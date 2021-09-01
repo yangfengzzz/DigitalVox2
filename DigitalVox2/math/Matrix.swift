@@ -104,7 +104,7 @@ extension Matrix {
     ///   - quaternion: The quaternion used to calculate the matrix
     ///   - out: The calculated rotation matrix
     static func rotationQuaternion(quaternion: Quaternion, out: Matrix) {
-        out.elements = matrix_float4x4(quaternion.element)
+        out.elements = matrix_float4x4(quaternion.elements)
     }
 
     /// Calculate a matrix rotates around an arbitrary axis.
@@ -509,7 +509,7 @@ extension Matrix {
         if (abs(sx) < Float.leastNonzeroMagnitude ||
                 abs(sy) < Float.leastNonzeroMagnitude ||
                 abs(sz) < Float.leastNonzeroMagnitude) {
-//            rotation.identity()
+            _ = rotation.identity()
             return false
         } else {
             let invSX = 1 / sx
@@ -525,7 +525,7 @@ extension Matrix {
             rm.elements.columns.2[0] = m31 * invSZ
             rm.elements.columns.2[1] = m32 * invSZ
             rm.elements.columns.2[2] = m33 * invSZ
-//            Quaternion.rotationMatrix3x3(rm, rotation)
+            Quaternion.rotationMatrix3x3(m: rm, out: rotation)
             return true
         }
     }
@@ -535,7 +535,7 @@ extension Matrix {
     /// - Parameter out: Rotation quaternion as an output parameter
     /// - Returns: The out
     func getRotation(out: Quaternion) -> Quaternion {
-        out.element = simd_quatf(elements)
+        out.elements = simd_quatf(elements)
         return out
     }
 
