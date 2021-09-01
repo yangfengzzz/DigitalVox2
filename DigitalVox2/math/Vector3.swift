@@ -307,6 +307,7 @@ extension Vector3 {
     func setValue(x: Float, y: Float, z: Float) -> Vector3 {
         self.x = x
         self.y = y
+        self.z = z
         return self
     }
 
