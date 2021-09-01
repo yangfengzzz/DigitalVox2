@@ -13,7 +13,8 @@ let zero4f = vec4f(0, 0, 0, 0)
 
 let one4f = vec4f(1, 1, 1, 1)
 
-@inlinable func xyz(a: vec4f) -> vec3f {
+@inlinable
+func xyz(a: vec4f) -> vec3f {
     fatalError("TODO")
 }
 
