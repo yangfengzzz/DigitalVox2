@@ -14,6 +14,30 @@
 		0452ECA026DFA0CD0015BFB1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0452EC9F26DFA0CD0015BFB1 /* Preview Assets.xcassets */; };
 		0452ECAB26DFA0CD0015BFB1 /* vox_tracingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECAA26DFA0CD0015BFB1 /* vox_tracingTests.swift */; };
 		0452ECB626DFA0CD0015BFB1 /* vox_tracingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECB526DFA0CD0015BFB1 /* vox_tracingUITests.swift */; };
+		0452ECC326DFA4590015BFB1 /* EngineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECC226DFA4590015BFB1 /* EngineView.swift */; };
+		0452ECC526DFA4920015BFB1 /* Engine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECC426DFA4920015BFB1 /* Engine.swift */; };
+		0452ECD226DFA5360015BFB1 /* VertexDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECC626DFA5360015BFB1 /* VertexDescriptor.swift */; };
+		0452ECD326DFA5360015BFB1 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECC726DFA5360015BFB1 /* Node.swift */; };
+		0452ECD426DFA5360015BFB1 /* Lighting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECC826DFA5360015BFB1 /* Lighting.swift */; };
+		0452ECD526DFA5360015BFB1 /* Primitive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECC926DFA5360015BFB1 /* Primitive.swift */; };
+		0452ECD626DFA5360015BFB1 /* PBR.metal in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECCA26DFA5360015BFB1 /* PBR.metal */; };
+		0452ECD726DFA5360015BFB1 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECCC26DFA5360015BFB1 /* Shaders.metal */; };
+		0452ECD826DFA5360015BFB1 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECCD26DFA5360015BFB1 /* Model.swift */; };
+		0452ECD926DFA5360015BFB1 /* Texturable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECCE26DFA5360015BFB1 /* Texturable.swift */; };
+		0452ECDA26DFA5360015BFB1 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECCF26DFA5360015BFB1 /* Camera.swift */; };
+		0452ECDB26DFA5360015BFB1 /* Mesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECD026DFA5360015BFB1 /* Mesh.swift */; };
+		0452ECDC26DFA5360015BFB1 /* Submesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECD126DFA5360015BFB1 /* Submesh.swift */; };
+		0452ECDE26DFA5C50015BFB1 /* MathLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECDD26DFA5C50015BFB1 /* MathLibrary.swift */; };
+		0452ECE626DFA6A10015BFB1 /* cube.obj in Resources */ = {isa = PBXBuildFile; fileRef = 0452ECE026DFA6A10015BFB1 /* cube.obj */; };
+		0452ECE726DFA6A10015BFB1 /* cube.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 0452ECE126DFA6A10015BFB1 /* cube.mtl */; };
+		0452ECE826DFA6A10015BFB1 /* cottage1.obj in Resources */ = {isa = PBXBuildFile; fileRef = 0452ECE226DFA6A10015BFB1 /* cottage1.obj */; };
+		0452ECE926DFA6A10015BFB1 /* cottage1.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 0452ECE326DFA6A10015BFB1 /* cottage1.mtl */; };
+		0452ECEA26DFA6A10015BFB1 /* cottage2.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 0452ECE426DFA6A10015BFB1 /* cottage2.mtl */; };
+		0452ECEB26DFA6A10015BFB1 /* cottage2.obj in Resources */ = {isa = PBXBuildFile; fileRef = 0452ECE526DFA6A10015BFB1 /* cottage2.obj */; };
+		0452ECED26DFA7870015BFB1 /* ControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECEC26DFA7870015BFB1 /* ControllerView.swift */; };
+		0452ECEF26DFA7B90015BFB1 /* InputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECEE26DFA7B90015BFB1 /* InputController.swift */; };
+		0452ECF126DFA7C90015BFB1 /* MotionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECF026DFA7C90015BFB1 /* MotionController.swift */; };
+		0452ECF326DFA8BD0015BFB1 /* Textures.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0452ECF226DFA8BD0015BFB1 /* Textures.xcassets */; };
 		0497A1E526DF150500F61DE9 /* DigitalVox2App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A1E426DF150500F61DE9 /* DigitalVox2App.swift */; };
 		0497A1E726DF150500F61DE9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A1E626DF150500F61DE9 /* ContentView.swift */; };
 		0497A1E926DF150800F61DE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0497A1E826DF150800F61DE9 /* Assets.xcassets */; };
@@ -76,6 +100,31 @@
 		0452ECB526DFA0CD0015BFB1 /* vox_tracingUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = vox_tracingUITests.swift; sourceTree = "<group>"; };
 		0452ECB726DFA0CD0015BFB1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0452ECC126DFA0DE0015BFB1 /* vox.tracing.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = vox.tracing.entitlements; sourceTree = "<group>"; };
+		0452ECC226DFA4590015BFB1 /* EngineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineView.swift; sourceTree = "<group>"; };
+		0452ECC426DFA4920015BFB1 /* Engine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Engine.swift; sourceTree = "<group>"; };
+		0452ECC626DFA5360015BFB1 /* VertexDescriptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VertexDescriptor.swift; sourceTree = "<group>"; };
+		0452ECC726DFA5360015BFB1 /* Node.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
+		0452ECC826DFA5360015BFB1 /* Lighting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lighting.swift; sourceTree = "<group>"; };
+		0452ECC926DFA5360015BFB1 /* Primitive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Primitive.swift; sourceTree = "<group>"; };
+		0452ECCA26DFA5360015BFB1 /* PBR.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = PBR.metal; sourceTree = "<group>"; };
+		0452ECCB26DFA5360015BFB1 /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
+		0452ECCC26DFA5360015BFB1 /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		0452ECCD26DFA5360015BFB1 /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		0452ECCE26DFA5360015BFB1 /* Texturable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Texturable.swift; sourceTree = "<group>"; };
+		0452ECCF26DFA5360015BFB1 /* Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
+		0452ECD026DFA5360015BFB1 /* Mesh.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mesh.swift; sourceTree = "<group>"; };
+		0452ECD126DFA5360015BFB1 /* Submesh.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Submesh.swift; sourceTree = "<group>"; };
+		0452ECDD26DFA5C50015BFB1 /* MathLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MathLibrary.swift; sourceTree = "<group>"; };
+		0452ECE026DFA6A10015BFB1 /* cube.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube.obj; sourceTree = "<group>"; };
+		0452ECE126DFA6A10015BFB1 /* cube.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube.mtl; sourceTree = "<group>"; };
+		0452ECE226DFA6A10015BFB1 /* cottage1.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cottage1.obj; sourceTree = "<group>"; };
+		0452ECE326DFA6A10015BFB1 /* cottage1.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cottage1.mtl; sourceTree = "<group>"; };
+		0452ECE426DFA6A10015BFB1 /* cottage2.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cottage2.mtl; sourceTree = "<group>"; };
+		0452ECE526DFA6A10015BFB1 /* cottage2.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cottage2.obj; sourceTree = "<group>"; };
+		0452ECEC26DFA7870015BFB1 /* ControllerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllerView.swift; sourceTree = "<group>"; };
+		0452ECEE26DFA7B90015BFB1 /* InputController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputController.swift; sourceTree = "<group>"; };
+		0452ECF026DFA7C90015BFB1 /* MotionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionController.swift; sourceTree = "<group>"; };
+		0452ECF226DFA8BD0015BFB1 /* Textures.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Textures.xcassets; sourceTree = "<group>"; };
 		0497A1E126DF150500F61DE9 /* vox.render.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vox.render.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0497A1E426DF150500F61DE9 /* DigitalVox2App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitalVox2App.swift; sourceTree = "<group>"; };
 		0497A1E626DF150500F61DE9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -184,6 +233,19 @@
 			path = vox.tracingUITests;
 			sourceTree = "<group>";
 		};
+		0452ECDF26DFA66E0015BFB1 /* models */ = {
+			isa = PBXGroup;
+			children = (
+				0452ECE326DFA6A10015BFB1 /* cottage1.mtl */,
+				0452ECE226DFA6A10015BFB1 /* cottage1.obj */,
+				0452ECE426DFA6A10015BFB1 /* cottage2.mtl */,
+				0452ECE526DFA6A10015BFB1 /* cottage2.obj */,
+				0452ECE126DFA6A10015BFB1 /* cube.mtl */,
+				0452ECE026DFA6A10015BFB1 /* cube.obj */,
+			);
+			path = models;
+			sourceTree = "<group>";
+		};
 		0497A1D826DF150500F61DE9 = {
 			isa = PBXGroup;
 			children = (
@@ -213,14 +275,34 @@
 		0497A1E326DF150500F61DE9 /* vox.render */ = {
 			isa = PBXGroup;
 			children = (
-				04EFDE7426DF1F87005FBB6F /* math */,
-				04DB2A4026DF1DF100C15850 /* design */,
-				0497A20F26DF151700F61DE9 /* DigitalVox2.entitlements */,
 				0497A1E426DF150500F61DE9 /* DigitalVox2App.swift */,
 				0497A1E626DF150500F61DE9 /* ContentView.swift */,
+				0452ECEC26DFA7870015BFB1 /* ControllerView.swift */,
+				0452ECEE26DFA7B90015BFB1 /* InputController.swift */,
+				0452ECF026DFA7C90015BFB1 /* MotionController.swift */,
+				0452ECC226DFA4590015BFB1 /* EngineView.swift */,
+				0452ECC426DFA4920015BFB1 /* Engine.swift */,
+				0452ECCC26DFA5360015BFB1 /* Shaders.metal */,
+				0452ECC726DFA5360015BFB1 /* Node.swift */,
+				0452ECCA26DFA5360015BFB1 /* PBR.metal */,
+				0452ECCE26DFA5360015BFB1 /* Texturable.swift */,
+				0452ECC926DFA5360015BFB1 /* Primitive.swift */,
+				0452ECCB26DFA5360015BFB1 /* Common.h */,
+				0452ECCF26DFA5360015BFB1 /* Camera.swift */,
+				0452ECCD26DFA5360015BFB1 /* Model.swift */,
+				0452ECD026DFA5360015BFB1 /* Mesh.swift */,
+				0452ECD126DFA5360015BFB1 /* Submesh.swift */,
+				0452ECC626DFA5360015BFB1 /* VertexDescriptor.swift */,
+				0452ECC826DFA5360015BFB1 /* Lighting.swift */,
+				0452ECDD26DFA5C50015BFB1 /* MathLibrary.swift */,
+				04EFDE7426DF1F87005FBB6F /* math */,
+				04DB2A4026DF1DF100C15850 /* design */,
+				0452ECDF26DFA66E0015BFB1 /* models */,
+				0497A20F26DF151700F61DE9 /* DigitalVox2.entitlements */,
 				0497A1E826DF150800F61DE9 /* Assets.xcassets */,
 				0497A1ED26DF150800F61DE9 /* Info.plist */,
 				0497A1EA26DF150800F61DE9 /* Preview Content */,
+				0452ECF226DFA8BD0015BFB1 /* Textures.xcassets */,
 			);
 			path = vox.render;
 			sourceTree = "<group>";
@@ -467,8 +549,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0452ECEA26DFA6A10015BFB1 /* cottage2.mtl in Resources */,
+				0452ECE626DFA6A10015BFB1 /* cube.obj in Resources */,
+				0452ECE926DFA6A10015BFB1 /* cottage1.mtl in Resources */,
+				0452ECF326DFA8BD0015BFB1 /* Textures.xcassets in Resources */,
 				0497A1EC26DF150800F61DE9 /* Preview Assets.xcassets in Resources */,
+				0452ECE726DFA6A10015BFB1 /* cube.mtl in Resources */,
 				0497A1E926DF150800F61DE9 /* Assets.xcassets in Resources */,
+				0452ECEB26DFA6A10015BFB1 /* cottage2.obj in Resources */,
+				0452ECE826DFA6A10015BFB1 /* cottage1.obj in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -518,16 +607,33 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0452ECEF26DFA7B90015BFB1 /* InputController.swift in Sources */,
+				0452ECD626DFA5360015BFB1 /* PBR.metal in Sources */,
 				04DB2A4226DF1E0500C15850 /* IClone.swift in Sources */,
+				0452ECC526DFA4920015BFB1 /* Engine.swift in Sources */,
 				04EFDE8026DF4C85005FBB6F /* Quaternion.swift in Sources */,
+				0452ECD526DFA5360015BFB1 /* Primitive.swift in Sources */,
+				0452ECDA26DFA5360015BFB1 /* Camera.swift in Sources */,
 				04EFDE7626DF1F96005FBB6F /* Vector2.swift in Sources */,
+				0452ECD726DFA5360015BFB1 /* Shaders.metal in Sources */,
+				0452ECD226DFA5360015BFB1 /* VertexDescriptor.swift in Sources */,
 				04EFDE7E26DF49FD005FBB6F /* Matrix3x3.swift in Sources */,
 				04EFDE7C26DF3495005FBB6F /* Matrix.swift in Sources */,
+				0452ECDE26DFA5C50015BFB1 /* MathLibrary.swift in Sources */,
+				0452ECF126DFA7C90015BFB1 /* MotionController.swift in Sources */,
 				0413286B26DF86DC000A4F4E /* BoundingBox.swift in Sources */,
+				0452ECDC26DFA5360015BFB1 /* Submesh.swift in Sources */,
+				0452ECDB26DFA5360015BFB1 /* Mesh.swift in Sources */,
+				0452ECC326DFA4590015BFB1 /* EngineView.swift in Sources */,
 				0497A1E726DF150500F61DE9 /* ContentView.swift in Sources */,
 				04EFDE7A26DF3072005FBB6F /* Vector3.swift in Sources */,
+				0452ECD426DFA5360015BFB1 /* Lighting.swift in Sources */,
+				0452ECED26DFA7870015BFB1 /* ControllerView.swift in Sources */,
 				04EFDE8226DF4DC3005FBB6F /* Vector4.swift in Sources */,
+				0452ECD826DFA5360015BFB1 /* Model.swift in Sources */,
 				0497A1E526DF150500F61DE9 /* DigitalVox2App.swift in Sources */,
+				0452ECD326DFA5360015BFB1 /* Node.swift in Sources */,
+				0452ECD926DFA5360015BFB1 /* Texturable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -841,6 +947,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = DigitalVox2.DigitalVox2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = vox.render/Common.h;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -865,6 +972,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = DigitalVox2.DigitalVox2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = vox.render/Common.h;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

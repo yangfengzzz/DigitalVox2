@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct ContentView: View {
+    let engine = Engine()
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        EngineView(view: engine)
     }
 }
 
