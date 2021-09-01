@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0413286B26DF86DC000A4F4E /* BoundingBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413286A26DF86DC000A4F4E /* BoundingBox.swift */; };
 		0497A1E526DF150500F61DE9 /* DigitalVox2App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A1E426DF150500F61DE9 /* DigitalVox2App.swift */; };
 		0497A1E726DF150500F61DE9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A1E626DF150500F61DE9 /* ContentView.swift */; };
 		0497A1E926DF150800F61DE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0497A1E826DF150800F61DE9 /* Assets.xcassets */; };
@@ -41,6 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0413286A26DF86DC000A4F4E /* BoundingBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingBox.swift; sourceTree = "<group>"; };
 		0497A1E126DF150500F61DE9 /* DigitalVox2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DigitalVox2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0497A1E426DF150500F61DE9 /* DigitalVox2App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitalVox2App.swift; sourceTree = "<group>"; };
 		0497A1E626DF150500F61DE9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 				04EFDE7B26DF3495005FBB6F /* Matrix.swift */,
 				04EFDE7D26DF49FD005FBB6F /* Matrix3x3.swift */,
 				04EFDE7F26DF4C85005FBB6F /* Quaternion.swift */,
+				0413286A26DF86DC000A4F4E /* BoundingBox.swift */,
 			);
 			path = math;
 			sourceTree = "<group>";
@@ -306,6 +309,7 @@
 				04EFDE7626DF1F96005FBB6F /* Vector2.swift in Sources */,
 				04EFDE7E26DF49FD005FBB6F /* Matrix3x3.swift in Sources */,
 				04EFDE7C26DF3495005FBB6F /* Matrix.swift in Sources */,
+				0413286B26DF86DC000A4F4E /* BoundingBox.swift in Sources */,
 				0497A1E726DF150500F61DE9 /* ContentView.swift in Sources */,
 				04EFDE7A26DF3072005FBB6F /* Vector3.swift in Sources */,
 				04EFDE8226DF4DC3005FBB6F /* Vector4.swift in Sources */,
