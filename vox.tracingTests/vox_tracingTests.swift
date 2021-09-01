@@ -1,14 +1,14 @@
 //
-//  DigitalVox2Tests.swift
-//  DigitalVox2Tests
+//  vox_tracingTests.swift
+//  vox.tracingTests
 //
 //  Created by 杨丰 on 2021/9/1.
 //
 
 import XCTest
-@testable import DigitalVox2
+@testable import vox_tracing
 
-class DigitalVox2Tests: XCTestCase {
+class vox_tracingTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.

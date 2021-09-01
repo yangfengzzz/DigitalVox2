@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		0413286B26DF86DC000A4F4E /* BoundingBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413286A26DF86DC000A4F4E /* BoundingBox.swift */; };
+		0452EC9926DFA0CD0015BFB1 /* vox_tracingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9826DFA0CD0015BFB1 /* vox_tracingApp.swift */; };
+		0452EC9B26DFA0CD0015BFB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */; };
+		0452EC9D26DFA0CD0015BFB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0452EC9C26DFA0CD0015BFB1 /* Assets.xcassets */; };
+		0452ECA026DFA0CD0015BFB1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0452EC9F26DFA0CD0015BFB1 /* Preview Assets.xcassets */; };
+		0452ECAB26DFA0CD0015BFB1 /* vox_tracingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECAA26DFA0CD0015BFB1 /* vox_tracingTests.swift */; };
+		0452ECB626DFA0CD0015BFB1 /* vox_tracingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECB526DFA0CD0015BFB1 /* vox_tracingUITests.swift */; };
 		0497A1E526DF150500F61DE9 /* DigitalVox2App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A1E426DF150500F61DE9 /* DigitalVox2App.swift */; };
 		0497A1E726DF150500F61DE9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A1E626DF150500F61DE9 /* ContentView.swift */; };
 		0497A1E926DF150800F61DE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0497A1E826DF150800F61DE9 /* Assets.xcassets */; };
@@ -25,6 +31,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		0452ECA726DFA0CD0015BFB1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0497A1D926DF150500F61DE9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0452EC9526DFA0CD0015BFB1;
+			remoteInfo = vox.tracing;
+		};
+		0452ECB226DFA0CD0015BFB1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0497A1D926DF150500F61DE9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0452EC9526DFA0CD0015BFB1;
+			remoteInfo = vox.tracing;
+		};
 		0497A1F326DF150800F61DE9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0497A1D926DF150500F61DE9 /* Project object */;
@@ -43,16 +63,29 @@
 
 /* Begin PBXFileReference section */
 		0413286A26DF86DC000A4F4E /* BoundingBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingBox.swift; sourceTree = "<group>"; };
-		0497A1E126DF150500F61DE9 /* DigitalVox2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DigitalVox2.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0452EC9626DFA0CD0015BFB1 /* vox.tracing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vox.tracing.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0452EC9826DFA0CD0015BFB1 /* vox_tracingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = vox_tracingApp.swift; sourceTree = "<group>"; };
+		0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		0452EC9C26DFA0CD0015BFB1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0452EC9F26DFA0CD0015BFB1 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		0452ECA126DFA0CD0015BFB1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0452ECA626DFA0CD0015BFB1 /* vox.tracingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = vox.tracingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0452ECAA26DFA0CD0015BFB1 /* vox_tracingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = vox_tracingTests.swift; sourceTree = "<group>"; };
+		0452ECAC26DFA0CD0015BFB1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0452ECB126DFA0CD0015BFB1 /* vox.tracingUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = vox.tracingUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0452ECB526DFA0CD0015BFB1 /* vox_tracingUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = vox_tracingUITests.swift; sourceTree = "<group>"; };
+		0452ECB726DFA0CD0015BFB1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0452ECC126DFA0DE0015BFB1 /* vox.tracing.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = vox.tracing.entitlements; sourceTree = "<group>"; };
+		0497A1E126DF150500F61DE9 /* vox.render.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vox.render.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0497A1E426DF150500F61DE9 /* DigitalVox2App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitalVox2App.swift; sourceTree = "<group>"; };
 		0497A1E626DF150500F61DE9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		0497A1E826DF150800F61DE9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0497A1EB26DF150800F61DE9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		0497A1ED26DF150800F61DE9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0497A1F226DF150800F61DE9 /* DigitalVox2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DigitalVox2Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0497A1F226DF150800F61DE9 /* vox.renderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = vox.renderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0497A1F626DF150800F61DE9 /* DigitalVox2Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitalVox2Tests.swift; sourceTree = "<group>"; };
 		0497A1F826DF150800F61DE9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0497A1FD26DF150800F61DE9 /* DigitalVox2UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DigitalVox2UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0497A1FD26DF150800F61DE9 /* vox.renderUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = vox.renderUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0497A20126DF150800F61DE9 /* DigitalVox2UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitalVox2UITests.swift; sourceTree = "<group>"; };
 		0497A20326DF150800F61DE9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0497A20F26DF151700F61DE9 /* DigitalVox2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DigitalVox2.entitlements; sourceTree = "<group>"; };
@@ -67,6 +100,27 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		0452EC9326DFA0CD0015BFB1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0452ECA326DFA0CD0015BFB1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0452ECAE26DFA0CD0015BFB1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		0497A1DE26DF150500F61DE9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -91,12 +145,54 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0452EC9726DFA0CD0015BFB1 /* vox.tracing */ = {
+			isa = PBXGroup;
+			children = (
+				0452ECC126DFA0DE0015BFB1 /* vox.tracing.entitlements */,
+				0452EC9826DFA0CD0015BFB1 /* vox_tracingApp.swift */,
+				0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */,
+				0452EC9C26DFA0CD0015BFB1 /* Assets.xcassets */,
+				0452ECA126DFA0CD0015BFB1 /* Info.plist */,
+				0452EC9E26DFA0CD0015BFB1 /* Preview Content */,
+			);
+			path = vox.tracing;
+			sourceTree = "<group>";
+		};
+		0452EC9E26DFA0CD0015BFB1 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				0452EC9F26DFA0CD0015BFB1 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		0452ECA926DFA0CD0015BFB1 /* vox.tracingTests */ = {
+			isa = PBXGroup;
+			children = (
+				0452ECAA26DFA0CD0015BFB1 /* vox_tracingTests.swift */,
+				0452ECAC26DFA0CD0015BFB1 /* Info.plist */,
+			);
+			path = vox.tracingTests;
+			sourceTree = "<group>";
+		};
+		0452ECB426DFA0CD0015BFB1 /* vox.tracingUITests */ = {
+			isa = PBXGroup;
+			children = (
+				0452ECB526DFA0CD0015BFB1 /* vox_tracingUITests.swift */,
+				0452ECB726DFA0CD0015BFB1 /* Info.plist */,
+			);
+			path = vox.tracingUITests;
+			sourceTree = "<group>";
+		};
 		0497A1D826DF150500F61DE9 = {
 			isa = PBXGroup;
 			children = (
-				0497A1E326DF150500F61DE9 /* DigitalVox2 */,
-				0497A1F526DF150800F61DE9 /* DigitalVox2Tests */,
-				0497A20026DF150800F61DE9 /* DigitalVox2UITests */,
+				0497A1E326DF150500F61DE9 /* vox.render */,
+				0497A1F526DF150800F61DE9 /* vox.renderTests */,
+				0497A20026DF150800F61DE9 /* vox.renderUITests */,
+				0452EC9726DFA0CD0015BFB1 /* vox.tracing */,
+				0452ECA926DFA0CD0015BFB1 /* vox.tracingTests */,
+				0452ECB426DFA0CD0015BFB1 /* vox.tracingUITests */,
 				0497A1E226DF150500F61DE9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -104,14 +200,17 @@
 		0497A1E226DF150500F61DE9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0497A1E126DF150500F61DE9 /* DigitalVox2.app */,
-				0497A1F226DF150800F61DE9 /* DigitalVox2Tests.xctest */,
-				0497A1FD26DF150800F61DE9 /* DigitalVox2UITests.xctest */,
+				0497A1E126DF150500F61DE9 /* vox.render.app */,
+				0497A1F226DF150800F61DE9 /* vox.renderTests.xctest */,
+				0497A1FD26DF150800F61DE9 /* vox.renderUITests.xctest */,
+				0452EC9626DFA0CD0015BFB1 /* vox.tracing.app */,
+				0452ECA626DFA0CD0015BFB1 /* vox.tracingTests.xctest */,
+				0452ECB126DFA0CD0015BFB1 /* vox.tracingUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		0497A1E326DF150500F61DE9 /* DigitalVox2 */ = {
+		0497A1E326DF150500F61DE9 /* vox.render */ = {
 			isa = PBXGroup;
 			children = (
 				04EFDE7426DF1F87005FBB6F /* math */,
@@ -123,7 +222,7 @@
 				0497A1ED26DF150800F61DE9 /* Info.plist */,
 				0497A1EA26DF150800F61DE9 /* Preview Content */,
 			);
-			path = DigitalVox2;
+			path = vox.render;
 			sourceTree = "<group>";
 		};
 		0497A1EA26DF150800F61DE9 /* Preview Content */ = {
@@ -134,23 +233,23 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		0497A1F526DF150800F61DE9 /* DigitalVox2Tests */ = {
+		0497A1F526DF150800F61DE9 /* vox.renderTests */ = {
 			isa = PBXGroup;
 			children = (
 				0497A1F626DF150800F61DE9 /* DigitalVox2Tests.swift */,
 				0497A1F826DF150800F61DE9 /* Info.plist */,
 				04EFDE7726DF281D005FBB6F /* Vector2.test.swift */,
 			);
-			path = DigitalVox2Tests;
+			path = vox.renderTests;
 			sourceTree = "<group>";
 		};
-		0497A20026DF150800F61DE9 /* DigitalVox2UITests */ = {
+		0497A20026DF150800F61DE9 /* vox.renderUITests */ = {
 			isa = PBXGroup;
 			children = (
 				0497A20126DF150800F61DE9 /* DigitalVox2UITests.swift */,
 				0497A20326DF150800F61DE9 /* Info.plist */,
 			);
-			path = DigitalVox2UITests;
+			path = vox.renderUITests;
 			sourceTree = "<group>";
 		};
 		04DB2A4026DF1DF100C15850 /* design */ = {
@@ -178,9 +277,62 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		0497A1E026DF150500F61DE9 /* DigitalVox2 */ = {
+		0452EC9526DFA0CD0015BFB1 /* vox.tracing */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0497A20626DF150800F61DE9 /* Build configuration list for PBXNativeTarget "DigitalVox2" */;
+			buildConfigurationList = 0452ECBE26DFA0CD0015BFB1 /* Build configuration list for PBXNativeTarget "vox.tracing" */;
+			buildPhases = (
+				0452EC9226DFA0CD0015BFB1 /* Sources */,
+				0452EC9326DFA0CD0015BFB1 /* Frameworks */,
+				0452EC9426DFA0CD0015BFB1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = vox.tracing;
+			productName = vox.tracing;
+			productReference = 0452EC9626DFA0CD0015BFB1 /* vox.tracing.app */;
+			productType = "com.apple.product-type.application";
+		};
+		0452ECA526DFA0CD0015BFB1 /* vox.tracingTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0452ECBF26DFA0CD0015BFB1 /* Build configuration list for PBXNativeTarget "vox.tracingTests" */;
+			buildPhases = (
+				0452ECA226DFA0CD0015BFB1 /* Sources */,
+				0452ECA326DFA0CD0015BFB1 /* Frameworks */,
+				0452ECA426DFA0CD0015BFB1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0452ECA826DFA0CD0015BFB1 /* PBXTargetDependency */,
+			);
+			name = vox.tracingTests;
+			productName = vox.tracingTests;
+			productReference = 0452ECA626DFA0CD0015BFB1 /* vox.tracingTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		0452ECB026DFA0CD0015BFB1 /* vox.tracingUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0452ECC026DFA0CD0015BFB1 /* Build configuration list for PBXNativeTarget "vox.tracingUITests" */;
+			buildPhases = (
+				0452ECAD26DFA0CD0015BFB1 /* Sources */,
+				0452ECAE26DFA0CD0015BFB1 /* Frameworks */,
+				0452ECAF26DFA0CD0015BFB1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0452ECB326DFA0CD0015BFB1 /* PBXTargetDependency */,
+			);
+			name = vox.tracingUITests;
+			productName = vox.tracingUITests;
+			productReference = 0452ECB126DFA0CD0015BFB1 /* vox.tracingUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		0497A1E026DF150500F61DE9 /* vox.render */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0497A20626DF150800F61DE9 /* Build configuration list for PBXNativeTarget "vox.render" */;
 			buildPhases = (
 				0497A1DD26DF150500F61DE9 /* Sources */,
 				0497A1DE26DF150500F61DE9 /* Frameworks */,
@@ -190,14 +342,14 @@
 			);
 			dependencies = (
 			);
-			name = DigitalVox2;
+			name = vox.render;
 			productName = DigitalVox2;
-			productReference = 0497A1E126DF150500F61DE9 /* DigitalVox2.app */;
+			productReference = 0497A1E126DF150500F61DE9 /* vox.render.app */;
 			productType = "com.apple.product-type.application";
 		};
-		0497A1F126DF150800F61DE9 /* DigitalVox2Tests */ = {
+		0497A1F126DF150800F61DE9 /* vox.renderTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0497A20926DF150800F61DE9 /* Build configuration list for PBXNativeTarget "DigitalVox2Tests" */;
+			buildConfigurationList = 0497A20926DF150800F61DE9 /* Build configuration list for PBXNativeTarget "vox.renderTests" */;
 			buildPhases = (
 				0497A1EE26DF150800F61DE9 /* Sources */,
 				0497A1EF26DF150800F61DE9 /* Frameworks */,
@@ -208,14 +360,14 @@
 			dependencies = (
 				0497A1F426DF150800F61DE9 /* PBXTargetDependency */,
 			);
-			name = DigitalVox2Tests;
+			name = vox.renderTests;
 			productName = DigitalVox2Tests;
-			productReference = 0497A1F226DF150800F61DE9 /* DigitalVox2Tests.xctest */;
+			productReference = 0497A1F226DF150800F61DE9 /* vox.renderTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		0497A1FC26DF150800F61DE9 /* DigitalVox2UITests */ = {
+		0497A1FC26DF150800F61DE9 /* vox.renderUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0497A20C26DF150800F61DE9 /* Build configuration list for PBXNativeTarget "DigitalVox2UITests" */;
+			buildConfigurationList = 0497A20C26DF150800F61DE9 /* Build configuration list for PBXNativeTarget "vox.renderUITests" */;
 			buildPhases = (
 				0497A1F926DF150800F61DE9 /* Sources */,
 				0497A1FA26DF150800F61DE9 /* Frameworks */,
@@ -226,9 +378,9 @@
 			dependencies = (
 				0497A1FF26DF150800F61DE9 /* PBXTargetDependency */,
 			);
-			name = DigitalVox2UITests;
+			name = vox.renderUITests;
 			productName = DigitalVox2UITests;
-			productReference = 0497A1FD26DF150800F61DE9 /* DigitalVox2UITests.xctest */;
+			productReference = 0497A1FD26DF150800F61DE9 /* vox.renderUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -240,6 +392,17 @@
 				LastSwiftUpdateCheck = 1250;
 				LastUpgradeCheck = 1250;
 				TargetAttributes = {
+					0452EC9526DFA0CD0015BFB1 = {
+						CreatedOnToolsVersion = 12.5.1;
+					};
+					0452ECA526DFA0CD0015BFB1 = {
+						CreatedOnToolsVersion = 12.5.1;
+						TestTargetID = 0452EC9526DFA0CD0015BFB1;
+					};
+					0452ECB026DFA0CD0015BFB1 = {
+						CreatedOnToolsVersion = 12.5.1;
+						TestTargetID = 0452EC9526DFA0CD0015BFB1;
+					};
 					0497A1E026DF150500F61DE9 = {
 						CreatedOnToolsVersion = 12.5.1;
 					};
@@ -266,14 +429,40 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				0497A1E026DF150500F61DE9 /* DigitalVox2 */,
-				0497A1F126DF150800F61DE9 /* DigitalVox2Tests */,
-				0497A1FC26DF150800F61DE9 /* DigitalVox2UITests */,
+				0497A1E026DF150500F61DE9 /* vox.render */,
+				0497A1F126DF150800F61DE9 /* vox.renderTests */,
+				0497A1FC26DF150800F61DE9 /* vox.renderUITests */,
+				0452EC9526DFA0CD0015BFB1 /* vox.tracing */,
+				0452ECA526DFA0CD0015BFB1 /* vox.tracingTests */,
+				0452ECB026DFA0CD0015BFB1 /* vox.tracingUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		0452EC9426DFA0CD0015BFB1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0452ECA026DFA0CD0015BFB1 /* Preview Assets.xcassets in Resources */,
+				0452EC9D26DFA0CD0015BFB1 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0452ECA426DFA0CD0015BFB1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0452ECAF26DFA0CD0015BFB1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		0497A1DF26DF150500F61DE9 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -300,6 +489,31 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		0452EC9226DFA0CD0015BFB1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0452EC9B26DFA0CD0015BFB1 /* ContentView.swift in Sources */,
+				0452EC9926DFA0CD0015BFB1 /* vox_tracingApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0452ECA226DFA0CD0015BFB1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0452ECAB26DFA0CD0015BFB1 /* vox_tracingTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0452ECAD26DFA0CD0015BFB1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0452ECB626DFA0CD0015BFB1 /* vox_tracingUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		0497A1DD26DF150500F61DE9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -337,19 +551,161 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		0452ECA826DFA0CD0015BFB1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0452EC9526DFA0CD0015BFB1 /* vox.tracing */;
+			targetProxy = 0452ECA726DFA0CD0015BFB1 /* PBXContainerItemProxy */;
+		};
+		0452ECB326DFA0CD0015BFB1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0452EC9526DFA0CD0015BFB1 /* vox.tracing */;
+			targetProxy = 0452ECB226DFA0CD0015BFB1 /* PBXContainerItemProxy */;
+		};
 		0497A1F426DF150800F61DE9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 0497A1E026DF150500F61DE9 /* DigitalVox2 */;
+			target = 0497A1E026DF150500F61DE9 /* vox.render */;
 			targetProxy = 0497A1F326DF150800F61DE9 /* PBXContainerItemProxy */;
 		};
 		0497A1FF26DF150800F61DE9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 0497A1E026DF150500F61DE9 /* DigitalVox2 */;
+			target = 0497A1E026DF150500F61DE9 /* vox.render */;
 			targetProxy = 0497A1FE26DF150800F61DE9 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		0452ECB826DFA0CD0015BFB1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = vox.tracing/vox.tracing.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"vox.tracing/Preview Content\"";
+				DEVELOPMENT_TEAM = 4SL5L673UU;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = vox.tracing/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "digitalArche.oasis.vox-tracing";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		0452ECB926DFA0CD0015BFB1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = vox.tracing/vox.tracing.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"vox.tracing/Preview Content\"";
+				DEVELOPMENT_TEAM = 4SL5L673UU;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = vox.tracing/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "digitalArche.oasis.vox-tracing";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		0452ECBA26DFA0CD0015BFB1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4SL5L673UU;
+				INFOPLIST_FILE = vox.tracingTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "digitalArche.oasis.vox-tracingTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/vox.tracing.app/vox.tracing";
+			};
+			name = Debug;
+		};
+		0452ECBB26DFA0CD0015BFB1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4SL5L673UU;
+				INFOPLIST_FILE = vox.tracingTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "digitalArche.oasis.vox-tracingTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/vox.tracing.app/vox.tracing";
+			};
+			name = Release;
+		};
+		0452ECBC26DFA0CD0015BFB1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4SL5L673UU;
+				INFOPLIST_FILE = vox.tracingUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "digitalArche.oasis.vox-tracingUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = vox.tracing;
+			};
+			name = Debug;
+		};
+		0452ECBD26DFA0CD0015BFB1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4SL5L673UU;
+				INFOPLIST_FILE = vox.tracingUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "digitalArche.oasis.vox-tracingUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = vox.tracing;
+			};
+			name = Release;
+		};
 		0497A20426DF150800F61DE9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -471,12 +827,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = DigitalVox2/DigitalVox2.entitlements;
+				CODE_SIGN_ENTITLEMENTS = vox.render/DigitalVox2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"DigitalVox2/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"vox.render/Preview Content\"";
 				DEVELOPMENT_TEAM = 4SL5L673UU;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = DigitalVox2/Info.plist;
+				INFOPLIST_FILE = vox.render/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -495,12 +851,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = DigitalVox2/DigitalVox2.entitlements;
+				CODE_SIGN_ENTITLEMENTS = vox.render/DigitalVox2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"DigitalVox2/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"vox.render/Preview Content\"";
 				DEVELOPMENT_TEAM = 4SL5L673UU;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = DigitalVox2/Info.plist;
+				INFOPLIST_FILE = vox.render/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -521,7 +877,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4SL5L673UU;
-				INFOPLIST_FILE = DigitalVox2Tests/Info.plist;
+				INFOPLIST_FILE = vox.renderTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -532,7 +888,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DigitalVox2.app/DigitalVox2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/vox.render.app/vox.render";
 			};
 			name = Debug;
 		};
@@ -543,7 +899,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4SL5L673UU;
-				INFOPLIST_FILE = DigitalVox2Tests/Info.plist;
+				INFOPLIST_FILE = vox.renderTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -554,7 +910,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DigitalVox2.app/DigitalVox2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/vox.render.app/vox.render";
 			};
 			name = Release;
 		};
@@ -564,7 +920,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4SL5L673UU;
-				INFOPLIST_FILE = DigitalVox2UITests/Info.plist;
+				INFOPLIST_FILE = vox.renderUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -584,7 +940,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4SL5L673UU;
-				INFOPLIST_FILE = DigitalVox2UITests/Info.plist;
+				INFOPLIST_FILE = vox.renderUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -601,6 +957,33 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		0452ECBE26DFA0CD0015BFB1 /* Build configuration list for PBXNativeTarget "vox.tracing" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0452ECB826DFA0CD0015BFB1 /* Debug */,
+				0452ECB926DFA0CD0015BFB1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0452ECBF26DFA0CD0015BFB1 /* Build configuration list for PBXNativeTarget "vox.tracingTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0452ECBA26DFA0CD0015BFB1 /* Debug */,
+				0452ECBB26DFA0CD0015BFB1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0452ECC026DFA0CD0015BFB1 /* Build configuration list for PBXNativeTarget "vox.tracingUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0452ECBC26DFA0CD0015BFB1 /* Debug */,
+				0452ECBD26DFA0CD0015BFB1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		0497A1DC26DF150500F61DE9 /* Build configuration list for PBXProject "DigitalVox2" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -610,7 +993,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0497A20626DF150800F61DE9 /* Build configuration list for PBXNativeTarget "DigitalVox2" */ = {
+		0497A20626DF150800F61DE9 /* Build configuration list for PBXNativeTarget "vox.render" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0497A20726DF150800F61DE9 /* Debug */,
@@ -619,7 +1002,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0497A20926DF150800F61DE9 /* Build configuration list for PBXNativeTarget "DigitalVox2Tests" */ = {
+		0497A20926DF150800F61DE9 /* Build configuration list for PBXNativeTarget "vox.renderTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0497A20A26DF150800F61DE9 /* Debug */,
@@ -628,7 +1011,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0497A20C26DF150800F61DE9 /* Build configuration list for PBXNativeTarget "DigitalVox2UITests" */ = {
+		0497A20C26DF150800F61DE9 /* Build configuration list for PBXNativeTarget "vox.renderUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0497A20D26DF150800F61DE9 /* Debug */,

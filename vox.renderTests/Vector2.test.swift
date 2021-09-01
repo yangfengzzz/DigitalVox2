@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import DigitalVox2
+@testable import vox_render
 
 class Vector2Tests: XCTestCase {
     override func setUpWithError() throws {
