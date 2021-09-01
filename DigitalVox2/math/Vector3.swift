@@ -108,6 +108,15 @@ extension Vector3 {
         simd_dot(left.elements, right.elements)
     }
 
+    /// Determines the cross product of two vectors.
+    /// - Parameters:
+    ///   - left: The first vector to cross
+    ///   - right: The second vector to cross
+    ///   - out: The cross product of two vectors
+    static func cross(left: Vector3, right: Vector3, out: Vector3) {
+        out.elements = simd_cross(left.elements, right.elements)
+    }
+
     /// Determines the distance of two vectors.
     /// - Parameters:
     ///   - left: The first vector
