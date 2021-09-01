@@ -68,6 +68,9 @@ final class Engine: UIView {
         models.append(house)
         
         fragmentUniforms.lightCount = lighting.count
+        
+        controllerView.inputController = InputController()
+        controllerView.inputController?.player = camera
     }
     
     required init?(coder: NSCoder) {

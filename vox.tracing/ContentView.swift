@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct ContentView: View {
+    let rayrenderer = RayRenderer()
+
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        MetalKitRayView(view: rayrenderer)
     }
 }
 
