@@ -192,8 +192,10 @@ extension Vector3 {
     static func scale(left: Vector3, s: Float, out: Vector3) {
         out.elements = left.elements * s
     }
+}
 
-
+//MARK:- Static Method: Transformation
+extension Vector3 {
     /// Performs a normal transformation using the given 4x4 matrix.
     /// - Remark: A normal transform performs the transformation with the assumption that the w component
     /// is zero. This causes the fourth row and fourth column of the matrix to be unused. The
@@ -204,8 +206,93 @@ extension Vector3 {
     ///   - v: The normal vector to transform
     ///   - m: The transform matrix
     ///   - out: The transformed normal
-    static func transformNormal() {
-        fatalError("TODO")
+    static func transformNormal(v: Vector3, m: Matrix, out: Vector3) {
+        let x = v.x
+        let y = v.y
+        let z = v.z
+        out.x = x * m.elements.columns.0[0] + y * m.elements.columns.1[0] + z * m.elements.columns.1[0]
+        out.y = x * m.elements.columns.0[1] + y * m.elements.columns.1[1] + z * m.elements.columns.1[1]
+        out.z = x * m.elements.columns.0[2] + y * m.elements.columns.1[2] + z * m.elements.columns.1[2]
+    }
+
+    /// Performs a transformation using the given 4x4 matrix.
+    /// - Parameters:
+    ///   - v: The vector to transform
+    ///   - m: The transform matrix
+    ///   - out: The transformed vector3
+    static func transformToVec3(v: Vector3, m: Matrix, out: Vector3) {
+        let x = v.x
+        let y = v.y
+        let z = v.z
+
+        out.x = x * m.elements.columns.0[0] + y * m.elements.columns.1[0] + z * m.elements.columns.2[0] + m.elements.columns.3[0]
+        out.y = x * m.elements.columns.0[1] + y * m.elements.columns.1[1] + z * m.elements.columns.2[1] + m.elements.columns.3[1]
+        out.z = x * m.elements.columns.0[2] + y * m.elements.columns.1[2] + z * m.elements.columns.2[2] + m.elements.columns.3[2]
+    }
+
+    /// Performs a transformation from vector3 to vector4 using the given 4x4 matrix.
+    /// - Parameters:
+    ///   - v: The vector to transform
+    ///   - m: The transform matrix
+    ///   - out: The transformed vector4
+    static func transformToVec4(v: Vector3, m: Matrix, out: Vector4) {
+        let x = v.x
+        let y = v.y
+        let z = v.z
+
+        out.x = x * m.elements.columns.0[0] + y * m.elements.columns.1[0] + z * m.elements.columns.2[0] + m.elements.columns.3[0]
+        out.y = x * m.elements.columns.0[1] + y * m.elements.columns.1[1] + z * m.elements.columns.2[1] + m.elements.columns.3[0]
+        out.z = x * m.elements.columns.0[2] + y * m.elements.columns.1[2] + z * m.elements.columns.2[2] + m.elements.columns.3[0]
+        out.w = x * m.elements.columns.0[3] + y * m.elements.columns.1[3] + z * m.elements.columns.2[3] + m.elements.columns.3[0]
+    }
+
+    /// Performs a coordinate transformation using the given 4x4 matrix.
+    /// - Remark:
+    /// A coordinate transform performs the transformation with the assumption that the w component
+    /// is one. The four dimensional vector obtained from the transformation operation has each
+    /// component in the vector divided by the w component. This forces the w-component to be one and
+    /// therefore makes the vector homogeneous. The homogeneous vector is often preferred when working
+    /// with coordinates as the w component can safely be ignored.
+    /// - Parameters:
+    ///   - v: The coordinate vector to transform
+    ///   - m: The transform matrix
+    ///   - out: The transformed coordinates
+    static func transformCoordinate(v: Vector3, m: Matrix, out: Vector3) {
+        let x = v.x
+        let y = v.y
+        let z = v.z
+        var w = x * m.elements.columns.0[3] + y * m.elements.columns.1[3] + z * m.elements.columns.2[3] + m.elements.columns.3[3]
+        w = 1.0 / w
+
+        out.x = (x * m.elements.columns.0[0] + y * m.elements.columns.1[0] + z * m.elements.columns.2[0] + m.elements.columns.3[0]) * w
+        out.y = (x * m.elements.columns.0[1] + y * m.elements.columns.1[1] + z * m.elements.columns.2[1] + m.elements.columns.3[1]) * w
+        out.z = (x * m.elements.columns.0[2] + y * m.elements.columns.1[2] + z * m.elements.columns.2[2] + m.elements.columns.3[2]) * w
+    }
+
+    /// Performs a transformation using the given quaternion.
+    /// - Parameters:
+    ///   - v: The vector to transform
+    ///   - quaternion: The transform quaternion
+    ///   - out: The transformed vector
+    static func transformByQuat(v: Vector3, quaternion: Quaternion, out: Vector3) {
+        let x = v.x
+        let y = v.y
+        let z = v.z
+        let qx = quaternion.x
+        let qy = quaternion.y
+        let qz = quaternion.z
+        let qw = quaternion.w
+
+        // calculate quat * vec
+        let ix = qw * x + qy * z - qz * y
+        let iy = qw * y + qz * x - qx * z
+        let iz = qw * z + qx * y - qy * x
+        let iw = -qx * x - qy * y - qz * z
+
+        // calculate result * inverse quat
+        out.x = ix * qw - iw * qx - iy * qz + iz * qy
+        out.y = iy * qw - iw * qy - iz * qx + ix * qz
+        out.z = iz * qw - iw * qz - ix * qy + iy * qx
     }
 }
 
@@ -299,6 +386,52 @@ extension Vector3 {
     /// - Returns: This vector
     func scale(s: Float) -> Vector3 {
         elements *= s
+        return self
+    }
+}
+
+extension Vector3 {
+    /// This vector performs a normal transformation using the given 4x4 matrix.
+    /// - Remark:
+    /// A normal transform performs the transformation with the assumption that the w component
+    /// is zero. This causes the fourth row and fourth column of the matrix to be unused. The
+    /// end result is a vector that is not translated, but all other transformation properties
+    /// apply. This is often preferred for normal vectors as normals purely represent direction
+    /// rather than location because normal vectors should not be translated.
+    /// - Parameter m: The transform matrix
+    /// - Returns: This vector
+    func transformNormal(m: Matrix) -> Vector3 {
+        Vector3.transformNormal(v: self, m: m, out: self)
+        return self
+    }
+
+    /// This vector performs a transformation using the given 4x4 matrix.
+    /// - Parameter m: The transform matrix
+    /// - Returns: This vector
+    func transformToVec3(m: Matrix) -> Vector3 {
+        Vector3.transformToVec3(v: self, m: m, out: self)
+        return self
+    }
+
+    /// This vector performs a coordinate transformation using the given 4x4 matrix.
+    /// - Remark:
+    /// A coordinate transform performs the transformation with the assumption that the w component
+    /// is one. The four dimensional vector obtained from the transformation operation has each
+    /// component in the vector divided by the w component. This forces the w-component to be one and
+    /// therefore makes the vector homogeneous. The homogeneous vector is often preferred when working
+    /// with coordinates as the w component can safely be ignored.
+    /// - Parameter m: The transform matrix
+    /// - Returns: This vector
+    func transformCoordinate(m: Matrix) -> Vector3 {
+        Vector3.transformCoordinate(v: self, m: m, out: self)
+        return self
+    }
+
+    /// This vector performs a transformation using the given quaternion.
+    /// - Parameter quaternion: The transform quaternion
+    /// - Returns: This vector
+    func transformByQuat(quaternion: Quaternion) -> Vector3 {
+        Vector3.transformByQuat(v: self, quaternion: quaternion, out: self)
         return self
     }
 }
