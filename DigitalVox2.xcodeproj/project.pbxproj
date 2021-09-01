@@ -13,6 +13,9 @@
 		0497A1EC26DF150800F61DE9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0497A1EB26DF150800F61DE9 /* Preview Assets.xcassets */; };
 		0497A1F726DF150800F61DE9 /* DigitalVox2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A1F626DF150800F61DE9 /* DigitalVox2Tests.swift */; };
 		0497A20226DF150800F61DE9 /* DigitalVox2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A20126DF150800F61DE9 /* DigitalVox2UITests.swift */; };
+		04DB2A4226DF1E0500C15850 /* IClone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DB2A4126DF1E0500C15850 /* IClone.swift */; };
+		04EFDE7626DF1F96005FBB6F /* Vector2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EFDE7526DF1F96005FBB6F /* Vector2.swift */; };
+		04EFDE7826DF281E005FBB6F /* Vector2.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EFDE7726DF281D005FBB6F /* Vector2.test.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +49,9 @@
 		0497A20126DF150800F61DE9 /* DigitalVox2UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitalVox2UITests.swift; sourceTree = "<group>"; };
 		0497A20326DF150800F61DE9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0497A20F26DF151700F61DE9 /* DigitalVox2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DigitalVox2.entitlements; sourceTree = "<group>"; };
+		04DB2A4126DF1E0500C15850 /* IClone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IClone.swift; sourceTree = "<group>"; };
+		04EFDE7526DF1F96005FBB6F /* Vector2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector2.swift; sourceTree = "<group>"; };
+		04EFDE7726DF281D005FBB6F /* Vector2.test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector2.test.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +102,8 @@
 		0497A1E326DF150500F61DE9 /* DigitalVox2 */ = {
 			isa = PBXGroup;
 			children = (
+				04EFDE7426DF1F87005FBB6F /* math */,
+				04DB2A4026DF1DF100C15850 /* design */,
 				0497A20F26DF151700F61DE9 /* DigitalVox2.entitlements */,
 				0497A1E426DF150500F61DE9 /* DigitalVox2App.swift */,
 				0497A1E626DF150500F61DE9 /* ContentView.swift */,
@@ -119,6 +127,7 @@
 			children = (
 				0497A1F626DF150800F61DE9 /* DigitalVox2Tests.swift */,
 				0497A1F826DF150800F61DE9 /* Info.plist */,
+				04EFDE7726DF281D005FBB6F /* Vector2.test.swift */,
 			);
 			path = DigitalVox2Tests;
 			sourceTree = "<group>";
@@ -130,6 +139,22 @@
 				0497A20326DF150800F61DE9 /* Info.plist */,
 			);
 			path = DigitalVox2UITests;
+			sourceTree = "<group>";
+		};
+		04DB2A4026DF1DF100C15850 /* design */ = {
+			isa = PBXGroup;
+			children = (
+				04DB2A4126DF1E0500C15850 /* IClone.swift */,
+			);
+			path = design;
+			sourceTree = "<group>";
+		};
+		04EFDE7426DF1F87005FBB6F /* math */ = {
+			isa = PBXGroup;
+			children = (
+				04EFDE7526DF1F96005FBB6F /* Vector2.swift */,
+			);
+			path = math;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -261,6 +286,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04DB2A4226DF1E0500C15850 /* IClone.swift in Sources */,
+				04EFDE7626DF1F96005FBB6F /* Vector2.swift in Sources */,
 				0497A1E726DF150500F61DE9 /* ContentView.swift in Sources */,
 				0497A1E526DF150500F61DE9 /* DigitalVox2App.swift in Sources */,
 			);
@@ -270,6 +297,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04EFDE7826DF281E005FBB6F /* Vector2.test.swift in Sources */,
 				0497A1F726DF150800F61DE9 /* DigitalVox2Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
