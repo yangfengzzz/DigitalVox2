@@ -55,6 +55,9 @@
 		0452ED1A26DFB0F80015BFB1 /* InputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ED1726DFB0F80015BFB1 /* InputController.swift */; };
 		0452ED1B26DFB0F80015BFB1 /* ControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ED1826DFB0F80015BFB1 /* ControllerView.swift */; };
 		0452ED1C26DFB0F80015BFB1 /* MotionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ED1926DFB0F80015BFB1 /* MotionController.swift */; };
+		0452ED1E26DFB9F50015BFB1 /* vec2f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ED1D26DFB9F50015BFB1 /* vec2f.swift */; };
+		0452ED2026DFBCFC0015BFB1 /* vec3f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ED1F26DFBCFC0015BFB1 /* vec3f.swift */; };
+		0452ED2226DFBD080015BFB1 /* vec4f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ED2126DFBD080015BFB1 /* vec4f.swift */; };
 		0497A1E526DF150500F61DE9 /* voxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A1E426DF150500F61DE9 /* voxApp.swift */; };
 		0497A1E726DF150500F61DE9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A1E626DF150500F61DE9 /* ContentView.swift */; };
 		0497A1E926DF150800F61DE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0497A1E826DF150800F61DE9 /* Assets.xcassets */; };
@@ -160,6 +163,9 @@
 		0452ED1726DFB0F80015BFB1 /* InputController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputController.swift; sourceTree = "<group>"; };
 		0452ED1826DFB0F80015BFB1 /* ControllerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControllerView.swift; sourceTree = "<group>"; };
 		0452ED1926DFB0F80015BFB1 /* MotionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MotionController.swift; sourceTree = "<group>"; };
+		0452ED1D26DFB9F50015BFB1 /* vec2f.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = vec2f.swift; sourceTree = "<group>"; };
+		0452ED1F26DFBCFC0015BFB1 /* vec3f.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = vec3f.swift; sourceTree = "<group>"; };
+		0452ED2126DFBD080015BFB1 /* vec4f.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = vec4f.swift; sourceTree = "<group>"; };
 		0497A1E126DF150500F61DE9 /* vox.render.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vox.render.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0497A1E426DF150500F61DE9 /* voxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = voxApp.swift; sourceTree = "<group>"; };
 		0497A1E626DF150500F61DE9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -233,6 +239,9 @@
 			isa = PBXGroup;
 			children = (
 				0452EC9826DFA0CD0015BFB1 /* voxApp.swift */,
+				0452ED1D26DFB9F50015BFB1 /* vec2f.swift */,
+				0452ED1F26DFBCFC0015BFB1 /* vec3f.swift */,
+				0452ED2126DFBD080015BFB1 /* vec4f.swift */,
 				0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */,
 				0452ECF426DFAEA30015BFB1 /* RayRenderer.swift */,
 				0452ECF726DFAECE0015BFB1 /* RayRendererExtension.swift */,
@@ -685,7 +694,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0452ED1E26DFB9F50015BFB1 /* vec2f.swift in Sources */,
 				0452ECFA26DFAEE70015BFB1 /* Raytracing.metal in Sources */,
+				0452ED2026DFBCFC0015BFB1 /* vec3f.swift in Sources */,
 				0452ECFC26DFAEFC0015BFB1 /* ShowUp.metal in Sources */,
 				0452ED1A26DFB0F80015BFB1 /* InputController.swift in Sources */,
 				0452EC9B26DFA0CD0015BFB1 /* ContentView.swift in Sources */,
@@ -693,6 +704,7 @@
 				0452ECF826DFAECE0015BFB1 /* RayRendererExtension.swift in Sources */,
 				0452ECF626DFAEAB0015BFB1 /* RayRenderer.swift in Sources */,
 				0452ED1B26DFB0F80015BFB1 /* ControllerView.swift in Sources */,
+				0452ED2226DFBD080015BFB1 /* vec4f.swift in Sources */,
 				0452EC9926DFA0CD0015BFB1 /* voxApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
