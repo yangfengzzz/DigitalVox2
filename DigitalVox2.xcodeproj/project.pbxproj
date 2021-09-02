@@ -16,6 +16,7 @@
 		0413287926E07748000A4F4E /* ContainmentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413287826E07748000A4F4E /* ContainmentType.swift */; };
 		0413287B26E07BA3000A4F4E /* Ray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413287A26E07BA3000A4F4E /* Ray.swift */; };
 		0413288026E08044000A4F4E /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413287F26E08044000A4F4E /* Color.swift */; };
+		0413288226E08394000A4F4E /* MathUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413288126E08394000A4F4E /* MathUtil.swift */; };
 		0452EC9926DFA0CD0015BFB1 /* voxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9826DFA0CD0015BFB1 /* voxApp.swift */; };
 		0452EC9B26DFA0CD0015BFB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */; };
 		0452EC9D26DFA0CD0015BFB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0452EC9C26DFA0CD0015BFB1 /* Assets.xcassets */; };
@@ -130,6 +131,7 @@
 		0413287826E07748000A4F4E /* ContainmentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainmentType.swift; sourceTree = "<group>"; };
 		0413287A26E07BA3000A4F4E /* Ray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ray.swift; sourceTree = "<group>"; };
 		0413287F26E08044000A4F4E /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		0413288126E08394000A4F4E /* MathUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathUtil.swift; sourceTree = "<group>"; };
 		0452EC9626DFA0CD0015BFB1 /* vox.tracing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vox.tracing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0452EC9826DFA0CD0015BFB1 /* voxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = voxApp.swift; sourceTree = "<group>"; };
 		0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -507,6 +509,7 @@
 				0413287226E0723E000A4F4E /* CollisionUtil.swift */,
 				0413287A26E07BA3000A4F4E /* Ray.swift */,
 				0413287F26E08044000A4F4E /* Color.swift */,
+				0413288126E08394000A4F4E /* MathUtil.swift */,
 			);
 			path = math;
 			sourceTree = "<group>";
@@ -818,6 +821,7 @@
 				0452ECED26DFA7870015BFB1 /* ControllerView.swift in Sources */,
 				0413287126E06D2E000A4F4E /* BoundingFrustum.swift in Sources */,
 				04EFDE8226DF4DC3005FBB6F /* Vector4.swift in Sources */,
+				0413288226E08394000A4F4E /* MathUtil.swift in Sources */,
 				0452ECD826DFA5360015BFB1 /* Model.swift in Sources */,
 				0497A1E526DF150500F61DE9 /* voxApp.swift in Sources */,
 				0452ECD326DFA5360015BFB1 /* Node.swift in Sources */,
