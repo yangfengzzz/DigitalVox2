@@ -24,7 +24,7 @@
 		0413289026E0A16C000A4F4E /* IRefObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413288F26E0A16C000A4F4E /* IRefObject.swift */; };
 		0413289226E0A1CD000A4F4E /* RefObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413289126E0A1CD000A4F4E /* RefObject.swift */; };
 		0413289426E0A48F000A4F4E /* SubMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413289326E0A48F000A4F4E /* SubMesh.swift */; };
-		0413289726E0A4B4000A4F4E /* MeshTopology.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413289626E0A4B4000A4F4E /* MeshTopology.swift */; };
+		0413289926E0A607000A4F4E /* VertexElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413289826E0A607000A4F4E /* VertexElement.swift */; };
 		0452EC9926DFA0CD0015BFB1 /* voxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9826DFA0CD0015BFB1 /* voxApp.swift */; };
 		0452EC9B26DFA0CD0015BFB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */; };
 		0452EC9D26DFA0CD0015BFB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0452EC9C26DFA0CD0015BFB1 /* Assets.xcassets */; };
@@ -147,7 +147,7 @@
 		0413288F26E0A16C000A4F4E /* IRefObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IRefObject.swift; sourceTree = "<group>"; };
 		0413289126E0A1CD000A4F4E /* RefObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefObject.swift; sourceTree = "<group>"; };
 		0413289326E0A48F000A4F4E /* SubMesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubMesh.swift; sourceTree = "<group>"; };
-		0413289626E0A4B4000A4F4E /* MeshTopology.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeshTopology.swift; sourceTree = "<group>"; };
+		0413289826E0A607000A4F4E /* VertexElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VertexElement.swift; sourceTree = "<group>"; };
 		0452EC9626DFA0CD0015BFB1 /* vox.tracing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vox.tracing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0452EC9826DFA0CD0015BFB1 /* voxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = voxApp.swift; sourceTree = "<group>"; };
 		0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -307,6 +307,7 @@
 				0413289526E0A4AA000A4F4E /* enums */,
 				0413288926E09FB3000A4F4E /* Mesh.swift */,
 				0413289326E0A48F000A4F4E /* SubMesh.swift */,
+				0413289826E0A607000A4F4E /* VertexElement.swift */,
 			);
 			path = graphic;
 			sourceTree = "<group>";
@@ -331,7 +332,6 @@
 		0413289526E0A4AA000A4F4E /* enums */ = {
 			isa = PBXGroup;
 			children = (
-				0413289626E0A4B4000A4F4E /* MeshTopology.swift */,
 			);
 			path = enums;
 			sourceTree = "<group>";
@@ -875,7 +875,6 @@
 				0413289026E0A16C000A4F4E /* IRefObject.swift in Sources */,
 				0413286F26E06A40000A4F4E /* Plane.swift in Sources */,
 				0452ECF126DFA7C90015BFB1 /* MotionController.swift in Sources */,
-				0413289726E0A4B4000A4F4E /* MeshTopology.swift in Sources */,
 				0413287326E0723E000A4F4E /* CollisionUtil.swift in Sources */,
 				0413286B26DF86DC000A4F4E /* BoundingBox.swift in Sources */,
 				0413288D26E0A086000A4F4E /* EngineObject.swift in Sources */,
@@ -888,6 +887,7 @@
 				0413288026E08044000A4F4E /* Color.swift in Sources */,
 				0413286D26E06648000A4F4E /* BoundingSphere.swift in Sources */,
 				0452ECD426DFA5360015BFB1 /* Lighting.swift in Sources */,
+				0413289926E0A607000A4F4E /* VertexElement.swift in Sources */,
 				0413288A26E09FB3000A4F4E /* Mesh.swift in Sources */,
 				0452ECED26DFA7870015BFB1 /* ControllerView.swift in Sources */,
 				0413287126E06D2E000A4F4E /* BoundingFrustum.swift in Sources */,
