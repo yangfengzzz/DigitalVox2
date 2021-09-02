@@ -9,7 +9,7 @@ import Foundation
 
 public typealias vec3i = SIMD3<Int>
 
-let zero3i = vec3i(0, 0, 0)
+public let zero3i = vec3i(0, 0, 0)
 
 @inlinable
 func max(_ a: vec3i, _ b: Int) -> vec3i {

@@ -9,9 +9,9 @@ import Foundation
 
 public typealias vec3f = SIMD3<Float>
 
-let zero3f = vec3f(0, 0, 0)
+public let zero3f = vec3f(0, 0, 0)
 
-let one3f = vec3f(1, 1, 1)
+public let one3f = vec3f(1, 1, 1)
 
 @inlinable
 func dot(_ a: vec3f, _ b: vec3f) -> Float {

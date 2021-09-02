@@ -29,7 +29,7 @@ extension mat2f {
     }
 }
 
-let identity2x2f = mat2f(
+public let identity2x2f = mat2f(
         [1, 0],
         [0, 1]
 );

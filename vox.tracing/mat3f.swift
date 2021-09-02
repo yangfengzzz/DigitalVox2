@@ -38,7 +38,7 @@ extension mat3f {
     }
 }
 
-let identity3x3f = mat3f(
+public let identity3x3f = mat3f(
         [1, 0, 0],
         [0, 1, 0],
         [0, 0, 1]

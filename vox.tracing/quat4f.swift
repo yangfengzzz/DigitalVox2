@@ -9,7 +9,42 @@ import Foundation
 
 public typealias quat4f = simd_quatf
 
-let identity_quat4f = quat4f(ix: 0, iy: 0, iz: 0, r: 1)
+extension quat4f {
+    public var x:Float {
+        get {
+            imag.x
+        }
+        set {
+            imag.x = newValue
+        }
+    }
+    public var y:Float {
+        get {
+            imag.y
+        }
+        set {
+            imag.y = newValue
+        }
+    }
+    public var z:Float {
+        get {
+            imag.z
+        }
+        set {
+            imag.z = newValue
+        }
+    }
+    public var w:Float {
+        get {
+            real
+        }
+        set {
+            real = newValue
+        }
+    }
+}
+
+public let identity_quat4f = quat4f(ix: 0, iy: 0, iz: 0, r: 1)
 
 // Quaterion operations
 @inlinable

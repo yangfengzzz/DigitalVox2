@@ -43,7 +43,7 @@ public struct frame3f {
     }
 }
 
-let identity3x4f = frame3f([1, 0, 0], [0, 1, 0], [0, 0, 1], [0, 0, 0])
+public let identity3x4f = frame3f([1, 0, 0], [0, 1, 0], [0, 0, 1], [0, 0, 0])
 
 
 // Frame properties

@@ -39,7 +39,7 @@ public struct frame2f {
     }
 }
 
-let identity2x3f = frame2f([1, 0], [0, 1], [0, 0])
+public let identity2x3f = frame2f([1, 0], [0, 1], [0, 0])
 
 // Frame properties
 @inlinable

@@ -47,7 +47,7 @@ extension mat4f {
     }
 }
 
-let identity4x4f = mat4f(
+public let identity4x4f = mat4f(
         [1, 0, 0, 0],
         [0, 1, 0, 0],
         [0, 0, 1, 0],

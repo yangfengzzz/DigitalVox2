@@ -9,7 +9,7 @@ import Foundation
 
 public typealias vec4i = SIMD4<Int>
 
-let zero4i = vec4i(0, 0, 0, 0)
+public let zero4i = vec4i(0, 0, 0, 0)
 
 @inlinable
 func xyz(a: vec4i) -> vec3i {
