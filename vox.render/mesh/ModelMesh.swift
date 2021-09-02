@@ -288,6 +288,46 @@ extension ModelMesh {
     /// Upload Mesh Data to the graphics API.
     /// - Parameter noLongerAccessible: Whether to access data later. If true, you'll never access data anymore (free memory cache)
     func uploadData(noLongerAccessible: Bool) {
+        if (!_accessible) {
+            fatalError("Not allowed to access data while accessible is false.")
+        }
+
+        // Vertex element change.
+        if (_vertexSlotChanged) {
+            let vertexElements = _updateVertexElements()
+            _setVertexElements(elements: vertexElements)
+            _vertexChangeFlag = ValueChanged.All.rawValue
+            _vertexSlotChanged = false
+        }
+
+        // Vertex value change.
+        let elementCount = _elementCount
+        let vertexFloatCount = elementCount * _vertexCount
+        var vertices = [Float](repeating: 0, count: vertexFloatCount)
+        _verticesFloat32 = vertices
+
+        _vertexChangeFlag = ValueChanged.All.rawValue
+        _updateVertices(vertices: &vertices)
+
+        let vertexBuffer = Engine.device.makeBuffer(bytes: &vertices, length: vertices.count * MemoryLayout<SIMD2<Float>>.stride * 4,
+                                                    options: .storageModeShared)
+        engine.renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
+        switch _indices {
+        case .u16(let value):
+            let indexBuffer = Engine.device.makeBuffer(bytes: value, length: value.count * MemoryLayout<UInt16>.stride,
+                                                       options: .storageModeShared)
+            engine.renderEncoder.drawIndexedPrimitives(type: .triangle, indexCount: value.count, indexType: .uint16,
+                    indexBuffer: indexBuffer!, indexBufferOffset: 0)
+        case .u32(let value):
+            let indexBuffer = Engine.device.makeBuffer(bytes: value, length: value.count * MemoryLayout<UInt32>.stride,
+                                                       options: .storageModeShared)
+            engine.renderEncoder.drawIndexedPrimitives(type: .triangle, indexCount: value.count, indexType: .uint32,
+                    indexBuffer: indexBuffer!, indexBufferOffset: 0)
+
+        default:
+            fatalError()
+        }
+
         fatalError("TODO")
     }
 

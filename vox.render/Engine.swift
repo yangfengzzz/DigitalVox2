@@ -23,6 +23,8 @@ final class Engine: UIView {
     let depthStencilState: MTLDepthStencilState
     let lighting = Lighting()
 
+    var renderEncoder: MTLRenderCommandEncoder!
+    
     lazy var camera: Camera = {
         let camera = ArcballCamera()
         camera.distance = 3
@@ -92,15 +94,20 @@ extension Engine: MTKViewDelegate {
         camera.aspect = Float(view.bounds.width) / Float(view.bounds.height)
     }
 
+    func createPrimitive() {
+        _ = PrimitiveMesh.createCuboid(engine: self, width: 1, height: 1, depth: 1, noLongerAccessible: false);
+    }
+    
     func draw(in view: MTKView) {
         guard
                 let descriptor = view.currentRenderPassDescriptor,
                 let commandBuffer = Engine.commandQueue.makeCommandBuffer(),
-                let renderEncoder =
-                commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {
+                let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {
             return
         }
 
+        self.renderEncoder = renderEncoder
+        
         renderEncoder.setDepthStencilState(depthStencilState)
 
         uniforms.projectionMatrix = camera.projectionMatrix

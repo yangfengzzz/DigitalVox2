@@ -12,8 +12,14 @@ class Mesh: RefObject {
     var name: String?
     /// The bounding volume of the mesh.
     var bounds: BoundingBox = BoundingBox()
-    
+
+    var _vertexElementMap: [String: VertexElement] = [:]
+
+    internal var _instanceCount: Int = 0
+    internal var _vertexElements: [VertexElement] = []
+
     private var _subMeshes: [SubMesh] = []
+    private var _updateFlagManager: UpdateFlagManager = UpdateFlagManager()
 
     /// Create mesh.
     /// - Parameters:
@@ -42,5 +48,24 @@ class Mesh: RefObject {
         let startOrSubMesh = SubMesh(start: start, count: count, topology: topology)
         _subMeshes.append(startOrSubMesh)
         return startOrSubMesh
+    }
+
+    func _setVertexElements(elements: [VertexElement]) {
+        _clearVertexElements()
+        for i in 0..<elements.count {
+            _addVertexElement(element: elements[i])
+        }
+    }
+
+    private func _clearVertexElements() {
+        _vertexElements = []
+        _vertexElementMap = [:]
+    }
+
+    private func _addVertexElement(element: VertexElement) {
+        let semantic = element.semantic
+        _vertexElementMap[semantic] = element
+        _vertexElements.append(element)
+        _updateFlagManager.distribute()
     }
 }
