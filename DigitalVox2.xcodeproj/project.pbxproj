@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		0413286B26DF86DC000A4F4E /* BoundingBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413286A26DF86DC000A4F4E /* BoundingBox.swift */; };
 		0413286D26E06648000A4F4E /* BoundingSphere.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413286C26E06648000A4F4E /* BoundingSphere.swift */; };
+		0413286F26E06A40000A4F4E /* Plane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413286E26E06A40000A4F4E /* Plane.swift */; };
+		0413287126E06D2E000A4F4E /* BoundingFrustum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413287026E06D2E000A4F4E /* BoundingFrustum.swift */; };
 		0452EC9926DFA0CD0015BFB1 /* voxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9826DFA0CD0015BFB1 /* voxApp.swift */; };
 		0452EC9B26DFA0CD0015BFB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */; };
 		0452EC9D26DFA0CD0015BFB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0452EC9C26DFA0CD0015BFB1 /* Assets.xcassets */; };
@@ -116,6 +118,8 @@
 /* Begin PBXFileReference section */
 		0413286A26DF86DC000A4F4E /* BoundingBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingBox.swift; sourceTree = "<group>"; };
 		0413286C26E06648000A4F4E /* BoundingSphere.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingSphere.swift; sourceTree = "<group>"; };
+		0413286E26E06A40000A4F4E /* Plane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plane.swift; sourceTree = "<group>"; };
+		0413287026E06D2E000A4F4E /* BoundingFrustum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingFrustum.swift; sourceTree = "<group>"; };
 		0452EC9626DFA0CD0015BFB1 /* vox.tracing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vox.tracing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0452EC9826DFA0CD0015BFB1 /* voxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = voxApp.swift; sourceTree = "<group>"; };
 		0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -478,6 +482,8 @@
 				04EFDE7F26DF4C85005FBB6F /* Quaternion.swift */,
 				0413286A26DF86DC000A4F4E /* BoundingBox.swift */,
 				0413286C26E06648000A4F4E /* BoundingSphere.swift */,
+				0413286E26E06A40000A4F4E /* Plane.swift */,
+				0413287026E06D2E000A4F4E /* BoundingFrustum.swift */,
 			);
 			path = math;
 			sourceTree = "<group>";
@@ -773,6 +779,7 @@
 				04EFDE7E26DF49FD005FBB6F /* Matrix3x3.swift in Sources */,
 				04EFDE7C26DF3495005FBB6F /* Matrix.swift in Sources */,
 				0452ECDE26DFA5C50015BFB1 /* MathLibrary.swift in Sources */,
+				0413286F26E06A40000A4F4E /* Plane.swift in Sources */,
 				0452ECF126DFA7C90015BFB1 /* MotionController.swift in Sources */,
 				0413286B26DF86DC000A4F4E /* BoundingBox.swift in Sources */,
 				0452ECDC26DFA5360015BFB1 /* Submesh.swift in Sources */,
@@ -783,6 +790,7 @@
 				0413286D26E06648000A4F4E /* BoundingSphere.swift in Sources */,
 				0452ECD426DFA5360015BFB1 /* Lighting.swift in Sources */,
 				0452ECED26DFA7870015BFB1 /* ControllerView.swift in Sources */,
+				0413287126E06D2E000A4F4E /* BoundingFrustum.swift in Sources */,
 				04EFDE8226DF4DC3005FBB6F /* Vector4.swift in Sources */,
 				0452ECD826DFA5360015BFB1 /* Model.swift in Sources */,
 				0497A1E526DF150500F61DE9 /* voxApp.swift in Sources */,
