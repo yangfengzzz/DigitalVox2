@@ -31,6 +31,7 @@
 
 
 import ModelIO
+import Metal
 
 extension MDLVertexDescriptor {
     static var defaultVertexDescriptor: MDLVertexDescriptor = {
@@ -43,7 +44,7 @@ extension MDLVertexDescriptor {
                 format: .float3,
                 offset: 0,
                 bufferIndex: Int(BufferIndexVertices.rawValue))
-        offset += MemoryLayout<float3>.stride
+        offset += MemoryLayout<Float>.stride * 3
 
         // normal attribute
         vertexDescriptor.attributes[Int(Normal.rawValue)] =
@@ -51,7 +52,7 @@ extension MDLVertexDescriptor {
                         format: .float3,
                         offset: offset,
                         bufferIndex: Int(BufferIndexVertices.rawValue))
-        offset += MemoryLayout<float3>.stride
+        offset += MemoryLayout<Float>.stride * 3
 
         // uv attribute
         vertexDescriptor.attributes[Int(UV.rawValue)] =
@@ -59,7 +60,7 @@ extension MDLVertexDescriptor {
                         format: .float2,
                         offset: offset,
                         bufferIndex: Int(BufferIndexVertices.rawValue))
-        offset += MemoryLayout<float2>.stride
+        offset += MemoryLayout<Float>.stride * 2
 
         vertexDescriptor.layouts[0] = MDLVertexBufferLayout(stride: offset)
         return vertexDescriptor

@@ -308,10 +308,9 @@ extension ModelMesh {
 
         _vertexChangeFlag = ValueChanged.All.rawValue
         _updateVertices(vertices: &vertices)
-
-        let vertexBuffer = Engine.device.makeBuffer(bytes: &vertices, length: vertices.count * MemoryLayout<SIMD2<Float>>.stride * 4,
-                                                    options: .storageModeShared)
-        engine.renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
+        
+        let vertexBuffer = Engine.device.makeBuffer(bytes: &vertices, length: vertexFloatCount * MemoryLayout<Float>.stride)
+        engine.renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: Int(BufferIndexVertices.rawValue))
         switch _indices {
         case .u16(let value):
             let indexBuffer = Engine.device.makeBuffer(bytes: value, length: value.count * MemoryLayout<UInt16>.stride,
@@ -327,8 +326,6 @@ extension ModelMesh {
         default:
             fatalError()
         }
-
-        fatalError("TODO")
     }
 
     private func _updateVertexElements() -> [VertexElement] {
