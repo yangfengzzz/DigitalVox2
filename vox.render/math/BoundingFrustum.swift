@@ -167,18 +167,18 @@ extension BoundingFrustum {
         bottom.distance = -m44 - m42
         _ = bottom.normalize()
     }
-    
+
     /// Get whether or not a specified bounding box intersects with this frustum (Contains or Intersects).
     /// - Parameter box: The box for testing
     /// - Returns: True if bounding box intersects with this frustum, false otherwise
-    public func intersectsBox(box: BoundingBox)->Bool {
-        fatalError("TODO")
+    public func intersectsBox(box: BoundingBox) -> Bool {
+        return CollisionUtil.intersectsFrustumAndBox(frustum: self, box: box)
     }
-    
+
     /// Get whether or not a specified bounding sphere intersects with this frustum (Contains or Intersects).
     /// - Parameter sphere: The sphere for testing
     /// - Returns: True if bounding sphere intersects with this frustum, false otherwise
-    public func intersectsSphere(sphere: BoundingSphere)->Bool {
-        fatalError("TODO")
+    public func intersectsSphere(sphere: BoundingSphere) -> Bool {
+        return CollisionUtil.frustumContainsSphere(frustum: self, sphere: sphere) != ContainmentType.Disjoint
     }
 }

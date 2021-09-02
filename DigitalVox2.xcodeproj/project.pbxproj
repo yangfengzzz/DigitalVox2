@@ -11,6 +11,10 @@
 		0413286D26E06648000A4F4E /* BoundingSphere.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413286C26E06648000A4F4E /* BoundingSphere.swift */; };
 		0413286F26E06A40000A4F4E /* Plane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413286E26E06A40000A4F4E /* Plane.swift */; };
 		0413287126E06D2E000A4F4E /* BoundingFrustum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413287026E06D2E000A4F4E /* BoundingFrustum.swift */; };
+		0413287326E0723E000A4F4E /* CollisionUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413287226E0723E000A4F4E /* CollisionUtil.swift */; };
+		0413287526E072A9000A4F4E /* PlaneIntersectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413287426E072A9000A4F4E /* PlaneIntersectionType.swift */; };
+		0413287926E07748000A4F4E /* ContainmentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413287826E07748000A4F4E /* ContainmentType.swift */; };
+		0413287B26E07BA3000A4F4E /* Ray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413287A26E07BA3000A4F4E /* Ray.swift */; };
 		0452EC9926DFA0CD0015BFB1 /* voxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9826DFA0CD0015BFB1 /* voxApp.swift */; };
 		0452EC9B26DFA0CD0015BFB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */; };
 		0452EC9D26DFA0CD0015BFB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0452EC9C26DFA0CD0015BFB1 /* Assets.xcassets */; };
@@ -120,6 +124,10 @@
 		0413286C26E06648000A4F4E /* BoundingSphere.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingSphere.swift; sourceTree = "<group>"; };
 		0413286E26E06A40000A4F4E /* Plane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plane.swift; sourceTree = "<group>"; };
 		0413287026E06D2E000A4F4E /* BoundingFrustum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingFrustum.swift; sourceTree = "<group>"; };
+		0413287226E0723E000A4F4E /* CollisionUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollisionUtil.swift; sourceTree = "<group>"; };
+		0413287426E072A9000A4F4E /* PlaneIntersectionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaneIntersectionType.swift; sourceTree = "<group>"; };
+		0413287826E07748000A4F4E /* ContainmentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainmentType.swift; sourceTree = "<group>"; };
+		0413287A26E07BA3000A4F4E /* Ray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ray.swift; sourceTree = "<group>"; };
 		0452EC9626DFA0CD0015BFB1 /* vox.tracing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vox.tracing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0452EC9826DFA0CD0015BFB1 /* voxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = voxApp.swift; sourceTree = "<group>"; };
 		0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -255,6 +263,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0413287C26E07F07000A4F4E /* enums */ = {
+			isa = PBXGroup;
+			children = (
+				0413287426E072A9000A4F4E /* PlaneIntersectionType.swift */,
+				0413287826E07748000A4F4E /* ContainmentType.swift */,
+			);
+			path = enums;
+			sourceTree = "<group>";
+		};
 		0452EC9726DFA0CD0015BFB1 /* vox.tracing */ = {
 			isa = PBXGroup;
 			children = (
@@ -474,6 +491,7 @@
 		04EFDE7426DF1F87005FBB6F /* math */ = {
 			isa = PBXGroup;
 			children = (
+				0413287C26E07F07000A4F4E /* enums */,
 				04EFDE7526DF1F96005FBB6F /* Vector2.swift */,
 				04EFDE7926DF3072005FBB6F /* Vector3.swift */,
 				04EFDE8126DF4DC3005FBB6F /* Vector4.swift */,
@@ -484,6 +502,8 @@
 				0413286C26E06648000A4F4E /* BoundingSphere.swift */,
 				0413286E26E06A40000A4F4E /* Plane.swift */,
 				0413287026E06D2E000A4F4E /* BoundingFrustum.swift */,
+				0413287226E0723E000A4F4E /* CollisionUtil.swift */,
+				0413287A26E07BA3000A4F4E /* Ray.swift */,
 			);
 			path = math;
 			sourceTree = "<group>";
@@ -781,8 +801,10 @@
 				0452ECDE26DFA5C50015BFB1 /* MathLibrary.swift in Sources */,
 				0413286F26E06A40000A4F4E /* Plane.swift in Sources */,
 				0452ECF126DFA7C90015BFB1 /* MotionController.swift in Sources */,
+				0413287326E0723E000A4F4E /* CollisionUtil.swift in Sources */,
 				0413286B26DF86DC000A4F4E /* BoundingBox.swift in Sources */,
 				0452ECDC26DFA5360015BFB1 /* Submesh.swift in Sources */,
+				0413287926E07748000A4F4E /* ContainmentType.swift in Sources */,
 				0452ECDB26DFA5360015BFB1 /* Mesh.swift in Sources */,
 				0452ECC326DFA4590015BFB1 /* EngineView.swift in Sources */,
 				0497A1E726DF150500F61DE9 /* ContentView.swift in Sources */,
@@ -796,6 +818,8 @@
 				0497A1E526DF150500F61DE9 /* voxApp.swift in Sources */,
 				0452ECD326DFA5360015BFB1 /* Node.swift in Sources */,
 				0452ECD926DFA5360015BFB1 /* Texturable.swift in Sources */,
+				0413287B26E07BA3000A4F4E /* Ray.swift in Sources */,
+				0413287526E072A9000A4F4E /* PlaneIntersectionType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
