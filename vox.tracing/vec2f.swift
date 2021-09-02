@@ -50,7 +50,7 @@ func distance_squared(_ a: vec2f, _ b: vec2f) -> Float {
 
 @inlinable
 func angle(_ a: vec2f, _ b: vec2f) -> Float {
-    return acos(simd_clamp(dot(normalize(a), normalize(b)), -1.0, 1.0));
+    acos(simd_clamp(dot(normalize(a), normalize(b)), -1.0, 1.0))
 }
 
 // Max element and clamp.
@@ -86,7 +86,7 @@ func lerp(_ a: vec2f, _ b: vec2f, _ u: Float) -> vec2f {
 
 @inlinable
 func lerp(_ a: vec2f, _ b: vec2f, _ u: vec2f) -> vec2f {
-    a * (1 - u) + b * u;
+    a * (1 - u) + b * u
 }
 
 @inlinable
@@ -147,7 +147,7 @@ func log2(_ a: vec2f) -> vec2f {
 
 @inlinable
 func isfinite(_ a: vec2f) -> Bool {
-    a.x.isInfinite && a.y.isInfinite
+    a.x.isFinite && a.y.isFinite
 }
 
 @inlinable

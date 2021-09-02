@@ -25,169 +25,171 @@ func cross(_ a: vec3f, _ b: vec3f) -> Float {
 
 @inlinable
 func length(_ a: vec3f) -> Float {
-    fatalError("TODO")
+    simd_length(a)
 }
 
 @inlinable
 func length_squared(_ a: vec3f) -> Float {
-    fatalError("TODO")
+    simd_length_squared(a)
 }
 
 @inlinable
 func normalize(_ a: vec3f) -> vec3f {
-    fatalError("TODO")
+    simd_normalize(a)
 }
 
 @inlinable
 func distance(_ a: vec3f, _ b: vec3f) -> Float {
-    fatalError("TODO")
+    simd_distance(a, b)
 }
 
 @inlinable
 func distance_squared(_ a: vec3f, _ b: vec3f) -> Float {
-    fatalError("TODO")
+    simd_distance_squared(a, b)
 }
 
 @inlinable
 func angle(_ a: vec3f, _ b: vec3f) -> Float {
-    fatalError("TODO")
+    acos(simd_clamp(dot(normalize(a), normalize(b)), -1.0, 1.0))
 }
 
 // Orthogonal vectors.
 @inlinable
 func orthogonal(_ v: vec3f) -> vec3f {
-    fatalError("TODO")
+    // http://lolengine.net/blog/2013/09/21/picking-orthogonal-vector-combing-coconuts)
+    abs(v.x) > abs(v.z) ? vec3f(-v.y, v.x, 0) : vec3f(0, -v.z, v.y)
 }
 
 @inlinable
 func orthonormalize(_ a: vec3f, _ b: vec3f) -> vec3f {
-    fatalError("TODO")
+    normalize(a - b * dot(a, b))
 }
 
 // Reflected and refracted vector.
 @inlinable
 func reflect(_ w: vec3f, _ n: vec3f) -> vec3f {
-    fatalError("TODO")
+    simd_reflect(w, n)
 }
 
 @inlinable
 func refract(_ w: vec3f, _ n: vec3f, _ inv_eta: Float) -> vec3f {
-    fatalError("TODO")
+    //todo maybe inv bug
+    simd_refract(w, n, inv_eta)
 }
 
 // Max element and clamp.
 @inlinable
 func max(_ a: vec3f, _ b: Float) -> vec3f {
-    fatalError("TODO")
+    simd_max(a, [b, b, b])
 }
 
 @inlinable
 func min(_ a: vec3f, _ b: Float) -> vec3f {
-    fatalError("TODO")
+    simd_min(a, [b, b, b])
 }
 
 @inlinable
 func max(_ a: vec3f, _ b: vec3f) -> vec3f {
-    fatalError("TODO")
+    simd_max(a, b)
 }
 
 @inlinable
 func min(_ a: vec3f, _ b: vec3f) -> vec3f {
-    fatalError("TODO")
+    simd_min(a, b)
 }
 
 @inlinable
 func clamp(_ x: vec3f, _ min: Float, _ max: Float) -> vec3f {
-    fatalError("TODO")
+    [simd_clamp(x.x, min, max), simd_clamp(x.y, min, max), simd_clamp(x.z, min, max)]
 }
 
 @inlinable
 func lerp(_ a: vec3f, _ b: vec3f, _ u: Float) -> vec3f {
-    fatalError("TODO")
+    a * (1 - u) + b * u
 }
 
 @inlinable
 func lerp(_ a: vec3f, _ b: vec3f, _ u: vec3f) -> vec3f {
-    fatalError("TODO")
+    a * (1 - u) + b * u
 }
 
 @inlinable
 func max(_ a: vec3f) -> Float {
-    fatalError("TODO")
+    a.max()
 }
 
 @inlinable
 func min(_ a: vec3f) -> Float {
-    fatalError("TODO")
+    a.min()
 }
 
 @inlinable
 func sum(_ a: vec3f) -> Float {
-    fatalError("TODO")
+    a.sum()
 }
 
 @inlinable
 func mean(_ a: vec3f) -> Float {
-    fatalError("TODO")
+    sum(a) / 3
 }
 
 // Functions applied to vector elements
 @inlinable
 func abs(_ a: vec3f) -> vec3f {
-    fatalError("TODO")
+    simd_abs(a)
 }
 
 @inlinable
 func sqr(_ a: vec3f) -> vec3f {
-    fatalError("TODO")
+    a * a
 }
 
 @inlinable
 func sqrt(_ a: vec3f) -> vec3f {
-    fatalError("TODO")
+    a.squareRoot()
 }
 
 @inlinable
 func exp(_ a: vec3f) -> vec3f {
-    fatalError("TODO")
+    [exp(a.x), exp(a.y), exp(a.z)]
 }
 
 @inlinable
 func log(_ a: vec3f) -> vec3f {
-    fatalError("TODO")
+    [log(a.x), log(a.y), log(a.z)]
 }
 
 @inlinable
 func exp2(_ a: vec3f) -> vec3f {
-    fatalError("TODO")
+    [exp2(a.x), exp2(a.y), exp2(a.z)]
 }
 
 @inlinable
 func log2(_ a: vec3f) -> vec3f {
-    fatalError("TODO")
+    [log2(a.x), log2(a.y), log2(a.z)]
 }
 
 @inlinable
 func pow(_ a: vec3f, _ b: Float) -> vec3f {
-    fatalError("TODO")
+    [pow(a.x, b), pow(a.y, b), pow(a.z, b)]
 }
 
 @inlinable
 func pow(_ a: vec3f, _ b: vec3f) -> vec3f {
-    fatalError("TODO")
+    [pow(a.x, b.x), pow(a.y, b.y), pow(a.z, b.z)]
 }
 
 @inlinable
 func gain(_ a: vec3f, _ b: Float) -> vec3f {
-    fatalError("TODO")
+    [gain(a.x, b), gain(a.y, b), gain(a.z, b)]
 }
 
 @inlinable
 func isfinite(_ a: vec3f) -> Bool {
-    fatalError("TODO")
+    a.x.isFinite && a.y.isFinite && a.z.isFinite
 }
 
 @inlinable
 func swap(_ a: inout vec3f, _ b: inout vec3f) {
-    fatalError("TODO")
+    Swift.swap(&a, &b)
 }
