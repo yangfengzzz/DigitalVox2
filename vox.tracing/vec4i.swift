@@ -13,56 +13,56 @@ let zero4i = vec4i(0, 0, 0, 0)
 
 @inlinable
 func xyz(a: vec4i) -> vec3i {
-    fatalError("TODO")
+    [a.x, a.y, a.z]
 }
 
 @inlinable
 func max(_ a: vec4i, _ b: Int) -> vec4i {
-    fatalError("TODO")
+    simd_max(a, [b, b, b, b])
 }
 
 @inlinable
 func min(_ a: vec4i, _ b: Int) -> vec4i {
-    fatalError("TODO")
+    simd_min(a, [b, b, b, b])
 }
 
 @inlinable
 func max(_ a: vec4i, _ b: vec4i) -> vec4i {
-    fatalError("TODO")
+    simd_max(a, b)
 }
 
 @inlinable
 func min(_ a: vec4i, _ b: vec4i) -> vec4i {
-    fatalError("TODO")
+    simd_min(a, b)
 }
 
 @inlinable
 func clamp(_ a: vec4i, _ min: Int, _ max: Int) -> vec4i {
-    fatalError("TODO")
+    simd_clamp(a, [min, min], [max, max])
 }
 
 @inlinable
 func max(_ a: vec4i) -> Int {
-    fatalError("TODO")
+    a.max()
 }
 
 @inlinable
 func min(_ a: vec4i) -> Int {
-    fatalError("TODO")
+    a.min()
 }
 
 @inlinable
 func sum(_ a: vec4i) -> Int {
-    fatalError("TODO")
+    a.wrappedSum()
 }
 
 // Functions applied to vector elements
 @inlinable
 func abs(_ a: vec4i) -> vec4i {
-    fatalError("TODO")
+    simd_abs(a)
 }
 
 @inlinable
 func swap(_ a: inout vec4i, _ b: inout vec4i) {
-    fatalError("TODO")
+    Swift.swap(&a, &b)
 }
