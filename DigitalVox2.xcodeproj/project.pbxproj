@@ -96,6 +96,10 @@
 		0497A20226DF150800F61DE9 /* DigitalVox2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A20126DF150800F61DE9 /* DigitalVox2UITests.swift */; };
 		04DB2A4226DF1E0500C15850 /* IClone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DB2A4126DF1E0500C15850 /* IClone.swift */; };
 		04EA0D6A26E0F9AD00CA7833 /* math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6926E0F9AD00CA7833 /* math.swift */; };
+		04EA0D6C26E1204200CA7833 /* bbox2f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6B26E1204200CA7833 /* bbox2f.swift */; };
+		04EA0D6E26E1204F00CA7833 /* bbox3f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6D26E1204F00CA7833 /* bbox3f.swift */; };
+		04EA0D7026E1205C00CA7833 /* ray2f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6F26E1205C00CA7833 /* ray2f.swift */; };
+		04EA0D7226E1206400CA7833 /* ray3f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D7126E1206400CA7833 /* ray3f.swift */; };
 		04EFDE7626DF1F96005FBB6F /* Vector2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EFDE7526DF1F96005FBB6F /* Vector2.swift */; };
 		04EFDE7826DF281E005FBB6F /* Vector2.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EFDE7726DF281D005FBB6F /* Vector2.test.swift */; };
 		04EFDE7A26DF3072005FBB6F /* Vector3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EFDE7926DF3072005FBB6F /* Vector3.swift */; };
@@ -242,6 +246,10 @@
 		0497A20F26DF151700F61DE9 /* DigitalVox2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DigitalVox2.entitlements; sourceTree = "<group>"; };
 		04DB2A4126DF1E0500C15850 /* IClone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IClone.swift; sourceTree = "<group>"; };
 		04EA0D6926E0F9AD00CA7833 /* math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = math.swift; sourceTree = "<group>"; };
+		04EA0D6B26E1204200CA7833 /* bbox2f.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bbox2f.swift; sourceTree = "<group>"; };
+		04EA0D6D26E1204F00CA7833 /* bbox3f.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bbox3f.swift; sourceTree = "<group>"; };
+		04EA0D6F26E1205C00CA7833 /* ray2f.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ray2f.swift; sourceTree = "<group>"; };
+		04EA0D7126E1206400CA7833 /* ray3f.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ray3f.swift; sourceTree = "<group>"; };
 		04EFDE7526DF1F96005FBB6F /* Vector2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector2.swift; sourceTree = "<group>"; };
 		04EFDE7726DF281D005FBB6F /* Vector2.test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector2.test.swift; sourceTree = "<group>"; };
 		04EFDE7926DF3072005FBB6F /* Vector3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector3.swift; sourceTree = "<group>"; };
@@ -382,6 +390,10 @@
 				0452ECC126DFA0DE0015BFB1 /* vox.tracing.entitlements */,
 				0452ECA126DFA0CD0015BFB1 /* Info.plist */,
 				0452EC9E26DFA0CD0015BFB1 /* Preview Content */,
+				04EA0D6B26E1204200CA7833 /* bbox2f.swift */,
+				04EA0D6D26E1204F00CA7833 /* bbox3f.swift */,
+				04EA0D6F26E1205C00CA7833 /* ray2f.swift */,
+				04EA0D7126E1206400CA7833 /* ray3f.swift */,
 			);
 			path = vox.tracing;
 			sourceTree = "<group>";
@@ -837,15 +849,18 @@
 			files = (
 				0452ED1E26DFB9F50015BFB1 /* vec2f.swift in Sources */,
 				0452ECFA26DFAEE70015BFB1 /* Raytracing.metal in Sources */,
+				04EA0D6E26E1204F00CA7833 /* bbox3f.swift in Sources */,
 				0452ED2626E042160015BFB1 /* vec3i.swift in Sources */,
 				0452ED3C26E0F50A0015BFB1 /* frame2f.swift in Sources */,
 				0452ED2E26E044C20015BFB1 /* mat3f.swift in Sources */,
 				0452ED2026DFBCFC0015BFB1 /* vec3f.swift in Sources */,
 				0452ECFC26DFAEFC0015BFB1 /* ShowUp.metal in Sources */,
+				04EA0D7026E1205C00CA7833 /* ray2f.swift in Sources */,
 				0452ED1A26DFB0F80015BFB1 /* InputController.swift in Sources */,
 				0452ED3B26E0F50A0015BFB1 /* frame3f.swift in Sources */,
 				0452EC9B26DFA0CD0015BFB1 /* ContentView.swift in Sources */,
 				0452ED1C26DFB0F80015BFB1 /* MotionController.swift in Sources */,
+				04EA0D7226E1206400CA7833 /* ray3f.swift in Sources */,
 				0452ECF826DFAECE0015BFB1 /* RayRendererExtension.swift in Sources */,
 				0452ED2C26E044B90015BFB1 /* mat2f.swift in Sources */,
 				0452ECF626DFAEAB0015BFB1 /* RayRenderer.swift in Sources */,
@@ -853,6 +868,7 @@
 				0452ED2A26E0422D0015BFB1 /* vec4b.swift in Sources */,
 				0452ED1B26DFB0F80015BFB1 /* ControllerView.swift in Sources */,
 				0452ED2426E0420B0015BFB1 /* vec2i.swift in Sources */,
+				04EA0D6C26E1204200CA7833 /* bbox2f.swift in Sources */,
 				0452ED2226DFBD080015BFB1 /* vec4f.swift in Sources */,
 				0452ED2826E042200015BFB1 /* vec4i.swift in Sources */,
 				0452EC9926DFA0CD0015BFB1 /* voxApp.swift in Sources */,
