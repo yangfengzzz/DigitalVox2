@@ -76,7 +76,7 @@ func min(_ a: vec2f, _ b: vec2f) -> vec2f {
 
 @inlinable
 func clamp(_ x: vec2f, _ min: Float, _ max: Float) -> vec2f {
-    [simd_clamp(x.x, min, max), simd_clamp(x.y, min, max)]
+    simd_clamp(x, [min, min], [max, max])
 }
 
 @inlinable

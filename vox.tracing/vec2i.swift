@@ -13,51 +13,51 @@ let zero2i = vec2i(0, 0)
 
 @inlinable
 func max(_ a: vec2i, _ b: Int) -> vec2i {
-    fatalError("TODO")
+    simd_max(a, [b, b])
 }
 
 @inlinable
 func min(_ a: vec2i, _ b: Int) -> vec2i {
-    fatalError("TODO")
+    simd_min(a, [b, b])
 }
 
 @inlinable
 func max(_ a: vec2i, _ b: vec2i) -> vec2i {
-    fatalError("TODO")
+    simd_max(a, b)
 }
 
 @inlinable
 func min(_ a: vec2i, _ b: vec2i) -> vec2i {
-    fatalError("TODO")
+    simd_max(a, b)
 }
 
 @inlinable
 func clamp(_ a: vec2i, _ min: Int, _ max: Int) -> vec2i {
-    fatalError("TODO")
+    simd_clamp(a, [min, min], [max, max])
 }
 
 @inlinable
 func max(_ a: vec2i) -> Int {
-    fatalError("TODO")
+    a.max()
 }
 
 @inlinable
 func min(_ a: vec2i) -> Int {
-    fatalError("TODO")
+    a.min()
 }
 
 @inlinable
 func sum(_ a: vec2i) -> Int {
-    fatalError("TODO")
+    a.wrappedSum()
 }
 
 // Functions applied to vector elements
 @inlinable
 func abs(_ a: vec2i) -> vec2i {
-    fatalError("TODO")
+    simd_abs(a)
 }
 
 @inlinable
 func swap(_ a: inout vec2i, _ b: inout vec2i) {
-    fatalError("TODO")
+    Swift.swap(&a, &b)
 }

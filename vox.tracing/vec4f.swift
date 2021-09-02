@@ -83,8 +83,7 @@ func min(_ a: vec4f, _ b: vec4f) -> vec4f {
 
 @inlinable
 func clamp(_ x: vec4f, _ min: Float, _ max: Float) -> vec4f {
-    [simd_clamp(x.x, min, max), simd_clamp(x.y, min, max),
-     simd_clamp(x.z, min, max), simd_clamp(x.w, min, max)]
+    simd_clamp(x, [min, min, min, min], [max, max, max, max])
 }
 
 @inlinable
