@@ -95,6 +95,7 @@
 		0497A1F726DF150800F61DE9 /* DigitalVox2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A1F626DF150800F61DE9 /* DigitalVox2Tests.swift */; };
 		0497A20226DF150800F61DE9 /* DigitalVox2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A20126DF150800F61DE9 /* DigitalVox2UITests.swift */; };
 		04DB2A4226DF1E0500C15850 /* IClone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DB2A4126DF1E0500C15850 /* IClone.swift */; };
+		04EA0D6A26E0F9AD00CA7833 /* math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6926E0F9AD00CA7833 /* math.swift */; };
 		04EFDE7626DF1F96005FBB6F /* Vector2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EFDE7526DF1F96005FBB6F /* Vector2.swift */; };
 		04EFDE7826DF281E005FBB6F /* Vector2.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EFDE7726DF281D005FBB6F /* Vector2.test.swift */; };
 		04EFDE7A26DF3072005FBB6F /* Vector3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EFDE7926DF3072005FBB6F /* Vector3.swift */; };
@@ -240,6 +241,7 @@
 		0497A20326DF150800F61DE9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0497A20F26DF151700F61DE9 /* DigitalVox2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DigitalVox2.entitlements; sourceTree = "<group>"; };
 		04DB2A4126DF1E0500C15850 /* IClone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IClone.swift; sourceTree = "<group>"; };
+		04EA0D6926E0F9AD00CA7833 /* math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = math.swift; sourceTree = "<group>"; };
 		04EFDE7526DF1F96005FBB6F /* Vector2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector2.swift; sourceTree = "<group>"; };
 		04EFDE7726DF281D005FBB6F /* Vector2.test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector2.test.swift; sourceTree = "<group>"; };
 		04EFDE7926DF3072005FBB6F /* Vector3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector3.swift; sourceTree = "<group>"; };
@@ -359,9 +361,13 @@
 				0452ED2526E042160015BFB1 /* vec3i.swift */,
 				0452ED2726E042200015BFB1 /* vec4i.swift */,
 				0452ED2926E0422D0015BFB1 /* vec4b.swift */,
+				0452ED2B26E044B90015BFB1 /* mat2f.swift */,
+				0452ED2D26E044C20015BFB1 /* mat3f.swift */,
+				0452ED2F26E044CA0015BFB1 /* mat4f.swift */,
 				0452ED3926E0F50A0015BFB1 /* frame2f.swift */,
 				0452ED3826E0F50A0015BFB1 /* frame3f.swift */,
 				0452ED3726E0F50A0015BFB1 /* quat4f.swift */,
+				04EA0D6926E0F9AD00CA7833 /* math.swift */,
 				0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */,
 				0452ECF426DFAEA30015BFB1 /* RayRenderer.swift */,
 				0452ECF726DFAECE0015BFB1 /* RayRendererExtension.swift */,
@@ -376,9 +382,6 @@
 				0452ECC126DFA0DE0015BFB1 /* vox.tracing.entitlements */,
 				0452ECA126DFA0CD0015BFB1 /* Info.plist */,
 				0452EC9E26DFA0CD0015BFB1 /* Preview Content */,
-				0452ED2B26E044B90015BFB1 /* mat2f.swift */,
-				0452ED2D26E044C20015BFB1 /* mat3f.swift */,
-				0452ED2F26E044CA0015BFB1 /* mat4f.swift */,
 			);
 			path = vox.tracing;
 			sourceTree = "<group>";
@@ -854,6 +857,7 @@
 				0452ED2826E042200015BFB1 /* vec4i.swift in Sources */,
 				0452EC9926DFA0CD0015BFB1 /* voxApp.swift in Sources */,
 				0452ED3026E044CA0015BFB1 /* mat4f.swift in Sources */,
+				04EA0D6A26E0F9AD00CA7833 /* math.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
