@@ -21,7 +21,7 @@ class BoundingBox {
     /// - Parameters:
     ///   - min: The minimum point of the box
     ///   - max: The maximum point of the box
-    init(_ min: Vector3?, _ max: Vector3?) {
+    init(_ min: Vector3? = nil, _ max: Vector3? = nil) {
         if min != nil {
             min!.cloneTo(target: self.min)
         }

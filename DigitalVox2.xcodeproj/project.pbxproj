@@ -17,6 +17,14 @@
 		0413287B26E07BA3000A4F4E /* Ray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413287A26E07BA3000A4F4E /* Ray.swift */; };
 		0413288026E08044000A4F4E /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413287F26E08044000A4F4E /* Color.swift */; };
 		0413288226E08394000A4F4E /* MathUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413288126E08394000A4F4E /* MathUtil.swift */; };
+		0413288626E09F1F000A4F4E /* PrimitiveMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413288526E09F1F000A4F4E /* PrimitiveMesh.swift */; };
+		0413288826E09FA5000A4F4E /* ModelMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413288726E09FA5000A4F4E /* ModelMesh.swift */; };
+		0413288A26E09FB3000A4F4E /* Mesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413288926E09FB3000A4F4E /* Mesh.swift */; };
+		0413288D26E0A086000A4F4E /* EngineObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413288C26E0A086000A4F4E /* EngineObject.swift */; };
+		0413289026E0A16C000A4F4E /* IRefObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413288F26E0A16C000A4F4E /* IRefObject.swift */; };
+		0413289226E0A1CD000A4F4E /* RefObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413289126E0A1CD000A4F4E /* RefObject.swift */; };
+		0413289426E0A48F000A4F4E /* SubMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413289326E0A48F000A4F4E /* SubMesh.swift */; };
+		0413289726E0A4B4000A4F4E /* MeshTopology.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413289626E0A4B4000A4F4E /* MeshTopology.swift */; };
 		0452EC9926DFA0CD0015BFB1 /* voxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9826DFA0CD0015BFB1 /* voxApp.swift */; };
 		0452EC9B26DFA0CD0015BFB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */; };
 		0452EC9D26DFA0CD0015BFB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0452EC9C26DFA0CD0015BFB1 /* Assets.xcassets */; };
@@ -34,7 +42,7 @@
 		0452ECD826DFA5360015BFB1 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECCD26DFA5360015BFB1 /* Model.swift */; };
 		0452ECD926DFA5360015BFB1 /* Texturable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECCE26DFA5360015BFB1 /* Texturable.swift */; };
 		0452ECDA26DFA5360015BFB1 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECCF26DFA5360015BFB1 /* Camera.swift */; };
-		0452ECDB26DFA5360015BFB1 /* Mesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECD026DFA5360015BFB1 /* Mesh.swift */; };
+		0452ECDB26DFA5360015BFB1 /* MeshOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECD026DFA5360015BFB1 /* MeshOld.swift */; };
 		0452ECDC26DFA5360015BFB1 /* Submesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECD126DFA5360015BFB1 /* Submesh.swift */; };
 		0452ECDE26DFA5C50015BFB1 /* MathLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECDD26DFA5C50015BFB1 /* MathLibrary.swift */; };
 		0452ECE626DFA6A10015BFB1 /* cube.obj in Resources */ = {isa = PBXBuildFile; fileRef = 0452ECE026DFA6A10015BFB1 /* cube.obj */; };
@@ -132,6 +140,14 @@
 		0413287A26E07BA3000A4F4E /* Ray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ray.swift; sourceTree = "<group>"; };
 		0413287F26E08044000A4F4E /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		0413288126E08394000A4F4E /* MathUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathUtil.swift; sourceTree = "<group>"; };
+		0413288526E09F1F000A4F4E /* PrimitiveMesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimitiveMesh.swift; sourceTree = "<group>"; };
+		0413288726E09FA5000A4F4E /* ModelMesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelMesh.swift; sourceTree = "<group>"; };
+		0413288926E09FB3000A4F4E /* Mesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mesh.swift; sourceTree = "<group>"; };
+		0413288C26E0A086000A4F4E /* EngineObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineObject.swift; sourceTree = "<group>"; };
+		0413288F26E0A16C000A4F4E /* IRefObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IRefObject.swift; sourceTree = "<group>"; };
+		0413289126E0A1CD000A4F4E /* RefObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefObject.swift; sourceTree = "<group>"; };
+		0413289326E0A48F000A4F4E /* SubMesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubMesh.swift; sourceTree = "<group>"; };
+		0413289626E0A4B4000A4F4E /* MeshTopology.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeshTopology.swift; sourceTree = "<group>"; };
 		0452EC9626DFA0CD0015BFB1 /* vox.tracing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vox.tracing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0452EC9826DFA0CD0015BFB1 /* voxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = voxApp.swift; sourceTree = "<group>"; };
 		0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -157,7 +173,7 @@
 		0452ECCD26DFA5360015BFB1 /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		0452ECCE26DFA5360015BFB1 /* Texturable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Texturable.swift; sourceTree = "<group>"; };
 		0452ECCF26DFA5360015BFB1 /* Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
-		0452ECD026DFA5360015BFB1 /* Mesh.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mesh.swift; sourceTree = "<group>"; };
+		0452ECD026DFA5360015BFB1 /* MeshOld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeshOld.swift; sourceTree = "<group>"; };
 		0452ECD126DFA5360015BFB1 /* Submesh.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Submesh.swift; sourceTree = "<group>"; };
 		0452ECDD26DFA5C50015BFB1 /* MathLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MathLibrary.swift; sourceTree = "<group>"; };
 		0452ECE026DFA6A10015BFB1 /* cube.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube.obj; sourceTree = "<group>"; };
@@ -272,6 +288,50 @@
 			children = (
 				0413287426E072A9000A4F4E /* PlaneIntersectionType.swift */,
 				0413287826E07748000A4F4E /* ContainmentType.swift */,
+			);
+			path = enums;
+			sourceTree = "<group>";
+		};
+		0413288326E09EFC000A4F4E /* mesh */ = {
+			isa = PBXGroup;
+			children = (
+				0413288526E09F1F000A4F4E /* PrimitiveMesh.swift */,
+				0413288726E09FA5000A4F4E /* ModelMesh.swift */,
+			);
+			path = mesh;
+			sourceTree = "<group>";
+		};
+		0413288426E09F11000A4F4E /* graphic */ = {
+			isa = PBXGroup;
+			children = (
+				0413289526E0A4AA000A4F4E /* enums */,
+				0413288926E09FB3000A4F4E /* Mesh.swift */,
+				0413289326E0A48F000A4F4E /* SubMesh.swift */,
+			);
+			path = graphic;
+			sourceTree = "<group>";
+		};
+		0413288B26E0A07C000A4F4E /* base */ = {
+			isa = PBXGroup;
+			children = (
+				0413288C26E0A086000A4F4E /* EngineObject.swift */,
+			);
+			path = base;
+			sourceTree = "<group>";
+		};
+		0413288E26E0A15F000A4F4E /* asset */ = {
+			isa = PBXGroup;
+			children = (
+				0413288F26E0A16C000A4F4E /* IRefObject.swift */,
+				0413289126E0A1CD000A4F4E /* RefObject.swift */,
+			);
+			path = asset;
+			sourceTree = "<group>";
+		};
+		0413289526E0A4AA000A4F4E /* enums */ = {
+			isa = PBXGroup;
+			children = (
+				0413289626E0A4B4000A4F4E /* MeshTopology.swift */,
 			);
 			path = enums;
 			sourceTree = "<group>";
@@ -425,6 +485,10 @@
 		0497A1E326DF150500F61DE9 /* vox.render */ = {
 			isa = PBXGroup;
 			children = (
+				0413288E26E0A15F000A4F4E /* asset */,
+				0413288B26E0A07C000A4F4E /* base */,
+				0413288426E09F11000A4F4E /* graphic */,
+				0413288326E09EFC000A4F4E /* mesh */,
 				0497A1E426DF150500F61DE9 /* voxApp.swift */,
 				0497A1E626DF150500F61DE9 /* ContentView.swift */,
 				0452ECEC26DFA7870015BFB1 /* ControllerView.swift */,
@@ -440,7 +504,7 @@
 				0452ECCB26DFA5360015BFB1 /* Common.h */,
 				0452ECCF26DFA5360015BFB1 /* Camera.swift */,
 				0452ECCD26DFA5360015BFB1 /* Model.swift */,
-				0452ECD026DFA5360015BFB1 /* Mesh.swift */,
+				0452ECD026DFA5360015BFB1 /* MeshOld.swift */,
 				0452ECD126DFA5360015BFB1 /* Submesh.swift */,
 				0452ECC626DFA5360015BFB1 /* VertexDescriptor.swift */,
 				0452ECC826DFA5360015BFB1 /* Lighting.swift */,
@@ -793,6 +857,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0452ECEF26DFA7B90015BFB1 /* InputController.swift in Sources */,
+				0413289426E0A48F000A4F4E /* SubMesh.swift in Sources */,
 				0452ECD626DFA5360015BFB1 /* PBR.metal in Sources */,
 				04DB2A4226DF1E0500C15850 /* IClone.swift in Sources */,
 				0452ECC526DFA4920015BFB1 /* Engine.swift in Sources */,
@@ -800,29 +865,36 @@
 				0452ECD526DFA5360015BFB1 /* Primitive.swift in Sources */,
 				0452ECDA26DFA5360015BFB1 /* Camera.swift in Sources */,
 				04EFDE7626DF1F96005FBB6F /* Vector2.swift in Sources */,
+				0413289226E0A1CD000A4F4E /* RefObject.swift in Sources */,
 				0452ECD726DFA5360015BFB1 /* Shaders.metal in Sources */,
 				0452ECD226DFA5360015BFB1 /* VertexDescriptor.swift in Sources */,
 				04EFDE7E26DF49FD005FBB6F /* Matrix3x3.swift in Sources */,
 				04EFDE7C26DF3495005FBB6F /* Matrix.swift in Sources */,
 				0452ECDE26DFA5C50015BFB1 /* MathLibrary.swift in Sources */,
+				0413288626E09F1F000A4F4E /* PrimitiveMesh.swift in Sources */,
+				0413289026E0A16C000A4F4E /* IRefObject.swift in Sources */,
 				0413286F26E06A40000A4F4E /* Plane.swift in Sources */,
 				0452ECF126DFA7C90015BFB1 /* MotionController.swift in Sources */,
+				0413289726E0A4B4000A4F4E /* MeshTopology.swift in Sources */,
 				0413287326E0723E000A4F4E /* CollisionUtil.swift in Sources */,
 				0413286B26DF86DC000A4F4E /* BoundingBox.swift in Sources */,
+				0413288D26E0A086000A4F4E /* EngineObject.swift in Sources */,
 				0452ECDC26DFA5360015BFB1 /* Submesh.swift in Sources */,
 				0413287926E07748000A4F4E /* ContainmentType.swift in Sources */,
-				0452ECDB26DFA5360015BFB1 /* Mesh.swift in Sources */,
+				0452ECDB26DFA5360015BFB1 /* MeshOld.swift in Sources */,
 				0452ECC326DFA4590015BFB1 /* EngineView.swift in Sources */,
 				0497A1E726DF150500F61DE9 /* ContentView.swift in Sources */,
 				04EFDE7A26DF3072005FBB6F /* Vector3.swift in Sources */,
 				0413288026E08044000A4F4E /* Color.swift in Sources */,
 				0413286D26E06648000A4F4E /* BoundingSphere.swift in Sources */,
 				0452ECD426DFA5360015BFB1 /* Lighting.swift in Sources */,
+				0413288A26E09FB3000A4F4E /* Mesh.swift in Sources */,
 				0452ECED26DFA7870015BFB1 /* ControllerView.swift in Sources */,
 				0413287126E06D2E000A4F4E /* BoundingFrustum.swift in Sources */,
 				04EFDE8226DF4DC3005FBB6F /* Vector4.swift in Sources */,
 				0413288226E08394000A4F4E /* MathUtil.swift in Sources */,
 				0452ECD826DFA5360015BFB1 /* Model.swift in Sources */,
+				0413288826E09FA5000A4F4E /* ModelMesh.swift in Sources */,
 				0497A1E526DF150500F61DE9 /* voxApp.swift in Sources */,
 				0452ECD326DFA5360015BFB1 /* Node.swift in Sources */,
 				0452ECD926DFA5360015BFB1 /* Texturable.swift in Sources */,

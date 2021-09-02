@@ -31,7 +31,7 @@
 
 import MetalKit
 
-struct Mesh {
+struct MeshOld {
     let mtkMesh: MTKMesh
     let submeshes: [Submesh]
 
