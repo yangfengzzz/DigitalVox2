@@ -15,7 +15,7 @@ let one4f = vec4f(1, 1, 1, 1)
 
 @inlinable
 func xyz(a: vec4f) -> vec3f {
-    fatalError("TODO")
+    [a.x, a.y, a.z];
 }
 
 @inlinable

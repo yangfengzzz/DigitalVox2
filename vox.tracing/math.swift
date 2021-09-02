@@ -7,6 +7,17 @@
 
 import Foundation
 
+@inlinable
+func bias(_ a: Float, _ bias: Float) -> Float {
+    return a / ((1 / bias - 2) * (1 - a) + 1)
+}
+
+@inlinable
+func gain(_ a: Float, _ gain: Float) -> Float {
+    return (a < 0.5) ? bias(a * 2, gain) / 2
+            : bias(a * 2 - 1, 1 - gain) / 2 + 0.5
+}
+
 // -----------------------------------------------------------------------------
 // TRANSFORMS
 // -----------------------------------------------------------------------------
