@@ -202,7 +202,7 @@ func lookat_frame(_ eye: vec3f, _ center: vec3f, _ up: vec3f, _ inv_xz: Bool = f
     return frame3f(u, v, w, eye)
 }
 
-// OpenGL frustum, ortho and perspecgive matrices.
+// OpenGL frustum, ortho and perspective matrices.
 @inlinable
 func frustum_mat(_ l: Float, _ r: Float, _ b: Float, _ t: Float, _ n: Float, _ f: Float) -> mat4f {
     mat4f([2 * n / (r - l), 0, 0, 0], [0, 2 * n / (t - b), 0, 0],
@@ -245,7 +245,7 @@ func perspective_mat(_ fovy: Float, _ aspect: Float, _ near: Float) -> mat4f {
 
 // Rotation conversions.
 @inlinable
-func rotation_axisangle(_ quat: vec4f) -> (vec3f, Float) {
+func rotation_axis_angle(_ quat: vec4f) -> (vec3f, Float) {
     (normalize(vec3f(quat.x, quat.y, quat.z)), 2 * acos(quat.w))
 }
 
@@ -260,8 +260,8 @@ func rotation_quat(_ axis: vec3f, _ angle: Float) -> vec4f {
 }
 
 @inlinable
-func rotation_quat(_ axisangle: vec4f) -> vec4f {
-    rotation_quat(vec3f(axisangle.x, axisangle.y, axisangle.z), axisangle.w)
+func rotation_quat(_ axis_angle: vec4f) -> vec4f {
+    rotation_quat(vec3f(axis_angle.x, axis_angle.y, axis_angle.z), axis_angle.w)
 }
 
 // -----------------------------------------------------------------------------
@@ -368,7 +368,7 @@ func camera_turntable(_ frame_: frame3f, _ focus_: Float,
 
 // FPS camera for UI navigation for a frame parametrization. Returns frame.
 @inlinable
-func camera_fpscam(_ frame: frame3f, _ transl: vec3f, _ rotate: vec2f) -> frame3f {
+func camera_fps_cam(_ frame: frame3f, _ transl: vec3f, _ rotate: vec2f) -> frame3f {
     // https://gamedev.stackexchange.com/questions/30644/how-to-keep-my-quaternion-using-fps-camera-from-tilting-and-messing-up
     let y = vec3f(0, 1, 0)
     let z = orthonormalize(frame.z, y)
