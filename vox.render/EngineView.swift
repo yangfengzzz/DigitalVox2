@@ -10,9 +10,11 @@ import SwiftUI
 
 struct EngineView: UIViewRepresentable {
     let view: Engine
+
     func makeUIView(context: UIViewRepresentableContext<EngineView>) -> Engine {
-        return view
+        view
     }
-    
-    func updateUIView(_ nsView: Engine, context: UIViewRepresentableContext<EngineView>) {}
+
+    func updateUIView(_ nsView: Engine, context: UIViewRepresentableContext<EngineView>) {
+    }
 }

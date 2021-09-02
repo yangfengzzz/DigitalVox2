@@ -8,8 +8,13 @@
 import SwiftUI
 
 struct ContentView: View {
-    let engine = Engine()
-    
+    let engine = Engine() { engine in
+        // models
+        let house = Model(name: "cube.obj")
+        house.position = [0, 0, 0]
+        engine.models.append(house)
+    }
+
     var body: some View {
         EngineView(view: engine)
     }
