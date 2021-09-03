@@ -93,6 +93,7 @@
 		047FEB7426E1BD590078CFAF /* shape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEB7326E1BD590078CFAF /* shape.swift */; };
 		047FEB7626E1C3CA0078CFAF /* edge_map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEB7526E1C3CA0078CFAF /* edge_map.swift */; };
 		047FEB7826E1C59F0078CFAF /* shape_bvh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEB7726E1C59F0078CFAF /* shape_bvh.swift */; };
+		047FEB7A26E1C8340078CFAF /* hash_grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEB7926E1C8340078CFAF /* hash_grid.swift */; };
 		0497A1E526DF150500F61DE9 /* voxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A1E426DF150500F61DE9 /* voxApp.swift */; };
 		0497A1E726DF150500F61DE9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A1E626DF150500F61DE9 /* ContentView.swift */; };
 		0497A1E926DF150800F61DE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0497A1E826DF150800F61DE9 /* Assets.xcassets */; };
@@ -242,6 +243,7 @@
 		047FEB7326E1BD590078CFAF /* shape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = shape.swift; sourceTree = "<group>"; };
 		047FEB7526E1C3CA0078CFAF /* edge_map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = edge_map.swift; sourceTree = "<group>"; };
 		047FEB7726E1C59F0078CFAF /* shape_bvh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = shape_bvh.swift; sourceTree = "<group>"; };
+		047FEB7926E1C8340078CFAF /* hash_grid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = hash_grid.swift; sourceTree = "<group>"; };
 		0497A1E126DF150500F61DE9 /* vox.render.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vox.render.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0497A1E426DF150500F61DE9 /* voxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = voxApp.swift; sourceTree = "<group>"; };
 		0497A1E626DF150500F61DE9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -411,6 +413,7 @@
 				047FEB7326E1BD590078CFAF /* shape.swift */,
 				047FEB7526E1C3CA0078CFAF /* edge_map.swift */,
 				047FEB7726E1C59F0078CFAF /* shape_bvh.swift */,
+				047FEB7926E1C8340078CFAF /* hash_grid.swift */,
 			);
 			path = vox.tracing;
 			sourceTree = "<group>";
@@ -870,6 +873,7 @@
 				04EA0D6E26E1204F00CA7833 /* bbox3f.swift in Sources */,
 				0452ED2626E042160015BFB1 /* vec3i.swift in Sources */,
 				0452ED3C26E0F50A0015BFB1 /* frame2f.swift in Sources */,
+				047FEB7A26E1C8340078CFAF /* hash_grid.swift in Sources */,
 				047FEB7426E1BD590078CFAF /* shape.swift in Sources */,
 				0452ED2E26E044C20015BFB1 /* mat3f.swift in Sources */,
 				0452ED2026DFBCFC0015BFB1 /* vec3f.swift in Sources */,
