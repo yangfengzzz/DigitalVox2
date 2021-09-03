@@ -11,22 +11,98 @@ import Foundation
 // EXAMPLE SHAPES
 // -----------------------------------------------------------------------------
 
+// Make a tessellated rectangle. Useful in other subdivisions.
+func make_quads(_ steps: vec2i, _ scale: vec2f, _ uvscale: vec2f) -> shape_data {
+    var shape = shape_data()
+
+    shape.positions = .init(repeating: vec3f(), count: (steps.x + 1) * (steps.y + 1))
+    shape.normals = .init(repeating: vec3f(), count: (steps.x + 1) * (steps.y + 1))
+    shape.texcoords = .init(repeating: vec2f(), count: (steps.x + 1) * (steps.y + 1))
+    for j in 0...steps.y {
+        for i in 0...steps.x {
+            let uv = vec2f(Float(i) / Float(steps.x), Float(j) / Float(steps.y))
+            shape.positions[j * (steps.x + 1) + i] = [
+                (2 * uv.x - 1) * scale.x, (2 * uv.y - 1) * scale.y, 0]
+            shape.normals[j * (steps.x + 1) + i] = [0, 0, 1]
+            shape.texcoords[j * (steps.x + 1) + i] = vec2f(uv.x, 1 - uv.y) * uvscale
+        }
+    }
+
+    shape.quads = .init(repeating: vec4i(), count: steps.x * steps.y)
+    for j in 0..<steps.y {
+        for i in 0..<steps.x {
+            shape.quads[j * steps.x + i] = [j * (steps.x + 1) + i,
+                                            j * (steps.x + 1) + i + 1,
+                                            (j + 1) * (steps.x + 1) + i + 1,
+                                            (j + 1) * (steps.x + 1) + i]
+        }
+    }
+
+    return shape
+}
+
+// Merge shape elements
+func merge_shape_inplace(_ shape: inout shape_data, _ merge: shape_data) {
+    let offset = shape.positions.count
+    for p in merge.points {
+        shape.points.append(p + offset)
+    }
+    for l in merge.lines {
+        shape.lines.append([l.x + offset, l.y + offset])
+    }
+    for t in merge.triangles {
+        shape.triangles.append([t.x + offset, t.y + offset, t.z + offset])
+    }
+    for q in merge.quads {
+        shape.quads.append([q.x + offset, q.y + offset, q.z + offset, q.w + offset])
+    }
+    shape.positions.append(contentsOf: merge.positions)
+    shape.tangents.append(contentsOf: merge.tangents)
+    shape.texcoords.append(contentsOf: merge.texcoords)
+    shape.colors.append(contentsOf: merge.colors)
+    shape.radius.append(contentsOf: merge.radius)
+}
+
 // Make a plane.
 func make_rect(_ steps: vec2i = [1, 1], _ scale: vec2f = [1, 1],
                _ uvscale: vec2f = [1, 1]) -> shape_data {
-    fatalError()
+    make_quads(steps, scale, uvscale)
 }
 
 func make_bulged_rect(_ steps: vec2i = [1, 1],
                       _ scale: vec2f = [1, 1], _ uvscale: vec2f = [1, 1],
-                      _ radius: Float = 0.3) -> shape_data {
-    fatalError()
+                      _ height: Float = 0.3) -> shape_data {
+    var height = height
+    var shape = make_rect(steps, scale, uvscale)
+    if (height != 0) {
+        height = min(height, min(scale))
+        let radius = (1 + height * height) / (2 * height)
+        let center = vec3f(0, 0, -radius + height)
+        for i in 0..<shape.positions.count {
+            let pn = normalize(shape.positions[i] - center)
+            shape.positions[i] = center + pn * radius
+            shape.normals[i] = pn
+        }
+    }
+    return shape
 }
 
 // Make a plane in the xz plane.
 func make_recty(_ steps: vec2i = [1, 1], _ scale: vec2f = [1, 1],
                 _ uvscale: vec2f = [1, 1]) -> shape_data {
-    fatalError()
+    var shape = make_rect(steps, scale, uvscale)
+    shape.positions = shape.positions.map { position -> vec3f in
+        var position = position
+        position = [position.x, position.z, -position.y]
+        return position
+    }
+    shape.normals = shape.normals.map({ normal -> vec3f in
+        var normal = normal
+        normal = [normal.x, normal.z, normal.y]
+        return normal
+    })
+
+    return shape
 }
 
 func make_bulged_recty(_ steps: vec2i = [1, 1],
