@@ -855,20 +855,70 @@ func make_hair2(_ shape: shape_data, _  steps: vec2i = [8, 65536],
 // intended for making very small primitives for display in interactive
 // applications, so the spheres are low res.
 func points_to_spheres(_ vertices: [vec3f], _ steps: Int = 2, _ scale: Float = 0.01) -> shape_data {
-    fatalError()
+    var shape = shape_data()
+    for vertex in vertices {
+        var sphere = make_sphere(steps, scale, 1)
+        sphere.positions = sphere.positions.map({ position in
+            position + vertex
+        })
+        merge_shape_inplace(&shape, sphere)
+    }
+    return shape
 }
 
 func polyline_to_cylinders(_ vertices: [vec3f], _ steps: Int = 4, _ scale: Float = 0.01) -> shape_data {
-    fatalError()
+    var shape = shape_data()
+    for idx in 0..<vertices.count - 1 {
+        var cylinder = make_uvcylinder([steps, 1, 1], [scale, 1], [1, 1, 1])
+        let frame = frame_from_z((vertices[idx] + vertices[idx + 1]) / 2,
+                vertices[idx] - vertices[idx + 1])
+        let length = distance(vertices[idx], vertices[idx + 1])
+        cylinder.positions = cylinder.positions.map({ position in
+            transform_point(frame, position * vec3f(1, 1, length / 2))
+        })
+        cylinder.normals = cylinder.normals.map({ normal in
+            transform_direction(frame, normal)
+        })
+        merge_shape_inplace(&shape, cylinder)
+    }
+    return shape
 }
 
 func lines_to_cylinders(_ vertices: [vec3f], _ steps: Int = 4, _ scale: Float = 0.01) -> shape_data {
-    fatalError()
+    var shape = shape_data()
+    for idx in stride(from: 0, to: vertices.count, by: 2) {
+        var cylinder = make_uvcylinder([steps, 1, 1], [scale, 1], [1, 1, 1])
+        let frame = frame_from_z((vertices[idx + 0] + vertices[idx + 1]) / 2,
+                vertices[idx + 0] - vertices[idx + 1])
+        let length = distance(vertices[idx + 0], vertices[idx + 1])
+        cylinder.positions = cylinder.positions.map({ position in
+            transform_point(frame, position * vec3f(1, 1, length / 2))
+        })
+        cylinder.normals = cylinder.normals.map({ normal in
+            transform_direction(frame, normal)
+        })
+        merge_shape_inplace(&shape, cylinder)
+    }
+    return shape
 }
 
 func lines_to_cylinders(_ lines: [vec2i], _ positions: [vec3f],
                         _ steps: Int = 4, _ scale: Float = 0.01) -> shape_data {
-    fatalError()
+    var shape = shape_data()
+    for line in lines {
+        var cylinder = make_uvcylinder([steps, 1, 1], [scale, 1], [1, 1, 1])
+        let frame = frame_from_z((positions[line.x] + positions[line.y]) / 2,
+                positions[line.x] - positions[line.y])
+        let length = distance(positions[line.x], positions[line.y])
+        cylinder.positions = cylinder.positions.map({ position in
+            transform_point(frame, position * vec3f(1, 1, length / 2))
+        })
+        cylinder.normals = cylinder.normals.map({ normal in
+            transform_direction(frame, normal)
+        })
+        merge_shape_inplace(&shape, cylinder)
+    }
+    return shape
 }
 
 // Make a heightfield mesh.
