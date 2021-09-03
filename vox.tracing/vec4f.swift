@@ -14,7 +14,7 @@ public let zero4f = vec4f(0, 0, 0, 0)
 public let one4f = vec4f(1, 1, 1, 1)
 
 @inlinable
-func xyz(a: vec4f) -> vec3f {
+func xyz(_ a: vec4f) -> vec3f {
     [a.x, a.y, a.z]
 }
 

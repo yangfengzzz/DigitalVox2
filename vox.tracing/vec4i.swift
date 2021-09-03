@@ -12,7 +12,7 @@ public typealias vec4i = SIMD4<Int>
 public let zero4i = vec4i(0, 0, 0, 0)
 
 @inlinable
-func xyz(a: vec4i) -> vec3i {
+func xyz(_ a: vec4i) -> vec3i {
     [a.x, a.y, a.z]
 }
 
