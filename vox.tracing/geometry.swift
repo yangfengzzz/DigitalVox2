@@ -225,7 +225,7 @@ func interpolate_quad(_ p0: vec2f, _ p1: vec2f, _ p2: vec2f, _ p3: vec2f, _ uv: 
 }
 
 @inlinable
-func interpolate_quad(_ p0: vec3f, _ p1: vec3f, _ p2: vec3f, _ p3: vec3f, _ uv: vec3f) -> vec3f {
+func interpolate_quad(_ p0: vec3f, _ p1: vec3f, _ p2: vec3f, _ p3: vec3f, _ uv: vec2f) -> vec3f {
     if (uv.x + uv.y <= 1) {
         return interpolate_triangle(p0, p1, p3, uv)
     } else {
@@ -234,7 +234,7 @@ func interpolate_quad(_ p0: vec3f, _ p1: vec3f, _ p2: vec3f, _ p3: vec3f, _ uv: 
 }
 
 @inlinable
-func interpolate_quad(_ p0: vec4f, _ p1: vec4f, _ p2: vec4f, _ p3: vec4f, _ uv: vec4f) -> vec4f {
+func interpolate_quad(_ p0: vec4f, _ p1: vec4f, _ p2: vec4f, _ p3: vec4f, _ uv: vec2f) -> vec4f {
     if (uv.x + uv.y <= 1) {
         return interpolate_triangle(p0, p1, p3, uv)
     } else {
@@ -245,39 +245,51 @@ func interpolate_quad(_ p0: vec4f, _ p1: vec4f, _ p2: vec4f, _ p3: vec4f, _ uv: 
 // Interpolates values along a cubic Bezier segment parametrized by u.
 @inlinable
 func interpolate_bezier(_ p0: vec2f, _ p1: vec2f, _ p2: vec2f, _ p3: vec2f, _ u: Float) -> vec2f {
-    p0 * (1 - u) * (1 - u) * (1 - u) + p1 * 3 * u * (1 - u) * (1 - u) +
-            p2 * 3 * u * u * (1 - u) + p3 * u * u * u
+    var result = p0 * (1 - u) * (1 - u) * (1 - u)
+    result += p1 * 3 * u * (1 - u) * (1 - u)
+    result += p2 * 3 * u * u * (1 - u)
+    result += p3 * u * u * u
+    return result
 }
 
 @inlinable
 func interpolate_bezier(_ p0: vec3f, _ p1: vec3f, _ p2: vec3f, _ p3: vec3f, _ u: Float) -> vec3f {
-    p0 * (1 - u) * (1 - u) * (1 - u) + p1 * 3 * u * (1 - u) * (1 - u) +
-            p2 * 3 * u * u * (1 - u) + p3 * u * u * u
+    var result = p0 * (1 - u) * (1 - u) * (1 - u)
+    result += p1 * 3 * u * (1 - u) * (1 - u)
+    result += p2 * 3 * u * u * (1 - u)
+    result += p3 * u * u * u
+    return result
 }
 
 @inlinable
 func interpolate_bezier(_ p0: vec4f, _ p1: vec4f, _ p2: vec4f, _ p3: vec4f, _ u: Float) -> vec4f {
-    p0 * (1 - u) * (1 - u) * (1 - u) + p1 * 3 * u * (1 - u) * (1 - u) +
-            p2 * 3 * u * u * (1 - u) + p3 * u * u * u
+    var result = p0 * (1 - u) * (1 - u) * (1 - u)
+    result += p1 * 3 * u * (1 - u) * (1 - u)
+    result += p2 * 3 * u * u * (1 - u)
+    result += p3 * u * u * u
+    return result
 }
 
 // Computes the derivative of a cubic Bezier segment parametrized by u.
 @inlinable
 func interpolate_bezier_derivative(_ p0: vec2f, _ p1: vec2f, _ p2: vec2f, _ p3: vec2f, _ u: Float) -> vec2f {
-    (p1 - p0) * 3 * (1 - u) * (1 - u) + (p2 - p1) * 6 * u * (1 - u) +
-            (p3 - p2) * 3 * u * u
+    var result = (p1 - p0) * 3 * (1 - u) * (1 - u)
+    result += (p2 - p1) * 6 * u * (1 - u)
+    result += (p3 - p2) * 3 * u * u
 }
 
 @inlinable
 func interpolate_bezier_derivative(_ p0: vec3f, _ p1: vec3f, _ p2: vec3f, _ p3: vec3f, _ u: Float) -> vec3f {
-    (p1 - p0) * 3 * (1 - u) * (1 - u) + (p2 - p1) * 6 * u * (1 - u) +
-            (p3 - p2) * 3 * u * u
+    var result = (p1 - p0) * 3 * (1 - u) * (1 - u)
+    result += (p2 - p1) * 6 * u * (1 - u)
+    result += (p3 - p2) * 3 * u * u
 }
 
 @inlinable
 func interpolate_bezier_derivative(_ p0: vec4f, _ p1: vec4f, _ p2: vec4f, _ p3: vec4f, _ u: Float) -> vec4f {
-    (p1 - p0) * 3 * (1 - u) * (1 - u) + (p2 - p1) * 6 * u * (1 - u) +
-            (p3 - p2) * 3 * u * u
+    var result = (p1 - p0) * 3 * (1 - u) * (1 - u)
+    result += (p2 - p1) * 6 * u * (1 - u)
+    result += (p3 - p2) * 3 * u * u
 }
 
 // Interpolated line properties.
