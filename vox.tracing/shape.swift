@@ -107,135 +107,515 @@ func make_recty(_ steps: vec2i = [1, 1], _ scale: vec2f = [1, 1],
 
 func make_bulged_recty(_ steps: vec2i = [1, 1],
                        _ scale: vec2f = [1, 1], _ uvscale: vec2f = [1, 1],
-                       _ radius: Float = 0.3) -> shape_data {
-    fatalError()
+                       _ height: Float = 0.3) -> shape_data {
+    var shape = make_bulged_rect(steps, scale, uvscale, height)
+    shape.positions = shape.positions.map { position -> vec3f in
+        var position = position
+        position = [position.x, position.z, -position.y]
+        return position
+    }
+    shape.normals = shape.normals.map({ normal -> vec3f in
+        var normal = normal
+        normal = [normal.x, normal.z, normal.y]
+        return normal
+    })
+    return shape
 }
 
 // Make a box.
 func make_box(_ steps: vec3i = [1, 1, 1],
               _ scale: vec3f = [1, 1, 1], _ uvscale: vec3f = [1, 1, 1]) -> shape_data {
-    fatalError()
+    var shape = shape_data()
+    var qshape = shape_data()
+    // + z
+    qshape = make_rect(
+            [steps.x, steps.y], [scale.x, scale.y], [uvscale.x, uvscale.y])
+    qshape.positions = qshape.positions.map({ p in
+        var p = p
+        p = [p.x, p.y, scale.z]
+        return p
+    })
+    qshape.normals = qshape.normals.map({ n in
+        var n = n
+        n = [0, 0, 1]
+        return n
+    })
+    merge_shape_inplace(&shape, qshape)
+    // - z
+    qshape = make_rect([steps.x, steps.y], [scale.x, scale.y], [uvscale.x, uvscale.y])
+    qshape.positions = qshape.positions.map({ p in
+        var p = p
+        p = [-p.x, p.y, -scale.z]
+        return p
+    })
+    qshape.normals = qshape.normals.map({ n in
+        var n = n
+        n = [0, 0, -1]
+        return n
+    })
+    merge_shape_inplace(&shape, qshape)
+    // + x
+    qshape = make_rect([steps.z, steps.y], [scale.z, scale.y], [uvscale.z, uvscale.y])
+    qshape.positions = qshape.positions.map({ p in
+        var p = p
+        p = [scale.x, p.y, -p.x]
+        return p
+    })
+    qshape.normals = qshape.normals.map({ n in
+        var n = n
+        n = [1, 0, 0]
+        return n
+    })
+    merge_shape_inplace(&shape, qshape)
+    // - x
+    qshape = make_rect([steps.z, steps.y], [scale.z, scale.y], [uvscale.z, uvscale.y])
+    qshape.positions = qshape.positions.map({ p in
+        var p = p
+        p = [-scale.x, p.y, p.x]
+        return p
+    })
+    qshape.normals = qshape.normals.map({ n in
+        var n = n
+        n = [-1, 0, 0]
+        return n
+    })
+    merge_shape_inplace(&shape, qshape)
+    // + y
+    qshape = make_rect([steps.x, steps.z], [scale.x, scale.z], [uvscale.x, uvscale.z])
+    for i in 0..<qshape.positions.count {
+        qshape.positions[i] = [qshape.positions[i].x, scale.y, -qshape.positions[i].y]
+        qshape.normals[i] = [0, 1, 0]
+    }
+    merge_shape_inplace(&shape, qshape)
+    // - y
+    qshape = make_rect([steps.x, steps.z], [scale.x, scale.z], [uvscale.x, uvscale.z])
+    for i in 0..<qshape.positions.count {
+        qshape.positions[i] = [qshape.positions[i].x, -scale.y, qshape.positions[i].y]
+        qshape.normals[i] = [0, -1, 0]
+    }
+    merge_shape_inplace(&shape, qshape)
+    return shape
+
 }
 
 func make_rounded_box(_ steps: vec3i = [1, 1, 1],
                       _ scale: vec3f = [1, 1, 1], _ uvscale: vec3f = [1, 1, 1],
                       _ radius: Float = 0.3) -> shape_data {
-    fatalError()
+    var shape = make_box(steps, scale, uvscale)
+    if (radius != 0) {
+        let radius = min(radius, min(scale))
+        let c = scale - radius
+        for i in 0..<shape.positions.count {
+            let pc = vec3f(abs(shape.positions[i].x), abs(shape.positions[i].y),
+                    abs(shape.positions[i].z))
+            let ps = vec3f(shape.positions[i].x < 0 ? -1.0 : 1.0,
+                    shape.positions[i].y < 0 ? -1.0 : 1.0,
+                    shape.positions[i].z < 0 ? -1.0 : 1.0)
+            if (pc.x >= c.x && pc.y >= c.y && pc.z >= c.z) {
+                let pn = normalize(pc - c)
+                shape.positions[i] = c + radius * pn
+                shape.normals[i] = pn
+            } else if (pc.x >= c.x && pc.y >= c.y) {
+                let pn = normalize((pc - c) * vec3f(1, 1, 0))
+                shape.positions[i] = [c.x + radius * pn.x, c.y + radius * pn.y, pc.z]
+                shape.normals[i] = pn
+            } else if (pc.x >= c.x && pc.z >= c.z) {
+                let pn = normalize((pc - c) * vec3f(1, 0, 1))
+                shape.positions[i] = [c.x + radius * pn.x, pc.y, c.z + radius * pn.z]
+                shape.normals[i] = pn
+            } else if (pc.y >= c.y && pc.z >= c.z) {
+                let pn = normalize((pc - c) * vec3f(0, 1, 1))
+                shape.positions[i] = [pc.x, c.y + radius * pn.y, c.z + radius * pn.z]
+                shape.normals[i] = pn
+            } else {
+                continue
+            }
+            shape.positions[i] *= ps
+            shape.normals[i] *= ps
+        }
+    }
+    return shape
 }
 
 // Make a quad stack
 func make_rect_stack(_ steps: vec3i = [1, 1, 1],
                      _ scale: vec3f = [1, 1, 1], _ uvscale: vec2f = [1, 1]) -> shape_data {
-    fatalError()
+    var shape = shape_data()
+    var qshape = shape_data()
+    for i in 0...steps.z {
+        qshape = make_rect([steps.x, steps.y], [scale.x, scale.y], uvscale)
+        qshape.positions = qshape.positions.map({ p in
+            var p = p
+            p.z = (-1 + 2 * Float(i) / Float(steps.z)) * scale.z
+            return p
+        })
+        merge_shape_inplace(&shape, qshape)
+    }
+    return shape
 }
 
 // Make a floor.
 func make_floor(_ steps: vec2i = [1, 1],
                 _ scale: vec2f = [10, 10], _ uvscale: vec2f = [10, 10]) -> shape_data {
-    fatalError()
+    var shape = make_rect(steps, scale, uvscale)
+    shape.positions = shape.positions.map({ position in
+        var position = position
+        position = [position.x, position.z, -position.y]
+        return position
+    })
+    shape.normals = shape.normals.map({ normal in
+        var normal = normal
+        normal = [normal.x, normal.z, normal.y]
+        return normal
+    })
+    return shape
 }
 
 func make_bent_floor(_ steps: vec2i = [1, 1],
                      _ scale: vec2f = [10, 10], _ uvscale: vec2f = [10, 10],
-                     _ bent: Float = 0.5) -> shape_data {
-    fatalError()
+                     _ radius: Float = 0.5) -> shape_data {
+    var shape = make_floor(steps, scale, uvscale)
+    if (radius != 0) {
+        let radius = min(radius, scale.y)
+        let start = (scale.y - radius) / 2
+        let end = start + radius
+        for i in 0..<shape.positions.count {
+            if (shape.positions[i].z < -end) {
+                shape.positions[i] = [
+                    shape.positions[i].x, -shape.positions[i].z - end + radius, -end]
+                shape.normals[i] = [0, 0, 1]
+            } else if (shape.positions[i].z < -start &&
+                    shape.positions[i].z >= -end) {
+                let phi: Float = (Float.pi / 2) * (-shape.positions[i].z - start) / radius
+                shape.positions[i] = [shape.positions[i].x, -cos(phi) * radius + radius,
+                                      -sin(phi) * radius - start]
+                shape.normals[i] = [0, cos(phi), sin(phi)]
+            } else {
+            }
+        }
+    }
+    return shape
 }
 
 // Make a sphere.
 func make_sphere(_ steps: Int = 32, _ scale: Float = 1, _ uvscale: Float = 1) -> shape_data {
-    fatalError()
+    var shape = make_box([steps, steps, steps], [scale, scale, scale],
+            [uvscale, uvscale, uvscale])
+    shape.positions = shape.positions.map({ p in
+        var p = p
+        p = normalize(p) * scale
+        return p
+    })
+    shape.normals = shape.positions
+    shape.normals = shape.normals.map({ n in
+        var n = n
+        n = normalize(n)
+        return n
+    })
+    return shape
 }
 
 // Make a sphere.
 func make_uvsphere(_ steps: vec2i = [32, 32], _ scale: Float = 1,
                    _ uvscale: vec2f = [1, 1]) -> shape_data {
-    fatalError()
+    var shape = make_rect([1, 1], [1, 1])
+    for i in 0..<shape.positions.count {
+        let uv = shape.texcoords[i]
+        let a = vec2f(2 * Float.pi * uv.x, Float.pi * (1 - uv.y))
+        shape.positions[i] = vec3f(cos(a.x) * sin(a.y), sin(a.x) * sin(a.y), cos(a.y)) * scale
+        shape.normals[i] = normalize(shape.positions[i])
+        shape.texcoords[i] = uv * uvscale
+    }
+    return shape
 }
 
 func make_uvspherey(_ steps: vec2i = [32, 32], _ scale: Float = 1,
                     _ uvscale: vec2f = [1, 1]) -> shape_data {
-    fatalError()
+    var shape = make_uvsphere(steps, scale, uvscale)
+    shape.positions = shape.positions.map({ position in
+        [position.x, position.z, position.y]
+    })
+    shape.normals = shape.normals.map({ normal in
+        [normal.x, normal.z, normal.y]
+    })
+    shape.texcoords = shape.texcoords.map({ texcoord in
+        [texcoord.x, 1 - texcoord.y]
+    })
+    shape.quads = shape.quads.map({ quad in
+        [quad.x, quad.w, quad.z, quad.y]
+    })
+    return shape
 }
 
 // Make a sphere with slipped caps.
 func make_capped_uvsphere(_ steps: vec2i = [32, 32], _ scale: Float = 1,
-                          _ uvscale: vec2f = [1, 1], _ height: Float = 0.3) -> shape_data {
-    fatalError()
+                          _ uvscale: vec2f = [1, 1], _ cap: Float = 0.3) -> shape_data {
+    var shape = make_uvsphere(steps, scale, uvscale)
+    if (cap != 0) {
+        let cap = min(cap, scale / 2)
+        let zflip = (scale - cap)
+        for i in 0..<shape.positions.count {
+            if (shape.positions[i].z > zflip) {
+                shape.positions[i].z = 2 * zflip - shape.positions[i].z
+                shape.normals[i].x = -shape.normals[i].x
+                shape.normals[i].y = -shape.normals[i].y
+            } else if (shape.positions[i].z < -zflip) {
+                shape.positions[i].z = 2 * (-zflip) - shape.positions[i].z
+                shape.normals[i].x = -shape.normals[i].x
+                shape.normals[i].y = -shape.normals[i].y
+            }
+        }
+    }
+    return shape
 }
 
 func make_capped_uvspherey(_ steps: vec2i = [32, 32], _ scale: Float = 1,
-                           _ uvscale: vec2f = [1, 1], _ height: Float = 0.3) -> shape_data {
-    fatalError()
+                           _ uvscale: vec2f = [1, 1], _ cap: Float = 0.3) -> shape_data {
+    var shape = make_capped_uvsphere(steps, scale, uvscale, cap)
+    shape.positions = shape.positions.map({ position in
+        [position.x, position.z, position.y]
+    })
+    shape.normals = shape.normals.map({ normal in
+        [normal.x, normal.z, normal.y]
+    })
+    shape.texcoords = shape.texcoords.map({ texcoord in
+        [texcoord.x, 1 - texcoord.y]
+    })
+    shape.quads = shape.quads.map({ quad in
+        [quad.x, quad.w, quad.z, quad.y]
+    })
+    return shape
 }
 
 // Make a disk
 func make_disk(_ steps: Int = 32, _ scale: Float = 1, _ uvscale: Float = 1) -> shape_data {
-    fatalError()
+    var shape = make_rect([steps, steps], [1, 1], [uvscale, uvscale])
+    shape.positions = shape.positions.map({ position in
+        // Analytical Methods for Squaring the Disc, by C. Fong
+        // https://arxiv.org/abs/1509.06344
+        let xy = vec2f(position.x, position.y)
+        let uv = vec2f(xy.x * sqrt(1 - xy.y * xy.y / 2), xy.y * sqrt(1 - xy.x * xy.x / 2))
+        return vec3f(uv.x, uv.y, 0) * scale
+    })
+    return shape
 }
 
 // Make a bulged disk
 func make_bulged_disk(
         _ steps: Int = 32, _ scale: Float = 1, _ uvscale: Float = 1, _ height: Float = 0.3) -> shape_data {
-    fatalError()
+    var shape = make_disk(steps, scale, uvscale)
+    if (height != 0) {
+        let height = min(height, scale)
+        let radius = (1 + height * height) / (2 * height)
+        let center = vec3f(0, 0, -radius + height)
+        for i in 0..<shape.positions.count {
+            let pn = normalize(shape.positions[i] - center)
+            shape.positions[i] = center + pn * radius
+            shape.normals[i] = pn
+        }
+    }
+    return shape
 }
 
 // Make a uv disk
 func make_uvdisk(_ steps: vec2i = [32, 32], _ scale: Float = 1,
                  _ uvscale: vec2f = [1, 1]) -> shape_data {
-    fatalError()
+    var shape = make_rect(steps, [1, 1], [1, 1])
+    for i in 0..<shape.positions.count {
+        let uv = shape.texcoords[i]
+        let phi = 2 * Float.pi * uv.x
+        shape.positions[i] = vec3f(cos(phi) * uv.y, sin(phi) * uv.y, 0) * scale
+        shape.normals[i] = [0, 0, 1]
+        shape.texcoords[i] = uv * uvscale
+    }
+    return shape
 }
 
 // Make a uv cylinder
 func make_uvcylinder(_ steps: vec3i = [32, 32, 32],
                      _ scale: vec2f = [1, 1], _ uvscale: vec3f = [1, 1, 1]) -> shape_data {
-    fatalError()
+    var shape = shape_data()
+    var qshape = shape_data()
+    // side
+    qshape = make_rect([steps.x, steps.y], [1, 1], [1, 1])
+    for i in 0..<qshape.positions.count {
+        let uv = qshape.texcoords[i]
+        let phi = 2 * Float.pi * uv.x
+        qshape.positions[i] = [cos(phi) * scale.x, sin(phi) * scale.x, (2 * uv.y - 1) * scale.y]
+        qshape.normals[i] = [cos(phi), sin(phi), 0]
+        qshape.texcoords[i] = uv * vec2f(uvscale.x, uvscale.y)
+    }
+    qshape.quads = qshape.quads.map({ quad in
+        [quad.x, quad.w, quad.z, quad.y]
+    })
+    merge_shape_inplace(&shape, qshape)
+    // top
+    qshape = make_rect([steps.x, steps.z], [1, 1], [1, 1])
+    for i in 0..<qshape.positions.count {
+        let uv = qshape.texcoords[i]
+        let phi = 2 * Float.pi * uv.x
+        qshape.positions[i] = [cos(phi) * uv.y * scale.x, sin(phi) * uv.y * scale.x, 0]
+        qshape.normals[i] = [0, 0, 1]
+        qshape.texcoords[i] = uv * vec2f(uvscale.x, uvscale.z)
+        qshape.positions[i].z = scale.y
+    }
+    merge_shape_inplace(&shape, qshape)
+    // bottom
+    qshape = make_rect([steps.x, steps.z], [1, 1], [1, 1])
+    for i in 0..<qshape.positions.count {
+        let uv = qshape.texcoords[i]
+        let phi = 2 * Float.pi * uv.x
+        qshape.positions[i] = [cos(phi) * uv.y * scale.x, sin(phi) * uv.y * scale.x, 0]
+        qshape.normals[i] = [0, 0, 1]
+        qshape.texcoords[i] = uv * vec2f(uvscale.x, uvscale.z)
+        qshape.positions[i].z = -scale.y
+        qshape.normals[i] = -qshape.normals[i]
+    }
+    qshape.quads = qshape.quads.map({ qquad in
+        [qquad.z, qquad.y, qquad.x]
+    })
+    merge_shape_inplace(&shape, qshape)
+    return shape
 }
 
 // Make a rounded uv cylinder
 func make_rounded_uvcylinder(_ steps: vec3i = [32, 32, 32],
                              _ scale: vec2f = [1, 1], _ uvscale: vec3f = [1, 1, 1],
                              _ radius: Float = 0.3) -> shape_data {
-    fatalError()
+    var shape = make_uvcylinder(steps, scale, uvscale)
+    if (radius != 0) {
+        let radius = min(radius, min(scale))
+        let c = scale - radius
+        for i in 0..<shape.positions.count {
+            let phi = atan2(shape.positions[i].y, shape.positions[i].x)
+            let r = length(vec2f(shape.positions[i].x, shape.positions[i].y))
+            let z = shape.positions[i].z
+            let pc = vec2f(r, abs(z))
+            let ps: Float = (z < 0) ? -1.0 : 1.0
+            if (pc.x >= c.x && pc.y >= c.y) {
+                let pn = normalize(pc - c)
+                shape.positions[i] = [cos(phi) * (c.x + radius * pn.x), sin(phi) * (c.x + radius * pn.x), ps * (c.y + radius * pn.y)]
+                shape.normals[i] = [cos(phi) * pn.x, sin(phi) * pn.x, ps * pn.y]
+            } else {
+                continue
+            }
+        }
+    }
+    return shape
 }
 
 // Make a facevarying rect
 func make_fvrect(_ steps: vec2i = [1, 1],
-                 _ scale: vec2f = [1, 1], _ uvscale: vec2f = [1, 1]) -> shape_data {
-    fatalError()
+                 _ scale: vec2f = [1, 1], _ uvscale: vec2f = [1, 1]) -> fvshape_data {
+    let rect = make_rect(steps, scale, uvscale)
+    var shape = fvshape_data()
+    shape.positions = rect.positions
+    shape.normals = rect.normals
+    shape.texcoords = rect.texcoords
+    shape.quadspos = rect.quads
+    shape.quadsnorm = rect.quads
+    shape.quadstexcoord = rect.quads
+    return shape
 }
 
 // Make a facevarying box
 func make_fvbox(_ steps: vec3i = [1, 1, 1],
-                _ scale: vec3f = [1, 1, 1], _ uvscale: vec3f = [1, 1, 1]) -> shape_data {
-    fatalError()
+                _ scale: vec3f = [1, 1, 1], _ uvscale: vec3f = [1, 1, 1]) -> fvshape_data {
+    var shape = fvshape_data()
+    make_fvbox(&shape.quadspos, &shape.quadsnorm, &shape.quadstexcoord,
+            &shape.positions, &shape.normals, &shape.texcoords, steps, scale, uvscale)
+    return shape
 }
 
 // Make a facevarying sphere
-func make_fvsphere(_ steps: Int = 32, _ scale: Float = 1, _ uvscale: Float = 1) -> shape_data {
-    fatalError()
+func make_fvsphere(_ steps: Int = 32, _ scale: Float = 1, _ uvscale: Float = 1) -> fvshape_data {
+    var shape = fvshape_data()
+    make_fvsphere(&shape.quadspos, &shape.quadsnorm, &shape.quadstexcoord,
+            &shape.positions, &shape.normals, &shape.texcoords, steps, scale, uvscale)
+    return shape
 }
 
 // Generate lines set along a quad. Returns lines, pos, norm, texcoord, radius.
 func make_lines(_ steps: vec2i = [4, 65536],
                 _ scale: vec2f = [1, 1], _ uvscale: vec2f = [1, 1],
-                _ radius: vec2f = [0.001, 0.001]) -> shape_data {
-    fatalError()
+                _ rad: vec2f = [0.001, 0.001]) -> shape_data {
+    var shape = shape_data()
+    shape.positions = .init(repeating: vec3f(), count: (steps.x + 1) * steps.y)
+    shape.normals = .init(repeating: vec3f(), count: (steps.x + 1) * steps.y)
+    shape.texcoords = .init(repeating: vec2f(), count: (steps.x + 1) * steps.y)
+    shape.radius = .init(repeating: 0, count: (steps.x + 1) * steps.y)
+    if (steps.y > 1) {
+        for j in 0..<steps.y {
+            for i in 0...steps.x {
+                let uv = vec2f(Float(i) / Float(steps.x), Float(j) / Float(steps.y - 1))
+                shape.positions[j * (steps.x + 1) + i] = [(uv.x - 0.5) * scale.x, (uv.y - 0.5) * scale.y, 0]
+                shape.normals[j * (steps.x + 1) + i] = [1, 0, 0]
+                shape.texcoords[j * (steps.x + 1) + i] = uv * uvscale
+                shape.radius[j * (steps.x + 1) + i] = interpolate_line(rad.x, rad.y, uv.x)
+            }
+        }
+    } else {
+        for i in 0...steps.x {
+            let uv = vec2f(Float(i) / Float(steps.x), 0)
+            shape.positions[i] = [(uv.x - 0.5) * scale.x, 0, 0]
+            shape.normals[i] = [1, 0, 0]
+            shape.texcoords[i] = uv * uvscale
+            shape.radius[i] = interpolate_line(rad.x, rad.y, uv.x)
+        }
+    }
+
+    shape.lines = .init(repeating: vec2i(), count: steps.x * steps.y)
+    for j in 0..<steps.y {
+        for i in 0..<steps.x {
+            shape.lines[j * steps.x + i] = [j * (steps.x + 1) + i, j * (steps.x + 1) + i + 1]
+        }
+    }
+
+    return shape
 }
 
 // Make a point primitive. Returns points, pos, norm, texcoord, radius.
 func make_point(_ radius: Float = 0.001) -> shape_data {
-    fatalError()
+    var shape = shape_data()
+    shape.points = [0]
+    shape.positions = [[0, 0, 0]]
+    shape.normals = [[0, 0, 1]]
+    shape.texcoords = [[0, 0]]
+    shape.radius = [radius]
+    return shape
 }
 
 // Make a point set on a grid. Returns points, pos, norm, texcoord, radius.
 func make_points(_ num: Int = 65536, _ uvscale: Float = 1, _ radius: Float = 0.001) -> shape_data {
-    fatalError()
+    var shape = shape_data()
+    shape.points = .init(repeating: 0, count: num)
+    for i in 0..<num {
+        shape.points[i] = i
+    }
+    shape.positions.append(contentsOf: [vec3f](repeating: vec3f(), count: num))
+    shape.normals.append(contentsOf: [vec3f](repeating: vec3f(0, 0, 1), count: num))
+    shape.texcoords.append(contentsOf: [vec2f](repeating: vec2f(), count: num))
+    shape.radius.append(contentsOf: [Float](repeating: radius, count: num))
+    for i in 0..<shape.texcoords.count {
+        shape.texcoords[i] = [Float(i) / Float(num), 0]
+    }
+    return shape
 }
 
 func make_points(_ steps: vec2i = [256, 256],
                  _ size: vec2f = [1, 1], _ uvscale: vec2f = [1, 1],
                  _ radius: vec2f = [0.001, 0.001]) -> shape_data {
-    fatalError()
+    var shape = make_rect(steps, size, uvscale)
+    shape.quads = []
+    shape.points = .init(repeating: 0, count: shape.positions.count)
+    for i in 0..<shape.positions.count {
+        shape.points[i] = i
+    }
+    shape.radius = .init(repeating: 0.0, count: shape.positions.count)
+    for i in 0..<shape.texcoords.count {
+        shape.radius[i] = interpolate_line(radius.x, radius.y, shape.texcoords[i].y / uvscale.y)
+    }
+    return shape
 }
 
 // Make random points in a cube. Returns points, pos, norm, texcoord, radius.
