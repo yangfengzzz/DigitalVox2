@@ -182,34 +182,102 @@ func quad_tangents_from_uv(_ p0: vec3f, _ p1: vec3f, _ p2: vec3f, _ p3: vec3f,
 
 // Interpolates values over a line parameterized from a to b by u. Same as lerp.
 @inlinable
-func interpolate_line<T>(_ p0: T, _ p1: T, _ u: Float) -> T {
-    fatalError()
+func interpolate_line(_ p0: vec2f, _ p1: vec2f, _ u: Float) -> vec2f {
+    p0 * (1 - u) + p1 * u
+}
+
+@inlinable
+func interpolate_line(_ p0: vec3f, _ p1: vec3f, _ u: Float) -> vec3f {
+    p0 * (1 - u) + p1 * u
+}
+
+@inlinable
+func interpolate_line(_ p0: vec4f, _ p1: vec4f, _ u: Float) -> vec4f {
+    p0 * (1 - u) + p1 * u
 }
 
 // Interpolates values over a triangle parameterized by u and v along the
 // (p1-p0) and (p2-p0) directions. Same as barycentric interpolation.
 @inlinable
-func interpolate_triangle<T>(_ p0: T, _ p1: T, _ p2: T, _ uv: vec2f) -> T {
-    fatalError()
+func interpolate_triangle(_ p0: vec2f, _ p1: vec2f, _ p2: vec2f, _ uv: vec2f) -> vec2f {
+    p0 * (1 - uv.x - uv.y) + p1 * uv.x + p2 * uv.y
+}
+
+@inlinable
+func interpolate_triangle(_ p0: vec3f, _ p1: vec3f, _ p2: vec3f, _ uv: vec2f) -> vec3f {
+    p0 * (1 - uv.x - uv.y) + p1 * uv.x + p2 * uv.y
+}
+
+@inlinable
+func interpolate_triangle(_ p0: vec4f, _ p1: vec4f, _ p2: vec4f, _ uv: vec2f) -> vec4f {
+    p0 * (1 - uv.x - uv.y) + p1 * uv.x + p2 * uv.y
 }
 
 // Interpolates values over a quad parameterized by u and v along the
 // (p1-p0) and (p2-p1) directions. Same as bilinear interpolation.
 @inlinable
-func interpolate_quad<T>(_ p0: T, _ p1: T, _ p2: T, _ p3: T, _ uv: vec2f) -> T {
-    fatalError()
+func interpolate_quad(_ p0: vec2f, _ p1: vec2f, _ p2: vec2f, _ p3: vec2f, _ uv: vec2f) -> vec2f {
+    if (uv.x + uv.y <= 1) {
+        return interpolate_triangle(p0, p1, p3, uv)
+    } else {
+        return interpolate_triangle(p2, p3, p1, 1 - uv)
+    }
+}
+
+@inlinable
+func interpolate_quad(_ p0: vec3f, _ p1: vec3f, _ p2: vec3f, _ p3: vec3f, _ uv: vec3f) -> vec3f {
+    if (uv.x + uv.y <= 1) {
+        return interpolate_triangle(p0, p1, p3, uv)
+    } else {
+        return interpolate_triangle(p2, p3, p1, 1 - uv)
+    }
+}
+
+@inlinable
+func interpolate_quad(_ p0: vec4f, _ p1: vec4f, _ p2: vec4f, _ p3: vec4f, _ uv: vec4f) -> vec4f {
+    if (uv.x + uv.y <= 1) {
+        return interpolate_triangle(p0, p1, p3, uv)
+    } else {
+        return interpolate_triangle(p2, p3, p1, 1 - uv)
+    }
 }
 
 // Interpolates values along a cubic Bezier segment parametrized by u.
 @inlinable
-func interpolate_bezier<T>(_ p0: T, _ p1: T, _ p2: T, _ p3: T, _ u: Float) -> T {
-    fatalError()
+func interpolate_bezier(_ p0: vec2f, _ p1: vec2f, _ p2: vec2f, _ p3: vec2f, _ u: Float) -> vec2f {
+    p0 * (1 - u) * (1 - u) * (1 - u) + p1 * 3 * u * (1 - u) * (1 - u) +
+            p2 * 3 * u * u * (1 - u) + p3 * u * u * u
+}
+
+@inlinable
+func interpolate_bezier(_ p0: vec3f, _ p1: vec3f, _ p2: vec3f, _ p3: vec3f, _ u: Float) -> vec3f {
+    p0 * (1 - u) * (1 - u) * (1 - u) + p1 * 3 * u * (1 - u) * (1 - u) +
+            p2 * 3 * u * u * (1 - u) + p3 * u * u * u
+}
+
+@inlinable
+func interpolate_bezier(_ p0: vec4f, _ p1: vec4f, _ p2: vec4f, _ p3: vec4f, _ u: Float) -> vec4f {
+    p0 * (1 - u) * (1 - u) * (1 - u) + p1 * 3 * u * (1 - u) * (1 - u) +
+            p2 * 3 * u * u * (1 - u) + p3 * u * u * u
 }
 
 // Computes the derivative of a cubic Bezier segment parametrized by u.
 @inlinable
-func interpolate_bezier_derivative<T>(_ p0: T, _ p1: T, _ p2: T, _ p3: T, _ u: Float) -> T {
-    fatalError()
+func interpolate_bezier_derivative(_ p0: vec2f, _ p1: vec2f, _ p2: vec2f, _ p3: vec2f, _ u: Float) -> vec2f {
+    (p1 - p0) * 3 * (1 - u) * (1 - u) + (p2 - p1) * 6 * u * (1 - u) +
+            (p3 - p2) * 3 * u * u
+}
+
+@inlinable
+func interpolate_bezier_derivative(_ p0: vec3f, _ p1: vec3f, _ p2: vec3f, _ p3: vec3f, _ u: Float) -> vec3f {
+    (p1 - p0) * 3 * (1 - u) * (1 - u) + (p2 - p1) * 6 * u * (1 - u) +
+            (p3 - p2) * 3 * u * u
+}
+
+@inlinable
+func interpolate_bezier_derivative(_ p0: vec4f, _ p1: vec4f, _ p2: vec4f, _ p3: vec4f, _ u: Float) -> vec4f {
+    (p1 - p0) * 3 * (1 - u) * (1 - u) + (p2 - p1) * 6 * u * (1 - u) +
+            (p3 - p2) * 3 * u * u
 }
 
 // Interpolated line properties.
