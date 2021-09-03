@@ -89,6 +89,7 @@
 		0452ED3B26E0F50A0015BFB1 /* frame3f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ED3826E0F50A0015BFB1 /* frame3f.swift */; };
 		0452ED3C26E0F50A0015BFB1 /* frame2f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ED3926E0F50A0015BFB1 /* frame2f.swift */; };
 		047FEB7026E1BA4A0078CFAF /* shape_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEB6F26E1BA4A0078CFAF /* shape_data.swift */; };
+		047FEB7226E1BC570078CFAF /* fvshape_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEB7126E1BC570078CFAF /* fvshape_data.swift */; };
 		0497A1E526DF150500F61DE9 /* voxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A1E426DF150500F61DE9 /* voxApp.swift */; };
 		0497A1E726DF150500F61DE9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A1E626DF150500F61DE9 /* ContentView.swift */; };
 		0497A1E926DF150800F61DE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0497A1E826DF150800F61DE9 /* Assets.xcassets */; };
@@ -234,6 +235,7 @@
 		0452ED3826E0F50A0015BFB1 /* frame3f.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = frame3f.swift; sourceTree = "<group>"; };
 		0452ED3926E0F50A0015BFB1 /* frame2f.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = frame2f.swift; sourceTree = "<group>"; };
 		047FEB6F26E1BA4A0078CFAF /* shape_data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = shape_data.swift; sourceTree = "<group>"; };
+		047FEB7126E1BC570078CFAF /* fvshape_data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fvshape_data.swift; sourceTree = "<group>"; };
 		0497A1E126DF150500F61DE9 /* vox.render.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vox.render.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0497A1E426DF150500F61DE9 /* voxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = voxApp.swift; sourceTree = "<group>"; };
 		0497A1E626DF150500F61DE9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -399,6 +401,7 @@
 				04EA0D7126E1206400CA7833 /* ray3f.swift */,
 				041328A026E19EE1000A4F4E /* geometry.swift */,
 				047FEB6F26E1BA4A0078CFAF /* shape_data.swift */,
+				047FEB7126E1BC570078CFAF /* fvshape_data.swift */,
 			);
 			path = vox.tracing;
 			sourceTree = "<group>";
@@ -867,6 +870,7 @@
 				0452ED1C26DFB0F80015BFB1 /* MotionController.swift in Sources */,
 				04EA0D7226E1206400CA7833 /* ray3f.swift in Sources */,
 				0452ECF826DFAECE0015BFB1 /* RayRendererExtension.swift in Sources */,
+				047FEB7226E1BC570078CFAF /* fvshape_data.swift in Sources */,
 				0452ED2C26E044B90015BFB1 /* mat2f.swift in Sources */,
 				047FEB7026E1BA4A0078CFAF /* shape_data.swift in Sources */,
 				0452ECF626DFAEAB0015BFB1 /* RayRenderer.swift in Sources */,

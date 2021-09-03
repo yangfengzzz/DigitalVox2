@@ -23,7 +23,7 @@ struct shape_data {
     var colors: [vec4f] = []
     var radius: [Float]
     var tangents: [vec4f]
-};
+}
 
 // Interpolate vertex data
 func eval_position(shape: shape_data, element: Int, uv: vec2f) -> vec3f {
@@ -66,9 +66,9 @@ func compute_normals(normals: inout [vec3f], shape: shape_data) {
 
 // An unevaluated location on a shape
 struct shape_point {
-    var element: Int = 0;
+    var element: Int = 0
     var uv = vec2f(0, 0)
-};
+}
 
 // Shape sampling
 func sample_shape_cdf(shape: shape_data) -> [Float] {
