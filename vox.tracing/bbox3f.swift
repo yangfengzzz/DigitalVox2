@@ -20,10 +20,18 @@ public struct bbox3f {
 
     subscript(i: Int) -> vec3f {
         get {
-            fatalError()
+            switch i {
+            case 0: return min
+            case 1: return max
+            default: fatalError()
+            }
         }
         set {
-            fatalError()
+            switch i {
+            case 0: min = newValue
+            case 1: max = newValue
+            default: fatalError()
+            }
         }
     }
 }
@@ -33,42 +41,42 @@ public let invalidb3f = bbox3f()
 // Bounding box properties
 @inlinable
 func center(_ a: bbox3f) -> vec3f {
-    fatalError()
+    (a.min + a.max) / 2
 }
 
 @inlinable
 func size(_ a: bbox3f) -> vec3f {
-    fatalError()
+    a.max - a.min
 }
 
 // Bounding box comparisons.
 @inlinable
 func ==(_ a: bbox3f, _ b: bbox3f) -> Bool {
-    fatalError()
+    a.min == b.min && a.max == b.max
 }
 
 @inlinable
 func !=(_ a: bbox3f, _  b: bbox3f) -> Bool {
-    fatalError()
+    a.min != b.min || a.max != b.max
 }
 
 // Bounding box expansions with points and other boxes.
 @inlinable
 func merge(_ a: bbox3f, _ b: vec3f) -> bbox3f {
-    fatalError()
+    bbox3f(min(a.min, b), max(a.max, b))
 }
 
 @inlinable
 func merge(_ a: bbox3f, _ b: bbox3f) -> bbox3f {
-    fatalError()
+    bbox3f(min(a.min, b.min), max(a.max, b.max))
 }
 
 @inlinable
-func expand(_ a: bbox3f, _ b: vec3f) {
-    fatalError()
+func expand(_ a: inout bbox3f, _ b: vec3f) {
+    a = merge(a, b)
 }
 
 @inlinable
-func expand(_ a: bbox3f, _ b: bbox3f) {
-    fatalError()
+func expand(_ a: inout bbox3f, _ b: bbox3f) {
+    a = merge(a, b)
 }

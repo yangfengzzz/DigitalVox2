@@ -19,5 +19,5 @@ public struct ray2f {
 
 @inlinable
 func ray_point(_ ray: ray2f, _ t: Float) -> vec2f {
-    fatalError()
+    ray.o + ray.d * t
 }
