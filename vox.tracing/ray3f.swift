@@ -12,6 +12,14 @@ public struct ray3f {
     public var d = vec3f(0, 0, 1)
     public var tmin = ray_eps
     public var tmax = Float.greatestFiniteMagnitude
+
+    public init(_ o: vec3f = vec3f(0, 0, 0), _ d: vec3f = vec3f(0, 0, 1),
+                _ tmin: Float = ray_eps, _ tmax: Float = Float.greatestFiniteMagnitude) {
+        self.o = o
+        self.d = d
+        self.tmin = tmin
+        self.tmax = tmax
+    }
 }
 
 @inlinable

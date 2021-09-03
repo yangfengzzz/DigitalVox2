@@ -15,6 +15,14 @@ public struct ray2f {
     public var d = vec2f(0, 1)
     public var tmin = ray_eps
     public var tmax = Float.greatestFiniteMagnitude
+
+    public init(_ o: vec2f = vec2f(0, 0), _ d: vec2f = vec2f(0, 1),
+                _ tmin: Float = ray_eps, _ tmax: Float = Float.greatestFiniteMagnitude) {
+        self.o = o
+        self.d = d
+        self.tmin = tmin
+        self.tmax = tmax
+    }
 }
 
 @inlinable
