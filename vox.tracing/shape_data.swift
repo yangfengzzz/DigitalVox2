@@ -148,36 +148,111 @@ func eval_radius(_ shape: shape_data, _ element: Int, _ uv: vec2f) -> Float {
 
 // Evaluate element normals
 func eval_element_normal(_ shape: shape_data, _ element: Int) -> vec3f {
-    fatalError()
+    if (!shape.points.isEmpty) {
+        return [0, 0, 1]
+    } else if (!shape.lines.isEmpty) {
+        let line = shape.lines[element]
+        return line_tangent(shape.positions[line.x], shape.positions[line.y])
+    } else if (!shape.triangles.isEmpty) {
+        let triangle = shape.triangles[element]
+        return triangle_normal(shape.positions[triangle.x],
+                shape.positions[triangle.y], shape.positions[triangle.z])
+    } else if (!shape.quads.isEmpty) {
+        let quad = shape.quads[element]
+        return quad_normal(shape.positions[quad.x], shape.positions[quad.y],
+                shape.positions[quad.z], shape.positions[quad.w])
+    } else {
+        return [0, 0, 0]
+    }
 }
 
 // Compute per-vertex normals/tangents for lines/triangles/quads.
 func compute_normals(_ shape: shape_data) -> [vec3f] {
-    fatalError()
+    if (!shape.points.isEmpty) {
+        return [vec3f](repeating: [0, 0, 1], count: shape.positions.count)
+    } else if (!shape.lines.isEmpty) {
+        return lines_tangents(shape.lines, shape.positions)
+    } else if (!shape.triangles.isEmpty) {
+        return triangles_normals(shape.triangles, shape.positions)
+    } else if (!shape.quads.isEmpty) {
+        return quads_normals(shape.quads, shape.positions)
+    } else {
+        return [vec3f](repeating: [0, 0, 1], count: shape.positions.count)
+    }
 }
 
 func compute_normals(_ normals: inout [vec3f], _ shape: shape_data) {
-    fatalError()
+    if (!shape.points.isEmpty) {
+        normals.append(contentsOf: [vec3f](repeating: [0, 0, 1], count: shape.positions.count))
+    } else if (!shape.lines.isEmpty) {
+        lines_tangents(&normals, shape.lines, shape.positions)
+    } else if (!shape.triangles.isEmpty) {
+        triangles_normals(&normals, shape.triangles, shape.positions)
+    } else if (!shape.quads.isEmpty) {
+        quads_normals(&normals, shape.quads, shape.positions)
+    } else {
+        normals.append(contentsOf: [vec3f](repeating: [0, 0, 1], count: shape.positions.count))
+    }
 }
 
 // An unevaluated location on a shape
 struct shape_point {
     var element: Int = 0
     var uv = vec2f(0, 0)
+
+    init(_ element: Int = 0, _ uv: vec2f = [0, 0]) {
+        self.element = element
+        self.uv = uv
+    }
 }
 
 // Shape sampling
 func sample_shape_cdf(_ shape: shape_data) -> [Float] {
-    fatalError()
+    if (!shape.points.isEmpty) {
+        return sample_points_cdf(shape.points.count)
+    } else if (!shape.lines.isEmpty) {
+        return sample_lines_cdf(shape.lines, shape.positions)
+    } else if (!shape.triangles.isEmpty) {
+        return sample_triangles_cdf(shape.triangles, shape.positions)
+    } else if (!shape.quads.isEmpty) {
+        return sample_quads_cdf(shape.quads, shape.positions)
+    } else {
+        return sample_points_cdf(shape.positions.count)
+    }
 }
 
 func sample_shape_cdf(_ cdf: inout [Float], _ shape: shape_data) {
-    fatalError()
+    if (!shape.points.isEmpty) {
+        sample_points_cdf(&cdf, shape.points.count)
+    } else if (!shape.lines.isEmpty) {
+        sample_lines_cdf(&cdf, shape.lines, shape.positions)
+    } else if (!shape.triangles.isEmpty) {
+        sample_triangles_cdf(&cdf, shape.triangles, shape.positions)
+    } else if (!shape.quads.isEmpty) {
+        sample_quads_cdf(&cdf, shape.quads, shape.positions)
+    } else {
+        sample_points_cdf(&cdf, shape.positions.count)
+    }
 }
 
 func sample_shape(_ shape: shape_data, _ cdf: [Float],
                   _ rn: Float, _ ruv: vec2f) -> shape_point {
-    fatalError()
+    if (!shape.points.isEmpty) {
+        let element = sample_points(cdf, rn)
+        return shape_point(element, [0, 0])
+    } else if (!shape.lines.isEmpty) {
+        let (element, u) = sample_lines(cdf, rn, ruv.x)
+        return shape_point(element, [u, 0])
+    } else if (!shape.triangles.isEmpty) {
+        let (element, uv) = sample_triangles(cdf, rn, ruv)
+        return shape_point(element, uv)
+    } else if (!shape.quads.isEmpty) {
+        let (element, uv) = sample_quads(cdf, rn, ruv)
+        return shape_point(element, uv)
+    } else {
+        let element = sample_points(cdf, rn)
+        return shape_point(element, [0, 0])
+    }
 }
 
 func sample_shape(_ shape: shape_data, _ num_samples: Int, _ seed: UInt64 = 98729387) -> [shape_point] {
@@ -186,11 +261,20 @@ func sample_shape(_ shape: shape_data, _ num_samples: Int, _ seed: UInt64 = 9872
 
 // Conversions
 func quads_to_triangles(_ shape: shape_data) -> shape_data {
-    fatalError()
+    var result = shape
+    if (!shape.quads.isEmpty) {
+        result.triangles = quads_to_triangles(shape.quads)
+        result.quads = []
+    }
+    return result
 }
 
 func quads_to_triangles_inplace(_ shape: inout shape_data) {
-    fatalError()
+    if (shape.quads.isEmpty) {
+        return
+    }
+    shape.triangles = quads_to_triangles(shape.quads)
+    shape.quads = []
 }
 
 // Subdivision
