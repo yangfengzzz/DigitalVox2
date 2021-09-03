@@ -276,6 +276,7 @@ func interpolate_bezier_derivative(_ p0: vec2f, _ p1: vec2f, _ p2: vec2f, _ p3: 
     var result = (p1 - p0) * 3 * (1 - u) * (1 - u)
     result += (p2 - p1) * 6 * u * (1 - u)
     result += (p3 - p2) * 3 * u * u
+    return result
 }
 
 @inlinable
@@ -283,6 +284,7 @@ func interpolate_bezier_derivative(_ p0: vec3f, _ p1: vec3f, _ p2: vec3f, _ p3: 
     var result = (p1 - p0) * 3 * (1 - u) * (1 - u)
     result += (p2 - p1) * 6 * u * (1 - u)
     result += (p3 - p2) * 3 * u * u
+    return result
 }
 
 @inlinable
@@ -290,6 +292,7 @@ func interpolate_bezier_derivative(_ p0: vec4f, _ p1: vec4f, _ p2: vec4f, _ p3: 
     var result = (p1 - p0) * 3 * (1 - u) * (1 - u)
     result += (p2 - p1) * 6 * u * (1 - u)
     result += (p3 - p2) * 3 * u * u
+    return result
 }
 
 // Interpolated line properties.
