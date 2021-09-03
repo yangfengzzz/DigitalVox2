@@ -21,8 +21,11 @@ struct shape_data {
     var normals: [vec3f] = []
     var texcoords: [vec2f] = []
     var colors: [vec4f] = []
-    var radius: [Float]
-    var tangents: [vec4f]
+    var radius: [Float] = []
+    var tangents: [vec4f] = []
+
+    init() {
+    }
 }
 
 // Interpolate vertex data
@@ -279,10 +282,100 @@ func quads_to_triangles_inplace(_ shape: inout shape_data) {
 
 // Subdivision
 func subdivide_shape(_ shape: shape_data, _ subdivisions: Int, _ catmullclark: Bool) -> shape_data {
-    fatalError()
+    // This should probably be re-implemented in a faster fashion,
+    // but how it is not obvious
+    if (subdivisions == 0) {
+        return shape
+    }
+    var subdivided = shape_data()
+    if (!subdivided.points.isEmpty) {
+        subdivided = shape
+    } else if (!subdivided.lines.isEmpty) {
+        (_, subdivided.normals) = subdivide_lines(
+                shape.lines, shape.normals, subdivisions)
+        (_, subdivided.texcoords) = subdivide_lines(
+                shape.lines, shape.texcoords, subdivisions)
+        (_, subdivided.colors) = subdivide_lines(
+                shape.lines, shape.colors, subdivisions)
+        (_, subdivided.radius) = subdivide_lines(
+                subdivided.lines, shape.radius, subdivisions)
+        (subdivided.lines, subdivided.positions) = subdivide_lines(
+                shape.lines, shape.positions, subdivisions)
+    } else if (!subdivided.triangles.isEmpty) {
+        (_, subdivided.normals) = subdivide_triangles(
+                shape.triangles, shape.normals, subdivisions)
+        (_, subdivided.texcoords) = subdivide_triangles(
+                shape.triangles, shape.texcoords, subdivisions)
+        (_, subdivided.colors) = subdivide_triangles(
+                shape.triangles, shape.colors, subdivisions)
+        (_, subdivided.radius) = subdivide_triangles(
+                shape.triangles, shape.radius, subdivisions)
+        (subdivided.triangles, subdivided.positions) = subdivide_triangles(
+                shape.triangles, shape.positions, subdivisions)
+    } else if (!subdivided.quads.isEmpty && !catmullclark) {
+        (_, subdivided.normals) = subdivide_quads(
+                shape.quads, shape.normals, subdivisions)
+        (_, subdivided.texcoords) = subdivide_quads(
+                shape.quads, shape.texcoords, subdivisions)
+        (_, subdivided.colors) = subdivide_quads(
+                shape.quads, shape.colors, subdivisions)
+        (_, subdivided.radius) = subdivide_quads(
+                shape.quads, shape.radius, subdivisions)
+        (subdivided.quads, subdivided.positions) = subdivide_quads(
+                shape.quads, shape.positions, subdivisions)
+    } else if (!subdivided.quads.isEmpty && catmullclark) {
+        (_, subdivided.normals) = subdivide_catmullclark(
+                shape.quads, shape.normals, subdivisions)
+        (_, subdivided.texcoords) = subdivide_catmullclark(
+                shape.quads, shape.texcoords, subdivisions)
+        (_, subdivided.colors) = subdivide_catmullclark(
+                shape.quads, shape.colors, subdivisions)
+        (_, subdivided.radius) = subdivide_catmullclark(
+                shape.quads, shape.radius, subdivisions)
+        (subdivided.quads, subdivided.positions) = subdivide_catmullclark(
+                shape.quads, shape.positions, subdivisions)
+    } else {
+        // empty shape
+    }
+    return subdivided
 }
 
 // Shape statistics
 func shape_stats(_ shape: shape_data, _ verbose: Bool = false) -> [String] {
-    fatalError()
+    let format = { (num: Int) -> String in
+        var str = String(num)
+        while (str.count < 13) {
+            str = " " + str
+        }
+        return str
+    }
+    let format3 = { (num: vec3f) -> String in
+        var str = String(num.x) + " " + String(num.y) + " " + String(num.z)
+        while (str.count < 13) {
+            str = " " + str
+        }
+        return str
+    }
+
+    var bbox = invalidb3f
+    for pos in shape.positions {
+        bbox = merge(bbox, pos)
+    }
+
+    var stats: [String] = []
+    stats.append("points:       " + format(shape.points.count))
+    stats.append("lines:        " + format(shape.lines.count))
+    stats.append("triangles:    " + format(shape.triangles.count))
+    stats.append("quads:        " + format(shape.quads.count))
+    stats.append("positions:    " + format(shape.positions.count))
+    stats.append("normals:      " + format(shape.normals.count))
+    stats.append("texcoords:    " + format(shape.texcoords.count))
+    stats.append("colors:       " + format(shape.colors.count))
+    stats.append("radius:       " + format(shape.radius.count))
+    stats.append("center:       " + format3(center(bbox)))
+    stats.append("size:         " + format3(size(bbox)))
+    stats.append("min:          " + format3(bbox.min))
+    stats.append("max:          " + format3(bbox.max))
+
+    return stats
 }
