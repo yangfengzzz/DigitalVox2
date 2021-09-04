@@ -1177,21 +1177,56 @@ func skin_matrices(_ skinned_positions: inout [vec3f],
 // -----------------------------------------------------------------------------
 // Flip vertex normals
 func flip_normals(_ normals: [vec3f]) -> [vec3f] {
-    fatalError()
+    normals.map { n in
+        -n
+    }
 }
 
 // Flip face orientation
 func flip_triangles(_ triangles: [vec3i]) -> [vec3i] {
-    fatalError()
+    triangles.map { t in
+        [t.x, t.z, t.y]
+    }
 }
 
 func flip_quads(_ quads: [vec4i]) -> [vec4i] {
-    fatalError()
+    quads.map { q in
+        if (q.z != q.w) {
+            return [q.x, q.w, q.z, q.y]
+        } else {
+            return [q.x, q.z, q.y, q.y]
+        }
+    }
 }
 
 // Align vertex positions. Alignment is 0: none, 1: min, 2: max, 3: center.
 func align_vertices(_ positions: [vec3f], _ alignment: vec3i) -> [vec3f] {
-    fatalError()
+    var bounds = invalidb3f
+    for p in positions {
+        bounds = merge(bounds, p)
+    }
+    var offset = vec3f(0, 0, 0)
+    switch (alignment.x) {
+    case 1: offset.x = bounds.min.x
+    case 2: offset.x = (bounds.min.x + bounds.max.x) / 2
+    case 3: offset.x = bounds.max.x
+    default: fatalError()
+    }
+    switch (alignment.y) {
+    case 1: offset.y = bounds.min.y
+    case 2: offset.y = (bounds.min.y + bounds.max.y) / 2
+    case 3: offset.y = bounds.max.y
+    default: fatalError()
+    }
+    switch (alignment.z) {
+    case 1: offset.z = bounds.min.z
+    case 2: offset.z = (bounds.min.z + bounds.max.z) / 2
+    case 3: offset.z = bounds.max.z
+    default: fatalError()
+    }
+    return positions.map { p in
+        p - offset
+    }
 }
 
 // -----------------------------------------------------------------------------
