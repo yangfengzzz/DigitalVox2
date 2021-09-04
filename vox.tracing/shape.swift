@@ -950,28 +950,110 @@ func make_heightfield(_ size: vec2i, _ color: [vec4f]) -> shape_data {
 // -----------------------------------------------------------------------------
 // Compute per-vertex normals/tangents for lines/triangles/quads.
 func lines_tangents(_ lines: [vec2i], _ positions: [vec3f]) -> [vec3f] {
-    fatalError()
+    var tangents = [vec3f](repeating: vec3f(), count: positions.count)
+    for l in lines {
+        let tangent = line_tangent(positions[l.x], positions[l.y])
+        let length = line_length(positions[l.x], positions[l.y])
+        tangents[l.x] += tangent * length
+        tangents[l.y] += tangent * length
+    }
+    tangents = tangents.map({ tangent in
+        normalize(tangent)
+    })
+    return tangents
 }
 
 func triangles_normals(_ triangles: [vec3i], _ positions: [vec3f]) -> [vec3f] {
-    fatalError()
+    var normals = [vec3f](repeating: vec3f(), count: positions.count)
+    for t in triangles {
+        let normal = triangle_normal(positions[t.x], positions[t.y], positions[t.z])
+        let area = triangle_area(positions[t.x], positions[t.y], positions[t.z])
+        normals[t.x] += normal * area
+        normals[t.y] += normal * area
+        normals[t.z] += normal * area
+    }
+    normals = normals.map({ normal in
+        normalize(normal)
+    })
+    return normals
 }
 
 func quads_normals(_ quads: [vec4i], _ positions: [vec3f]) -> [vec3f] {
-    fatalError()
+    var normals = [vec3f](repeating: vec3f(), count: positions.count)
+    for q in quads {
+        let normal = quad_normal(positions[q.x], positions[q.y], positions[q.z], positions[q.w])
+        let area = quad_area(positions[q.x], positions[q.y], positions[q.z], positions[q.w])
+        normals[q.x] += normal * area
+        normals[q.y] += normal * area
+        normals[q.z] += normal * area
+        if (q.z != q.w) {
+            normals[q.w] += normal * area
+        }
+    }
+    normals = normals.map({ normal in
+        normalize(normal)
+    })
+    return normals
 }
 
 // Update normals and tangents
 func lines_tangents(_ tangents: inout [vec3f], _ lines: [vec2i], _ positions: [vec3f]) {
-    fatalError()
+    if (tangents.count != positions.count) {
+        fatalError("array should be the same length")
+    }
+    tangents = tangents.map({ _ in
+        [0, 0, 0]
+    })
+    for l in lines {
+        let tangent = line_tangent(positions[l.x], positions[l.y])
+        let length = line_length(positions[l.x], positions[l.y])
+        tangents[l.x] += tangent * length
+        tangents[l.y] += tangent * length
+    }
+    tangents = tangents.map({ tangent in
+        normalize(tangent)
+    })
 }
 
 func triangles_normals(_ normals: inout [vec3f], _ triangles: [vec3i], _ positions: [vec3f]) {
-    fatalError()
+    if (normals.count != positions.count) {
+        fatalError("array should be the same length")
+    }
+    normals = normals.map({ _ in
+        [0, 0, 0]
+    })
+    for t in triangles {
+        let normal = triangle_normal(positions[t.x], positions[t.y], positions[t.z])
+        let area = triangle_area(positions[t.x], positions[t.y], positions[t.z])
+        normals[t.x] += normal * area
+        normals[t.y] += normal * area
+        normals[t.z] += normal * area
+    }
+    normals = normals.map({ normal in
+        normalize(normal)
+    })
 }
 
 func quads_normals(_ normals: inout [vec3f], _ quads: [vec4i], _ positions: [vec3f]) {
-    fatalError()
+    if (normals.count != positions.count) {
+        fatalError("array should be the same length")
+    }
+    normals = normals.map({ _ in
+        [0, 0, 0]
+    })
+    for q in quads {
+        let normal = quad_normal(positions[q.x], positions[q.y], positions[q.z], positions[q.w])
+        let area = quad_area(positions[q.x], positions[q.y], positions[q.z], positions[q.w])
+        normals[q.x] += normal * area
+        normals[q.y] += normal * area
+        normals[q.z] += normal * area
+        if (q.z != q.w) {
+            normals[q.w] += normal * area
+        }
+    }
+    normals = normals.map({ normal in
+        normalize(normal)
+    })
 }
 
 // Compute per-vertex tangent space for triangle meshes.
@@ -981,33 +1063,113 @@ func quads_normals(_ normals: inout [vec3f], _ quads: [vec4i], _ positions: [vec
 // Tangent frame is useful in normal mapping.
 func triangle_tangent_spaces(_ triangles: [vec3i], _ positions: [vec3f],
                              _ normals: [vec3f], _ texcoords: [vec2f]) -> [vec4f] {
-    fatalError()
+    var tangu = [vec3f](repeating: vec3f(), count: positions.count)
+    var tangv = [vec3f](repeating: vec3f(), count: positions.count)
+    for t in triangles {
+        let tutv = triangle_tangents_from_uv(positions[t.x], positions[t.y],
+                positions[t.z], texcoords[t.x], texcoords[t.y], texcoords[t.z])
+        for vid in [t.x, t.y, t.z] {
+            tangu[vid] += normalize(tutv.0)
+        }
+        for vid in [t.x, t.y, t.z] {
+            tangv[vid] += normalize(tutv.1)
+        }
+    }
+    tangu = tangu.map({ t in
+        normalize(t)
+    })
+    tangv = tangv.map({ t in
+        normalize(t)
+    })
+
+    var tangent_spaces = [vec4f](repeating: vec4f(), count: positions.count)
+    tangent_spaces = tangent_spaces.map({ _ in
+        zero4f
+    })
+    for i in 0..<positions.count {
+        tangu[i] = orthonormalize(tangu[i], normals[i])
+        let s: Float = (dot(cross(normals[i], tangu[i]), tangv[i]) < 0) ? -1.0 : 1.0
+        tangent_spaces[i] = [tangu[i].x, tangu[i].y, tangu[i].z, s]
+    }
+    return tangent_spaces
 }
 
 // Apply skinning to vertex position and normals.
 func skin_vertices(_ positions: [vec3f], _ normals: [vec3f], _ weights: [vec4f],
                    _ joints: [vec4i], _ xforms: [frame3f]) -> ([vec3f], [vec3f]) {
-    fatalError()
+    var skinned_positions = [vec3f](repeating: vec3f(), count: positions.count)
+    var skinned_normals = [vec3f](repeating: vec3f(), count: positions.count)
+    for i in 0..<positions.count {
+        skinned_positions[i] = transform_point(xforms[joints[i].x], positions[i]) * weights[i].x
+        skinned_positions[i] += transform_point(xforms[joints[i].y], positions[i]) * weights[i].y
+        skinned_positions[i] += transform_point(xforms[joints[i].z], positions[i]) * weights[i].z
+        skinned_positions[i] += transform_point(xforms[joints[i].w], positions[i]) * weights[i].w
+    }
+    for i in 0..<normals.count {
+        var dir = transform_direction(xforms[joints[i].x], normals[i]) * weights[i].x
+        dir += transform_direction(xforms[joints[i].y], normals[i]) * weights[i].y
+        dir += transform_direction(xforms[joints[i].z], normals[i]) * weights[i].z
+        dir += transform_direction(xforms[joints[i].w], normals[i]) * weights[i].w
+        skinned_normals[i] = normalize(dir)
+    }
+    return (skinned_positions, skinned_normals)
 }
 
 // Apply skinning as specified in Khronos glTF.
 func skin_matrices(_ positions: [vec3f], _ normals: [vec3f], _ weights: [vec4f],
                    _ joints: [vec4i], _ xforms: [mat4f]) -> ([vec3f], [vec3f]) {
-    fatalError()
+    var skinned_positions = [vec3f](repeating: vec3f(), count: positions.count)
+    var skinned_normals = [vec3f](repeating: vec3f(), count: positions.count)
+    for i in 0..<positions.count {
+        let xform = xforms[joints[i].x] * weights[i].x +
+                xforms[joints[i].y] * weights[i].y +
+                xforms[joints[i].z] * weights[i].z +
+                xforms[joints[i].w] * weights[i].w
+        skinned_positions[i] = transform_point(xform, positions[i])
+        skinned_normals[i] = normalize(transform_direction(xform, normals[i]))
+    }
+    return (skinned_positions, skinned_normals)
 }
 
 // Update skinning
 func skin_vertices(_ skinned_positions: inout [vec3f], _ skinned_normals: inout [vec3f], _ positions: [vec3f],
                    _ normals: [vec3f], _ weights: [vec4f],
                    _ joints: [vec4i], _ xforms: [frame3f]) {
-    fatalError()
+    if (skinned_positions.count != positions.count ||
+            skinned_normals.count != normals.count) {
+        fatalError("arrays should be the same size")
+    }
+    for i in 0..<positions.count {
+        skinned_positions[i] = transform_point(xforms[joints[i].x], positions[i]) * weights[i].x
+        skinned_positions[i] += transform_point(xforms[joints[i].y], positions[i]) * weights[i].y
+        skinned_positions[i] += transform_point(xforms[joints[i].z], positions[i]) * weights[i].z
+        skinned_positions[i] += transform_point(xforms[joints[i].w], positions[i]) * weights[i].w
+    }
+    for i in 0..<normals.count {
+        var dir = transform_direction(xforms[joints[i].x], normals[i]) * weights[i].x
+        dir += transform_direction(xforms[joints[i].y], normals[i]) * weights[i].y
+        dir += transform_direction(xforms[joints[i].z], normals[i]) * weights[i].z
+        dir += transform_direction(xforms[joints[i].w], normals[i]) * weights[i].w
+        skinned_normals[i] = normalize(dir)
+    }
 }
 
 func skin_matrices(_ skinned_positions: inout [vec3f],
                    _ skinned_normals: inout [vec3f], _ positions: [vec3f],
                    _ normals: [vec3f], _ weights: [vec4f],
                    _ joints: [vec4i], _ xforms: [mat4f]) {
-    fatalError()
+    if (skinned_positions.count != positions.count ||
+            skinned_normals.count != normals.count) {
+        fatalError("arrays should be the same size")
+    }
+    for i in 0..<positions.count {
+        let xform = xforms[joints[i].x] * weights[i].x +
+                xforms[joints[i].y] * weights[i].y +
+                xforms[joints[i].z] * weights[i].z +
+                xforms[joints[i].w] * weights[i].w
+        skinned_positions[i] = transform_point(xform, positions[i])
+        skinned_normals[i] = normalize(transform_direction(xform, normals[i]))
+    }
 }
 
 // -----------------------------------------------------------------------------
