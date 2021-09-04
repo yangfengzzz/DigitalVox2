@@ -18,9 +18,6 @@ struct edge_map {
     }
 
     var edges: [vec2i: edge_data] = [:]
-
-    init() {
-    }
 }
 
 // Initialize an edge map with elements.

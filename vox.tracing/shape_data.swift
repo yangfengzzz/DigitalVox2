@@ -23,9 +23,6 @@ struct shape_data {
     var colors: [vec4f] = []
     var radius: [Float] = []
     var tangents: [vec4f] = []
-
-    init() {
-    }
 }
 
 // Interpolate vertex data

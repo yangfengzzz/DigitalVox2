@@ -18,9 +18,6 @@ struct fvshape_data {
     var positions: [vec3f] = []
     var normals: [vec3f] = []
     var texcoords: [vec2f] = []
-
-    init() {
-    }
 }
 
 // Interpolate vertex data
