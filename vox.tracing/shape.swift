@@ -2599,6 +2599,237 @@ func subdivide_catmullclark(_ quads: [vec4i], _ vertices: [vec4f],
     return (tquads, tvertices)
 }
 
+// Subdivide lines by splitting each line in half.
+func subdivide_lines(_ lines: [vec2i], _ vertices: [Float], _ level: Int) -> ([vec2i], [Float]) {
+    if (level < 1) {
+        return (lines, vertices)
+    }
+    var tess = (lines, vertices)
+    for _ in 0..<level {
+        tess = subdivide_lines(tess.0, tess.1)
+    }
+    return tess
+}
+
+func subdivide_lines(_ lines: [vec2i], _ vertices: [vec2f], _ level: Int) -> ([vec2i], [vec2f]) {
+    if (level < 1) {
+        return (lines, vertices)
+    }
+    var tess = (lines, vertices)
+    for _ in 0..<level {
+        tess = subdivide_lines(tess.0, tess.1)
+    }
+    return tess
+}
+
+func subdivide_lines(_ lines: [vec2i], _ vertices: [vec3f], _ level: Int) -> ([vec2i], [vec3f]) {
+    if (level < 1) {
+        return (lines, vertices)
+    }
+    var tess = (lines, vertices)
+    for _ in 0..<level {
+        tess = subdivide_lines(tess.0, tess.1)
+    }
+    return tess
+}
+
+func subdivide_lines(_ lines: [vec2i], _ vertices: [vec4f], _ level: Int) -> ([vec2i], [vec4f]) {
+    if (level < 1) {
+        return (lines, vertices)
+    }
+    var tess = (lines, vertices)
+    for _ in 0..<level {
+        tess = subdivide_lines(tess.0, tess.1)
+    }
+    return tess
+}
+
+// Subdivide triangle by splitting each triangle in four, creating new
+// vertices for each edge.
+func subdivide_triangles(_ triangles: [vec3i], _ vertices: [Float], _ level: Int) -> ([vec3i], [Float]) {
+    if (level < 1) {
+        return (triangles, vertices)
+    }
+    var tess = (triangles, vertices)
+    for _ in 0..<level {
+        tess = subdivide_triangles(tess.0, tess.1)
+    }
+    return tess
+}
+
+func subdivide_triangles(_ triangles: [vec3i], _ vertices: [vec2f], _ level: Int) -> ([vec3i], [vec2f]) {
+    if (level < 1) {
+        return (triangles, vertices)
+    }
+    var tess = (triangles, vertices)
+    for _ in 0..<level {
+        tess = subdivide_triangles(tess.0, tess.1)
+    }
+    return tess
+}
+
+func subdivide_triangles(_ triangles: [vec3i], _ vertices: [vec3f], _ level: Int) -> ([vec3i], [vec3f]) {
+    if (level < 1) {
+        return (triangles, vertices)
+    }
+    var tess = (triangles, vertices)
+    for _ in 0..<level {
+        tess = subdivide_triangles(tess.0, tess.1)
+    }
+    return tess
+}
+
+func subdivide_triangles(_ triangles: [vec3i], _ vertices: [vec4f], _ level: Int) -> ([vec3i], [vec4f]) {
+    if (level < 1) {
+        return (triangles, vertices)
+    }
+    var tess = (triangles, vertices)
+    for _ in 0..<level {
+        tess = subdivide_triangles(tess.0, tess.1)
+    }
+    return tess
+}
+
+// Subdivide quads by splitting each quads in four, creating new
+// vertices for each edge and for each face.
+func subdivide_quads(_ quads: [vec4i], _ vertices: [Float], _ level: Int) -> ([vec4i], [Float]) {
+    if (level < 1) {
+        return (quads, vertices)
+    }
+    var tess = (quads, vertices)
+    for _ in 0..<level {
+        tess = subdivide_quads(tess.0, tess.1)
+    }
+    return tess
+}
+
+func subdivide_quads(_ quads: [vec4i], _ vertices: [vec2f], _ level: Int) -> ([vec4i], [vec2f]) {
+    if (level < 1) {
+        return (quads, vertices)
+    }
+    var tess = (quads, vertices)
+    for _ in 0..<level {
+        tess = subdivide_quads(tess.0, tess.1)
+    }
+    return tess
+}
+
+func subdivide_quads(_ quads: [vec4i], _ vertices: [vec3f], _ level: Int) -> ([vec4i], [vec3f]) {
+    if (level < 1) {
+        return (quads, vertices)
+    }
+    var tess = (quads, vertices)
+    for _ in 0..<level {
+        tess = subdivide_quads(tess.0, tess.1)
+    }
+    return tess
+}
+
+func subdivide_quads(_ quads: [vec4i], _ vertices: [vec4f], _ level: Int) -> ([vec4i], [vec4f]) {
+    if (level < 1) {
+        return (quads, vertices)
+    }
+    var tess = (quads, vertices)
+    for _ in 0..<level {
+        tess = subdivide_quads(tess.0, tess.1)
+    }
+    return tess
+}
+
+// Subdivide beziers by splitting each segment in two.
+func subdivide_beziers(_ beziers: [vec4i], _ vertices: [Float], _ level: Int) -> ([vec4i], [Float]) {
+    if (level < 1) {
+        return (beziers, vertices)
+    }
+    var tess = (beziers, vertices)
+    for _ in 0..<level {
+        tess = subdivide_beziers(tess.0, tess.1)
+    }
+    return tess
+}
+
+func subdivide_beziers(_ beziers: [vec4i], _ vertices: [vec2f], _ level: Int) -> ([vec4i], [vec2f]) {
+    if (level < 1) {
+        return (beziers, vertices)
+    }
+    var tess = (beziers, vertices)
+    for _ in 0..<level {
+        tess = subdivide_beziers(tess.0, tess.1)
+    }
+    return tess
+}
+
+func subdivide_beziers(_ beziers: [vec4i], _ vertices: [vec3f], _ level: Int) -> ([vec4i], [vec3f]) {
+    if (level < 1) {
+        return (beziers, vertices)
+    }
+    var tess = (beziers, vertices)
+    for _ in 0..<level {
+        tess = subdivide_beziers(tess.0, tess.1)
+    }
+    return tess
+}
+
+func subdivide_beziers(_ beziers: [vec4i], _ vertices: [vec4f], _ level: Int) -> ([vec4i], [vec4f]) {
+    if (level < 1) {
+        return (beziers, vertices)
+    }
+    var tess = (beziers, vertices)
+    for _ in 0..<level {
+        tess = subdivide_beziers(tess.0, tess.1)
+    }
+    return tess
+}
+
+// Subdivide quads using Carmull-Clark subdivision rules.
+func subdivide_catmullclark(_ quads: [vec4i], _ vertices: [Float], _ level: Int,
+                            _ lock_boundary: Bool = false) -> ([vec4i], [Float]) {
+    if (level < 1) {
+        return (quads, vertices)
+    }
+    var tess = (quads, vertices)
+    for _ in 0..<level {
+        tess = subdivide_catmullclark(tess.0, tess.1, lock_boundary)
+    }
+    return tess
+}
+
+func subdivide_catmullclark(_ quads: [vec4i], _ vertices: [vec2f], _ level: Int,
+                            _ lock_boundary: Bool = false) -> ([vec4i], [vec2f]) {
+    if (level < 1) {
+        return (quads, vertices)
+    }
+    var tess = (quads, vertices)
+    for _ in 0..<level {
+        tess = subdivide_catmullclark(tess.0, tess.1, lock_boundary)
+    }
+    return tess
+}
+
+func subdivide_catmullclark(_ quads: [vec4i], _ vertices: [vec3f], _ level: Int,
+                            _ lock_boundary: Bool = false) -> ([vec4i], [vec3f]) {
+    if (level < 1) {
+        return (quads, vertices)
+    }
+    var tess = (quads, vertices)
+    for _ in 0..<level {
+        tess = subdivide_catmullclark(tess.0, tess.1, lock_boundary)
+    }
+    return tess
+}
+
+func subdivide_catmullclark(_ quads: [vec4i], _ vertices: [vec4f], _ level: Int,
+                            _ lock_boundary: Bool = false) -> ([vec4i], [vec4f]) {
+    if (level < 1) {
+        return (quads, vertices)
+    }
+    var tess = (quads, vertices)
+    for _ in 0..<level {
+        tess = subdivide_catmullclark(tess.0, tess.1, lock_boundary)
+    }
+    return tess
+}
+
 // -----------------------------------------------------------------------------
 // SHAPE SAMPLING
 // -----------------------------------------------------------------------------
