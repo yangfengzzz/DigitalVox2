@@ -1405,92 +1405,656 @@ func merge_quads(_ quads: inout [vec4i], _ positions: inout [vec3f],
 // SHAPE SUBDIVISION
 // -----------------------------------------------------------------------------
 // Subdivide lines by splitting each line in half.
-func subdivide_lines(_ lines: [vec2i], _ vertex: [Float]) -> ([vec2i], [Float]) {
-    fatalError()
+func subdivide_lines(_ lines: [vec2i], _ vertices: [Float]) -> ([vec2i], [Float]) {
+    // early exit
+    if (lines.isEmpty || vertices.isEmpty) {
+        return (lines, vertices)
+    }
+    // create vertices
+    var tvertices: [Float] = []
+    tvertices.reserveCapacity(vertices.count + lines.count)
+    for vertex in vertices {
+        tvertices.append(vertex)
+    }
+    for line in lines {
+        tvertices.append((vertices[line.x] + vertices[line.y]) / 2)
+    }
+    // create lines
+    var tlines: [vec2i] = []
+    tlines.reserveCapacity(lines.count * 2)
+    let line_vertex = { (line_id: Int) -> Int in
+        vertices.count + line_id
+    }
+    for (line_id, line) in lines.enumerated() {
+        tlines.append([line.x, line_vertex(line_id)])
+        tlines.append([line_vertex(line_id), line.y])
+    }
+    // done
+    return (tlines, tvertices)
 }
 
-func subdivide_lines(_ lines: [vec2i], _ vertex: [vec2f]) -> ([vec2i], [vec2f]) {
-    fatalError()
+func subdivide_lines(_ lines: [vec2i], _ vertices: [vec2f]) -> ([vec2i], [vec2f]) {
+    // early exit
+    if (lines.isEmpty || vertices.isEmpty) {
+        return (lines, vertices)
+    }
+    // create vertices
+    var tvertices: [vec2f] = []
+    tvertices.reserveCapacity(vertices.count + lines.count)
+    for vertex in vertices {
+        tvertices.append(vertex)
+    }
+    for line in lines {
+        tvertices.append((vertices[line.x] + vertices[line.y]) / 2)
+    }
+    // create lines
+    var tlines: [vec2i] = []
+    tlines.reserveCapacity(lines.count * 2)
+    let line_vertex = { (line_id: Int) -> Int in
+        vertices.count + line_id
+    }
+    for (line_id, line) in lines.enumerated() {
+        tlines.append([line.x, line_vertex(line_id)])
+        tlines.append([line_vertex(line_id), line.y])
+    }
+    // done
+    return (tlines, tvertices)
 }
 
-func subdivide_lines(_ lines: [vec2i], _ vertex: [vec3f]) -> ([vec2i], [vec3f]) {
-    fatalError()
+func subdivide_lines(_ lines: [vec2i], _ vertices: [vec3f]) -> ([vec2i], [vec3f]) {
+    // early exit
+    if (lines.isEmpty || vertices.isEmpty) {
+        return (lines, vertices)
+    }
+    // create vertices
+    var tvertices: [vec3f] = []
+    tvertices.reserveCapacity(vertices.count + lines.count)
+    for vertex in vertices {
+        tvertices.append(vertex)
+    }
+    for line in lines {
+        tvertices.append((vertices[line.x] + vertices[line.y]) / 2)
+    }
+    // create lines
+    var tlines: [vec2i] = []
+    tlines.reserveCapacity(lines.count * 2)
+    let line_vertex = { (line_id: Int) -> Int in
+        vertices.count + line_id
+    }
+    for (line_id, line) in lines.enumerated() {
+        tlines.append([line.x, line_vertex(line_id)])
+        tlines.append([line_vertex(line_id), line.y])
+    }
+    // done
+    return (tlines, tvertices)
 }
 
-func subdivide_lines(_ lines: [vec2i], _ vertex: [vec4f]) -> ([vec2i], [vec4f]) {
-    fatalError()
+func subdivide_lines(_ lines: [vec2i], _ vertices: [vec4f]) -> ([vec2i], [vec4f]) {
+    // early exit
+    if (lines.isEmpty || vertices.isEmpty) {
+        return (lines, vertices)
+    }
+    // create vertices
+    var tvertices: [vec4f] = []
+    tvertices.reserveCapacity(vertices.count + lines.count)
+    for vertex in vertices {
+        tvertices.append(vertex)
+    }
+    for line in lines {
+        tvertices.append((vertices[line.x] + vertices[line.y]) / 2)
+    }
+    // create lines
+    var tlines: [vec2i] = []
+    tlines.reserveCapacity(lines.count * 2)
+    let line_vertex = { (line_id: Int) -> Int in
+        vertices.count + line_id
+    }
+    for (line_id, line) in lines.enumerated() {
+        tlines.append([line.x, line_vertex(line_id)])
+        tlines.append([line_vertex(line_id), line.y])
+    }
+    // done
+    return (tlines, tvertices)
 }
 
 // Subdivide triangle by splitting each triangle in four, creating new
 // vertices for each edge.
-func subdivide_triangles(_ triangles: [vec3i], _ vertex: [Float]) -> ([vec3i], [Float]) {
-    fatalError()
+func subdivide_triangles(_ triangles: [vec3i], _ vertices: [Float]) -> ([vec3i], [Float]) {
+    // early exit
+    if (triangles.isEmpty || vertices.isEmpty) {
+        return (triangles, vertices)
+    }
+    // get edges
+    let emap = make_edge_map(triangles)
+    let edges = get_edges(emap)
+    // create vertices
+    var tvertices: [Float] = []
+    tvertices.reserveCapacity(vertices.count + edges.count)
+    for vertex in vertices {
+        tvertices.append(vertex)
+    }
+    for edge in edges {
+        tvertices.append((vertices[edge.x] + vertices[edge.y]) / 2)
+    }
+    // create triangles
+    var ttriangles: [vec3i] = []
+    ttriangles.reserveCapacity(triangles.count * 4)
+    let edge_vertex = { (edge: vec2i) -> Int in
+        vertices.count + edge_index(emap, edge)
+    }
+    for triangle in triangles {
+        ttriangles.append([triangle.x, edge_vertex([triangle.x, triangle.y]),
+                           edge_vertex([triangle.z, triangle.x])])
+        ttriangles.append([triangle.y, edge_vertex([triangle.y, triangle.z]),
+                           edge_vertex([triangle.x, triangle.y])])
+        ttriangles.append([triangle.z, edge_vertex([triangle.z, triangle.x]),
+                           edge_vertex([triangle.y, triangle.z])])
+        ttriangles.append([edge_vertex([triangle.x, triangle.y]),
+                           edge_vertex([triangle.y, triangle.z]),
+                           edge_vertex([triangle.z, triangle.x])])
+    }
+    // done
+    return (ttriangles, tvertices)
 }
 
-func subdivide_triangles(_ triangles: [vec3i], _ vertex: [vec2f]) -> ([vec3i], [vec2f]) {
-    fatalError()
+func subdivide_triangles(_ triangles: [vec3i], _ vertices: [vec2f]) -> ([vec3i], [vec2f]) {
+    // early exit
+    if (triangles.isEmpty || vertices.isEmpty) {
+        return (triangles, vertices)
+    }
+    // get edges
+    let emap = make_edge_map(triangles)
+    let edges = get_edges(emap)
+    // create vertices
+    var tvertices: [vec2f] = []
+    tvertices.reserveCapacity(vertices.count + edges.count)
+    for vertex in vertices {
+        tvertices.append(vertex)
+    }
+    for edge in edges {
+        tvertices.append((vertices[edge.x] + vertices[edge.y]) / 2)
+    }
+    // create triangles
+    var ttriangles: [vec3i] = []
+    ttriangles.reserveCapacity(triangles.count * 4)
+    let edge_vertex = { (edge: vec2i) -> Int in
+        vertices.count + edge_index(emap, edge)
+    }
+    for triangle in triangles {
+        ttriangles.append([triangle.x, edge_vertex([triangle.x, triangle.y]),
+                           edge_vertex([triangle.z, triangle.x])])
+        ttriangles.append([triangle.y, edge_vertex([triangle.y, triangle.z]),
+                           edge_vertex([triangle.x, triangle.y])])
+        ttriangles.append([triangle.z, edge_vertex([triangle.z, triangle.x]),
+                           edge_vertex([triangle.y, triangle.z])])
+        ttriangles.append([edge_vertex([triangle.x, triangle.y]),
+                           edge_vertex([triangle.y, triangle.z]),
+                           edge_vertex([triangle.z, triangle.x])])
+    }
+    // done
+    return (ttriangles, tvertices)
 }
 
-func subdivide_triangles(_ triangles: [vec3i], _ vertex: [vec3f]) -> ([vec3i], [vec3f]) {
-    fatalError()
+func subdivide_triangles(_ triangles: [vec3i], _ vertices: [vec3f]) -> ([vec3i], [vec3f]) {
+    // early exit
+    if (triangles.isEmpty || vertices.isEmpty) {
+        return (triangles, vertices)
+    }
+    // get edges
+    let emap = make_edge_map(triangles)
+    let edges = get_edges(emap)
+    // create vertices
+    var tvertices: [vec3f] = []
+    tvertices.reserveCapacity(vertices.count + edges.count)
+    for vertex in vertices {
+        tvertices.append(vertex)
+    }
+    for edge in edges {
+        tvertices.append((vertices[edge.x] + vertices[edge.y]) / 2)
+    }
+    // create triangles
+    var ttriangles: [vec3i] = []
+    ttriangles.reserveCapacity(triangles.count * 4)
+    let edge_vertex = { (edge: vec2i) -> Int in
+        vertices.count + edge_index(emap, edge)
+    }
+    for triangle in triangles {
+        ttriangles.append([triangle.x, edge_vertex([triangle.x, triangle.y]),
+                           edge_vertex([triangle.z, triangle.x])])
+        ttriangles.append([triangle.y, edge_vertex([triangle.y, triangle.z]),
+                           edge_vertex([triangle.x, triangle.y])])
+        ttriangles.append([triangle.z, edge_vertex([triangle.z, triangle.x]),
+                           edge_vertex([triangle.y, triangle.z])])
+        ttriangles.append([edge_vertex([triangle.x, triangle.y]),
+                           edge_vertex([triangle.y, triangle.z]),
+                           edge_vertex([triangle.z, triangle.x])])
+    }
+    // done
+    return (ttriangles, tvertices)
 }
 
-func subdivide_triangles(_ triangles: [vec3i], _ vertex: [vec4f]) -> ([vec3i], [vec4f]) {
-    fatalError()
+func subdivide_triangles(_ triangles: [vec3i], _ vertices: [vec4f]) -> ([vec3i], [vec4f]) {
+    // early exit
+    if (triangles.isEmpty || vertices.isEmpty) {
+        return (triangles, vertices)
+    }
+    // get edges
+    let emap = make_edge_map(triangles)
+    let edges = get_edges(emap)
+    // create vertices
+    var tvertices: [vec4f] = []
+    tvertices.reserveCapacity(vertices.count + edges.count)
+    for vertex in vertices {
+        tvertices.append(vertex)
+    }
+    for edge in edges {
+        tvertices.append((vertices[edge.x] + vertices[edge.y]) / 2)
+    }
+    // create triangles
+    var ttriangles: [vec3i] = []
+    ttriangles.reserveCapacity(triangles.count * 4)
+    let edge_vertex = { (edge: vec2i) -> Int in
+        vertices.count + edge_index(emap, edge)
+    }
+    for triangle in triangles {
+        ttriangles.append([triangle.x, edge_vertex([triangle.x, triangle.y]),
+                           edge_vertex([triangle.z, triangle.x])])
+        ttriangles.append([triangle.y, edge_vertex([triangle.y, triangle.z]),
+                           edge_vertex([triangle.x, triangle.y])])
+        ttriangles.append([triangle.z, edge_vertex([triangle.z, triangle.x]),
+                           edge_vertex([triangle.y, triangle.z])])
+        ttriangles.append([edge_vertex([triangle.x, triangle.y]),
+                           edge_vertex([triangle.y, triangle.z]),
+                           edge_vertex([triangle.z, triangle.x])])
+    }
+    // done
+    return (ttriangles, tvertices)
 }
 
 // Subdivide quads by splitting each quads in four, creating new
 // vertices for each edge and for each face.
-func subdivide_quads(_ quads: [vec4i], _ vertex: [Float]) -> ([vec4i], [Float]) {
-    fatalError()
+func subdivide_quads(_ quads: [vec4i], _ vertices: [Float]) -> ([vec4i], [Float]) {
+    // early exit
+    if (quads.isEmpty || vertices.isEmpty) {
+        return (quads, vertices)
+    }
+    // get edges
+    let emap = make_edge_map(quads)
+    let edges = get_edges(emap)
+    // create vertices
+    var tvertices: [Float] = []
+    tvertices.reserveCapacity(vertices.count + edges.count + quads.count)
+    for vertex in vertices {
+        tvertices.append(vertex)
+    }
+    for edge in edges {
+        tvertices.append((vertices[edge.x] + vertices[edge.y]) / 2)
+    }
+    for quad in quads {
+        if (quad.z != quad.w) {
+            tvertices.append((vertices[quad.x] + vertices[quad.y] +
+                    vertices[quad.z] + vertices[quad.w]) /
+                    4)
+        } else {
+            tvertices.append(
+                    (vertices[quad.x] + vertices[quad.y] + vertices[quad.z]) / 3)
+        }
+    }
+    // create quads
+    var tquads: [vec4i] = []
+    tquads.reserveCapacity(quads.count * 4)
+    let edge_vertex = { (edge: vec2i) -> Int in
+        vertices.count + edge_index(emap, edge)
+    }
+    let quad_vertex = { (quad_id: Int) -> Int in
+        vertices.count + edges.count + quad_id
+    }
+    for (quad_id, quad) in quads.enumerated() {
+        if (quad.z != quad.w) {
+            tquads.append([quad.x, edge_vertex([quad.x, quad.y]),
+                           quad_vertex(quad_id), edge_vertex([quad.w, quad.x])])
+            tquads.append([quad.y, edge_vertex([quad.y, quad.z]),
+                           quad_vertex(quad_id), edge_vertex([quad.x, quad.y])])
+            tquads.append([quad.z, edge_vertex([quad.z, quad.w]),
+                           quad_vertex(quad_id), edge_vertex([quad.y, quad.z])])
+            tquads.append([quad.w, edge_vertex([quad.w, quad.x]),
+                           quad_vertex(quad_id), edge_vertex([quad.z, quad.w])])
+        } else {
+            tquads.append([quad.x, edge_vertex([quad.x, quad.y]),
+                           quad_vertex(quad_id), edge_vertex([quad.z, quad.x])])
+            tquads.append([quad.y, edge_vertex([quad.y, quad.z]),
+                           quad_vertex(quad_id), edge_vertex([quad.x, quad.y])])
+            tquads.append([quad.z, edge_vertex([quad.z, quad.x]),
+                           quad_vertex(quad_id), edge_vertex([quad.y, quad.z])])
+        }
+    }
+    // done
+    return (tquads, tvertices)
 }
 
-func subdivide_quads(_ quads: [vec4i], _ vertex: [vec2f]) -> ([vec4i], [vec2f]) {
-    fatalError()
+func subdivide_quads(_ quads: [vec4i], _ vertices: [vec2f]) -> ([vec4i], [vec2f]) {
+    // early exit
+    if (quads.isEmpty || vertices.isEmpty) {
+        return (quads, vertices)
+    }
+    // get edges
+    let emap = make_edge_map(quads)
+    let edges = get_edges(emap)
+    // create vertices
+    var tvertices: [vec2f] = []
+    tvertices.reserveCapacity(vertices.count + edges.count + quads.count)
+    for vertex in vertices {
+        tvertices.append(vertex)
+    }
+    for edge in edges {
+        tvertices.append((vertices[edge.x] + vertices[edge.y]) / 2)
+    }
+    for quad in quads {
+        if (quad.z != quad.w) {
+            tvertices.append((vertices[quad.x] + vertices[quad.y] +
+                    vertices[quad.z] + vertices[quad.w]) /
+                    4)
+        } else {
+            tvertices.append(
+                    (vertices[quad.x] + vertices[quad.y] + vertices[quad.z]) / 3)
+        }
+    }
+    // create quads
+    var tquads: [vec4i] = []
+    tquads.reserveCapacity(quads.count * 4)
+    let edge_vertex = { (edge: vec2i) -> Int in
+        vertices.count + edge_index(emap, edge)
+    }
+    let quad_vertex = { (quad_id: Int) -> Int in
+        vertices.count + edges.count + quad_id
+    }
+    for (quad_id, quad) in quads.enumerated() {
+        if (quad.z != quad.w) {
+            tquads.append([quad.x, edge_vertex([quad.x, quad.y]),
+                           quad_vertex(quad_id), edge_vertex([quad.w, quad.x])])
+            tquads.append([quad.y, edge_vertex([quad.y, quad.z]),
+                           quad_vertex(quad_id), edge_vertex([quad.x, quad.y])])
+            tquads.append([quad.z, edge_vertex([quad.z, quad.w]),
+                           quad_vertex(quad_id), edge_vertex([quad.y, quad.z])])
+            tquads.append([quad.w, edge_vertex([quad.w, quad.x]),
+                           quad_vertex(quad_id), edge_vertex([quad.z, quad.w])])
+        } else {
+            tquads.append([quad.x, edge_vertex([quad.x, quad.y]),
+                           quad_vertex(quad_id), edge_vertex([quad.z, quad.x])])
+            tquads.append([quad.y, edge_vertex([quad.y, quad.z]),
+                           quad_vertex(quad_id), edge_vertex([quad.x, quad.y])])
+            tquads.append([quad.z, edge_vertex([quad.z, quad.x]),
+                           quad_vertex(quad_id), edge_vertex([quad.y, quad.z])])
+        }
+    }
+    // done
+    return (tquads, tvertices)
 }
 
-func subdivide_quads(_ quads: [vec4i], _ vertex: [vec3f]) -> ([vec4i], [vec3f]) {
-    fatalError()
+func subdivide_quads(_ quads: [vec4i], _ vertices: [vec3f]) -> ([vec4i], [vec3f]) {
+    // early exit
+    if (quads.isEmpty || vertices.isEmpty) {
+        return (quads, vertices)
+    }
+    // get edges
+    let emap = make_edge_map(quads)
+    let edges = get_edges(emap)
+    // create vertices
+    var tvertices: [vec3f] = []
+    tvertices.reserveCapacity(vertices.count + edges.count + quads.count)
+    for vertex in vertices {
+        tvertices.append(vertex)
+    }
+    for edge in edges {
+        tvertices.append((vertices[edge.x] + vertices[edge.y]) / 2)
+    }
+    for quad in quads {
+        if (quad.z != quad.w) {
+            tvertices.append((vertices[quad.x] + vertices[quad.y] +
+                    vertices[quad.z] + vertices[quad.w]) /
+                    4)
+        } else {
+            tvertices.append(
+                    (vertices[quad.x] + vertices[quad.y] + vertices[quad.z]) / 3)
+        }
+    }
+    // create quads
+    var tquads: [vec4i] = []
+    tquads.reserveCapacity(quads.count * 4)
+    let edge_vertex = { (edge: vec2i) -> Int in
+        vertices.count + edge_index(emap, edge)
+    }
+    let quad_vertex = { (quad_id: Int) -> Int in
+        vertices.count + edges.count + quad_id
+    }
+    for (quad_id, quad) in quads.enumerated() {
+        if (quad.z != quad.w) {
+            tquads.append([quad.x, edge_vertex([quad.x, quad.y]),
+                           quad_vertex(quad_id), edge_vertex([quad.w, quad.x])])
+            tquads.append([quad.y, edge_vertex([quad.y, quad.z]),
+                           quad_vertex(quad_id), edge_vertex([quad.x, quad.y])])
+            tquads.append([quad.z, edge_vertex([quad.z, quad.w]),
+                           quad_vertex(quad_id), edge_vertex([quad.y, quad.z])])
+            tquads.append([quad.w, edge_vertex([quad.w, quad.x]),
+                           quad_vertex(quad_id), edge_vertex([quad.z, quad.w])])
+        } else {
+            tquads.append([quad.x, edge_vertex([quad.x, quad.y]),
+                           quad_vertex(quad_id), edge_vertex([quad.z, quad.x])])
+            tquads.append([quad.y, edge_vertex([quad.y, quad.z]),
+                           quad_vertex(quad_id), edge_vertex([quad.x, quad.y])])
+            tquads.append([quad.z, edge_vertex([quad.z, quad.x]),
+                           quad_vertex(quad_id), edge_vertex([quad.y, quad.z])])
+        }
+    }
+    // done
+    return (tquads, tvertices)
 }
 
-func subdivide_quads(_ quads: [vec4i], _ vertex: [vec4f]) -> ([vec4i], [vec4f]) {
-    fatalError()
+func subdivide_quads(_ quads: [vec4i], _ vertices: [vec4f]) -> ([vec4i], [vec4f]) {
+    // early exit
+    if (quads.isEmpty || vertices.isEmpty) {
+        return (quads, vertices)
+    }
+    // get edges
+    let emap = make_edge_map(quads)
+    let edges = get_edges(emap)
+    // create vertices
+    var tvertices: [vec4f] = []
+    tvertices.reserveCapacity(vertices.count + edges.count + quads.count)
+    for vertex in vertices {
+        tvertices.append(vertex)
+    }
+    for edge in edges {
+        tvertices.append((vertices[edge.x] + vertices[edge.y]) / 2)
+    }
+    for quad in quads {
+        if (quad.z != quad.w) {
+            tvertices.append((vertices[quad.x] + vertices[quad.y] +
+                    vertices[quad.z] + vertices[quad.w]) /
+                    4)
+        } else {
+            tvertices.append(
+                    (vertices[quad.x] + vertices[quad.y] + vertices[quad.z]) / 3)
+        }
+    }
+    // create quads
+    var tquads: [vec4i] = []
+    tquads.reserveCapacity(quads.count * 4)
+    let edge_vertex = { (edge: vec2i) -> Int in
+        vertices.count + edge_index(emap, edge)
+    }
+    let quad_vertex = { (quad_id: Int) -> Int in
+        vertices.count + edges.count + quad_id
+    }
+    for (quad_id, quad) in quads.enumerated() {
+        if (quad.z != quad.w) {
+            tquads.append([quad.x, edge_vertex([quad.x, quad.y]),
+                           quad_vertex(quad_id), edge_vertex([quad.w, quad.x])])
+            tquads.append([quad.y, edge_vertex([quad.y, quad.z]),
+                           quad_vertex(quad_id), edge_vertex([quad.x, quad.y])])
+            tquads.append([quad.z, edge_vertex([quad.z, quad.w]),
+                           quad_vertex(quad_id), edge_vertex([quad.y, quad.z])])
+            tquads.append([quad.w, edge_vertex([quad.w, quad.x]),
+                           quad_vertex(quad_id), edge_vertex([quad.z, quad.w])])
+        } else {
+            tquads.append([quad.x, edge_vertex([quad.x, quad.y]),
+                           quad_vertex(quad_id), edge_vertex([quad.z, quad.x])])
+            tquads.append([quad.y, edge_vertex([quad.y, quad.z]),
+                           quad_vertex(quad_id), edge_vertex([quad.x, quad.y])])
+            tquads.append([quad.z, edge_vertex([quad.z, quad.x]),
+                           quad_vertex(quad_id), edge_vertex([quad.y, quad.z])])
+        }
+    }
+    // done
+    return (tquads, tvertices)
 }
 
 // Subdivide beziers by splitting each segment in two.
-func subdivide_beziers(_ beziers: [vec4i], _ vertex: [Float]) -> ([vec4i], [Float]) {
-    fatalError()
+func subdivide_beziers(_ beziers: [vec4i], _ vertices: [Float]) -> ([vec4i], [Float]) {
+    // early exit
+    if (beziers.isEmpty || vertices.isEmpty) {
+        return (beziers, vertices)
+    }
+    // get edges
+    var vmap: [Int: Int] = [:]
+    var tvertices: [Float] = []
+    var tbeziers: [vec4i] = []
+    for bezier in beziers {
+        if (vmap[bezier.x] == nil) {
+            vmap[bezier.x] = tvertices.count
+            tvertices.append(vertices[bezier.x])
+        }
+        if (vmap[bezier.w] == nil) {
+            vmap[bezier.w] = tvertices.count
+            tvertices.append(vertices[bezier.w])
+        }
+        let bo = tvertices.count
+        tbeziers.append([vmap[bezier.x]!, bo + 0, bo + 1, bo + 2])
+        tbeziers.append([bo + 2, bo + 3, bo + 4, vmap[bezier.w]!])
+        tvertices.append(vertices[bezier.x] / 2 + vertices[bezier.y] / 2)
+        tvertices.append(vertices[bezier.x] / 4 + vertices[bezier.y] / 2 + vertices[bezier.z] / 4)
+        tvertices.append(vertices[bezier.x] / 8 + vertices[bezier.y] * (3.0 / 8.0) + vertices[bezier.z] * (3.0 / 8.0) + vertices[bezier.w] / 8)
+        tvertices.append(vertices[bezier.y] / 4 + vertices[bezier.z] / 2 + vertices[bezier.w] / 4)
+        tvertices.append(vertices[bezier.z] / 2 + vertices[bezier.w] / 2)
+    }
+
+    // done
+    return (tbeziers, tvertices)
 }
 
-func subdivide_beziers(_ beziers: [vec4i], _ vertex: [vec2f]) -> ([vec4i], [vec2f]) {
-    fatalError()
+func subdivide_beziers(_ beziers: [vec4i], _ vertices: [vec2f]) -> ([vec4i], [vec2f]) {
+    // early exit
+    if (beziers.isEmpty || vertices.isEmpty) {
+        return (beziers, vertices)
+    }
+    // get edges
+    var vmap: [Int: Int] = [:]
+    var tvertices: [vec2f] = []
+    var tbeziers: [vec4i] = []
+    for bezier in beziers {
+        if (vmap[bezier.x] == nil) {
+            vmap[bezier.x] = tvertices.count
+            tvertices.append(vertices[bezier.x])
+        }
+        if (vmap[bezier.w] == nil) {
+            vmap[bezier.w] = tvertices.count
+            tvertices.append(vertices[bezier.w])
+        }
+        let bo = tvertices.count
+        tbeziers.append([vmap[bezier.x]!, bo + 0, bo + 1, bo + 2])
+        tbeziers.append([bo + 2, bo + 3, bo + 4, vmap[bezier.w]!])
+        tvertices.append(vertices[bezier.x] / 2 + vertices[bezier.y] / 2)
+        tvertices.append(vertices[bezier.x] / 4 + vertices[bezier.y] / 2 + vertices[bezier.z] / 4)
+        tvertices.append(vertices[bezier.x] / 8 + vertices[bezier.y] * (3.0 / 8.0) + vertices[bezier.z] * (3.0 / 8.0) + vertices[bezier.w] / 8)
+        tvertices.append(vertices[bezier.y] / 4 + vertices[bezier.z] / 2 + vertices[bezier.w] / 4)
+        tvertices.append(vertices[bezier.z] / 2 + vertices[bezier.w] / 2)
+    }
+
+    // done
+    return (tbeziers, tvertices)
 }
 
-func subdivide_beziers(_ beziers: [vec4i], _ vertex: [vec3f]) -> ([vec4i], [vec3f]) {
-    fatalError()
+func subdivide_beziers(_ beziers: [vec4i], _ vertices: [vec3f]) -> ([vec4i], [vec3f]) {
+    // early exit
+    if (beziers.isEmpty || vertices.isEmpty) {
+        return (beziers, vertices)
+    }
+    // get edges
+    var vmap: [Int: Int] = [:]
+    var tvertices: [vec3f] = []
+    var tbeziers: [vec4i] = []
+    for bezier in beziers {
+        if (vmap[bezier.x] == nil) {
+            vmap[bezier.x] = tvertices.count
+            tvertices.append(vertices[bezier.x])
+        }
+        if (vmap[bezier.w] == nil) {
+            vmap[bezier.w] = tvertices.count
+            tvertices.append(vertices[bezier.w])
+        }
+        let bo = tvertices.count
+        tbeziers.append([vmap[bezier.x]!, bo + 0, bo + 1, bo + 2])
+        tbeziers.append([bo + 2, bo + 3, bo + 4, vmap[bezier.w]!])
+        tvertices.append(vertices[bezier.x] / 2 + vertices[bezier.y] / 2)
+        tvertices.append(vertices[bezier.x] / 4 + vertices[bezier.y] / 2 + vertices[bezier.z] / 4)
+        tvertices.append(vertices[bezier.x] / 8 + vertices[bezier.y] * (3.0 / 8.0) + vertices[bezier.z] * (3.0 / 8.0) + vertices[bezier.w] / 8)
+        tvertices.append(vertices[bezier.y] / 4 + vertices[bezier.z] / 2 + vertices[bezier.w] / 4)
+        tvertices.append(vertices[bezier.z] / 2 + vertices[bezier.w] / 2)
+    }
+
+    // done
+    return (tbeziers, tvertices)
 }
 
-func subdivide_beziers(_ beziers: [vec4i], _ vertex: [vec4f]) -> ([vec4i], [vec4f]) {
-    fatalError()
+func subdivide_beziers(_ beziers: [vec4i], _ vertices: [vec4f]) -> ([vec4i], [vec4f]) {
+    // early exit
+    if (beziers.isEmpty || vertices.isEmpty) {
+        return (beziers, vertices)
+    }
+    // get edges
+    var vmap: [Int: Int] = [:]
+    var tvertices: [vec4f] = []
+    var tbeziers: [vec4i] = []
+    for bezier in beziers {
+        if (vmap[bezier.x] == nil) {
+            vmap[bezier.x] = tvertices.count
+            tvertices.append(vertices[bezier.x])
+        }
+        if (vmap[bezier.w] == nil) {
+            vmap[bezier.w] = tvertices.count
+            tvertices.append(vertices[bezier.w])
+        }
+        let bo = tvertices.count
+        tbeziers.append([vmap[bezier.x]!, bo + 0, bo + 1, bo + 2])
+        tbeziers.append([bo + 2, bo + 3, bo + 4, vmap[bezier.w]!])
+        tvertices.append(vertices[bezier.x] / 2 + vertices[bezier.y] / 2)
+        tvertices.append(vertices[bezier.x] / 4 + vertices[bezier.y] / 2 + vertices[bezier.z] / 4)
+        tvertices.append(vertices[bezier.x] / 8 + vertices[bezier.y] * (3.0 / 8.0) + vertices[bezier.z] * (3.0 / 8.0) + vertices[bezier.w] / 8)
+        tvertices.append(vertices[bezier.y] / 4 + vertices[bezier.z] / 2 + vertices[bezier.w] / 4)
+        tvertices.append(vertices[bezier.z] / 2 + vertices[bezier.w] / 2)
+    }
+
+    // done
+    return (tbeziers, tvertices)
 }
 
 // Subdivide quads using Catmull-Clark subdivision rules.
-func subdivide_catmullclark(_ quads: [vec4i], _ vertex: [Float],
+func subdivide_catmullclark(_ quads: [vec4i], _ vertices: [Float],
                             _ lock_boundary: Bool = false) -> ([vec4i], [Float]) {
     fatalError()
 }
 
-func subdivide_catmullclark(_ quads: [vec4i], _ vertex: [vec2f],
+func subdivide_catmullclark(_ quads: [vec4i], _ vertices: [vec2f],
                             _ lock_boundary: Bool = false) -> ([vec4i], [vec2f]) {
     fatalError()
 }
 
-func subdivide_catmullclark(_ quads: [vec4i], _ vertex: [vec3f],
+func subdivide_catmullclark(_ quads: [vec4i], _ vertices: [vec3f],
                             _ lock_boundary: Bool = false) -> ([vec4i], [vec3f]) {
     fatalError()
 }
 
-func subdivide_catmullclark(_ quads: [vec4i], _ vertex: [vec4f],
+func subdivide_catmullclark(_ quads: [vec4i], _ vertices: [vec4f],
                             _ lock_boundary: Bool = false) -> ([vec4i], [vec4f]) {
     fatalError()
 }
