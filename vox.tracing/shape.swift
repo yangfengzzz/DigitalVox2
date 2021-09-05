@@ -63,30 +63,6 @@ func merge_shape_inplace(_ shape: inout shape_data, _ merge: shape_data) {
     shape.radius.append(contentsOf: merge.radius)
 }
 
-// Make a plane.
-func make_rect(_ steps: vec2i = [1, 1], _ scale: vec2f = [1, 1],
-               _ uvscale: vec2f = [1, 1]) -> shape_data {
-    make_quads(steps, scale, uvscale)
-}
-
-func make_bulged_rect(_ steps: vec2i = [1, 1],
-                      _ scale: vec2f = [1, 1], _ uvscale: vec2f = [1, 1],
-                      _ height: Float = 0.3) -> shape_data {
-    var height = height
-    var shape = make_rect(steps, scale, uvscale)
-    if (height != 0) {
-        height = min(height, min(scale))
-        let radius = (1 + height * height) / (2 * height)
-        let center = vec3f(0, 0, -radius + height)
-        for i in 0..<shape.positions.count {
-            let pn = normalize(shape.positions[i] - center)
-            shape.positions[i] = center + pn * radius
-            shape.normals[i] = pn
-        }
-    }
-    return shape
-}
-
 // Make a plane in the xz plane.
 func make_recty(_ steps: vec2i = [1, 1], _ scale: vec2f = [1, 1],
                 _ uvscale: vec2f = [1, 1]) -> shape_data {
@@ -2988,18 +2964,8 @@ func sample_quads(_ sampled_positions: inout [vec3f], _ sampled_normals: inout [
 // -----------------------------------------------------------------------------
 // SHAPE EXAMPLES
 // -----------------------------------------------------------------------------
-// Make a quad.
-func make_rect(_ quads: inout [vec4i], _ positions: inout [vec3f],
-               _ normals: inout [vec3f], _ texcoords: inout [vec2f], _ steps: vec2i,
-               _ scale: vec2f, _ uvscale: vec2f) {
-    fatalError()
-}
 
-func make_bulged_rect(_ quads: inout [vec4i], _ positions: inout [vec3f],
-                      _ normals: inout [vec3f], _ texcoords: inout [vec2f], _ steps: vec2i,
-                      _ scale: vec2f, _ uvscale: vec2f, _ height: Float) {
-    fatalError()
-}
+
 
 // Make a quad.
 func make_recty(_ quads: inout [vec4i], _ positions: inout [vec3f],
