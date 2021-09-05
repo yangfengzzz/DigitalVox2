@@ -2835,72 +2835,154 @@ func subdivide_catmullclark(_ quads: [vec4i], _ vertices: [vec4f], _ level: Int,
 // -----------------------------------------------------------------------------
 // Pick a point in a point set uniformly.
 func sample_points(_ npoints: Int, _ re: Float) -> Int {
-    fatalError()
+    sample_uniform(npoints, re)
 }
 
 func sample_points(_ cdf: [Float], _ re: Float) -> Int {
-    fatalError()
+    sample_discrete(cdf, re)
 }
 
 func sample_points_cdf(_ npoints: Int) -> [Float] {
-    fatalError()
+    var cdf = [Float](repeating: 0.0, count: npoints)
+    for i in 0..<cdf.count {
+        cdf[i] = 1 + (i != 0 ? cdf[i - 1] : 0)
+    }
+    return cdf
 }
 
 func sample_points_cdf(_ cdf: inout [Float], _ npoints: Int) {
-    fatalError()
+    for i in 0..<cdf.count {
+        cdf[i] = 1 + (i != 0 ? cdf[i - 1] : 0)
+    }
 }
 
 // Pick a point on lines uniformly.
 func sample_lines(_ cdf: [Float], _ re: Float, _ ru: Float) -> (Int, Float) {
-    fatalError()
+    (sample_discrete(cdf, re), ru)
 }
 
 func sample_lines_cdf(_ lines: [vec2i], _ positions: [vec3f]) -> [Float] {
-    fatalError()
+    var cdf = [Float](repeating: 0.0, count: lines.count)
+    for i in 0..<cdf.count {
+        let l = lines[i]
+        let w = line_length(positions[l.x], positions[l.y])
+        cdf[i] = w + (i != 0 ? cdf[i - 1] : 0)
+    }
+    return cdf
 }
 
 func sample_lines_cdf(_ cdf: inout [Float], _ lines: [vec2i], _ positions: [vec3f]) {
-    fatalError()
+    for i in 0..<cdf.count {
+        let l = lines[i]
+        let w = line_length(positions[l.x], positions[l.y])
+        cdf[i] = w + (i != 0 ? cdf[i - 1] : 0)
+    }
 }
 
 // Pick a point on a triangle mesh uniformly.
 func sample_triangles(_ cdf: [Float], _ re: Float, _ ruv: vec2f) -> (Int, vec2f) {
-    fatalError()
+    (sample_discrete(cdf, re), sample_triangle(ruv))
 }
 
 func sample_triangles_cdf(_ triangles: [vec3i], _  positions: [vec3f]) -> [Float] {
-    fatalError()
+    var cdf = [Float](repeating: 0.0, count: triangles.count)
+    for i in 0..<cdf.count {
+        let t = triangles[i]
+        let w = triangle_area(positions[t.x], positions[t.y], positions[t.z])
+        cdf[i] = w + (i != 0 ? cdf[i - 1] : 0)
+    }
+    return cdf
 }
 
 func sample_triangles_cdf(_ cdf: inout [Float], _ triangles: [vec3i], _ positions: [vec3f]) {
-    fatalError()
+    for i in 0..<cdf.count {
+        let t = triangles[i]
+        let w = triangle_area(positions[t.x], positions[t.y], positions[t.z])
+        cdf[i] = w + (i != 0 ? cdf[i - 1] : 0)
+    }
 }
 
 // Pick a point on a quad mesh uniformly.
 func sample_quads(_ cdf: [Float], _ re: Float, _ ruv: vec2f) -> (Int, vec2f) {
-    fatalError()
+    (sample_discrete(cdf, re), ruv)
 }
 
 func sample_quads_cdf(_ quads: [vec4i], _ positions: [vec3f]) -> [Float] {
-    fatalError()
+    var cdf = [Float](repeating: 0.0, count: quads.count)
+    for i in 0..<cdf.count {
+        let q = quads[i]
+        let w = quad_area(positions[q.x], positions[q.y], positions[q.z], positions[q.w])
+        cdf[i] = w + (i != 0 ? cdf[i - 1] : 0)
+    }
+    return cdf
 }
 
 func sample_quads_cdf(_ cdf: inout [Float], _ quads: [vec4i], _ positions: [vec3f]) {
-    fatalError()
+    for i in 0..<cdf.count {
+        let q = quads[i]
+        let w = quad_area(positions[q.x], positions[q.y], positions[q.z], positions[q.w])
+        cdf[i] = w + (i != 0 ? cdf[i - 1] : 0)
+    }
 }
 
 // Samples a set of points over a triangle/quad mesh uniformly. Returns pos,
 // norm and texcoord of the sampled points.
 func sample_triangles(_ sampled_positions: inout [vec3f], _ sampled_normals: inout [vec3f], _ sampled_texcoords: inout [vec2f],
                       _ triangles: [vec3i], _ positions: [vec3f], _ normals: [vec3f],
-                      _ texcoords: [vec2f], _ npoints: Int, _ seed: Int = 7) {
-    fatalError()
+                      _ texcoords: [vec2f], _ npoints: Int) {
+    sampled_positions = .init(repeating: vec3f(), count: npoints)
+    sampled_normals = .init(repeating: vec3f(), count: npoints)
+    sampled_texcoords = .init(repeating: vec2f(), count: npoints)
+    let cdf = sample_triangles_cdf(triangles, positions)
+    for i in 0..<npoints {
+        let sample = sample_triangles(cdf, rand1f(), rand2f())
+        let t = triangles[sample.0]
+        let uv = sample.1
+        sampled_positions[i] = interpolate_triangle(
+                positions[t.x], positions[t.y], positions[t.z], uv)
+        if (!sampled_normals.isEmpty) {
+            sampled_normals[i] = normalize(
+                    interpolate_triangle(normals[t.x], normals[t.y], normals[t.z], uv))
+        } else {
+            sampled_normals[i] = triangle_normal(
+                    positions[t.x], positions[t.y], positions[t.z])
+        }
+        if (!sampled_texcoords.isEmpty) {
+            sampled_texcoords[i] = interpolate_triangle(
+                    texcoords[t.x], texcoords[t.y], texcoords[t.z], uv)
+        } else {
+            sampled_texcoords[i] = zero2f
+        }
+    }
 }
 
 func sample_quads(_ sampled_positions: inout [vec3f], _ sampled_normals: inout [vec3f], _ sampled_texcoords: inout [vec2f],
                   _ quads: [vec4i], _ positions: [vec3f], _ normals: [vec3f],
-                  _ texcoords: [vec2f], _ npoints: Int, _ seed: Int = 7) {
-    fatalError()
+                  _ texcoords: [vec2f], _ npoints: Int) {
+    sampled_positions = .init(repeating: vec3f(), count: npoints)
+    sampled_normals = .init(repeating: vec3f(), count: npoints)
+    sampled_texcoords = .init(repeating: vec2f(), count: npoints)
+    let cdf = sample_quads_cdf(quads, positions)
+    for i in 0..<npoints {
+        let sample = sample_quads(cdf, rand1f(), rand2f())
+        let q = quads[sample.0]
+        let uv = sample.1
+        sampled_positions[i] = interpolate_quad(
+                positions[q.x], positions[q.y], positions[q.z], positions[q.w], uv)
+        if (!sampled_normals.isEmpty) {
+            sampled_normals[i] = normalize(interpolate_quad(
+                    normals[q.x], normals[q.y], normals[q.z], normals[q.w], uv))
+        } else {
+            sampled_normals[i] = quad_normal(
+                    positions[q.x], positions[q.y], positions[q.z], positions[q.w])
+        }
+        if (!sampled_texcoords.isEmpty) {
+            sampled_texcoords[i] = interpolate_quad(
+                    texcoords[q.x], texcoords[q.y], texcoords[q.z], texcoords[q.w], uv)
+        } else {
+            sampled_texcoords[i] = zero2f
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
