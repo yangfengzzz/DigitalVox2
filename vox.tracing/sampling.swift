@@ -232,7 +232,11 @@ func sample_uniform_pdf(_ elements: [Float]) -> Float {
 // Sample a discrete distribution represented by its cdf.
 @inlinable
 func sample_discrete(_ cdf: [Float], _ r: Float) -> Int {
-    fatalError()
+    let r = simd_clamp(r * cdf.last!, 0, cdf.last! - 0.00001)
+    let idx = cdf.firstIndex { val in
+        val > r
+    }
+    return Int(simd_clamp(Float(idx!), 0, Float(cdf.count) - 1))
 }
 
 // Pdf for uniform discrete distribution sampling.
