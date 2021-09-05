@@ -1234,17 +1234,37 @@ func align_vertices(_ positions: [vec3f], _ alignment: vec3i) -> [vec3f] {
 // -----------------------------------------------------------------------------
 // Convert quads to triangles
 func quads_to_triangles(_ quads: [vec4i]) -> [vec3i] {
-    fatalError()
+    var triangles: [vec3i] = []
+    triangles.reserveCapacity(quads.count * 2)
+    for q in quads {
+        triangles.append([q.x, q.y, q.w])
+        if (q.z != q.w) {
+            triangles.append([q.z, q.w, q.y])
+        }
+    }
+    return triangles
 }
 
 // Convert triangles to quads by creating degenerate quads
 func triangles_to_quads(_ triangles: [vec3i]) -> [vec4i] {
-    fatalError()
+    var quads: [vec4i] = []
+    quads.reserveCapacity(triangles.count)
+    for t in triangles {
+        quads.append([t.x, t.y, t.z, t.z])
+    }
+    return quads
 }
 
 // Convert beziers to lines using 3 lines for each bezier.
-func bezier_to_lines(_ lines: [vec2i]) -> [vec4i] {
-    fatalError()
+func bezier_to_lines(_ beziers: [vec4i]) -> [vec2i] {
+    var lines: [vec2i] = []
+    lines.reserveCapacity(beziers.count * 3)
+    for b in beziers {
+        lines.append([b.x, b.y])
+        lines.append([b.y, b.z])
+        lines.append([b.z, b.w])
+    }
+    return lines
 }
 
 // Convert face-varying data to single primitives. Returns the quads indices
@@ -1254,20 +1274,87 @@ func split_facevarying(_ split_quads: inout [vec4i], _ split_positions: inout [v
                        _ quadsnorm: [vec4i], _ quadstexcoord: [vec4i],
                        _ positions: [vec3f], _ normals: [vec3f],
                        _ texcoords: [vec2f]) {
-    fatalError()
+    // make faces unique
+    var vert_map: [vec3i: Int] = [:]
+    split_quads = .init(repeating: vec4i(), count: quadspos.count)
+    for fid in 0..<quadspos.count {
+        for c in 0..<4 {
+            let v = vec3i(
+                    quadspos[fid][c],
+                    (!quadsnorm.isEmpty ? quadsnorm[fid][c] : -1),
+                    (!quadstexcoord.isEmpty ? quadstexcoord[fid][c] : -1)
+            )
+            let it = vert_map.first(where: { (key: vec3i, value: Int) in
+                key == v
+            })
+            if (it == nil) {
+                let s = vert_map.count
+                vert_map[v] = s
+                split_quads[fid][c] = s
+            } else {
+                split_quads[fid][c] = it!.value
+            }
+        }
+    }
+
+    // fill vert data
+    split_positions = []
+    if (!positions.isEmpty) {
+        split_positions = .init(repeating: vec3f(), count: vert_map.count)
+        for (vert, index) in vert_map {
+            split_positions[index] = positions[vert.x]
+        }
+    }
+    split_normals = []
+    if (!normals.isEmpty) {
+        split_normals = .init(repeating: vec3f(), count: vert_map.count)
+        for (vert, index) in vert_map {
+            split_normals[index] = normals[vert.y]
+        }
+    }
+    split_texcoords = []
+    if (!texcoords.isEmpty) {
+        split_texcoords = .init(repeating: vec2f(), count: vert_map.count)
+        for (vert, index) in vert_map {
+            split_texcoords[index] = texcoords[vert.z]
+        }
+    }
 }
 
 // Weld vertices within a threshold.
 func weld_vertices(_ positions: [vec3f], _ threshold: Float) -> ([vec3f], [Int]) {
-    fatalError()
+    var indices = [Int](repeating: 0, count: positions.count)
+    var welded: [vec3f] = []
+    var grid = make_hash_grid(threshold)
+    var neighbors: [Int] = []
+    for vertex in 0..<positions.count {
+        let position = positions[vertex]
+        find_neighbors(grid, &neighbors, position, threshold)
+        if (neighbors.isEmpty) {
+            welded.append(position)
+            indices[vertex] = welded.count - 1
+            _ = insert_vertex(&grid, position)
+        } else {
+            indices[vertex] = neighbors.first!
+        }
+    }
+    return (welded, indices)
 }
 
 func weld_triangles(_ triangles: [vec3i], _ positions: [vec3f], _ threshold: Float) -> ([vec3i], [vec3f]) {
-    fatalError()
+    let (wpositions, indices) = weld_vertices(positions, threshold)
+    let wtriangles = triangles.map { t in
+        vec3i(indices[t.x], indices[t.y], indices[t.z])
+    }
+    return (wtriangles, wpositions)
 }
 
 func weld_quads(_ quads: [vec4i], _ positions: [vec3f], _ threshold: Float) -> ([vec4i], [vec3f]) {
-    fatalError()
+    let (wpositions, indices) = weld_vertices(positions, threshold)
+    let wquads = quads.map { q in
+        vec4i(indices[q.x], indices[q.y], indices[q.z], indices[q.w])
+    }
+    return (wquads, wpositions)
 }
 
 // Merge shape elements
@@ -1277,21 +1364,41 @@ func merge_lines(_ lines: inout [vec2i], _ positions: inout [vec3f],
                  _ merge_tangents: [vec3f],
                  _ merge_texturecoords: [vec2f],
                  _ merge_radius: [Float]) {
-    fatalError()
+    let merge_verts = positions.count
+    for l in merge_lines {
+        lines.append([l.x + merge_verts, l.y + merge_verts])
+    }
+    positions.append(contentsOf: merge_positions)
+    tangents.append(contentsOf: merge_tangents)
+    texcoords.append(contentsOf: merge_texturecoords)
+    radius.append(contentsOf: merge_radius)
 }
 
 func merge_triangles(_ triangles: inout [vec3i], _ positions: inout [vec3f],
                      _ normals: inout [vec3f], _ texcoords: inout[vec2f],
-                     _ merge_triangles: [vec2i], _ merge_positions: [vec3f],
+                     _ merge_triangles: [vec3i], _ merge_positions: [vec3f],
                      _ merge_normals: [vec3f], _ merge_texturecoords: [vec2f]) {
-    fatalError()
+    let merge_verts = positions.count
+    for t in merge_triangles {
+        triangles.append([t.x + merge_verts, t.y + merge_verts, t.z + merge_verts])
+    }
+    positions.append(contentsOf: merge_positions)
+    normals.append(contentsOf: merge_normals)
+    texcoords.append(contentsOf: merge_texturecoords)
 }
 
 func merge_quads(_ quads: inout [vec4i], _ positions: inout [vec3f],
                  _ normals: inout [vec3f], _ texcoords: inout [vec2f],
                  _ merge_quads: [vec4i], _ merge_positions: [vec3f],
                  _ merge_normals: [vec3f], _ merge_texturecoords: [vec2f]) {
-    fatalError()
+    let merge_verts = positions.count
+    for q in merge_quads {
+        quads.append([q.x + merge_verts, q.y + merge_verts,
+                      q.z + merge_verts, q.w + merge_verts])
+    }
+    positions.append(contentsOf: merge_positions)
+    normals.append(contentsOf: merge_normals)
+    texcoords.append(contentsOf: merge_texturecoords)
 }
 
 // -----------------------------------------------------------------------------
