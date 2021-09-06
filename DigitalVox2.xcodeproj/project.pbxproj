@@ -97,6 +97,8 @@
 		047FEB7A26E1C8340078CFAF /* hash_grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEB7926E1C8340078CFAF /* hash_grid.swift */; };
 		047FEB7B26E1D63D0078CFAF /* geometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041328A026E19EE1000A4F4E /* geometry.swift */; };
 		047FEBC326E597730078CFAF /* noise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBC226E597730078CFAF /* noise.swift */; };
+		047FEBC526E59D630078CFAF /* image_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBC426E59D630078CFAF /* image_data.swift */; };
+		047FEBC726E59FB00078CFAF /* color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBC626E59FB00078CFAF /* color.swift */; };
 		0497A1E526DF150500F61DE9 /* voxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A1E426DF150500F61DE9 /* voxApp.swift */; };
 		0497A1E726DF150500F61DE9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A1E626DF150500F61DE9 /* ContentView.swift */; };
 		0497A1E926DF150800F61DE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0497A1E826DF150800F61DE9 /* Assets.xcassets */; };
@@ -285,6 +287,8 @@
 		047FEBBE26E595D90078CFAF /* bezier_circle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bezier_circle.swift; sourceTree = "<group>"; };
 		047FEBC026E595E60078CFAF /* shell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = shell.swift; sourceTree = "<group>"; };
 		047FEBC226E597730078CFAF /* noise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = noise.swift; sourceTree = "<group>"; };
+		047FEBC426E59D630078CFAF /* image_data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = image_data.swift; sourceTree = "<group>"; };
+		047FEBC626E59FB00078CFAF /* color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = color.swift; sourceTree = "<group>"; };
 		0497A1E126DF150500F61DE9 /* vox.render.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vox.render.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0497A1E426DF150500F61DE9 /* voxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = voxApp.swift; sourceTree = "<group>"; };
 		0497A1E626DF150500F61DE9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -501,6 +505,8 @@
 				047FEB7926E1C8340078CFAF /* hash_grid.swift */,
 				042C841126E4A7AE00BD3733 /* sampling.swift */,
 				047FEBC226E597730078CFAF /* noise.swift */,
+				047FEBC626E59FB00078CFAF /* color.swift */,
+				047FEBC426E59D630078CFAF /* image_data.swift */,
 			);
 			path = vox.tracing;
 			sourceTree = "<group>";
@@ -959,6 +965,7 @@
 				0452ECFA26DFAEE70015BFB1 /* Raytracing.metal in Sources */,
 				04EA0D6E26E1204F00CA7833 /* bbox3f.swift in Sources */,
 				047FEBC326E597730078CFAF /* noise.swift in Sources */,
+				047FEBC726E59FB00078CFAF /* color.swift in Sources */,
 				0452ED2626E042160015BFB1 /* vec3i.swift in Sources */,
 				0452ED3C26E0F50A0015BFB1 /* frame2f.swift in Sources */,
 				047FEB7A26E1C8340078CFAF /* hash_grid.swift in Sources */,
@@ -978,6 +985,7 @@
 				047FEB7226E1BC570078CFAF /* fvshape_data.swift in Sources */,
 				0452ED2C26E044B90015BFB1 /* mat2f.swift in Sources */,
 				047FEB7026E1BA4A0078CFAF /* shape_data.swift in Sources */,
+				047FEBC526E59D630078CFAF /* image_data.swift in Sources */,
 				0452ECF626DFAEAB0015BFB1 /* RayRenderer.swift in Sources */,
 				0452ED3A26E0F50A0015BFB1 /* quat4f.swift in Sources */,
 				0452ED2A26E0422D0015BFB1 /* vec4b.swift in Sources */,
