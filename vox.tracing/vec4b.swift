@@ -7,6 +7,6 @@
 
 import Foundation
 
-public typealias vec4b = SIMD4<Int8>
+public typealias vec4b = SIMD4<UInt8>
 
 public let zero4b = vec4b(0, 0, 0, 0)
