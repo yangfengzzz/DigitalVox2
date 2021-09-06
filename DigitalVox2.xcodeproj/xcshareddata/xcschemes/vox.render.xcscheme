@@ -27,6 +27,16 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "0497A1F126DF150800F61DE9"
+               BuildableName = "vox.renderTests.xctest"
+               BlueprintName = "vox.renderTests"
+               ReferencedContainer = "container:DigitalVox2.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
@@ -56,6 +66,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "0497A1E026DF150500F61DE9"
+            BuildableName = "vox.render.app"
+            BlueprintName = "vox.render"
+            ReferencedContainer = "container:DigitalVox2.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

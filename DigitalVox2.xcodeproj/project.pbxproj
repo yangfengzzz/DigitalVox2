@@ -117,6 +117,11 @@
 		047FEBEA26E5A3BE0078CFAF /* lights.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBE926E5A3BE0078CFAF /* lights.swift */; };
 		047FEBEC26E5A8D60078CFAF /* rand_points.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBEB26E5A8D60078CFAF /* rand_points.swift */; };
 		047FEBEE26E5A8E50078CFAF /* rand_lines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBED26E5A8E50078CFAF /* rand_lines.swift */; };
+		047FEBF026E600E70078CFAF /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBEF26E600E70078CFAF /* Scene.swift */; };
+		047FEBF226E601750078CFAF /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBF126E601750078CFAF /* Entity.swift */; };
+		047FEBF426E603CD0078CFAF /* Layer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBF326E603CD0078CFAF /* Layer.swift */; };
+		047FEBF626E6052D0078CFAF /* Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBF526E6052D0078CFAF /* Transform.swift */; };
+		047FEBF826E6053A0078CFAF /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBF726E6053A0078CFAF /* Component.swift */; };
 		0497A1E526DF150500F61DE9 /* voxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A1E426DF150500F61DE9 /* voxApp.swift */; };
 		0497A1E726DF150500F61DE9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A1E626DF150500F61DE9 /* ContentView.swift */; };
 		0497A1E926DF150800F61DE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0497A1E826DF150800F61DE9 /* Assets.xcassets */; };
@@ -325,6 +330,11 @@
 		047FEBE926E5A3BE0078CFAF /* lights.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lights.swift; sourceTree = "<group>"; };
 		047FEBEB26E5A8D60078CFAF /* rand_points.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rand_points.swift; sourceTree = "<group>"; };
 		047FEBED26E5A8E50078CFAF /* rand_lines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rand_lines.swift; sourceTree = "<group>"; };
+		047FEBEF26E600E70078CFAF /* Scene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
+		047FEBF126E601750078CFAF /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
+		047FEBF326E603CD0078CFAF /* Layer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Layer.swift; sourceTree = "<group>"; };
+		047FEBF526E6052D0078CFAF /* Transform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transform.swift; sourceTree = "<group>"; };
+		047FEBF726E6053A0078CFAF /* Component.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
 		0497A1E126DF150500F61DE9 /* vox.render.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vox.render.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0497A1E426DF150500F61DE9 /* voxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = voxApp.swift; sourceTree = "<group>"; };
 		0497A1E626DF150500F61DE9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -696,9 +706,16 @@
 				0413288326E09EFC000A4F4E /* mesh */,
 				0413289A26E0C1DD000A4F4E /* UpdateFlag.swift */,
 				0413289C26E0C288000A4F4E /* UpdateFlagManager.swift */,
+				047FEBEF26E600E70078CFAF /* Scene.swift */,
+				047FEBF126E601750078CFAF /* Entity.swift */,
+				047FEBF326E603CD0078CFAF /* Layer.swift */,
+				047FEBF726E6053A0078CFAF /* Component.swift */,
+				047FEBF526E6052D0078CFAF /* Transform.swift */,
 				0413289E26E0CBE7000A4F4E /* ShaderSimple.metal */,
 				0452ECCC26DFA5360015BFB1 /* Shaders.metal */,
 				0452ECCA26DFA5360015BFB1 /* PBR.metal */,
+				04EFDE7426DF1F87005FBB6F /* math */,
+				04DB2A4026DF1DF100C15850 /* design */,
 				0497A1E426DF150500F61DE9 /* voxApp.swift */,
 				0497A1E626DF150500F61DE9 /* ContentView.swift */,
 				0452ECEC26DFA7870015BFB1 /* ControllerView.swift */,
@@ -717,8 +734,6 @@
 				0452ECC626DFA5360015BFB1 /* VertexDescriptor.swift */,
 				0452ECC826DFA5360015BFB1 /* Lighting.swift */,
 				0452ECDD26DFA5C50015BFB1 /* MathLibrary.swift */,
-				04EFDE7426DF1F87005FBB6F /* math */,
-				04DB2A4026DF1DF100C15850 /* design */,
 				0452ECDF26DFA66E0015BFB1 /* models */,
 				0497A20F26DF151700F61DE9 /* DigitalVox2.entitlements */,
 				0497A1E826DF150800F61DE9 /* Assets.xcassets */,
@@ -1118,9 +1133,11 @@
 				04EFDE7C26DF3495005FBB6F /* Matrix.swift in Sources */,
 				0452ECDE26DFA5C50015BFB1 /* MathLibrary.swift in Sources */,
 				0413288626E09F1F000A4F4E /* PrimitiveMesh.swift in Sources */,
+				047FEBF426E603CD0078CFAF /* Layer.swift in Sources */,
 				0413289F26E0CBE7000A4F4E /* ShaderSimple.metal in Sources */,
 				0413289026E0A16C000A4F4E /* IRefObject.swift in Sources */,
 				0413286F26E06A40000A4F4E /* Plane.swift in Sources */,
+				047FEBF026E600E70078CFAF /* Scene.swift in Sources */,
 				0413289B26E0C1DD000A4F4E /* UpdateFlag.swift in Sources */,
 				0452ECF126DFA7C90015BFB1 /* MotionController.swift in Sources */,
 				0413287326E0723E000A4F4E /* CollisionUtil.swift in Sources */,
@@ -1139,11 +1156,14 @@
 				0413288A26E09FB3000A4F4E /* Mesh.swift in Sources */,
 				0452ECED26DFA7870015BFB1 /* ControllerView.swift in Sources */,
 				0413287126E06D2E000A4F4E /* BoundingFrustum.swift in Sources */,
+				047FEBF626E6052D0078CFAF /* Transform.swift in Sources */,
 				04EFDE8226DF4DC3005FBB6F /* Vector4.swift in Sources */,
 				0413288226E08394000A4F4E /* MathUtil.swift in Sources */,
 				0452ECD826DFA5360015BFB1 /* Model.swift in Sources */,
 				0413288826E09FA5000A4F4E /* ModelMesh.swift in Sources */,
+				047FEBF826E6053A0078CFAF /* Component.swift in Sources */,
 				0497A1E526DF150500F61DE9 /* voxApp.swift in Sources */,
+				047FEBF226E601750078CFAF /* Entity.swift in Sources */,
 				0452ECD326DFA5360015BFB1 /* Node.swift in Sources */,
 				0452ECD926DFA5360015BFB1 /* Texturable.swift in Sources */,
 				0413287B26E07BA3000A4F4E /* Ray.swift in Sources */,
