@@ -319,7 +319,14 @@ func colormap_viridis(_ t: Float) -> vec3f {
             4.776384997670288, -13.74514537774601, -65.35303263337234)
     let c6 = vec3f(
             -5.435455855934631, 4.645852612178535, 26.3124352495832)
-    return c0 + t * (c1 + t * (c2 + t * (c3 + t * (c4 + t * (c5 + t * c6)))))
+
+    var result = c5 + t * c6
+    result = c4 + t * result
+    result = c3 + t * result
+    result = c2 + t * result
+    result = c1 + t * result
+    result = c0 + t * result
+    return result
 }
 
 @inlinable
@@ -339,7 +346,14 @@ func colormap_plasma(_ t: Float) -> vec3f {
             10.02306557647065, 71.41361770095349, -54.07218655560067)
     let c6 = vec3f(
             -3.658713842777788, -22.93153465461149, 18.19190778539828)
-    return c0 + t * (c1 + t * (c2 + t * (c3 + t * (c4 + t * (c5 + t * c6)))))
+
+    var result = c5 + t * c6
+    result = c4 + t * result
+    result = c3 + t * result
+    result = c2 + t * result
+    result = c1 + t * result
+    result = c0 + t * result
+    return result
 }
 
 @inlinable
@@ -359,13 +373,20 @@ func colormap_magma(_ t: Float) -> vec3f {
             -50.76852536473588, 29.04658282127291, 4.23415299384598)
     let c6 = vec3f(
             18.65570506591883, -11.48977351997711, -5.601961508734096)
-    return c0 + t * (c1 + t * (c2 + t * (c3 + t * (c4 + t * (c5 + t * c6)))))
+
+    var result = c5 + t * c6
+    result = c4 + t * result
+    result = c3 + t * result
+    result = c2 + t * result
+    result = c1 + t * result
+    result = c0 + t * result
+    return result
 }
 
 @inlinable
 func colormap_inferno(_ t: Float) -> vec3f {
     // https://www.shadertoy.com/view/WlfXRN
-    c0 = vec3f(
+    let c0 = vec3f(
             0.0002189403691192265, 0.001651004631001012, -0.01948089843709184)
     let c1 = vec3f(
             0.1065134194856116, 0.5639564367884091, 3.932712388889277)
@@ -379,7 +400,14 @@ func colormap_inferno(_ t: Float) -> vec3f {
             -71.31942824499214, 32.62606426397723, 73.20951985803202)
     let c6 = vec3f(
             25.13112622477341, -12.24266895238567, -23.07032500287172)
-    return c0 + t * (c1 + t * (c2 + t * (c3 + t * (c4 + t * (c5 + t * c6)))))
+
+    var result = c5 + t * c6
+    result = c4 + t * result
+    result = c3 + t * result
+    result = c2 + t * result
+    result = c1 + t * result
+    result = c0 + t * result
+    return result
 }
 
 
@@ -393,7 +421,6 @@ func colormap(_ t: Float, _ type: colormap_type = .viridis) -> vec3f {
     case .inferno: return colormap_inferno(t)
     case .plasma: return colormap_plasma(t)
     }
-    return [0, 0, 0]
 }
 
 // -----------------------------------------------------------------------------
@@ -401,32 +428,78 @@ func colormap(_ t: Float, _ type: colormap_type = .viridis) -> vec3f {
 // -----------------------------------------------------------------------------
 // minimal color grading
 public struct colorgrade_params {
-    var exposure: Float = 0
-    var tint: vec3f = [1, 1, 1]
-    var lincontrast: Float = 0.5
-    var logcontrast: Float = 0.5
-    var linsaturation: Float = 0.5
-    var filmic: Bool = false
-    var srgb: Bool = true
-    var contrast: Float = 0.5
-    var saturation: Float = 0.5
-    var shadows: Float = 0.5
-    var midtones: Float = 0.5
-    var highlights: Float = 0.5
-    var shadows_color: vec3f = [1, 1, 1]
-    var midtones_color: vec3f = [1, 1, 1]
-    var highlights_color: vec3f = [1, 1, 1]
+    public var exposure: Float = 0
+    public var tint: vec3f = [1, 1, 1]
+    public var lincontrast: Float = 0.5
+    public var logcontrast: Float = 0.5
+    public var linsaturation: Float = 0.5
+    public var filmic: Bool = false
+    public var srgb: Bool = true
+    public var contrast: Float = 0.5
+    public var saturation: Float = 0.5
+    public var shadows: Float = 0.5
+    public var midtones: Float = 0.5
+    public var highlights: Float = 0.5
+    public var shadows_color: vec3f = [1, 1, 1]
+    public var midtones_color: vec3f = [1, 1, 1]
+    public var highlights_color: vec3f = [1, 1, 1]
 }
 
 // Apply color grading from a linear or srgb color to an srgb color.
 @inlinable
-func colorgrade(_ color: vec3f, _ linear: Bool, _ params: colorgrade_params) -> vec3f {
-    fatalError()
+func colorgrade(_ rgb_: vec3f, _ linear: Bool, _ params: colorgrade_params) -> vec3f {
+    var rgb = rgb_
+    if (params.exposure != 0) {
+        rgb *= exp2(params.exposure)
+    }
+    if (params.tint != vec3f(1, 1, 1)) {
+        rgb *= params.tint
+    }
+    if (params.lincontrast != 0.5) {
+        rgb = lincontrast(rgb, params.lincontrast, linear ? 0.18 : 0.5)
+    }
+    if (params.logcontrast != 0.5) {
+        rgb = logcontrast(rgb, params.logcontrast, linear ? 0.18 : 0.5)
+    }
+    if (params.linsaturation != 0.5) {
+        rgb = saturate(rgb, params.linsaturation)
+    }
+    if (params.filmic) {
+        rgb = tonemap_filmic(rgb)
+    }
+    if (linear && params.srgb) {
+        rgb = rgb_to_srgb(rgb)
+    }
+    if (params.contrast != 0.5) {
+        rgb = contrast(rgb, params.contrast)
+    }
+    if (params.saturation != 0.5) {
+        rgb = saturate(rgb, params.saturation)
+    }
+    if (params.shadows != 0.5 || params.midtones != 0.5 ||
+            params.highlights != 0.5 || params.shadows_color != vec3f(1, 1, 1) ||
+            params.midtones_color != vec3f(1, 1, 1) ||
+            params.highlights_color != vec3f(1, 1, 1)) {
+        var lift = params.shadows_color
+        var gamma = params.midtones_color
+        var gain = params.highlights_color
+
+        lift = lift - mean(lift) + params.shadows - 0.5
+        gain = gain - mean(gain) + params.highlights + 0.5
+        let grey = gamma - mean(gamma) + params.midtones
+        gamma = log((0.5 - lift) / (gain - lift)) / log(grey)
+
+        // apply_image
+        let lerp_value = clamp(pow(rgb, 1 / gamma), 0, 1)
+        rgb = gain * lerp_value + lift * (1 - lerp_value)
+    }
+    return rgb
 }
 
 @inlinable
-func colorgrade(_ color: vec4f, _ linear: Bool, _ params: colorgrade_params) -> vec4f {
-    fatalError()
+func colorgrade(_ rgba: vec4f, _ linear: Bool, _ params: colorgrade_params) -> vec4f {
+    let graded = colorgrade(xyz(rgba), linear, params)
+    return [graded.x, graded.y, graded.z, rgba.w]
 }
 
 // -----------------------------------------------------------------------------
@@ -450,6 +523,32 @@ public enum color_space {
     case p3d60       // P3 variation for D60 (non-linear)
     case p3d65       // P3 variation for D65 (non-linear)
     case p3display   // Apple display P3
+}
+
+// RGB color space definition. Various predefined color spaces are listed below.
+struct color_space_params {
+    // Curve type
+    enum curve_t {
+        case linear
+        case gamma
+        case linear_gamma
+        case aces_cc
+        case aces_cct
+        case pq
+        case hlg
+    }
+
+    // primaries
+    var red_chromaticity: vec2f    // xy chromaticity of the red primary
+    var green_chromaticity: vec2f  // xy chromaticity of the green primary
+    var blue_chromaticity: vec2f   // xy chromaticity of the blue primary
+    var white_chromaticity: vec2f  // xy chromaticity of the white point
+    var rgb_to_xyz_mat: mat3f      // matrix from rgb to xyz
+    var xyz_to_rgb_mat: mat3f      // matrix from xyz to rgb
+    // tone curve
+    var curve_type: curve_t
+    var curve_gamma: Float  // gamma for power curves
+    var curve_abcd: vec4f   // tone curve values for linear_gamma curves
 }
 
 // Conversion between rgb color spaces
