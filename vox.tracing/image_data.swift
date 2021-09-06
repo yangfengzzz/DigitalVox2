@@ -11,18 +11,18 @@ import Foundation
 // or non linear color space.
 public struct image_data {
     // image data
-    var width: Int = 0
-    var height: Int = 0
-    var linear: Bool = false
-    var pixels: [vec4f] = []
+    public var width: Int = 0
+    public var height: Int = 0
+    public var linear: Bool = false
+    public var pixels: [vec4f] = []
 
     // pixel access
-    subscript(i: vec2i) -> vec4f {
+    subscript(ij: vec2i) -> vec4f {
         get {
-            fatalError()
+            pixels[ij.y * width + ij.x]
         }
         set {
-            fatalError()
+            pixels[ij.y * width + ij.x] = newValue
         }
     }
 }
@@ -49,12 +49,12 @@ func swap(_ a: inout image_data, _ b: inout image_data) {
 // pixel access
 @inlinable
 func get_pixel(_ image: image_data, _ i: Int, _ j: Int) -> vec4f {
-    fatalError()
+    image.pixels[j * image.width + i]
 }
 
 @inlinable
 func set_pixel(_ image: inout image_data, _ i: Int, _ j: Int, _ pixel: vec4f) {
-    fatalError()
+    image.pixels[j * image.width + i] = pixel
 }
 
 // conversions
