@@ -7,8 +7,14 @@
 
 import Foundation
 
-func make_fbmmap(width: Int, height: Int, scale: Float = 1,
-                 noise: vec4f = [2, 0.5, 8, 1], color0: vec4f = [0, 0, 0, 1],
-                 color1: vec4f = [1, 1, 1, 1]) -> image_data {
+func make_fbmmap(_ width: Int, _ height: Int, _ scale: Float = 1,
+                 _ noise: vec4f = [2, 0.5, 8, 1], _ color0: vec4f = [0, 0, 0, 1],
+                 _ color1: vec4f = [1, 1, 1, 1]) -> image_data {
+    fatalError()
+}
+
+func make_fbmmap(_ pixels: inout [vec4f], _ width: Int, _  height: Int, _ scale: Float = 1,
+                 _ noise: vec4f = [2, 0.5, 8, 1], _ color0: vec4f = [0, 0, 0, 1],
+                 _ color1: vec4f = [1, 1, 1, 1]) {
     fatalError()
 }

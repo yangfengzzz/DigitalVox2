@@ -8,6 +8,12 @@
 import Foundation
 
 // Make a uv grid
-func make_uvgrid(width: Int, height: Int, scale: Float = 1, colored: Bool = true) -> image_data {
+func make_uvgrid(_ width: Int, _ height: Int, _ scale: Float = 1, _ colored: Bool = true) -> image_data {
+    fatalError()
+}
+
+// Make a uv grid
+func make_uvgrid(_ pixels: inout [vec4f], _ width: Int, _  height: Int, _ scale: Float = 1,
+                 _ colored: Bool = true) {
     fatalError()
 }

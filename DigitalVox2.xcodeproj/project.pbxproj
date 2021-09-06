@@ -115,6 +115,8 @@
 		047FEBE626E5A3A40078CFAF /* ridge_map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBE526E5A3A40078CFAF /* ridge_map.swift */; };
 		047FEBE826E5A3B20078CFAF /* sunsky.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBE726E5A3B20078CFAF /* sunsky.swift */; };
 		047FEBEA26E5A3BE0078CFAF /* lights.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBE926E5A3BE0078CFAF /* lights.swift */; };
+		047FEBEC26E5A8D60078CFAF /* rand_points.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBEB26E5A8D60078CFAF /* rand_points.swift */; };
+		047FEBEE26E5A8E50078CFAF /* rand_lines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBED26E5A8E50078CFAF /* rand_lines.swift */; };
 		0497A1E526DF150500F61DE9 /* voxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A1E426DF150500F61DE9 /* voxApp.swift */; };
 		0497A1E726DF150500F61DE9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A1E626DF150500F61DE9 /* ContentView.swift */; };
 		0497A1E926DF150800F61DE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0497A1E826DF150800F61DE9 /* Assets.xcassets */; };
@@ -321,6 +323,8 @@
 		047FEBE526E5A3A40078CFAF /* ridge_map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ridge_map.swift; sourceTree = "<group>"; };
 		047FEBE726E5A3B20078CFAF /* sunsky.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sunsky.swift; sourceTree = "<group>"; };
 		047FEBE926E5A3BE0078CFAF /* lights.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lights.swift; sourceTree = "<group>"; };
+		047FEBEB26E5A8D60078CFAF /* rand_points.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rand_points.swift; sourceTree = "<group>"; };
+		047FEBED26E5A8E50078CFAF /* rand_lines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rand_lines.swift; sourceTree = "<group>"; };
 		0497A1E126DF150500F61DE9 /* vox.render.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vox.render.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0497A1E426DF150500F61DE9 /* voxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = voxApp.swift; sourceTree = "<group>"; };
 		0497A1E626DF150500F61DE9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -651,6 +655,8 @@
 				047FEBE526E5A3A40078CFAF /* ridge_map.swift */,
 				047FEBE726E5A3B20078CFAF /* sunsky.swift */,
 				047FEBE926E5A3BE0078CFAF /* lights.swift */,
+				047FEBEB26E5A8D60078CFAF /* rand_points.swift */,
+				047FEBED26E5A8E50078CFAF /* rand_lines.swift */,
 			);
 			path = images;
 			sourceTree = "<group>";
@@ -1042,6 +1048,7 @@
 				042C841226E4A7AE00BD3733 /* sampling.swift in Sources */,
 				0452EC9B26DFA0CD0015BFB1 /* ContentView.swift in Sources */,
 				0452ED1C26DFB0F80015BFB1 /* MotionController.swift in Sources */,
+				047FEBEE26E5A8E50078CFAF /* rand_lines.swift in Sources */,
 				047FEBC926E5A10E0078CFAF /* image.swift in Sources */,
 				04EA0D7226E1206400CA7833 /* ray3f.swift in Sources */,
 				0452ECF826DFAECE0015BFB1 /* RayRendererExtension.swift in Sources */,
@@ -1070,6 +1077,7 @@
 				0452EC9926DFA0CD0015BFB1 /* voxApp.swift in Sources */,
 				0452ED3026E044CA0015BFB1 /* mat4f.swift in Sources */,
 				04EA0D6A26E0F9AD00CA7833 /* math.swift in Sources */,
+				047FEBEC26E5A8D60078CFAF /* rand_points.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
