@@ -99,6 +99,22 @@
 		047FEBC326E597730078CFAF /* noise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBC226E597730078CFAF /* noise.swift */; };
 		047FEBC526E59D630078CFAF /* image_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBC426E59D630078CFAF /* image_data.swift */; };
 		047FEBC726E59FB00078CFAF /* color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBC626E59FB00078CFAF /* color.swift */; };
+		047FEBC926E5A10E0078CFAF /* image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBC826E5A10E0078CFAF /* image.swift */; };
+		047FEBCC26E5A2D70078CFAF /* grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBCB26E5A2D70078CFAF /* grid.swift */; };
+		047FEBCE26E5A2E60078CFAF /* checker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBCD26E5A2E60078CFAF /* checker.swift */; };
+		047FEBD026E5A2F20078CFAF /* bumps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBCF26E5A2F20078CFAF /* bumps.swift */; };
+		047FEBD226E5A3020078CFAF /* ramp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBD126E5A3020078CFAF /* ramp.swift */; };
+		047FEBD426E5A3120078CFAF /* gamma_ramp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBD326E5A3120078CFAF /* gamma_ramp.swift */; };
+		047FEBD626E5A3240078CFAF /* uv_ramp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBD526E5A3240078CFAF /* uv_ramp.swift */; };
+		047FEBD826E5A3350078CFAF /* uv_grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBD726E5A3350078CFAF /* uv_grid.swift */; };
+		047FEBDC26E5A3500078CFAF /* blackbody_ramp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBDB26E5A3500078CFAF /* blackbody_ramp.swift */; };
+		047FEBDE26E5A3610078CFAF /* colormap_ramp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBDD26E5A3610078CFAF /* colormap_ramp.swift */; };
+		047FEBE026E5A3720078CFAF /* noise_map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBDF26E5A3720078CFAF /* noise_map.swift */; };
+		047FEBE226E5A37F0078CFAF /* fbm_map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBE126E5A37F0078CFAF /* fbm_map.swift */; };
+		047FEBE426E5A3920078CFAF /* turbulence_map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBE326E5A3920078CFAF /* turbulence_map.swift */; };
+		047FEBE626E5A3A40078CFAF /* ridge_map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBE526E5A3A40078CFAF /* ridge_map.swift */; };
+		047FEBE826E5A3B20078CFAF /* sunsky.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBE726E5A3B20078CFAF /* sunsky.swift */; };
+		047FEBEA26E5A3BE0078CFAF /* lights.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBE926E5A3BE0078CFAF /* lights.swift */; };
 		0497A1E526DF150500F61DE9 /* voxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A1E426DF150500F61DE9 /* voxApp.swift */; };
 		0497A1E726DF150500F61DE9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A1E626DF150500F61DE9 /* ContentView.swift */; };
 		0497A1E926DF150800F61DE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0497A1E826DF150800F61DE9 /* Assets.xcassets */; };
@@ -289,6 +305,22 @@
 		047FEBC226E597730078CFAF /* noise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = noise.swift; sourceTree = "<group>"; };
 		047FEBC426E59D630078CFAF /* image_data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = image_data.swift; sourceTree = "<group>"; };
 		047FEBC626E59FB00078CFAF /* color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = color.swift; sourceTree = "<group>"; };
+		047FEBC826E5A10E0078CFAF /* image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = image.swift; sourceTree = "<group>"; };
+		047FEBCB26E5A2D70078CFAF /* grid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = grid.swift; sourceTree = "<group>"; };
+		047FEBCD26E5A2E60078CFAF /* checker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = checker.swift; sourceTree = "<group>"; };
+		047FEBCF26E5A2F20078CFAF /* bumps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bumps.swift; sourceTree = "<group>"; };
+		047FEBD126E5A3020078CFAF /* ramp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ramp.swift; sourceTree = "<group>"; };
+		047FEBD326E5A3120078CFAF /* gamma_ramp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gamma_ramp.swift; sourceTree = "<group>"; };
+		047FEBD526E5A3240078CFAF /* uv_ramp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = uv_ramp.swift; sourceTree = "<group>"; };
+		047FEBD726E5A3350078CFAF /* uv_grid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = uv_grid.swift; sourceTree = "<group>"; };
+		047FEBDB26E5A3500078CFAF /* blackbody_ramp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = blackbody_ramp.swift; sourceTree = "<group>"; };
+		047FEBDD26E5A3610078CFAF /* colormap_ramp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = colormap_ramp.swift; sourceTree = "<group>"; };
+		047FEBDF26E5A3720078CFAF /* noise_map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = noise_map.swift; sourceTree = "<group>"; };
+		047FEBE126E5A37F0078CFAF /* fbm_map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fbm_map.swift; sourceTree = "<group>"; };
+		047FEBE326E5A3920078CFAF /* turbulence_map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = turbulence_map.swift; sourceTree = "<group>"; };
+		047FEBE526E5A3A40078CFAF /* ridge_map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ridge_map.swift; sourceTree = "<group>"; };
+		047FEBE726E5A3B20078CFAF /* sunsky.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sunsky.swift; sourceTree = "<group>"; };
+		047FEBE926E5A3BE0078CFAF /* lights.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lights.swift; sourceTree = "<group>"; };
 		0497A1E126DF150500F61DE9 /* vox.render.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vox.render.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0497A1E426DF150500F61DE9 /* voxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = voxApp.swift; sourceTree = "<group>"; };
 		0497A1E626DF150500F61DE9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -507,6 +539,8 @@
 				047FEBC226E597730078CFAF /* noise.swift */,
 				047FEBC626E59FB00078CFAF /* color.swift */,
 				047FEBC426E59D630078CFAF /* image_data.swift */,
+				047FEBC826E5A10E0078CFAF /* image.swift */,
+				047FEBCA26E5A1130078CFAF /* images */,
 			);
 			path = vox.tracing;
 			sourceTree = "<group>";
@@ -597,6 +631,28 @@
 				0452ED1326DFB0A00015BFB1 /* sphere.obj */,
 			);
 			name = sphere;
+			sourceTree = "<group>";
+		};
+		047FEBCA26E5A1130078CFAF /* images */ = {
+			isa = PBXGroup;
+			children = (
+				047FEBCB26E5A2D70078CFAF /* grid.swift */,
+				047FEBCD26E5A2E60078CFAF /* checker.swift */,
+				047FEBCF26E5A2F20078CFAF /* bumps.swift */,
+				047FEBD126E5A3020078CFAF /* ramp.swift */,
+				047FEBD326E5A3120078CFAF /* gamma_ramp.swift */,
+				047FEBD526E5A3240078CFAF /* uv_ramp.swift */,
+				047FEBD726E5A3350078CFAF /* uv_grid.swift */,
+				047FEBDB26E5A3500078CFAF /* blackbody_ramp.swift */,
+				047FEBDD26E5A3610078CFAF /* colormap_ramp.swift */,
+				047FEBDF26E5A3720078CFAF /* noise_map.swift */,
+				047FEBE126E5A37F0078CFAF /* fbm_map.swift */,
+				047FEBE326E5A3920078CFAF /* turbulence_map.swift */,
+				047FEBE526E5A3A40078CFAF /* ridge_map.swift */,
+				047FEBE726E5A3B20078CFAF /* sunsky.swift */,
+				047FEBE926E5A3BE0078CFAF /* lights.swift */,
+			);
+			path = images;
 			sourceTree = "<group>";
 		};
 		0497A1D826DF150500F61DE9 = {
@@ -961,18 +1017,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				0452ED1E26DFB9F50015BFB1 /* vec2f.swift in Sources */,
+				047FEBD426E5A3120078CFAF /* gamma_ramp.swift in Sources */,
 				047FEB7626E1C3CA0078CFAF /* edge_map.swift in Sources */,
 				0452ECFA26DFAEE70015BFB1 /* Raytracing.metal in Sources */,
 				04EA0D6E26E1204F00CA7833 /* bbox3f.swift in Sources */,
 				047FEBC326E597730078CFAF /* noise.swift in Sources */,
+				047FEBE026E5A3720078CFAF /* noise_map.swift in Sources */,
+				047FEBE426E5A3920078CFAF /* turbulence_map.swift in Sources */,
 				047FEBC726E59FB00078CFAF /* color.swift in Sources */,
 				0452ED2626E042160015BFB1 /* vec3i.swift in Sources */,
+				047FEBE626E5A3A40078CFAF /* ridge_map.swift in Sources */,
 				0452ED3C26E0F50A0015BFB1 /* frame2f.swift in Sources */,
 				047FEB7A26E1C8340078CFAF /* hash_grid.swift in Sources */,
 				047FEB7426E1BD590078CFAF /* shape.swift in Sources */,
 				0452ED2E26E044C20015BFB1 /* mat3f.swift in Sources */,
 				0452ED2026DFBCFC0015BFB1 /* vec3f.swift in Sources */,
+				047FEBDC26E5A3500078CFAF /* blackbody_ramp.swift in Sources */,
 				0452ECFC26DFAEFC0015BFB1 /* ShowUp.metal in Sources */,
+				047FEBD226E5A3020078CFAF /* ramp.swift in Sources */,
 				047FEB7B26E1D63D0078CFAF /* geometry.swift in Sources */,
 				04EA0D7026E1205C00CA7833 /* ray2f.swift in Sources */,
 				0452ED1A26DFB0F80015BFB1 /* InputController.swift in Sources */,
@@ -980,20 +1042,30 @@
 				042C841226E4A7AE00BD3733 /* sampling.swift in Sources */,
 				0452EC9B26DFA0CD0015BFB1 /* ContentView.swift in Sources */,
 				0452ED1C26DFB0F80015BFB1 /* MotionController.swift in Sources */,
+				047FEBC926E5A10E0078CFAF /* image.swift in Sources */,
 				04EA0D7226E1206400CA7833 /* ray3f.swift in Sources */,
 				0452ECF826DFAECE0015BFB1 /* RayRendererExtension.swift in Sources */,
 				047FEB7226E1BC570078CFAF /* fvshape_data.swift in Sources */,
 				0452ED2C26E044B90015BFB1 /* mat2f.swift in Sources */,
 				047FEB7026E1BA4A0078CFAF /* shape_data.swift in Sources */,
+				047FEBE826E5A3B20078CFAF /* sunsky.swift in Sources */,
 				047FEBC526E59D630078CFAF /* image_data.swift in Sources */,
 				0452ECF626DFAEAB0015BFB1 /* RayRenderer.swift in Sources */,
+				047FEBD626E5A3240078CFAF /* uv_ramp.swift in Sources */,
 				0452ED3A26E0F50A0015BFB1 /* quat4f.swift in Sources */,
 				0452ED2A26E0422D0015BFB1 /* vec4b.swift in Sources */,
 				0452ED1B26DFB0F80015BFB1 /* ControllerView.swift in Sources */,
 				0452ED2426E0420B0015BFB1 /* vec2i.swift in Sources */,
 				04EA0D6C26E1204200CA7833 /* bbox2f.swift in Sources */,
+				047FEBD826E5A3350078CFAF /* uv_grid.swift in Sources */,
+				047FEBD026E5A2F20078CFAF /* bumps.swift in Sources */,
+				047FEBCE26E5A2E60078CFAF /* checker.swift in Sources */,
 				047FEB7826E1C59F0078CFAF /* shape_bvh.swift in Sources */,
 				0452ED2226DFBD080015BFB1 /* vec4f.swift in Sources */,
+				047FEBEA26E5A3BE0078CFAF /* lights.swift in Sources */,
+				047FEBDE26E5A3610078CFAF /* colormap_ramp.swift in Sources */,
+				047FEBE226E5A37F0078CFAF /* fbm_map.swift in Sources */,
+				047FEBCC26E5A2D70078CFAF /* grid.swift in Sources */,
 				0452ED2826E042200015BFB1 /* vec4i.swift in Sources */,
 				0452EC9926DFA0CD0015BFB1 /* voxApp.swift in Sources */,
 				0452ED3026E044CA0015BFB1 /* mat4f.swift in Sources */,
