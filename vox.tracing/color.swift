@@ -526,9 +526,9 @@ public enum color_space {
 }
 
 // RGB color space definition. Various predefined color spaces are listed below.
-struct color_space_params {
+public struct color_space_params {
     // Curve type
-    enum curve_t {
+    public enum curve_t {
         case linear
         case gamma
         case linear_gamma
@@ -539,31 +539,360 @@ struct color_space_params {
     }
 
     // primaries
-    var red_chromaticity: vec2f    // xy chromaticity of the red primary
-    var green_chromaticity: vec2f  // xy chromaticity of the green primary
-    var blue_chromaticity: vec2f   // xy chromaticity of the blue primary
-    var white_chromaticity: vec2f  // xy chromaticity of the white point
-    var rgb_to_xyz_mat: mat3f      // matrix from rgb to xyz
-    var xyz_to_rgb_mat: mat3f      // matrix from xyz to rgb
+    public var red_chromaticity: vec2f    // xy chromaticity of the red primary
+    public var green_chromaticity: vec2f  // xy chromaticity of the green primary
+    public var blue_chromaticity: vec2f   // xy chromaticity of the blue primary
+    public var white_chromaticity: vec2f  // xy chromaticity of the white point
+    public var rgb_to_xyz_mat: mat3f      // matrix from rgb to xyz
+    public var xyz_to_rgb_mat: mat3f      // matrix from xyz to rgb
     // tone curve
-    var curve_type: curve_t
-    var curve_gamma: Float  // gamma for power curves
-    var curve_abcd: vec4f   // tone curve values for linear_gamma curves
+    public var curve_type: curve_t
+    public var curve_gamma: Float  // gamma for power curves
+    public var curve_abcd: vec4f   // tone curve values for linear_gamma curves
+}
+
+// Compute the rgb -> xyz matrix from the color space definition
+// Input: red, green, blue, white (x,y) chromoticities
+// Algorithm from: SMPTE Recommended Practice RP 177-1993
+// http://car.france3.mars.free.fr/HD/INA-%2026%20jan%2006/SMPTE%20normes%20et%20confs/rp177.pdf
+@inlinable
+func rgb_to_xyz_mat(_ rc: vec2f, _ gc: vec2f, _ bc: vec2f, _ wc: vec2f) -> mat3f {
+    let rgb = mat3f(
+            [rc.x, rc.y, 1 - rc.x - rc.y],
+            [gc.x, gc.y, 1 - gc.x - gc.y],
+            [bc.x, bc.y, 1 - bc.x - bc.y]
+    )
+    let w = vec3f(wc.x, wc.y, 1 - wc.x - wc.y)
+    let c = inverse(rgb) * vec3f(w.x / w.y, 1, w.z / w.y)
+    return mat3f(c.x * rgb.x, c.y * rgb.y, c.z * rgb.z)
+}
+
+// Construct an RGB color space. Predefined color spaces below
+func get_color_scape_params(_ space: color_space) -> color_space_params {
+    let make_linear_rgb_space = { (red: vec2f, green: vec2f, blue: vec2f, white: vec2f) -> color_space_params in
+        color_space_params(red_chromaticity: red, green_chromaticity: green, blue_chromaticity: blue, white_chromaticity: white,
+                rgb_to_xyz_mat: rgb_to_xyz_mat(red, green, blue, white), xyz_to_rgb_mat: inverse(rgb_to_xyz_mat(red, green, blue, white)),
+                curve_type: .linear, curve_gamma: 0.0, curve_abcd: vec4f())
+    }
+    let make_gamma_rgb_space = { (red: vec2f, green: vec2f, blue: vec2f,
+                                  white: vec2f, gamma: Float, curve_abcd: vec4f) -> color_space_params in
+        color_space_params(red_chromaticity: red, green_chromaticity: green, blue_chromaticity: blue, white_chromaticity: white,
+                rgb_to_xyz_mat: rgb_to_xyz_mat(red, green, blue, white), xyz_to_rgb_mat: inverse(rgb_to_xyz_mat(red, green, blue, white)),
+                curve_type: curve_abcd == zero4f ? .gamma : .linear_gamma, curve_gamma: 0.0, curve_abcd: vec4f())
+    }
+    let make_other_rgb_space = { (red: vec2f, green: vec2f, blue: vec2f, white: vec2f, curve_type: color_space_params.curve_t) -> color_space_params in
+        color_space_params(red_chromaticity: red, green_chromaticity: green, blue_chromaticity: blue, white_chromaticity: white,
+                rgb_to_xyz_mat: rgb_to_xyz_mat(red, green, blue, white), xyz_to_rgb_mat: inverse(rgb_to_xyz_mat(red, green, blue, white)),
+                curve_type: curve_type, curve_gamma: 0.0, curve_abcd: vec4f())
+    }
+
+    // color space parameters
+    // https://en.wikipedia.org/wiki/Rec._709
+    let rgb_params = make_linear_rgb_space([0.6400, 0.3300],
+            [0.3000, 0.6000], [0.1500, 0.0600], [0.3127, 0.3290])
+    // https://en.wikipedia.org/wiki/Rec._709
+    let srgb_params = make_gamma_rgb_space([0.6400, 0.3300],
+            [0.3000, 0.6000], [0.1500, 0.0600], [0.3127, 0.3290], 2.4,
+            [1.055, 0.055, 12.92, 0.0031308])
+    // https://en.wikipedia.org/wiki/Academy_Color_Encoding_System
+    let aces2065_params = make_linear_rgb_space([0.7347, 0.2653],
+            [0.0000, 1.0000], [0.0001, -0.0770], [0.32168, 0.33767])
+    // https://en.wikipedia.org/wiki/Academy_Color_Encoding_Systemx
+    let acescg_params = make_linear_rgb_space([0.7130, 0.2930],
+            [0.1650, 0.8300], [0.1280, 0.0440], [0.32168, 0.33767])
+    // https://en.wikipedia.org/wiki/Academy_Color_Encoding_Systemx
+    let acescc_params = make_other_rgb_space([0.7130, 0.2930],
+            [0.1650, 0.8300], [0.1280, 0.0440], [0.32168, 0.33767],
+            .aces_cc)
+    // https://en.wikipedia.org/wiki/Academy_Color_Encoding_Systemx
+    let acescct_params = make_other_rgb_space([0.7130, 0.2930],
+            [0.1650, 0.8300], [0.1280, 0.0440], [0.32168, 0.33767],
+            .aces_cct)
+    // https://en.wikipedia.org/wiki/Adobe_RGB_color_space
+    let adobe_params = make_gamma_rgb_space([0.6400, 0.3300],
+            [0.2100, 0.7100], [0.1500, 0.0600], [0.3127, 0.3290], 2.19921875, zero4f)
+    // https://en.wikipedia.org/wiki/Rec._709
+    let rec709_params = make_gamma_rgb_space([0.6400, 0.3300],
+            [0.3000, 0.6000], [0.1500, 0.0600], [0.3127, 0.3290], 1 / 0.45,
+            [1.099, 0.099, 4.500, 0.018])
+    // https://en.wikipedia.org/wiki/Rec._2020
+    let rec2020_params = make_gamma_rgb_space([0.7080, 0.2920],
+            [0.1700, 0.7970], [0.1310, 0.0460], [0.3127, 0.3290], 1 / 0.45,
+            [1.09929682680944, 0.09929682680944, 4.5, 0.018053968510807])
+    // https://en.wikipedia.org/wiki/Rec._2020
+    let rec2100pq_params = make_other_rgb_space([0.7080, 0.2920],
+            [0.1700, 0.7970], [0.1310, 0.0460], [0.3127, 0.3290],
+            .pq)
+    // https://en.wikipedia.org/wiki/Rec._2020
+    let rec2100hlg_params = make_other_rgb_space([0.7080, 0.2920],
+            [0.1700, 0.7970], [0.1310, 0.0460], [0.3127, 0.3290],
+            .hlg)
+    // https://en.wikipedia.org/wiki/DCI-P3
+    let p3dci_params = make_gamma_rgb_space([0.6800, 0.3200],
+            [0.2650, 0.6900], [0.1500, 0.0600], [0.3140, 0.3510], 1.6, zero4f)
+    // https://en.wikipedia.org/wiki/DCI-P3
+    let p3d60_params = make_gamma_rgb_space([0.6800, 0.3200],
+            [0.2650, 0.6900], [0.1500, 0.0600], [0.32168, 0.33767], 1.6, zero4f)
+    // https://en.wikipedia.org/wiki/DCI-P3
+    let p3d65_params = make_gamma_rgb_space([0.6800, 0.3200],
+            [0.2650, 0.6900], [0.1500, 0.0600], [0.3127, 0.3290], 1.6, zero4f)
+    // https://en.wikipedia.org/wiki/DCI-P3
+    let p3display_params = make_gamma_rgb_space([0.6800, 0.3200],
+            [0.2650, 0.6900], [0.1500, 0.0600], [0.3127, 0.3290], 2.4,
+            [1.055, 0.055, 12.92, 0.0031308])
+    // https://en.wikipedia.org/wiki/ProPhoto_RGB_color_space
+    let prophoto_params = make_gamma_rgb_space([0.7347, 0.2653],
+            [0.1596, 0.8404], [0.0366, 0.0001], [0.3457, 0.3585], 1.8,
+            [1.0, 0.0, 16.0, 0.001953125])
+
+    // return values
+    switch (space) {
+    case .rgb: return rgb_params
+    case .srgb: return srgb_params
+    case .adobe: return adobe_params
+    case .prophoto: return prophoto_params
+    case .rec709: return rec709_params
+    case .rec2020: return rec2020_params
+    case .rec2100pq: return rec2100pq_params
+    case .rec2100hlg: return rec2100hlg_params
+    case .aces2065: return aces2065_params
+    case .acescg: return acescg_params
+    case .acescc: return acescc_params
+    case .acescct: return acescct_params
+    case .p3dci: return p3dci_params
+    case .p3d60: return p3d60_params
+    case .p3d65: return p3d65_params
+    case .p3display: return p3display_params
+    }
+}
+
+// gamma to linear
+@inlinable
+func gamma_display_to_linear(_ x: Float, _ gamma: Float) -> Float {
+    pow(x, gamma)
+}
+
+@inlinable
+func gamma_linear_to_display(_ x: Float, _ gamma: Float) -> Float {
+    pow(x, 1 / gamma)
+}
+
+// https://en.wikipedia.org/wiki/Rec._709
+@inlinable
+func gamma_display_to_linear(_ x: Float, _ gamma: Float, _ abcd: vec4f) -> Float {
+    let a = abcd[0]
+    let b = abcd[1]
+    let c = abcd[2]
+    let d = abcd[3]
+
+    if (x < 1 / d) {
+        return x / c
+    } else {
+        return pow((x + b) / a, gamma)
+    }
+}
+
+@inlinable
+func gamma_linear_to_display(_ x: Float, _ gamma: Float, _ abcd: vec4f) -> Float {
+    let a = abcd[0]
+    let b = abcd[1]
+    let c = abcd[2]
+    let d = abcd[3]
+
+    if (x < d) {
+        return x * c
+    } else {
+        return a * pow(x, 1 / gamma) - b
+    }
+}
+
+// https://en.wikipedia.org/wiki/Academy_Color_Encoding_Systemx
+@inlinable
+func acescc_display_to_linear(_ x: Float) -> Float {
+    if (x < -0.3013698630) {  // (9.72-15)/17.52
+        return (exp2(x * 17.52 - 9.72) - exp2(-16.0)) * 2
+    } else if (x < (log2(65504.0) + 9.72) / 17.52) {
+        return exp2(x * 17.52 - 9.72)
+    } else {  // (in >= (log2(65504)+9.72)/17.52)
+        return 65504.0
+    }
+}
+
+// https://en.wikipedia.org/wiki/Academy_Color_Encoding_Systemx
+@inlinable
+func acescct_display_to_linear(_ x: Float) -> Float {
+    if (x < 0.155251141552511) {
+        return (x - 0.0729055341958355) / 10.5402377416545
+    } else {
+        return exp2(x * 17.52 - 9.72)
+    }
+}
+
+// https://en.wikipedia.org/wiki/Academy_Color_Encoding_Systemx
+@inlinable
+func acescc_linear_to_display(_ x: Float) -> Float {
+    if (x <= 0) {
+        return -0.3584474886  // =(log2( pow(2.,-16.))+9.72)/17.52
+    } else if (x < exp2(-15.0)) {
+        return (log2(exp2(-16.0) + x * 0.5) + 9.72) / 17.52
+    } else {  // (in >= pow(2.,-15))
+        return (log2(x) + 9.72) / 17.52
+    }
+}
+
+// https://en.wikipedia.org/wiki/Academy_Color_Encoding_Systemx
+@inlinable
+func acescct_linear_to_display(_ x: Float) -> Float {
+    if (x <= 0.0078125) {
+        return 10.5402377416545 * x + 0.0729055341958355
+    } else {
+        return (log2(x) + 9.72) / 17.52
+    }
+}
+
+// https://en.wikipedia.org/wiki/High-dynamic-range_video#Perceptual_Quantizer
+// https://github.com/ampas/aces-dev/blob/master/transforms/ctl/lib/ACESlib.Utilities_Color.ctl
+// In PQ, we assume that the linear luminance in [0,1] corresponds to
+// [0,10000] cd m^2
+@inlinable
+func pq_display_to_linear(_ x: Float) -> Float {
+    let Np = pow(x, 1 / 78.84375)
+    var L = max(Np - 0.8359375, 0.0)
+    L = L / (18.8515625 - 18.6875 * Np)
+    L = pow(L, 1 / 0.1593017578125)
+    return L
+}
+
+@inlinable
+func pq_linear_to_display(_ x: Float) -> Float {
+    pow((0.8359375 + 18.8515625 * pow(x, 0.1593017578125)) /
+            (1 + 18.6875 * pow(x, 0.1593017578125)), 78.84375)
+}
+
+// https://en.wikipedia.org/wiki/High-dynamic-range_video#Perceptual_Quantizer
+// In HLG, we assume that the linear luminance in [0,1] corresponds to
+// [0,1000] cd m^2. Note that the version we report here is scaled in [0,1]
+// range for nominal luminance. But HLG was initially defined in the [0,12]
+// range where it maps 1 to 0.5 and 12 to 1. For use in HDR tonemapping that is
+// likely a better range to use.
+@inlinable
+func hlg_display_to_linear(_ x: Float) -> Float {
+    if (x < 0.5) {
+        return 3 * 3 * x * x
+    } else {
+        return (exp((x - 0.55991073) / 0.17883277) + 0.28466892) / 12
+    }
+}
+
+@inlinable
+func hlg_linear_to_display(_ x: Float) -> Float {
+    if (x < 1 / 12.0) {
+        return sqrt(3 * x)
+    } else {
+        return 0.17883277 * log(12 * x - 0.28466892) + 0.55991073
+    }
 }
 
 // Conversion between rgb color spaces
-@inlinable
 func color_to_xyz(_ col: vec3f, _ from: color_space) -> vec3f {
-    fatalError()
+    let space = get_color_scape_params(from)
+    var rgb = col
+    if (space.curve_type == .linear) {
+        // do nothing
+    } else if (space.curve_type == .gamma) {
+        rgb = [
+            gamma_linear_to_display(rgb.x, space.curve_gamma),
+            gamma_linear_to_display(rgb.y, space.curve_gamma),
+            gamma_linear_to_display(rgb.z, space.curve_gamma)
+        ]
+    } else if (space.curve_type == .linear_gamma) {
+        rgb = [
+            gamma_linear_to_display(rgb.x, space.curve_gamma, space.curve_abcd),
+            gamma_linear_to_display(rgb.y, space.curve_gamma, space.curve_abcd),
+            gamma_linear_to_display(rgb.z, space.curve_gamma, space.curve_abcd)
+        ]
+    } else if (space.curve_type == .aces_cc) {
+        rgb = [
+            acescc_linear_to_display(rgb.x),
+            acescc_linear_to_display(rgb.y),
+            acescc_linear_to_display(rgb.z)
+        ]
+    } else if (space.curve_type == .aces_cct) {
+        rgb = [
+            acescct_linear_to_display(rgb.x),
+            acescct_linear_to_display(rgb.y),
+            acescct_linear_to_display(rgb.z)
+        ]
+    } else if (space.curve_type == .pq) {
+        rgb = [
+            pq_linear_to_display(rgb.x),
+            pq_linear_to_display(rgb.y),
+            pq_linear_to_display(rgb.z)
+        ]
+    } else if (space.curve_type == .hlg) {
+        rgb = [
+            hlg_linear_to_display(rgb.x),
+            hlg_linear_to_display(rgb.y),
+            hlg_linear_to_display(rgb.z)
+        ]
+    } else {
+        fatalError("should not have gotten here")
+    }
+    return space.rgb_to_xyz_mat * rgb
 }
 
-@inlinable
 func xyz_to_color(_ xyz: vec3f, _ to: color_space) -> vec3f {
-    fatalError()
+    let space = get_color_scape_params(to)
+    var rgb = space.xyz_to_rgb_mat * xyz
+    if (space.curve_type == .linear) {
+        // nothing
+    } else if (space.curve_type == .gamma) {
+        rgb = [
+            gamma_display_to_linear(rgb.x, space.curve_gamma),
+            gamma_display_to_linear(rgb.y, space.curve_gamma),
+            gamma_display_to_linear(rgb.z, space.curve_gamma)
+        ]
+    } else if (space.curve_type == .linear_gamma) {
+        rgb = [
+            gamma_display_to_linear(rgb.x, space.curve_gamma, space.curve_abcd),
+            gamma_display_to_linear(rgb.y, space.curve_gamma, space.curve_abcd),
+            gamma_display_to_linear(rgb.z, space.curve_gamma, space.curve_abcd)
+        ]
+    } else if (space.curve_type == .aces_cc) {
+        rgb = [
+            acescc_display_to_linear(rgb.x),
+            acescc_display_to_linear(rgb.y),
+            acescc_display_to_linear(rgb.z)
+        ]
+    } else if (space.curve_type == .aces_cct) {
+        rgb = [
+            acescct_display_to_linear(rgb.x),
+            acescct_display_to_linear(rgb.y),
+            acescct_display_to_linear(rgb.z)
+        ]
+    } else if (space.curve_type == .pq) {
+        rgb = [
+            pq_display_to_linear(rgb.x),
+            pq_display_to_linear(rgb.y),
+            pq_display_to_linear(rgb.z)
+        ]
+    } else if (space.curve_type == .hlg) {
+        rgb = [
+            hlg_display_to_linear(rgb.x),
+            hlg_display_to_linear(rgb.y),
+            hlg_display_to_linear(rgb.z)
+        ]
+    } else {
+        fatalError("should not have gotten here")
+    }
+    return rgb
 }
 
 // Conversion between rgb color spaces
 @inlinable
 func convert_color(_ col: vec3f, _ from: color_space, _ to: color_space) -> vec3f {
-    fatalError()
+    if (from == to) {
+        return col
+    }
+    return xyz_to_color(color_to_xyz(col, from), to)
 }
