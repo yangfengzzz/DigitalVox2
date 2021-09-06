@@ -44,20 +44,58 @@ func bump_to_normal(_ bumpmap: image_data, _ scale: Float = 1) -> image_data {
 }
 
 // Convert a bump map to a normal map. All linear color spaces.
-func bump_to_normal(_ normal: inout [vec4f], _ bump: [vec4f], _  width: Int,
+func bump_to_normal(_ normalmap: inout [vec4f], _ bumpmap: [vec4f], _  width: Int,
                     _  height: Int, _  scale: Float = 1) {
-    fatalError()
+    let dx = 1.0 / Float(width), dy = 1.0 / Float(height)
+    for j in 0..<height {
+        for i in 0..<width {
+            let i1 = (i + 1) % width, j1 = (j + 1) % height
+            let p00 = bumpmap[j * width + i], p10 = bumpmap[j * width + i1],
+                    p01 = bumpmap[j1 * width + i]
+            let g00 = (p00.x + p00.y + p00.z) / 3
+            let g01 = (p01.x + p01.y + p01.z) / 3
+            let g10 = (p10.x + p10.y + p10.z) / 3
+            var normal = vec3f(
+                    scale * (g00 - g10) / dx, scale * (g00 - g01) / dy, 1.0)
+            normal.y = -normal.y  // make green pointing up, even if y axis
+            // points down
+            normal = normalize(normal) * 0.5 + vec3f(0.5, 0.5, 0.5)
+            normalmap[j * width + i] = [normal.x, normal.y, normal.z, 1]
+        }
+    }
 }
 
 // Add a border to an image
-func add_border(_ img: image_data, _ width: Float, _ color: vec4f = [0, 0, 0, 1]) -> image_data {
-    fatalError()
+func add_border(_ image: image_data, _ width: Float, _ color: vec4f = [0, 0, 0, 1]) -> image_data {
+    var result = image
+    let scale = 1.0 / Float(max(image.width, image.height))
+    for j in 0..<image.height {
+        for i in 0..<image.width {
+            let uv = vec2f(Float(i) * scale, Float(j) * scale)
+            if (uv.x < width || uv.y < width || uv.x > Float(image.width) * scale - width ||
+                    uv.y > Float(image.height) * scale - width) {
+                set_pixel(&result, i, j, color)
+            }
+        }
+    }
+    return result
 }
 
 // Add a border to an image
 func add_border(_ pixels: inout [vec4f], _ source: [vec4f], _  width: Int,
                 _ height: Int, _  thickness: Float, _ color: vec4f = [0, 0, 0, 1]) {
-    fatalError()
+    pixels = source
+    let scale = 1.0 / Float(max(width, height))
+    for j in 0..<height {
+        for i in 0..<width {
+            let uv = vec2f(Float(i) * scale, Float(j) * scale)
+            if (uv.x < thickness || uv.y < thickness ||
+                    uv.x > Float(width) * scale - thickness ||
+                    uv.y > Float(height) * scale - thickness) {
+                pixels[j * width + i] = color
+            }
+        }
+    }
 }
 
 func make_proc_image(_ width: Int, _ height: Int, _ linear: Bool, _ shader: (_ uv: vec2f) -> vec4f) -> image_data {
@@ -72,44 +110,79 @@ func make_proc_image(_ width: Int, _ height: Int, _ linear: Bool, _ shader: (_ u
     return image
 }
 
+func make_proc_image(_ pixels: inout [vec4f], _ width: Int, _ height: Int, _ shader: (_ uv: vec2f) -> vec4f) {
+    pixels = .init(repeating: vec4f(), count: width * height)
+    let scale = 1.0 / Float(max(width, height))
+    for j in 0..<height {
+        for i in 0..<width {
+            let uv = vec2f(Float(i) * scale, Float(j) * scale)
+            pixels[j * width + i] = shader(uv)
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 //MARK:- IMAGE UTILITIES
 // -----------------------------------------------------------------------------
 // Conversion from/to floats.
 func byte_to_float(_ fl: inout [vec4f], _ bt: [vec4b]) {
-    fatalError()
+    fl = .init(repeating: vec4f(), count: bt.count)
+    for i in 0..<fl.count {
+        fl[i] = byte_to_float(bt[i])
+    }
 }
 
 func float_to_byte(_ bt: inout [vec4b], _ fl: [vec4f]) {
-    fatalError()
+    bt = .init(repeating: vec4b(), count: fl.count)
+    for i in 0..<bt.count {
+        bt[i] = float_to_byte(fl[i])
+    }
 }
 
 // Conversion between linear and gamma-encoded images.
 func srgb_to_rgb(_ rgb: inout [vec4f], _ srgb: [vec4f]) {
-    fatalError()
+    rgb = .init(repeating: vec4f(), count: srgb.count)
+    for i in 0..<rgb.count {
+        rgb[i] = srgb_to_rgb(srgb[i])
+    }
 }
 
 func rgb_to_srgb(_ srgb: inout [vec4f], _ rgb: [vec4f]) {
-    fatalError()
+    srgb = .init(repeating: vec4f(), count: rgb.count)
+    for i in 0..<srgb.count {
+        srgb[i] = rgb_to_srgb(rgb[i])
+    }
 }
 
 func srgb_to_rgb(_ rgb: inout [vec4f], _ srgb: [vec4b]) {
-    fatalError()
+    rgb = .init(repeating: vec4f(), count: srgb.count)
+    for i in 0..<rgb.count {
+        rgb[i] = srgb_to_rgb(byte_to_float(srgb[i]))
+    }
 }
 
 func rgb_to_srgb(_ srgb: inout [vec4b], _ rgb: [vec4f]) {
-    fatalError()
+    srgb = .init(repeating: vec4b(), count: rgb.count)
+    for i in 0..<srgb.count {
+        srgb[i] = float_to_byte(rgb_to_srgb(rgb[i]))
+    }
 }
 
 // Apply tone mapping
 func tonemap_image(_ ldr: inout [vec4f], _ hdr: [vec4f], _ exposure: Float,
                    _ filmic: Bool = false, _ srgb: Bool = true) {
-    fatalError()
+    ldr = .init(repeating: vec4f(), count: hdr.count)
+    for i in 0..<hdr.count {
+        ldr[i] = tonemap(hdr[i], exposure, filmic, srgb)
+    }
 }
 
 func tonemap_image(_ ldr: inout [vec4b], _ hdr: [vec4f], _  exposure: Float,
                    _ filmic: Bool = false, _ srgb: Bool = true) {
-    fatalError()
+    ldr = .init(repeating: vec4b(), count: hdr.count)
+    for i in 0..<hdr.count {
+        ldr[i] = float_to_byte(tonemap(hdr[i], exposure, filmic, srgb))
+    }
 }
 
 // Apply tone mapping using multithreading for speed
@@ -137,7 +210,14 @@ func colorgrade_image_mt(_ corrected: inout [vec4b], _ img: [vec4f],
 
 // determine white balance colors
 func compute_white_balance(_ img: [vec4f]) -> vec3f {
-    fatalError()
+    var rgb = vec3f(0, 0, 0)
+    for p in img {
+        rgb += xyz(p)
+    }
+    if (rgb == vec3f(0, 0, 0)) {
+        return [0, 0, 0]
+    }
+    return rgb / max(rgb)
 }
 
 // Resize an image.
@@ -152,6 +232,18 @@ func resize_image(_ res: inout [vec4b], _  img: [vec4b], _ width: Int,
 }
 
 // Compute the difference between two images
-func image_difference(_ diff: inout [vec4f], _ a: [vec4f], _ b: [vec4f], _ display_diff: Bool) {
-    fatalError()
+func image_difference(_ diff: inout [vec4f], _ a: [vec4f], _ b: [vec4f], _ display: Bool) {
+    if (a.count != b.count) {
+        fatalError("image haev different sizes")
+    }
+    diff = .init(repeating: vec4f(), count: a.count)
+    for i in 0..<diff.count {
+        diff[i] = abs(a[i] - b[i])
+    }
+    if (display) {
+        for i in 0..<diff.count {
+            let d = max(diff[i])
+            diff[i] = [d, d, d, 1]
+        }
+    }
 }
