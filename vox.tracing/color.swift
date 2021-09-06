@@ -8,155 +8,155 @@
 import Foundation
 
 // -----------------------------------------------------------------------------
-// COLOR OPERATIONS
+//MARK:- COLOR OPERATIONS
 // -----------------------------------------------------------------------------
 // Conversion between flots and bytes
 @inlinable
-func float_to_byte(a: vec4f) -> vec4b {
+func float_to_byte(_ a: vec4f) -> vec4b {
     fatalError()
 }
 
 @inlinable
-func byte_to_float(a: vec4b) -> vec4f {
+func byte_to_float(_ a: vec4b) -> vec4f {
     fatalError()
 }
 
 @inlinable
-func float_to_byte(a: Float) -> UInt8 {
+func float_to_byte(_ a: Float) -> UInt8 {
     fatalError()
 }
 
 @inlinable
-func byte_to_float(a: UInt8) -> Float {
+func byte_to_float(_ a: UInt8) -> Float {
     fatalError()
 }
 
 // Luminance
 @inlinable
-func luminance(a: vec3f) -> Float {
+func luminance(_ a: vec3f) -> Float {
     fatalError()
 }
 
 // sRGB non-linear curve
 @inlinable
-func srgb_to_rgb(srgb: Float) -> Float {
+func srgb_to_rgb(_ srgb: Float) -> Float {
     fatalError()
 }
 
 @inlinable
-func rgb_to_srgb(rgb: Float) -> Float {
+func rgb_to_srgb(_ rgb: Float) -> Float {
     fatalError()
 }
 
 @inlinable
-func srgb_to_rgb(srgb: vec3f) -> vec3f {
+func srgb_to_rgb(_ srgb: vec3f) -> vec3f {
     fatalError()
 }
 
 @inlinable
-func srgb_to_rgb(srgb: vec4f) -> vec4f {
+func srgb_to_rgb(_ srgb: vec4f) -> vec4f {
     fatalError()
 }
 
 @inlinable
-func rgb_to_srgb(rgb: vec3f) -> vec3f {
+func rgb_to_srgb(_ rgb: vec3f) -> vec3f {
     fatalError()
 }
 
 @inlinable
-func rgb_to_srgb(rgb: vec4f) -> vec4f {
+func rgb_to_srgb(_ rgb: vec4f) -> vec4f {
     fatalError()
 }
 
 // Conversion between number of channels.
 @inlinable
-func rgb_to_rgba(rgb: vec3f) -> vec4f {
+func rgb_to_rgba(_ rgb: vec3f) -> vec4f {
     fatalError()
 }
 
 @inlinable
-func rgba_to_rgb(rgba: vec4f) -> vec3f {
+func rgba_to_rgb(_ rgba: vec4f) -> vec3f {
     fatalError()
 }
 
 // Apply contrast. Grey should be 0.18 for linear and 0.5 for gamma.
 @inlinable
-func lincontrast(rgb: vec3f, contrast: Float, grey: Float) -> vec3f {
+func lincontrast(_ rgb: vec3f, _ contrast: Float, _ grey: Float) -> vec3f {
     fatalError()
 }
 
 // Apply contrast in log2. Grey should be 0.18 for linear and 0.5 for gamma.
 @inlinable
-func logcontrast(rgb: vec3f, logcontrast: Float, grey: Float) -> vec3f {
+func logcontrast(_ rgb: vec3f, _ logcontrast: Float, _ grey: Float) -> vec3f {
     fatalError()
 }
 
 // Apply an s-shaped contrast.
 @inlinable
-func contrast(rgb: vec3f, contrast: Float) -> vec3f {
+func contrast(_ rgb: vec3f, _ contrast: Float) -> vec3f {
     fatalError()
 }
 
 // Apply saturation.
 @inlinable
-func saturate(rgb: vec3f, saturation: Float,
-              weights: vec3f = vec3f(0.333333, 0.333333, 0.333333)) -> vec3f {
+func saturate(_ rgb: vec3f, _  saturation: Float,
+              _ weights: vec3f = vec3f(0.333333, 0.333333, 0.333333)) -> vec3f {
     fatalError()
 }
 
 // Apply tone mapping
 @inlinable
-func tonemap(hdr: vec3f, exposure: Float, filmic: Bool = false, srgb: Bool = true) -> vec3f {
+func tonemap(_ hdr: vec3f, _ exposure: Float, _ filmic: Bool = false, _ srgb: Bool = true) -> vec3f {
     fatalError()
 }
 
 @inlinable
-func tonemap(hdr: vec4f, exposure: Float, filmic: Bool = false, srgb: Bool = true) -> vec4f {
+func tonemap(_ hdr: vec4f, _ exposure: Float, _ filmic: Bool = false, _ srgb: Bool = true) -> vec4f {
     fatalError()
 }
 
 // Composite colors
 @inlinable
-func composite(a: vec4f, b: vec4f) -> vec4f {
+func composite(_ a: vec4f, _ b: vec4f) -> vec4f {
     fatalError()
 }
 
 // Convert between CIE XYZ and RGB
 @inlinable
-func rgb_to_xyz(rgb: vec3f) -> vec3f {
+func rgb_to_xyz(_ rgb: vec3f) -> vec3f {
     fatalError()
 }
 
 @inlinable
-func xyz_to_rgb(xyz: vec3f) -> vec3f {
+func xyz_to_rgb(_ xyz: vec3f) -> vec3f {
     fatalError()
 }
 
 // Convert between CIE XYZ and xyY
 @inlinable
-func xyz_to_xyY(xyz: vec3f) -> vec3f {
+func xyz_to_xyY(_ xyz: vec3f) -> vec3f {
     fatalError()
 }
 
 @inlinable
-func xyY_to_xyz(xyY: vec3f) -> vec3f {
+func xyY_to_xyz(_ xyY: vec3f) -> vec3f {
     fatalError()
 }
 
 // Converts between HSV and RGB color spaces.
 @inlinable
-func hsv_to_rgb(hsv: vec3f) -> vec3f {
+func hsv_to_rgb(_ hsv: vec3f) -> vec3f {
     fatalError()
 }
 
 @inlinable
-func rgb_to_hsv(rgb: vec3f) -> vec3f {
+func rgb_to_hsv(_ rgb: vec3f) -> vec3f {
     fatalError()
 }
 
 // Approximate color of blackbody radiation from wavelength in nm.
 @inlinable
-func blackbody_to_rgb(temperature: Float) -> vec3f {
+func blackbody_to_rgb(_ temperature: Float) -> vec3f {
     fatalError()
 }
 
@@ -170,7 +170,7 @@ public enum colormap_type {
 
 // Colormaps from [0,1] to color
 @inlinable
-func colormap(t: Float, type: colormap_type = .viridis) -> vec3f {
+func colormap(_ t: Float, _ type: colormap_type = .viridis) -> vec3f {
     fatalError()
 }
 
@@ -232,17 +232,17 @@ public enum color_space {
 
 // Conversion between rgb color spaces
 @inlinable
-func color_to_xyz(col: vec3f, from: color_space) -> vec3f {
+func color_to_xyz(_ col: vec3f, _ from: color_space) -> vec3f {
     fatalError()
 }
 
 @inlinable
-func xyz_to_color(xyz: vec3f, to: color_space) -> vec3f {
+func xyz_to_color(_ xyz: vec3f, _ to: color_space) -> vec3f {
     fatalError()
 }
 
 // Conversion between rgb color spaces
 @inlinable
-func convert_color(col: vec3f, from: color_space, to: color_space) -> vec3f {
+func convert_color(_ col: vec3f, _ from: color_space, _ to: color_space) -> vec3f {
     fatalError()
 }
