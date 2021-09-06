@@ -889,7 +889,6 @@ func xyz_to_color(_ xyz: vec3f, _ to: color_space) -> vec3f {
 }
 
 // Conversion between rgb color spaces
-@inlinable
 func convert_color(_ col: vec3f, _ from: color_space, _ to: color_space) -> vec3f {
     if (from == to) {
         return col
