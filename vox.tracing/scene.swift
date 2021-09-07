@@ -161,22 +161,254 @@ func make_shape_scene(_ shape: shape_data, _ addsky: Bool = false) -> scene_data
     return scene
 }
 
+func vector_memory<T>(_ values: [T]) -> Int {
+    if (values.isEmpty) {
+        return 0
+    }
+    return values.count * MemoryLayout<T>.stride
+}
+
+func compute_memory(_ scene: scene_data) -> Int {
+    var memory = 0
+    memory += vector_memory(scene.cameras)
+    memory += vector_memory(scene.instances)
+    memory += vector_memory(scene.materials)
+    memory += vector_memory(scene.shapes)
+    memory += vector_memory(scene.textures)
+    memory += vector_memory(scene.environments)
+    memory += vector_memory(scene.camera_names)
+    memory += vector_memory(scene.instance_names)
+    memory += vector_memory(scene.material_names)
+    memory += vector_memory(scene.shape_names)
+    memory += vector_memory(scene.texture_names)
+    memory += vector_memory(scene.environment_names)
+    for shape in scene.shapes {
+        memory += vector_memory(shape.points)
+        memory += vector_memory(shape.lines)
+        memory += vector_memory(shape.triangles)
+        memory += vector_memory(shape.quads)
+        memory += vector_memory(shape.positions)
+        memory += vector_memory(shape.normals)
+        memory += vector_memory(shape.texcoords)
+        memory += vector_memory(shape.colors)
+        memory += vector_memory(shape.triangles)
+    }
+    for subdiv in scene.subdivs {
+        memory += vector_memory(subdiv.quadspos)
+        memory += vector_memory(subdiv.quadsnorm)
+        memory += vector_memory(subdiv.quadstexcoord)
+        memory += vector_memory(subdiv.positions)
+        memory += vector_memory(subdiv.normals)
+        memory += vector_memory(subdiv.texcoords)
+    }
+    for texture in scene.textures {
+        memory += vector_memory(texture.pixelsb)
+        memory += vector_memory(texture.pixelsf)
+    }
+    return memory
+}
+
+func accumulate<T>(_ values: [T], _ function: (T) -> Int) -> Int {
+    var sum = 0
+    for value in values {
+        sum += function(value)
+    }
+    return sum
+}
+
 // Return scene statistics as list of strings.
 func scene_stats(_ scene: scene_data, _ verbose: Bool = false) -> [String] {
-    fatalError()
+
+    let format = { (num: Int) -> String in
+        var num = num
+        var str = String()
+        while (num > 0) {
+            str = String(num % 1000) + (str.isEmpty ? "" : ",") + str
+            num /= 1000
+        }
+        if (str.isEmpty) {
+            str = "0"
+        }
+        while (str.count < 20) {
+            str = " " + str
+        }
+        return str
+    }
+
+    let format3 = { (num: vec3f) -> String in
+        var str = String(num.x) + " " + String(num.y) + " " + String(num.z)
+        while (str.count < 48) {
+            str = " " + str
+        }
+        return str
+    }
+
+    let bbox = compute_bounds(scene)
+
+    var stats: [String] = []
+    stats.append("cameras:      " + format(scene.cameras.count))
+    stats.append("instances:    " + format(scene.instances.count))
+    stats.append("materials:    " + format(scene.materials.count))
+    stats.append("shapes:       " + format(scene.shapes.count))
+    stats.append("subdivs:      " + format(scene.subdivs.count))
+    stats.append("environments: " + format(scene.environments.count))
+    stats.append("textures:     " + format(scene.textures.count))
+    stats.append("memory:       " + format(compute_memory(scene)))
+    stats.append(
+            "points:       " + format(accumulate(scene.shapes) { shape in
+                shape.points.count
+            }))
+    stats.append(
+            "lines:        " + format(accumulate(scene.shapes) { shape in
+                shape.lines.count
+            }))
+    stats.append("triangles:    " +
+            format(accumulate(scene.shapes) { shape in
+                shape.triangles.count
+            }))
+    stats.append(
+            "quads:        " + format(accumulate(scene.shapes) { shape in
+                shape.quads.count
+            }))
+    stats.append("fvquads:      " +
+            format(accumulate(scene.subdivs) { subdiv in
+                subdiv.quadspos.count
+            }))
+    stats.append("texels4b:     " +
+            format(accumulate(scene.textures) { texture in
+                texture.pixelsb.count
+            }))
+    stats.append("texels4f:     " +
+            format(accumulate(scene.textures) { texture in
+                texture.pixelsf.count
+            }))
+    stats.append("center:       " + format3(center(bbox)))
+    stats.append("size:         " + format3(size(bbox)))
+
+    return stats
+
 }
 
 // Return validation errors as list of strings.
 func scene_validation(_ scene: scene_data, _ notextures: Bool = false) -> [String] {
-    fatalError()
+    var errs: [String] = []
+    let check_names = { (names: [String], base: String) in
+        var used: [String: Int] = [:]
+        used.reserveCapacity(names.count)
+        for name in names {
+            used[name]! += 1
+        }
+        for (name, used) in used {
+            if (name.isEmpty) {
+                errs.append("empty " + base + " name")
+            } else if (used > 1) {
+                errs.append("duplicated " + base + " name " + name)
+            }
+        }
+    }
+    let check_empty_textures = { (scene: scene_data) in
+        for idx in 0..<scene.textures.count {
+            let texture = scene.textures[idx]
+            if (texture.pixelsf.isEmpty && texture.pixelsb.isEmpty) {
+                errs.append("empty texture " + scene.texture_names[idx])
+            }
+        }
+    }
+
+    check_names(scene.camera_names, "camera")
+    check_names(scene.shape_names, "shape")
+    check_names(scene.material_names, "material")
+    check_names(scene.instance_names, "instance")
+    check_names(scene.texture_names, "texture")
+    check_names(scene.environment_names, "environment")
+    if (!notextures) {
+        check_empty_textures(scene)
+    }
+
+    return errs
 }
 
 // -----------------------------------------------------------------------------
 //MARK:- SCENE TESSELATION
 // -----------------------------------------------------------------------------
+func tesselate_subdiv(_ shape: inout shape_data, _ subdiv_: inout subdiv_data, _ scene: scene_data) {
+    var subdiv = subdiv_
+
+    if (subdiv.subdivisions > 0) {
+        if (subdiv.catmullclark) {
+            for _ in 0..<subdiv.subdivisions {
+                (subdiv.quadstexcoord, subdiv.texcoords) =
+                        subdivide_catmullclark(
+                                subdiv.quadstexcoord, subdiv.texcoords, true)
+                (subdiv.quadsnorm, subdiv.normals) = subdivide_catmullclark(
+                        subdiv.quadsnorm, subdiv.normals, true)
+                (subdiv.quadspos, subdiv.positions) = subdivide_catmullclark(
+                        subdiv.quadspos, subdiv.positions)
+            }
+        } else {
+            for _ in 0..<subdiv.subdivisions {
+                (subdiv.quadstexcoord, subdiv.texcoords) = subdivide_quads(
+                        subdiv.quadstexcoord, subdiv.texcoords)
+                (subdiv.quadsnorm, subdiv.normals) = subdivide_quads(
+                        subdiv.quadsnorm, subdiv.normals)
+                (subdiv.quadspos, subdiv.positions) = subdivide_quads(
+                        subdiv.quadspos, subdiv.positions)
+            }
+        }
+        if (subdiv.smooth) {
+            subdiv.normals = quads_normals(subdiv.quadspos, subdiv.positions)
+            subdiv.quadsnorm = subdiv.quadspos
+        } else {
+            subdiv.normals = []
+            subdiv.quadsnorm = []
+        }
+    }
+
+    if (subdiv.displacement != 0 && subdiv.displacement_tex != invalidid) {
+        if (subdiv.texcoords.isEmpty) {
+            fatalError("missing texture coordinates")
+        }
+        // facevarying case
+        var offset = [Float](repeating: 0, count: subdiv.positions.count)
+        var count = [Int](repeating: 0, count: subdiv.positions.count)
+        for fid in 0..<subdiv.quadspos.count {
+            let qpos = subdiv.quadspos[fid]
+            let qtxt = subdiv.quadstexcoord[fid]
+            for i in 0..<4 {
+                let displacement_tex = scene.textures[subdiv.displacement_tex]
+                var disp = mean(
+                        eval_texture(displacement_tex, subdiv.texcoords[qtxt[i]], false))
+                if (!displacement_tex.pixelsb.isEmpty) {
+                    disp -= 0.5
+                }
+                offset[qpos[i]] += subdiv.displacement * disp
+                count[qpos[i]] += 1
+            }
+        }
+        let normals = quads_normals(subdiv.quadspos, subdiv.positions)
+        for vid in 0..<subdiv.positions.count {
+            subdiv.positions[vid] += normals[vid] * offset[vid] / Float(count[vid])
+        }
+        if (subdiv.smooth || !subdiv.normals.isEmpty) {
+            subdiv.quadsnorm = subdiv.quadspos
+            subdiv.normals = quads_normals(subdiv.quadspos, subdiv.positions)
+        }
+    }
+
+    shape = shape_data()
+    split_facevarying(&shape.quads, &shape.positions, &shape.normals,
+            &shape.texcoords, subdiv.quadspos, subdiv.quadsnorm, subdiv.quadstexcoord,
+            subdiv.positions, subdiv.normals, subdiv.texcoords)
+}
+
 // Apply subdivision and displacement rules.
 func tesselate_subdivs(_ scene: inout scene_data) {
-    fatalError()
+    // tesselate shapes
+    scene.subdivs = scene.subdivs.map({ subdiv in
+        var subdiv = subdiv
+        tesselate_subdiv(&scene.shapes[subdiv.shape], &subdiv, scene)
+        return subdiv
+    })
 }
 
 // -----------------------------------------------------------------------------
@@ -184,5 +416,133 @@ func tesselate_subdivs(_ scene: inout scene_data) {
 // -----------------------------------------------------------------------------
 // Make Cornell Box scene
 func make_cornellbox() -> scene_data {
-    fatalError()
+    var scene = scene_data()
+
+    var camera = camera_data()
+    camera.frame = frame3f([1, 0, 0], [0, 1, 0], [0, 0, 1], [0, 1, 3.9])
+    camera.lens = 0.035
+    camera.aperture = 0.0
+    camera.focus = 3.9
+    camera.film = 0.024
+    camera.aspect = 1
+    scene.cameras.append(camera)
+
+    var floor_shape = shape_data()
+    floor_shape.positions = [[-1, 0, 1], [1, 0, 1], [1, 0, -1], [-1, 0, -1]]
+    floor_shape.triangles = [[0, 1, 2], [2, 3, 0]]
+    scene.shapes.append(floor_shape)
+    var floor_material = material_data()
+    floor_material.color = [0.725, 0.71, 0.68]
+    scene.materials.append(floor_material)
+    var floor_instance = instance_data()
+    floor_instance.shape = scene.shapes.count - 1
+    floor_instance.material = scene.materials.count - 1
+    scene.instances.append(floor_instance)
+
+    var ceiling_shape = shape_data()
+    ceiling_shape.positions = [[-1, 2, 1], [-1, 2, -1], [1, 2, -1], [1, 2, 1]]
+    ceiling_shape.triangles = [[0, 1, 2], [2, 3, 0]]
+    scene.shapes.append(ceiling_shape)
+    var ceiling_material = material_data()
+    ceiling_material.color = [0.725, 0.71, 0.68]
+    scene.materials.append(ceiling_material)
+    var ceiling_instance = instance_data()
+    ceiling_instance.shape = scene.shapes.count - 1
+    ceiling_instance.material = scene.materials.count - 1
+    scene.instances.append(ceiling_instance)
+
+    var backwall_shape = shape_data()
+    backwall_shape.positions = [[-1, 0, -1], [1, 0, -1], [1, 2, -1], [-1, 2, -1]]
+    backwall_shape.triangles = [[0, 1, 2], [2, 3, 0]]
+    scene.shapes.append(backwall_shape)
+    var backwall_material = material_data()
+    backwall_material.color = [0.725, 0.71, 0.68]
+    scene.materials.append(backwall_material)
+    var backwall_instance = instance_data()
+    backwall_instance.shape = scene.shapes.count - 1
+    backwall_instance.material = scene.materials.count - 1
+    scene.instances.append(backwall_instance)
+
+    var rightwall_shape = shape_data()
+    rightwall_shape.positions = [[1, 0, -1], [1, 0, 1], [1, 2, 1], [1, 2, -1]]
+    rightwall_shape.triangles = [[0, 1, 2], [2, 3, 0]]
+    scene.shapes.append(rightwall_shape)
+    var rightwall_material = material_data()
+    rightwall_material.color = [0.14, 0.45, 0.091]
+    scene.materials.append(rightwall_material)
+    var rightwall_instance = instance_data()
+    rightwall_instance.shape = scene.shapes.count - 1
+    rightwall_instance.material = scene.materials.count - 1
+    scene.instances.append(rightwall_instance)
+
+    var leftwall_shape = shape_data()
+    leftwall_shape.positions = [[-1, 0, 1], [-1, 0, -1], [-1, 2, -1], [-1, 2, 1]]
+    leftwall_shape.triangles = [[0, 1, 2], [2, 3, 0]]
+    scene.shapes.append(leftwall_shape)
+    var leftwall_material = material_data()
+    leftwall_material.color = [0.63, 0.065, 0.05]
+    scene.materials.append(leftwall_material)
+    var leftwall_instance = instance_data()
+    leftwall_instance.shape = scene.shapes.count - 1
+    leftwall_instance.material = scene.materials.count - 1
+    scene.instances.append(leftwall_instance)
+
+    var shortbox_shape = shape_data()
+    shortbox_shape.positions = [[0.53, 0.6, 0.75], [0.7, 0.6, 0.17],
+                                [0.13, 0.6, 0.0], [-0.05, 0.6, 0.57], [-0.05, 0.0, 0.57],
+                                [-0.05, 0.6, 0.57], [0.13, 0.6, 0.0], [0.13, 0.0, 0.0],
+                                [0.53, 0.0, 0.75], [0.53, 0.6, 0.75], [-0.05, 0.6, 0.57],
+                                [-0.05, 0.0, 0.57], [0.7, 0.0, 0.17], [0.7, 0.6, 0.17],
+                                [0.53, 0.6, 0.75], [0.53, 0.0, 0.75], [0.13, 0.0, 0.0],
+                                [0.13, 0.6, 0.0], [0.7, 0.6, 0.17], [0.7, 0.0, 0.17],
+                                [0.53, 0.0, 0.75], [0.7, 0.0, 0.17], [0.13, 0.0, 0.0],
+                                [-0.05, 0.0, 0.57]]
+    shortbox_shape.triangles = [[0, 1, 2], [2, 3, 0], [4, 5, 6], [6, 7, 4],
+                                [8, 9, 10], [10, 11, 8], [12, 13, 14], [14, 15, 12], [16, 17, 18],
+                                [18, 19, 16], [20, 21, 22], [22, 23, 20]]
+    scene.shapes.append(shortbox_shape)
+    var shortbox_material = material_data()
+    shortbox_material.color = [0.725, 0.71, 0.68]
+    scene.materials.append(shortbox_material)
+    var shortbox_instance = instance_data()
+    shortbox_instance.shape = scene.shapes.count - 1
+    shortbox_instance.material = scene.materials.count - 1
+    scene.instances.append(shortbox_instance)
+
+    var tallbox_shape = shape_data()
+    tallbox_shape.positions = [[-0.53, 1.2, 0.09], [0.04, 1.2, -0.09],
+                               [-0.14, 1.2, -0.67], [-0.71, 1.2, -0.49], [-0.53, 0.0, 0.09],
+                               [-0.53, 1.2, 0.09], [-0.71, 1.2, -0.49], [-0.71, 0.0, -0.49],
+                               [-0.71, 0.0, -0.49], [-0.71, 1.2, -0.49], [-0.14, 1.2, -0.67],
+                               [-0.14, 0.0, -0.67], [-0.14, 0.0, -0.67], [-0.14, 1.2, -0.67],
+                               [0.04, 1.2, -0.09], [0.04, 0.0, -0.09], [0.04, 0.0, -0.09],
+                               [0.04, 1.2, -0.09], [-0.53, 1.2, 0.09], [-0.53, 0.0, 0.09],
+                               [-0.53, 0.0, 0.09], [0.04, 0.0, -0.09], [-0.14, 0.0, -0.67],
+                               [-0.71, 0.0, -0.49]]
+    tallbox_shape.triangles = [[0, 1, 2], [2, 3, 0], [4, 5, 6], [6, 7, 4],
+                               [8, 9, 10], [10, 11, 8], [12, 13, 14], [14, 15, 12], [16, 17, 18],
+                               [18, 19, 16], [20, 21, 22], [22, 23, 20]]
+    scene.shapes.append(tallbox_shape)
+    var tallbox_material = material_data()
+    tallbox_material.color = [0.725, 0.71, 0.68]
+    scene.materials.append(tallbox_material)
+    var tallbox_instance = instance_data()
+    tallbox_instance.shape = scene.shapes.count - 1
+    tallbox_instance.material = scene.materials.count - 1
+    scene.instances.append(tallbox_instance)
+
+    var light_shape = shape_data()
+    light_shape.positions = [[-0.25, 1.99, 0.25], [-0.25, 1.99, -0.25],
+                             [0.25, 1.99, -0.25], [0.25, 1.99, 0.25]]
+    light_shape.triangles = [[0, 1, 2], [2, 3, 0]]
+    scene.shapes.append(light_shape)
+    var light_material = material_data()
+    light_material.emission = [17, 12, 4]
+    scene.materials.append(light_material)
+    var light_instance = instance_data()
+    light_instance.shape = scene.shapes.count - 1
+    light_instance.material = scene.materials.count - 1
+    scene.instances.append(light_instance)
+
+    return scene
 }
