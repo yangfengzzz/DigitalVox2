@@ -35,15 +35,13 @@ class Entity: EngineObject {
         self.name = name != nil ? name! : ""
         super.init(engine)
 
-        // self.transform = this.addComponent(Transform)
-        // self._inverseWorldMatFlag = this.transform.registerWorldChangeFlag()
+        self.transform = addComponent()
     }
 }
 
+//MARK:- Get/Set Methods
 extension Entity {
-    /**
-     * Whether to activate locally.
-     */
+    /// Whether to activate locally.
     var isActive: Bool {
         get {
             _isActive
@@ -65,18 +63,14 @@ extension Entity {
         }
     }
 
-    /**
-     * Whether it is active in the hierarchy.
-     */
+    /// Whether it is active in the hierarchy.
     var isActiveInHierarchy: Bool {
         get {
             _isActiveInHierarchy
         }
     }
 
-    /**
-     * The parent entity.
-     */
+    /// The parent entity.
     var parent: Entity? {
         get {
             _parent
@@ -137,6 +131,7 @@ extension Entity {
     }
 }
 
+//MARK:- Static Methods
 extension Entity {
     internal static func _findChildByName(_ root: Entity, _ name: String) -> Entity? {
         let children = root._children
@@ -158,11 +153,12 @@ extension Entity {
     }
 }
 
+//MARK:- Public Methods
 extension Entity {
     /// Add component based on the component type.
     /// - Returns: The component which has been added.
     func addComponent<T: Component>() -> T {
-        // ComponentsDependencies._addCheck(this, type)
+        //todo ComponentsDependencies._addCheck(this, type)
         let component = T(self)
         _components.append(component)
         if (_isActiveInHierarchy) {
@@ -197,48 +193,37 @@ extension Entity {
         return results
     }
 
-    /**
-     * Get the components which match the type of the entity and it's children.
-     * @param type - The component type.
-     * @param results - The components collection.
-     * @returns    The components collection which match the type.
-     */
+    /// Get the components which match the type of the entity and it's children.
+    /// - Parameter results: The components collection.
+    /// - Returns:  The components collection which match the type.
     func getComponentsIncludeChildren<T: Component>(_ results: inout [T]) -> [T] {
         results = []
         _getComponentsInChildren(&results)
         return results
     }
 
-    /**
-     * Add child entity.
-     * @param child - The child entity which want to be added.
-     */
+    /// Add child entity.
+    /// - Parameter child: The child entity which want to be added.
     func addChild(_ child: Entity) {
         child.parent = self
     }
 
-    /**
-     * Remove child entity.
-     * @param child - The child entity which want to be removed.
-     */
+    /// Remove child entity.
+    /// - Parameter child: The child entity which want to be removed.
     func removeChild(_ child: Entity) {
         child.parent = nil
     }
 
-    /**
-     * Find child entity by index.
-     * @param index - The index of the child entity.
-     * @returns    The component which be found.
-     */
+    /// Find child entity by index.
+    /// - Parameter index: The index of the child entity.
+    /// - Returns: The component which be found.
     func getChild(_ index: Int) -> Entity {
         return _children[index]
     }
 
-    /**
-     * Find child entity by name.
-     * @param name - The name of the entity which want to be found.
-     * @returns The component which be found.
-     */
+    /// Find child entity by name.
+    /// - Parameter name: The name of the entity which want to be found.
+    /// - Returns: The component which be found.
     func findByName(_ name: String) -> Entity? {
         let children = _children
         let child = Entity._findChildByName(self, name)
@@ -255,11 +240,9 @@ extension Entity {
         return nil
     }
 
-    /**
-     * Find the entity by path.
-     * @param path - The path fo the entity eg: /entity.
-     * @returns The component which be found.
-     */
+    /// Find the entity by path.
+    /// - Parameter path: The path fo the entity eg: /entity.
+    /// - Returns: The component which be found.
     func findByPath(_ path: String) -> Entity? {
         let splits = path.split(separator: "/")
         var entity: Entity? = self
@@ -273,11 +256,9 @@ extension Entity {
         return entity
     }
 
-    /**
-     * Create child entity.
-     * @param name - The child entity's name.
-     * @returns The child entity.
-     */
+    /// Create child entity.
+    /// - Parameter name: The child entity's name.
+    /// - Returns: The child entity.
     func createChild(_ name: String?) -> Entity {
         let child = Entity(engine, name)
         child.layer = layer
@@ -285,9 +266,7 @@ extension Entity {
         return child
     }
 
-    /**
-     * Clear children entities.
-     */
+    /// Clear children entities.
     func clearChildren() {
         var children = _children
         for i in 0..<children.count {
@@ -301,10 +280,8 @@ extension Entity {
         children = []
     }
 
-    /**
-     * Clone
-     * @returns Cloned entity.
-     */
+    /// Clone
+    /// - Returns: Cloned entity.
     func clone() -> Entity {
         let cloneEntity = Entity(_engine, name)
 
@@ -321,31 +298,55 @@ extension Entity {
         for i in 0..<components.count {
             let sourceComp = components[i]
             if (!(sourceComp is Transform)) {
-//          let targetComp = cloneEntity.addComponent(<new (entity: Entity) => Component>sourceComp.constructor)
-//          ComponentCloner.cloneComponent(sourceComp, targetComp)
+                // todo
+                // let targetComp = cloneEntity.addComponent(<new (entity: Entity) => Component>sourceComp.constructor)
+                // ComponentCloner.cloneComponent(sourceComp, targetComp)
             }
         }
 
         return cloneEntity
     }
 
+    /// Destroy self.
+    func destroy() {
+        let abilityArray = _components;
+        for i in 0..<abilityArray.count {
+            abilityArray[i].destroy();
+        }
+        _components = []
+
+        let children = _children;
+        for i in 0..<children.count {
+            children[i].destroy();
+        }
+        _children = []
+
+        if (_parent != nil) {
+            var parentChildren = _parent!._children;
+            parentChildren.removeAll { entity in
+                entity === self
+            }
+        }
+        _parent = nil;
+    }
 }
 
+//MARK:- Internal Methods
 extension Entity {
-    internal func _removeComponent(component: Component) {
-//      ComponentsDependencies._removeCheck(this, component.constructor as any)
+    internal func _removeComponent(_ component: Component) {
+        //todo  ComponentsDependencies._removeCheck(this, component.constructor as any)
         var components = _components
         components.removeAll { value in
             value === component
         }
     }
 
-    internal func _addScript(script: Script) {
+    internal func _addScript(_ script: Script) {
         script._entityCacheIndex = _scripts.count
         _scripts.append(script)
     }
 
-    internal func _removeScript(script: Script) {
+    internal func _removeScript(_ script: Script) {
         let replaced = _scripts.remove(at: script._entityCacheIndex)
         replaced._entityCacheIndex = script._entityCacheIndex
         script._entityCacheIndex = -1
@@ -382,6 +383,7 @@ extension Entity {
     }
 }
 
+//MARK:- Private Methods
 extension Entity {
     private func _getComponentsInChildren<T: Component>(_ results: inout [T]) {
         for i in 0..<_components.count {

@@ -25,6 +25,72 @@ class Component: EngineObject {
     }
 }
 
+//MARK:- Get/Set Methods
+extension Component {
+    /// Indicates whether the component is enabled.
+    var enabled: Bool {
+        get {
+            _enabled
+        }
+        set {
+            if (newValue == _enabled) {
+                return
+            }
+            _enabled = newValue
+            if (newValue) {
+                if _entity.isActiveInHierarchy {
+                    _onEnable()
+                }
+            } else {
+                if _entity.isActiveInHierarchy {
+                    _onDisable()
+                }
+            }
+        }
+    }
+
+    /// Indicates whether the component is destroyed.
+    var destroyed: Bool {
+        get {
+            _destroyed
+        }
+    }
+
+    /// The entity which the component belongs to.
+    var entity: Entity {
+        get {
+            _entity
+        }
+    }
+
+    /// The scene which the component's entity belongs to.
+    var scene: Scene {
+        get {
+            _entity.scene
+        }
+    }
+}
+
+//MARK:- Public Methods
+extension Component {
+    /// Destroy this instance.
+    func destroy() {
+        if (_destroyed) {
+            return
+        }
+        _entity._removeComponent(self)
+        if (_entity.isActiveInHierarchy) {
+            if _enabled {
+                _onDisable()
+            }
+            _onInActive()
+        }
+        _destroyed = true
+        _onDestroy()
+    }
+}
+
+//MARK:- Internal Methods
 extension Component {
     internal func _onAwake() {
     }
