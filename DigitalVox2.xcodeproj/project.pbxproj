@@ -28,6 +28,7 @@
 		0413289B26E0C1DD000A4F4E /* UpdateFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413289A26E0C1DD000A4F4E /* UpdateFlag.swift */; };
 		0413289D26E0C288000A4F4E /* UpdateFlagManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413289C26E0C288000A4F4E /* UpdateFlagManager.swift */; };
 		0413289F26E0CBE7000A4F4E /* ShaderSimple.metal in Sources */ = {isa = PBXBuildFile; fileRef = 0413289E26E0CBE7000A4F4E /* ShaderSimple.metal */; };
+		0419B6D626E6E30300005FEA /* instance_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D526E6E30300005FEA /* instance_data.swift */; };
 		042C841226E4A7AE00BD3733 /* sampling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042C841126E4A7AE00BD3733 /* sampling.swift */; };
 		0452EC9926DFA0CD0015BFB1 /* voxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9826DFA0CD0015BFB1 /* voxApp.swift */; };
 		0452EC9B26DFA0CD0015BFB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */; };
@@ -122,6 +123,12 @@
 		047FEBF426E603CD0078CFAF /* Layer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBF326E603CD0078CFAF /* Layer.swift */; };
 		047FEBF626E6052D0078CFAF /* Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBF526E6052D0078CFAF /* Transform.swift */; };
 		047FEBF826E6053A0078CFAF /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBF726E6053A0078CFAF /* Component.swift */; };
+		047FEBFA26E6DEF20078CFAF /* camera_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBF926E6DEF20078CFAF /* camera_data.swift */; };
+		047FEBFC26E6DEFE0078CFAF /* scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBFB26E6DEFE0078CFAF /* scene.swift */; };
+		047FEBFE26E6DF4D0078CFAF /* texture_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBFD26E6DF4C0078CFAF /* texture_data.swift */; };
+		047FEC0026E6DF870078CFAF /* material_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBFF26E6DF870078CFAF /* material_data.swift */; };
+		047FEC0226E6E0320078CFAF /* environment_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEC0126E6E0320078CFAF /* environment_data.swift */; };
+		047FEC0426E6E0580078CFAF /* subdiv_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEC0326E6E0580078CFAF /* subdiv_data.swift */; };
 		0497A1E526DF150500F61DE9 /* voxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A1E426DF150500F61DE9 /* voxApp.swift */; };
 		0497A1E726DF150500F61DE9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A1E626DF150500F61DE9 /* ContentView.swift */; };
 		0497A1E926DF150800F61DE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0497A1E826DF150800F61DE9 /* Assets.xcassets */; };
@@ -197,6 +204,7 @@
 		0413289C26E0C288000A4F4E /* UpdateFlagManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateFlagManager.swift; sourceTree = "<group>"; };
 		0413289E26E0CBE7000A4F4E /* ShaderSimple.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = ShaderSimple.metal; sourceTree = "<group>"; };
 		041328A026E19EE1000A4F4E /* geometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = geometry.swift; sourceTree = "<group>"; };
+		0419B6D526E6E30300005FEA /* instance_data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = instance_data.swift; sourceTree = "<group>"; };
 		042C841126E4A7AE00BD3733 /* sampling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sampling.swift; sourceTree = "<group>"; };
 		042C841426E5043200BD3733 /* rect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rect.swift; sourceTree = "<group>"; };
 		042C841626E504B200BD3733 /* bulged_rect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bulged_rect.swift; sourceTree = "<group>"; };
@@ -335,6 +343,12 @@
 		047FEBF326E603CD0078CFAF /* Layer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Layer.swift; sourceTree = "<group>"; };
 		047FEBF526E6052D0078CFAF /* Transform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transform.swift; sourceTree = "<group>"; };
 		047FEBF726E6053A0078CFAF /* Component.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
+		047FEBF926E6DEF20078CFAF /* camera_data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = camera_data.swift; sourceTree = "<group>"; };
+		047FEBFB26E6DEFE0078CFAF /* scene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = scene.swift; sourceTree = "<group>"; };
+		047FEBFD26E6DF4C0078CFAF /* texture_data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = texture_data.swift; sourceTree = "<group>"; };
+		047FEBFF26E6DF870078CFAF /* material_data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = material_data.swift; sourceTree = "<group>"; };
+		047FEC0126E6E0320078CFAF /* environment_data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = environment_data.swift; sourceTree = "<group>"; };
+		047FEC0326E6E0580078CFAF /* subdiv_data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = subdiv_data.swift; sourceTree = "<group>"; };
 		0497A1E126DF150500F61DE9 /* vox.render.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vox.render.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0497A1E426DF150500F61DE9 /* voxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = voxApp.swift; sourceTree = "<group>"; };
 		0497A1E626DF150500F61DE9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -555,6 +569,13 @@
 				047FEBC426E59D630078CFAF /* image_data.swift */,
 				047FEBC826E5A10E0078CFAF /* image.swift */,
 				047FEBCA26E5A1130078CFAF /* images */,
+				047FEBFB26E6DEFE0078CFAF /* scene.swift */,
+				047FEBF926E6DEF20078CFAF /* camera_data.swift */,
+				047FEBFD26E6DF4C0078CFAF /* texture_data.swift */,
+				047FEBFF26E6DF870078CFAF /* material_data.swift */,
+				0419B6D526E6E30300005FEA /* instance_data.swift */,
+				047FEC0126E6E0320078CFAF /* environment_data.swift */,
+				047FEC0326E6E0580078CFAF /* subdiv_data.swift */,
 			);
 			path = vox.tracing;
 			sourceTree = "<group>";
@@ -1063,6 +1084,7 @@
 				042C841226E4A7AE00BD3733 /* sampling.swift in Sources */,
 				0452EC9B26DFA0CD0015BFB1 /* ContentView.swift in Sources */,
 				0452ED1C26DFB0F80015BFB1 /* MotionController.swift in Sources */,
+				047FEC0026E6DF870078CFAF /* material_data.swift in Sources */,
 				047FEBEE26E5A8E50078CFAF /* rand_lines.swift in Sources */,
 				047FEBC926E5A10E0078CFAF /* image.swift in Sources */,
 				04EA0D7226E1206400CA7833 /* ray3f.swift in Sources */,
@@ -1070,15 +1092,18 @@
 				047FEB7226E1BC570078CFAF /* fvshape_data.swift in Sources */,
 				0452ED2C26E044B90015BFB1 /* mat2f.swift in Sources */,
 				047FEB7026E1BA4A0078CFAF /* shape_data.swift in Sources */,
+				047FEC0426E6E0580078CFAF /* subdiv_data.swift in Sources */,
 				047FEBE826E5A3B20078CFAF /* sunsky.swift in Sources */,
 				047FEBC526E59D630078CFAF /* image_data.swift in Sources */,
 				0452ECF626DFAEAB0015BFB1 /* RayRenderer.swift in Sources */,
 				047FEBD626E5A3240078CFAF /* uv_ramp.swift in Sources */,
 				0452ED3A26E0F50A0015BFB1 /* quat4f.swift in Sources */,
+				047FEBFE26E6DF4D0078CFAF /* texture_data.swift in Sources */,
 				0452ED2A26E0422D0015BFB1 /* vec4b.swift in Sources */,
 				0452ED1B26DFB0F80015BFB1 /* ControllerView.swift in Sources */,
 				0452ED2426E0420B0015BFB1 /* vec2i.swift in Sources */,
 				04EA0D6C26E1204200CA7833 /* bbox2f.swift in Sources */,
+				047FEBFA26E6DEF20078CFAF /* camera_data.swift in Sources */,
 				047FEBD826E5A3350078CFAF /* uv_grid.swift in Sources */,
 				047FEBD026E5A2F20078CFAF /* bumps.swift in Sources */,
 				047FEBCE26E5A2E60078CFAF /* checker.swift in Sources */,
@@ -1089,7 +1114,10 @@
 				047FEBE226E5A37F0078CFAF /* fbm_map.swift in Sources */,
 				047FEBCC26E5A2D70078CFAF /* grid.swift in Sources */,
 				0452ED2826E042200015BFB1 /* vec4i.swift in Sources */,
+				047FEC0226E6E0320078CFAF /* environment_data.swift in Sources */,
 				0452EC9926DFA0CD0015BFB1 /* voxApp.swift in Sources */,
+				047FEBFC26E6DEFE0078CFAF /* scene.swift in Sources */,
+				0419B6D626E6E30300005FEA /* instance_data.swift in Sources */,
 				0452ED3026E044CA0015BFB1 /* mat4f.swift in Sources */,
 				04EA0D6A26E0F9AD00CA7833 /* math.swift in Sources */,
 				047FEBEC26E5A8D60078CFAF /* rand_points.swift in Sources */,
