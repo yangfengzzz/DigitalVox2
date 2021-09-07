@@ -32,6 +32,8 @@
 		0419B6D826E6E5CE00005FEA /* shading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D726E6E5CE00005FEA /* shading.swift */; };
 		0419B6DA26E6EA3900005FEA /* trace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D926E6EA3900005FEA /* trace.swift */; };
 		0419B6DC26E6ED2300005FEA /* bvh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6DB26E6ED2300005FEA /* bvh.swift */; };
+		0419B6DE26E701FE00005FEA /* Script.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6DD26E701FE00005FEA /* Script.swift */; };
+		0419B6E026E7114C00005FEA /* ComponentsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6DF26E7114C00005FEA /* ComponentsManager.swift */; };
 		042C841226E4A7AE00BD3733 /* sampling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042C841126E4A7AE00BD3733 /* sampling.swift */; };
 		0452EC9926DFA0CD0015BFB1 /* voxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9826DFA0CD0015BFB1 /* voxApp.swift */; };
 		0452EC9B26DFA0CD0015BFB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */; };
@@ -211,6 +213,8 @@
 		0419B6D726E6E5CE00005FEA /* shading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = shading.swift; sourceTree = "<group>"; };
 		0419B6D926E6EA3900005FEA /* trace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = trace.swift; sourceTree = "<group>"; };
 		0419B6DB26E6ED2300005FEA /* bvh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bvh.swift; sourceTree = "<group>"; };
+		0419B6DD26E701FE00005FEA /* Script.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Script.swift; sourceTree = "<group>"; };
+		0419B6DF26E7114C00005FEA /* ComponentsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentsManager.swift; sourceTree = "<group>"; };
 		042C841126E4A7AE00BD3733 /* sampling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sampling.swift; sourceTree = "<group>"; };
 		042C841426E5043200BD3733 /* rect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rect.swift; sourceTree = "<group>"; };
 		042C841626E504B200BD3733 /* bulged_rect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bulged_rect.swift; sourceTree = "<group>"; };
@@ -734,12 +738,14 @@
 				0413288B26E0A07C000A4F4E /* base */,
 				0413288426E09F11000A4F4E /* graphic */,
 				0413288326E09EFC000A4F4E /* mesh */,
+				0419B6DD26E701FE00005FEA /* Script.swift */,
 				0413289A26E0C1DD000A4F4E /* UpdateFlag.swift */,
 				0413289C26E0C288000A4F4E /* UpdateFlagManager.swift */,
 				047FEBEF26E600E70078CFAF /* Scene.swift */,
 				047FEBF126E601750078CFAF /* Entity.swift */,
 				047FEBF326E603CD0078CFAF /* Layer.swift */,
 				047FEBF726E6053A0078CFAF /* Component.swift */,
+				0419B6DF26E7114C00005FEA /* ComponentsManager.swift */,
 				047FEBF526E6052D0078CFAF /* Transform.swift */,
 				0413289E26E0CBE7000A4F4E /* ShaderSimple.metal */,
 				0452ECCC26DFA5360015BFB1 /* Shaders.metal */,
@@ -1189,6 +1195,7 @@
 				0452ECC326DFA4590015BFB1 /* EngineView.swift in Sources */,
 				0497A1E726DF150500F61DE9 /* ContentView.swift in Sources */,
 				04EFDE7A26DF3072005FBB6F /* Vector3.swift in Sources */,
+				0419B6E026E7114C00005FEA /* ComponentsManager.swift in Sources */,
 				0413288026E08044000A4F4E /* Color.swift in Sources */,
 				0413286D26E06648000A4F4E /* BoundingSphere.swift in Sources */,
 				0452ECD426DFA5360015BFB1 /* Lighting.swift in Sources */,
@@ -1205,6 +1212,7 @@
 				0497A1E526DF150500F61DE9 /* voxApp.swift in Sources */,
 				047FEBF226E601750078CFAF /* Entity.swift in Sources */,
 				0452ECD326DFA5360015BFB1 /* Node.swift in Sources */,
+				0419B6DE26E701FE00005FEA /* Script.swift in Sources */,
 				0452ECD926DFA5360015BFB1 /* Texturable.swift in Sources */,
 				0413287B26E07BA3000A4F4E /* Ray.swift in Sources */,
 				0413287526E072A9000A4F4E /* PlaneIntersectionType.swift in Sources */,

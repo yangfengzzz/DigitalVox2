@@ -58,8 +58,8 @@ class ModelMesh: Mesh {
     /// - Parameters:
     ///   - engine: Engine to which the mesh belongs
     ///   - name: Mesh name
-    override init(engine: Engine, name: String? = nil) {
-        super.init(engine: engine)
+    override init(_ engine: Engine, _ name: String? = nil) {
+        super.init(engine)
         self.name = name
     }
 }

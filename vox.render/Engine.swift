@@ -11,6 +11,8 @@ import SwiftUI
 typealias EngineInitCallback = (Engine) -> Void
 
 final class Engine: UIView {
+    var _componentsManager: ComponentsManager = ComponentsManager();
+    
     let controllerView = ControllerView(frame: .zero, device: MTLCreateSystemDefaultDevice())
 
     static var device: MTLDevice!

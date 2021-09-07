@@ -24,7 +24,7 @@ class PrimitiveMesh {
             depth: Float = 1,
             noLongerAccessible: Bool = true
     ) -> ModelMesh {
-        let mesh = ModelMesh(engine: engine)
+        let mesh = ModelMesh(engine)
 
         let halfWidth: Float = width / 2
         let halfHeight: Float = height / 2

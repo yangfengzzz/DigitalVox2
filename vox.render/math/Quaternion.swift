@@ -416,6 +416,17 @@ extension Quaternion {
 
     /// Get the euler of this quaternion.
     /// - Parameter out: The euler (in radians) as an output parameter
+    /// - Returns: Euler x->pitch y->yaw z->roll
+    func toEuler(out: Vector3) -> Vector3 {
+        _ = toYawPitchRoll(out: out)
+        let t = out.x
+        out.x = out.y
+        out.y = t
+        return out
+    }
+
+    /// Get the euler of this quaternion.
+    /// - Parameter out: The euler (in radians) as an output parameter
     /// - Returns: Euler x->yaw y->pitch z->roll
     func toYawPitchRoll(out: Vector3) -> Vector3 {
         let xx = x * x

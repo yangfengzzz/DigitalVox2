@@ -23,7 +23,7 @@ class EngineObject {
         }
     }
 
-    init(engine: Engine) {
+    init(_ engine: Engine) {
         EngineObject._instanceIdCounter += 1
         instanceId = EngineObject._instanceIdCounter
 

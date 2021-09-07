@@ -11,6 +11,8 @@ class Scene: EngineObject {
     /// Scene name. 
     var name: String
 
+    internal var _isActiveInEngine: Bool = false;
+
     private var _destroyed: Bool = false
     private var _rootEntities: [Entity] = []
     private var _resolution: Vector2 = Vector2()
@@ -22,7 +24,7 @@ class Scene: EngineObject {
      */
     init(engine: Engine, name: String?) {
         self.name = name != nil ? name! : ""
-        super.init(engine: engine)
+        super.init(engine)
     }
 }
 

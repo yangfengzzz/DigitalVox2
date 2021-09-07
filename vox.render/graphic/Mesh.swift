@@ -25,8 +25,8 @@ class Mesh: RefObject {
     /// - Parameters:
     ///   - engine: Engine
     ///   - name: Mesh name
-    init(engine: Engine, name: String? = nil) {
-        super.init(engine: engine)
+    init(_ engine: Engine, _ name: String? = nil) {
+        super.init(engine)
         self.name = name
     }
 
