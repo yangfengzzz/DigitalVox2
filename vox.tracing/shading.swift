@@ -13,6 +13,7 @@ func same_hemisphere(_ normal: vec3f, _ outgoing: vec3f, _ incoming: vec3f) -> B
     dot(normal, outgoing) * dot(normal, incoming) >= 0
 }
 
+//MARK:- Fresnel
 // Schlick approximation of the Fresnel term.
 @inlinable
 func fresnel_schlick(_ specular: vec3f, _ normal: vec3f, _ outgoing: vec3f) -> vec3f {
@@ -140,6 +141,7 @@ func conductor_eta(_ name: String) -> (vec3f, vec3f) {
     fatalError()
 }
 
+//MARK:- Microfacet
 // Evaluates the microfacet distribution.
 @inlinable
 func microfacet_distribution(_ roughness: Float, _ normal: vec3f,
@@ -302,116 +304,253 @@ func microfacet_compensation(_ color: vec3f, _ roughness: Float,
     return 1 + color * (1 - E) / E
 }
 
+//MARK:- Matte
 // Evaluates a diffuse BRDF lobe.
 @inlinable
 func eval_matte(_ color: vec3f, _ normal: vec3f,
                 _ outgoing: vec3f, _ incoming: vec3f) -> vec3f {
-    fatalError()
+    if (dot(normal, incoming) * dot(normal, outgoing) <= 0) {
+        return [0, 0, 0]
+    }
+    return color / Float.pi * abs(dot(normal, incoming))
 }
 
 // Sample a diffuse BRDF lobe.
 @inlinable
 func sample_matte(_ color: vec3f, _ normal: vec3f,
                   _ outgoing: vec3f, _ rn: vec2f) -> vec3f {
-    fatalError()
+    let up_normal = dot(normal, outgoing) <= 0 ? -normal : normal
+    return sample_hemisphere_cos(up_normal, rn)
 }
 
 // Pdf for diffuse BRDF lobe sampling.
 @inlinable
 func sample_matte_pdf(_ color: vec3f, _ normal: vec3f,
                       _ outgoing: vec3f, _ incoming: vec3f) -> Float {
-    fatalError()
+    if (dot(normal, incoming) * dot(normal, outgoing) <= 0) {
+        return 0
+    }
+    let up_normal = dot(normal, outgoing) <= 0 ? -normal : normal
+    return sample_hemisphere_cos_pdf(up_normal, incoming)
 }
 
+//MARK:- Glossy
 // Evaluates a specular BRDF lobe.
 @inlinable
 func eval_glossy(_ color: vec3f, _ ior: Float, _ roughness: Float,
                  _ normal: vec3f, _ outgoing: vec3f, _ incoming: vec3f) -> vec3f {
-    fatalError()
+    if (dot(normal, incoming) * dot(normal, outgoing) <= 0) {
+        return [0, 0, 0]
+    }
+    let up_normal = dot(normal, outgoing) <= 0 ? -normal : normal
+    let F1 = fresnel_dielectric(ior, up_normal, outgoing)
+    let halfway = normalize(incoming + outgoing)
+    let F = fresnel_dielectric(ior, halfway, incoming)
+    let D = microfacet_distribution(roughness, up_normal, halfway)
+    let G = microfacet_shadowing(roughness, up_normal, halfway, outgoing, incoming)
+
+    var result = vec3f(1, 1, 1) * F * D * G
+    result /= 4 * dot(up_normal, outgoing) * dot(up_normal, incoming)
+    result *= abs(dot(up_normal, incoming))
+    return color * ((1 - F1) / Float.pi * abs(dot(up_normal, incoming))) + result
 }
 
 // Sample a specular BRDF lobe.
 @inlinable
 func sample_glossy(_ color: vec3f, _ ior: Float, _ roughness: Float,
-                   _ normal: vec3f, _ outgoing: vec3f, _ rn: vec2f) -> vec3f {
-    fatalError()
+                   _ normal: vec3f, _ outgoing: vec3f, rnl: Float, _ rn: vec2f) -> vec3f {
+    let up_normal = dot(normal, outgoing) <= 0 ? -normal : normal
+    if (rnl < fresnel_dielectric(ior, up_normal, outgoing)) {
+        let halfway = sample_microfacet(roughness, up_normal, rn)
+        let incoming = reflect(outgoing, halfway)
+        if (!same_hemisphere(up_normal, outgoing, incoming)) {
+            return [0, 0, 0]
+        }
+        return incoming
+    } else {
+        return sample_hemisphere_cos(up_normal, rn)
+    }
 }
 
 // Pdf for specular BRDF lobe sampling.
 @inlinable
 func sample_glossy_pdf(_ color: vec3f, _ ior: Float, _ roughness: Float,
                        _ normal: vec3f, _ outgoing: vec3f, _ incoming: vec3f) -> Float {
-    fatalError()
+    if (dot(normal, incoming) * dot(normal, outgoing) <= 0) {
+        return 0
+    }
+    let up_normal = dot(normal, outgoing) <= 0 ? -normal : normal
+    let halfway = normalize(outgoing + incoming)
+    let F = fresnel_dielectric(ior, up_normal, outgoing)
+    return F * sample_microfacet_pdf(roughness, up_normal, halfway) /
+            (4 * abs(dot(outgoing, halfway))) +
+            (1 - F) * sample_hemisphere_cos_pdf(up_normal, incoming)
 }
 
+//MARK:- Reflective
 // Evaluates a metal BRDF lobe.
 @inlinable
 func eval_reflective(_ color: vec3f, _ roughness: Float,
                      _ normal: vec3f, _ outgoing: vec3f, _ incoming: vec3f) -> vec3f {
-    fatalError()
+    if (dot(normal, incoming) * dot(normal, outgoing) <= 0) {
+        return [0, 0, 0]
+    }
+    let up_normal = dot(normal, outgoing) <= 0 ? -normal : normal
+    let halfway = normalize(incoming + outgoing)
+    let F = fresnel_conductor(
+            reflectivity_to_eta(color), [0, 0, 0], halfway, incoming)
+    let D = microfacet_distribution(roughness, up_normal, halfway)
+    let G = microfacet_shadowing(
+            roughness, up_normal, halfway, outgoing, incoming)
+    return F * D * G / (4 * dot(up_normal, outgoing) * dot(up_normal, incoming)) *
+            abs(dot(up_normal, incoming))
 }
 
 // Sample a metal BRDF lobe.
 @inlinable
 func sample_reflective(_ color: vec3f, _ roughness: Float,
                        _ normal: vec3f, _ outgoing: vec3f, _ rn: vec2f) -> vec3f {
-    fatalError()
+    let up_normal = dot(normal, outgoing) <= 0 ? -normal : normal
+    let halfway = sample_microfacet(roughness, up_normal, rn)
+    let incoming = reflect(outgoing, halfway)
+    if (!same_hemisphere(up_normal, outgoing, incoming)) {
+        return [0, 0, 0]
+    }
+    return incoming
 }
 
 // Pdf for metal BRDF lobe sampling.
 @inlinable
 func sample_reflective_pdf(_ color: vec3f, _ roughness: Float,
                            _ normal: vec3f, _ outgoing: vec3f, _ incoming: vec3f) -> Float {
-    fatalError()
+    if (dot(normal, incoming) * dot(normal, outgoing) <= 0) {
+        return 0
+    }
+    let up_normal = dot(normal, outgoing) <= 0 ? -normal : normal
+    let halfway = normalize(outgoing + incoming)
+    return sample_microfacet_pdf(roughness, up_normal, halfway) /
+            (4 * abs(dot(outgoing, halfway)))
+}
+
+// Evaluate a delta metal BRDF lobe.
+@inlinable
+func eval_reflective(_ eta: vec3f, _ etak: vec3f, _ roughness: Float,
+                     _ normal: vec3f, _ outgoing: vec3f, _ incoming: vec3f) -> vec3f {
+    if (dot(normal, incoming) * dot(normal, outgoing) <= 0) {
+        return [0, 0, 0]
+    }
+    let up_normal = dot(normal, outgoing) <= 0 ? -normal : normal
+    let halfway = normalize(incoming + outgoing)
+    let F = fresnel_conductor(eta, etak, halfway, incoming)
+    let D = microfacet_distribution(roughness, up_normal, halfway)
+    let G = microfacet_shadowing(
+            roughness, up_normal, halfway, outgoing, incoming)
+    return F * D * G / (4 * dot(up_normal, outgoing) * dot(up_normal, incoming)) *
+            abs(dot(up_normal, incoming))
+}
+
+// Sample a delta metal BRDF lobe.
+@inlinable
+func sample_reflective(_ eta: vec3f, _ etak: vec3f, _ roughness: Float,
+                       _ normal: vec3f, _ outgoing: vec3f, _ rn: vec2f) -> vec3f {
+    let up_normal = dot(normal, outgoing) <= 0 ? -normal : normal
+    let halfway = sample_microfacet(roughness, up_normal, rn)
+    return reflect(outgoing, halfway)
+}
+
+// Pdf for delta metal BRDF lobe sampling.
+@inlinable
+func sample_reflective_pdf(_ eta: vec3f, _ etak: vec3f, _ roughness: Float,
+                           _ normal: vec3f, _ outgoing: vec3f, _ incoming: vec3f) -> Float {
+    if (dot(normal, incoming) * dot(normal, outgoing) <= 0) {
+        return 0
+    }
+    let up_normal = dot(normal, outgoing) <= 0 ? -normal : normal
+    let halfway = normalize(outgoing + incoming)
+    return sample_microfacet_pdf(roughness, up_normal, halfway) /
+            (4 * abs(dot(outgoing, halfway)))
 }
 
 // Evaluate a delta metal BRDF lobe.
 @inlinable
 func eval_reflective(_ color: vec3f, _ normal: vec3f,
                      _ outgoing: vec3f, _ incoming: vec3f) -> vec3f {
-    fatalError()
+    if (dot(normal, incoming) * dot(normal, outgoing) <= 0) {
+        return [0, 0, 0]
+    }
+    let up_normal = dot(normal, outgoing) <= 0 ? -normal : normal
+    return fresnel_conductor(
+            reflectivity_to_eta(color), [0, 0, 0], up_normal, outgoing)
 }
 
 // Sample a delta metal BRDF lobe.
 @inlinable
 func sample_reflective(_ color: vec3f, _ normal: vec3f, _ outgoing: vec3f) -> vec3f {
-    fatalError()
+    let up_normal = dot(normal, outgoing) <= 0 ? -normal : normal
+    return reflect(outgoing, up_normal)
 }
 
 // Pdf for delta metal BRDF lobe sampling.
 @inlinable
 func sample_reflective_pdf(_ color: vec3f, _ normal: vec3f,
                            _ outgoing: vec3f, _ incoming: vec3f) -> Float {
-    fatalError()
+    if (dot(normal, incoming) * dot(normal, outgoing) <= 0) {
+        return 0
+    }
+    return 1
 }
 
 // Evaluate a delta metal BRDF lobe.
 @inlinable
 func eval_reflective(_ eta: vec3f, _ etak: vec3f,
                      _ normal: vec3f, _ outgoing: vec3f, _ incoming: vec3f) -> vec3f {
-    fatalError()
+    if (dot(normal, incoming) * dot(normal, outgoing) <= 0) {
+        return [0, 0, 0]
+    }
+    let up_normal = dot(normal, outgoing) <= 0 ? -normal : normal
+    return fresnel_conductor(eta, etak, up_normal, outgoing)
 }
 
 // Sample a delta metal BRDF lobe.
 @inlinable
 func sample_reflective(_ eta: vec3f, _ etak: vec3f,
                        _ normal: vec3f, _ outgoing: vec3f) -> vec3f {
-    fatalError()
+    let up_normal = dot(normal, outgoing) <= 0 ? -normal : normal
+    return reflect(outgoing, up_normal)
 }
 
 // Pdf for delta metal BRDF lobe sampling.
 @inlinable
 func sample_reflective_pdf(_ eta: vec3f, _ etak: vec3f,
                            _ normal: vec3f, _ outgoing: vec3f, _ incoming: vec3f) -> Float {
-    fatalError()
+    if (dot(normal, incoming) * dot(normal, outgoing) <= 0) {
+        return 0
+    }
+    return 1
 }
 
+//MARK:- gltf pbr
 // Evaluates a specular BRDF lobe.
 @inlinable
 func eval_gltfpbr(_ color: vec3f, _ ior: Float, _ roughness: Float,
                   _ metallic: Float, _ normal: vec3f, _ outgoing: vec3f,
                   _ incoming: vec3f) -> vec3f {
-    fatalError()
+    if (dot(normal, incoming) * dot(normal, outgoing) <= 0) {
+        return [0, 0, 0]
+    }
+    let reflectivity = lerp(eta_to_reflectivity(vec3f(ior, ior, ior)), color, metallic)
+    let up_normal = dot(normal, outgoing) <= 0 ? -normal : normal
+    let F1 = fresnel_schlick(reflectivity, up_normal, outgoing)
+    let halfway = normalize(incoming + outgoing)
+    let F = fresnel_schlick(reflectivity, halfway, incoming)
+    let D = microfacet_distribution(roughness, up_normal, halfway)
+    let G = microfacet_shadowing(roughness, up_normal, halfway, outgoing, incoming)
+
+    var result = F * D * G
+    result /= 4 * dot(up_normal, outgoing) * dot(up_normal, incoming)
+    result += abs(dot(up_normal, incoming))
+    let result2 = (1 - F1) * ((1 - metallic) / Float.pi * abs(dot(up_normal, incoming)))
+    return color * result2 + result
 }
 
 // Sample a specular BRDF lobe.
@@ -419,7 +558,18 @@ func eval_gltfpbr(_ color: vec3f, _ ior: Float, _ roughness: Float,
 func sample_gltfpbr(_ color: vec3f, _ ior: Float, _ roughness: Float,
                     _ metallic: Float, _ normal: vec3f, _ outgoing: vec3f, _ rnl: Float,
                     _ rn: vec2f) -> vec3f {
-    fatalError()
+    let up_normal = dot(normal, outgoing) <= 0 ? -normal : normal
+    let reflectivity = lerp(eta_to_reflectivity(vec3f(ior, ior, ior)), color, metallic)
+    if (rnl < mean(fresnel_schlick(reflectivity, up_normal, outgoing))) {
+        let halfway = sample_microfacet(roughness, up_normal, rn)
+        let incoming = reflect(outgoing, halfway)
+        if (!same_hemisphere(up_normal, outgoing, incoming)) {
+            return [0, 0, 0]
+        }
+        return incoming
+    } else {
+        return sample_hemisphere_cos(up_normal, rn)
+    }
 }
 
 // Pdf for specular BRDF lobe sampling.
@@ -427,21 +577,65 @@ func sample_gltfpbr(_ color: vec3f, _ ior: Float, _ roughness: Float,
 func sample_gltfpbr_pdf(_ color: vec3f, _ ior: Float, _ roughness: Float,
                         _ metallic: Float, _ normal: vec3f, _ outgoing: vec3f,
                         _ incoming: vec3f) -> Float {
-    fatalError()
+    if (dot(normal, incoming) * dot(normal, outgoing) <= 0) {
+        return 0
+    }
+    let up_normal = dot(normal, outgoing) <= 0 ? -normal : normal
+    let halfway = normalize(outgoing + incoming)
+    let reflectivity = lerp(eta_to_reflectivity(vec3f(ior, ior, ior)), color, metallic)
+    let F = mean(fresnel_schlick(reflectivity, up_normal, outgoing))
+    return F * sample_microfacet_pdf(roughness, up_normal, halfway) /
+            (4 * abs(dot(outgoing, halfway))) +
+            (1 - F) * sample_hemisphere_cos_pdf(up_normal, incoming)
 }
 
+//MARK:- Transparent
 // Evaluates a transmission BRDF lobe.
 @inlinable
 func eval_transparent(_ color: vec3f, _ ior: Float, _ roughness: Float,
                       _ normal: vec3f, _ outgoing: vec3f, _  incoming: vec3f) -> vec3f {
-    fatalError()
+    let up_normal = dot(normal, outgoing) <= 0 ? -normal : normal
+    if (dot(normal, incoming) * dot(normal, outgoing) >= 0) {
+        let halfway = normalize(incoming + outgoing)
+        let F = fresnel_dielectric(ior, halfway, outgoing)
+        let D = microfacet_distribution(roughness, up_normal, halfway)
+        let G = microfacet_shadowing(roughness, up_normal, halfway, outgoing, incoming)
+        return vec3f(1, 1, 1) * F * D * G /
+                (4 * dot(up_normal, outgoing) * dot(up_normal, incoming)) *
+                abs(dot(up_normal, incoming))
+    } else {
+        let reflected = reflect(-incoming, up_normal)
+        let halfway = normalize(reflected + outgoing)
+        let F = fresnel_dielectric(ior, halfway, outgoing)
+        let D = microfacet_distribution(roughness, up_normal, halfway)
+        let G = microfacet_shadowing(roughness, up_normal, halfway, outgoing, reflected)
+        
+        var result = color * (1 - F) * D * G
+        result /= 4 * dot(up_normal, outgoing) * dot(up_normal, reflected)
+        return  result * (abs(dot(up_normal, reflected)))
+    }
 }
 
 // Sample a transmission BRDF lobe.
 @inlinable
 func sample_transparent(_ ior: Float, _ roughness: Float, _ normal: vec3f,
                         _ outgoing: vec3f, _ rnl: Float, _ rn: vec2f) -> vec3f {
-    fatalError()
+    let up_normal = dot(normal, outgoing) <= 0 ? -normal : normal
+    let halfway = sample_microfacet(roughness, up_normal, rn)
+    if (rnl < fresnel_dielectric(ior, halfway, outgoing)) {
+        let incoming = reflect(outgoing, halfway)
+        if (!same_hemisphere(up_normal, outgoing, incoming)) {
+            return [0, 0, 0]
+        }
+        return incoming
+    } else {
+        let reflected = reflect(outgoing, halfway)
+        let incoming = -reflect(reflected, up_normal)
+        if (same_hemisphere(up_normal, outgoing, incoming)) {
+            return [0, 0, 0]
+        }
+        return incoming
+    }
 }
 
 // Pdf for transmission BRDF lobe sampling.
@@ -449,30 +643,58 @@ func sample_transparent(_ ior: Float, _ roughness: Float, _ normal: vec3f,
 func sample_tranparent_pdf(_ color: vec3f, _ ior: Float,
                            _ roughness: Float, _ normal: vec3f, _ outgoing: vec3f,
                            _ incoming: vec3f) -> Float {
-    fatalError()
+    let up_normal = dot(normal, outgoing) <= 0 ? -normal : normal
+    if (dot(normal, incoming) * dot(normal, outgoing) >= 0) {
+        let halfway = normalize(incoming + outgoing)
+        return fresnel_dielectric(ior, halfway, outgoing) *
+                sample_microfacet_pdf(roughness, up_normal, halfway) /
+                (4 * abs(dot(outgoing, halfway)))
+    } else {
+        let reflected = reflect(-incoming, up_normal)
+        let halfway = normalize(reflected + outgoing)
+        let d = (1 - fresnel_dielectric(ior, halfway, outgoing)) *
+                sample_microfacet_pdf(roughness, up_normal, halfway)
+        return d / (4 * abs(dot(outgoing, halfway)))
+    }
 }
 
 // Evaluate a delta transmission BRDF lobe.
 @inlinable
 func eval_transparent(_ color: vec3f, _ ior: Float,
                       _ normal: vec3f, _ outgoing: vec3f, _ incoming: vec3f) -> vec3f {
-    fatalError()
+    let up_normal = dot(normal, outgoing) <= 0 ? -normal : normal
+    if (dot(normal, incoming) * dot(normal, outgoing) >= 0) {
+        return vec3f(1, 1, 1) * fresnel_dielectric(ior, up_normal, outgoing)
+    } else {
+        return color * (1 - fresnel_dielectric(ior, up_normal, outgoing))
+    }
 }
 
 // Sample a delta transmission BRDF lobe.
 @inlinable
 func sample_transparent(_ color: vec3f, _ ior: Float,
                         _ normal: vec3f, _ outgoing: vec3f, _ rnl: Float) -> vec3f {
-    fatalError()
+    let up_normal = dot(normal, outgoing) <= 0 ? -normal : normal
+    if (rnl < fresnel_dielectric(ior, up_normal, outgoing)) {
+        return reflect(outgoing, up_normal)
+    } else {
+        return -outgoing
+    }
 }
 
 // Pdf for delta transmission BRDF lobe sampling.
 @inlinable
 func sample_tranparent_pdf(_ color: vec3f, _ ior: Float,
                            _ normal: vec3f, _ outgoing: vec3f, _ incoming: vec3f) -> Float {
-    fatalError()
+    let up_normal = dot(normal, outgoing) <= 0 ? -normal : normal
+    if (dot(normal, incoming) * dot(normal, outgoing) >= 0) {
+        return fresnel_dielectric(ior, up_normal, outgoing)
+    } else {
+        return 1 - fresnel_dielectric(ior, up_normal, outgoing)
+    }
 }
 
+//MARK:- Refractive
 // Evaluates a refraction BRDF lobe.
 @inlinable
 func eval_refractive(_ color: vec3f, _ ior: Float, _ roughness: Float,
@@ -516,6 +738,7 @@ func sample_refractive_pdf(_ color: vec3f, _ ior: Float,
     fatalError()
 }
 
+//MARK:- Translucent
 // Evaluate a translucent BRDF lobe.
 @inlinable
 func eval_translucent(_ color: vec3f, _ normal: vec3f,
@@ -537,6 +760,7 @@ func sample_translucent(_ color: vec3f, _ normal: vec3f,
     fatalError()
 }
 
+//MARK:- Passthrough
 // Evaluate a passthrough BRDF lobe.
 @inlinable
 func eval_passthrough(_ color: vec3f, _ normal: vec3f,
@@ -557,6 +781,7 @@ func sample_passthrough_pdf(_ color: vec3f, _ normal: vec3f,
     fatalError()
 }
 
+//MARK:- Transmission
 // Convert mean-free-path to transmission
 @inlinable
 func mfp_to_transmission(_ mfp: vec3f, _ depth: Float) -> vec3f {
@@ -581,6 +806,7 @@ func sample_transmittance_pdf(_ density: vec3f, _ distance: Float, _ max_distanc
     fatalError()
 }
 
+//MARK:- Phasefunction
 // Evaluate phase function
 @inlinable
 func eval_phasefunction(_ anisotropy: Float, _ outgoing: vec3f, _ incoming: vec3f) -> Float {
