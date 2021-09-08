@@ -10,37 +10,34 @@
 
 #include <simd/simd.h>
 
-typedef struct {
-    matrix_float4x4 modelMatrix;
-    matrix_float4x4 viewMatrix;
-    matrix_float4x4 projectionMatrix;
-    matrix_float3x3 normalMatrix;
-    matrix_float4x4 shadowMatrix;
-} Uniforms;
+#define TRIANGLE_MASK_GEOMETRY 1
+#define TRIANGLE_MASK_LIGHT    2
 
-struct RayCamera {
-  vector_float3 position;
-  vector_float3 right;
-  vector_float3 up;
-  vector_float3 forward;
+#define RAY_MASK_PRIMARY   3
+#define RAY_MASK_SHADOW    1
+#define RAY_MASK_SECONDARY 1
+
+struct Camera {
+    vector_float3 position;
+    vector_float3 right;
+    vector_float3 up;
+    vector_float3 forward;
 };
 
-struct RayAreaLight {
-  vector_float3 position;
-  vector_float3 forward;
-  vector_float3 right;
-  vector_float3 up;
-  vector_float3 color;
+struct AreaLight {
+    vector_float3 position;
+    vector_float3 forward;
+    vector_float3 right;
+    vector_float3 up;
+    vector_float3 color;
 };
 
-struct RayUniforms
-{
-  unsigned int width;
-  unsigned int height;
-  unsigned int blocksWide;
-  unsigned int frameIndex;
-  struct RayCamera camera;
-  struct RayAreaLight light;
+struct Uniforms {
+    unsigned int width;
+    unsigned int height;
+    unsigned int frameIndex;
+    struct Camera camera;
+    struct AreaLight light;
 };
 
 #endif /* Common_h */
