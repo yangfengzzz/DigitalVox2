@@ -135,10 +135,99 @@ func edgetint_to_eta(_ reflectivity: vec3f, _ edgetint: vec3f) -> (vec3f, vec3f)
     return (n, k)
 }
 
+public let metal_ior_table: [(String, (vec3f, vec3f))] = [
+    ("a-C", ([2.9440999183, 2.2271502925, 1.9681668794],
+            [0.8874329109, 0.7993216383, 0.8152862927])),
+    ("Ag", ([0.1552646489, 0.1167232965, 0.1383806959],
+            [4.8283433224, 3.1222459278, 2.1469504455])),
+    ("Al", ([1.6574599595, 0.8803689579, 0.5212287346],
+            [9.2238691996, 6.2695232477, 4.8370012281])),
+    ("AlAs", ([3.6051023902, 3.2329365777, 2.2175611545],
+            [0.0006670247, -0.0004999400, 0.0074261204])),
+    ("AlSb", ([-0.0485225705, 4.1427547893, 4.6697691348],
+            [-0.0363741915, 0.0937665154, 1.3007390124])),
+    ("Au", ([0.1431189557, 0.3749570432, 1.4424785571],
+            [3.9831604247, 2.3857207478, 1.6032152899])),
+    ("Be", ([4.1850592788, 3.1850604423, 2.7840913457],
+            [3.8354398268, 3.0101260162, 2.8690088743])),
+    ("Cr", ([4.3696828663, 2.9167024892, 1.6547005413],
+            [5.2064337956, 4.2313645277, 3.7549467933])),
+    ("CsI", ([2.1449030413, 1.7023164587, 1.6624194173],
+            [0.0000000000, 0.0000000000, 0.0000000000])),
+    ("Cu", ([0.2004376970, 0.9240334304, 1.1022119527],
+            [3.9129485033, 2.4528477015, 2.1421879552])),
+    ("Cu2O", ([3.5492833755, 2.9520622449, 2.7369202137],
+            [0.1132179294, 0.1946659670, 0.6001681264])),
+    ("CuO", ([3.2453822204, 2.4496293965, 2.1974114493],
+            [0.5202739621, 0.5707372756, 0.7172250613])),
+    ("d-C", ([2.7112524747, 2.3185812849, 2.2288565009],
+            [0.0000000000, 0.0000000000, 0.0000000000])),
+    ("Hg", ([2.3989314904, 1.4400254917, 0.9095512090],
+            [6.3276269444, 4.3719414152, 3.4217899270])),
+    ("HgTe", ([4.7795267752, 3.2309984581, 2.6600252401],
+            [1.6319827058, 1.5808189339, 1.7295753852])),
+    ("Ir", ([3.0864098394, 2.0821938440, 1.6178866805],
+            [5.5921510077, 4.0671757150, 3.2672611269])),
+    ("K", ([0.0640493070, 0.0464100621, 0.0381842017],
+            [2.1042155920, 1.3489364357, 0.9132113889])),
+    ("Li", ([0.2657871942, 0.1956102432, 0.2209198538],
+            [3.5401743407, 2.3111306542, 1.6685930000])),
+    ("MgO", ([2.0895885542, 1.6507224525, 1.5948759692],
+            [0.0000000000, -0.0000000000, 0.0000000000])),
+    ("Mo", ([4.4837010280, 3.5254578255, 2.7760769438],
+            [4.1111307988, 3.4208716252, 3.1506031404])),
+    ("Na", ([0.0602665320, 0.0561412435, 0.0619909494],
+            [3.1792906496, 2.1124800781, 1.5790940266])),
+    ("Nb", ([3.4201353595, 2.7901921379, 2.3955856658],
+            [3.4413817900, 2.7376437930, 2.5799132708])),
+    ("Ni", ([2.3672753521, 1.6633583302, 1.4670554172],
+            [4.4988329911, 3.0501643957, 2.3454274399])),
+    ("Rh", ([2.5857954933, 1.8601866068, 1.5544279524],
+            [6.7822927110, 4.7029501026, 3.9760892461])),
+    ("Se-e", ([5.7242724833, 4.1653992967, 4.0816099264],
+            [0.8713747439, 1.1052845009, 1.5647788766])),
+    ("Se", ([4.0592611085, 2.8426947380, 2.8207582835],
+            [0.7543791750, 0.6385150558, 0.5215872029])),
+    ("SiC", ([3.1723450205, 2.5259677964, 2.4793623897],
+            [0.0000007284, -0.0000006859, 0.0000100150])),
+    ("SnTe", ([4.5251865890, 1.9811525984, 1.2816819226],
+            [0.0000000000, 0.0000000000, 0.0000000000])),
+    ("Ta", ([2.0625846607, 2.3930915569, 2.6280684948],
+            [2.4080467973, 1.7413705864, 1.9470377016])),
+    ("Te-e", ([7.5090397678, 4.2964603080, 2.3698732430],
+            [5.5842076830, 4.9476231084, 3.9975145063])),
+    ("Te", ([7.3908396088, 4.4821028985, 2.6370708478],
+            [3.2561412892, 3.5273908133, 3.2921683116])),
+    ("ThF4", ([1.8307187117, 1.4422274283, 1.3876488528],
+            [0.0000000000, 0.0000000000, 0.0000000000])),
+    ("TiC", ([3.7004673762, 2.8374356509, 2.5823030278],
+            [3.2656905818, 2.3515586388, 2.1727857800])),
+    ("TiN", ([1.6484691607, 1.1504482522, 1.3797795097],
+            [3.3684596226, 1.9434888540, 1.1020123347])),
+    ("TiO2-e", ([3.1065574823, 2.5131551146, 2.5823844157],
+            [0.0000289537, -0.0000251484, 0.0001775555])),
+    ("TiO2", ([3.4566203131, 2.8017076558, 2.9051485020],
+            [0.0001026662, -0.0000897534, 0.0006356902])),
+    ("VC", ([3.6575665991, 2.7527298065, 2.5326814570],
+            [3.0683516659, 2.1986687713, 1.9631816252])),
+    ("VN", ([2.8656011588, 2.1191817791, 1.9400767149],
+            [3.0323264950, 2.0561075580, 1.6162930914])),
+    ("V", ([4.2775126218, 3.5131538236, 2.7611257461],
+            [3.4911844504, 2.8893580874, 3.1116965117])),
+    ("W", ([4.3707029924, 3.3002972445, 2.9982666528],
+            [3.5006778591, 2.6048652781, 2.2731930614])),
+]
+
 // Get tabulated ior for conductors
 @inlinable
 func conductor_eta(_ name: String) -> (vec3f, vec3f) {
-    fatalError()
+    for (ename, etas) in metal_ior_table {
+        if (ename == name) {
+            return etas
+        }
+    }
+    return ([0, 0, 0], [0, 0, 0])
+
 }
 
 //MARK:- Microfacet
@@ -609,10 +698,10 @@ func eval_transparent(_ color: vec3f, _ ior: Float, _ roughness: Float,
         let F = fresnel_dielectric(ior, halfway, outgoing)
         let D = microfacet_distribution(roughness, up_normal, halfway)
         let G = microfacet_shadowing(roughness, up_normal, halfway, outgoing, reflected)
-        
+
         var result = color * (1 - F) * D * G
         result /= 4 * dot(up_normal, outgoing) * dot(up_normal, reflected)
-        return  result * (abs(dot(up_normal, reflected)))
+        return result * (abs(dot(up_normal, reflected)))
     }
 }
 
@@ -699,14 +788,55 @@ func sample_tranparent_pdf(_ color: vec3f, _ ior: Float,
 @inlinable
 func eval_refractive(_ color: vec3f, _ ior: Float, _ roughness: Float,
                      _ normal: vec3f, _ outgoing: vec3f, _ incoming: vec3f) -> vec3f {
-    fatalError()
+    let entering = dot(normal, outgoing) >= 0
+    let up_normal = entering ? normal : -normal
+    let rel_ior = entering ? ior : (1 / ior)
+    if (dot(normal, incoming) * dot(normal, outgoing) >= 0) {
+        let halfway = normalize(incoming + outgoing)
+        let F = fresnel_dielectric(rel_ior, halfway, outgoing)
+        let D = microfacet_distribution(roughness, up_normal, halfway)
+        let G = microfacet_shadowing(roughness, up_normal, halfway, outgoing, incoming)
+        return vec3f(1, 1, 1) * F * D * G /
+                abs(4 * dot(normal, outgoing) * dot(normal, incoming)) *
+                abs(dot(normal, incoming))
+    } else {
+        let halfway = -normalize(rel_ior * incoming + outgoing) *
+                (entering ? 1.0 : -1.0)
+        let F = fresnel_dielectric(rel_ior, halfway, outgoing)
+        let D = microfacet_distribution(roughness, up_normal, halfway)
+        let G = microfacet_shadowing(
+                roughness, up_normal, halfway, outgoing, incoming)
+
+        // [Walter 2007] equation 21
+        var result = vec3f(1, 1, 1)
+        result *= abs((dot(outgoing, halfway) * dot(incoming, halfway)) / (dot(outgoing, normal) * dot(incoming, normal)))
+        result *= (1 - F) * D * G
+        result /= pow(rel_ior * dot(halfway, incoming) + dot(halfway, outgoing), 2)
+        return result * abs(dot(normal, incoming))
+    }
 }
 
 // Sample a refraction BRDF lobe.
 @inlinable
 func sample_refractive(_ ior: Float, _ roughness: Float, _ normal: vec3f,
                        _ outgoing: vec3f, _ rnl: Float, _ rn: vec2f) -> vec3f {
-    fatalError()
+    let entering = dot(normal, outgoing) >= 0
+    let up_normal = entering ? normal : -normal
+    let halfway = sample_microfacet(roughness, up_normal, rn)
+    // auto halfway = sample_microfacet(roughness, up_normal, outgoing, rn)
+    if (rnl < fresnel_dielectric(entering ? ior : (1 / ior), halfway, outgoing)) {
+        let incoming = reflect(outgoing, halfway)
+        if (!same_hemisphere(up_normal, outgoing, incoming)) {
+            return [0, 0, 0]
+        }
+        return incoming
+    } else {
+        let incoming = refract(outgoing, halfway, entering ? (1 / ior) : ior)
+        if (same_hemisphere(up_normal, outgoing, incoming)) {
+            return [0, 0, 0]
+        }
+        return incoming
+    }
 }
 
 // Pdf for refraction BRDF lobe sampling.
@@ -714,28 +844,78 @@ func sample_refractive(_ ior: Float, _ roughness: Float, _ normal: vec3f,
 func sample_refractive_pdf(_ color: vec3f, _ ior: Float,
                            _ roughness: Float, _ normal: vec3f, _ outgoing: vec3f,
                            _ incoming: vec3f) -> Float {
-    fatalError()
+    let entering = dot(normal, outgoing) >= 0
+    let up_normal = entering ? normal : -normal
+    let rel_ior = entering ? ior : (1 / ior)
+    if (dot(normal, incoming) * dot(normal, outgoing) >= 0) {
+        let halfway = normalize(incoming + outgoing)
+        return fresnel_dielectric(rel_ior, halfway, outgoing) *
+                sample_microfacet_pdf(roughness, up_normal, halfway) /
+                //  sample_microfacet_pdf(roughness, up_normal, halfway, outgoing) /
+                (4 * abs(dot(outgoing, halfway)))
+    } else {
+        let halfway = -normalize(rel_ior * incoming + outgoing) *
+                (entering ? 1.0 : -1.0)
+        // [Walter 2007] equation 17
+        return (1 - fresnel_dielectric(rel_ior, halfway, outgoing)) *
+                sample_microfacet_pdf(roughness, up_normal, halfway) *
+                //  sample_microfacet_pdf(roughness, up_normal, halfway, outgoing) /
+                abs(dot(halfway, incoming)) / // here we use incoming as from pbrt
+                pow(rel_ior * dot(halfway, incoming) + dot(halfway, outgoing), 2)
+    }
 }
 
 // Evaluate a delta refraction BRDF lobe.
 @inlinable
 func eval_refractive(_ color: vec3f, _ ior: Float, _ normal: vec3f,
                      _ outgoing: vec3f, _ incoming: vec3f) -> vec3f {
-    fatalError()
+    if (abs(ior - 1) < 1e-3) {
+        return dot(normal, incoming) * dot(normal, outgoing) <= 0 ? vec3f(1, 1, 1)
+                : vec3f(0, 0, 0)
+    }
+    let entering = dot(normal, outgoing) >= 0
+    let up_normal = entering ? normal : -normal
+    let rel_ior = entering ? ior : (1 / ior)
+    if (dot(normal, incoming) * dot(normal, outgoing) >= 0) {
+        return vec3f(1, 1, 1) * fresnel_dielectric(rel_ior, up_normal, outgoing)
+    } else {
+        return vec3f(1, 1, 1) * (1 / (rel_ior * rel_ior)) *
+                (1 - fresnel_dielectric(rel_ior, up_normal, outgoing))
+    }
 }
 
 // Sample a delta refraction BRDF lobe.
 @inlinable
 func sample_refractive(_ color: vec3f, _ ior: Float,
                        _ normal: vec3f, _ outgoing: vec3f, _ rnl: Float) -> vec3f {
-    fatalError()
+    if (abs(ior - 1) < 1e-3) {
+        return -outgoing
+    }
+    let entering = dot(normal, outgoing) >= 0
+    let up_normal = entering ? normal : -normal
+    let rel_ior = entering ? ior : (1 / ior)
+    if (rnl < fresnel_dielectric(rel_ior, up_normal, outgoing)) {
+        return reflect(outgoing, up_normal)
+    } else {
+        return refract(outgoing, up_normal, 1 / rel_ior)
+    }
 }
 
 // Pdf for delta refraction BRDF lobe sampling.
 @inlinable
 func sample_refractive_pdf(_ color: vec3f, _ ior: Float,
                            _ normal: vec3f, _ outgoing: vec3f, _ incoming: vec3f) -> Float {
-    fatalError()
+    if (abs(ior - 1) < 1e-3) {
+        return dot(normal, incoming) * dot(normal, outgoing) < 0 ? 1.0 : 0.0
+    }
+    let entering = dot(normal, outgoing) >= 0
+    let up_normal = entering ? normal : -normal
+    let rel_ior = entering ? ior : (1 / ior)
+    if (dot(normal, incoming) * dot(normal, outgoing) >= 0) {
+        return fresnel_dielectric(rel_ior, up_normal, outgoing)
+    } else {
+        return (1 - fresnel_dielectric(rel_ior, up_normal, outgoing))
+    }
 }
 
 //MARK:- Translucent
@@ -743,21 +923,32 @@ func sample_refractive_pdf(_ color: vec3f, _ ior: Float,
 @inlinable
 func eval_translucent(_ color: vec3f, _ normal: vec3f,
                       _ outgoing: vec3f, _ incoming: vec3f) -> vec3f {
-    fatalError()
+    // TODO (fabio): fix me
+    if (dot(normal, incoming) * dot(normal, outgoing) >= 0) {
+        return [0, 0, 0]
+    }
+    return color / Float.pi * abs(dot(normal, incoming))
 }
 
 // Pdf for translucency BRDF lobe sampling.
 @inlinable
 func sample_translucent_pdf(_ color: vec3f, _ normal: vec3f,
                             _ outgoing: vec3f, _ incoming: vec3f) -> Float {
-    fatalError()
+    // TODO (fabio): fix me
+    if (dot(normal, incoming) * dot(normal, outgoing) >= 0) {
+        return 0
+    }
+    let up_normal = dot(normal, outgoing) <= 0 ? -normal : normal
+    return sample_hemisphere_cos_pdf(-up_normal, incoming)
 }
 
 // Sample a translucency BRDF lobe.
 @inlinable
 func sample_translucent(_ color: vec3f, _ normal: vec3f,
                         _ outgoing: vec3f, _ rn: vec2f) -> vec3f {
-    fatalError()
+    // TODO (fabio): fix me
+    let up_normal = dot(normal, outgoing) <= 0 ? -normal : normal
+    return sample_hemisphere_cos(-up_normal, rn)
 }
 
 //MARK:- Passthrough
@@ -765,62 +956,93 @@ func sample_translucent(_ color: vec3f, _ normal: vec3f,
 @inlinable
 func eval_passthrough(_ color: vec3f, _ normal: vec3f,
                       _ outgoing: vec3f, _ incoming: vec3f) -> vec3f {
-    fatalError()
+    if (dot(normal, incoming) * dot(normal, outgoing) >= 0) {
+        return vec3f(0, 0, 0)
+    } else {
+        return vec3f(1, 1, 1)
+    }
 }
 
 // Sample a passthrough BRDF lobe.
 @inlinable
 func sample_passthrough(_ color: vec3f, _ normal: vec3f, _ outgoing: vec3f) -> vec3f {
-    fatalError()
+    -outgoing
 }
 
 // Pdf for passthrough BRDF lobe sampling.
 @inlinable
 func sample_passthrough_pdf(_ color: vec3f, _ normal: vec3f,
                             _ outgoing: vec3f, _ incoming: vec3f) -> Float {
-    fatalError()
+    if (dot(normal, incoming) * dot(normal, outgoing) >= 0) {
+        return 0
+    } else {
+        return 1
+    }
 }
 
 //MARK:- Transmission
 // Convert mean-free-path to transmission
 @inlinable
 func mfp_to_transmission(_ mfp: vec3f, _ depth: Float) -> vec3f {
-    fatalError()
+    exp(-depth / mfp)
 }
 
 // Evaluate transmittance
 @inlinable
 func eval_transmittance(_ density: vec3f, _ distance: Float) -> vec3f {
-    fatalError()
+    exp(-density * distance)
 }
 
 // Sample a distance proportionally to transmittance
 @inlinable
 func sample_transmittance(_ density: vec3f, _ max_distance: Float, _ rl: Float, _ rd: Float) -> Float {
-    fatalError()
+    let channel = Int(simd_clamp(rl * 3, 0, 2))
+    let distance = (density[channel] == 0) ? Float.greatestFiniteMagnitude
+            : -log(1 - rd) / density[channel]
+    return min(distance, max_distance)
 }
 
 // Pdf for distance sampling
 @inlinable
 func sample_transmittance_pdf(_ density: vec3f, _ distance: Float, _ max_distance: Float) -> Float {
-    fatalError()
+    if (distance < max_distance) {
+        return sum(density * exp(-density * distance)) / 3
+    } else {
+        return sum(exp(-density * max_distance)) / 3
+    }
 }
 
 //MARK:- Phasefunction
 // Evaluate phase function
 @inlinable
 func eval_phasefunction(_ anisotropy: Float, _ outgoing: vec3f, _ incoming: vec3f) -> Float {
-    fatalError()
+    let cosine = -dot(outgoing, incoming)
+    let denom = 1 + anisotropy * anisotropy - 2 * anisotropy * cosine
+    return (1 - anisotropy * anisotropy) / (4 * Float.pi * denom * sqrt(denom))
 }
 
 // Sample phase function
 @inlinable
 func sample_phasefunction(_ anisotropy: Float, _ outgoing: vec3f, _ rn: vec2f) -> vec3f {
-    fatalError()
+    var cos_theta: Float = 0.0
+    if (abs(anisotropy) < 1e-3) {
+        cos_theta = 1 - 2 * rn.y
+    } else {
+        let square = (1 - anisotropy * anisotropy) /
+                (1 + anisotropy - 2 * anisotropy * rn.y)
+        cos_theta = (1 + anisotropy * anisotropy - square * square) /
+                (2 * anisotropy)
+    }
+
+    let sin_theta = sqrt(max(0.0, 1 - cos_theta * cos_theta))
+    let phi = 2 * Float.pi * rn.x
+    let local_incoming = vec3f(
+            sin_theta * cos(phi), sin_theta * sin(phi), cos_theta)
+    return basis_fromz(-outgoing) * local_incoming
 }
 
 // Pdf for phase function sampling
 @inlinable
 func sample_phasefunction_pdf(_ anisotropy: Float, _ outgoing: vec3f, _ incoming: vec3f) -> Float {
-    fatalError()
+    eval_phasefunction(anisotropy, outgoing, incoming)
 }
