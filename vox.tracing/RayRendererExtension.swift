@@ -61,6 +61,7 @@ extension RayRenderer {
                 colors.append(color)
             }
         }
+        masks = .init(repeating: UInt32(TRIANGLE_MASK_GEOMETRY), count: vertices.count / 3)
     }
 
 }

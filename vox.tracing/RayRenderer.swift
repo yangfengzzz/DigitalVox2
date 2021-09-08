@@ -135,7 +135,7 @@ final class RayRenderer: UIView {
 
             computeDescriptor.computeFunction = library.makeFunction(
                     name: "shadowKernel")
-            accumulatePipeline = try device.makeComputePipelineState(
+            shadowPipeline = try device.makeComputePipelineState(
                     descriptor: computeDescriptor,
                     options: [],
                     reflection: nil)
@@ -404,7 +404,7 @@ extension RayRenderer: MTKViewDelegate {
             computeEncoder?.setBuffer(intersectionBuffer, offset: 0, index: 2)
             computeEncoder?.setTexture(renderTarget0, index: 0)
             computeEncoder?.setTexture(renderTarget1, index: 1)
-            computeEncoder?.setComputePipelineState(shadowPipeline!)
+            computeEncoder?.setComputePipelineState(shadowPipeline)
             computeEncoder?.dispatchThreadgroups(threadGroups, threadsPerThreadgroup: threadsPerGroup)
             computeEncoder?.endEncoding()
 
