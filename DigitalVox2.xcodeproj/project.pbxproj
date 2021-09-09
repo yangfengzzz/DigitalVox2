@@ -39,6 +39,7 @@
 		042BB12F26EA379700604751 /* CameraClearFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042BB12E26EA379700604751 /* CameraClearFlags.swift */; };
 		042BB13126EA38EB00604751 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042BB13026EA38EB00604751 /* Camera.swift */; };
 		042BB13426EA3EA400604751 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 042BB13326EA3EA400604751 /* Logging */; };
+		042BB13626EA404200604751 /* SceneManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042BB13526EA404200604751 /* SceneManager.swift */; };
 		042C841226E4A7AE00BD3733 /* sampling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042C841126E4A7AE00BD3733 /* sampling.swift */; };
 		0452EC9926DFA0CD0015BFB1 /* voxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9826DFA0CD0015BFB1 /* voxApp.swift */; };
 		0452EC9B26DFA0CD0015BFB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */; };
@@ -225,6 +226,7 @@
 		042BB12C26EA371500604751 /* BackgroundMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundMode.swift; sourceTree = "<group>"; };
 		042BB12E26EA379700604751 /* CameraClearFlags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraClearFlags.swift; sourceTree = "<group>"; };
 		042BB13026EA38EB00604751 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
+		042BB13526EA404200604751 /* SceneManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneManager.swift; sourceTree = "<group>"; };
 		042C841126E4A7AE00BD3733 /* sampling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sampling.swift; sourceTree = "<group>"; };
 		042C841426E5043200BD3733 /* rect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rect.swift; sourceTree = "<group>"; };
 		042C841626E504B200BD3733 /* bulged_rect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bulged_rect.swift; sourceTree = "<group>"; };
@@ -761,15 +763,17 @@
 				0413288326E09EFC000A4F4E /* mesh */,
 				042BB12926EA35C100604751 /* Background.swift */,
 				042BB13026EA38EB00604751 /* Camera.swift */,
-				0419B6DD26E701FE00005FEA /* Script.swift */,
-				0413289A26E0C1DD000A4F4E /* UpdateFlag.swift */,
-				0413289C26E0C288000A4F4E /* UpdateFlagManager.swift */,
-				047FEBEF26E600E70078CFAF /* Scene.swift */,
-				047FEBF126E601750078CFAF /* Entity.swift */,
-				047FEBF326E603CD0078CFAF /* Layer.swift */,
 				047FEBF726E6053A0078CFAF /* Component.swift */,
 				0419B6DF26E7114C00005FEA /* ComponentsManager.swift */,
+				0452ECC426DFA4920015BFB1 /* Engine.swift */,
+				047FEBF126E601750078CFAF /* Entity.swift */,
+				047FEBF326E603CD0078CFAF /* Layer.swift */,
+				047FEBEF26E600E70078CFAF /* Scene.swift */,
+				042BB13526EA404200604751 /* SceneManager.swift */,
+				0419B6DD26E701FE00005FEA /* Script.swift */,
 				047FEBF526E6052D0078CFAF /* Transform.swift */,
+				0413289A26E0C1DD000A4F4E /* UpdateFlag.swift */,
+				0413289C26E0C288000A4F4E /* UpdateFlagManager.swift */,
 				0413289E26E0CBE7000A4F4E /* ShaderSimple.metal */,
 				0452ECCC26DFA5360015BFB1 /* Shaders.metal */,
 				0452ECCA26DFA5360015BFB1 /* PBR.metal */,
@@ -781,7 +785,6 @@
 				0452ECEE26DFA7B90015BFB1 /* InputController.swift */,
 				0452ECF026DFA7C90015BFB1 /* MotionController.swift */,
 				0452ECC226DFA4590015BFB1 /* EngineView.swift */,
-				0452ECC426DFA4920015BFB1 /* Engine.swift */,
 				0452ECC726DFA5360015BFB1 /* Node.swift */,
 				0452ECCE26DFA5360015BFB1 /* Texturable.swift */,
 				0452ECC926DFA5360015BFB1 /* Primitive.swift */,
@@ -1208,6 +1211,7 @@
 				0452ECD226DFA5360015BFB1 /* VertexDescriptor.swift in Sources */,
 				04EFDE7E26DF49FD005FBB6F /* Matrix3x3.swift in Sources */,
 				04EFDE7C26DF3495005FBB6F /* Matrix.swift in Sources */,
+				042BB13626EA404200604751 /* SceneManager.swift in Sources */,
 				0452ECDE26DFA5C50015BFB1 /* MathLibrary.swift in Sources */,
 				0413288626E09F1F000A4F4E /* PrimitiveMesh.swift in Sources */,
 				047FEBF426E603CD0078CFAF /* Layer.swift in Sources */,

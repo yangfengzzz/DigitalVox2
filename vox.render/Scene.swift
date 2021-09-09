@@ -167,7 +167,7 @@ let logger = Logger(label: "com.vox.Render.main")
 
 //MARK:- Internal Members
 extension Scene {
-    internal func _attachRenderCamera(camera: Camera) {
+    internal func _attachRenderCamera(_ camera: Camera) {
         let index = _activeCameras.firstIndex { cam in
             cam === camera
         }
@@ -178,13 +178,13 @@ extension Scene {
         }
     }
 
-    internal func _detachRenderCamera(camera: Camera) {
+    internal func _detachRenderCamera(_ camera: Camera) {
         _activeCameras.removeAll { cam in
             cam === camera
         }
     }
 
-    internal func _processActive(active: Bool) {
+    internal func _processActive(_ active: Bool) {
         _isActiveInEngine = active
         let rootEntities = _rootEntities
         for i in 0..<rootEntities.count {
