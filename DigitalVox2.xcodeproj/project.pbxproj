@@ -146,6 +146,7 @@
 		04EA0D6E26E1204F00CA7833 /* bbox3f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6D26E1204F00CA7833 /* bbox3f.swift */; };
 		04EA0D7026E1205C00CA7833 /* ray2f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6F26E1205C00CA7833 /* ray2f.swift */; };
 		04EA0D7226E1206400CA7833 /* ray3f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D7126E1206400CA7833 /* ray3f.swift */; };
+		04EC860426E984C300F58934 /* monkey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBAE26E5936A0078CFAF /* monkey.swift */; };
 		04EFDE7626DF1F96005FBB6F /* Vector2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EFDE7526DF1F96005FBB6F /* Vector2.swift */; };
 		04EFDE7826DF281E005FBB6F /* Vector2.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EFDE7726DF281D005FBB6F /* Vector2.test.swift */; };
 		04EFDE7A26DF3072005FBB6F /* Vector3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EFDE7926DF3072005FBB6F /* Vector3.swift */; };
@@ -1096,6 +1097,7 @@
 				047FEBD226E5A3020078CFAF /* ramp.swift in Sources */,
 				047FEB7B26E1D63D0078CFAF /* geometry.swift in Sources */,
 				04EA0D7026E1205C00CA7833 /* ray2f.swift in Sources */,
+				04EC860426E984C300F58934 /* monkey.swift in Sources */,
 				0452ED1A26DFB0F80015BFB1 /* InputController.swift in Sources */,
 				0452ED3B26E0F50A0015BFB1 /* frame3f.swift in Sources */,
 				042C841226E4A7AE00BD3733 /* sampling.swift in Sources */,

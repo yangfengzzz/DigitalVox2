@@ -154,8 +154,8 @@ final class RayRenderer: UIView {
     }
 
     func createScene() {
-        loadAsset(name: "train", position: [-0.3, 0, 0.4], scale: 0.5)
-        loadAsset(name: "treefir", position: [0.5, 0, -0.2], scale: 0.7)
+        let transform = matrix4x4_translation(0.0, 0.7, 0.0) * matrix4x4_scale(0.5, 0.5, 0.5);
+        monkey(transform)
         loadAsset(name: "plane", position: [0, 0, 0], scale: 10)
         loadAsset(name: "sphere", position: [-1.9, 0.0, 0.3], scale: 1)
         loadAsset(name: "sphere", position: [2.9, 0.0, -0.5], scale: 2)
