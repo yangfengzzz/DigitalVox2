@@ -27,7 +27,7 @@ final class Engine: UIView {
 
     var renderEncoder: MTLRenderCommandEncoder!
     
-    lazy var camera: Camera = {
+    lazy var camera: OldCamera = {
         let camera = ArcballCamera()
         camera.distance = 3
         camera.target = [0, 0, 0]

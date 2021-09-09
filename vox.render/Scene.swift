@@ -10,7 +10,9 @@ import Foundation
 class Scene: EngineObject {
     /// Scene name. 
     var name: String
-
+    /// The background of the scene.
+    var background: Background = Background();
+    
     internal var _isActiveInEngine: Bool = false;
 
     private var _destroyed: Bool = false
