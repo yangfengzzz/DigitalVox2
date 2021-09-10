@@ -148,7 +148,7 @@ extension Engine: MTKViewDelegate {
                 index: Int(BufferIndexUniforms.rawValue))
 
         renderEncoder.setRenderPipelineState(Engine.makePipelineState())
-        _ = PrimitiveMesh.createCuboid(engine: self, width: 1, height: 1, depth: 1, noLongerAccessible: false);
+        _ = PrimitiveMesh.createCuboid(self, 1, 1, 1, false);
 
         renderEncoder.endEncoding()
         guard let drawable = view.currentDrawable else {
