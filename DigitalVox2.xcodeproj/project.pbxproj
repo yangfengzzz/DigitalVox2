@@ -67,7 +67,7 @@
 		0452ECE926DFA6A10015BFB1 /* cottage1.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 0452ECE326DFA6A10015BFB1 /* cottage1.mtl */; };
 		0452ECEA26DFA6A10015BFB1 /* cottage2.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 0452ECE426DFA6A10015BFB1 /* cottage2.mtl */; };
 		0452ECEB26DFA6A10015BFB1 /* cottage2.obj in Resources */ = {isa = PBXBuildFile; fileRef = 0452ECE526DFA6A10015BFB1 /* cottage2.obj */; };
-		0452ECED26DFA7870015BFB1 /* ControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECEC26DFA7870015BFB1 /* ControllerView.swift */; };
+		0452ECED26DFA7870015BFB1 /* Canvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECEC26DFA7870015BFB1 /* Canvas.swift */; };
 		0452ECEF26DFA7B90015BFB1 /* InputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECEE26DFA7B90015BFB1 /* InputController.swift */; };
 		0452ECF126DFA7C90015BFB1 /* MotionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECF026DFA7C90015BFB1 /* MotionController.swift */; };
 		0452ECF326DFA8BD0015BFB1 /* Textures.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0452ECF226DFA8BD0015BFB1 /* Textures.xcassets */; };
@@ -153,6 +153,8 @@
 		04E28C3B26ECE845003A3C3B /* IHardwareRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E28C3A26ECE845003A3C3B /* IHardwareRenderer.swift */; };
 		04E28C3D26ECED51003A3C3B /* IndexBufferBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E28C3C26ECED51003A3C3B /* IndexBufferBinding.swift */; };
 		04E28C3F26ECEE24003A3C3B /* VertexBufferBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E28C3E26ECEE24003A3C3B /* VertexBufferBinding.swift */; };
+		04E28C4226EDD722003A3C3B /* BasicRenderPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E28C4126EDD722003A3C3B /* BasicRenderPipeline.swift */; };
+		04E28C4426EDD78C003A3C3B /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E28C4326EDD78C003A3C3B /* Renderer.swift */; };
 		04EA0D6A26E0F9AD00CA7833 /* math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6926E0F9AD00CA7833 /* math.swift */; };
 		04EA0D6C26E1204200CA7833 /* bbox2f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6B26E1204200CA7833 /* bbox2f.swift */; };
 		04EA0D6E26E1204F00CA7833 /* bbox3f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6D26E1204F00CA7833 /* bbox3f.swift */; };
@@ -270,7 +272,7 @@
 		0452ECE326DFA6A10015BFB1 /* cottage1.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cottage1.mtl; sourceTree = "<group>"; };
 		0452ECE426DFA6A10015BFB1 /* cottage2.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cottage2.mtl; sourceTree = "<group>"; };
 		0452ECE526DFA6A10015BFB1 /* cottage2.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cottage2.obj; sourceTree = "<group>"; };
-		0452ECEC26DFA7870015BFB1 /* ControllerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllerView.swift; sourceTree = "<group>"; };
+		0452ECEC26DFA7870015BFB1 /* Canvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Canvas.swift; sourceTree = "<group>"; };
 		0452ECEE26DFA7B90015BFB1 /* InputController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputController.swift; sourceTree = "<group>"; };
 		0452ECF026DFA7C90015BFB1 /* MotionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionController.swift; sourceTree = "<group>"; };
 		0452ECF226DFA8BD0015BFB1 /* Textures.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Textures.xcassets; sourceTree = "<group>"; };
@@ -397,6 +399,8 @@
 		04E28C3A26ECE845003A3C3B /* IHardwareRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IHardwareRenderer.swift; sourceTree = "<group>"; };
 		04E28C3C26ECED51003A3C3B /* IndexBufferBinding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexBufferBinding.swift; sourceTree = "<group>"; };
 		04E28C3E26ECEE24003A3C3B /* VertexBufferBinding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VertexBufferBinding.swift; sourceTree = "<group>"; };
+		04E28C4126EDD722003A3C3B /* BasicRenderPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicRenderPipeline.swift; sourceTree = "<group>"; };
+		04E28C4326EDD78C003A3C3B /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
 		04EA0D6926E0F9AD00CA7833 /* math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = math.swift; sourceTree = "<group>"; };
 		04EA0D6B26E1204200CA7833 /* bbox2f.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bbox2f.swift; sourceTree = "<group>"; };
 		04EA0D6D26E1204F00CA7833 /* bbox3f.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bbox3f.swift; sourceTree = "<group>"; };
@@ -776,6 +780,7 @@
 				0413288426E09F11000A4F4E /* graphic */,
 				0413288326E09EFC000A4F4E /* mesh */,
 				04E28C3926ECE82E003A3C3B /* renderingHardwareInterface */,
+				04E28C4026EDD6F8003A3C3B /* renderPipeline */,
 				042BB12926EA35C100604751 /* Background.swift */,
 				042BB13026EA38EB00604751 /* Camera.swift */,
 				047FEBF726E6053A0078CFAF /* Component.swift */,
@@ -783,6 +788,7 @@
 				0452ECC426DFA4920015BFB1 /* Engine.swift */,
 				047FEBF126E601750078CFAF /* Entity.swift */,
 				047FEBF326E603CD0078CFAF /* Layer.swift */,
+				04E28C4326EDD78C003A3C3B /* Renderer.swift */,
 				047FEBEF26E600E70078CFAF /* Scene.swift */,
 				042BB13526EA404200604751 /* SceneManager.swift */,
 				0419B6DD26E701FE00005FEA /* Script.swift */,
@@ -797,7 +803,7 @@
 				04DB2A4026DF1DF100C15850 /* design */,
 				0497A1E426DF150500F61DE9 /* voxApp.swift */,
 				0497A1E626DF150500F61DE9 /* ContentView.swift */,
-				0452ECEC26DFA7870015BFB1 /* ControllerView.swift */,
+				0452ECEC26DFA7870015BFB1 /* Canvas.swift */,
 				0452ECEE26DFA7B90015BFB1 /* InputController.swift */,
 				0452ECF026DFA7C90015BFB1 /* MotionController.swift */,
 				0452ECC226DFA4590015BFB1 /* EngineView.swift */,
@@ -873,6 +879,14 @@
 				04E28C3A26ECE845003A3C3B /* IHardwareRenderer.swift */,
 			);
 			path = renderingHardwareInterface;
+			sourceTree = "<group>";
+		};
+		04E28C4026EDD6F8003A3C3B /* renderPipeline */ = {
+			isa = PBXGroup;
+			children = (
+				04E28C4126EDD722003A3C3B /* BasicRenderPipeline.swift */,
+			);
+			path = renderPipeline;
 			sourceTree = "<group>";
 		};
 		04EFDE7426DF1F87005FBB6F /* math */ = {
@@ -1259,6 +1273,7 @@
 				0413289B26E0C1DD000A4F4E /* UpdateFlag.swift in Sources */,
 				0452ECF126DFA7C90015BFB1 /* MotionController.swift in Sources */,
 				0413287326E0723E000A4F4E /* CollisionUtil.swift in Sources */,
+				04E28C4426EDD78C003A3C3B /* Renderer.swift in Sources */,
 				0413286B26DF86DC000A4F4E /* BoundingBox.swift in Sources */,
 				0413288D26E0A086000A4F4E /* EngineObject.swift in Sources */,
 				0452ECDC26DFA5360015BFB1 /* Submesh.swift in Sources */,
@@ -1274,7 +1289,7 @@
 				0452ECD426DFA5360015BFB1 /* Lighting.swift in Sources */,
 				0413289926E0A607000A4F4E /* VertexElement.swift in Sources */,
 				0413288A26E09FB3000A4F4E /* Mesh.swift in Sources */,
-				0452ECED26DFA7870015BFB1 /* ControllerView.swift in Sources */,
+				0452ECED26DFA7870015BFB1 /* Canvas.swift in Sources */,
 				0413287126E06D2E000A4F4E /* BoundingFrustum.swift in Sources */,
 				047FEBF626E6052D0078CFAF /* Transform.swift in Sources */,
 				04EFDE8226DF4DC3005FBB6F /* Vector4.swift in Sources */,
@@ -1287,6 +1302,7 @@
 				042BB12F26EA379700604751 /* CameraClearFlags.swift in Sources */,
 				042BB13126EA38EB00604751 /* Camera.swift in Sources */,
 				0497A1E526DF150500F61DE9 /* voxApp.swift in Sources */,
+				04E28C4226EDD722003A3C3B /* BasicRenderPipeline.swift in Sources */,
 				04E28C3F26ECEE24003A3C3B /* VertexBufferBinding.swift in Sources */,
 				047FEBF226E601750078CFAF /* Entity.swift in Sources */,
 				0452ECD326DFA5360015BFB1 /* Node.swift in Sources */,

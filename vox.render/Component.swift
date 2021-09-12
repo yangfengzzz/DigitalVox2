@@ -23,10 +23,8 @@ class Component: EngineObject {
         _entity = entity
         super.init(entity.engine)
     }
-}
 
 //MARK:- Get/Set Methods
-extension Component {
     /// Indicates whether the component is enabled.
     var enabled: Bool {
         get {
@@ -69,10 +67,8 @@ extension Component {
             _entity.scene
         }
     }
-}
 
 //MARK:- Public Methods
-extension Component {
     /// Destroy this instance.
     func destroy() {
         if (_destroyed) {
@@ -88,10 +84,8 @@ extension Component {
         _destroyed = true
         _onDestroy()
     }
-}
 
 //MARK:- Internal Methods
-extension Component {
     internal func _onAwake() {
     }
 

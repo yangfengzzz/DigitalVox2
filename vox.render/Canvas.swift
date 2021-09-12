@@ -7,14 +7,14 @@
 
 import MetalKit
 
-class ControllerView: MTKView {
+class Canvas: MTKView {
     var inputController: InputController?
     var motionController = MotionController()
     var isTouched = false
     static var previousScale: CGFloat = 1
 }
 
-extension ControllerView {
+extension Canvas {
     override func didMoveToWindow() {
         super.didMoveToWindow()
         motionController.motionClosure = {
@@ -50,11 +50,11 @@ extension ControllerView {
 
     @objc func handlePinch(gesture: UIPinchGestureRecognizer) {
         let sensitivity: Float = 0.8
-        inputController?.zoomUsing(delta: gesture.scale - ControllerView.previousScale,
+        inputController?.zoomUsing(delta: gesture.scale - Canvas.previousScale,
                 sensitivity: sensitivity)
-        ControllerView.previousScale = gesture.scale
+        Canvas.previousScale = gesture.scale
         if gesture.state == .ended {
-            ControllerView.previousScale = 1
+            Canvas.previousScale = 1
         }
     }
 

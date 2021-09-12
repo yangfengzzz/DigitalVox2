@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
-    let controllerView: ControllerView
+    let canvas: Canvas
     let engine: Engine
 
     init() {
-        controllerView = ControllerView(frame: .zero, device: MTLCreateSystemDefaultDevice())
-        engine = Engine(controllerView, MetalGPURenderer()) { engine in
+        canvas = Canvas(frame: .zero, device: MTLCreateSystemDefaultDevice())
+        engine = Engine(canvas, MetalGPURenderer()) { engine in
             // models
             let house = Model(name: "cube.obj")
             house.position = [0, 0, 0]
@@ -22,7 +22,7 @@ struct ContentView: View {
     }
 
     var body: some View {
-        EngineView(view: controllerView)
+        EngineView(view: canvas)
     }
 }
 

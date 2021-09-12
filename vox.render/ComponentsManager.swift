@@ -22,14 +22,25 @@ class ComponentsManager {
     private var _onUpdateAnimations: [Component] = []
 
     // Render
-    // private var _renderers: [Renderer] = []
-    // private var _onUpdateRenderers: [Renderer] = []
+     private var _renderers: [Renderer] = []
+     private var _onUpdateRenderers: [Renderer] = []
 
     // Delay dispose active/inActive Pool
     private var _componentsContainerPool: [[Component]] = [[]]
 }
 
 extension ComponentsManager {
+    func addRenderer(_ renderer: Renderer) {
+        renderer._rendererIndex = _renderers.count;
+        _renderers.append(renderer);
+    }
+
+    func removeRenderer(_ renderer: Renderer) {
+        let replaced = _renderers.remove(at: renderer._rendererIndex);
+        replaced._rendererIndex = renderer._rendererIndex
+        renderer._rendererIndex = -1
+    }
+    
     func addOnStartScript(_ script: Script) {
         script._onStartIndex = _onStartScripts.count
         _onStartScripts.append(script)
@@ -61,6 +72,21 @@ extension ComponentsManager {
         let replaced = _onLateUpdateScripts.remove(at: script._onLateUpdateIndex)
         replaced._onLateUpdateIndex = script._onLateUpdateIndex
         script._onLateUpdateIndex = -1
+    }
+    
+    func addOnUpdateRenderers(_ renderer: Renderer) {
+        renderer._onUpdateIndex = _onUpdateRenderers.count;
+        _onUpdateRenderers.append(renderer);
+    }
+
+    func removeOnUpdateRenderers(_ renderer: Renderer) {
+        let replaced = _onUpdateRenderers.remove(at: renderer._onUpdateIndex);
+        replaced._onUpdateIndex = renderer._onUpdateIndex
+        renderer._onUpdateIndex = -1;
+    }
+    
+    func addDestroyComponent(_ component:Script) {
+        _destroyComponents.append(component);
     }
 
     func callScriptOnStart() {
@@ -95,6 +121,48 @@ extension ComponentsManager {
             if (element._started) {
                 element.onLateUpdate(deltaTime)
             }
+        }
+    }
+
+    func callRendererOnUpdate(_ deltaTime: Float) {
+        let elements = _onUpdateRenderers
+        for i in 0..<_onUpdateRenderers.count {
+            elements[i].update(deltaTime);
+        }
+    }
+    
+    func callRender(_ camera: Camera) {
+        let elements = _renderers
+        for i in 0..<_renderers.count {
+            let element = elements[i];
+            element._render(camera);
+        }
+    }
+    
+    func callComponentDestroy() {
+        var destroyComponents = _destroyComponents;
+        let length = destroyComponents.count;
+        if (length > 0) {
+            for i in 0..<length {
+                destroyComponents[i].onDestroy();
+            }
+            destroyComponents = []
+        }
+    }
+
+    func callCameraOnBeginRender(_ camera: Camera) {
+        let camComps = camera.entity._components;
+        for i in 0..<camComps.count {
+            let camComp = camComps[i];
+            (camComp as? Script)?.onBeginRender(camera);
+        }
+    }
+
+    func callCameraOnEndRender(_ camera: Camera) {
+        let camComps = camera.entity._components;
+        for i in 0..<camComps.count {
+            let camComp = camComps[i];
+            (camComp as? Script)?.onEndRender(camera);
         }
     }
 }

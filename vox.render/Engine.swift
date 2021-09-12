@@ -14,6 +14,15 @@ final class Engine: NSObject {
     var _componentsManager: ComponentsManager = ComponentsManager();
     var _hardwareRenderer: MetalGPURenderer;
 
+    var _canvas: Canvas;
+    
+    /// The canvas to use for rendering.
+    var canvas:Canvas {
+        get {
+            _canvas
+        }
+    }
+    
     static var device: MTLDevice!
     static var commandQueue: MTLCommandQueue!
     static var library: MTLLibrary!
@@ -37,7 +46,8 @@ final class Engine: NSObject {
     // Array of Models allows for rendering multiple models
     var models: [Model] = []
 
-    init(_ controllerView: ControllerView, _ hardwareRenderer: MetalGPURenderer, callback: EngineInitCallback) {
+    init(_ canvas: Canvas, _ hardwareRenderer: MetalGPURenderer, callback: EngineInitCallback) {
+        _canvas = canvas;
         _hardwareRenderer = hardwareRenderer;
 
         guard let device = MTLCreateSystemDefaultDevice(),
@@ -47,27 +57,27 @@ final class Engine: NSObject {
         Engine.device = device
         Engine.commandQueue = commandQueue
         Engine.library = device.makeDefaultLibrary()
-        Engine.colorPixelFormat = controllerView.colorPixelFormat
+        Engine.colorPixelFormat = _canvas.colorPixelFormat
 
-        controllerView.device = device
-        controllerView.depthStencilPixelFormat = .depth32Float
+        _canvas.device = device
+        _canvas.depthStencilPixelFormat = .depth32Float
         depthStencilState = Engine.buildDepthStencilState()!
 
         super.init()
-        controllerView.translatesAutoresizingMaskIntoConstraints = false
-        controllerView.framebufferOnly = false
-        controllerView.isMultipleTouchEnabled = true
-        controllerView.clearColor = MTLClearColor(red: 0.7, green: 0.9, blue: 1, alpha: 1)
-        controllerView.delegate = self
-        controllerView.registerGesture();
-        mtkView(controllerView, drawableSizeWillChange: controllerView.bounds.size)
+        _canvas.translatesAutoresizingMaskIntoConstraints = false
+        _canvas.framebufferOnly = false
+        _canvas.isMultipleTouchEnabled = true
+        _canvas.clearColor = MTLClearColor(red: 0.7, green: 0.9, blue: 1, alpha: 1)
+        _canvas.delegate = self
+        _canvas.registerGesture();
+        mtkView(_canvas, drawableSizeWillChange: _canvas.bounds.size)
 
         callback(self)
 
         fragmentUniforms.lightCount = lighting.count
 
-        controllerView.inputController = InputController()
-        controllerView.inputController?.player = camera
+        _canvas.inputController = InputController()
+        _canvas.inputController?.player = camera
     }
 
     required init?(coder: NSCoder) {
