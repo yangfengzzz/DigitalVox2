@@ -147,6 +147,12 @@
 		0497A1F726DF150800F61DE9 /* DigitalVox2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A1F626DF150800F61DE9 /* DigitalVox2Tests.swift */; };
 		0497A20226DF150800F61DE9 /* DigitalVox2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A20126DF150800F61DE9 /* DigitalVox2UITests.swift */; };
 		04DB2A4226DF1E0500C15850 /* IClone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DB2A4126DF1E0500C15850 /* IClone.swift */; };
+		04E28C3426ECE6F3003A3C3B /* IPlatformPrimitive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E28C3326ECE6F3003A3C3B /* IPlatformPrimitive.swift */; };
+		04E28C3626ECE780003A3C3B /* GPUPrimitive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E28C3526ECE780003A3C3B /* GPUPrimitive.swift */; };
+		04E28C3826ECE7B3003A3C3B /* MetalGPURenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E28C3726ECE7B3003A3C3B /* MetalGPURenderer.swift */; };
+		04E28C3B26ECE845003A3C3B /* IHardwareRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E28C3A26ECE845003A3C3B /* IHardwareRenderer.swift */; };
+		04E28C3D26ECED51003A3C3B /* IndexBufferBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E28C3C26ECED51003A3C3B /* IndexBufferBinding.swift */; };
+		04E28C3F26ECEE24003A3C3B /* VertexBufferBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E28C3E26ECEE24003A3C3B /* VertexBufferBinding.swift */; };
 		04EA0D6A26E0F9AD00CA7833 /* math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6926E0F9AD00CA7833 /* math.swift */; };
 		04EA0D6C26E1204200CA7833 /* bbox2f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6B26E1204200CA7833 /* bbox2f.swift */; };
 		04EA0D6E26E1204F00CA7833 /* bbox3f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6D26E1204F00CA7833 /* bbox3f.swift */; };
@@ -385,6 +391,12 @@
 		0497A20326DF150800F61DE9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0497A20F26DF151700F61DE9 /* DigitalVox2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DigitalVox2.entitlements; sourceTree = "<group>"; };
 		04DB2A4126DF1E0500C15850 /* IClone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IClone.swift; sourceTree = "<group>"; };
+		04E28C3326ECE6F3003A3C3B /* IPlatformPrimitive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPlatformPrimitive.swift; sourceTree = "<group>"; };
+		04E28C3526ECE780003A3C3B /* GPUPrimitive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPUPrimitive.swift; sourceTree = "<group>"; };
+		04E28C3726ECE7B3003A3C3B /* MetalGPURenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalGPURenderer.swift; sourceTree = "<group>"; };
+		04E28C3A26ECE845003A3C3B /* IHardwareRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IHardwareRenderer.swift; sourceTree = "<group>"; };
+		04E28C3C26ECED51003A3C3B /* IndexBufferBinding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexBufferBinding.swift; sourceTree = "<group>"; };
+		04E28C3E26ECEE24003A3C3B /* VertexBufferBinding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VertexBufferBinding.swift; sourceTree = "<group>"; };
 		04EA0D6926E0F9AD00CA7833 /* math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = math.swift; sourceTree = "<group>"; };
 		04EA0D6B26E1204200CA7833 /* bbox2f.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bbox2f.swift; sourceTree = "<group>"; };
 		04EA0D6D26E1204F00CA7833 /* bbox3f.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bbox3f.swift; sourceTree = "<group>"; };
@@ -471,6 +483,8 @@
 				0413288926E09FB3000A4F4E /* Mesh.swift */,
 				0413289326E0A48F000A4F4E /* SubMesh.swift */,
 				0413289826E0A607000A4F4E /* VertexElement.swift */,
+				04E28C3C26ECED51003A3C3B /* IndexBufferBinding.swift */,
+				04E28C3E26ECEE24003A3C3B /* VertexBufferBinding.swift */,
 			);
 			path = graphic;
 			sourceTree = "<group>";
@@ -761,6 +775,7 @@
 				0413288B26E0A07C000A4F4E /* base */,
 				0413288426E09F11000A4F4E /* graphic */,
 				0413288326E09EFC000A4F4E /* mesh */,
+				04E28C3926ECE82E003A3C3B /* renderingHardwareInterface */,
 				042BB12926EA35C100604751 /* Background.swift */,
 				042BB13026EA38EB00604751 /* Camera.swift */,
 				047FEBF726E6053A0078CFAF /* Component.swift */,
@@ -777,6 +792,7 @@
 				0413289E26E0CBE7000A4F4E /* ShaderSimple.metal */,
 				0452ECCC26DFA5360015BFB1 /* Shaders.metal */,
 				0452ECCA26DFA5360015BFB1 /* PBR.metal */,
+				04E28C3226ECE6C5003A3C3B /* rhi-metal */,
 				04EFDE7426DF1F87005FBB6F /* math */,
 				04DB2A4026DF1DF100C15850 /* design */,
 				0497A1E426DF150500F61DE9 /* voxApp.swift */,
@@ -839,6 +855,24 @@
 				04DB2A4126DF1E0500C15850 /* IClone.swift */,
 			);
 			path = design;
+			sourceTree = "<group>";
+		};
+		04E28C3226ECE6C5003A3C3B /* rhi-metal */ = {
+			isa = PBXGroup;
+			children = (
+				04E28C3326ECE6F3003A3C3B /* IPlatformPrimitive.swift */,
+				04E28C3526ECE780003A3C3B /* GPUPrimitive.swift */,
+				04E28C3726ECE7B3003A3C3B /* MetalGPURenderer.swift */,
+			);
+			path = "rhi-metal";
+			sourceTree = "<group>";
+		};
+		04E28C3926ECE82E003A3C3B /* renderingHardwareInterface */ = {
+			isa = PBXGroup;
+			children = (
+				04E28C3A26ECE845003A3C3B /* IHardwareRenderer.swift */,
+			);
+			path = renderingHardwareInterface;
 			sourceTree = "<group>";
 		};
 		04EFDE7426DF1F87005FBB6F /* math */ = {
@@ -1195,8 +1229,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04E28C3D26ECED51003A3C3B /* IndexBufferBinding.swift in Sources */,
 				0452ECEF26DFA7B90015BFB1 /* InputController.swift in Sources */,
 				0413289426E0A48F000A4F4E /* SubMesh.swift in Sources */,
+				04E28C3826ECE7B3003A3C3B /* MetalGPURenderer.swift in Sources */,
 				0452ECD626DFA5360015BFB1 /* PBR.metal in Sources */,
 				04DB2A4226DF1E0500C15850 /* IClone.swift in Sources */,
 				042BB12D26EA371500604751 /* BackgroundMode.swift in Sources */,
@@ -1207,6 +1243,7 @@
 				0452ECDA26DFA5360015BFB1 /* OldCamera.swift in Sources */,
 				04EFDE7626DF1F96005FBB6F /* Vector2.swift in Sources */,
 				0413289226E0A1CD000A4F4E /* RefObject.swift in Sources */,
+				04E28C3B26ECE845003A3C3B /* IHardwareRenderer.swift in Sources */,
 				0452ECD726DFA5360015BFB1 /* Shaders.metal in Sources */,
 				0452ECD226DFA5360015BFB1 /* VertexDescriptor.swift in Sources */,
 				04EFDE7E26DF49FD005FBB6F /* Matrix3x3.swift in Sources */,
@@ -1229,6 +1266,7 @@
 				0452ECDB26DFA5360015BFB1 /* MeshOld.swift in Sources */,
 				0452ECC326DFA4590015BFB1 /* EngineView.swift in Sources */,
 				0497A1E726DF150500F61DE9 /* ContentView.swift in Sources */,
+				04E28C3426ECE6F3003A3C3B /* IPlatformPrimitive.swift in Sources */,
 				04EFDE7A26DF3072005FBB6F /* Vector3.swift in Sources */,
 				0419B6E026E7114C00005FEA /* ComponentsManager.swift in Sources */,
 				0413288026E08044000A4F4E /* Color.swift in Sources */,
@@ -1240,6 +1278,7 @@
 				0413287126E06D2E000A4F4E /* BoundingFrustum.swift in Sources */,
 				047FEBF626E6052D0078CFAF /* Transform.swift in Sources */,
 				04EFDE8226DF4DC3005FBB6F /* Vector4.swift in Sources */,
+				04E28C3626ECE780003A3C3B /* GPUPrimitive.swift in Sources */,
 				0413288226E08394000A4F4E /* MathUtil.swift in Sources */,
 				042BB12A26EA35C100604751 /* Background.swift in Sources */,
 				0452ECD826DFA5360015BFB1 /* Model.swift in Sources */,
@@ -1248,6 +1287,7 @@
 				042BB12F26EA379700604751 /* CameraClearFlags.swift in Sources */,
 				042BB13126EA38EB00604751 /* Camera.swift in Sources */,
 				0497A1E526DF150500F61DE9 /* voxApp.swift in Sources */,
+				04E28C3F26ECEE24003A3C3B /* VertexBufferBinding.swift in Sources */,
 				047FEBF226E601750078CFAF /* Entity.swift in Sources */,
 				0452ECD326DFA5360015BFB1 /* Node.swift in Sources */,
 				0419B6DE26E701FE00005FEA /* Script.swift in Sources */,

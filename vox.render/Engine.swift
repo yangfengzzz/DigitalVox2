@@ -10,10 +10,9 @@ import SwiftUI
 
 typealias EngineInitCallback = (Engine) -> Void
 
-final class Engine: UIView {
+final class Engine: NSObject {
     var _componentsManager: ComponentsManager = ComponentsManager();
-    
-    let controllerView = ControllerView(frame: .zero, device: MTLCreateSystemDefaultDevice())
+    var _hardwareRenderer: MetalGPURenderer;
 
     static var device: MTLDevice!
     static var commandQueue: MTLCommandQueue!
@@ -26,7 +25,7 @@ final class Engine: UIView {
     let lighting = Lighting()
 
     var renderEncoder: MTLRenderCommandEncoder!
-    
+
     lazy var camera: OldCamera = {
         let camera = ArcballCamera()
         camera.distance = 3
@@ -38,7 +37,9 @@ final class Engine: UIView {
     // Array of Models allows for rendering multiple models
     var models: [Model] = []
 
-    init(callback: EngineInitCallback) {
+    init(_ controllerView: ControllerView, _ hardwareRenderer: MetalGPURenderer, callback: EngineInitCallback) {
+        _hardwareRenderer = hardwareRenderer;
+
         guard let device = MTLCreateSystemDefaultDevice(),
               let commandQueue = device.makeCommandQueue() else {
             fatalError("GPU not available")
@@ -52,17 +53,11 @@ final class Engine: UIView {
         controllerView.depthStencilPixelFormat = .depth32Float
         depthStencilState = Engine.buildDepthStencilState()!
 
-        super.init(frame: .zero)
-        self.addSubview(controllerView)
+        super.init()
         controllerView.translatesAutoresizingMaskIntoConstraints = false
-        controllerView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        controllerView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-        controllerView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        controllerView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
         controllerView.framebufferOnly = false
         controllerView.isMultipleTouchEnabled = true
-        controllerView.clearColor = MTLClearColor(red: 0.7, green: 0.9,
-                blue: 1, alpha: 1)
+        controllerView.clearColor = MTLClearColor(red: 0.7, green: 0.9, blue: 1, alpha: 1)
         controllerView.delegate = self
         controllerView.registerGesture();
         mtkView(controllerView, drawableSizeWillChange: controllerView.bounds.size)
@@ -95,7 +90,7 @@ extension Engine: MTKViewDelegate {
     func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
         camera.aspect = Float(view.bounds.width) / Float(view.bounds.height)
     }
-    
+
     static func makePipelineState() -> MTLRenderPipelineState {
         let library = Engine.library
         let vertexFunction = library?.makeFunction(name: "vertex_simple")
@@ -117,7 +112,7 @@ extension Engine: MTKViewDelegate {
         }
         return pipelineState
     }
-    
+
     func draw(in view: MTKView) {
         guard
                 let descriptor = view.currentRenderPassDescriptor,
@@ -127,7 +122,7 @@ extension Engine: MTKViewDelegate {
         }
 
         self.renderEncoder = renderEncoder
-        
+
         renderEncoder.setDepthStencilState(depthStencilState)
 
         uniforms.projectionMatrix = camera.projectionMatrix

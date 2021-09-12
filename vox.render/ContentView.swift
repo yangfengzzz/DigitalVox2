@@ -8,15 +8,21 @@
 import SwiftUI
 
 struct ContentView: View {
-    let engine = Engine() { engine in
-        // models
-        let house = Model(name: "cube.obj")
-        house.position = [0, 0, 0]
-        engine.models.append(house)
+    let controllerView: ControllerView
+    let engine: Engine
+
+    init() {
+        controllerView = ControllerView(frame: .zero, device: MTLCreateSystemDefaultDevice())
+        engine = Engine(controllerView, MetalGPURenderer()) { engine in
+            // models
+            let house = Model(name: "cube.obj")
+            house.position = [0, 0, 0]
+            engine.models.append(house)
+        }
     }
 
     var body: some View {
-        EngineView(view: engine)
+        EngineView(view: controllerView)
     }
 }
 

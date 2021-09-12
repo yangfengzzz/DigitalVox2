@@ -14,12 +14,31 @@ class Mesh: RefObject {
     var bounds: BoundingBox = BoundingBox()
 
     var _vertexElementMap: [String: VertexElement] = [:]
+    var _indexType: MTLIndexType!
+    var _indexByteCount: Int = 0
+    var _platformPrimitive: IPlatformPrimitive!
 
     internal var _instanceCount: Int = 0
+    internal var _vertexBufferBindings: [VertexBufferBinding] = [];
+    internal var _indexBufferBinding: IndexBufferBinding!
     internal var _vertexElements: [VertexElement] = []
 
     private var _subMeshes: [SubMesh] = []
     private var _updateFlagManager: UpdateFlagManager = UpdateFlagManager()
+
+    /// First sub-mesh. Rendered using the first material.
+    var subMesh: SubMesh? {
+        get {
+            _subMeshes.first
+        }
+    }
+
+    /// A collection of sub-mesh, each sub-mesh can be rendered with an independent material.
+    var subMeshes: [SubMesh] {
+        get {
+            _subMeshes
+        }
+    }
 
     /// Create mesh.
     /// - Parameters:
@@ -67,5 +86,9 @@ class Mesh: RefObject {
         _vertexElementMap[semantic] = element
         _vertexElements.append(element)
         _updateFlagManager.distribute()
+    }
+
+    func _draw(_ shaderProgram: AnyClass, _ subMesh: SubMesh) {
+        _platformPrimitive.draw(shaderProgram, subMesh)
     }
 }

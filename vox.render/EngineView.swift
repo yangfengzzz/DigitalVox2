@@ -9,12 +9,12 @@ import MetalKit
 import SwiftUI
 
 struct EngineView: UIViewRepresentable {
-    let view: Engine
+    let view: ControllerView
 
-    func makeUIView(context: UIViewRepresentableContext<EngineView>) -> Engine {
+    func makeUIView(context: UIViewRepresentableContext<EngineView>) -> ControllerView {
         view
     }
 
-    func updateUIView(_ nsView: Engine, context: UIViewRepresentableContext<EngineView>) {
+    func updateUIView(_ nsView: ControllerView, context: UIViewRepresentableContext<EngineView>) {
     }
 }
