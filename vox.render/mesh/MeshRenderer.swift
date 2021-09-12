@@ -36,28 +36,19 @@ class MeshRenderer: Renderer {
 
     override func _render(_ camera: Camera) {
         engine._hardwareRenderer.preDraw()
-        
+
         var uniforms = Uniforms()
         uniforms.projectionMatrix = camera.projectionMatrix.elements
         uniforms.viewMatrix = camera.viewMatrix.elements
-        let position: float3 = [0, 0, 0]
-        let rotation: float3 = [0, 0, 0]
-        let scale: float3 = [1, 1, 1]
-        var modelMatrix: float4x4 {
-            let translateMatrix = float4x4(translation: position)
-            let rotateMatrix = float4x4(rotation: rotation)
-            let scaleMatrix = float4x4(scaling: scale)
-            return translateMatrix * rotateMatrix * scaleMatrix
-        }
-        uniforms.modelMatrix = modelMatrix
+        uniforms.modelMatrix = entity.transform.worldMatrix.elements
         uniforms.normalMatrix = uniforms.modelMatrix.upperLeft
         engine._hardwareRenderer.renderEncoder.setVertexBytes(&uniforms,
                 length: MemoryLayout<Uniforms>.stride,
                 index: Int(BufferIndexUniforms.rawValue))
-        
+
         let box = PrimitiveMesh.createCuboid(engine, 1)
         engine._hardwareRenderer.drawPrimitive(box, box.subMesh!)
-        
+
         engine._hardwareRenderer.postDraw()
     }
 
