@@ -8,7 +8,7 @@
 import SwiftUI
 
 class CubeScript: Script {
-    let speed: Float = 30
+    let speed: Float = 60
 
     override func onUpdate(_ deltaTime: Float) {
         let rotation = entity.transform.rotation
@@ -24,7 +24,7 @@ struct ContentView: View {
     let engine: Engine
 
     init() {
-        canvas = Canvas(frame: .zero, device: MTLCreateSystemDefaultDevice())
+        canvas = Canvas()
         engine = Engine(canvas, MetalGPURenderer())
 
         let scene = engine.sceneManager.activeScene
@@ -37,7 +37,9 @@ struct ContentView: View {
         canvas.inputController?.player = cameraEntity
 
         let cubeEntity = rootEntity.createChild()
-        let _: MeshRenderer = cubeEntity.addComponent()
+        let renderer: MeshRenderer = cubeEntity.addComponent()
+        let box = PrimitiveMesh.createCuboid(engine)
+        renderer.mesh = box
         let _: CubeScript = cubeEntity.addComponent()
     }
 

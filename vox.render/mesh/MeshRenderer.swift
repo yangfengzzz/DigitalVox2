@@ -46,8 +46,7 @@ class MeshRenderer: Renderer {
                 length: MemoryLayout<Uniforms>.stride,
                 index: Int(BufferIndexUniforms.rawValue))
 
-        let box = PrimitiveMesh.createCuboid(engine, 1)
-        engine._hardwareRenderer.drawPrimitive(box, box.subMesh!)
+        engine._hardwareRenderer.drawPrimitive(mesh!, mesh!.subMesh!)
 
         engine._hardwareRenderer.postDraw()
     }

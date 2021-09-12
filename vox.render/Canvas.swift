@@ -12,6 +12,14 @@ class Canvas: MTKView {
     var motionController = MotionController()
     var isTouched = false
     static var previousScale: CGFloat = 1
+    
+    init() {
+        super.init(frame: .zero, device: nil)
+    }
+    
+    required init(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 
 extension Canvas {
