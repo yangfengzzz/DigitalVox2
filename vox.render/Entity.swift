@@ -25,7 +25,7 @@ class Entity: EngineObject {
     internal var _isActive: Bool = true
 
     private var _parent: Entity? = nil
-    private var _activeChangedComponents: [Component] = []
+    private var _activeChangedComponents: [Component]?
 
     /// Create a entity.
     /// - Parameters:
@@ -259,7 +259,7 @@ extension Entity {
     /// Create child entity.
     /// - Parameter name: The child entity's name.
     /// - Returns: The child entity.
-    func createChild(_ name: String?) -> Entity {
+    func createChild(_ name: String? = nil) -> Entity {
         let child = Entity(engine, name)
         child.layer = layer
         child.parent = self
@@ -365,20 +365,20 @@ extension Entity {
     }
 
     internal func _processActive() {
-        if (_activeChangedComponents.isEmpty) {
+        if (_activeChangedComponents != nil) {
             fatalError("Note: can't set the 'main inActive entity' active in hierarchy, if the operation is in main inActive entity or it's children script's onDisable Event.")
         }
         _activeChangedComponents = _engine._componentsManager.getActiveChangedTempList()
-        _setActiveInHierarchy(&_activeChangedComponents)
+        _setActiveInHierarchy(&_activeChangedComponents!)
         _setActiveComponents(true)
     }
 
     internal func _processInActive() {
-        if (_activeChangedComponents.isEmpty) {
+        if (_activeChangedComponents != nil) {
             fatalError("Note: can't set the 'main active entity' inActive in hierarchy, if the operation is in main active entity or it's children script's onEnable Event.")
         }
         _activeChangedComponents = _engine._componentsManager.getActiveChangedTempList()
-        _setInActiveInHierarchy(&_activeChangedComponents)
+        _setInActiveInHierarchy(&_activeChangedComponents!)
         _setActiveComponents(false)
     }
 }
@@ -399,10 +399,10 @@ extension Entity {
 
     private func _setActiveComponents(_ isActive: Bool) {
         var activeChangedComponents = _activeChangedComponents
-        for i in 0..<activeChangedComponents.count {
-            activeChangedComponents[i]._setActive(isActive)
+        for i in 0..<activeChangedComponents!.count {
+            activeChangedComponents![i]._setActive(isActive)
         }
-        _engine._componentsManager.putActiveChangedTempList(&activeChangedComponents)
+        _engine._componentsManager.putActiveChangedTempList(&activeChangedComponents!)
         _activeChangedComponents = []
     }
 

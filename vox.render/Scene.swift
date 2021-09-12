@@ -56,7 +56,7 @@ extension Scene {
     /// Create root entity.
     /// - Parameter name: Entity name
     /// - Returns: Entity
-    func createRootEntity(_ name: String?) -> Entity {
+    func createRootEntity(_ name: String? = nil) -> Entity {
         let entity = Entity(_engine, name)
         addRootEntity(entity)
         return entity

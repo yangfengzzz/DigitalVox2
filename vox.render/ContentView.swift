@@ -14,6 +14,17 @@ struct ContentView: View {
     init() {
         canvas = Canvas(frame: .zero, device: MTLCreateSystemDefaultDevice())
         engine = Engine(canvas, MetalGPURenderer())
+
+        let scene = engine.sceneManager.activeScene
+        let rootEntity = scene!.createRootEntity()
+
+        // init camera
+        let cameraEntity = rootEntity.createChild("camera")
+        let _: Camera = cameraEntity.addComponent()
+        cameraEntity.transform.setPosition(x: 10, y: 10, z: 10)
+        
+        let cubeEntity = rootEntity.createChild()
+        let _: MeshRenderer = cubeEntity.addComponent()
     }
 
     var body: some View {
