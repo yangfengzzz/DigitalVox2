@@ -11,6 +11,9 @@ import Foundation
  * Metal renderer.
  */
 class MetalGPURenderer {
+    func reinit(_ canvas: Canvas) {
+        
+    }
 }
 
 extension MetalGPURenderer: IHardwareRenderer {

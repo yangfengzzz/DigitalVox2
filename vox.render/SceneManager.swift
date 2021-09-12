@@ -9,18 +9,18 @@ import Foundation
 
 /// Scene manager.
 class SceneManager {
-    var _activeScene: Scene!
+    var _activeScene: Scene?
 
     /// The activated scene.
-    var activeScene: Scene {
+    var activeScene: Scene? {
         get {
             _activeScene
         }
         set {
             let oldScene = _activeScene
             if (oldScene !== newValue) {
-                oldScene!._processActive(false)
-                newValue._processActive(true)
+                oldScene?._processActive(false)
+                newValue!._processActive(true)
                 _activeScene = newValue
             }
         }

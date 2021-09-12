@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Logging
 
 class Scene: EngineObject {
     /// Scene name. 
@@ -46,7 +45,7 @@ class Scene: EngineObject {
     /// - Parameters:
     ///   - engine: Engine
     ///   - name: Name
-    init(engine: Engine, name: String?) {
+    init(_ engine: Engine, _ name: String?) {
         self.name = name != nil ? name! : ""
         super.init(engine)
     }
@@ -162,8 +161,6 @@ extension Scene {
         return nil
     }
 }
-
-let logger = Logger(label: "com.vox.Render.main")
 
 //MARK:- Internal Members
 extension Scene {
