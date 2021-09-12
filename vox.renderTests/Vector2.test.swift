@@ -18,22 +18,32 @@ class Vector2Tests: XCTestCase {
     }
 
     func testAdd() {
-        let a = Vector2(2, 3);
-        let b = Vector2(-3, 5);
-        let out = Vector2();
+        let a = Vector2(2, 3)
+        let b = Vector2(-3, 5)
+        let out = Vector2()
 
-        Vector2.add(left: a, right: b, out: out);
-        XCTAssertEqual(out.x, -1);
-        XCTAssertEqual(out.y, 8);
+        Vector2.add(left: a, right: b, out: out)
+        XCTAssertEqual(out.x, -1)
+        XCTAssertEqual(out.y, 8)
     }
-    
-    func testSubtract() {
-        let a =  Vector2(2, 3);
-        let b =  Vector2(-3, 5);
-        let out =  Vector2();
 
-        Vector2.subtract(left: a, right: b, out: out);
-        XCTAssertEqual(out.x, 5);
-        XCTAssertEqual(out.y, -2);
+    func testSubtract() {
+        let a = Vector2(2, 3)
+        let b = Vector2(-3, 5)
+        let out = Vector2()
+
+        Vector2.subtract(left: a, right: b, out: out)
+        XCTAssertEqual(out.x, 5)
+        XCTAssertEqual(out.y, -2)
+    }
+
+    func testMultiply() {
+        let a = Vector2(2, 3)
+        let b = Vector2(-3, 5)
+        let out = Vector2()
+
+        Vector2.multiply(left: a, right: b, out: out)
+        XCTAssertEqual(out.x, -6)
+        XCTAssertEqual(out.y, 15)
     }
 }
