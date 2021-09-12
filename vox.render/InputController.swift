@@ -8,7 +8,7 @@
 import MetalKit
 
 class InputController {
-    var player: Node?
+    var player: Entity?
     var currentSpeed: Float = 0
 
     var rotationSpeed: Float = 4.0
@@ -30,13 +30,17 @@ class InputController {
 
 extension InputController {
     func zoomUsing(delta: CGFloat, sensitivity: Float) {
-        player?.position.z += Float(delta) * sensitivity
+        let position = player!.transform.position
+        position.z += Float(delta) * sensitivity
+        player!.transform.position = position
     }
 
     func rotateUsing(translation: float2) {
         let sensitivity: Float = 0.01
-        player?.rotation.x += Float(translation.y) * sensitivity
-        player?.rotation.y -= Float(translation.x) * sensitivity
+        let rotation = player!.transform.rotation
+        rotation.x += Float(translation.y) * sensitivity
+        rotation.y -= Float(translation.x) * sensitivity
+        player!.transform.rotation = rotation
     }
 }
 
@@ -64,9 +68,14 @@ extension InputController {
         } else if currentSpeed > maxSpeed {
             currentSpeed = maxSpeed
         }
-        player.rotation.y += currentPitch * deltaTime * rotationSpeed
-        player.position.x += currentSpeed * sin(player.rotation.y)
-        player.position.z += currentSpeed * cos(player.rotation.y)
+        let rotation = player.transform.rotation
+        rotation.y += currentPitch * deltaTime * rotationSpeed
+        player.transform.rotation = rotation
+        
+        let position = player.transform.position
+        position.x += currentSpeed * sin(player.transform.rotation.y)
+        position.z += currentSpeed * cos(player.transform.rotation.y)
+        player.transform.position = position
     }
 }
 

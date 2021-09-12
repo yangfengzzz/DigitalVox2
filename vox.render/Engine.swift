@@ -25,14 +25,6 @@ final class Engine: NSObject {
     private var _vSyncCounter: Int = 1
     private var _targetFrameInterval: Float = 1000 / 60
 
-//    lazy var camera: OldCamera = {
-//        let camera = ArcballCamera()
-//        camera.distance = 3
-//        camera.target = [0, 0, 0]
-//        camera.rotation.x = Float(-10).degreesToRadians
-//        return camera
-//    }()
-
     /// The canvas to use for rendering.
     var canvas: Canvas {
         get {
