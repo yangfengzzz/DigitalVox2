@@ -25,13 +25,13 @@ final class Engine: NSObject {
     private var _vSyncCounter: Int = 1
     private var _targetFrameInterval: Float = 1000 / 60
 
-    lazy var camera: OldCamera = {
-        let camera = ArcballCamera()
-        camera.distance = 3
-        camera.target = [0, 0, 0]
-        camera.rotation.x = Float(-10).degreesToRadians
-        return camera
-    }()
+//    lazy var camera: OldCamera = {
+//        let camera = ArcballCamera()
+//        camera.distance = 3
+//        camera.target = [0, 0, 0]
+//        camera.rotation.x = Float(-10).degreesToRadians
+//        return camera
+//    }()
 
     /// The canvas to use for rendering.
     var canvas: Canvas {
@@ -87,7 +87,7 @@ final class Engine: NSObject {
         super.init()
 
         _canvas.inputController = InputController()
-        _canvas.inputController?.player = camera
+        _canvas.delegate = self
         _sceneManager.activeScene = Scene(self, "DefaultScene")
         mtkView(_canvas, drawableSizeWillChange: _canvas.bounds.size)
     }
@@ -144,11 +144,13 @@ final class Engine: NSObject {
 
 extension Engine: MTKViewDelegate {
     func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
-        camera.aspect = Float(view.bounds.width) / Float(view.bounds.height)
+        _sceneManager._activeScene?._activeCameras.first?.aspectRatio = Float(view.bounds.width) / Float(view.bounds.height)
     }
 
     func draw(in view: MTKView) {
-        _hardwareRenderer.draw(in: view, camera: camera)
+        _hardwareRenderer.setView(in: view)
+        
+        update()
     }
 }
 

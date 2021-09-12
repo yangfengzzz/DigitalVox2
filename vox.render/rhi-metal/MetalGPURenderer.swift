@@ -15,12 +15,14 @@ class MetalGPURenderer {
     var library: MTLLibrary!
     var colorPixelFormat: MTLPixelFormat!
 
-    var uniforms = Uniforms()
     var fragmentUniforms = FragmentUniforms()
     var depthStencilState: MTLDepthStencilState!
     let lighting = Lighting()
 
     var renderEncoder: MTLRenderCommandEncoder!
+    var commandBuffer: MTLCommandBuffer!
+    
+    var view: MTKView!
 
     func reinit(_ canvas: Canvas) {
         guard let device = MTLCreateSystemDefaultDevice(),
@@ -71,6 +73,10 @@ class MetalGPURenderer {
         }
         return pipelineState
     }
+    
+    func setView(in view: MTKView) {
+        self.view = view
+    }
 }
 
 extension MetalGPURenderer: IHardwareRenderer {
@@ -78,42 +84,26 @@ extension MetalGPURenderer: IHardwareRenderer {
         GPUPrimitive(self, primitive)
     }
 
-    func drawPrimitive(_ primitive: Mesh, _ subPrimitive: SubMesh, _ shaderProgram: AnyClass) {
-        primitive._draw(renderEncoder, shaderProgram, subPrimitive)
+    func drawPrimitive(_ primitive: Mesh, _ subPrimitive: SubMesh) {
+        primitive._draw(renderEncoder, subPrimitive)
     }
 
-    func draw(in view: MTKView, camera: OldCamera) {
-        guard
-                let descriptor = view.currentRenderPassDescriptor,
+    func preDraw() {
+        guard let descriptor = view.currentRenderPassDescriptor,
                 let commandBuffer = commandQueue.makeCommandBuffer(),
                 let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {
             return
         }
 
         self.renderEncoder = renderEncoder
-
+        self.commandBuffer = commandBuffer
+        
         renderEncoder.setDepthStencilState(depthStencilState)
 
-        uniforms.projectionMatrix = camera.projectionMatrix
-        uniforms.viewMatrix = camera.viewMatrix
-        let position: float3 = [0, 0, 0]
-        let rotation: float3 = [0, 0, 0]
-        let scale: float3 = [1, 1, 1]
-        var modelMatrix: float4x4 {
-            let translateMatrix = float4x4(translation: position)
-            let rotateMatrix = float4x4(rotation: rotation)
-            let scaleMatrix = float4x4(scaling: scale)
-            return translateMatrix * rotateMatrix * scaleMatrix
-        }
-        uniforms.modelMatrix = modelMatrix
-        uniforms.normalMatrix = uniforms.modelMatrix.upperLeft
-        renderEncoder.setVertexBytes(&uniforms,
-                length: MemoryLayout<Uniforms>.stride,
-                index: Int(BufferIndexUniforms.rawValue))
-
         renderEncoder.setRenderPipelineState(makePipelineState())
-        // _ = PrimitiveMesh.createCuboid(self, 1, 1, 1, false)
-
+    }
+    
+    func postDraw() {
         renderEncoder.endEncoding()
         guard let drawable = view.currentDrawable else {
             return

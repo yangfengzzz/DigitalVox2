@@ -21,8 +21,9 @@ struct ContentView: View {
         // init camera
         let cameraEntity = rootEntity.createChild("camera")
         let _: Camera = cameraEntity.addComponent()
-        cameraEntity.transform.setPosition(x: 10, y: 10, z: 10)
-        
+        cameraEntity.transform.setPosition(x: 0, y: 0, z: 3)
+//        cameraEntity.transform.lookAt(worldPosition: Vector3(0, 0, 3), worldUp: nil)
+
         let cubeEntity = rootEntity.createChild()
         let _: MeshRenderer = cubeEntity.addComponent()
     }

@@ -81,8 +81,8 @@ class Mesh: RefObject {
         _updateFlagManager.register()
     }
 
-    internal func _draw(_ renderPassEncoder: MTLRenderCommandEncoder, _ shaderProgram: AnyClass, _ subMesh: SubMesh) {
-        _platformPrimitive.draw(renderPassEncoder, shaderProgram, subMesh)
+    internal func _draw(_ renderPassEncoder: MTLRenderCommandEncoder, _ subMesh: SubMesh) {
+        _platformPrimitive.draw(renderPassEncoder, subMesh)
     }
 
     func _setVertexElements(_ elements: [VertexElement]) {
@@ -93,7 +93,7 @@ class Mesh: RefObject {
     }
 
     func _setVertexBufferBinding(_ index: Int, _ binding: VertexBufferBinding) {
-        _vertexBufferBindings[index] = binding
+        _vertexBufferBindings.insert(binding, at: index)
     }
 
     func _setIndexBufferBinding(_ binding: IndexBufferBinding?) {

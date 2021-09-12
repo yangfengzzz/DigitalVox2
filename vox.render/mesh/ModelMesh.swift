@@ -287,7 +287,7 @@ extension ModelMesh {
 
     /// Upload Mesh Data to the graphics API.
     /// - Parameter noLongerAccessible: Whether to access data later. If true, you'll never access data anymore (free memory cache)
-    func uploadData(noLongerAccessible: Bool) {
+    func uploadData(_ noLongerAccessible: Bool) {
         if (!_accessible) {
             fatalError("Not allowed to access data while accessible is false.")
         }
@@ -303,7 +303,7 @@ extension ModelMesh {
         // Vertex value change.
         let vertexBufferBindings = _vertexBufferBindings
         let elementCount = _elementCount
-        let vertexBuffer = vertexBufferBindings[0]._buffer
+        let vertexBuffer = vertexBufferBindings.first?._buffer
         let vertexFloatCount = elementCount * _vertexCount
         if (vertexBuffer == nil || _verticesFloat32?.count != vertexFloatCount) {
             var vertices = [Float](repeating: 0, count: vertexFloatCount)

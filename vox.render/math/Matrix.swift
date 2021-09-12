@@ -163,10 +163,10 @@ extension Matrix {
         out.elements.columns.0[2] = (xz - wy) * sx
         out.elements.columns.0[3] = 0
 
-        out.elements.columns.0[0] = (xy - wz) * sy
-        out.elements.columns.0[1] = (1 - (xx + zz)) * sy
-        out.elements.columns.0[2] = (yz + wx) * sy
-        out.elements.columns.0[3] = 0
+        out.elements.columns.1[0] = (xy - wz) * sy
+        out.elements.columns.1[1] = (1 - (xx + zz)) * sy
+        out.elements.columns.1[2] = (yz + wx) * sy
+        out.elements.columns.1[3] = 0
 
         out.elements.columns.2[0] = (xz + wy) * sz
         out.elements.columns.2[1] = (yz - wx) * sz
@@ -329,20 +329,20 @@ extension Matrix {
         out.elements.columns.0[2] = 0
         out.elements.columns.0[3] = 0
 
-        out.elements.columns.1[4] = 0
-        out.elements.columns.1[5] = f
-        out.elements.columns.1[6] = 0
-        out.elements.columns.1[7] = 0
+        out.elements.columns.1[0] = 0
+        out.elements.columns.1[1] = f
+        out.elements.columns.1[2] = 0
+        out.elements.columns.1[3] = 0
 
-        out.elements.columns.2[8] = 0
-        out.elements.columns.2[9] = 0
-        out.elements.columns.2[10] = (far + near) * nf
-        out.elements.columns.2[11] = -1
+        out.elements.columns.2[0] = 0
+        out.elements.columns.2[1] = 0
+        out.elements.columns.2[2] = (far + near) * nf
+        out.elements.columns.2[3] = -1
 
-        out.elements.columns.3[12] = 0
-        out.elements.columns.3[13] = 0
-        out.elements.columns.3[14] = 2 * far * near * nf
-        out.elements.columns.3[15] = 0
+        out.elements.columns.3[0] = 0
+        out.elements.columns.3[1] = 0
+        out.elements.columns.3[2] = 2 * far * near * nf
+        out.elements.columns.3[3] = 0
     }
 
     /// The specified matrix rotates around an arbitrary axis.

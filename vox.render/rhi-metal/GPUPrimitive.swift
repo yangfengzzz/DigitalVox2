@@ -21,7 +21,10 @@ class GPUPrimitive {
 
 extension GPUPrimitive: IPlatformPrimitive {
     /// Draw the primitive.
-    func draw(_ renderPassEncoder: MTLRenderCommandEncoder, _ shaderProgram: AnyClass, _ subMesh: SubMesh) {
+    func draw(_ renderPassEncoder: MTLRenderCommandEncoder, _ subMesh: SubMesh) {
+        renderPassEncoder.setVertexBuffer(_primitive._vertexBufferBindings[0]._buffer, offset: 0, index: Int(BufferIndexVertices.rawValue))
+        renderPassEncoder.drawIndexedPrimitives(type: .triangle, indexCount: subMesh.count, indexType: .uint32,
+                indexBuffer: _primitive._indexBufferBinding.buffer!, indexBufferOffset: 0)
     }
 
     func destroy() {

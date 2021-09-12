@@ -735,7 +735,7 @@ extension PrimitiveMesh {
         mesh.setUVs(uv: uvs)
         mesh.setIndices(indices: .u32(indices))
 
-        mesh.uploadData(noLongerAccessible: noLongerAccessible)
+        mesh.uploadData(noLongerAccessible)
         _ = mesh.addSubMesh(0, indices.count)
     }
 

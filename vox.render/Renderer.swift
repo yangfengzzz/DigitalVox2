@@ -63,12 +63,10 @@ class Renderer: Component {
             _transformChangeFlag = nil;
         }
     }
-}
-
-extension Renderer {
+    
     func update(_ deltaTime: Float) {
     }
 
-    internal func _render(_ camera: Camera) {
+    func _render(_ camera: Camera) {
     }
 }
