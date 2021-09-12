@@ -13,12 +13,7 @@ struct ContentView: View {
 
     init() {
         canvas = Canvas(frame: .zero, device: MTLCreateSystemDefaultDevice())
-        engine = Engine(canvas, MetalGPURenderer()) { engine in
-            // models
-            let house = Model(name: "cube.obj")
-            house.position = [0, 0, 0]
-            engine.models.append(house)
-        }
+        engine = Engine(canvas, MetalGPURenderer())
     }
 
     var body: some View {

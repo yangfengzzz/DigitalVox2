@@ -35,7 +35,7 @@ extension RefObject: IRefObject {
         _refCount
     }
 
-    func _addRefCount(count: Int) {
+    func _addRefCount(_ count: Int) {
         _refCount += count
     }
 }

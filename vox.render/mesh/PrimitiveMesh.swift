@@ -736,7 +736,7 @@ extension PrimitiveMesh {
         mesh.setIndices(indices: .u32(indices))
 
         mesh.uploadData(noLongerAccessible: noLongerAccessible)
-        _ = mesh.addSubMesh(start: 0, count: indices.count)
+        _ = mesh.addSubMesh(0, indices.count)
     }
 
     private static func _generateIndices(_ engine: Engine, _ vertexCount: Int, _ indexCount: Int) -> [UInt32] {

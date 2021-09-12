@@ -5,21 +5,23 @@
 //  Created by 杨丰 on 2021/9/11.
 //
 
-import Foundation
+import Metal
 
 /// WebGPU platform primitive.
 class GPUPrimitive {
-    var _primitive: Mesh;
+    var _primitive: Mesh
+    private var _renderer: MetalGPURenderer
 
     init(_ rhi: MetalGPURenderer, _ primitive: Mesh) {
-        self._primitive = primitive;
+        _primitive = primitive
+        _renderer = rhi
     }
 
 }
 
 extension GPUPrimitive: IPlatformPrimitive {
     /// Draw the primitive.
-    func draw(_ shaderProgram: AnyClass, _ subMesh: SubMesh) {
+    func draw(_ renderPassEncoder: MTLRenderCommandEncoder, _ shaderProgram: AnyClass, _ subMesh: SubMesh) {
     }
 
     func destroy() {

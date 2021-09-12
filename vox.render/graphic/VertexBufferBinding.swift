@@ -9,11 +9,11 @@ import Metal
 
 /// Vertex buffer binding.
 class VertexBufferBinding {
-    internal var _buffer: MTLBuffer
+    internal var _buffer: MTLBuffer?
     internal var _stride: Int
 
     /// Vertex buffer.
-    var buffer: MTLBuffer {
+    var buffer: MTLBuffer? {
         get {
             _buffer
         }
@@ -30,7 +30,7 @@ class VertexBufferBinding {
     /// - Parameters:
     ///   - buffer: Vertex buffer
     ///   - stride: Vertex buffer stride
-    init(buffer: MTLBuffer, stride: Int) {
+    init(_ buffer: MTLBuffer, _ stride: Int) {
         _buffer = buffer
         _stride = stride
     }

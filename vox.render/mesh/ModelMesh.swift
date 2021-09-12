@@ -295,36 +295,47 @@ extension ModelMesh {
         // Vertex element change.
         if (_vertexSlotChanged) {
             let vertexElements = _updateVertexElements()
-            _setVertexElements(elements: vertexElements)
+            _setVertexElements(vertexElements)
             _vertexChangeFlag = ValueChanged.All.rawValue
             _vertexSlotChanged = false
         }
 
         // Vertex value change.
+        let vertexBufferBindings = _vertexBufferBindings
         let elementCount = _elementCount
+        let vertexBuffer = vertexBufferBindings[0]._buffer
         let vertexFloatCount = elementCount * _vertexCount
-        var vertices = [Float](repeating: 0, count: vertexFloatCount)
-        _verticesFloat32 = vertices
+        if (vertexBuffer == nil || _verticesFloat32?.count != vertexFloatCount) {
+            var vertices = [Float](repeating: 0, count: vertexFloatCount)
+            _verticesFloat32 = vertices
 
-        _vertexChangeFlag = ValueChanged.All.rawValue
-        _updateVertices(vertices: &vertices)
-        
-        let vertexBuffer = Engine.device.makeBuffer(bytes: &vertices, length: vertexFloatCount * MemoryLayout<Float>.stride)
-        engine.renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: Int(BufferIndexVertices.rawValue))
-        switch _indices {
-        case .u16(let value):
-            let indexBuffer = Engine.device.makeBuffer(bytes: value, length: value.count * MemoryLayout<UInt16>.stride,
-                                                       options: .storageModeShared)
-            engine.renderEncoder.drawIndexedPrimitives(type: .triangle, indexCount: value.count, indexType: .uint16,
-                    indexBuffer: indexBuffer!, indexBufferOffset: 0)
-        case .u32(let value):
-            let indexBuffer = Engine.device.makeBuffer(bytes: value, length: value.count * MemoryLayout<UInt32>.stride,
-                                                       options: .storageModeShared)
-            engine.renderEncoder.drawIndexedPrimitives(type: .triangle, indexCount: value.count, indexType: .uint32,
-                    indexBuffer: indexBuffer!, indexBufferOffset: 0)
+            _vertexChangeFlag = ValueChanged.All.rawValue
+            _updateVertices(vertices: &vertices)
 
-        default:
-            fatalError()
+            let newVertexBuffer = engine._hardwareRenderer.device.makeBuffer(bytes: &vertices, length: vertexFloatCount * MemoryLayout<Float>.stride)
+            _setVertexBufferBinding(0, VertexBufferBinding(newVertexBuffer!, elementCount * 4))
+        }
+
+        let indexBuffer = _indexBufferBinding?._buffer
+        if (_indices != nil) {
+            switch _indices {
+            case .u16(let value):
+                if (indexBuffer == nil || value.count * MemoryLayout<UInt16>.stride != indexBuffer!.length) {
+                    let newIndexBuffer = engine._hardwareRenderer.device.makeBuffer(bytes: value,
+                            length: value.count * MemoryLayout<UInt16>.stride,
+                            options: .storageModeShared)
+                    _setIndexBufferBinding(IndexBufferBinding(newIndexBuffer!, _indicesFormat!))
+                }
+            case .u32(let value):
+                if (indexBuffer == nil || value.count * MemoryLayout<UInt32>.stride != indexBuffer!.length) {
+                    let newIndexBuffer = engine._hardwareRenderer.device.makeBuffer(bytes: value,
+                            length: value.count * MemoryLayout<UInt32>.stride,
+                            options: .storageModeShared)
+                    _setIndexBufferBinding(IndexBufferBinding(newIndexBuffer!, _indicesFormat!))
+                }
+            default:
+                fatalError()
+            }
         }
     }
 

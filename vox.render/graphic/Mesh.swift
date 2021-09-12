@@ -19,7 +19,7 @@ class Mesh: RefObject {
     var _platformPrimitive: IPlatformPrimitive!
 
     internal var _instanceCount: Int = 0
-    internal var _vertexBufferBindings: [VertexBufferBinding] = [];
+    internal var _vertexBufferBindings: [VertexBufferBinding] = []
     internal var _indexBufferBinding: IndexBufferBinding!
     internal var _vertexElements: [VertexElement] = []
 
@@ -47,12 +47,13 @@ class Mesh: RefObject {
     init(_ engine: Engine, _ name: String? = nil) {
         super.init(engine)
         self.name = name
+        _platformPrimitive = _engine._hardwareRenderer.createPlatformPrimitive(self)
     }
 
     /// Add sub-mesh, each sub-mesh can correspond to an independent material.
     /// - Parameter subMesh: Start drawing offset, if the index buffer is set, it means the offset in the index buffer, if not set, it means the offset in the vertex buffer
     /// - Returns: Sub-mesh
-    func addSubMesh(subMesh: SubMesh) -> SubMesh {
+    func addSubMesh(_ subMesh: SubMesh) -> SubMesh {
         _subMeshes.append(subMesh)
         return subMesh
     }
@@ -63,17 +64,40 @@ class Mesh: RefObject {
     ///   - count: Drawing count, if the index buffer is set, it means the count in the index buffer, if not set, it means the count in the vertex buffer
     ///   - topology: Drawing topology, default is MeshTopology.Triangles
     /// - Returns: Sub-mesh
-    func addSubMesh(start: Int, count: Int, topology: MTLPrimitiveType? = nil) -> SubMesh {
+    func addSubMesh(_ start: Int, _ count: Int, _ topology: MTLPrimitiveType? = nil) -> SubMesh {
         let startOrSubMesh = SubMesh(start: start, count: count, topology: topology)
         _subMeshes.append(startOrSubMesh)
         return startOrSubMesh
     }
 
-    func _setVertexElements(elements: [VertexElement]) {
+    /// Clear all sub-mesh.
+    func clearSubMesh() {
+        _subMeshes = []
+    }
+
+    /// Register update flag, update flag will be true if the vertex element changes.
+    /// - Returns: Update flag
+    func registerUpdateFlag() -> UpdateFlag {
+        _updateFlagManager.register()
+    }
+
+    internal func _draw(_ renderPassEncoder: MTLRenderCommandEncoder, _ shaderProgram: AnyClass, _ subMesh: SubMesh) {
+        _platformPrimitive.draw(renderPassEncoder, shaderProgram, subMesh)
+    }
+
+    func _setVertexElements(_ elements: [VertexElement]) {
         _clearVertexElements()
         for i in 0..<elements.count {
-            _addVertexElement(element: elements[i])
+            _addVertexElement(elements[i])
         }
+    }
+
+    func _setVertexBufferBinding(_ index: Int, _ binding: VertexBufferBinding) {
+        _vertexBufferBindings[index] = binding
+    }
+
+    func _setIndexBufferBinding(_ binding: IndexBufferBinding?) {
+        _indexBufferBinding = binding
     }
 
     private func _clearVertexElements() {
@@ -81,14 +105,10 @@ class Mesh: RefObject {
         _vertexElementMap = [:]
     }
 
-    private func _addVertexElement(element: VertexElement) {
+    private func _addVertexElement(_ element: VertexElement) {
         let semantic = element.semantic
         _vertexElementMap[semantic] = element
         _vertexElements.append(element)
         _updateFlagManager.distribute()
-    }
-
-    func _draw(_ shaderProgram: AnyClass, _ subMesh: SubMesh) {
-        _platformPrimitive.draw(shaderProgram, subMesh)
     }
 }

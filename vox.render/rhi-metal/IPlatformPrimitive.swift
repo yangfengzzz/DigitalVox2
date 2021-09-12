@@ -5,7 +5,7 @@
 //  Created by 杨丰 on 2021/9/11.
 //
 
-import Foundation
+import Metal
 
 /// Platform primitive interface.
 protocol IPlatformPrimitive {
@@ -13,7 +13,7 @@ protocol IPlatformPrimitive {
     /// - Parameters:
     ///   - shaderProgram: Shader
     ///   - subMesh: Sub primitive
-    func draw(_ shaderProgram: AnyClass, _ subMesh: SubMesh)
+    func draw(_ renderPassEncoder: MTLRenderCommandEncoder, _ shaderProgram: AnyClass, _ subMesh: SubMesh)
 
     func destroy()
 }

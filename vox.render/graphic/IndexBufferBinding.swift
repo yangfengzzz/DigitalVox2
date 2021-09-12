@@ -9,11 +9,11 @@ import Metal
 
 /// Index buffer binding.
 class IndexBufferBinding {
-    internal var _buffer: MTLBuffer
+    internal var _buffer: MTLBuffer?
     internal var _format: MTLIndexType
 
     /// Index buffer.
-    var buffer: MTLBuffer {
+    var buffer: MTLBuffer? {
         get {
             _buffer
         }
@@ -30,7 +30,7 @@ class IndexBufferBinding {
     /// - Parameters:
     ///   - buffer: Index buffer
     ///   - format: Index buffer format
-    init(buffer: MTLBuffer, format: MTLIndexType) {
+    init(_ buffer: MTLBuffer, _ format: MTLIndexType) {
         _buffer = buffer
         _format = format
     }

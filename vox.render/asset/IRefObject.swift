@@ -10,5 +10,5 @@ import Foundation
 protocol IRefObject {
     func _getRefCount() -> Int
 
-    func _addRefCount(count: Int)
+    func _addRefCount(_ count: Int)
 }
