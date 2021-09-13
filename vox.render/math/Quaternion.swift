@@ -118,7 +118,10 @@ extension Quaternion {
     ///   - right: The second vector to compare
     /// - Returns: True if the specified vectors are equals, false otherwise
     static func equals(left: Quaternion, right: Quaternion) -> Bool {
-        left.elements == right.elements
+        MathUtil.equals(left.x, right.x) &&
+                MathUtil.equals(left.y, right.y) &&
+                MathUtil.equals(left.z, right.z) &&
+                MathUtil.equals(left.w, right.w)
     }
 
     /// Calculate a quaternion rotates around an arbitrary axis.

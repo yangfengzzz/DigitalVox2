@@ -340,10 +340,10 @@ class MatrixTests: XCTestCase {
 
         _ = a.multiply(right: b)
         XCTAssertEqual(Matrix.equals(left: a,
-                right: Matrix(m11: 386, m12: 456.6, m13: 506.8, m14: 560,
-                        m21: 274, m22: 325, m23: 361.6, m24: 400,
-                        m31: 162.88, m32: 195.16000000000003, m33: 219.304, m34: 243.52,
-                        m41: 50, m42: 61.8, m43: 71.2, m44: 80)), true)
+                right: Matrix(m11: 386, m12: 456.599976, m13: 506.799988, m14: 560,
+                        m21: 274, m22: 325, m23: 361.600006, m24: 400,
+                        m31: 162.880005, m32: 195.160004, m33: 219.304001, m34: 243.520004,
+                        m41: 50, m42: 61.7999992, m43: 71.1999969, m44: 80)), true)
     }
 
     func testDeterminant() {
@@ -351,7 +351,7 @@ class MatrixTests: XCTestCase {
                 m21: 5, m22: 6, m23: 7, m24: 8,
                 m31: 9, m32: 10.9, m33: 11, m34: 12,
                 m41: 13, m42: 14, m43: 15, m44: 16)
-        XCTAssertEqual(a.determinant(), 0)
+        XCTAssertEqual(a.determinant(), 0, accuracy: 1.0e-4)
     }
 
     func testDecompose() {
@@ -369,7 +369,7 @@ class MatrixTests: XCTestCase {
         XCTAssertEqual(
                 Quaternion.equals(
                         left: quat,
-                        right: Quaternion(0.01879039477474769, -0.09554131404261303, 0.01844761344901482, 0.783179537258594)
+                        right: Quaternion(1.879038e-02, -9.554128e-02, 1.844761e-02, 7.831795e-01)
                 ), true)
         XCTAssertEqual(Vector3.equals(left: scale, right: Vector3(3.7416573867739413, 10.488088481701515, 17.91116946723357)), true)
     }
@@ -408,10 +408,10 @@ class MatrixTests: XCTestCase {
 
         _ = a.invert()
         XCTAssertEqual(Matrix.equals(left: a,
-                right: Matrix(m11: -1.1111111111111172, m12: 1.3703703703703825, m13: -0.7407407407407528, m14: 0.1481481481481532,
-                        m21: 0, m22: -0.5555555555555607, m23: 1.1111111111111214, m24: -0.5555555555555607,
-                        m31: 3.3333333333333863, m32: -5.000000000000064, m33: 0, m34: 1.6666666666666867,
-                        m41: -2.222222222222265, m42: 4.0601851851852375, m43: -0.3703703703703687, m44: -1.134259259259275)), true)
+                right: Matrix(m11: -1.11118591, m12: 1.37044585, m13: -0.740784704, m14: 0.148155302,
+                        m21: -0, m22: -0.555588245, m23: 1.11117172, m24: -0.555585861,
+                        m31: 3.33351779, m32: -5.00028944, m33: -0, m34: 1.66676235,
+                        m41: -2.22234392, m42: 4.06041765, m43: -0.370390594, m44: -1.13432443)), true)
     }
 
     func testRotateAxisAngle() {
