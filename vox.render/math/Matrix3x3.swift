@@ -80,7 +80,15 @@ extension Matrix3x3 {
     ///   - right: The second matrix to compare
     /// - Returns: True if the specified matrices are equals, false otherwise
     static func equals(left: Matrix3x3, right: Matrix3x3) -> Bool {
-        left.elements == right.elements
+        MathUtil.equals(left.elements.columns.0[0], right.elements.columns.0[0]) &&
+        MathUtil.equals(left.elements.columns.0[1], right.elements.columns.0[1]) &&
+        MathUtil.equals(left.elements.columns.0[2], right.elements.columns.0[2]) &&
+        MathUtil.equals(left.elements.columns.1[0], right.elements.columns.1[0]) &&
+        MathUtil.equals(left.elements.columns.1[1], right.elements.columns.1[1]) &&
+        MathUtil.equals(left.elements.columns.1[2], right.elements.columns.1[2]) &&
+        MathUtil.equals(left.elements.columns.2[0], right.elements.columns.2[0]) &&
+        MathUtil.equals(left.elements.columns.2[1], right.elements.columns.2[1]) &&
+        MathUtil.equals(left.elements.columns.2[2], right.elements.columns.2[2])
     }
 
     /// Performs a linear interpolation between two matrices.
@@ -299,6 +307,22 @@ extension Matrix3x3 {
         elements.columns.2[2] = a.elements.columns.2[2]
 
         return self
+    }
+    
+    /// Clone the value of this matrix to an array.
+    /// - Parameters:
+    ///   - out: The array
+    ///   - outOffset: The start offset of the array
+    func toArray(out: inout [Float], outOffset: Int = 0) {
+        out[outOffset] = elements.columns.0[0]
+        out[outOffset + 1] = elements.columns.0[1]
+        out[outOffset + 2] = elements.columns.0[2]
+        out[outOffset + 3] = elements.columns.1[0]
+        out[outOffset + 4] = elements.columns.1[1]
+        out[outOffset + 5] = elements.columns.1[2]
+        out[outOffset + 6] = elements.columns.2[0]
+        out[outOffset + 7] = elements.columns.2[1]
+        out[outOffset + 8] = elements.columns.2[2]
     }
 
     /// Determines the sum of this matrix and the specified matrix.

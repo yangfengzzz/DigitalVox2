@@ -41,6 +41,7 @@
 		042BB13426EA3EA400604751 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 042BB13326EA3EA400604751 /* Logging */; };
 		042BB13626EA404200604751 /* SceneManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042BB13526EA404200604751 /* SceneManager.swift */; };
 		042C841226E4A7AE00BD3733 /* sampling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042C841126E4A7AE00BD3733 /* sampling.swift */; };
+		043CB42326EF590B004A0B21 /* Matrix3x3.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB42226EF590B004A0B21 /* Matrix3x3.test.swift */; };
 		0452EC9926DFA0CD0015BFB1 /* voxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9826DFA0CD0015BFB1 /* voxApp.swift */; };
 		0452EC9B26DFA0CD0015BFB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */; };
 		0452EC9D26DFA0CD0015BFB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0452EC9C26DFA0CD0015BFB1 /* Assets.xcassets */; };
@@ -234,6 +235,7 @@
 		042C841126E4A7AE00BD3733 /* sampling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sampling.swift; sourceTree = "<group>"; };
 		042C841426E5043200BD3733 /* rect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rect.swift; sourceTree = "<group>"; };
 		042C841626E504B200BD3733 /* bulged_rect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bulged_rect.swift; sourceTree = "<group>"; };
+		043CB42226EF590B004A0B21 /* Matrix3x3.test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matrix3x3.test.swift; sourceTree = "<group>"; };
 		0452EC9626DFA0CD0015BFB1 /* vox.tracing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vox.tracing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0452EC9826DFA0CD0015BFB1 /* voxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = voxApp.swift; sourceTree = "<group>"; };
 		0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -844,6 +846,7 @@
 				04AE164D26EED80600201439 /* Vector3.test.swift */,
 				04AE164F26EEE2C100201439 /* Vector4.test.swift */,
 				04AE165126EEE85D00201439 /* Matrix.test.swift */,
+				043CB42226EF590B004A0B21 /* Matrix3x3.test.swift */,
 			);
 			path = vox.renderTests;
 			sourceTree = "<group>";
@@ -1317,6 +1320,7 @@
 				04EFDE7826DF281E005FBB6F /* Vector2.test.swift in Sources */,
 				04AE165026EEE2C100201439 /* Vector4.test.swift in Sources */,
 				04AE165226EEE85D00201439 /* Matrix.test.swift in Sources */,
+				043CB42326EF590B004A0B21 /* Matrix3x3.test.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
