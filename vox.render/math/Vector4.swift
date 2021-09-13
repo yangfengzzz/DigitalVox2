@@ -147,7 +147,10 @@ extension Vector4 {
     ///   - right: The second vector to compare
     /// - Returns: True if the specified vectors are equals, false otherwise
     static func equals(left: Vector4, right: Vector4) -> Bool {
-        left.elements == right.elements
+        MathUtil.equals(left.x, right.x) &&
+        MathUtil.equals(left.y, right.y) &&
+        MathUtil.equals(left.z, right.z) &&
+        MathUtil.equals(left.w, right.w)
     }
 
     /// Performs a linear interpolation between two vectors.
@@ -276,7 +279,7 @@ extension Vector4 {
         x = array[offset]
         y = array[offset + 1]
         z = array[offset + 2]
-        w = array[offset + 2]
+        w = array[offset + 3]
         return self
     }
 
@@ -345,5 +348,16 @@ extension Vector4 {
     func scale(s: Float) -> Vector4 {
         elements *= s
         return self
+    }
+    
+    /// Clone the value of this vector to an array.
+    /// - Parameters:
+    ///   - out: The array
+    ///   - outOffset: The start offset of the array
+    func toArray(out: inout [Float], outOffset: Int = 0) {
+        out[outOffset] = x
+        out[outOffset + 1] = y
+        out[outOffset + 2] = z
+        out[outOffset + 3] = w
     }
 }
