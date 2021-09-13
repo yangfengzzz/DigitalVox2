@@ -141,7 +141,7 @@ extension Vector3 {
     ///   - right: The second vector to compare
     /// - Returns: True if the specified vectors are equals, false otherwise
     static func equals(left: Vector3, right: Vector3) -> Bool {
-        left.elements == right.elements
+        MathUtil.equals(left.x, right.x) && MathUtil.equals(left.y, right.y) && MathUtil.equals(left.z, right.z)
     }
 
     /// Performs a linear interpolation between two vectors.
@@ -219,9 +219,9 @@ extension Vector3 {
         let x = v.x
         let y = v.y
         let z = v.z
-        out.x = x * m.elements.columns.0[0] + y * m.elements.columns.1[0] + z * m.elements.columns.1[0]
-        out.y = x * m.elements.columns.0[1] + y * m.elements.columns.1[1] + z * m.elements.columns.1[1]
-        out.z = x * m.elements.columns.0[2] + y * m.elements.columns.1[2] + z * m.elements.columns.1[2]
+        out.x = x * m.elements.columns.0[0] + y * m.elements.columns.1[0] + z * m.elements.columns.2[0]
+        out.y = x * m.elements.columns.0[1] + y * m.elements.columns.1[1] + z * m.elements.columns.2[1]
+        out.z = x * m.elements.columns.0[2] + y * m.elements.columns.1[2] + z * m.elements.columns.2[2]
     }
 
     /// Performs a transformation using the given 4x4 matrix.
@@ -397,6 +397,16 @@ extension Vector3 {
     func scale(s: Float) -> Vector3 {
         elements *= s
         return self
+    }
+    
+    /// Clone the value of this vector to an array.
+    /// - Parameters:
+    ///   - out: The array
+    ///   - outOffset: The start offset of the array
+    func toArray(out: inout [Float], outOffset: Int = 0) {
+        out[outOffset] = x
+        out[outOffset + 1] = y
+        out[outOffset + 2] = z
     }
 }
 

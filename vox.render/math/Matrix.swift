@@ -31,10 +31,10 @@ class Matrix {
     ///   - m42: default 0, column 4, row 2
     ///   - m43: default 0, column 4, row 3
     ///   - m44: default 1, column 4, row 4
-    init(_ m11: Float = 1, _ m12: Float = 0, _ m13: Float = 0, _ m14: Float = 0,
-         _ m21: Float = 0, _ m22: Float = 1, _ m23: Float = 0, _ m24: Float = 0,
-         _ m31: Float = 0, _ m32: Float = 0, _ m33: Float = 1, _ m34: Float = 0,
-         _ m41: Float = 0, _ m42: Float = 0, _ m43: Float = 0, _ m44: Float = 1) {
+    init(m11: Float = 1, m12: Float = 0, m13: Float = 0, m14: Float = 0,
+         m21: Float = 0, m22: Float = 1, m23: Float = 0, m24: Float = 0,
+         m31: Float = 0, m32: Float = 0, m33: Float = 1, m34: Float = 0,
+         m41: Float = 0, m42: Float = 0, m43: Float = 0, m44: Float = 1) {
         elements = simd_float4x4([SIMD4<Float>(m11, m12, m13, m14),
                                   SIMD4<Float>(m21, m22, m23, m24),
                                   SIMD4<Float>(m31, m32, m33, m34),
@@ -48,10 +48,10 @@ class Matrix {
 
     /// Identity matrix.
     static internal let _identity: Matrix = Matrix(
-            1.0, 0.0, 0.0, 0.0,
-            0.0, 1.0, 0.0, 0.0,
-            0.0, 0.0, 1.0, 0.0,
-            0.0, 0.0, 0.0, 1.0
+        m11: 1.0, m12: 0.0, m13: 0.0, m14: 0.0,
+        m21: 0.0, m22: 1.0, m23: 0.0, m24: 0.0,
+        m31: 0.0, m32: 0.0, m33: 1.0, m34: 0.0,
+        m41: 0.0, m42: 0.0, m43: 0.0, m44: 1.0
     )
 }
 
