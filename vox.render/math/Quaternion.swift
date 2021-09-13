@@ -130,7 +130,7 @@ extension Quaternion {
     ///   - rad: The rotation angle in radians
     ///   - out: The quaternion after rotate
     static func rotationAxisAngle(axis: Vector3, rad: Float, out: Quaternion) {
-        out.elements = simd_quatf(angle: rad, axis: axis.elements)
+        out.elements = simd_quatf(angle: rad, axis: axis.normalize().elements)
     }
 
     /// Calculate a quaternion from the specified yaw, pitch and roll angles.
@@ -520,7 +520,7 @@ extension Quaternion {
      * @returns The dot product of two quaternions
      */
     func dot(quat: Quaternion) -> Float {
-        Quaternion.dot(left: self, right: self)
+        Quaternion.dot(left: self, right: quat)
     }
 
     /**
