@@ -127,7 +127,7 @@ extension Vector2 {
     ///   - right: The second vector to compare
     /// - Returns: True if the specified vectors are equals, false otherwise
     static func equals(left: Vector2, right: Vector2) -> Bool {
-        left.elements == right.elements
+        MathUtil.equals(left.x, right.x) && MathUtil.equals(left.y, right.y)
     }
 
     /// Performs a linear interpolation between two vectors.
@@ -276,5 +276,14 @@ extension Vector2 {
     func scale(s: Float) -> Vector2 {
         elements *= s
         return self
+    }
+
+    /// Clone the value of this vector to an array.
+    /// - Parameters:
+    ///   - out: The array
+    ///   - outOffset: The start offset of the array
+    func toArray(out: inout [Float], outOffset: Int = 0) {
+        out[outOffset] = x
+        out[outOffset + 1] = y
     }
 }

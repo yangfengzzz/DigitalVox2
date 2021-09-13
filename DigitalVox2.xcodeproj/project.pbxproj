@@ -139,6 +139,7 @@
 		0497A1E926DF150800F61DE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0497A1E826DF150800F61DE9 /* Assets.xcassets */; };
 		0497A1EC26DF150800F61DE9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0497A1EB26DF150800F61DE9 /* Preview Assets.xcassets */; };
 		0497A20226DF150800F61DE9 /* DigitalVox2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A20126DF150800F61DE9 /* DigitalVox2UITests.swift */; };
+		04AE164E26EED80600201439 /* Vector3.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE164D26EED80600201439 /* Vector3.test.swift */; };
 		04DB2A4226DF1E0500C15850 /* IClone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DB2A4126DF1E0500C15850 /* IClone.swift */; };
 		04E28C3426ECE6F3003A3C3B /* IPlatformPrimitive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E28C3326ECE6F3003A3C3B /* IPlatformPrimitive.swift */; };
 		04E28C3626ECE780003A3C3B /* GPUPrimitive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E28C3526ECE780003A3C3B /* GPUPrimitive.swift */; };
@@ -385,6 +386,7 @@
 		0497A20126DF150800F61DE9 /* DigitalVox2UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitalVox2UITests.swift; sourceTree = "<group>"; };
 		0497A20326DF150800F61DE9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0497A20F26DF151700F61DE9 /* DigitalVox2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DigitalVox2.entitlements; sourceTree = "<group>"; };
+		04AE164D26EED80600201439 /* Vector3.test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector3.test.swift; sourceTree = "<group>"; };
 		04DB2A4126DF1E0500C15850 /* IClone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IClone.swift; sourceTree = "<group>"; };
 		04E28C3326ECE6F3003A3C3B /* IPlatformPrimitive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPlatformPrimitive.swift; sourceTree = "<group>"; };
 		04E28C3526ECE780003A3C3B /* GPUPrimitive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPUPrimitive.swift; sourceTree = "<group>"; };
@@ -835,6 +837,7 @@
 			children = (
 				0497A1F826DF150800F61DE9 /* Info.plist */,
 				04EFDE7726DF281D005FBB6F /* Vector2.test.swift */,
+				04AE164D26EED80600201439 /* Vector3.test.swift */,
 			);
 			path = vox.renderTests;
 			sourceTree = "<group>";
@@ -1304,6 +1307,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04AE164E26EED80600201439 /* Vector3.test.swift in Sources */,
 				04EFDE7826DF281E005FBB6F /* Vector2.test.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

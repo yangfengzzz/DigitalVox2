@@ -12,9 +12,7 @@ class CubeScript: Script {
 
     override func onUpdate(_ deltaTime: Float) {
         let rotation = entity.transform.rotation
-        rotation.x += deltaTime * speed
-        rotation.y += deltaTime * speed
-        rotation.z += deltaTime * speed
+        rotation.elements += deltaTime * speed
         entity.transform.rotation = rotation
     }
 }

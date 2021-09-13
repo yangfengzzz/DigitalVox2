@@ -172,7 +172,7 @@ class Camera: Component {
             let aspectRatio = aspectRatio
             if (!_isOrthographic) {
                 Matrix.perspective(
-                        fovy: MathUtil.degreeToRadian(d: _fieldOfView),
+                    fovy: MathUtil.degreeToRadian(_fieldOfView),
                         aspect: aspectRatio,
                         near: _nearClipPlane,
                         far: _farClipPlane,

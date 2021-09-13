@@ -137,9 +137,9 @@ extension Transform {
                 newValue.cloneTo(target: _worldRotation)
             }
             Quaternion.rotationEuler(
-                    x: MathUtil.degreeToRadian(d: newValue.x),
-                    y: MathUtil.degreeToRadian(d: newValue.y),
-                    z: MathUtil.degreeToRadian(d: newValue.z),
+                x: MathUtil.degreeToRadian(newValue.x),
+                y: MathUtil.degreeToRadian(newValue.y),
+                z: MathUtil.degreeToRadian(newValue.z),
                     out: _worldRotationQuaternion
             )
             worldRotationQuaternion = _worldRotationQuaternion
@@ -153,9 +153,9 @@ extension Transform {
         get {
             if (_isContainDirtyFlag(TransformFlag.LocalQuat.rawValue)) {
                 Quaternion.rotationEuler(
-                        x: MathUtil.degreeToRadian(d: _rotation.x),
-                        y: MathUtil.degreeToRadian(d: _rotation.y),
-                        z: MathUtil.degreeToRadian(d: _rotation.z),
+                    x: MathUtil.degreeToRadian(_rotation.x),
+                    y: MathUtil.degreeToRadian(_rotation.y),
+                    z: MathUtil.degreeToRadian(_rotation.z),
                         out: _rotationQuaternion
                 )
                 _setDirtyFlagFalse(TransformFlag.LocalQuat.rawValue)
