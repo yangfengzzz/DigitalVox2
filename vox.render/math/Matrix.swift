@@ -468,6 +468,29 @@ extension Matrix {
         return self
     }
 
+    /// Clone the value of this matrix to an array.
+    /// - Parameters:
+    ///   - out: The array
+    ///   - outOffset: The start offset of the array
+    func toArray(out: inout [Float], outOffset: Int = 0) {
+        out[outOffset] = elements.columns.0[0]
+        out[outOffset + 1] = elements.columns.0[1]
+        out[outOffset + 2] = elements.columns.0[2]
+        out[outOffset + 3] = elements.columns.0[3]
+        out[outOffset + 4] = elements.columns.1[0]
+        out[outOffset + 5] = elements.columns.1[1]
+        out[outOffset + 6] = elements.columns.1[2]
+        out[outOffset + 7] = elements.columns.1[3]
+        out[outOffset + 8] = elements.columns.2[0]
+        out[outOffset + 9] = elements.columns.2[1]
+        out[outOffset + 10] = elements.columns.2[2]
+        out[outOffset + 11] = elements.columns.2[3]
+        out[outOffset + 12] = elements.columns.3[0]
+        out[outOffset + 13] = elements.columns.3[1]
+        out[outOffset + 14] = elements.columns.3[2]
+        out[outOffset + 15] = elements.columns.3[3]
+    }
+
     /// Determines the product of this matrix and the specified matrix.
     /// - Parameter right: The specified matrix
     /// - Returns: This matrix that store the product of the two matrices
