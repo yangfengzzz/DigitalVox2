@@ -48,10 +48,10 @@ class Matrix {
 
     /// Identity matrix.
     static internal let _identity: Matrix = Matrix(
-        m11: 1.0, m12: 0.0, m13: 0.0, m14: 0.0,
-        m21: 0.0, m22: 1.0, m23: 0.0, m24: 0.0,
-        m31: 0.0, m32: 0.0, m33: 1.0, m34: 0.0,
-        m41: 0.0, m42: 0.0, m43: 0.0, m44: 1.0
+            m11: 1.0, m12: 0.0, m13: 0.0, m14: 0.0,
+            m21: 0.0, m22: 1.0, m23: 0.0, m24: 0.0,
+            m31: 0.0, m32: 0.0, m33: 1.0, m34: 0.0,
+            m41: 0.0, m42: 0.0, m43: 0.0, m44: 1.0
     )
 }
 
@@ -86,7 +86,22 @@ extension Matrix {
     ///   - right: The second matrix to compare
     /// - Returns: True if the specified matrices are equals, false otherwise
     static func equals(left: Matrix, right: Matrix) -> Bool {
-        left.elements == right.elements
+        MathUtil.equals(left.elements.columns.0[0], right.elements.columns.0[0]) &&
+                MathUtil.equals(left.elements.columns.0[1], right.elements.columns.0[1]) &&
+                MathUtil.equals(left.elements.columns.0[2], right.elements.columns.0[2]) &&
+                MathUtil.equals(left.elements.columns.0[3], right.elements.columns.0[3]) &&
+                MathUtil.equals(left.elements.columns.1[0], right.elements.columns.1[0]) &&
+                MathUtil.equals(left.elements.columns.1[1], right.elements.columns.1[1]) &&
+                MathUtil.equals(left.elements.columns.1[2], right.elements.columns.1[2]) &&
+                MathUtil.equals(left.elements.columns.1[3], right.elements.columns.1[3]) &&
+                MathUtil.equals(left.elements.columns.2[0], right.elements.columns.2[0]) &&
+                MathUtil.equals(left.elements.columns.2[1], right.elements.columns.2[1]) &&
+                MathUtil.equals(left.elements.columns.2[2], right.elements.columns.2[2]) &&
+                MathUtil.equals(left.elements.columns.2[3], right.elements.columns.2[3]) &&
+                MathUtil.equals(left.elements.columns.3[0], right.elements.columns.3[0]) &&
+                MathUtil.equals(left.elements.columns.3[1], right.elements.columns.3[1]) &&
+                MathUtil.equals(left.elements.columns.3[2], right.elements.columns.3[2]) &&
+                MathUtil.equals(left.elements.columns.3[3], right.elements.columns.3[3])
     }
 
     /// Performs a linear interpolation between two matrices.
