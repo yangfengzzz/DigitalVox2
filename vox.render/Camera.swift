@@ -152,10 +152,8 @@ class Camera: Component {
         }
     }
 
-    /**
-     * The projection matrix is ​​calculated by the relevant parameters of the camera by default.
-     * If it is manually set, the manual value will be maintained. Call resetProjectionMatrix() to restore it.
-     */
+    /// The projection matrix is ​​calculated by the relevant parameters of the camera by default.
+    /// If it is manually set, the manual value will be maintained. Call resetProjectionMatrix() to restore it.
     var projectionMatrix: Matrix {
         get {
             let canvas = _entity.engine.canvas

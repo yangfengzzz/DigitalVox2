@@ -47,6 +47,7 @@
 		043CB42B26F027E9004A0B21 /* Plane.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB42A26F027E9004A0B21 /* Plane.test.swift */; };
 		043CB42D26F02908004A0B21 /* BoundingSphere.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB42C26F02908004A0B21 /* BoundingSphere.test.swift */; };
 		043CB42F26F02A28004A0B21 /* BoundingFrustum.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB42E26F02A28004A0B21 /* BoundingFrustum.test.swift */; };
+		043CB43126F02C87004A0B21 /* CollisionUtil.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB43026F02C87004A0B21 /* CollisionUtil.test.swift */; };
 		0452EC9926DFA0CD0015BFB1 /* voxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9826DFA0CD0015BFB1 /* voxApp.swift */; };
 		0452EC9B26DFA0CD0015BFB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */; };
 		0452EC9D26DFA0CD0015BFB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0452EC9C26DFA0CD0015BFB1 /* Assets.xcassets */; };
@@ -246,6 +247,7 @@
 		043CB42A26F027E9004A0B21 /* Plane.test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plane.test.swift; sourceTree = "<group>"; };
 		043CB42C26F02908004A0B21 /* BoundingSphere.test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingSphere.test.swift; sourceTree = "<group>"; };
 		043CB42E26F02A28004A0B21 /* BoundingFrustum.test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingFrustum.test.swift; sourceTree = "<group>"; };
+		043CB43026F02C87004A0B21 /* CollisionUtil.test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollisionUtil.test.swift; sourceTree = "<group>"; };
 		0452EC9626DFA0CD0015BFB1 /* vox.tracing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vox.tracing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0452EC9826DFA0CD0015BFB1 /* voxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = voxApp.swift; sourceTree = "<group>"; };
 		0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -862,6 +864,7 @@
 				043CB42C26F02908004A0B21 /* BoundingSphere.test.swift */,
 				043CB42A26F027E9004A0B21 /* Plane.test.swift */,
 				043CB42E26F02A28004A0B21 /* BoundingFrustum.test.swift */,
+				043CB43026F02C87004A0B21 /* CollisionUtil.test.swift */,
 			);
 			path = vox.renderTests;
 			sourceTree = "<group>";
@@ -1338,6 +1341,7 @@
 				043CB42D26F02908004A0B21 /* BoundingSphere.test.swift in Sources */,
 				04AE165026EEE2C100201439 /* Vector4.test.swift in Sources */,
 				04AE165226EEE85D00201439 /* Matrix.test.swift in Sources */,
+				043CB43126F02C87004A0B21 /* CollisionUtil.test.swift in Sources */,
 				043CB42526EF8954004A0B21 /* Quaternion.test.swift in Sources */,
 				043CB42726F02520004A0B21 /* BoundingBox.test.swift in Sources */,
 				043CB42326EF590B004A0B21 /* Matrix3x3.test.swift in Sources */,

@@ -116,11 +116,9 @@ extension Scene {
         return _rootEntities[index]
     }
 
-    /**
-     * Find entity globally by name.
-     * @param name - Entity name
-     * @returns Entity
-     */
+    /// Find entity globally by name.
+    /// - Parameter name: Entity name
+    /// - Returns: Entity
     func findEntityByName(_ name: String) -> Entity? {
         let children = _rootEntities
         for i in 0..<children.count {

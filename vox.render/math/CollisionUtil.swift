@@ -257,12 +257,11 @@ extension CollisionUtil {
         return distance
     }
 
-    /**
-     * Get whether or not a specified bounding box intersects with this frustum (Contains or Intersects).
-     * @param frustum - The frustum
-     * @param box - The box
-     * @returns True if bounding box intersects with this frustum, false otherwise
-     */
+    /// Get whether or not a specified bounding box intersects with this frustum (Contains or Intersects).
+    /// - Parameters:
+    ///   - frustum: The frustum
+    ///   - box:  The box
+    /// - Returns: True if bounding box intersects with this frustum, false otherwise
     static func intersectsFrustumAndBox(frustum: BoundingFrustum, box: BoundingBox) -> Bool {
         let min = box.min
         let max = box.max
@@ -283,12 +282,11 @@ extension CollisionUtil {
         return true
     }
 
-    /**
-     * Get the containment type between a frustum and a box (AABB).
-     * @param frustum - The frustum
-     * @param box - The box
-     * @returns The containment type
-     */
+    /// Get the containment type between a frustum and a box (AABB).
+    /// - Parameters:
+    ///   - frustum: The frustum
+    ///   - box: The box
+    /// - Returns: The containment type
     static func frustumContainsBox(frustum: BoundingFrustum, box: BoundingBox) -> ContainmentType {
         let min = box.min
         let max = box.max
@@ -334,12 +332,11 @@ extension CollisionUtil {
         return result
     }
 
-    /**
-     * Get the containment type between a frustum and a sphere.
-     * @param frustum - The frustum
-     * @param sphere - The sphere
-     * @returns The containment type
-     */
+    /// Get the containment type between a frustum and a sphere.
+    /// - Parameters:
+    ///   - frustum: The frustum
+    ///   - sphere: The sphere
+    /// - Returns: The containment type
     static func frustumContainsSphere(frustum: BoundingFrustum, sphere: BoundingSphere) -> ContainmentType {
         var result = ContainmentType.Contains
 
