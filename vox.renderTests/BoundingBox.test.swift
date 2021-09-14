@@ -5,8 +5,6 @@
 //  Created by 杨丰 on 2021/9/14.
 //
 
-import Foundation
-
 import XCTest
 @testable import vox_render
 
