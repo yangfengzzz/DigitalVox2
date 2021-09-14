@@ -108,7 +108,7 @@ class ColorTests: XCTestCase {
             fixColor(colorLinear)
             fixColor(colorNewLinear)
 
-            XCTAssertEqual(Color.equals(left: colorLinear, right: colorNewLinear), true)
+            XCTAssertEqual(simd_distance(colorLinear.elements, colorNewLinear.elements) < 1.0e-3, true)
         }
     }
 }

@@ -10,7 +10,7 @@ import Foundation
 /// Common utility methods for math operations.
 class MathUtil {
     /// The value for which all absolute numbers smaller than are considered equal to zero. 
-    static let zeroTolerance: Float = 1e-6
+    static let zeroTolerance: Float = 1e-5
     /// The conversion factor that radian to degree.
     static let radToDegreeFactor: Float = 180 / Float.pi
     /// The conversion factor that degree to radian.
