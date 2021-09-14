@@ -242,11 +242,10 @@ extension Quaternion {
         out.w = c
     }
 
-    /**
-     * Calculate a quaternion rotate around Y axis.
-     * @param rad - The rotation angle in radians
-     * @param out - The calculated quaternion
-     */
+    /// Calculate a quaternion rotate around Y axis.
+    /// - Parameters:
+    ///   - rad: The rotation angle in radians
+    ///   - out: The calculated quaternion
     static func rotationY(rad: Float, out: Quaternion) {
         let rad = rad * 0.5
         let s = sin(rad)
@@ -258,11 +257,10 @@ extension Quaternion {
         out.w = c
     }
 
-    /**
-     * Calculate a quaternion rotate around Z axis.
-     * @param rad - The rotation angle in radians
-     * @param out - The calculated quaternion
-     */
+    /// Calculate a quaternion rotate around Z axis.
+    /// - Parameters:
+    ///   - rad: The rotation angle in radians
+    ///   - out: The calculated quaternion
     static func rotationZ(rad: Float, out: Quaternion) {
         let rad = rad * 0.5
         let s = sin(rad)
@@ -390,7 +388,7 @@ extension Quaternion {
     /// Identity this quaternion.
     /// - Returns: This quaternion after identity
     func identity() -> Quaternion {
-        elements = simd_quatf()
+        elements = simd_quatf(ix: 0, iy: 0, iz: 0, r: 1)
 
         return self
     }
@@ -401,10 +399,8 @@ extension Quaternion {
         elements.length
     }
 
-    /**
-     * Calculates the squared length of this quaternion.
-     * @returns The squared length of this quaternion
-     */
+    /// Calculates the squared length of this quaternion.
+    /// - Returns: The squared length of this quaternion
     func lengthSquared() -> Float {
         x * x + y * y + z * z + w * w
     }
@@ -453,82 +449,79 @@ extension Quaternion {
 
         return out
     }
+    
+    /// Clone the value of this quaternion to an array.
+    /// - Parameters:
+    ///   - out: The array
+    ///   - outOffset: The start offset of the array
+    func toArray(out: inout [Float], outOffset: Int = 0) {
+        out[outOffset] = x
+        out[outOffset + 1] = y
+        out[outOffset + 2] = z
+        out[outOffset + 3] = w
+    }
 
-    /**
-     * Calculate this quaternion rotate around X axis.
-     * @param rad - The rotation angle in radians
-     * @returns This quaternion
-     */
+    /// Calculate this quaternion rotate around X axis.
+    /// - Parameter rad: The rotation angle in radians
+    /// - Returns: This quaternion
     func rotateX(rad: Float) -> Quaternion {
         Quaternion.rotateX(quaternion: self, rad: rad, out: self)
         return self
     }
 
-    /**
-     * Calculate this quaternion rotate around Y axis.
-     * @param rad - The rotation angle in radians
-     * @returns This quaternion
-     */
+    /// Calculate this quaternion rotate around Y axis.
+    /// - Parameter rad: The rotation angle in radians
+    /// - Returns: This quaternion
     func rotateY(rad: Float) -> Quaternion {
         Quaternion.rotateY(quaternion: self, rad: rad, out: self)
         return self
     }
 
-    /**
-     * Calculate this quaternion rotate around Z axis.
-     * @param rad - The rotation angle in radians
-     * @returns This quaternion
-     */
+    /// Calculate this quaternion rotate around Z axis.
+    /// - Parameter rad: The rotation angle in radians
+    /// - Returns: This quaternion
     func rotateZ(rad: Float) -> Quaternion {
         Quaternion.rotateZ(quaternion: self, rad: rad, out: self)
         return self
     }
 
-    /**
-     * Calculate this quaternion rotates around an arbitrary axis.
-     * @param axis - The axis
-     * @param rad - The rotation angle in radians
-     * @returns This quaternion
-     */
+    /// Calculate this quaternion rotates around an arbitrary axis.
+    /// - Parameters:
+    ///   - axis: The axis
+    ///   - rad: The rotation angle in radians
+    /// - Returns: This quaternion
     func rotationAxisAngle(axis: Vector3, rad: Float) -> Quaternion {
         Quaternion.rotationAxisAngle(axis: axis, rad: rad, out: self)
         return self
     }
 
-    /**
-     * Determines the product of this quaternion and the specified quaternion.
-     * @param quat - The specified quaternion
-     * @returns The product of the two quaternions
-     */
+    /// Determines the product of this quaternion and the specified quaternion.
+    /// - Parameter quat: The specified quaternion
+    /// - Returns: The product of the two quaternions
     func multiply(quat: Quaternion) -> Quaternion {
         Quaternion.multiply(left: self, right: quat, out: self)
         return self
     }
-
-    /**
-     * Invert this quaternion.
-     * @returns This quaternion after invert
-     */
+    
+    /// Invert this quaternion.
+    /// - Returns: This quaternion after invert
     func invert() -> Quaternion {
         Quaternion.invert(a: self, out: self)
         return self
     }
 
-    /**
-     * Determines the dot product of this quaternion and the specified quaternion.
-     * @param quat - The specified quaternion
-     * @returns The dot product of two quaternions
-     */
+    /// Determines the dot product of this quaternion and the specified quaternion.
+    /// - Parameter quat: The specified quaternion
+    /// - Returns: The dot product of two quaternions
     func dot(quat: Quaternion) -> Float {
         Quaternion.dot(left: self, right: quat)
     }
 
-    /**
-     * Performs a linear blend between this quaternion and the specified quaternion.
-     * @param quat - The specified quaternion
-     * @param t - The blend amount where 0 returns this and 1 quat
-     * @returns - The result of linear blending between two quaternions
-     */
+    /// Performs a linear blend between this quaternion and the specified quaternion.
+    /// - Parameters:
+    ///   - quat: The specified quaternion
+    ///   - t: The blend amount where 0 returns this and 1 quat
+    /// - Returns: The result of linear blending between two quaternions
     func lerp(quat: Quaternion, t: Float) -> Quaternion {
         Quaternion.lerp(start: self, end: quat, t: t, out: self)
         return self
