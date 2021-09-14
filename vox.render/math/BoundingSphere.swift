@@ -18,7 +18,7 @@ class BoundingSphere {
     /// - Parameters:
     ///   - center: The center point of the sphere
     ///   - radius: The radius of the sphere
-    init(_ center: Vector3?, _ radius: Float = 0) {
+    init(_ center: Vector3? = nil, _ radius: Float = 0) {
         if center != nil {
             center!.cloneTo(target: self.center)
         }
