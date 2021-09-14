@@ -110,7 +110,7 @@ extension CollisionUtil {
     /// - Returns: The distance from ray to plane if intersecting, -1 otherwise
     static func intersectsRayAndPlane(ray: Ray, plane: Plane) -> Float {
         let normal = plane.normal
-        let zeroTolerance = Float.leastNonzeroMagnitude
+        let zeroTolerance = MathUtil.zeroTolerance
 
         let dir = Vector3.dot(left: normal, right: ray.direction)
         // Parallel
@@ -138,11 +138,11 @@ extension CollisionUtil {
     ///   - box: The box
     /// - Returns: The distance from ray to box if intersecting, -1 otherwise
     static func intersectsRayAndBox(ray: Ray, box: BoundingBox) -> Float {
-        let zeroTolerance = Float.leastNonzeroMagnitude
+        let zeroTolerance = MathUtil.zeroTolerance
         let origin = ray.origin
-        let direction = ray.origin
+        let direction = ray.direction
         let min = box.min
-        let max = box.min
+        let max = box.max
         let dirX = direction.x
         let dirY = direction.y
         let dirZ = direction.z
