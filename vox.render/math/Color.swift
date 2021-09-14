@@ -116,7 +116,10 @@ extension Color {
     ///   - right: The second color to compare
     /// - Returns: True if the specified colors are equals, false otherwise
     static func equals(left: Color, right: Color) -> Bool {
-        left.elements == right.elements
+        MathUtil.equals(left.r, right.r) &&
+        MathUtil.equals(left.g, right.g) &&
+        MathUtil.equals(left.b, right.b) &&
+        MathUtil.equals(left.a, right.a)
     }
 
     /// Determines the sum of two colors.
