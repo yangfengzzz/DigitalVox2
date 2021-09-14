@@ -58,14 +58,6 @@ extension BoundingFrustum: IClone {
 }
 
 extension BoundingFrustum {
-    /**
-     *
-
-     * @param index - The index
-     * @returns The plane get
-     */
-
-
     /// Get the plane by the given index.
     /// - Remark:
     /// 0: near
