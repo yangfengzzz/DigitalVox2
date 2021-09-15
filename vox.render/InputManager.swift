@@ -11,6 +11,8 @@ class InputManager {
     var beginEvent: Set<UITouch> = []
     var movedEvent: Set<UITouch> = []
     var endedEvent: Set<UITouch> = []
+    
+    var zoom:[CGFloat] = []
 }
 
 extension InputManager {
@@ -25,6 +27,10 @@ extension InputManager {
         default:
             break
         }
+    }
+    
+    func zoomUsing(delta: CGFloat) {
+        zoom.append(delta)
     }
 }
 

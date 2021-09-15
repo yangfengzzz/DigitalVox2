@@ -131,6 +131,17 @@ class OrbitControl: Script {
             }
             engine._inputManager.endedEvent = []
         }
+        
+        if !engine._inputManager.zoom.isEmpty {
+            engine._inputManager.zoom.forEach { _zoomDelta in
+                if (_zoomDelta > 0) {
+                    zoomIn(getZoomScale())
+                } else if (_zoomDelta < 0) {
+                    zoomOut(getZoomScale())
+                }
+            }
+            engine._inputManager.zoom = []
+        }
     }
 
     override func onUpdate(_ dtime: Float) {

@@ -81,6 +81,7 @@ final class Engine: NSObject {
 
         _canvas.inputManager = _inputManager
         _canvas.delegate = self
+        _canvas.registerGesture()
         _sceneManager.activeScene = Scene(self, "DefaultScene")
         mtkView(_canvas, drawableSizeWillChange: _canvas.bounds.size)
     }

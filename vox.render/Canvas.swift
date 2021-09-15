@@ -9,6 +9,7 @@ import MetalKit
 
 class Canvas: MTKView {
     var inputManager: InputManager?
+    static var previousScale: CGFloat = 1
 
     init() {
         super.init(frame: .zero, device: nil)
@@ -25,22 +26,17 @@ extension Canvas {
     }
 
     func registerGesture() {
-        let pan = UIPanGestureRecognizer(target: self,
-                action: #selector(handlePan(gesture:)))
-        addGestureRecognizer(pan);
-
         let pinch = UIPinchGestureRecognizer(target: self,
                 action: #selector(handlePinch(gesture:)))
         addGestureRecognizer(pinch);
     }
 
-    @objc func handlePan(gesture: UIPanGestureRecognizer) {
-        let _ = float2(Float(gesture.translation(in: gesture.view).x),
-                Float(gesture.translation(in: gesture.view).y))
-        gesture.setTranslation(.zero, in: gesture.view)
-    }
-
     @objc func handlePinch(gesture: UIPinchGestureRecognizer) {
+        inputManager?.zoomUsing(delta: gesture.scale - Canvas.previousScale)
+        Canvas.previousScale = gesture.scale
+        if gesture.state == .ended {
+            Canvas.previousScale = 1
+        }
     }
 
     override func touchesBegan(_ touches: Set<UITouch>,
