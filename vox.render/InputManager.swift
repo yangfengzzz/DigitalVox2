@@ -15,10 +15,6 @@ class InputManager {
 
 extension InputManager {
     func processEvent(touches: Set<UITouch>, state: InputState, event: UIEvent?) {
-        beginEvent = []
-        movedEvent = []
-        endedEvent = []
-
         switch state {
         case .began:
             beginEvent = beginEvent.union(touches)

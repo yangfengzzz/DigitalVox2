@@ -115,18 +115,21 @@ class OrbitControl: Script {
             engine._inputManager.beginEvent.forEach { touch in
                 onTouchStart(touch)
             }
+            engine._inputManager.beginEvent = []
         }
 
         if !engine._inputManager.movedEvent.isEmpty {
             engine._inputManager.movedEvent.forEach { touch in
                 onTouchMove(touch)
             }
+            engine._inputManager.movedEvent = []
         }
 
         if !engine._inputManager.endedEvent.isEmpty {
             engine._inputManager.endedEvent.forEach { touch in
                 onTouchEnd()
             }
+            engine._inputManager.endedEvent = []
         }
     }
 
@@ -263,7 +266,10 @@ class OrbitControl: Script {
         // perspective only
         _scale /= zoomScale
     }
+}
 
+//MARK:- Touch Event
+extension OrbitControl {
     /// Rotation parameter update when touch is dropped.
     func handleTouchStartRotate(_ event: UITouch) {
         let loc = event.location(in: nil)
@@ -438,4 +444,8 @@ class OrbitControl: Script {
         _state = STATE.NONE
     }
 
+}
+
+//MARK:- Mouse Event
+extension OrbitControl {
 }

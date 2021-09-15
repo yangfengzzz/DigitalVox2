@@ -40,7 +40,8 @@ extension Canvas {
         gesture.setTranslation(.zero, in: gesture.view)
     }
 
-    @objc func handlePinch(gesture: UIPinchGestureRecognizer) {}
+    @objc func handlePinch(gesture: UIPinchGestureRecognizer) {
+    }
 
     override func touchesBegan(_ touches: Set<UITouch>,
                                with event: UIEvent?) {
@@ -50,13 +51,13 @@ extension Canvas {
 
     override func touchesMoved(_ touches: Set<UITouch>,
                                with event: UIEvent?) {
-            inputManager?.processEvent(touches: touches, state: .moved, event: event)
+        inputManager?.processEvent(touches: touches, state: .moved, event: event)
         super.touchesMoved(touches, with: event)
     }
 
     override func touchesEnded(_ touches: Set<UITouch>,
                                with event: UIEvent?) {
-            inputManager?.processEvent(touches: touches, state: .ended, event: event)
+        inputManager?.processEvent(touches: touches, state: .ended, event: event)
         super.touchesEnded(touches, with: event)
     }
 
