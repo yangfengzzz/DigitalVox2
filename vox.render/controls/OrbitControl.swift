@@ -109,20 +109,20 @@ class OrbitControl: Script {
 
         super.init(entity)
     }
-    
+
     func bindEvent() {
         if !engine._inputManager.beginEvent.isEmpty {
             engine._inputManager.beginEvent.forEach { touch in
                 onTouchStart(touch)
             }
         }
-        
+
         if !engine._inputManager.movedEvent.isEmpty {
             engine._inputManager.movedEvent.forEach { touch in
                 onTouchMove(touch)
             }
         }
-        
+
         if !engine._inputManager.endedEvent.isEmpty {
             engine._inputManager.endedEvent.forEach { touch in
                 onTouchEnd()
@@ -134,7 +134,7 @@ class OrbitControl: Script {
         if (!enabled) {
             return
         }
-        
+
         bindEvent()
 
         let position: Vector3 = camera.transform.position

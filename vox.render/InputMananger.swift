@@ -7,18 +7,18 @@
 
 import MetalKit
 
-class InputController {
-    var beginEvent:Set<UITouch> = []
-    var movedEvent:Set<UITouch> = []
-    var endedEvent:Set<UITouch> = []
+class InputMananger {
+    var beginEvent: Set<UITouch> = []
+    var movedEvent: Set<UITouch> = []
+    var endedEvent: Set<UITouch> = []
 }
 
-extension InputController {
+extension InputMananger {
     func processEvent(touches: Set<UITouch>, state: InputState, event: UIEvent?) {
         beginEvent = []
         movedEvent = []
         endedEvent = []
-        
+
         switch state {
         case .began:
             beginEvent = beginEvent.union(touches)

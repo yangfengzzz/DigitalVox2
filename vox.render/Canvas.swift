@@ -8,13 +8,13 @@
 import MetalKit
 
 class Canvas: MTKView {
-    var inputController: InputController?
+    var inputMananger: InputMananger?
     var isTouched = false
-    
+
     init() {
         super.init(frame: .zero, device: nil)
     }
-    
+
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -46,14 +46,14 @@ extension Canvas {
     override func touchesBegan(_ touches: Set<UITouch>,
                                with event: UIEvent?) {
         isTouched = true
-        inputController?.processEvent(touches: touches, state: .began, event: event)
+        inputMananger?.processEvent(touches: touches, state: .began, event: event)
         super.touchesBegan(touches, with: event)
     }
 
     override func touchesMoved(_ touches: Set<UITouch>,
                                with event: UIEvent?) {
         if isTouched {
-            inputController?.processEvent(touches: touches, state: .moved, event: event)
+            inputMananger?.processEvent(touches: touches, state: .moved, event: event)
         }
         super.touchesMoved(touches, with: event)
     }
@@ -61,7 +61,7 @@ extension Canvas {
     override func touchesEnded(_ touches: Set<UITouch>,
                                with event: UIEvent?) {
         if isTouched {
-            inputController?.processEvent(touches: touches, state: .ended, event: event)
+            inputMananger?.processEvent(touches: touches, state: .ended, event: event)
         }
         isTouched = false
         super.touchesEnded(touches, with: event)
