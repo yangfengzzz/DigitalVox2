@@ -109,11 +109,33 @@ class OrbitControl: Script {
 
         super.init(entity)
     }
+    
+    func bindEvent() {
+        if !engine._inputManager.beginEvent.isEmpty {
+            engine._inputManager.beginEvent.forEach { touch in
+                onTouchStart(touch)
+            }
+        }
+        
+        if !engine._inputManager.movedEvent.isEmpty {
+            engine._inputManager.movedEvent.forEach { touch in
+                onTouchMove(touch)
+            }
+        }
+        
+        if !engine._inputManager.endedEvent.isEmpty {
+            engine._inputManager.endedEvent.forEach { touch in
+                onTouchEnd()
+            }
+        }
+    }
 
     override func onUpdate(_ dtime: Float) {
         if (!enabled) {
             return
         }
+        
+        bindEvent()
 
         let position: Vector3 = camera.transform.position
         position.cloneTo(target: _offset)
@@ -121,7 +143,7 @@ class OrbitControl: Script {
         _ = _spherical.setFromVec3(v3: _offset)
 
         if (autoRotate && _state == STATE.NONE) {
-            rotateLeft(radian: getAutoRotationAngle(dtime: dtime))
+            rotateLeft(getAutoRotationAngle(dtime))
         }
 
         _spherical.theta += _sphericalDelta.theta
@@ -167,7 +189,7 @@ class OrbitControl: Script {
     }
 
     /// Get the radian of automatic rotation.
-    func getAutoRotationAngle(dtime: Float) -> Float {
+    func getAutoRotationAngle(_ dtime: Float) -> Float {
         (autoRotateSpeed / 1000) * dtime
     }
 
@@ -178,7 +200,7 @@ class OrbitControl: Script {
 
     /// Rotate to the left by a certain radian.
     /// - Parameter radian: Radian value of rotation
-    func rotateLeft(radian: Float) {
+    func rotateLeft(_ radian: Float) {
         _sphericalDelta.theta -= radian
         if (enableDamping) {
             _sphericalDump.theta = -radian
@@ -187,7 +209,7 @@ class OrbitControl: Script {
 
     /// Rotate to the right by a certain radian.
     /// - Parameter radian: Radian value of rotation
-    func rotateUp(radian: Float) {
+    func rotateUp(_ radian: Float) {
         _sphericalDelta.phi -= radian
         if (enableDamping) {
             _sphericalDump.phi = -radian
@@ -195,7 +217,7 @@ class OrbitControl: Script {
     }
 
     /// Pan left.
-    func panLeft(distance: Float, worldMatrix: Matrix) {
+    func panLeft(_ distance: Float, _ worldMatrix: Matrix) {
         let e = worldMatrix.elements
         _ = _vPan.setValue(x: e.columns.0[0], y: e.columns.0[1], z: e.columns.0[2])
         _ = _vPan.scale(s: distance)
@@ -203,7 +225,7 @@ class OrbitControl: Script {
     }
 
     /// Pan right.
-    func panUp(distance: Float, worldMatrix: Matrix) {
+    func panUp(_ distance: Float, _ worldMatrix: Matrix) {
         let e = worldMatrix.elements
         _ = _vPan.setValue(x: e.columns.1[0], y: e.columns.1[1], z: e.columns.1[2])
         _ = _vPan.scale(s: distance)
@@ -214,7 +236,7 @@ class OrbitControl: Script {
     /// - Parameters:
     ///   - deltaX: The amount of translation from the screen distance in the x direction
     ///   - deltaY: The amount of translation from the screen distance in the y direction
-    func pan(deltaX: Float, deltaY: Float) {
+    func pan(_ deltaX: Float, _ deltaY: Float) {
         // perspective only
         let position: Vector3 = camera.transform.position
         position.cloneTo(target: _vPan)
@@ -226,30 +248,30 @@ class OrbitControl: Script {
         let clientWidth = Float(engine.canvas.bounds.width)
         let clientHeight = Float(engine.canvas.bounds.height)
 
-        panLeft(distance: -2 * deltaX * (targetDistance / clientWidth), worldMatrix: camera.transform.worldMatrix)
-        panUp(distance: 2 * deltaY * (targetDistance / clientHeight), worldMatrix: camera.transform.worldMatrix)
+        panLeft(-2 * deltaX * (targetDistance / clientWidth), camera.transform.worldMatrix)
+        panUp(2 * deltaY * (targetDistance / clientHeight), camera.transform.worldMatrix)
     }
 
     /// Zoom in.
-    func zoomIn(zoomScale: Float) {
+    func zoomIn(_ zoomScale: Float) {
         // perspective only
         _scale *= zoomScale
     }
 
     /// Zoom out.
-    func zoomOut(zoomScale: Float) {
+    func zoomOut(_ zoomScale: Float) {
         // perspective only
         _scale /= zoomScale
     }
 
     /// Rotation parameter update when touch is dropped.
-    func handleTouchStartRotate(event: UITouch) {
+    func handleTouchStartRotate(_ event: UITouch) {
         let loc = event.location(in: nil)
         _ = _rotateStart.setValue(x: Float(loc.x), y: Float(loc.y))
     }
 
     ///  Zoom parameter update when touch down.
-    func handleTouchStartZoom(event: UITouch) {
+    func handleTouchStartZoom(_ event: UITouch) {
         let loc = event.location(in: nil)
         let preLoc = event.previousLocation(in: nil)
 
@@ -262,13 +284,13 @@ class OrbitControl: Script {
     }
 
     /// Update the translation parameter when touch down.
-    func handleTouchStartPan(event: UITouch) {
+    func handleTouchStartPan(_ event: UITouch) {
         let loc = event.location(in: nil)
         _ = _panStart.setValue(x: Float(loc.x), y: Float(loc.y))
     }
 
     /// Rotation parameter update when touch to move.
-    func handleTouchMoveRotate(event: UITouch) {
+    func handleTouchMoveRotate(_ event: UITouch) {
         let loc = event.location(in: nil)
         _ = _rotateEnd.setValue(x: Float(loc.x), y: Float(loc.y))
         Vector2.subtract(left: _rotateEnd, right: _rotateStart, out: _rotateDelta)
@@ -276,14 +298,14 @@ class OrbitControl: Script {
         let clientWidth = Float(engine.canvas.bounds.width)
         let clientHeight = Float(engine.canvas.bounds.height)
 
-        rotateLeft(radian: ((2 * Float.pi * _rotateDelta.x) / clientWidth) * rotateSpeed)
-        rotateUp(radian: ((2 * Float.pi * _rotateDelta.y) / clientHeight) * rotateSpeed)
+        rotateLeft(((2 * Float.pi * _rotateDelta.x) / clientWidth) * rotateSpeed)
+        rotateUp(((2 * Float.pi * _rotateDelta.y) / clientHeight) * rotateSpeed)
 
         _rotateEnd.cloneTo(target: _rotateStart)
     }
 
     /// Zoom parameter update when touch to move.
-    func handleTouchMoveZoom(event: UITouch) {
+    func handleTouchMoveZoom(_ event: UITouch) {
         let loc = event.location(in: nil)
         let preLoc = event.previousLocation(in: nil)
 
@@ -297,28 +319,28 @@ class OrbitControl: Script {
         Vector2.subtract(left: _zoomEnd, right: _zoomStart, out: _zoomDelta)
 
         if (_zoomDelta.y > 0) {
-            zoomIn(zoomScale: getZoomScale())
+            zoomIn(getZoomScale())
         } else if (_zoomDelta.y < 0) {
-            zoomOut(zoomScale: getZoomScale())
+            zoomOut(getZoomScale())
         }
 
         _zoomEnd.cloneTo(target: _zoomStart)
     }
 
     /// Pan parameter update when touch moves.
-    func handleTouchMovePan(event: UITouch) {
+    func handleTouchMovePan(_ event: UITouch) {
         let loc = event.location(in: nil)
         _ = _panEnd.setValue(x: Float(loc.x), y: Float(loc.y))
 
         Vector2.subtract(left: _panEnd, right: _panStart, out: _panDelta)
 
-        pan(deltaX: _panDelta.x, deltaY: _panDelta.y)
+        pan(_panDelta.x, _panDelta.y)
 
         _panEnd.cloneTo(target: _panStart)
     }
 
     /// Total handling of touch start events.
-    func onTouchStart(event: UITouch) {
+    func onTouchStart(_ event: UITouch) {
         if (enabled == false) {
             return
         }
@@ -331,7 +353,7 @@ class OrbitControl: Script {
                 return
             }
 
-            handleTouchStartRotate(event: event)
+            handleTouchStartRotate(event)
             _state = STATE.TOUCH_ROTATE
 
             break
@@ -341,7 +363,7 @@ class OrbitControl: Script {
                 return
             }
 
-            handleTouchStartZoom(event: event)
+            handleTouchStartZoom(event)
             _state = STATE.TOUCH_ZOOM
 
             break
@@ -351,7 +373,7 @@ class OrbitControl: Script {
                 return
             }
 
-            handleTouchStartPan(event: event)
+            handleTouchStartPan(event)
             _state = STATE.TOUCH_PAN
 
             break
@@ -362,7 +384,7 @@ class OrbitControl: Script {
     }
 
     /// Total handling of touch movement events.
-    func onTouchMove(event: UITouch) {
+    func onTouchMove(_ event: UITouch) {
         if (enabled == false) {
             return
         }
@@ -375,7 +397,7 @@ class OrbitControl: Script {
             if (_state != STATE.TOUCH_ROTATE) {
                 return
             }
-            handleTouchMoveRotate(event: event)
+            handleTouchMoveRotate(event)
 
             break
 
@@ -386,7 +408,7 @@ class OrbitControl: Script {
             if (_state != STATE.TOUCH_ZOOM) {
                 return
             }
-            handleTouchMoveZoom(event: event)
+            handleTouchMoveZoom(event)
 
             break
 
@@ -397,7 +419,7 @@ class OrbitControl: Script {
             if (_state != STATE.TOUCH_PAN) {
                 return
             }
-            handleTouchMovePan(event: event)
+            handleTouchMovePan(event)
 
             break
 

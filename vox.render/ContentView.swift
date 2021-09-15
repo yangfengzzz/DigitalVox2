@@ -32,7 +32,6 @@ struct ContentView: View {
         let cameraEntity = rootEntity.createChild("camera")
         let _: Camera = cameraEntity.addComponent()
         cameraEntity.transform.setPosition(x: 0, y: 0, z: 4)
-        canvas.inputController?.player = cameraEntity
 
         let cubeEntity = rootEntity.createChild()
         let renderer: MeshRenderer = cubeEntity.addComponent()
