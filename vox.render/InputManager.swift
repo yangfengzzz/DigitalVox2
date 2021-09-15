@@ -7,13 +7,13 @@
 
 import MetalKit
 
-class InputMananger {
+class InputManager {
     var beginEvent: Set<UITouch> = []
     var movedEvent: Set<UITouch> = []
     var endedEvent: Set<UITouch> = []
 }
 
-extension InputMananger {
+extension InputManager {
     func processEvent(touches: Set<UITouch>, state: InputState, event: UIEvent?) {
         beginEvent = []
         movedEvent = []

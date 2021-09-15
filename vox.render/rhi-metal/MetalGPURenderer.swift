@@ -41,7 +41,6 @@ class MetalGPURenderer {
         canvas.framebufferOnly = false
         canvas.isMultipleTouchEnabled = true
         canvas.clearColor = MTLClearColor(red: 0.7, green: 0.9, blue: 1, alpha: 1)
-        canvas.registerGesture()
 
         fragmentUniforms.lightCount = lighting.count
     }

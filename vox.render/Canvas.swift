@@ -8,8 +8,7 @@
 import MetalKit
 
 class Canvas: MTKView {
-    var inputMananger: InputMananger?
-    var isTouched = false
+    var inputManager: InputManager?
 
     init() {
         super.init(frame: .zero, device: nil)
@@ -45,31 +44,24 @@ extension Canvas {
 
     override func touchesBegan(_ touches: Set<UITouch>,
                                with event: UIEvent?) {
-        isTouched = true
-        inputMananger?.processEvent(touches: touches, state: .began, event: event)
+        inputManager?.processEvent(touches: touches, state: .began, event: event)
         super.touchesBegan(touches, with: event)
     }
 
     override func touchesMoved(_ touches: Set<UITouch>,
                                with event: UIEvent?) {
-        if isTouched {
-            inputMananger?.processEvent(touches: touches, state: .moved, event: event)
-        }
+            inputManager?.processEvent(touches: touches, state: .moved, event: event)
         super.touchesMoved(touches, with: event)
     }
 
     override func touchesEnded(_ touches: Set<UITouch>,
                                with event: UIEvent?) {
-        if isTouched {
-            inputMananger?.processEvent(touches: touches, state: .ended, event: event)
-        }
-        isTouched = false
+            inputManager?.processEvent(touches: touches, state: .ended, event: event)
         super.touchesEnded(touches, with: event)
     }
 
     override func touchesCancelled(_ touches: Set<UITouch>,
                                    with event: UIEvent?) {
-        isTouched = false
         super.touchesCancelled(touches, with: event)
     }
 }

@@ -71,7 +71,7 @@
 		0452ECEA26DFA6A10015BFB1 /* cottage2.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 0452ECE426DFA6A10015BFB1 /* cottage2.mtl */; };
 		0452ECEB26DFA6A10015BFB1 /* cottage2.obj in Resources */ = {isa = PBXBuildFile; fileRef = 0452ECE526DFA6A10015BFB1 /* cottage2.obj */; };
 		0452ECED26DFA7870015BFB1 /* Canvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECEC26DFA7870015BFB1 /* Canvas.swift */; };
-		0452ECEF26DFA7B90015BFB1 /* InputMananger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECEE26DFA7B90015BFB1 /* InputMananger.swift */; };
+		0452ECEF26DFA7B90015BFB1 /* InputManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECEE26DFA7B90015BFB1 /* InputManager.swift */; };
 		0452ECF326DFA8BD0015BFB1 /* Textures.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0452ECF226DFA8BD0015BFB1 /* Textures.xcassets */; };
 		0452ECF626DFAEAB0015BFB1 /* RayRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECF426DFAEA30015BFB1 /* RayRenderer.swift */; };
 		0452ECF826DFAECE0015BFB1 /* RayRendererExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECF726DFAECE0015BFB1 /* RayRendererExtension.swift */; };
@@ -292,7 +292,7 @@
 		0452ECE426DFA6A10015BFB1 /* cottage2.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cottage2.mtl; sourceTree = "<group>"; };
 		0452ECE526DFA6A10015BFB1 /* cottage2.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cottage2.obj; sourceTree = "<group>"; };
 		0452ECEC26DFA7870015BFB1 /* Canvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Canvas.swift; sourceTree = "<group>"; };
-		0452ECEE26DFA7B90015BFB1 /* InputMananger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputMananger.swift; sourceTree = "<group>"; };
+		0452ECEE26DFA7B90015BFB1 /* InputManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputManager.swift; sourceTree = "<group>"; };
 		0452ECF026DFA7C90015BFB1 /* MotionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionController.swift; sourceTree = "<group>"; };
 		0452ECF226DFA8BD0015BFB1 /* Textures.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Textures.xcassets; sourceTree = "<group>"; };
 		0452ECF426DFAEA30015BFB1 /* RayRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RayRenderer.swift; sourceTree = "<group>"; };
@@ -810,7 +810,7 @@
 				0497A1E626DF150500F61DE9 /* ContentView.swift */,
 				0452ECC226DFA4590015BFB1 /* EngineView.swift */,
 				0452ECEC26DFA7870015BFB1 /* Canvas.swift */,
-				0452ECEE26DFA7B90015BFB1 /* InputMananger.swift */,
+				0452ECEE26DFA7B90015BFB1 /* InputManager.swift */,
 				042BB12B26EA370600604751 /* enum */,
 				0413288E26E0A15F000A4F4E /* asset */,
 				0413288B26E0A07C000A4F4E /* base */,
@@ -1289,7 +1289,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				04E28C3D26ECED51003A3C3B /* IndexBufferBinding.swift in Sources */,
-				0452ECEF26DFA7B90015BFB1 /* InputMananger.swift in Sources */,
+				0452ECEF26DFA7B90015BFB1 /* InputManager.swift in Sources */,
 				0413289426E0A48F000A4F4E /* SubMesh.swift in Sources */,
 				04E28C3826ECE7B3003A3C3B /* MetalGPURenderer.swift in Sources */,
 				0452ECD626DFA5360015BFB1 /* PBR.metal in Sources */,
