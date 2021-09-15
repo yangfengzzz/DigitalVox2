@@ -51,6 +51,8 @@
 		043CB43326F03008004A0B21 /* Ray.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB43226F03008004A0B21 /* Ray.test.swift */; };
 		043CB43526F030EB004A0B21 /* Color.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB43426F030EB004A0B21 /* Color.test.swift */; };
 		043CB43726F03355004A0B21 /* MathUtil.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB43626F03355004A0B21 /* MathUtil.test.swift */; };
+		043CB43A26F0E3B7004A0B21 /* Spherical.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB43926F0E3B7004A0B21 /* Spherical.swift */; };
+		043CB43C26F0E51E004A0B21 /* OrbitControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB43B26F0E51E004A0B21 /* OrbitControl.swift */; };
 		0452EC9926DFA0CD0015BFB1 /* voxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9826DFA0CD0015BFB1 /* voxApp.swift */; };
 		0452EC9B26DFA0CD0015BFB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */; };
 		0452EC9D26DFA0CD0015BFB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0452EC9C26DFA0CD0015BFB1 /* Assets.xcassets */; };
@@ -254,6 +256,8 @@
 		043CB43226F03008004A0B21 /* Ray.test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ray.test.swift; sourceTree = "<group>"; };
 		043CB43426F030EB004A0B21 /* Color.test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.test.swift; sourceTree = "<group>"; };
 		043CB43626F03355004A0B21 /* MathUtil.test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathUtil.test.swift; sourceTree = "<group>"; };
+		043CB43926F0E3B7004A0B21 /* Spherical.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spherical.swift; sourceTree = "<group>"; };
+		043CB43B26F0E51E004A0B21 /* OrbitControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrbitControl.swift; sourceTree = "<group>"; };
 		0452EC9626DFA0CD0015BFB1 /* vox.tracing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vox.tracing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0452EC9826DFA0CD0015BFB1 /* voxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = voxApp.swift; sourceTree = "<group>"; };
 		0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -589,6 +593,15 @@
 			path = shapes;
 			sourceTree = "<group>";
 		};
+		043CB43826F0E39D004A0B21 /* controls */ = {
+			isa = PBXGroup;
+			children = (
+				043CB43926F0E3B7004A0B21 /* Spherical.swift */,
+				043CB43B26F0E51E004A0B21 /* OrbitControl.swift */,
+			);
+			path = controls;
+			sourceTree = "<group>";
+		};
 		0452EC9726DFA0CD0015BFB1 /* vox.tracing */ = {
 			isa = PBXGroup;
 			children = (
@@ -827,6 +840,7 @@
 				04E28C3226ECE6C5003A3C3B /* rhi-metal */,
 				04EFDE7426DF1F87005FBB6F /* math */,
 				04DB2A4026DF1DF100C15850 /* design */,
+				043CB43826F0E39D004A0B21 /* controls */,
 				0452ECCB26DFA5360015BFB1 /* Common.h */,
 				0452ECC626DFA5360015BFB1 /* VertexDescriptor.swift */,
 				0452ECC826DFA5360015BFB1 /* Lighting.swift */,
@@ -1284,6 +1298,7 @@
 				042BB12D26EA371500604751 /* BackgroundMode.swift in Sources */,
 				047E7B2E26EE447D006BC3FB /* MathLibrary.swift in Sources */,
 				0413289D26E0C288000A4F4E /* UpdateFlagManager.swift in Sources */,
+				043CB43C26F0E51E004A0B21 /* OrbitControl.swift in Sources */,
 				0452ECC526DFA4920015BFB1 /* Engine.swift in Sources */,
 				04EFDE8026DF4C85005FBB6F /* Quaternion.swift in Sources */,
 				04EFDE7626DF1F96005FBB6F /* Vector2.swift in Sources */,
@@ -1328,6 +1343,7 @@
 				0413288826E09FA5000A4F4E /* ModelMesh.swift in Sources */,
 				047FEBF826E6053A0078CFAF /* Component.swift in Sources */,
 				042BB12F26EA379700604751 /* CameraClearFlags.swift in Sources */,
+				043CB43A26F0E3B7004A0B21 /* Spherical.swift in Sources */,
 				042BB13126EA38EB00604751 /* Camera.swift in Sources */,
 				0497A1E526DF150500F61DE9 /* voxApp.swift in Sources */,
 				04E28C4226EDD722003A3C3B /* BasicRenderPipeline.swift in Sources */,

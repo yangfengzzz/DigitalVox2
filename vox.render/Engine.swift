@@ -14,6 +14,7 @@ let logger = Logger(label: "com.vox.Render.main")
 final class Engine: NSObject {
     var _componentsManager: ComponentsManager = ComponentsManager()
     var _hardwareRenderer: MetalGPURenderer
+    var _inputManager:InputController
 
     var _canvas: Canvas
     private var _sceneManager: SceneManager = SceneManager()
@@ -75,10 +76,10 @@ final class Engine: NSObject {
         _hardwareRenderer = hardwareRenderer
         _hardwareRenderer.reinit(canvas)
         _canvas = canvas
-
+        _inputManager = InputController()
         super.init()
 
-        _canvas.inputController = InputController()
+        _canvas.inputController = _inputManager
         _canvas.delegate = self
         _sceneManager.activeScene = Scene(self, "DefaultScene")
         mtkView(_canvas, drawableSizeWillChange: _canvas.bounds.size)
