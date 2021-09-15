@@ -447,7 +447,7 @@ extension Transform {
     ///   - worldPosition: Target world position
     ///   - worldUp: Up direction in world space, default is Vector3(0, 1, 0)
     func lookAt(worldPosition: Vector3, worldUp: Vector3?) {
-        let position = worldPosition
+        let position = self.worldPosition
         let EPSILON = Float.leastNonzeroMagnitude
         if (
                    abs(position.x - worldPosition.x) < EPSILON &&
