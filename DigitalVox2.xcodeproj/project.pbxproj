@@ -72,7 +72,6 @@
 		0452ECEB26DFA6A10015BFB1 /* cottage2.obj in Resources */ = {isa = PBXBuildFile; fileRef = 0452ECE526DFA6A10015BFB1 /* cottage2.obj */; };
 		0452ECED26DFA7870015BFB1 /* Canvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECEC26DFA7870015BFB1 /* Canvas.swift */; };
 		0452ECEF26DFA7B90015BFB1 /* InputMananger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECEE26DFA7B90015BFB1 /* InputMananger.swift */; };
-		0452ECF126DFA7C90015BFB1 /* MotionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECF026DFA7C90015BFB1 /* MotionController.swift */; };
 		0452ECF326DFA8BD0015BFB1 /* Textures.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0452ECF226DFA8BD0015BFB1 /* Textures.xcassets */; };
 		0452ECF626DFAEAB0015BFB1 /* RayRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECF426DFAEA30015BFB1 /* RayRenderer.swift */; };
 		0452ECF826DFAECE0015BFB1 /* RayRendererExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECF726DFAECE0015BFB1 /* RayRendererExtension.swift */; };
@@ -809,10 +808,9 @@
 			children = (
 				0497A1E426DF150500F61DE9 /* voxApp.swift */,
 				0497A1E626DF150500F61DE9 /* ContentView.swift */,
+				0452ECC226DFA4590015BFB1 /* EngineView.swift */,
 				0452ECEC26DFA7870015BFB1 /* Canvas.swift */,
 				0452ECEE26DFA7B90015BFB1 /* InputMananger.swift */,
-				0452ECF026DFA7C90015BFB1 /* MotionController.swift */,
-				0452ECC226DFA4590015BFB1 /* EngineView.swift */,
 				042BB12B26EA370600604751 /* enum */,
 				0413288E26E0A15F000A4F4E /* asset */,
 				0413288B26E0A07C000A4F4E /* base */,
@@ -857,6 +855,7 @@
 				0452ECCD26DFA5360015BFB1 /* Model.swift */,
 				0452ECD026DFA5360015BFB1 /* MeshOld.swift */,
 				0452ECD126DFA5360015BFB1 /* Submesh.swift */,
+				0452ECF026DFA7C90015BFB1 /* MotionController.swift */,
 				0452ECF226DFA8BD0015BFB1 /* Textures.xcassets */,
 			);
 			path = vox.render;
@@ -1317,7 +1316,6 @@
 				0413286F26E06A40000A4F4E /* Plane.swift in Sources */,
 				047FEBF026E600E70078CFAF /* Scene.swift in Sources */,
 				0413289B26E0C1DD000A4F4E /* UpdateFlag.swift in Sources */,
-				0452ECF126DFA7C90015BFB1 /* MotionController.swift in Sources */,
 				0413287326E0723E000A4F4E /* CollisionUtil.swift in Sources */,
 				04E28C4426EDD78C003A3C3B /* Renderer.swift in Sources */,
 				0413286B26DF86DC000A4F4E /* BoundingBox.swift in Sources */,
