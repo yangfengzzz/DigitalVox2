@@ -53,6 +53,7 @@
 		043CB43726F03355004A0B21 /* MathUtil.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB43626F03355004A0B21 /* MathUtil.test.swift */; };
 		043CB43A26F0E3B7004A0B21 /* Spherical.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB43926F0E3B7004A0B21 /* Spherical.swift */; };
 		043CB43C26F0E51E004A0B21 /* OrbitControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB43B26F0E51E004A0B21 /* OrbitControl.swift */; };
+		043CB43E26F1F176004A0B21 /* Transform.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB43D26F1F176004A0B21 /* Transform.test.swift */; };
 		0452EC9926DFA0CD0015BFB1 /* voxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9826DFA0CD0015BFB1 /* voxApp.swift */; };
 		0452EC9B26DFA0CD0015BFB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */; };
 		0452EC9D26DFA0CD0015BFB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0452EC9C26DFA0CD0015BFB1 /* Assets.xcassets */; };
@@ -257,6 +258,7 @@
 		043CB43626F03355004A0B21 /* MathUtil.test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathUtil.test.swift; sourceTree = "<group>"; };
 		043CB43926F0E3B7004A0B21 /* Spherical.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spherical.swift; sourceTree = "<group>"; };
 		043CB43B26F0E51E004A0B21 /* OrbitControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrbitControl.swift; sourceTree = "<group>"; };
+		043CB43D26F1F176004A0B21 /* Transform.test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transform.test.swift; sourceTree = "<group>"; };
 		0452EC9626DFA0CD0015BFB1 /* vox.tracing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vox.tracing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0452EC9826DFA0CD0015BFB1 /* voxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = voxApp.swift; sourceTree = "<group>"; };
 		0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -887,6 +889,7 @@
 				043CB43226F03008004A0B21 /* Ray.test.swift */,
 				043CB43426F030EB004A0B21 /* Color.test.swift */,
 				043CB43626F03355004A0B21 /* MathUtil.test.swift */,
+				043CB43D26F1F176004A0B21 /* Transform.test.swift */,
 			);
 			path = vox.renderTests;
 			sourceTree = "<group>";
@@ -1365,6 +1368,7 @@
 				043CB42D26F02908004A0B21 /* BoundingSphere.test.swift in Sources */,
 				04AE165026EEE2C100201439 /* Vector4.test.swift in Sources */,
 				04AE165226EEE85D00201439 /* Matrix.test.swift in Sources */,
+				043CB43E26F1F176004A0B21 /* Transform.test.swift in Sources */,
 				043CB43126F02C87004A0B21 /* CollisionUtil.test.swift in Sources */,
 				043CB43526F030EB004A0B21 /* Color.test.swift in Sources */,
 				043CB42526EF8954004A0B21 /* Quaternion.test.swift in Sources */,
