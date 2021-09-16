@@ -40,6 +40,8 @@
 		042BB13126EA38EB00604751 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042BB13026EA38EB00604751 /* Camera.swift */; };
 		042BB13426EA3EA400604751 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 042BB13326EA3EA400604751 /* Logging */; };
 		042BB13626EA404200604751 /* SceneManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042BB13526EA404200604751 /* SceneManager.swift */; };
+		042BB13A26F36EDD00604751 /* ShaderDataGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042BB13926F36EDD00604751 /* ShaderDataGroup.swift */; };
+		042BB13C26F36F2600604751 /* ShaderProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042BB13B26F36F2600604751 /* ShaderProperty.swift */; };
 		042C841226E4A7AE00BD3733 /* sampling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042C841126E4A7AE00BD3733 /* sampling.swift */; };
 		043CB42326EF590B004A0B21 /* Matrix3x3.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB42226EF590B004A0B21 /* Matrix3x3.test.swift */; };
 		043CB42526EF8954004A0B21 /* Quaternion.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB42426EF8954004A0B21 /* Quaternion.test.swift */; };
@@ -109,6 +111,7 @@
 		0452ED3A26E0F50A0015BFB1 /* quat4f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ED3726E0F50A0015BFB1 /* quat4f.swift */; };
 		0452ED3B26E0F50A0015BFB1 /* frame3f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ED3826E0F50A0015BFB1 /* frame3f.swift */; };
 		0452ED3C26E0F50A0015BFB1 /* frame2f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ED3926E0F50A0015BFB1 /* frame2f.swift */; };
+		047914CB26F37C0300BE5170 /* ShaderData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047914CA26F37C0300BE5170 /* ShaderData.swift */; };
 		047E7B2C26EE257E006BC3FB /* MeshRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047E7B2B26EE257E006BC3FB /* MeshRenderer.swift */; };
 		047E7B2D26EE446E006BC3FB /* Lighting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECC826DFA5360015BFB1 /* Lighting.swift */; };
 		047E7B2E26EE447D006BC3FB /* MathLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECDD26DFA5C50015BFB1 /* MathLibrary.swift */; };
@@ -248,6 +251,8 @@
 		042BB12E26EA379700604751 /* CameraClearFlags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraClearFlags.swift; sourceTree = "<group>"; };
 		042BB13026EA38EB00604751 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		042BB13526EA404200604751 /* SceneManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneManager.swift; sourceTree = "<group>"; };
+		042BB13926F36EDD00604751 /* ShaderDataGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderDataGroup.swift; sourceTree = "<group>"; };
+		042BB13B26F36F2600604751 /* ShaderProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderProperty.swift; sourceTree = "<group>"; };
 		042C841126E4A7AE00BD3733 /* sampling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sampling.swift; sourceTree = "<group>"; };
 		042C841426E5043200BD3733 /* rect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rect.swift; sourceTree = "<group>"; };
 		042C841626E504B200BD3733 /* bulged_rect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bulged_rect.swift; sourceTree = "<group>"; };
@@ -338,6 +343,7 @@
 		0452ED3726E0F50A0015BFB1 /* quat4f.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = quat4f.swift; sourceTree = "<group>"; };
 		0452ED3826E0F50A0015BFB1 /* frame3f.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = frame3f.swift; sourceTree = "<group>"; };
 		0452ED3926E0F50A0015BFB1 /* frame2f.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = frame2f.swift; sourceTree = "<group>"; };
+		047914CA26F37C0300BE5170 /* ShaderData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderData.swift; sourceTree = "<group>"; };
 		047E7B2B26EE257E006BC3FB /* MeshRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeshRenderer.swift; sourceTree = "<group>"; };
 		047FEB6F26E1BA4A0078CFAF /* shape_data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = shape_data.swift; sourceTree = "<group>"; };
 		047FEB7126E1BC570078CFAF /* fvshape_data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fvshape_data.swift; sourceTree = "<group>"; };
@@ -561,6 +567,21 @@
 			path = enum;
 			sourceTree = "<group>";
 		};
+		042BB13726F36D7F00604751 /* state */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = state;
+			sourceTree = "<group>";
+		};
+		042BB13826F36DAA00604751 /* enums */ = {
+			isa = PBXGroup;
+			children = (
+				042BB13926F36EDD00604751 /* ShaderDataGroup.swift */,
+			);
+			path = enums;
+			sourceTree = "<group>";
+		};
 		042C841326E5042100BD3733 /* shapes */ = {
 			isa = PBXGroup;
 			children = (
@@ -625,7 +646,11 @@
 		043CB44226F2E0BC004A0B21 /* shader */ = {
 			isa = PBXGroup;
 			children = (
+				042BB13826F36DAA00604751 /* enums */,
+				042BB13726F36D7F00604751 /* state */,
 				043CB44326F2E0CD004A0B21 /* Shader.swift */,
+				047914CA26F37C0300BE5170 /* ShaderData.swift */,
+				042BB13B26F36F2600604751 /* ShaderProperty.swift */,
 			);
 			path = shader;
 			sourceTree = "<group>";
@@ -1346,6 +1371,7 @@
 				04EFDE8026DF4C85005FBB6F /* Quaternion.swift in Sources */,
 				04EFDE7626DF1F96005FBB6F /* Vector2.swift in Sources */,
 				047E7B2D26EE446E006BC3FB /* Lighting.swift in Sources */,
+				042BB13C26F36F2600604751 /* ShaderProperty.swift in Sources */,
 				0413289226E0A1CD000A4F4E /* RefObject.swift in Sources */,
 				04E28C3B26ECE845003A3C3B /* IHardwareRenderer.swift in Sources */,
 				0452ECD726DFA5360015BFB1 /* Shaders.metal in Sources */,
@@ -1385,6 +1411,7 @@
 				0413288226E08394000A4F4E /* MathUtil.swift in Sources */,
 				042BB12A26EA35C100604751 /* Background.swift in Sources */,
 				0413288826E09FA5000A4F4E /* ModelMesh.swift in Sources */,
+				047914CB26F37C0300BE5170 /* ShaderData.swift in Sources */,
 				047FEBF826E6053A0078CFAF /* Component.swift in Sources */,
 				042BB12F26EA379700604751 /* CameraClearFlags.swift in Sources */,
 				043CB43A26F0E3B7004A0B21 /* Spherical.swift in Sources */,
@@ -1396,6 +1423,7 @@
 				0419B6DE26E701FE00005FEA /* Script.swift in Sources */,
 				0413287B26E07BA3000A4F4E /* Ray.swift in Sources */,
 				043CB44426F2E0CD004A0B21 /* Shader.swift in Sources */,
+				042BB13A26F36EDD00604751 /* ShaderDataGroup.swift in Sources */,
 				0413287526E072A9000A4F4E /* PlaneIntersectionType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
