@@ -54,6 +54,8 @@
 		043CB43A26F0E3B7004A0B21 /* Spherical.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB43926F0E3B7004A0B21 /* Spherical.swift */; };
 		043CB43C26F0E51E004A0B21 /* OrbitControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB43B26F0E51E004A0B21 /* OrbitControl.swift */; };
 		043CB43E26F1F176004A0B21 /* Transform.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB43D26F1F176004A0B21 /* Transform.test.swift */; };
+		043CB44126F2E069004A0B21 /* Material.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB44026F2E069004A0B21 /* Material.swift */; };
+		043CB44426F2E0CD004A0B21 /* Shader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB44326F2E0CD004A0B21 /* Shader.swift */; };
 		0452EC9926DFA0CD0015BFB1 /* voxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9826DFA0CD0015BFB1 /* voxApp.swift */; };
 		0452EC9B26DFA0CD0015BFB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */; };
 		0452EC9D26DFA0CD0015BFB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0452EC9C26DFA0CD0015BFB1 /* Assets.xcassets */; };
@@ -259,6 +261,8 @@
 		043CB43926F0E3B7004A0B21 /* Spherical.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spherical.swift; sourceTree = "<group>"; };
 		043CB43B26F0E51E004A0B21 /* OrbitControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrbitControl.swift; sourceTree = "<group>"; };
 		043CB43D26F1F176004A0B21 /* Transform.test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transform.test.swift; sourceTree = "<group>"; };
+		043CB44026F2E069004A0B21 /* Material.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Material.swift; sourceTree = "<group>"; };
+		043CB44326F2E0CD004A0B21 /* Shader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shader.swift; sourceTree = "<group>"; };
 		0452EC9626DFA0CD0015BFB1 /* vox.tracing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vox.tracing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0452EC9826DFA0CD0015BFB1 /* voxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = voxApp.swift; sourceTree = "<group>"; };
 		0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -603,6 +607,22 @@
 			path = controls;
 			sourceTree = "<group>";
 		};
+		043CB43F26F2E058004A0B21 /* material */ = {
+			isa = PBXGroup;
+			children = (
+				043CB44026F2E069004A0B21 /* Material.swift */,
+			);
+			path = material;
+			sourceTree = "<group>";
+		};
+		043CB44226F2E0BC004A0B21 /* shader */ = {
+			isa = PBXGroup;
+			children = (
+				043CB44326F2E0CD004A0B21 /* Shader.swift */,
+			);
+			path = shader;
+			sourceTree = "<group>";
+		};
 		0452EC9726DFA0CD0015BFB1 /* vox.tracing */ = {
 			isa = PBXGroup;
 			children = (
@@ -817,9 +837,11 @@
 				0413288E26E0A15F000A4F4E /* asset */,
 				0413288B26E0A07C000A4F4E /* base */,
 				0413288426E09F11000A4F4E /* graphic */,
+				043CB43F26F2E058004A0B21 /* material */,
 				0413288326E09EFC000A4F4E /* mesh */,
 				04E28C3926ECE82E003A3C3B /* renderingHardwareInterface */,
 				04E28C4026EDD6F8003A3C3B /* renderPipeline */,
+				043CB44226F2E0BC004A0B21 /* shader */,
 				042BB12926EA35C100604751 /* Background.swift */,
 				042BB13026EA38EB00604751 /* Camera.swift */,
 				047FEBF726E6053A0078CFAF /* Component.swift */,
@@ -1319,6 +1341,7 @@
 				0413286F26E06A40000A4F4E /* Plane.swift in Sources */,
 				047FEBF026E600E70078CFAF /* Scene.swift in Sources */,
 				0413289B26E0C1DD000A4F4E /* UpdateFlag.swift in Sources */,
+				043CB44126F2E069004A0B21 /* Material.swift in Sources */,
 				0413287326E0723E000A4F4E /* CollisionUtil.swift in Sources */,
 				04E28C4426EDD78C003A3C3B /* Renderer.swift in Sources */,
 				0413286B26DF86DC000A4F4E /* BoundingBox.swift in Sources */,
@@ -1352,6 +1375,7 @@
 				047FEBF226E601750078CFAF /* Entity.swift in Sources */,
 				0419B6DE26E701FE00005FEA /* Script.swift in Sources */,
 				0413287B26E07BA3000A4F4E /* Ray.swift in Sources */,
+				043CB44426F2E0CD004A0B21 /* Shader.swift in Sources */,
 				0413287526E072A9000A4F4E /* PlaneIntersectionType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

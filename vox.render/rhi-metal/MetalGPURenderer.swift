@@ -22,6 +22,8 @@ class MetalGPURenderer {
     var renderEncoder: MTLRenderCommandEncoder!
     var commandBuffer: MTLCommandBuffer!
     
+    var pipelineState: MTLRenderPipelineState!
+    
     var view: MTKView!
 
     func reinit(_ canvas: Canvas) {
@@ -43,6 +45,8 @@ class MetalGPURenderer {
         canvas.clearColor = MTLClearColor(red: 0.7, green: 0.9, blue: 1, alpha: 1)
 
         fragmentUniforms.lightCount = lighting.count
+        
+        pipelineState = makePipelineState()
     }
 
     func buildDepthStencilState() -> MTLDepthStencilState? {
@@ -99,7 +103,7 @@ extension MetalGPURenderer: IHardwareRenderer {
         
         renderEncoder.setDepthStencilState(depthStencilState)
 
-        renderEncoder.setRenderPipelineState(makePipelineState())
+        renderEncoder.setRenderPipelineState(pipelineState)
     }
     
     func postDraw() {
