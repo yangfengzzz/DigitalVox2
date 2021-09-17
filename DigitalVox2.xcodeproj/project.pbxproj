@@ -68,6 +68,8 @@
 		043CB45926F41E6F004A0B21 /* RasterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB45826F41E6F004A0B21 /* RasterState.swift */; };
 		043CB45B26F41E87004A0B21 /* DepthState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB45A26F41E87004A0B21 /* DepthState.swift */; };
 		043CB45D26F41EA2004A0B21 /* StencilState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB45C26F41EA2004A0B21 /* StencilState.swift */; };
+		043CB45F26F42057004A0B21 /* RenderContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB45E26F42057004A0B21 /* RenderContext.swift */; };
+		043CB46126F4225D004A0B21 /* TextureCubeMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB46026F4225D004A0B21 /* TextureCubeMap.swift */; };
 		0452EC9926DFA0CD0015BFB1 /* voxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9826DFA0CD0015BFB1 /* voxApp.swift */; };
 		0452EC9B26DFA0CD0015BFB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */; };
 		0452EC9D26DFA0CD0015BFB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0452EC9C26DFA0CD0015BFB1 /* Assets.xcassets */; };
@@ -288,6 +290,8 @@
 		043CB45826F41E6F004A0B21 /* RasterState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RasterState.swift; sourceTree = "<group>"; };
 		043CB45A26F41E87004A0B21 /* DepthState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepthState.swift; sourceTree = "<group>"; };
 		043CB45C26F41EA2004A0B21 /* StencilState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StencilState.swift; sourceTree = "<group>"; };
+		043CB45E26F42057004A0B21 /* RenderContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderContext.swift; sourceTree = "<group>"; };
+		043CB46026F4225D004A0B21 /* TextureCubeMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextureCubeMap.swift; sourceTree = "<group>"; };
 		0452EC9626DFA0CD0015BFB1 /* vox.tracing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vox.tracing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0452EC9826DFA0CD0015BFB1 /* voxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = voxApp.swift; sourceTree = "<group>"; };
 		0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -677,6 +681,7 @@
 			children = (
 				043CB44D26F410CA004A0B21 /* Texture.swift */,
 				043CB44F26F41AD6004A0B21 /* Texture2D.swift */,
+				043CB46026F4225D004A0B21 /* TextureCubeMap.swift */,
 			);
 			path = texture;
 			sourceTree = "<group>";
@@ -1026,6 +1031,7 @@
 			isa = PBXGroup;
 			children = (
 				04E28C4126EDD722003A3C3B /* BasicRenderPipeline.swift */,
+				043CB45E26F42057004A0B21 /* RenderContext.swift */,
 			);
 			path = renderPipeline;
 			sourceTree = "<group>";
@@ -1411,6 +1417,7 @@
 				042BB13626EA404200604751 /* SceneManager.swift in Sources */,
 				0413288626E09F1F000A4F4E /* PrimitiveMesh.swift in Sources */,
 				043CB45026F41AD6004A0B21 /* Texture2D.swift in Sources */,
+				043CB45F26F42057004A0B21 /* RenderContext.swift in Sources */,
 				047FEBF426E603CD0078CFAF /* Layer.swift in Sources */,
 				0413289F26E0CBE7000A4F4E /* ShaderSimple.metal in Sources */,
 				0413289026E0A16C000A4F4E /* IRefObject.swift in Sources */,
@@ -1450,6 +1457,7 @@
 				043CB45526F41E44004A0B21 /* RenderState.swift in Sources */,
 				042BB12F26EA379700604751 /* CameraClearFlags.swift in Sources */,
 				043CB43A26F0E3B7004A0B21 /* Spherical.swift in Sources */,
+				043CB46126F4225D004A0B21 /* TextureCubeMap.swift in Sources */,
 				042BB13126EA38EB00604751 /* Camera.swift in Sources */,
 				0497A1E526DF150500F61DE9 /* voxApp.swift in Sources */,
 				04E28C4226EDD722003A3C3B /* BasicRenderPipeline.swift in Sources */,

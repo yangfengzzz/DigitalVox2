@@ -12,6 +12,8 @@ class Scene: EngineObject {
     var name: String
     /// The background of the scene.
     var background: Background = Background()
+    /// Scene-related shader data.
+    var shaderData: ShaderData = ShaderData(ShaderDataGroup.Scene)
 
     internal var _activeCameras: [Camera] = []
     internal var _isActiveInEngine: Bool = false
@@ -47,6 +49,8 @@ class Scene: EngineObject {
     ///   - name: Name
     init(_ engine: Engine, _ name: String?) {
         self.name = name != nil ? name! : ""
+        shaderData._addRefCount(1)
+        
         super.init(engine)
     }
 }

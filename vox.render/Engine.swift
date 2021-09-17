@@ -14,7 +14,15 @@ let logger = Logger(label: "com.vox.Render.main")
 final class Engine: NSObject {
     var _componentsManager: ComponentsManager = ComponentsManager()
     var _hardwareRenderer: MetalGPURenderer
-    var _inputManager:InputManager
+    var _inputManager: InputManager
+    var _lastRenderState: RenderState = RenderState()
+    var _renderContext: RenderContext = RenderContext()
+
+    // internal var _whiteTexture2D: Texture2D
+    // internal var _whiteTextureCube: TextureCubeMap
+    // internal var _backgroundTextureMaterial: Material
+    // internal var _backgroundTextureMesh: ModelMesh
+    internal var _renderCount: Int = 0
 
     var _canvas: Canvas
     private var _sceneManager: SceneManager = SceneManager()
@@ -143,7 +151,7 @@ extension Engine: MTKViewDelegate {
 
     func draw(in view: MTKView) {
         _hardwareRenderer.setView(in: view)
-        
+
         update()
     }
 }

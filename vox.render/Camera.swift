@@ -15,12 +15,32 @@ class MathTemp {
 }
 
 class Camera: Component {
+    private static var _viewMatrixProperty = Shader.getPropertyByName("u_viewMat")
+    private static var _projectionMatrixProperty = Shader.getPropertyByName("u_projMat")
+    private static var _vpMatrixProperty = Shader.getPropertyByName("u_VPMat")
+    private static var _inverseViewMatrixProperty = Shader.getPropertyByName("u_viewInvMat")
+    private static var _inverseProjectionMatrixProperty = Shader.getPropertyByName("u_projInvMat")
+    private static var _cameraPositionProperty = Shader.getPropertyByName("u_cameraPos")
+
+    /// Shader data.
+    var shaderData: ShaderData = ShaderData(ShaderDataGroup.Camera)
+
     /// Rendering priority - A Camera with higher priority will be rendered on top of a camera with lower priority.
     var priority: Int = 0
 
     /// Whether to enable frustum culling, it is enabled by default.
     var enableFrustumCulling: Bool = true
 
+    /// Determining what to clear when rendering by a Camera.
+    /// defaultValue `CameraClearFlags.DepthColor`
+    var clearFlags: CameraClearFlags = CameraClearFlags.DepthColor
+
+    /// Culling mask - which layers the camera renders.
+    /// - Remark Support bit manipulation, corresponding to Entity's layer.
+    var cullingMask: Layer = Layer.Everything
+
+    // @deepClone
+    internal var _frustum: BoundingFrustum = BoundingFrustum()
     // @ignoreClone
     internal var _renderPipeline: BasicRenderPipeline!
 
@@ -170,7 +190,7 @@ class Camera: Component {
             let aspectRatio = aspectRatio
             if (!_isOrthographic) {
                 Matrix.perspective(
-                    fovy: MathUtil.degreeToRadian(_fieldOfView),
+                        fovy: MathUtil.degreeToRadian(_fieldOfView),
                         aspect: aspectRatio,
                         near: _nearClipPlane,
                         far: _farClipPlane,
@@ -199,23 +219,24 @@ class Camera: Component {
         _isViewMatrixDirty = transform!.registerWorldChangeFlag()
         _isInvViewProjDirty = transform!.registerWorldChangeFlag()
         _frustumViewChangeFlag = transform!.registerWorldChangeFlag()
-        
+
         super.init(entity)
         _renderPipeline = BasicRenderPipeline(self)
+        shaderData._addRefCount(1)
     }
-    
+
     override func _onActive() {
-        entity.scene._attachRenderCamera(self);
+        entity.scene._attachRenderCamera(self)
     }
-    
+
     override func _onInActive() {
-        entity.scene._detachRenderCamera(self);
+        entity.scene._detachRenderCamera(self)
     }
 
     override func _onDestroy() {
-        _renderPipeline.destroy();
-        _isInvViewProjDirty.destroy();
-        _isViewMatrixDirty.destroy();
+        _renderPipeline.destroy()
+        _isInvViewProjDirty.destroy()
+        _isViewMatrixDirty.destroy()
     }
 }
 
@@ -369,7 +390,20 @@ extension Camera {
 
     /// Manually call the rendering of the camera.
     func render() {
+        // compute cull frustum.
+        let context = engine._renderContext
+        context._setContext(self)
+        if (enableFrustumCulling && (_frustumViewChangeFlag.flag || _isFrustumProjectDirty)) {
+            _frustum.calculateFromMatrix(matrix: context._viewProjectMatrix)
+            _frustumViewChangeFlag.flag = false
+            _isFrustumProjectDirty = false
+        }
+
+        _updateShaderData(context)
+
         _renderPipeline.render()
+
+        _engine._renderCount += 1
     }
 }
 
@@ -393,6 +427,15 @@ extension Camera {
         out.y = clipPoint.y * invW
         out.z = clipPoint.z * invW
         return out
+    }
+
+    private func _updateShaderData(_ context: RenderContext) {
+        shaderData.setMatrix(Camera._viewMatrixProperty, viewMatrix)
+        shaderData.setMatrix(Camera._projectionMatrixProperty, projectionMatrix)
+        shaderData.setMatrix(Camera._vpMatrixProperty, context._viewProjectMatrix)
+        shaderData.setMatrix(Camera._inverseViewMatrixProperty, _transform.worldMatrix)
+        shaderData.setMatrix(Camera._inverseProjectionMatrixProperty, inverseProjectionMatrix)
+        shaderData.setVector3(Camera._cameraPositionProperty, _transform.worldPosition)
     }
 
     /// The inverse matrix of view projection matrix.
