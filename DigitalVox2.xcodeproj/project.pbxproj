@@ -62,6 +62,12 @@
 		043CB44926F341AF004A0B21 /* RenderFace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB44826F341AF004A0B21 /* RenderFace.swift */; };
 		043CB44B26F34405004A0B21 /* RenderQueueType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB44A26F34405004A0B21 /* RenderQueueType.swift */; };
 		043CB44E26F410CA004A0B21 /* Texture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB44D26F410CA004A0B21 /* Texture.swift */; };
+		043CB45026F41AD6004A0B21 /* Texture2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB44F26F41AD6004A0B21 /* Texture2D.swift */; };
+		043CB45526F41E44004A0B21 /* RenderState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB45426F41E44004A0B21 /* RenderState.swift */; };
+		043CB45726F41E57004A0B21 /* BlendState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB45626F41E57004A0B21 /* BlendState.swift */; };
+		043CB45926F41E6F004A0B21 /* RasterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB45826F41E6F004A0B21 /* RasterState.swift */; };
+		043CB45B26F41E87004A0B21 /* DepthState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB45A26F41E87004A0B21 /* DepthState.swift */; };
+		043CB45D26F41EA2004A0B21 /* StencilState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB45C26F41EA2004A0B21 /* StencilState.swift */; };
 		0452EC9926DFA0CD0015BFB1 /* voxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9826DFA0CD0015BFB1 /* voxApp.swift */; };
 		0452EC9B26DFA0CD0015BFB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */; };
 		0452EC9D26DFA0CD0015BFB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0452EC9C26DFA0CD0015BFB1 /* Assets.xcassets */; };
@@ -276,6 +282,12 @@
 		043CB44826F341AF004A0B21 /* RenderFace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderFace.swift; sourceTree = "<group>"; };
 		043CB44A26F34405004A0B21 /* RenderQueueType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderQueueType.swift; sourceTree = "<group>"; };
 		043CB44D26F410CA004A0B21 /* Texture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Texture.swift; sourceTree = "<group>"; };
+		043CB44F26F41AD6004A0B21 /* Texture2D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Texture2D.swift; sourceTree = "<group>"; };
+		043CB45426F41E44004A0B21 /* RenderState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderState.swift; sourceTree = "<group>"; };
+		043CB45626F41E57004A0B21 /* BlendState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendState.swift; sourceTree = "<group>"; };
+		043CB45826F41E6F004A0B21 /* RasterState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RasterState.swift; sourceTree = "<group>"; };
+		043CB45A26F41E87004A0B21 /* DepthState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepthState.swift; sourceTree = "<group>"; };
+		043CB45C26F41EA2004A0B21 /* StencilState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StencilState.swift; sourceTree = "<group>"; };
 		0452EC9626DFA0CD0015BFB1 /* vox.tracing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vox.tracing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0452EC9826DFA0CD0015BFB1 /* voxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = voxApp.swift; sourceTree = "<group>"; };
 		0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -569,13 +581,6 @@
 			path = enum;
 			sourceTree = "<group>";
 		};
-		042BB13726F36D7F00604751 /* state */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = state;
-			sourceTree = "<group>";
-		};
 		042BB13826F36DAA00604751 /* enums */ = {
 			isa = PBXGroup;
 			children = (
@@ -648,8 +653,8 @@
 		043CB44226F2E0BC004A0B21 /* shader */ = {
 			isa = PBXGroup;
 			children = (
+				043CB45326F41E37004A0B21 /* state */,
 				042BB13826F36DAA00604751 /* enums */,
-				042BB13726F36D7F00604751 /* state */,
 				043CB44326F2E0CD004A0B21 /* Shader.swift */,
 				047914CA26F37C0300BE5170 /* ShaderData.swift */,
 				042BB13B26F36F2600604751 /* ShaderProperty.swift */,
@@ -671,8 +676,21 @@
 			isa = PBXGroup;
 			children = (
 				043CB44D26F410CA004A0B21 /* Texture.swift */,
+				043CB44F26F41AD6004A0B21 /* Texture2D.swift */,
 			);
 			path = texture;
+			sourceTree = "<group>";
+		};
+		043CB45326F41E37004A0B21 /* state */ = {
+			isa = PBXGroup;
+			children = (
+				043CB45426F41E44004A0B21 /* RenderState.swift */,
+				043CB45626F41E57004A0B21 /* BlendState.swift */,
+				043CB45826F41E6F004A0B21 /* RasterState.swift */,
+				043CB45A26F41E87004A0B21 /* DepthState.swift */,
+				043CB45C26F41EA2004A0B21 /* StencilState.swift */,
+			);
+			path = state;
 			sourceTree = "<group>";
 		};
 		0452EC9726DFA0CD0015BFB1 /* vox.tracing */ = {
@@ -1367,6 +1385,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				04E28C3D26ECED51003A3C3B /* IndexBufferBinding.swift in Sources */,
+				043CB45B26F41E87004A0B21 /* DepthState.swift in Sources */,
 				0452ECEF26DFA7B90015BFB1 /* InputManager.swift in Sources */,
 				0413289426E0A48F000A4F4E /* SubMesh.swift in Sources */,
 				04E28C3826ECE7B3003A3C3B /* MetalGPURenderer.swift in Sources */,
@@ -1391,9 +1410,11 @@
 				04EFDE7C26DF3495005FBB6F /* Matrix.swift in Sources */,
 				042BB13626EA404200604751 /* SceneManager.swift in Sources */,
 				0413288626E09F1F000A4F4E /* PrimitiveMesh.swift in Sources */,
+				043CB45026F41AD6004A0B21 /* Texture2D.swift in Sources */,
 				047FEBF426E603CD0078CFAF /* Layer.swift in Sources */,
 				0413289F26E0CBE7000A4F4E /* ShaderSimple.metal in Sources */,
 				0413289026E0A16C000A4F4E /* IRefObject.swift in Sources */,
+				043CB45726F41E57004A0B21 /* BlendState.swift in Sources */,
 				0413286F26E06A40000A4F4E /* Plane.swift in Sources */,
 				047FEBF026E600E70078CFAF /* Scene.swift in Sources */,
 				0413289B26E0C1DD000A4F4E /* UpdateFlag.swift in Sources */,
@@ -1408,6 +1429,7 @@
 				043CB44B26F34405004A0B21 /* RenderQueueType.swift in Sources */,
 				04E28C3426ECE6F3003A3C3B /* IPlatformPrimitive.swift in Sources */,
 				04EFDE7A26DF3072005FBB6F /* Vector3.swift in Sources */,
+				043CB45926F41E6F004A0B21 /* RasterState.swift in Sources */,
 				0419B6E026E7114C00005FEA /* ComponentsManager.swift in Sources */,
 				0413288026E08044000A4F4E /* Color.swift in Sources */,
 				0413286D26E06648000A4F4E /* BoundingSphere.swift in Sources */,
@@ -1425,6 +1447,7 @@
 				0413288826E09FA5000A4F4E /* ModelMesh.swift in Sources */,
 				047914CB26F37C0300BE5170 /* ShaderData.swift in Sources */,
 				047FEBF826E6053A0078CFAF /* Component.swift in Sources */,
+				043CB45526F41E44004A0B21 /* RenderState.swift in Sources */,
 				042BB12F26EA379700604751 /* CameraClearFlags.swift in Sources */,
 				043CB43A26F0E3B7004A0B21 /* Spherical.swift in Sources */,
 				042BB13126EA38EB00604751 /* Camera.swift in Sources */,
@@ -1432,6 +1455,7 @@
 				04E28C4226EDD722003A3C3B /* BasicRenderPipeline.swift in Sources */,
 				04E28C3F26ECEE24003A3C3B /* VertexBufferBinding.swift in Sources */,
 				047FEBF226E601750078CFAF /* Entity.swift in Sources */,
+				043CB45D26F41EA2004A0B21 /* StencilState.swift in Sources */,
 				0419B6DE26E701FE00005FEA /* Script.swift in Sources */,
 				0413287B26E07BA3000A4F4E /* Ray.swift in Sources */,
 				043CB44426F2E0CD004A0B21 /* Shader.swift in Sources */,
