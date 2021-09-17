@@ -61,6 +61,7 @@
 		043CB44726F3417E004A0B21 /* BlendMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB44626F3417E004A0B21 /* BlendMode.swift */; };
 		043CB44926F341AF004A0B21 /* RenderFace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB44826F341AF004A0B21 /* RenderFace.swift */; };
 		043CB44B26F34405004A0B21 /* RenderQueueType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB44A26F34405004A0B21 /* RenderQueueType.swift */; };
+		043CB44E26F410CA004A0B21 /* Texture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB44D26F410CA004A0B21 /* Texture.swift */; };
 		0452EC9926DFA0CD0015BFB1 /* voxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9826DFA0CD0015BFB1 /* voxApp.swift */; };
 		0452EC9B26DFA0CD0015BFB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */; };
 		0452EC9D26DFA0CD0015BFB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0452EC9C26DFA0CD0015BFB1 /* Assets.xcassets */; };
@@ -274,6 +275,7 @@
 		043CB44626F3417E004A0B21 /* BlendMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendMode.swift; sourceTree = "<group>"; };
 		043CB44826F341AF004A0B21 /* RenderFace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderFace.swift; sourceTree = "<group>"; };
 		043CB44A26F34405004A0B21 /* RenderQueueType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderQueueType.swift; sourceTree = "<group>"; };
+		043CB44D26F410CA004A0B21 /* Texture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Texture.swift; sourceTree = "<group>"; };
 		0452EC9626DFA0CD0015BFB1 /* vox.tracing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vox.tracing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0452EC9826DFA0CD0015BFB1 /* voxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = voxApp.swift; sourceTree = "<group>"; };
 		0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -665,6 +667,14 @@
 			path = enums;
 			sourceTree = "<group>";
 		};
+		043CB44C26F410B5004A0B21 /* texture */ = {
+			isa = PBXGroup;
+			children = (
+				043CB44D26F410CA004A0B21 /* Texture.swift */,
+			);
+			path = texture;
+			sourceTree = "<group>";
+		};
 		0452EC9726DFA0CD0015BFB1 /* vox.tracing */ = {
 			isa = PBXGroup;
 			children = (
@@ -884,6 +894,7 @@
 				04E28C3926ECE82E003A3C3B /* renderingHardwareInterface */,
 				04E28C4026EDD6F8003A3C3B /* renderPipeline */,
 				043CB44226F2E0BC004A0B21 /* shader */,
+				043CB44C26F410B5004A0B21 /* texture */,
 				042BB12926EA35C100604751 /* Background.swift */,
 				042BB13026EA38EB00604751 /* Camera.swift */,
 				047FEBF726E6053A0078CFAF /* Component.swift */,
@@ -1402,6 +1413,7 @@
 				0413286D26E06648000A4F4E /* BoundingSphere.swift in Sources */,
 				0413289926E0A607000A4F4E /* VertexElement.swift in Sources */,
 				0413288A26E09FB3000A4F4E /* Mesh.swift in Sources */,
+				043CB44E26F410CA004A0B21 /* Texture.swift in Sources */,
 				0452ECED26DFA7870015BFB1 /* Canvas.swift in Sources */,
 				0413287126E06D2E000A4F4E /* BoundingFrustum.swift in Sources */,
 				047FEBF626E6052D0078CFAF /* Transform.swift in Sources */,
