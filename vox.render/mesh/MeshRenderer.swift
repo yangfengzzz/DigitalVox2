@@ -64,7 +64,7 @@ class MeshRenderer: Renderer {
         target.mesh = _mesh
     }
 
-    func _updateBounds(_ worldBounds: BoundingBox) {
+    override func _updateBounds(_ worldBounds: BoundingBox) {
         let mesh = _mesh
         if (mesh != nil) {
             let localBounds = mesh!.bounds
