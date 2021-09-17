@@ -8,7 +8,7 @@
 import Foundation
 
 /// Render element.
-class RenderElement {
+final class RenderElement {
     /// Render component.
     var component: Renderer!
     /// Mesh.
@@ -24,4 +24,7 @@ class RenderElement {
         self.subMesh = subMesh;
         self.material = material;
     }
+}
+
+extension RenderElement: EmptyInit {
 }

@@ -72,6 +72,7 @@
 		043CB46126F4225D004A0B21 /* TextureCubeMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB46026F4225D004A0B21 /* TextureCubeMap.swift */; };
 		043CB46326F441C3004A0B21 /* RenderQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB46226F441C3004A0B21 /* RenderQueue.swift */; };
 		043CB46526F441EC004A0B21 /* RenderElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB46426F441EC004A0B21 /* RenderElement.swift */; };
+		043CB46726F45C18004A0B21 /* ClassPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB46626F45C18004A0B21 /* ClassPool.swift */; };
 		0452EC9926DFA0CD0015BFB1 /* voxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9826DFA0CD0015BFB1 /* voxApp.swift */; };
 		0452EC9B26DFA0CD0015BFB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */; };
 		0452EC9D26DFA0CD0015BFB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0452EC9C26DFA0CD0015BFB1 /* Assets.xcassets */; };
@@ -296,6 +297,7 @@
 		043CB46026F4225D004A0B21 /* TextureCubeMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextureCubeMap.swift; sourceTree = "<group>"; };
 		043CB46226F441C3004A0B21 /* RenderQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderQueue.swift; sourceTree = "<group>"; };
 		043CB46426F441EC004A0B21 /* RenderElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderElement.swift; sourceTree = "<group>"; };
+		043CB46626F45C18004A0B21 /* ClassPool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassPool.swift; sourceTree = "<group>"; };
 		0452EC9626DFA0CD0015BFB1 /* vox.tracing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vox.tracing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0452EC9826DFA0CD0015BFB1 /* voxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = voxApp.swift; sourceTree = "<group>"; };
 		0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -1035,9 +1037,10 @@
 			isa = PBXGroup;
 			children = (
 				04E28C4126EDD722003A3C3B /* BasicRenderPipeline.swift */,
-				043CB45E26F42057004A0B21 /* RenderContext.swift */,
 				043CB46226F441C3004A0B21 /* RenderQueue.swift */,
+				043CB45E26F42057004A0B21 /* RenderContext.swift */,
 				043CB46426F441EC004A0B21 /* RenderElement.swift */,
+				043CB46626F45C18004A0B21 /* ClassPool.swift */,
 			);
 			path = renderPipeline;
 			sourceTree = "<group>";
@@ -1402,6 +1405,7 @@
 				0452ECEF26DFA7B90015BFB1 /* InputManager.swift in Sources */,
 				0413289426E0A48F000A4F4E /* SubMesh.swift in Sources */,
 				04E28C3826ECE7B3003A3C3B /* MetalGPURenderer.swift in Sources */,
+				043CB46726F45C18004A0B21 /* ClassPool.swift in Sources */,
 				0452ECD626DFA5360015BFB1 /* PBR.metal in Sources */,
 				04DB2A4226DF1E0500C15850 /* IClone.swift in Sources */,
 				043CB44926F341AF004A0B21 /* RenderFace.swift in Sources */,

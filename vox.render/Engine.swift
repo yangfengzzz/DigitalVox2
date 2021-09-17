@@ -15,7 +15,9 @@ final class Engine: NSObject {
     var _componentsManager: ComponentsManager = ComponentsManager()
     var _hardwareRenderer: MetalGPURenderer
     var _inputManager: InputManager
+    
     var _lastRenderState: RenderState = RenderState()
+    var _renderElementPool: ClassPool<RenderElement> = ClassPool()
     var _renderContext: RenderContext = RenderContext()
 
     // internal var _whiteTexture2D: Texture2D
