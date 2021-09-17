@@ -401,7 +401,7 @@ extension Camera {
 
         _updateShaderData(context)
 
-        _renderPipeline.render()
+        _renderPipeline.render(context)
 
         _engine._renderCount += 1
     }

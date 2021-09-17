@@ -31,11 +31,11 @@ class RenderQueue {
 
 extension RenderQueue {
     /// Push a render element.
-    func pushPrimitive(element: RenderElement) {
+    func pushPrimitive(_ element: RenderElement) {
         items.append(element)
     }
 
-    func render(camera: Camera, replaceMaterial: Material, mask: Layer) {
+    func render(_ camera: Camera, _ replaceMaterial: Material?, _ mask: Layer) {
     }
 
     /// Clear collection.
@@ -48,7 +48,7 @@ extension RenderQueue {
     }
 
     /// Sort the elements.
-    func sort(compareFunc: (RenderElement, RenderElement) -> Bool) {
+    func sort(_ compareFunc: (RenderElement, RenderElement) -> Bool) {
         items.sort(by: compareFunc)
     }
 }

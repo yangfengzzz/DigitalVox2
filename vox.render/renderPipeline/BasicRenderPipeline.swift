@@ -13,7 +13,7 @@ class BasicRenderPipeline {
     internal var _transparentQueue: RenderQueue
     internal var _alphaTestQueue: RenderQueue
 
-    private var _camera: Camera?
+    private var _camera: Camera
     private var _defaultPass: RenderPass
     private var _renderPassArray: Array<RenderPass>
     private var _lastCanvasSize = Vector2()
@@ -33,15 +33,67 @@ class BasicRenderPipeline {
 
     /// Destroy internal resources.
     func destroy() {
-        _camera = nil
-    }
-
-    /// Perform scene rendering.
-    func render() {
-        let camera = _camera
-        camera!.engine._componentsManager.callRender(_camera!)
+        _opaqueQueue.destroy()
+        _alphaTestQueue.destroy()
+        _transparentQueue.destroy()
+        _renderPassArray = []
     }
 }
+
+extension BasicRenderPipeline {
+    /// Perform scene rendering.
+    /// - Parameter context: Render context
+    func render(_ context: RenderContext) {
+        let camera = _camera
+        let opaqueQueue = _opaqueQueue
+        let alphaTestQueue = _alphaTestQueue
+        let transparentQueue = _transparentQueue
+
+        opaqueQueue.clear()
+        alphaTestQueue.clear()
+        transparentQueue.clear()
+
+        camera.engine._componentsManager.callRender(_camera)
+        opaqueQueue.sort(RenderQueue._compareFromNearToFar)
+        alphaTestQueue.sort(RenderQueue._compareFromNearToFar)
+        transparentQueue.sort(RenderQueue._compareFromFarToNear)
+
+        for i in 0..<_renderPassArray.count {
+             _drawRenderPass(_renderPassArray[i], camera)
+        }
+    }
+
+    private func _drawRenderPass(_ pass: RenderPass, _ camera: Camera) {
+        pass.preRender(camera, _opaqueQueue, _alphaTestQueue, _transparentQueue)
+
+        if (pass.enabled) {
+            if (pass.renderOverride) {
+                pass.render(camera, _opaqueQueue, _alphaTestQueue, _transparentQueue)
+            } else {
+                _opaqueQueue.render(camera, pass.replaceMaterial, pass.mask)
+                _alphaTestQueue.render(camera, pass.replaceMaterial, pass.mask)
+                _transparentQueue.render(camera, pass.replaceMaterial, pass.mask)
+            }
+        }
+
+        pass.postRender(camera, _opaqueQueue, _alphaTestQueue, _transparentQueue)
+    }
+
+    /// Push a render element to the render queue.
+    /// - Parameter element: Render element
+    func pushPrimitive(element: RenderElement) {
+        let renderQueueType = element.material.renderQueueType
+
+        if (renderQueueType.rawValue > (RenderQueueType.Transparent.rawValue + RenderQueueType.AlphaTest.rawValue) >> 1) {
+            _transparentQueue.pushPrimitive(element)
+        } else if (renderQueueType.rawValue > (RenderQueueType.AlphaTest.rawValue + RenderQueueType.Opaque.rawValue) >> 1) {
+            _alphaTestQueue.pushPrimitive(element)
+        } else {
+            _opaqueQueue.pushPrimitive(element)
+        }
+    }
+}
+
 
 //MARK:- RenderPass Methods
 extension BasicRenderPipeline {
