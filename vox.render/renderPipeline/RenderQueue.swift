@@ -17,15 +17,15 @@ class RenderQueue {
     }
 
     internal static func _compareFromNearToFar(a: Item, b: Item) -> Bool {
-        ((a.material.renderQueueType.rawValue - b.material.renderQueueType.rawValue) != 0) ||
-                (a.component._distanceForSort - b.component._distanceForSort) != 0 ||
-                ((b.component._renderSortId - a.component._renderSortId) != 0)
+        (a.material.renderQueueType.rawValue < b.material.renderQueueType.rawValue) ||
+                (a.component._distanceForSort < b.component._distanceForSort) ||
+                (b.component._renderSortId < a.component._renderSortId)
     }
 
     internal static func _compareFromFarToNear(a: Item, b: Item) -> Bool {
-        ((a.material.renderQueueType.rawValue - b.material.renderQueueType.rawValue) != 0) ||
-                (b.component._distanceForSort - a.component._distanceForSort) != 0 ||
-                ((b.component._renderSortId - a.component._renderSortId) != 0)
+        (a.material.renderQueueType.rawValue < b.material.renderQueueType.rawValue) ||
+                (b.component._distanceForSort < a.component._distanceForSort) ||
+                (b.component._renderSortId < a.component._renderSortId)
     }
 }
 
