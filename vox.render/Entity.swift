@@ -8,7 +8,7 @@
 import Foundation
 
 /// Entity, be used as components container.
-class Entity: EngineObject {
+final class Entity: EngineObject {
     /// The name of entity.
     var name: String
     /// The layer the entity belongs to.

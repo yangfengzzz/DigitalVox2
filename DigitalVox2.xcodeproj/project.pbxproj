@@ -349,9 +349,9 @@
 		0452ECCA26DFA5360015BFB1 /* PBR.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = PBR.metal; sourceTree = "<group>"; };
 		0452ECCB26DFA5360015BFB1 /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
 		0452ECCC26DFA5360015BFB1 /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
-		0452ECCD26DFA5360015BFB1 /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
-		0452ECD026DFA5360015BFB1 /* MeshOld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeshOld.swift; sourceTree = "<group>"; };
-		0452ECD126DFA5360015BFB1 /* Submesh.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Submesh.swift; sourceTree = "<group>"; };
+		0452ECCD26DFA5360015BFB1 /* ResouceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResouceModel.swift; sourceTree = "<group>"; };
+		0452ECD026DFA5360015BFB1 /* ResouceMesh.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResouceMesh.swift; sourceTree = "<group>"; };
+		0452ECD126DFA5360015BFB1 /* ResouceSubmesh.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResouceSubmesh.swift; sourceTree = "<group>"; };
 		0452ECE026DFA6A10015BFB1 /* cube.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube.obj; sourceTree = "<group>"; };
 		0452ECE126DFA6A10015BFB1 /* cube.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube.mtl; sourceTree = "<group>"; };
 		0452ECE226DFA6A10015BFB1 /* cottage1.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cottage1.obj; sourceTree = "<group>"; };
@@ -990,9 +990,9 @@
 				0452ECCB26DFA5360015BFB1 /* Common.h */,
 				0452ECC626DFA5360015BFB1 /* VertexDescriptor.swift */,
 				0452ECDF26DFA66E0015BFB1 /* models */,
-				0452ECCD26DFA5360015BFB1 /* Model.swift */,
-				0452ECD026DFA5360015BFB1 /* MeshOld.swift */,
-				0452ECD126DFA5360015BFB1 /* Submesh.swift */,
+				0452ECCD26DFA5360015BFB1 /* ResouceModel.swift */,
+				0452ECD026DFA5360015BFB1 /* ResouceMesh.swift */,
+				0452ECD126DFA5360015BFB1 /* ResouceSubmesh.swift */,
 				0452ECF026DFA7C90015BFB1 /* MotionController.swift */,
 				0497A1EA26DF150800F61DE9 /* Preview Content */,
 				0497A1ED26DF150800F61DE9 /* Info.plist */,
