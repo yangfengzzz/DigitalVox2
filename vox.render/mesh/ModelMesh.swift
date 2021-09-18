@@ -303,7 +303,7 @@ extension ModelMesh {
         // Vertex value change.
         let vertexBufferBindings = _vertexBufferBindings
         let elementCount = _elementCount
-        let vertexBuffer = vertexBufferBindings.first?._buffer
+        let vertexBuffer = vertexBufferBindings.first?!._buffer
         let vertexFloatCount = elementCount * _vertexCount
         if (vertexBuffer == nil || _verticesFloat32?.count != vertexFloatCount) {
             var vertices = [Float](repeating: 0, count: vertexFloatCount)

@@ -39,6 +39,7 @@
 		041B584F26F57C1500B32BD0 /* ShaderUniformBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041B584E26F57C1500B32BD0 /* ShaderUniformBlock.swift */; };
 		041B585326F57C4200B32BD0 /* ShaderUniform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041B585226F57C4200B32BD0 /* ShaderUniform.swift */; };
 		041B585526F57FB600B32BD0 /* ShaderProgramPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041B585426F57FB600B32BD0 /* ShaderProgramPool.swift */; };
+		041B585726F5863700B32BD0 /* BufferMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041B585626F5863700B32BD0 /* BufferMesh.swift */; };
 		042BB12A26EA35C100604751 /* Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042BB12926EA35C100604751 /* Background.swift */; };
 		042BB12D26EA371500604751 /* BackgroundMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042BB12C26EA371500604751 /* BackgroundMode.swift */; };
 		042BB12F26EA379700604751 /* CameraClearFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042BB12E26EA379700604751 /* CameraClearFlags.swift */; };
@@ -279,6 +280,7 @@
 		041B584E26F57C1500B32BD0 /* ShaderUniformBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderUniformBlock.swift; sourceTree = "<group>"; };
 		041B585226F57C4200B32BD0 /* ShaderUniform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderUniform.swift; sourceTree = "<group>"; };
 		041B585426F57FB600B32BD0 /* ShaderProgramPool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderProgramPool.swift; sourceTree = "<group>"; };
+		041B585626F5863700B32BD0 /* BufferMesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferMesh.swift; sourceTree = "<group>"; };
 		042BB12926EA35C100604751 /* Background.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Background.swift; sourceTree = "<group>"; };
 		042BB12C26EA371500604751 /* BackgroundMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundMode.swift; sourceTree = "<group>"; };
 		042BB12E26EA379700604751 /* CameraClearFlags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraClearFlags.swift; sourceTree = "<group>"; };
@@ -572,6 +574,7 @@
 			children = (
 				0413288526E09F1F000A4F4E /* PrimitiveMesh.swift */,
 				0413288726E09FA5000A4F4E /* ModelMesh.swift */,
+				041B585626F5863700B32BD0 /* BufferMesh.swift */,
 				047E7B2B26EE257E006BC3FB /* MeshRenderer.swift */,
 			);
 			path = mesh;
@@ -1485,6 +1488,7 @@
 				043CB45F26F42057004A0B21 /* RenderContext.swift in Sources */,
 				047FEBF426E603CD0078CFAF /* Layer.swift in Sources */,
 				0413289F26E0CBE7000A4F4E /* ShaderSimple.metal in Sources */,
+				041B585726F5863700B32BD0 /* BufferMesh.swift in Sources */,
 				0413289026E0A16C000A4F4E /* IRefObject.swift in Sources */,
 				043CB45726F41E57004A0B21 /* BlendState.swift in Sources */,
 				0413286F26E06A40000A4F4E /* Plane.swift in Sources */,

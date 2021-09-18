@@ -19,7 +19,7 @@ class Mesh: RefObject {
     var _platformPrimitive: IPlatformPrimitive!
 
     internal var _instanceCount: Int = 0
-    internal var _vertexBufferBindings: [VertexBufferBinding] = []
+    internal var _vertexBufferBindings: [VertexBufferBinding?] = []
     internal var _indexBufferBinding: IndexBufferBinding!
     internal var _vertexElements: [VertexElement] = []
 

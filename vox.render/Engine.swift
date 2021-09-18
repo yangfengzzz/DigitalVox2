@@ -129,8 +129,8 @@ final class Engine: NSObject {
             let length = index + 1
             if (length > _shaderProgramPools.count) {
                 _shaderProgramPools.reserveCapacity(length)
-                for i in _shaderProgramPools.count..<length {
-                    _shaderProgramPools[i] = nil
+                for _ in _shaderProgramPools.count..<length {
+                    _shaderProgramPools.append(nil)
                 }
             }
             pool = ShaderProgramPool()
