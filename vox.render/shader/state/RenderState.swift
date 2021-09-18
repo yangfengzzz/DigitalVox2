@@ -10,11 +10,11 @@ import Foundation
 /// Render state.
 class RenderState {
     /// Blend state.
-    var blendState: BlendState = BlendState();
+    var blendState: BlendState = BlendState()
     /// Depth state.
-    var depthState: DepthState = DepthState();
+    var depthState: DepthState = DepthState()
     /// Stencil state.
-    var stencilState: StencilState = StencilState();
+    var stencilState: StencilState = StencilState()
     /// Raster state.
-    var rasterState: RasterState = RasterState();
+    var rasterState: RasterState = RasterState()
 }

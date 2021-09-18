@@ -14,7 +14,11 @@ class Material: RefObject {
     /// Shader used by the material.
     var shader: Shader
     /// Render queue type.
-    var renderQueueType: RenderQueueType = .Opaque;
+    var renderQueueType: RenderQueueType = .Opaque
+    /// Shader data.
+    var shaderData: ShaderData = ShaderData(ShaderDataGroup.Material)
+    /// Render state.
+    var renderState: RenderState = RenderState()
 
     /// Create a material instance.
     /// - Parameters:
@@ -24,20 +28,33 @@ class Material: RefObject {
         self.shader = shader
         super.init(engine)
     }
+
+    override func _addRefCount(_ value: Int) {
+        super._addRefCount(value)
+        shaderData._addRefCount(value)
+    }
+
+
+    internal func _preRender(renderElement: RenderElement) {
+    }
+
+
+    func _onDestroy() {
+    }
 }
 
 extension Material: IClone {
     typealias Object = Material
 
     func clone() -> Material {
-        let dest = Material(_engine, shader);
-        cloneTo(target: dest);
-        return dest;
+        let dest = Material(_engine, shader)
+        cloneTo(target: dest)
+        return dest
     }
 
     func cloneTo(target: Material) {
-        target.shader = shader;
-        target.renderQueueType = renderQueueType;
+        target.shader = shader
+        target.renderQueueType = renderQueueType
         fatalError()
     }
 }

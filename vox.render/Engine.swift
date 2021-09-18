@@ -88,7 +88,8 @@ final class Engine: NSObject {
         _canvas = canvas
         _inputManager = InputManager()
         super.init()
-
+        ShaderPool.initialization()
+        
         _canvas.inputManager = _inputManager
         _canvas.delegate = self
         _canvas.registerGesture()

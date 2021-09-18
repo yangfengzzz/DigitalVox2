@@ -8,7 +8,7 @@
 import Foundation
 
 /// The base class of assets, with reference counting capability.
-class RefObject: EngineObject {
+class RefObject: EngineObject, IRefObject {
     /// Whether to ignore the garbage collection check, if it is true, it will not be affected by ResourceManager.gc().
     var isGCIgnored: Bool = false
 
@@ -28,9 +28,7 @@ class RefObject: EngineObject {
             _destroyed
         }
     }
-}
 
-extension RefObject: IRefObject {
     func _getRefCount() -> Int {
         _refCount
     }
