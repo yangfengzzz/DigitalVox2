@@ -72,3 +72,18 @@ extension Shader {
         return shaderProperty?._group
     }
 }
+
+extension Shader {
+    internal func _getShaderProgram(_ engine: Engine) -> ShaderProgram {
+        let shaderProgramPool = engine._getShaderProgramPool(self)
+        var shaderProgram = shaderProgramPool.get()
+        if (shaderProgram != nil) {
+            return shaderProgram!
+        }
+
+        shaderProgram = ShaderProgram(engine, "", "")
+
+        shaderProgramPool.cache(shaderProgram!)
+        return shaderProgram!
+    }
+}

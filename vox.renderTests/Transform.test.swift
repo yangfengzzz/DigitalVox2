@@ -15,7 +15,7 @@ class TransformTests: XCTestCase {
 
     override func setUpWithError() throws {
         canvas = Canvas()
-        engine = Engine(canvas, MetalGPURenderer())
+        engine = Engine(canvas, MetalRenderer())
 
         let scene = engine.sceneManager.activeScene
         node = scene!.createRootEntity()

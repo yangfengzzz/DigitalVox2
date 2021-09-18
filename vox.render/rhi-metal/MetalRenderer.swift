@@ -9,7 +9,7 @@ import Metal
 import MetalKit
 
 /// Metal renderer.
-class MetalGPURenderer {
+class MetalRenderer {
     var device: MTLDevice!
     var commandQueue: MTLCommandQueue!
     var library: MTLLibrary!
@@ -21,9 +21,9 @@ class MetalGPURenderer {
 
     var renderEncoder: MTLRenderCommandEncoder!
     var commandBuffer: MTLCommandBuffer!
-    
+
     var pipelineState: MTLRenderPipelineState!
-    
+
     var view: MTKView!
 
     func reinit(_ canvas: Canvas) {
@@ -45,7 +45,7 @@ class MetalGPURenderer {
         canvas.clearColor = MTLClearColor(red: 0.7, green: 0.9, blue: 1, alpha: 1)
 
         fragmentUniforms.lightCount = lighting.count
-        
+
         pipelineState = makePipelineState()
     }
 
@@ -76,36 +76,36 @@ class MetalGPURenderer {
         }
         return pipelineState
     }
-    
+
     func setView(in view: MTKView) {
         self.view = view
     }
 }
 
-extension MetalGPURenderer: IHardwareRenderer {
+extension MetalRenderer: IHardwareRenderer {
     func createPlatformPrimitive(_ primitive: Mesh) -> IPlatformPrimitive {
         GPUPrimitive(self, primitive)
     }
 
-    func drawPrimitive(_ primitive: Mesh, _ subPrimitive: SubMesh) {
-        primitive._draw(renderEncoder, subPrimitive)
+    func drawPrimitive(_ primitive: Mesh, _ subPrimitive: SubMesh, _ shaderProgram: ShaderProgram) {
+        primitive._draw(renderEncoder, shaderProgram, subPrimitive)
     }
 
     func preDraw() {
         guard let descriptor = view.currentRenderPassDescriptor,
-                let commandBuffer = commandQueue.makeCommandBuffer(),
-                let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {
+              let commandBuffer = commandQueue.makeCommandBuffer(),
+              let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {
             return
         }
 
         self.renderEncoder = renderEncoder
         self.commandBuffer = commandBuffer
-        
+
         renderEncoder.setDepthStencilState(depthStencilState)
 
         renderEncoder.setRenderPipelineState(pipelineState)
     }
-    
+
     func postDraw() {
         renderEncoder.endEncoding()
         guard let drawable = view.currentDrawable else {

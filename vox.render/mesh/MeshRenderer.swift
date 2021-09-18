@@ -61,7 +61,7 @@ class MeshRenderer: Renderer {
                 length: MemoryLayout<Uniforms>.stride,
                 index: Int(BufferIndexUniforms.rawValue))
 
-        engine._hardwareRenderer.drawPrimitive(mesh!, mesh!.subMesh!)
+        engine._hardwareRenderer.drawPrimitive(mesh!, mesh!.subMesh!, ShaderProgram(engine, "", ""))
 
         engine._hardwareRenderer.postDraw()
     }

@@ -35,7 +35,7 @@ class Material: RefObject {
     }
 
 
-    internal func _preRender(renderElement: RenderElement) {
+    internal func _preRender(_ renderElement: RenderElement) {
     }
 
 

@@ -23,7 +23,7 @@ struct ContentView: View {
 
     init() {
         canvas = Canvas()
-        engine = Engine(canvas, MetalGPURenderer())
+        engine = Engine(canvas, MetalRenderer())
 
         let scene = engine.sceneManager.activeScene
         let rootEntity = scene!.createRootEntity()

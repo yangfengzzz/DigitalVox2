@@ -81,8 +81,8 @@ class Mesh: RefObject {
         _updateFlagManager.register()
     }
 
-    internal func _draw(_ renderPassEncoder: MTLRenderCommandEncoder, _ subMesh: SubMesh) {
-        _platformPrimitive.draw(renderPassEncoder, subMesh)
+    internal func _draw(_ renderPassEncoder: MTLRenderCommandEncoder, _ shaderProgram: ShaderProgram, _ subMesh: SubMesh) {
+        _platformPrimitive.draw(renderPassEncoder, shaderProgram, subMesh)
     }
 
     func _setVertexElements(_ elements: [VertexElement]) {

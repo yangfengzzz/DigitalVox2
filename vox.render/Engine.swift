@@ -13,9 +13,9 @@ let logger = Logger(label: "com.vox.Render.main")
 
 final class Engine: NSObject {
     var _componentsManager: ComponentsManager = ComponentsManager()
-    var _hardwareRenderer: MetalGPURenderer
+    var _hardwareRenderer: MetalRenderer
     var _inputManager: InputManager
-    
+
     var _lastRenderState: RenderState = RenderState()
     var _renderElementPool: ClassPool<RenderElement> = ClassPool()
     var _renderContext: RenderContext = RenderContext()
@@ -25,6 +25,7 @@ final class Engine: NSObject {
     // internal var _backgroundTextureMaterial: Material
     // internal var _backgroundTextureMesh: ModelMesh
     internal var _renderCount: Int = 0
+    internal var _shaderProgramPools: [ShaderProgramPool?] = []
 
     var _canvas: Canvas
     private var _sceneManager: SceneManager = SceneManager()
@@ -82,14 +83,14 @@ final class Engine: NSObject {
         }
     }
 
-    init(_ canvas: Canvas, _ hardwareRenderer: MetalGPURenderer) {
+    init(_ canvas: Canvas, _ hardwareRenderer: MetalRenderer) {
         _hardwareRenderer = hardwareRenderer
         _hardwareRenderer.reinit(canvas)
         _canvas = canvas
         _inputManager = InputManager()
         super.init()
         ShaderPool.initialization()
-        
+
         _canvas.inputManager = _inputManager
         _canvas.delegate = self
         _canvas.registerGesture()
@@ -119,6 +120,23 @@ final class Engine: NSObject {
         }
 
         _componentsManager.callComponentDestroy()
+    }
+
+    internal func _getShaderProgramPool(_ shader: Shader) -> ShaderProgramPool {
+        let index = shader._shaderId
+        var pool = _shaderProgramPools[index]
+        if pool == nil {
+            let length = index + 1
+            if (length > _shaderProgramPools.count) {
+                _shaderProgramPools.reserveCapacity(length)
+                for i in _shaderProgramPools.count..<length {
+                    _shaderProgramPools[i] = nil
+                }
+            }
+            pool = ShaderProgramPool()
+            _shaderProgramPools[index] = pool
+        }
+        return pool!
     }
 
     func _render(_ scene: Scene) {
