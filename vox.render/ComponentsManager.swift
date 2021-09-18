@@ -22,8 +22,8 @@ class ComponentsManager {
     private var _onUpdateAnimations: [Component] = []
 
     // Render
-     private var _renderers: [Renderer] = []
-     private var _onUpdateRenderers: [Renderer] = []
+    private var _renderers: [Renderer] = []
+    private var _onUpdateRenderers: [Renderer] = []
 
     // Delay dispose active/inActive Pool
     private var _componentsContainerPool: [[Component]] = [[]]
@@ -31,16 +31,16 @@ class ComponentsManager {
 
 extension ComponentsManager {
     func addRenderer(_ renderer: Renderer) {
-        renderer._rendererIndex = _renderers.count;
-        _renderers.append(renderer);
+        renderer._rendererIndex = _renderers.count
+        _renderers.append(renderer)
     }
 
     func removeRenderer(_ renderer: Renderer) {
-        let replaced = _renderers.remove(at: renderer._rendererIndex);
+        let replaced = _renderers.remove(at: renderer._rendererIndex)
         replaced._rendererIndex = renderer._rendererIndex
         renderer._rendererIndex = -1
     }
-    
+
     func addOnStartScript(_ script: Script) {
         script._onStartIndex = _onStartScripts.count
         _onStartScripts.append(script)
@@ -73,20 +73,20 @@ extension ComponentsManager {
         replaced._onLateUpdateIndex = script._onLateUpdateIndex
         script._onLateUpdateIndex = -1
     }
-    
+
     func addOnUpdateRenderers(_ renderer: Renderer) {
-        renderer._onUpdateIndex = _onUpdateRenderers.count;
-        _onUpdateRenderers.append(renderer);
+        renderer._onUpdateIndex = _onUpdateRenderers.count
+        _onUpdateRenderers.append(renderer)
     }
 
     func removeOnUpdateRenderers(_ renderer: Renderer) {
-        let replaced = _onUpdateRenderers.remove(at: renderer._onUpdateIndex);
+        let replaced = _onUpdateRenderers.remove(at: renderer._onUpdateIndex)
         replaced._onUpdateIndex = renderer._onUpdateIndex
-        renderer._onUpdateIndex = -1;
+        renderer._onUpdateIndex = -1
     }
-    
-    func addDestroyComponent(_ component:Script) {
-        _destroyComponents.append(component);
+
+    func addDestroyComponent(_ component: Script) {
+        _destroyComponents.append(component)
     }
 
     func callScriptOnStart() {
@@ -127,42 +127,70 @@ extension ComponentsManager {
     func callRendererOnUpdate(_ deltaTime: Float) {
         let elements = _onUpdateRenderers
         for i in 0..<_onUpdateRenderers.count {
-            elements[i].update(deltaTime);
+            elements[i].update(deltaTime)
         }
     }
-    
-    func callRender(_ camera: Camera) {
+
+    func callRender(_ context: RenderContext) {
+        let camera = context._camera
         let elements = _renderers
         for i in 0..<_renderers.count {
-            let element = elements[i];
-            element._render(camera);
+            let element = elements[i]
+
+            // filter by camera culling mask.
+            if (camera!.cullingMask.rawValue & element._entity.layer.rawValue) == 0 {
+                continue
+            }
+
+            // filter by camera frustum.
+            if (camera!.enableFrustumCulling) {
+                element.isCulled = !camera!._frustum.intersectsBox(box: element.bounds)
+                if (element.isCulled) {
+                    continue
+                }
+            }
+
+            let transform = camera!.entity.transform
+            let position = transform!.worldPosition
+            let center = element.bounds.getCenter(out: ComponentsManager._tempVector0)
+            if (camera!.isOrthographic) {
+                let forward = transform!.getWorldForward(forward: ComponentsManager._tempVector1)
+                Vector3.subtract(left: center, right: position, out: center)
+                element._distanceForSort = Vector3.dot(left: center, right: forward)
+            } else {
+                element._distanceForSort = Vector3.distanceSquared(left: center, right: position)
+            }
+
+            element._updateShaderData(context)
+
+            element._render(camera!)
         }
     }
-    
+
     func callComponentDestroy() {
-        var destroyComponents = _destroyComponents;
-        let length = destroyComponents.count;
+        var destroyComponents = _destroyComponents
+        let length = destroyComponents.count
         if (length > 0) {
             for i in 0..<length {
-                destroyComponents[i].onDestroy();
+                destroyComponents[i].onDestroy()
             }
             destroyComponents = []
         }
     }
 
     func callCameraOnBeginRender(_ camera: Camera) {
-        let camComps = camera.entity._components;
+        let camComps = camera.entity._components
         for i in 0..<camComps.count {
-            let camComp = camComps[i];
-            (camComp as? Script)?.onBeginRender(camera);
+            let camComp = camComps[i]
+            (camComp as? Script)?.onBeginRender(camera)
         }
     }
 
     func callCameraOnEndRender(_ camera: Camera) {
-        let camComps = camera.entity._components;
+        let camComps = camera.entity._components
         for i in 0..<camComps.count {
-            let camComp = camComps[i];
-            (camComp as? Script)?.onEndRender(camera);
+            let camComp = camComps[i]
+            (camComp as? Script)?.onEndRender(camera)
         }
     }
 }

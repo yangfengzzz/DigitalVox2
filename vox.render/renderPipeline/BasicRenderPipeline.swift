@@ -53,7 +53,7 @@ extension BasicRenderPipeline {
         alphaTestQueue.clear()
         transparentQueue.clear()
 
-        camera.engine._componentsManager.callRender(_camera)
+        camera.engine._componentsManager.callRender(context)
         opaqueQueue.sort(RenderQueue._compareFromNearToFar)
         alphaTestQueue.sort(RenderQueue._compareFromNearToFar)
         transparentQueue.sort(RenderQueue._compareFromFarToNear)
