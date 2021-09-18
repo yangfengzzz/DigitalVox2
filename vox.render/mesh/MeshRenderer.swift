@@ -56,7 +56,6 @@ class MeshRenderer: Renderer {
         uniforms.projectionMatrix = camera.projectionMatrix.elements
         uniforms.viewMatrix = camera.viewMatrix.elements
         uniforms.modelMatrix = entity.transform.worldMatrix.elements
-        uniforms.normalMatrix = uniforms.modelMatrix.upperLeft
         engine._hardwareRenderer.renderEncoder.setVertexBytes(&uniforms,
                 length: MemoryLayout<Uniforms>.stride,
                 index: Int(BufferIndexUniforms.rawValue))

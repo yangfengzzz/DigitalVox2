@@ -17,7 +17,6 @@ class MetalRenderer {
 
     var fragmentUniforms = FragmentUniforms()
     var depthStencilState: MTLDepthStencilState!
-    let lighting = Lighting()
 
     var renderEncoder: MTLRenderCommandEncoder!
     var commandBuffer: MTLCommandBuffer!
@@ -43,8 +42,6 @@ class MetalRenderer {
         canvas.framebufferOnly = false
         canvas.isMultipleTouchEnabled = true
         canvas.clearColor = MTLClearColor(red: 0.7, green: 0.9, blue: 1, alpha: 1)
-
-        fragmentUniforms.lightCount = lighting.count
 
         pipelineState = makePipelineState()
     }

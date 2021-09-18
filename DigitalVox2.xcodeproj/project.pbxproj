@@ -142,8 +142,6 @@
 		0452ED3C26E0F50A0015BFB1 /* frame2f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ED3926E0F50A0015BFB1 /* frame2f.swift */; };
 		047914CB26F37C0300BE5170 /* ShaderData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047914CA26F37C0300BE5170 /* ShaderData.swift */; };
 		047E7B2C26EE257E006BC3FB /* MeshRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047E7B2B26EE257E006BC3FB /* MeshRenderer.swift */; };
-		047E7B2D26EE446E006BC3FB /* Lighting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECC826DFA5360015BFB1 /* Lighting.swift */; };
-		047E7B2E26EE447D006BC3FB /* MathLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECDD26DFA5C50015BFB1 /* MathLibrary.swift */; };
 		047FEB7026E1BA4A0078CFAF /* shape_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEB6F26E1BA4A0078CFAF /* shape_data.swift */; };
 		047FEB7226E1BC570078CFAF /* fvshape_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEB7126E1BC570078CFAF /* fvshape_data.swift */; };
 		047FEB7426E1BD590078CFAF /* shape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEB7326E1BD590078CFAF /* shape.swift */; };
@@ -997,13 +995,13 @@
 				043CB43826F0E39D004A0B21 /* controls */,
 				0452ECCB26DFA5360015BFB1 /* Common.h */,
 				0452ECC626DFA5360015BFB1 /* VertexDescriptor.swift */,
-				0452ECC826DFA5360015BFB1 /* Lighting.swift */,
-				0452ECDD26DFA5C50015BFB1 /* MathLibrary.swift */,
 				0452ECDF26DFA66E0015BFB1 /* models */,
 				0497A20F26DF151700F61DE9 /* DigitalVox2.entitlements */,
 				0497A1E826DF150800F61DE9 /* Assets.xcassets */,
 				0497A1ED26DF150800F61DE9 /* Info.plist */,
 				0497A1EA26DF150800F61DE9 /* Preview Content */,
+				0452ECDD26DFA5C50015BFB1 /* MathLibrary.swift */,
+				0452ECC826DFA5360015BFB1 /* Lighting.swift */,
 				0452ECC726DFA5360015BFB1 /* Node.swift */,
 				0452ECCE26DFA5360015BFB1 /* Texturable.swift */,
 				0452ECC926DFA5360015BFB1 /* Primitive.swift */,
@@ -1464,14 +1462,12 @@
 				043CB44926F341AF004A0B21 /* RenderFace.swift in Sources */,
 				043CB44726F3417E004A0B21 /* BlendMode.swift in Sources */,
 				042BB12D26EA371500604751 /* BackgroundMode.swift in Sources */,
-				047E7B2E26EE447D006BC3FB /* MathLibrary.swift in Sources */,
 				0413289D26E0C288000A4F4E /* UpdateFlagManager.swift in Sources */,
 				043CB43C26F0E51E004A0B21 /* OrbitControl.swift in Sources */,
 				043CB47126F56B95004A0B21 /* RenderTargetBlendState.swift in Sources */,
 				0452ECC526DFA4920015BFB1 /* Engine.swift in Sources */,
 				04EFDE8026DF4C85005FBB6F /* Quaternion.swift in Sources */,
 				04EFDE7626DF1F96005FBB6F /* Vector2.swift in Sources */,
-				047E7B2D26EE446E006BC3FB /* Lighting.swift in Sources */,
 				042BB13C26F36F2600604751 /* ShaderProperty.swift in Sources */,
 				0413289226E0A1CD000A4F4E /* RefObject.swift in Sources */,
 				041B584B26F571DE00B32BD0 /* SimpleMaterial.swift in Sources */,
