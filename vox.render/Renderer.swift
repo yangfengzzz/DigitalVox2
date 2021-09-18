@@ -148,20 +148,18 @@ extension Renderer {
     func setMaterial(material: Material) {
         let index = 0
 
-        var materials = _materials
-        if (index >= materials.count) {
-            materials.reserveCapacity(index + 1)
-            for _ in materials.count..<index {
-                materials.append(nil)
+        if (index >= _materials.count) {
+            _materials.reserveCapacity(index + 1)
+            for _ in _materials.count...index {
+                _materials.append(nil)
             }
         }
 
-        var materialsInstance = _materialsInstanced
-        let internalMaterial = materials[index]
+        let internalMaterial = _materials[index]
         if (internalMaterial !== material) {
-            materials[index] = material
-            if index < materialsInstance.count {
-                materialsInstance[index] = false
+            _materials[index] = material
+            if index < _materialsInstanced.count {
+                _materialsInstanced[index] = false
             }
             if internalMaterial != nil {
                 internalMaterial!._addRefCount(-1)
@@ -175,20 +173,18 @@ extension Renderer {
     ///   - index: Material index
     ///   - material: The material
     func setMaterial(index: Int, material: Material) {
-        var materials = _materials
-        if (index >= materials.count) {
-            materials.reserveCapacity(index + 1)
-            for _ in materials.count..<index {
-                materials.append(nil)
+        if (index >= _materials.count) {
+            _materials.reserveCapacity(index + 1)
+            for _ in _materials.count..<index {
+                _materials.append(nil)
             }
         }
 
-        var materialsInstance = _materialsInstanced
-        let internalMaterial = materials[index]
+        let internalMaterial = _materials[index]
         if (internalMaterial !== material) {
-            materials[index] = material
-            if index < materialsInstance.count {
-                materialsInstance[index] = false
+            _materials[index] = material
+            if index < _materialsInstanced.count {
+                _materialsInstanced[index] = false
             }
             if internalMaterial != nil {
                 internalMaterial!._addRefCount(-1)
@@ -222,31 +218,29 @@ extension Renderer {
     /// - Parameter materials: All materials
     func setMaterials(materials: [Material]) {
         let count = materials.count
-        var internalMaterials = _materials
-        var materialsInstanced = _materialsInstanced
 
-        for i in 0..<internalMaterials.count {
-            let internalMaterial = internalMaterials[i]
+        for i in 0..<_materials.count {
+            let internalMaterial = _materials[i]
             if internalMaterial != nil {
                 internalMaterial!._addRefCount(-1)
             }
         }
 
-        if internalMaterials.count != count {
-            internalMaterials.reserveCapacity(count)
-            for _ in internalMaterials.count..<count {
-                internalMaterials.append(nil)
+        if _materials.count != count {
+            _materials.reserveCapacity(count)
+            for _ in _materials.count..<count {
+                _materials.append(nil)
             }
         }
-        if materialsInstanced.count != 0 {
-            materialsInstanced = []
+        if _materialsInstanced.count != 0 {
+            _materialsInstanced = []
         }
 
         for i in 0..<count {
-            let internalMaterial = internalMaterials[i]
+            let internalMaterial = _materials[i]
             let material = materials[i]
             if (internalMaterial !== material) {
-                internalMaterials[i] = material
+                _materials[i] = material
                 if internalMaterial != nil {
                     internalMaterial!._addRefCount(-1)
                 }

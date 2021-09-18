@@ -38,12 +38,11 @@ extension Shader {
     ///   - fragmentSource: Fragment source code
     /// - Returns: Shader
     static func create(_ name: String, _  vertexSource: String, _  fragmentSource: String) -> Shader {
-        var shaderMap = Shader._shaderMap
-        if (shaderMap[name] != nil) {
+        if (Shader._shaderMap[name] != nil) {
             fatalError("Shader named \(name) already exists.")
         }
         let shader = Shader(name, vertexSource, fragmentSource)
-        shaderMap[name] = shader
+        Shader._shaderMap[name] = shader
         return shader
     }
 

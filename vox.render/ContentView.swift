@@ -38,6 +38,9 @@ struct ContentView: View {
         let renderer: MeshRenderer = cubeEntity.addComponent()
         let box = PrimitiveMesh.createCuboid(engine)
         renderer.mesh = box
+        let simpleMtl = SimpleMaterial(engine)
+        renderer.setMaterial(material: simpleMtl)
+        
         let _: CubeScript = cubeEntity.addComponent()
     }
 

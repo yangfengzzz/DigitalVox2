@@ -81,7 +81,7 @@ extension BasicRenderPipeline {
 
     /// Push a render element to the render queue.
     /// - Parameter element: Render element
-    func pushPrimitive(element: RenderElement) {
+    func pushPrimitive(_ element: RenderElement) {
         let renderQueueType = element.material.renderQueueType
 
         if (renderQueueType.rawValue > (RenderQueueType.Transparent.rawValue + RenderQueueType.AlphaTest.rawValue) >> 1) {

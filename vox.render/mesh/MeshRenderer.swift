@@ -35,6 +35,21 @@ class MeshRenderer: Renderer {
     }
 
     override func _render(_ camera: Camera) {
+        let mesh = _mesh
+        if (mesh != nil) {
+            let subMeshes = mesh!.subMeshes
+            let renderPipeline = camera._renderPipeline
+            let renderElementPool = _engine._renderElementPool
+            for i in 0..<subMeshes.count {
+                let material = _materials[i]
+                if (material != nil) {
+                    let element = renderElementPool.getFromPool()
+                    element.setValue(self, mesh!, subMeshes[i], material!)
+                    renderPipeline!.pushPrimitive(element)
+                }
+            }
+        }
+
         engine._hardwareRenderer.preDraw()
 
         var uniforms = Uniforms()

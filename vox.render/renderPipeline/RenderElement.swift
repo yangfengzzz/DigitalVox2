@@ -18,7 +18,7 @@ final class RenderElement {
     /// Material.
     var material: Material!
 
-    func setValue(component: Renderer, mesh: Mesh, subMesh: SubMesh, material: Material) {
+    func setValue(_ component: Renderer, _ mesh: Mesh, _ subMesh: SubMesh, _ material: Material) {
         self.component = component;
         self.mesh = mesh;
         self.subMesh = subMesh;

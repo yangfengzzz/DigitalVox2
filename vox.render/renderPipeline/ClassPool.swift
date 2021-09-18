@@ -18,13 +18,14 @@ class ClassPool<T: EmptyInit> {
 
     /// Get element from pool.
     func getFromPool() -> T {
+        let index = _elementPoolIndex
         _elementPoolIndex += 1
-        if (_elementPool.count == _elementPoolIndex) {
+        if (_elementPool.count == index) {
             let element = T()
             _elementPool.append(element)
             return element
         } else {
-            return _elementPool[_elementPoolIndex]
+            return _elementPool[index]
         }
     }
 
