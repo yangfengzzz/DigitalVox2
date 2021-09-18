@@ -10,6 +10,6 @@ import Foundation
 /// Internal shader pool.
 internal class ShaderPool {
     static func initialization() {
-        _ = Shader.create("blinn-phong", "vertex_simple", "fragment_simple");
+        _ = Shader.create("simple", "vertex_simple", "fragment_simple");
     }
 }
