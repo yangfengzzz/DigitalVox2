@@ -21,9 +21,10 @@ class MetalRenderer {
     var renderEncoder: MTLRenderCommandEncoder!
     var commandBuffer: MTLCommandBuffer!
 
-    var pipelineState: MTLRenderPipelineState!
-
     var view: MTKView!
+    
+    var vertexFunction:MTLFunction?
+    var fragmentFunction:MTLFunction?
 
     func reinit(_ canvas: Canvas) {
         guard let device = MTLCreateSystemDefaultDevice(),
@@ -33,6 +34,9 @@ class MetalRenderer {
         self.device = device
         self.commandQueue = commandQueue
         library = device.makeDefaultLibrary()
+        vertexFunction = library?.makeFunction(name: "vertex_simple")
+        fragmentFunction = library?.makeFunction(name: "fragment_simple")
+        
         colorPixelFormat = canvas.colorPixelFormat
         depthStencilState = buildDepthStencilState()!
 
@@ -52,9 +56,7 @@ class MetalRenderer {
     }
 
     func makePipelineState(descriptor:MDLVertexDescriptor) {
-        let vertexFunction = library?.makeFunction(name: "vertex_simple")
-        let fragmentFunction = library?.makeFunction(name: "fragment_simple")
-
+        var pipelineState: MTLRenderPipelineState
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
         pipelineDescriptor.vertexFunction = vertexFunction
         pipelineDescriptor.fragmentFunction = fragmentFunction
@@ -68,6 +70,8 @@ class MetalRenderer {
         } catch let error {
             fatalError(error.localizedDescription)
         }
+        renderEncoder.setDepthStencilState(depthStencilState)
+        renderEncoder.setRenderPipelineState(pipelineState)
     }
 
     func setView(in view: MTKView) {
@@ -93,10 +97,6 @@ extension MetalRenderer: IHardwareRenderer {
 
         self.renderEncoder = renderEncoder
         self.commandBuffer = commandBuffer
-
-        renderEncoder.setDepthStencilState(depthStencilState)
-
-        renderEncoder.setRenderPipelineState(pipelineState)
     }
 
     func postDraw() {

@@ -25,7 +25,7 @@ final class Engine: NSObject {
     // internal var _backgroundTextureMaterial: Material
     // internal var _backgroundTextureMesh: ModelMesh
     internal var _renderCount: Int = 0
-    internal var _shaderProgramPools: [ShaderProgramPool?] = []
+    internal var _shaderProgramPools: [ShaderProgramPool?] = [nil]
 
     var _canvas: Canvas
     private var _sceneManager: SceneManager = SceneManager()

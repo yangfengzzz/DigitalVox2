@@ -49,27 +49,6 @@ class MeshRenderer: Renderer {
                 }
             }
         }
-
-        engine._hardwareRenderer.makePipelineState(descriptor: mesh!._vertexDescriptor._descriptor)
-        engine._hardwareRenderer.preDraw()
-
-        var uniforms = Uniforms()
-        uniforms.projectionMatrix = camera.projectionMatrix.elements
-        uniforms.viewMatrix = camera.viewMatrix.elements
-        uniforms.modelMatrix = entity.transform.worldMatrix.elements
-        engine._hardwareRenderer.renderEncoder.setVertexBytes(&uniforms,
-                length: MemoryLayout<Uniforms>.stride,
-                index: Int(BufferIndexUniforms.rawValue))
-        
-        for (index, vertexBuffer) in _mesh!._vertexBuffer.enumerated() {
-            engine._hardwareRenderer.renderEncoder.setVertexBuffer(vertexBuffer?.buffer,
-                                                                   offset: 0, index: index)
-        }
-        for i in 0..<mesh!.subMeshes.count {
-            engine._hardwareRenderer.drawPrimitive(mesh!, mesh!.subMeshes[i], ShaderProgram(engine, "", ""))
-        }
-
-        engine._hardwareRenderer.postDraw()
     }
 
     internal override func _onDestroy() {

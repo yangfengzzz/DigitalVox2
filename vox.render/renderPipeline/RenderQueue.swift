@@ -47,6 +47,9 @@ extension RenderQueue {
         let sceneData = scene.shaderData
         let cameraData = camera.shaderData
 
+        engine._hardwareRenderer.preDraw()
+
+        var mesh: Mesh? = nil
         for i in 0..<items.count {
             let item = items[i]
             let renderPassFlag = item.component.entity.layer
@@ -70,8 +73,27 @@ extension RenderQueue {
                 continue
             }
 
-            // rhi.drawPrimitive(element.mesh, element.subMesh, program)
+            if element.mesh !== mesh {
+                engine._hardwareRenderer.makePipelineState(descriptor: element.mesh._vertexDescriptor._descriptor)
+                var uniforms = Uniforms()
+                uniforms.projectionMatrix = camera.projectionMatrix.elements
+                uniforms.viewMatrix = camera.viewMatrix.elements
+                uniforms.modelMatrix = element.component.entity.transform.worldMatrix.elements
+                engine._hardwareRenderer.renderEncoder.setVertexBytes(&uniforms,
+                        length: MemoryLayout<Uniforms>.stride,
+                        index: Int(BufferIndexUniforms.rawValue))
+
+                for (index, vertexBuffer) in element.mesh._vertexBuffer.enumerated() {
+                    engine._hardwareRenderer.renderEncoder.setVertexBuffer(vertexBuffer?.buffer,
+                            offset: 0, index: index)
+                }
+
+                mesh = element.mesh
+            }
+
+            engine._hardwareRenderer.drawPrimitive(element.mesh!, element.subMesh, ShaderProgram(engine, "", ""))
         }
+        engine._hardwareRenderer.postDraw()
     }
 
     /// Clear collection.

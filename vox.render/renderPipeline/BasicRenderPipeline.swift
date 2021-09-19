@@ -27,7 +27,7 @@ class BasicRenderPipeline {
         _transparentQueue = RenderQueue(camera.engine)
 
         _renderPassArray = []
-        _defaultPass = RenderPass("default", 0, nil, nil, Layer(rawValue: 0)!)
+        _defaultPass = RenderPass("default", 0, nil, nil)
         addRenderPass(_defaultPass)
     }
 
@@ -59,7 +59,7 @@ extension BasicRenderPipeline {
         transparentQueue.sort(RenderQueue._compareFromFarToNear)
 
         for i in 0..<_renderPassArray.count {
-             _drawRenderPass(_renderPassArray[i], camera)
+            _drawRenderPass(_renderPassArray[i], camera)
         }
     }
 
