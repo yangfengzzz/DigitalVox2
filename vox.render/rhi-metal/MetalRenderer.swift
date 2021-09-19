@@ -70,7 +70,6 @@ class MetalRenderer {
         } catch let error {
             fatalError(error.localizedDescription)
         }
-        renderEncoder.setDepthStencilState(depthStencilState)
         renderEncoder.setRenderPipelineState(pipelineState)
     }
 
@@ -94,6 +93,7 @@ extension MetalRenderer: IHardwareRenderer {
               let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {
             return
         }
+        renderEncoder.setDepthStencilState(depthStencilState)
 
         self.renderEncoder = renderEncoder
         self.commandBuffer = commandBuffer
