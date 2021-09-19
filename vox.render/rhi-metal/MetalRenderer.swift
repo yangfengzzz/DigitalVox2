@@ -15,7 +15,7 @@ class MetalRenderer {
     var library: MTLLibrary!
     var colorPixelFormat: MTLPixelFormat!
 
-    var fragmentUniforms = FragmentUniforms()
+    var samplerState: MTLSamplerState!
     var depthStencilState: MTLDepthStencilState!
 
     var renderEncoder: MTLRenderCommandEncoder!
@@ -33,7 +33,8 @@ class MetalRenderer {
         library = device.makeDefaultLibrary()
 
         colorPixelFormat = canvas.colorPixelFormat
-        depthStencilState = buildDepthStencilState()!
+        depthStencilState = buildDepthStencilState()
+        samplerState = buildSamplerState()
 
         canvas.device = device
         canvas.depthStencilPixelFormat = .depth32Float
@@ -48,6 +49,16 @@ class MetalRenderer {
         descriptor.depthCompareFunction = .less
         descriptor.isDepthWriteEnabled = true
         return device.makeDepthStencilState(descriptor: descriptor)
+    }
+    
+    func buildSamplerState() -> MTLSamplerState? {
+      let descriptor = MTLSamplerDescriptor()
+      descriptor.sAddressMode = .repeat
+      descriptor.tAddressMode = .repeat
+      descriptor.mipFilter = .linear
+      descriptor.maxAnisotropy = 8
+      let samplerState = device.makeSamplerState(descriptor: descriptor)
+      return samplerState
     }
 
     func setView(in view: MTKView) {
@@ -71,6 +82,7 @@ extension MetalRenderer: IHardwareRenderer {
             return
         }
         renderEncoder.setDepthStencilState(depthStencilState)
+        renderEncoder.setFragmentSamplerState(samplerState, index: 0)
 
         self.renderEncoder = renderEncoder
         self.commandBuffer = commandBuffer

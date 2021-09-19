@@ -52,7 +52,10 @@ extension RenderQueue {
         var uniforms = Uniforms()
         uniforms.projectionMatrix = camera.projectionMatrix.elements
         uniforms.viewMatrix = camera.viewMatrix.elements
-        var entity: Entity? = nil
+        var fragmentUniforms = FragmentUniforms()
+        fragmentUniforms.tiling = 1
+        fragmentUniforms.cameraPosition = camera.entity.transform.worldPosition.elements
+        
         for i in 0..<items.count {
             let item = items[i]
             let renderPassFlag = item.component.entity.layer
@@ -76,20 +79,22 @@ extension RenderQueue {
                 continue
             }
 
-            if element.component.entity !== entity {
-                entity = element.component.entity
-                engine._hardwareRenderer.renderEncoder.setRenderPipelineState(element.pipelineState)
+            engine._hardwareRenderer.renderEncoder.setRenderPipelineState(element.pipelineState)
 
-                uniforms.modelMatrix = entity!.transform.worldMatrix.elements
-                engine._hardwareRenderer.renderEncoder.setVertexBytes(&uniforms,
-                        length: MemoryLayout<Uniforms>.stride,
-                        index: Int(BufferIndexUniforms.rawValue))
+            engine._hardwareRenderer.renderEncoder.setFragmentBytes(&fragmentUniforms,
+                                           length: MemoryLayout<FragmentUniforms>.stride,
+                                           index: Int(BufferIndexFragmentUniforms.rawValue))
+            
+            uniforms.modelMatrix = element.component.entity.transform.worldMatrix.elements
+            engine._hardwareRenderer.renderEncoder.setVertexBytes(&uniforms,
+                    length: MemoryLayout<Uniforms>.stride,
+                    index: Int(BufferIndexUniforms.rawValue))
 
-                for (index, vertexBuffer) in element.mesh._vertexBuffer.enumerated() {
-                    engine._hardwareRenderer.renderEncoder.setVertexBuffer(vertexBuffer?.buffer,
-                            offset: 0, index: index)
-                }
+            for (index, vertexBuffer) in element.mesh._vertexBuffer.enumerated() {
+                engine._hardwareRenderer.renderEncoder.setVertexBuffer(vertexBuffer?.buffer,
+                        offset: 0, index: index)
             }
+
 
             engine._hardwareRenderer.drawPrimitive(element.mesh!, element.subMesh, ShaderProgram(engine, "", ""))
         }
