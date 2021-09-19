@@ -68,7 +68,7 @@ vertex VertexOut vertex_main(const VertexIn vertexIn [[stage_in]],
 }
 
 fragment float4 fragment_main(VertexOut in [[stage_in]],
-                              constant Material &material [[buffer(BufferIndexMaterials)]],
+                              constant MaterialConstant &material [[buffer(BufferIndexMaterials)]],
                               texture2d<float> baseColorTexture [[ texture(BaseColorTexture),
                                                                   function_constant(hasColorTexture) ]],
                               texture2d<float> normalTexture [[ texture(NormalTexture),

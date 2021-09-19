@@ -9,10 +9,11 @@ import MetalKit
 
 class Assets {
     var meshes: [Mesh] = []
-    
-    private var _engine:Engine
-    
-    init(_ engine:Engine) {
+    var materials: [PBRMaterial] = []
+
+    private var _engine: Engine
+
+    init(_ engine: Engine) {
         _engine = engine
     }
 
@@ -36,18 +37,67 @@ class Assets {
 
         meshes = zip(mdlMeshes, mtkMeshes).map { (mdlMesh, mtkMesh) in
             let mesh = BufferMesh(_engine)
-            mesh.setVertexDescriptor( VertexDescriptor(mdlMesh.vertexDescriptor))
+            mesh.setVertexDescriptor(VertexDescriptor(mdlMesh.vertexDescriptor))
             for (index, vertexBuffer) in mtkMesh.vertexBuffers.enumerated() {
                 mesh.setVertexBufferBinding(vertexBuffer.buffer, 0, index)
             }
-            
+
+            zip(mdlMesh.submeshes!, mtkMesh.submeshes).forEach { (mdlSubmesh, mtkSubmesh: MTKSubmesh) in
+                _ = mesh.addSubMesh(
+                        MeshBuffer(mtkSubmesh.indexBuffer.buffer, mtkSubmesh.indexBuffer.length, mtkSubmesh.indexBuffer.type),
+                        mtkSubmesh.indexType, mtkSubmesh.indexCount, mtkSubmesh.primitiveType)
+
+                let mdlSubmesh = mdlSubmesh as! MDLSubmesh
+                let mat = PBRMaterial(_engine)
+                func property(with semantic: MDLMaterialSemantic) -> Texture2D? {
+                    let texture = Texture2D(_engine, 1, 1)
+                    guard let property = mdlSubmesh.material?.property(with: semantic),
+                          property.type == .string,
+                          let filename = property.stringValue
+                            else {
+                        return nil
+                    }
+                    try? texture.loadTexture(filename)
+                    return texture
+                }
+
+                mat.baseColor = property(with: MDLMaterialSemantic.baseColor)
+                mat.normal = property(with: .tangentSpaceNormal)
+                mat.roughness = property(with: .roughness)
+                mat.matConst = MaterialConstant(mdlSubmesh.material)
+                materials.append(mat)
+            }
+
+
             mtkMesh.submeshes.forEach { subMesh in
                 _ = mesh.addSubMesh(
-                    MeshBuffer(subMesh.indexBuffer.buffer, subMesh.indexBuffer.length, subMesh.indexBuffer.type),
-                    subMesh.indexType,subMesh.indexCount, subMesh.primitiveType)
+                        MeshBuffer(subMesh.indexBuffer.buffer, subMesh.indexBuffer.length, subMesh.indexBuffer.type),
+                        subMesh.indexType, subMesh.indexCount, subMesh.primitiveType)
             }
-            
+
             return mesh
         }
     }
+}
+
+private extension MaterialConstant {
+  init(_ material: MDLMaterial?) {
+    self.init()
+    if let baseColor = material?.property(with: .baseColor),
+      baseColor.type == .float3 {
+      self.baseColor = baseColor.float3Value
+    }
+    if let specular = material?.property(with: .specular),
+      specular.type == .float3 {
+      self.specularColor = specular.float3Value
+    }
+    if let shininess = material?.property(with: .specularExponent),
+      shininess.type == .float {
+      self.shininess = shininess.floatValue
+    }
+    if let roughness = material?.property(with: .roughness),
+      roughness.type == .float3 {
+      self.roughness = roughness.floatValue
+    }
+  }
 }

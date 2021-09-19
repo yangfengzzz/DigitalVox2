@@ -65,7 +65,7 @@ float3 render(Lighting lighting);
 
 fragment float4 fragment_mainPBR(VertexOut in [[stage_in]],
           constant Light *lights [[buffer(BufferIndexLights)]],
-          constant Material &material [[buffer(BufferIndexMaterials)]],
+          constant MaterialConstant &material [[buffer(BufferIndexMaterials)]],
           sampler textureSampler [[sampler(0)]],
           constant FragmentUniforms &fragmentUniforms [[buffer(BufferIndexFragmentUniforms)]],
           texture2d<float> baseColorTexture [[texture(0), function_constant(hasColorTexture)]],

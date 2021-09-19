@@ -105,6 +105,6 @@ typedef struct {
     float metallic;
     vector_float3 ambientOcclusion;
     float shininess;
-} Material;
+} MaterialConstant;
 
 #endif /* Common_h */

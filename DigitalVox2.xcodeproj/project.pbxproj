@@ -183,6 +183,7 @@
 		047FEC0026E6DF870078CFAF /* material_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBFF26E6DF870078CFAF /* material_data.swift */; };
 		047FEC0226E6E0320078CFAF /* environment_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEC0126E6E0320078CFAF /* environment_data.swift */; };
 		047FEC0426E6E0580078CFAF /* subdiv_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEC0326E6E0580078CFAF /* subdiv_data.swift */; };
+		04874ED426F771F3005E3318 /* PBRMaterial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04874ED326F771F3005E3318 /* PBRMaterial.swift */; };
 		0497A1E526DF150500F61DE9 /* voxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A1E426DF150500F61DE9 /* voxApp.swift */; };
 		0497A1E726DF150500F61DE9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A1E626DF150500F61DE9 /* ContentView.swift */; };
 		0497A1E926DF150800F61DE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0497A1E826DF150800F61DE9 /* Assets.xcassets */; };
@@ -469,6 +470,7 @@
 		047FEBFF26E6DF870078CFAF /* material_data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = material_data.swift; sourceTree = "<group>"; };
 		047FEC0126E6E0320078CFAF /* environment_data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = environment_data.swift; sourceTree = "<group>"; };
 		047FEC0326E6E0580078CFAF /* subdiv_data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = subdiv_data.swift; sourceTree = "<group>"; };
+		04874ED326F771F3005E3318 /* PBRMaterial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PBRMaterial.swift; sourceTree = "<group>"; };
 		0497A1E126DF150500F61DE9 /* vox.render.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vox.render.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0497A1E426DF150500F61DE9 /* voxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = voxApp.swift; sourceTree = "<group>"; };
 		0497A1E626DF150500F61DE9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -683,6 +685,7 @@
 				043CB44026F2E069004A0B21 /* Material.swift */,
 				043CB46E26F567D9004A0B21 /* BaseMaterial.swift */,
 				041B584A26F571DE00B32BD0 /* SimpleMaterial.swift */,
+				04874ED326F771F3005E3318 /* PBRMaterial.swift */,
 			);
 			path = material;
 			sourceTree = "<group>";
@@ -1499,6 +1502,7 @@
 				04EFDE8226DF4DC3005FBB6F /* Vector4.swift in Sources */,
 				043CB47326F56BAA004A0B21 /* BlendFactor.swift in Sources */,
 				041B585326F57C4200B32BD0 /* ShaderUniform.swift in Sources */,
+				04874ED426F771F3005E3318 /* PBRMaterial.swift in Sources */,
 				04E28C3626ECE780003A3C3B /* GPUPrimitive.swift in Sources */,
 				047E7B2C26EE257E006BC3FB /* MeshRenderer.swift in Sources */,
 				0413288226E08394000A4F4E /* MathUtil.swift in Sources */,

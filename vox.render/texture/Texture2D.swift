@@ -25,11 +25,11 @@ class Texture2D: Texture {
     ///   - height: Texture height
     ///   - format: Texture format. default  `MTLPixelFormat.rgba8Sint`
     ///   - mipmap: Whether to use multi-level texture
-    init(engine: Engine,
-         width: Int,
-         height: Int,
-         format: MTLPixelFormat = .rgba8Sint,
-         mipmap: Bool = true
+    init(_ engine: Engine,
+         _ width: Int,
+         _ height: Int,
+         _ format: MTLPixelFormat = .rgba8Sint,
+         _ mipmap: Bool = true
     ) {
         _format = format
 
@@ -44,7 +44,7 @@ class Texture2D: Texture {
     /// - Parameter imageName: name of image
     /// - Throws: a pointer to an NSError object if an error occurred, or nil if the texture was fully loaded and initialized.
     /// - Returns: a fully loaded and initialized Metal texture, or nil if an error occurred.
-    func loadTexture(imageName: String) throws -> MTLTexture? {
+    func loadTexture(_ imageName: String) throws {
         let textureLoader = MTKTextureLoader(device: _engine._hardwareRenderer.device)
 
         let textureLoaderOptions: [MTKTextureLoader.Option: Any] =
@@ -57,26 +57,25 @@ class Texture2D: Texture {
         guard let url = Bundle.main.url(forResource: imageName,
                 withExtension: fileExtension)
                 else {
-            let texture = try? textureLoader.newTexture(name: imageName,
+            self._platformTexture = try? textureLoader.newTexture(name: imageName,
                     scaleFactor: 1.0,
                     bundle: Bundle.main, options: nil)
-            if texture == nil {
+            if self._platformTexture == nil {
                 print("WARNING: Texture not found: \(imageName)")
             }
-            return texture
+            return
         }
 
-        let texture = try textureLoader.newTexture(URL: url,
+        self._platformTexture = try textureLoader.newTexture(URL: url,
                 options: textureLoaderOptions)
         print("loaded texture: \(url.lastPathComponent)")
-        return texture
     }
 
     /// static method to load texture from a instance of MDLTexture
     /// - Parameter texture: a source of texel data
     /// - Throws: a pointer to an NSError object if an error occurred, or nil if the texture was fully loaded and initialized.
     /// - Returns: a fully loaded and initialized Metal texture, or nil if an error occurred.
-    func loadTexture(texture: MDLTexture) throws -> MTLTexture? {
+    func loadTexture(_ texture: MDLTexture) throws -> MTLTexture? {
         let textureLoader = MTKTextureLoader(device: _engine._hardwareRenderer.device)
         let textureLoaderOptions: [MTKTextureLoader.Option: Any] =
                 [.origin: MTKTextureLoader.Origin.bottomLeft,
@@ -95,10 +94,10 @@ class Texture2D: Texture {
     ///   - pixelFormat: the format describing how every pixel on the texture image is stored
     ///   - usage: options that determine how you can use the texture
     /// - Returns: a fully loaded and initialized Metal texture
-    func buildTexture(size: CGSize,
-                      label: String,
-                      pixelFormat: MTLPixelFormat,
-                      usage: MTLTextureUsage) -> MTLTexture {
+    func buildTexture(_ size: CGSize,
+                      _ label: String,
+                      _ pixelFormat: MTLPixelFormat,
+                      _ usage: MTLTextureUsage) -> MTLTexture {
         let descriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: pixelFormat,
                 width: Int(size.width),
                 height: Int(size.height),
