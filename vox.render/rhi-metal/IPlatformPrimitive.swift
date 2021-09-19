@@ -13,7 +13,7 @@ protocol IPlatformPrimitive {
     /// - Parameters:
     ///   - shaderProgram: Shader
     ///   - subMesh: Sub primitive
-    func draw(_ renderPassEncoder: MTLRenderCommandEncoder, _ shaderProgram: ShaderProgram, _ subMesh: SubMesh)
+    func draw(_ shaderProgram: ShaderProgram, _ subMesh: SubMesh)
 
     func destroy()
 }

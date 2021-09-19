@@ -42,8 +42,6 @@ class MetalRenderer {
         canvas.framebufferOnly = false
         canvas.isMultipleTouchEnabled = true
         canvas.clearColor = MTLClearColor(red: 0.7, green: 0.9, blue: 1, alpha: 1)
-
-        pipelineState = makePipelineState()
     }
 
     func buildDepthStencilState() -> MTLDepthStencilState? {
@@ -53,16 +51,15 @@ class MetalRenderer {
         return device.makeDepthStencilState(descriptor: descriptor)
     }
 
-    func makePipelineState() -> MTLRenderPipelineState {
+    func makePipelineState(descriptor:MDLVertexDescriptor) {
         let vertexFunction = library?.makeFunction(name: "vertex_simple")
         let fragmentFunction = library?.makeFunction(name: "fragment_simple")
 
-        var pipelineState: MTLRenderPipelineState
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
         pipelineDescriptor.vertexFunction = vertexFunction
         pipelineDescriptor.fragmentFunction = fragmentFunction
 
-        let vertexDescriptor = MDLVertexDescriptor.defaultVertexDescriptor
+        let vertexDescriptor = descriptor
         pipelineDescriptor.vertexDescriptor = MTKMetalVertexDescriptorFromModelIO(vertexDescriptor)
         pipelineDescriptor.colorAttachments[0].pixelFormat = colorPixelFormat
         pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
@@ -71,7 +68,6 @@ class MetalRenderer {
         } catch let error {
             fatalError(error.localizedDescription)
         }
-        return pipelineState
     }
 
     func setView(in view: MTKView) {
@@ -81,11 +77,11 @@ class MetalRenderer {
 
 extension MetalRenderer: IHardwareRenderer {
     func createPlatformPrimitive(_ primitive: Mesh) -> IPlatformPrimitive {
-        GPUPrimitive(self, primitive)
+        GPUPrimitive(self)
     }
 
     func drawPrimitive(_ primitive: Mesh, _ subPrimitive: SubMesh, _ shaderProgram: ShaderProgram) {
-        primitive._draw(renderEncoder, shaderProgram, subPrimitive)
+        primitive._draw(shaderProgram, subPrimitive)
     }
 
     func preDraw() {

@@ -5,7 +5,7 @@
 //  Created by 杨丰 on 2021/9/2.
 //
 
-import Metal
+import MetalKit
 
 class Mesh: RefObject {
     /// Name.
@@ -13,17 +13,14 @@ class Mesh: RefObject {
     /// The bounding volume of the mesh.
     var bounds: BoundingBox = BoundingBox()
 
-    var _vertexElementMap: [String: VertexElement] = [:]
-    var _indexType: MTLIndexType!
-    var _indexByteCount: Int = 0
     var _platformPrimitive: IPlatformPrimitive!
 
-    internal var _instanceCount: Int = 0
-    internal var _vertexBufferBindings: [VertexBufferBinding?] = []
-    internal var _indexBufferBinding: IndexBufferBinding!
-    internal var _vertexElements: [VertexElement] = []
+    var _vertexBuffer: [MeshBuffer?] = []
+    var _vertexCount: Int = 0
+    var _vertexDescriptor: VertexDescriptor = VertexDescriptor()
+    var _subMeshes: [SubMesh] = []
 
-    private var _subMeshes: [SubMesh] = []
+    internal var _instanceCount: Int = 0
     private var _updateFlagManager: UpdateFlagManager = UpdateFlagManager()
 
     /// First sub-mesh. Rendered using the first material.
@@ -64,8 +61,9 @@ class Mesh: RefObject {
     ///   - count: Drawing count, if the index buffer is set, it means the count in the index buffer, if not set, it means the count in the vertex buffer
     ///   - topology: Drawing topology, default is MeshTopology.Triangles
     /// - Returns: Sub-mesh
-    func addSubMesh(_ start: Int, _ count: Int, _ topology: MTLPrimitiveType? = nil) -> SubMesh {
-        let startOrSubMesh = SubMesh(start: start, count: count, topology: topology)
+    func addSubMesh(_ indexBuffer: MeshBuffer, _ indexType: MTLIndexType,
+                    _ indexCount: Int = 0, _ topology: MTLPrimitiveType = .triangle) -> SubMesh {
+        let startOrSubMesh = SubMesh(indexBuffer, indexType, indexCount, topology)
         _subMeshes.append(startOrSubMesh)
         return startOrSubMesh
     }
@@ -81,34 +79,11 @@ class Mesh: RefObject {
         _updateFlagManager.register()
     }
 
-    internal func _draw(_ renderPassEncoder: MTLRenderCommandEncoder, _ shaderProgram: ShaderProgram, _ subMesh: SubMesh) {
-        _platformPrimitive.draw(renderPassEncoder, shaderProgram, subMesh)
+    func _setVertexBuffer(_ index: Int, _ buffer: MeshBuffer) {
+        _vertexBuffer.insert(buffer, at: index)
     }
 
-    func _setVertexElements(_ elements: [VertexElement]) {
-        _clearVertexElements()
-        for i in 0..<elements.count {
-            _addVertexElement(elements[i])
-        }
-    }
-
-    func _setVertexBufferBinding(_ index: Int, _ binding: VertexBufferBinding) {
-        _vertexBufferBindings.insert(binding, at: index)
-    }
-
-    func _setIndexBufferBinding(_ binding: IndexBufferBinding?) {
-        _indexBufferBinding = binding
-    }
-
-    private func _clearVertexElements() {
-        _vertexElements = []
-        _vertexElementMap = [:]
-    }
-
-    private func _addVertexElement(_ element: VertexElement) {
-        let semantic = element.semantic
-        _vertexElementMap[semantic] = element
-        _vertexElements.append(element)
-        _updateFlagManager.distribute()
+    internal func _draw(_ shaderProgram: ShaderProgram, _ subMesh: SubMesh) {
+        _platformPrimitive.draw(shaderProgram, subMesh)
     }
 }

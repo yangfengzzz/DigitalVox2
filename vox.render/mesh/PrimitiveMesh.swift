@@ -5,7 +5,7 @@
 //  Created by 杨丰 on 2021/9/2.
 //
 
-import Foundation
+import Metal
 
 /// Used to generate common primitive meshes.
 class PrimitiveMesh {
@@ -85,7 +85,7 @@ class PrimitiveMesh {
         _ = bounds.min.setValue(x: -radius, y: -radius, z: -radius)
         _ = bounds.max.setValue(x: radius, y: radius, z: radius)
 
-        PrimitiveMesh._initialize(mesh, positions, normals, uvs, indices, noLongerAccessible)
+        PrimitiveMesh._initialize(engine, mesh, positions, normals, uvs, indices, noLongerAccessible)
         return mesh
     }
 
@@ -241,7 +241,7 @@ class PrimitiveMesh {
         _ = bounds.min.setValue(x: -halfWidth, y: -halfHeight, z: -halfDepth)
         _ = bounds.max.setValue(x: halfWidth, y: halfHeight, z: halfDepth)
 
-        PrimitiveMesh._initialize(mesh, positions, normals, uvs,
+        PrimitiveMesh._initialize(engine, mesh, positions, normals, uvs,
                 indices, noLongerAccessible)
         return mesh
     }
@@ -322,7 +322,7 @@ class PrimitiveMesh {
         _ = bounds.min.setValue(x: -halfWidth, y: -halfHeight, z: 0)
         _ = bounds.max.setValue(x: halfWidth, y: halfHeight, z: 0)
 
-        PrimitiveMesh._initialize(mesh, positions, normals, uvs, indices, noLongerAccessible)
+        PrimitiveMesh._initialize(engine, mesh, positions, normals, uvs, indices, noLongerAccessible)
         return mesh
     }
 
@@ -493,7 +493,7 @@ class PrimitiveMesh {
         _ = bounds.min.setValue(x: -radiusMax, y: -halfHeight, z: -radiusMax)
         _ = bounds.max.setValue(x: radiusMax, y: halfHeight, z: radiusMax)
 
-        PrimitiveMesh._initialize(mesh, positions, normals, uvs, indices, noLongerAccessible)
+        PrimitiveMesh._initialize(engine, mesh, positions, normals, uvs, indices, noLongerAccessible)
         return mesh
     }
 
@@ -582,7 +582,7 @@ class PrimitiveMesh {
         _ = bounds.min.setValue(x: -outerRadius, y: -outerRadius, z: -tubeRadius)
         _ = bounds.max.setValue(x: outerRadius, y: outerRadius, z: tubeRadius)
 
-        PrimitiveMesh._initialize(mesh, positions, normals, uvs, indices, noLongerAccessible)
+        PrimitiveMesh._initialize(engine, mesh, positions, normals, uvs, indices, noLongerAccessible)
         return mesh
     }
 
@@ -717,14 +717,15 @@ class PrimitiveMesh {
         _ = bounds.min.setValue(x: -radius, y: -halfHeight, z: -radius)
         _ = bounds.max.setValue(x: radius, y: halfHeight, z: radius)
 
-        PrimitiveMesh._initialize(mesh, positions, normals, uvs, indices, noLongerAccessible)
+        PrimitiveMesh._initialize(engine, mesh, positions, normals, uvs, indices, noLongerAccessible)
         return mesh
     }
 }
 
 //MARK:- Private Function
 extension PrimitiveMesh {
-    private static func _initialize(_ mesh: ModelMesh,
+    private static func _initialize(_ engine: Engine,
+                                    _ mesh: ModelMesh,
                                     _ positions: [Vector3],
                                     _ normals: [Vector3],
                                     _ uvs: [Vector2],
@@ -733,10 +734,13 @@ extension PrimitiveMesh {
         mesh.setPositions(positions: positions)
         mesh.setNormals(normals: normals)
         mesh.setUVs(uv: uvs)
-        mesh.setIndices(indices: .u32(indices))
 
         mesh.uploadData(noLongerAccessible)
-        _ = mesh.addSubMesh(0, indices.count)
+        let indexBuffer = engine._hardwareRenderer.device.makeBuffer(bytes: indices,
+                length: indices.count * MemoryLayout<UInt32>.stride,
+                options: .storageModeShared)
+        _ = mesh.addSubMesh(MeshBuffer(indexBuffer!, indices.count * MemoryLayout<UInt32>.stride, .index),
+                .uint32, indices.count, .triangle)
     }
 
     private static func _generateIndices(_ engine: Engine, _ vertexCount: Int, _ indexCount: Int) -> [UInt32] {

@@ -71,9 +71,18 @@ typedef struct {
 typedef enum {
     Position = 0,
     Normal = 1,
-    UV = 2,
-    Tangent = 3,
-    Bitangent = 4
+    Color_0 = 2,
+    Weights_0 = 3,
+    Joints_0 = 4,
+    Tangent = 5,
+    UV_0 = 6,
+    UV_1 = 7,
+    UV_2 = 8,
+    UV_3 = 9,
+    UV_4 = 10,
+    UV_5 = 11,
+    UV_6 = 12,
+    UV_7 = 13
 } Attributes;
 
 typedef enum {
@@ -83,10 +92,10 @@ typedef enum {
 
 typedef enum {
     BufferIndexVertices = 0,
-    BufferIndexUniforms = 11,
-    BufferIndexLights = 12,
-    BufferIndexFragmentUniforms = 13,
-    BufferIndexMaterials = 14
+    BufferIndexUniforms = 15,
+    BufferIndexLights = 16,
+    BufferIndexFragmentUniforms = 17,
+    BufferIndexMaterials = 18
 } BufferIndices;
 
 typedef struct {

@@ -5,7 +5,7 @@
 //  Created by 杨丰 on 2021/9/2.
 //
 
-import Metal
+import MetalKit
 
 enum IndexArrayType {
     case u16([UInt16])
@@ -13,17 +13,12 @@ enum IndexArrayType {
 }
 
 class ModelMesh: Mesh {
-    private var _vertexCount: Int = 0
     private var _accessible: Bool = true
     private var _verticesFloat32: [Float]? = nil
     private var _verticesUint8: [UInt8]? = nil
-    private var _indices: IndexArrayType? = nil
-    private var _indicesFormat: MTLIndexType? = nil
     private var _vertexSlotChanged: Bool = true
     private var _vertexChangeFlag: Int = 0
-    private var _indicesChangeFlag: Bool = false
     private var _elementCount: Int = 0
-    private var _vertexElementsCache: [VertexElement] = []
 
     private var _positions: [Vector3] = []
     private var _normals: [Vector3]? = nil
@@ -257,34 +252,6 @@ extension ModelMesh {
         }
     }
 
-    /// Set indices for the mesh.
-    /// - Parameter indices: The indices for the mesh.
-    func setIndices(indices: IndexArrayType) {
-        if (!_accessible) {
-            fatalError("Not allowed to access data while accessible is false.")
-        }
-
-        _indices = indices
-        switch indices {
-        case .u16(_):
-            _indicesFormat = .uint16
-        case .u32(_):
-            _indicesFormat = .uint32
-        }
-
-        _indicesChangeFlag = true
-    }
-
-    /// Get indices for the mesh.
-    func getIndices() -> IndexArrayType? {
-        if (!_accessible) {
-            fatalError("Not allowed to access data while accessible is false.")
-        }
-
-        return _indices
-    }
-
-
     /// Upload Mesh Data to the graphics API.
     /// - Parameter noLongerAccessible: Whether to access data later. If true, you'll never access data anymore (free memory cache)
     func uploadData(_ noLongerAccessible: Bool) {
@@ -294,16 +261,14 @@ extension ModelMesh {
 
         // Vertex element change.
         if (_vertexSlotChanged) {
-            let vertexElements = _updateVertexElements()
-            _setVertexElements(vertexElements)
+            _vertexDescriptor = _updateVertexDescriptor()
             _vertexChangeFlag = ValueChanged.All.rawValue
             _vertexSlotChanged = false
         }
 
         // Vertex value change.
-        let vertexBufferBindings = _vertexBufferBindings
         let elementCount = _elementCount
-        let vertexBuffer = vertexBufferBindings.first?!._buffer
+        let vertexBuffer = _vertexBuffer.first?!.buffer
         let vertexFloatCount = elementCount * _vertexCount
         if (vertexBuffer == nil || _verticesFloat32?.count != vertexFloatCount) {
             var vertices = [Float](repeating: 0, count: vertexFloatCount)
@@ -313,107 +278,138 @@ extension ModelMesh {
             _updateVertices(vertices: &vertices)
 
             let newVertexBuffer = engine._hardwareRenderer.device.makeBuffer(bytes: &vertices, length: vertexFloatCount * MemoryLayout<Float>.stride)
-            _setVertexBufferBinding(0, VertexBufferBinding(newVertexBuffer!, elementCount * 4))
-        }
-
-        let indexBuffer = _indexBufferBinding?._buffer
-        if (_indices != nil) {
-            switch _indices {
-            case .u16(let value):
-                if (indexBuffer == nil || value.count * MemoryLayout<UInt16>.stride != indexBuffer!.length) {
-                    let newIndexBuffer = engine._hardwareRenderer.device.makeBuffer(bytes: value,
-                            length: value.count * MemoryLayout<UInt16>.stride,
-                            options: .storageModeShared)
-                    _setIndexBufferBinding(IndexBufferBinding(newIndexBuffer!, _indicesFormat!))
-                }
-            case .u32(let value):
-                if (indexBuffer == nil || value.count * MemoryLayout<UInt32>.stride != indexBuffer!.length) {
-                    let newIndexBuffer = engine._hardwareRenderer.device.makeBuffer(bytes: value,
-                            length: value.count * MemoryLayout<UInt32>.stride,
-                            options: .storageModeShared)
-                    _setIndexBufferBinding(IndexBufferBinding(newIndexBuffer!, _indicesFormat!))
-                }
-            default:
-                fatalError()
-            }
+            _setVertexBuffer(0, MeshBuffer(newVertexBuffer!, vertexFloatCount * MemoryLayout<Float>.stride, .vertex))
         }
     }
-
-    private func _updateVertexElements() -> [VertexElement] {
-        var vertexElements = _vertexElementsCache
-        vertexElements.append(POSITION_VERTEX_ELEMENT)
-
+    
+    private func _updateVertexDescriptor()->VertexDescriptor {
+        let descriptr = MDLVertexDescriptor()
+        descriptr.attributes[Int(Position.rawValue)] = POSITION_VERTEX_DESCRIPTOR
+        
         var offset = 12
         var elementCount = 3
         if (_normals != nil) {
-            vertexElements.append(VertexElement(semantic: "NORMAL", offset: offset, format: .float3, bindingIndex: 0))
-            offset += 12
+            descriptr.attributes[Int(Normal.rawValue)] =
+                    MDLVertexAttribute(name: MDLVertexAttributeNormal,
+                            format: .float3,
+                            offset: offset,
+                            bufferIndex: Int(BufferIndexVertices.rawValue))
+            offset += MemoryLayout<Float>.stride * 3
             elementCount += 3
         }
         if (_colors != nil) {
-            vertexElements.append(VertexElement(semantic: "COLOR_0", offset: offset, format: .float4, bindingIndex: 0))
-            offset += 16
+            descriptr.attributes[Int(Color_0.rawValue)] =
+                    MDLVertexAttribute(name: MDLVertexAttributeColor,
+                            format: .float4,
+                            offset: offset,
+                            bufferIndex: Int(BufferIndexVertices.rawValue))
+            offset += MemoryLayout<Float>.stride * 4
             elementCount += 4
         }
         if (_boneWeights != nil) {
-            vertexElements.append(VertexElement(semantic: "WEIGHTS_0", offset: offset, format: .float4, bindingIndex: 0))
-            offset += 16
+            descriptr.attributes[Int(Weights_0.rawValue)] =
+                    MDLVertexAttribute(name: MDLVertexAttributeJointWeights,
+                            format: .float4,
+                            offset: offset,
+                            bufferIndex: Int(BufferIndexVertices.rawValue))
+            offset += MemoryLayout<Float>.stride * 4
             elementCount += 4
         }
         if (_boneIndices != nil) {
-            vertexElements.append(VertexElement(semantic: "JOINTS_0", offset: offset, format: .short4, bindingIndex: 0))
-            offset += 4
+            descriptr.attributes[Int(Joints_0.rawValue)] =
+                    MDLVertexAttribute(name: MDLVertexAttributeJointIndices,
+                            format: .short4,
+                            offset: offset,
+                            bufferIndex: Int(BufferIndexVertices.rawValue))
+            
+            offset += MemoryLayout<u_short>.stride
             elementCount += 1
         }
         if (_tangents != nil) {
-            vertexElements.append(VertexElement(semantic: "TANGENT", offset: offset, format: .float4, bindingIndex: 0))
-            offset += 16
+            descriptr.attributes[Int(Tangent.rawValue)] =
+                    MDLVertexAttribute(name: MDLVertexAttributeTangent,
+                            format: .float4,
+                            offset: offset,
+                            bufferIndex: Int(BufferIndexVertices.rawValue))
+            offset += MemoryLayout<Float>.stride * 4
             elementCount += 4
         }
         if (_uv != nil) {
-            vertexElements.append(VertexElement(semantic: "TEXCOORD_0", offset: offset, format: .float2, bindingIndex: 0))
-            offset += 8
+            descriptr.attributes[Int(UV_0.rawValue)] =
+                    MDLVertexAttribute(name: MDLVertexAttributeTextureCoordinate,
+                            format: .float2,
+                            offset: offset,
+                            bufferIndex: Int(BufferIndexVertices.rawValue))
+            offset += MemoryLayout<Float>.stride * 2
             elementCount += 2
         }
         if (_uv1 != nil) {
-            vertexElements.append(VertexElement(semantic: "TEXCOORD_1", offset: offset, format: .float2, bindingIndex: 0))
-            offset += 8
+            descriptr.attributes[Int(UV_1.rawValue)] =
+                    MDLVertexAttribute(name: MDLVertexAttributeTextureCoordinate,
+                            format: .float2,
+                            offset: offset,
+                            bufferIndex: Int(BufferIndexVertices.rawValue))
+            offset += MemoryLayout<Float>.stride * 2
             elementCount += 2
         }
         if (_uv2 != nil) {
-            vertexElements.append(VertexElement(semantic: "TEXCOORD_2", offset: offset, format: .float2, bindingIndex: 0))
-            offset += 8
+            descriptr.attributes[Int(UV_2.rawValue)] =
+                    MDLVertexAttribute(name: MDLVertexAttributeTextureCoordinate,
+                            format: .float2,
+                            offset: offset,
+                            bufferIndex: Int(BufferIndexVertices.rawValue))
+            offset += MemoryLayout<Float>.stride * 2
             elementCount += 2
         }
         if (_uv3 != nil) {
-            vertexElements.append(VertexElement(semantic: "TEXCOORD_3", offset: offset, format: .float2, bindingIndex: 0))
-            offset += 8
+            descriptr.attributes[Int(UV_3.rawValue)] =
+                    MDLVertexAttribute(name: MDLVertexAttributeTextureCoordinate,
+                            format: .float2,
+                            offset: offset,
+                            bufferIndex: Int(BufferIndexVertices.rawValue))
+            offset += MemoryLayout<Float>.stride * 2
             elementCount += 2
         }
         if (_uv4 != nil) {
-            vertexElements.append(VertexElement(semantic: "TEXCOORD_4", offset: offset, format: .float2, bindingIndex: 0))
-            offset += 8
+            descriptr.attributes[Int(UV_4.rawValue)] =
+                    MDLVertexAttribute(name: MDLVertexAttributeTextureCoordinate,
+                            format: .float2,
+                            offset: offset,
+                            bufferIndex: Int(BufferIndexVertices.rawValue))
+            offset += MemoryLayout<Float>.stride * 2
             elementCount += 2
         }
         if (_uv5 != nil) {
-            vertexElements.append(VertexElement(semantic: "TEXCOORD_5", offset: offset, format: .float2, bindingIndex: 0))
-            offset += 8
+            descriptr.attributes[Int(UV_5.rawValue)] =
+                    MDLVertexAttribute(name: MDLVertexAttributeTextureCoordinate,
+                            format: .float2,
+                            offset: offset,
+                            bufferIndex: Int(BufferIndexVertices.rawValue))
+            offset += MemoryLayout<Float>.stride * 2
             elementCount += 2
         }
         if (_uv6 != nil) {
-            vertexElements.append(VertexElement(semantic: "TEXCOORD_6", offset: offset, format: .float2, bindingIndex: 0))
-            offset += 8
+            descriptr.attributes[Int(UV_6.rawValue)] =
+                    MDLVertexAttribute(name: MDLVertexAttributeTextureCoordinate,
+                            format: .float2,
+                            offset: offset,
+                            bufferIndex: Int(BufferIndexVertices.rawValue))
+            offset += MemoryLayout<Float>.stride * 2
             elementCount += 2
         }
         if (_uv7 != nil) {
-            vertexElements.append(VertexElement(semantic: "TEXCOORD_7", offset: offset, format: .float2, bindingIndex: 0))
-            offset += 8
+            descriptr.attributes[Int(UV_7.rawValue)] =
+                    MDLVertexAttribute(name: MDLVertexAttributeTextureCoordinate,
+                            format: .float2,
+                            offset: offset,
+                            bufferIndex: Int(BufferIndexVertices.rawValue))
+            offset += MemoryLayout<Float>.stride * 2
             elementCount += 2
         }
-
+        descriptr.layouts[0] = MDLVertexBufferLayout(stride: offset)
 
         _elementCount = elementCount
-        return vertexElements
+        return VertexDescriptor(descriptr)
     }
 
     private func _updateVertices(vertices: inout [Float32]) {
@@ -571,7 +567,6 @@ extension ModelMesh {
 
     private func _releaseCache() {
         _verticesUint8 = nil
-        _indices = nil
         _verticesFloat32 = nil
         _positions = []
         _tangents = nil
@@ -588,7 +583,11 @@ extension ModelMesh {
     }
 }
 
-let POSITION_VERTEX_ELEMENT = VertexElement(semantic: "POSITION", offset: 0, format: .float3, bindingIndex: 0)
+let POSITION_VERTEX_DESCRIPTOR = MDLVertexAttribute(
+    name: MDLVertexAttributePosition,
+    format: .float3,
+    offset: 0,
+    bufferIndex: Int(BufferIndexVertices.rawValue))
 
 enum ValueChanged: Int {
     case Position = 0x1

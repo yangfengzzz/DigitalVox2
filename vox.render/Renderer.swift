@@ -175,7 +175,7 @@ extension Renderer {
     func setMaterial(index: Int, material: Material) {
         if (index >= _materials.count) {
             _materials.reserveCapacity(index + 1)
-            for _ in _materials.count..<index {
+            for _ in _materials.count...index {
                 _materials.append(nil)
             }
         }

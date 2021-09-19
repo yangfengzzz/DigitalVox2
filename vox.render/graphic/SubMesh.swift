@@ -9,21 +9,28 @@ import Metal
 
 /// Sub-mesh, mainly contains drawing information.
 class SubMesh {
-    /// Start drawing offset.
-    var start: Int
-    /// Drawing count.
-    var count: Int
     /// Drawing topology.
     var topology: MTLPrimitiveType
+    /// Type of index buffer
+    var indexType: MTLIndexType
+    /// IndexBuffer
+    var indexBuffer: MeshBuffer?
+    /// Drawing count.
+    var indexCount: Int
+
 
     /// Create a sub-mesh.
     /// - Parameters:
-    ///   - start: Start drawing offset
-    ///   - count: Drawing count
+    ///   - indexBuffer: Index Buffer
+    ///   - indexType: Index Type
+    ///   - indexCount: Drawing count
     ///   - topology: Drawing topology
-    init(start: Int = 0, count: Int = 0, topology: MTLPrimitiveType? = nil) {
-        self.start = start
-        self.count = count
-        self.topology = topology ?? .triangle
+    init(_ indexBuffer: MeshBuffer, _ indexType: MTLIndexType,
+         _ indexCount: Int = 0, _ topology: MTLPrimitiveType = .triangle) {
+        self.indexBuffer = indexBuffer
+        self.indexType = indexType
+
+        self.indexCount = indexCount
+        self.topology = topology
     }
 }

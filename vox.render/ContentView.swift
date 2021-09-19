@@ -7,23 +7,15 @@
 
 import SwiftUI
 
-class CubeScript: Script {
-    let speed: Float = 60
-
-    override func onUpdate(_ deltaTime: Float) {
-        let rotation = entity.transform.rotation
-        rotation.elements += deltaTime * speed
-        entity.transform.rotation = rotation
-    }
-}
-
 struct ContentView: View {
     let canvas: Canvas
     let engine: Engine
+    let asset: Assets
 
     init() {
         canvas = Canvas()
         engine = Engine(canvas, MetalRenderer())
+        asset = Assets(engine)
 
         let scene = engine.sceneManager.activeScene
         let rootEntity = scene!.createRootEntity()
@@ -34,14 +26,22 @@ struct ContentView: View {
         cameraEntity.transform.setPosition(x: 0, y: 0, z: 4)
         let _: OrbitControl = cameraEntity.addComponent()
 
-        let cubeEntity = rootEntity.createChild()
-        let renderer: MeshRenderer = cubeEntity.addComponent()
-        let box = PrimitiveMesh.createCuboid(engine)
-        renderer.mesh = box
         let simpleMtl = SimpleMaterial(engine)
-        renderer.setMaterial(material: simpleMtl)
         
-        let _: CubeScript = cubeEntity.addComponent()
+        // let cubeEntity = rootEntity.createChild()
+        // let cubeRenderer: MeshRenderer = cubeEntity.addComponent()
+        // let box = PrimitiveMesh.createCuboid(engine)
+        // cubeRenderer.mesh = box
+        // cubeRenderer.setMaterial(material: simpleMtl)
+
+        let assetEntity = rootEntity.createChild()
+        let assetRenderer: MeshRenderer = assetEntity.addComponent()
+        asset.load(name: "cottage1.obj")
+        assetRenderer.mesh = asset.meshes[0]
+        assetRenderer.setMaterial(index: 0, material: simpleMtl)
+        assetRenderer.setMaterial(index: 1, material: simpleMtl)
+        assetRenderer.setMaterial(index: 2, material: simpleMtl)
+        assetRenderer.setMaterial(index: 3, material: simpleMtl)
     }
 
     var body: some View {

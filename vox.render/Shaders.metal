@@ -41,9 +41,8 @@ constant bool hasNormalTexture [[function_constant(1)]];
 struct VertexIn {
   float4 position [[attribute(Position)]];
   float3 normal [[attribute(Normal)]];
-  float2 uv [[attribute(UV)]];
+  float2 uv [[attribute(UV_0)]];
   float3 tangent [[attribute(Tangent)]];
-  float3 bitangent [[attribute(Bitangent)]];
 };
 
 struct VertexOut {
@@ -51,7 +50,6 @@ struct VertexOut {
   float3 worldPosition;
   float3 worldNormal;
   float3 worldTangent;
-  float3 worldBitangent;
   float2 uv;
 };
 
@@ -64,7 +62,6 @@ vertex VertexOut vertex_main(const VertexIn vertexIn [[stage_in]],
     .worldPosition = (uniforms.modelMatrix * vertexIn.position).xyz,
     .worldNormal = uniforms.normalMatrix * vertexIn.normal,
     .worldTangent = uniforms.normalMatrix * vertexIn.tangent,
-    .worldBitangent = uniforms.normalMatrix * vertexIn.bitangent,
     .uv = vertexIn.uv
   };
   return out;
@@ -108,7 +105,7 @@ fragment float4 fragment_main(VertexOut in [[stage_in]],
   float3 specularColor = 0;
   
   float3 normalDirection = float3x3(in.worldTangent,
-                                    in.worldBitangent,
+                                    in.worldTangent,
                                     in.worldNormal) * normalValue;
   normalDirection = normalize(normalDirection);
 
