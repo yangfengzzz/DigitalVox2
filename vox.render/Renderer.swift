@@ -5,7 +5,7 @@
 //  Created by 杨丰 on 2021/9/12.
 //
 
-import Foundation
+import Metal
 
 /// Renderable component.
 class Renderer: Component {
@@ -37,6 +37,7 @@ class Renderer: Component {
     var _overrideUpdate: Bool = false
     // @shallowClone
     var _materials: [Material?] = []
+    var _pipelineStates: [MTLRenderPipelineState] = []
 
     // @ignoreClone
     private var _transformChangeFlag: UpdateFlag? = nil
@@ -106,22 +107,20 @@ class Renderer: Component {
 
     func _render(_ camera: Camera) {
     }
-    
+
     func _updateBounds(_ worldBounds: BoundingBox) {
     }
-    
+
     func update(_ deltaTime: Float) {
     }
-}
 
 //MARK:- Material Methods
-extension Renderer {
     /// Get the first instance material by index.
     /// - Remark: Calling this function for the first time after the material is set
     /// will create an instance material to ensure that it is unique to the renderer.
     /// - Parameter index: Material index
     /// - Returns: Instance material
-    func getInstanceMaterial(index: Int = 0) -> Material? {
+    func getInstanceMaterial(_ index: Int = 0) -> Material? {
         let materials = _materials
         if (materials.count > index) {
             let material = materials[index]
@@ -139,13 +138,13 @@ extension Renderer {
     /// Get the first material by index.
     /// - Parameter index: Material index
     /// - Returns: Material
-    func getMaterial(index: Int = 0) -> Material? {
+    func getMaterial(_ index: Int = 0) -> Material? {
         return _materials[index]
     }
 
     /// Set the first material.
     /// - Parameter material: The first material
-    func setMaterial(material: Material) {
+    func setMaterial(_ material: Material) {
         let index = 0
 
         if (index >= _materials.count) {
@@ -172,7 +171,7 @@ extension Renderer {
     /// - Parameters:
     ///   - index: Material index
     ///   - material: The material
-    func setMaterial(index: Int, material: Material) {
+    func setMaterial(_ index: Int, _ material: Material) {
         if (index >= _materials.count) {
             _materials.reserveCapacity(index + 1)
             for _ in _materials.count...index {
@@ -216,7 +215,7 @@ extension Renderer {
 
     /// Set all materials.
     /// - Parameter materials: All materials
-    func setMaterials(materials: [Material]) {
+    func setMaterials(_ materials: [Material]) {
         let count = materials.count
 
         for i in 0..<_materials.count {

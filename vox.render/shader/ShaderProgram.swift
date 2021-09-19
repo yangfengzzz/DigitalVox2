@@ -31,6 +31,12 @@ internal class ShaderProgram {
     private var _fragmentShader: MTLFunction!
     private var _pipelineDescriptor: MTLRenderPipelineDescriptor!
 
+    var pipelineDescriptor: MTLRenderPipelineDescriptor {
+        get {
+            _pipelineDescriptor
+        }
+    }
+
     /// Whether this shader program is valid.
     var isValid: Bool {
         get {

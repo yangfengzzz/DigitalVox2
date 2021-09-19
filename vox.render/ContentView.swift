@@ -44,17 +44,17 @@ struct ContentView: View {
         let cubeRenderer: MeshRenderer = cubeEntity.addComponent()
         let box = PrimitiveMesh.createCuboid(engine)
         cubeRenderer.mesh = box
-        cubeRenderer.setMaterial(material: simpleMtl)
+        cubeRenderer.setMaterial(simpleMtl)
         let _: CubeScript = cubeEntity.addComponent()
 
         let assetEntity = rootEntity.createChild()
         let assetRenderer: MeshRenderer = assetEntity.addComponent()
         asset.load(name: "cottage1.obj")
         assetRenderer.mesh = asset.meshes[0]
-        assetRenderer.setMaterial(index: 0, material: simpleMtl)
-        assetRenderer.setMaterial(index: 1, material: simpleMtl)
-        assetRenderer.setMaterial(index: 2, material: simpleMtl)
-        assetRenderer.setMaterial(index: 3, material: simpleMtl)
+        assetRenderer.setMaterial(0, simpleMtl)
+        assetRenderer.setMaterial(1, simpleMtl)
+        assetRenderer.setMaterial(2, simpleMtl)
+        assetRenderer.setMaterial(3, simpleMtl)
     }
 
     var body: some View {

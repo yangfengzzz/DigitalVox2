@@ -5,7 +5,7 @@
 //  Created by 杨丰 on 2021/9/12.
 //
 
-import Foundation
+import MetalKit
 
 class MeshRenderer: Renderer {
     // @ignoreClone
@@ -34,6 +34,38 @@ class MeshRenderer: Renderer {
         }
     }
 
+    /// Set the first material.
+    /// - Parameter material: The first material
+    override func setMaterial(_ material: Material) {
+        super.setMaterial(material)
+        if mesh != nil {
+            _pipelineStates.insert(makePipelineState(mesh!, material.shader._getShaderProgram(engine)), at: 0)
+        }
+    }
+
+    /// Set material by index.
+    /// - Parameters:
+    ///   - index: Material index
+    ///   - material: The material
+    override func setMaterial(_ index: Int, _ material: Material) {
+        super.setMaterial(index, material)
+        if mesh != nil {
+            _pipelineStates.insert(makePipelineState(mesh!, material.shader._getShaderProgram(engine)), at: index)
+        }
+    }
+
+    /// Set all materials.
+    /// - Parameter materials: All materials
+    override func setMaterials(_ materials: [Material]) {
+        super.setMaterials(materials)
+        if mesh != nil {
+            _pipelineStates.reserveCapacity(materials.count)
+            materials.forEach { material in
+                _pipelineStates.append(makePipelineState(mesh!, material.shader._getShaderProgram(engine)))
+            }
+        }
+    }
+
     override func _render(_ camera: Camera) {
         let mesh = _mesh
         if (mesh != nil) {
@@ -41,10 +73,15 @@ class MeshRenderer: Renderer {
             let renderPipeline = camera._renderPipeline
             let renderElementPool = _engine._renderElementPool
             for i in 0..<subMeshes.count {
-                let material = _materials[i]
+                let material: Material?
+                if i < _materials.count {
+                    material = _materials[i]
+                } else {
+                    material = nil
+                }
                 if (material != nil) {
                     let element = renderElementPool.getFromPool()
-                    element.setValue(self, mesh!, subMeshes[i], material!)
+                    element.setValue(self, mesh!, subMeshes[i], material!, _pipelineStates[i])
                     renderPipeline!.pushPrimitive(element)
                 }
             }
@@ -74,5 +111,22 @@ class MeshRenderer: Renderer {
             _ = worldBounds.min.setValue(x: 0, y: 0, z: 0)
             _ = worldBounds.max.setValue(x: 0, y: 0, z: 0)
         }
+    }
+
+    private func makePipelineState(_ mesh: Mesh,
+                                   _ shaderProgram: ShaderProgram) -> MTLRenderPipelineState {
+        let pipelineState: MTLRenderPipelineState
+        let pipelineDescriptor = shaderProgram.pipelineDescriptor
+
+        let vertexDescriptor = mesh._vertexDescriptor._descriptor
+        pipelineDescriptor.vertexDescriptor = MTKMetalVertexDescriptorFromModelIO(vertexDescriptor)
+        pipelineDescriptor.colorAttachments[0].pixelFormat = engine._hardwareRenderer.colorPixelFormat
+        pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
+        do {
+            pipelineState = try engine._hardwareRenderer.device.makeRenderPipelineState(descriptor: pipelineDescriptor)
+        } catch let error {
+            fatalError(error.localizedDescription)
+        }
+        return pipelineState
     }
 }

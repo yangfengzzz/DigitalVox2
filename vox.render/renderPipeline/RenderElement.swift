@@ -5,7 +5,7 @@
 //  Created by 杨丰 on 2021/9/17.
 //
 
-import Foundation
+import Metal
 
 /// Render element.
 final class RenderElement {
@@ -17,12 +17,16 @@ final class RenderElement {
     var subMesh: SubMesh!
     /// Material.
     var material: Material!
+    /// Pipeline
+    var pipelineState: MTLRenderPipelineState!
 
-    func setValue(_ component: Renderer, _ mesh: Mesh, _ subMesh: SubMesh, _ material: Material) {
-        self.component = component;
-        self.mesh = mesh;
-        self.subMesh = subMesh;
-        self.material = material;
+    func setValue(_ component: Renderer, _ mesh: Mesh, _ subMesh: SubMesh,
+                  _ material: Material, _ pipelineState: MTLRenderPipelineState) {
+        self.component = component
+        self.mesh = mesh
+        self.subMesh = subMesh
+        self.material = material
+        self.pipelineState = pipelineState
     }
 }
 

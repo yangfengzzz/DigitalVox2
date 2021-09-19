@@ -78,7 +78,7 @@ extension RenderQueue {
 
             if element.component.entity !== entity {
                 entity = element.component.entity
-                engine._hardwareRenderer.makePipelineState(descriptor: element.mesh._vertexDescriptor._descriptor)
+                engine._hardwareRenderer.renderEncoder.setRenderPipelineState(element.pipelineState)
 
                 uniforms.modelMatrix = entity!.transform.worldMatrix.elements
                 engine._hardwareRenderer.renderEncoder.setVertexBytes(&uniforms,
