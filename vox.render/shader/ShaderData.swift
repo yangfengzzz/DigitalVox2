@@ -25,6 +25,7 @@ enum ShaderPropertyValueType {
 class ShaderData {
     internal var _group: ShaderDataGroup
     internal var _properties: [Int: ShaderPropertyValueType] = [:]
+    internal var _macroCollection: ShaderMacroCollection = ShaderMacroCollection()
     private var _refCount: Int = 0
 
     internal init(_ group: ShaderDataGroup) {

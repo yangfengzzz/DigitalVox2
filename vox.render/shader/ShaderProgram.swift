@@ -44,13 +44,13 @@ internal class ShaderProgram {
         }
     }
 
-    init(_ engine: Engine, _ vertexSource: String, _ fragmentSource: String, _ macroName: [MacroName]) {
+    init(_ engine: Engine, _ vertexSource: String, _ fragmentSource: String, _ macroInfo: [MacroInfo]) {
         id = ShaderProgram._counter
         ShaderProgram._counter += 1
 
         _engine = engine
         _library = engine._hardwareRenderer.library
-        _pipelineDescriptor = _createProgram(vertexSource, fragmentSource, macroName)
+        _pipelineDescriptor = _createProgram(vertexSource, fragmentSource, macroInfo)
 
         if _pipelineDescriptor != nil {
             _isValid = true
@@ -59,11 +59,15 @@ internal class ShaderProgram {
         }
     }
 
-    private func makeFunctionConstants(_ macroName: [MacroName]) -> MTLFunctionConstantValues {
+    private func makeFunctionConstants(_ macroInfo: [MacroInfo]) -> MTLFunctionConstantValues {
         let functionConstants = MTLFunctionConstantValues()
         var property = true
-        macroName.forEach { name in
-            functionConstants.setConstantValue(&property, type: .bool, index: Int(name.rawValue))
+        macroInfo.forEach { info in
+            if info.pointer == nil {
+                functionConstants.setConstantValue(&property, type: .bool, index: Int(info.name.rawValue))
+            } else {
+                functionConstants.setConstantValue(info.pointer!, type: info.type!, index: Int(info.name.rawValue))
+            }
         }
         return functionConstants
     }
@@ -73,8 +77,8 @@ internal class ShaderProgram {
     ///   - vertexSource: vertex name
     ///   - fragmentSource: fragment name
     private func _createProgram(_ vertexSource: String, _ fragmentSource: String,
-                                _ macroName: [MacroName]) -> MTLRenderPipelineDescriptor? {
-        let functionConstants = makeFunctionConstants(macroName)
+                                _ macroInfo: [MacroInfo]) -> MTLRenderPipelineDescriptor? {
+        let functionConstants = makeFunctionConstants(macroInfo)
 
         let vertexShader: MTLFunction?
         let fragmentShader: MTLFunction?

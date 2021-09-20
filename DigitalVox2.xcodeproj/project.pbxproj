@@ -92,6 +92,7 @@
 		043CB47D26F56F0B004A0B21 /* StencilOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB47C26F56F0B004A0B21 /* StencilOperation.swift */; };
 		0447D54626F803B300272D7C /* ShaderMacroCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447D54526F803B300272D7C /* ShaderMacroCollection.swift */; };
 		0447D54826F8078B00272D7C /* ShaderMacro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447D54726F8078B00272D7C /* ShaderMacro.swift */; };
+		0447D54B26F81D7500272D7C /* MacroInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447D54A26F81D7500272D7C /* MacroInfo.swift */; };
 		0452EC9926DFA0CD0015BFB1 /* voxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9826DFA0CD0015BFB1 /* voxApp.swift */; };
 		0452EC9B26DFA0CD0015BFB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */; };
 		0452EC9D26DFA0CD0015BFB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0452EC9C26DFA0CD0015BFB1 /* Assets.xcassets */; };
@@ -336,6 +337,7 @@
 		0447D54426F8020B00272D7C /* MacroName.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MacroName.h; sourceTree = "<group>"; };
 		0447D54526F803B300272D7C /* ShaderMacroCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderMacroCollection.swift; sourceTree = "<group>"; };
 		0447D54726F8078B00272D7C /* ShaderMacro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderMacro.swift; sourceTree = "<group>"; };
+		0447D54A26F81D7500272D7C /* MacroInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroInfo.swift; sourceTree = "<group>"; };
 		0452EC9626DFA0CD0015BFB1 /* vox.tracing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vox.tracing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0452EC9826DFA0CD0015BFB1 /* voxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = voxApp.swift; sourceTree = "<group>"; };
 		0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -710,6 +712,7 @@
 				041B585226F57C4200B32BD0 /* ShaderUniform.swift */,
 				0447D54526F803B300272D7C /* ShaderMacroCollection.swift */,
 				0447D54726F8078B00272D7C /* ShaderMacro.swift */,
+				0447D54A26F81D7500272D7C /* MacroInfo.swift */,
 			);
 			path = shader;
 			sourceTree = "<group>";
@@ -1486,6 +1489,7 @@
 				043CB44126F2E069004A0B21 /* Material.swift in Sources */,
 				043CB46F26F567D9004A0B21 /* BaseMaterial.swift in Sources */,
 				0413287326E0723E000A4F4E /* CollisionUtil.swift in Sources */,
+				0447D54B26F81D7500272D7C /* MacroInfo.swift in Sources */,
 				04E28C4426EDD78C003A3C3B /* Renderer.swift in Sources */,
 				0413286B26DF86DC000A4F4E /* BoundingBox.swift in Sources */,
 				0413288D26E0A086000A4F4E /* EngineObject.swift in Sources */,

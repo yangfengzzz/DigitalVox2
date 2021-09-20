@@ -7,9 +7,6 @@
 
 import Foundation
 
-extension MacroName: Hashable {
-}
-
 /// Shader containing vertex and fragment source.
 class Shader {
     static internal var _compileMacros: ShaderMacroCollection = ShaderMacroCollection()
@@ -17,9 +14,9 @@ class Shader {
     private static var _shaderCounter: Int = 0
     private static var _shaderMap: [String: Shader] = [:]
     private static var _propertyNameMap: [String: ShaderProperty] = [:]
-    private static var _macroMaskMap: [[MacroName]] = [[]]
+    private static var _macroMaskMap: [[MacroInfo]] = [[]]
     private static var _macroCounter: Int = 0
-    private static var _macroMap: [MacroName: ShaderMacro] = [:]
+    private static var _macroMap: [MacroInfo: ShaderMacro] = [:]
 
     /// The name of shader.
     var name: String
@@ -61,21 +58,21 @@ extension Shader {
         Shader._shaderMap[name]
     }
 
-    /// Get shader macro by name.
-    /// - Parameter name: Name of the shader macro
+    /// Get shader macro by info.
+    /// - Parameter info: Info of the shader macro
     /// - Returns: Shader macro
-    static func getMacroByName(_ name: MacroName) -> ShaderMacro {
-        var macro = Shader._macroMap[name]
+    static func getMacroByInfo(_ info: MacroInfo) -> ShaderMacro {
+        var macro = Shader._macroMap[info]
         if macro == nil {
             let counter = Shader._macroCounter
             let index = Int(floor(Float(counter) / 32))
             let bit = counter % 32
-            macro = ShaderMacro(name, index, 1 << bit)
-            Shader._macroMap[name] = macro
+            macro = ShaderMacro(info.name, index, 1 << bit)
+            Shader._macroMap[info] = macro
             if (index == Shader._macroMaskMap.count) {
-                Shader._macroMaskMap.append([MacroName](repeating: None, count: 32))
+                Shader._macroMaskMap.append([MacroInfo](repeating: MacroInfo(None), count: 32))
             }
-            Shader._macroMaskMap[index][bit] = name
+            Shader._macroMaskMap[index][bit] = info
             Shader._macroCounter += 1
         }
         return macro!
@@ -100,7 +97,7 @@ extension Shader {
         return shaderProperty?._group
     }
 
-    static private func _getNamesByMacros(_ macros: ShaderMacroCollection, _ out: inout [MacroName]) {
+    static private func _getInfosByMacros(_ macros: ShaderMacroCollection, _ out: inout [MacroInfo]) {
         let maskMap = Shader._macroMaskMap
         let mask = macros._mask
         out = []
@@ -119,26 +116,26 @@ extension Shader {
 }
 
 extension Shader {
-    /// Compile shader variant by macro name list.
+    /// Compile shader variant by macro info list.
     /// - Remark:
     /// Usually a shader contains some macros,any combination of macros is called shader variant.
     /// - Parameters:
     ///   - engine: Engine to which the shader variant belongs
-    ///   - macros: Macro name list
+    ///   - macros: Macro info list
     /// - Returns: Is the compiled shader variant valid
-    func compileVariant(engine: Engine, macros: [MacroName]) -> Bool {
+    func compileVariant(engine: Engine, macros: [MacroInfo]) -> Bool {
         let compileMacros = Shader._compileMacros
         compileMacros.clear()
         for i in 0..<macros.count {
-            compileMacros.enable(Shader.getMacroByName(macros[i]))
+            compileMacros.enable(Shader.getMacroByInfo(macros[i]))
         }
         return _getShaderProgram(engine, compileMacros).isValid
     }
 
     internal func _getShaderProgram(_ engine: Engine, _ macroCollection: ShaderMacroCollection) -> ShaderProgram {
-        var macroNameList: [MacroName] = []
-        Shader._getNamesByMacros(macroCollection, &macroNameList)
+        var macroInfoList: [MacroInfo] = []
+        Shader._getInfosByMacros(macroCollection, &macroInfoList)
 
-        return ShaderProgram(engine, _vertexSource, _fragmentSource, macroNameList)
+        return ShaderProgram(engine, _vertexSource, _fragmentSource, macroInfoList)
     }
 }
