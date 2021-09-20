@@ -136,7 +136,7 @@ class Texture: RefObject {
 
     /// Get the maximum mip level of the corresponding size:rounding down.
     /// - Remark  http://download.nvidia.com/developer/Papers/2005/NP2_Mipmapping/NP2_Mipmap_Creation.pdf
-    func _getMaxMiplevel(size: Int) -> Int {
+    func _getMaxMiplevel(_ size: Int) -> Int {
         Int(floor(log2(Double(size))))
     }
 

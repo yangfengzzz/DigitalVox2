@@ -11,7 +11,7 @@ import MetalKit
 /// Metal renderer.
 class MetalRenderer {
     let maxAnisotropy = 8
-    
+
     var device: MTLDevice!
     var commandQueue: MTLCommandQueue!
     var library: MTLLibrary!
@@ -52,15 +52,15 @@ class MetalRenderer {
         descriptor.isDepthWriteEnabled = true
         return device.makeDepthStencilState(descriptor: descriptor)
     }
-    
+
     func buildSamplerState() -> MTLSamplerState? {
-      let descriptor = MTLSamplerDescriptor()
-      descriptor.sAddressMode = .repeat
-      descriptor.tAddressMode = .repeat
-      descriptor.mipFilter = .linear
-      descriptor.maxAnisotropy = maxAnisotropy
-      let samplerState = device.makeSamplerState(descriptor: descriptor)
-      return samplerState
+        let descriptor = MTLSamplerDescriptor()
+        descriptor.sAddressMode = .repeat
+        descriptor.tAddressMode = .repeat
+        descriptor.mipFilter = .linear
+        descriptor.maxAnisotropy = maxAnisotropy
+        let samplerState = device.makeSamplerState(descriptor: descriptor)
+        return samplerState
     }
 
     func setView(in view: MTKView) {
@@ -72,12 +72,24 @@ extension MetalRenderer {
     func createPlatformPrimitive(_ primitive: Mesh) -> IPlatformPrimitive {
         GPUPrimitive(self)
     }
-    
-    func createPlatformTexture2D(_ texture2D: Texture2D)-> IPlatformTexture2D {
+
+    func createPlatformTexture2D(_ texture2D: Texture2D) -> IPlatformTexture2D {
         fatalError()
     }
-    
-    func createPlatformTextureCubeMap(_ textureCube: TextureCubeMap)-> IPlatformTextureCubeMap {
+
+    func createPlatformTextureCubeMap(_ textureCube: TextureCubeMap) -> IPlatformTextureCubeMap {
+        fatalError()
+    }
+
+    func createPlatformRenderColorTexture(_ texture: RenderColorTexture) -> IPlatformRenderColorTexture {
+        fatalError()
+    }
+
+    func createPlatformRenderDepthTexture(_ texture: RenderDepthTexture) -> IPlatformRenderDepthTexture {
+        fatalError()
+    }
+
+    func createPlatformRenderTarget(_ target: RenderTarget) -> IPlatformRenderTarget {
         fatalError()
     }
 }
