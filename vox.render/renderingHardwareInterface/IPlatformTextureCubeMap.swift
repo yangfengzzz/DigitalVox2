@@ -22,7 +22,7 @@ protocol IPlatformTextureCubeMap: IPlatformTexture {
     ///   - height: Data height.if it's empty, height is the height corresponding to mipLevel minus y ,
     ///   height corresponding to mipLevel is Math.max(1, this.height >> mipLevel)
     func setPixelBuffer(_ face: TextureCubeFace, _ colorBuffer: [Float],
-                        _ mipLevel: Int?, _ x: Float?, _ y: Float?, _ width: Int?, _ height: Int?
+                        _ mipLevel: Int?, _ x: Int?, _ y: Int?, _ width: Int?, _ height: Int?
     )
 
     /// Setting pixels data through cube face, TexImageSource, designated area and texture mipmapping level.
@@ -36,7 +36,7 @@ protocol IPlatformTextureCubeMap: IPlatformTexture {
     ///   - y: Y coordinate of area start
     func setImageSource(_ face: TextureCubeFace, _ imageSource: MTLBuffer,
                         _ mipLevel: Int?, _ flipY: Bool?, _ premultiplyAlpha: Bool?,
-                        _ x: Float?, _ y: Float?
+                        _ x: Int?, _ y: Int?
     )
 
     /// Get the pixel color buffer according to the specified cube face and area.
@@ -48,7 +48,7 @@ protocol IPlatformTextureCubeMap: IPlatformTexture {
     ///   - height: Area height
     ///   - out: Color buffer
     func getPixelBuffer(_ face: TextureCubeFace,
-                        _ x: Float, _ y: Float, _ width: Int, _ height: Int,
+                        _ x: Int, _ y: Int, _ width: Int, _ height: Int,
                         _ out: inout [Float]
     )
 }

@@ -28,8 +28,7 @@ class Texture2D: Texture {
     init(_ engine: Engine,
          _ width: Int, _ height: Int,
          _ format: MTLPixelFormat = .rgba8Sint,
-         _ mipmap: Bool = true
-    ) {
+         _ mipmap: Bool = true) {
         _format = format
 
         super.init(engine)
@@ -57,9 +56,8 @@ class Texture2D: Texture {
     ///   - height: Data height. if it's empty, height is the height corresponding to mipLevel minus y ,
     ///   height corresponding to mipLevel is Math.max(1, this.height >> mipLevel)
     func setPixelBuffer(_ colorBuffer: [Float], _ mipLevel: Int = 0,
-                        _ x: Float?, _ y: Float?,
-                        _ width: Int?, _ height: Int?
-    ) {
+                        _ x: Int?, _ y: Int?,
+                        _ width: Int?, _ height: Int?) {
         (_platformTexture as! IPlatformTexture2D).setPixelBuffer(colorBuffer, mipLevel, x, y, width, height)
     }
 
@@ -71,11 +69,12 @@ class Texture2D: Texture {
     ///   - premultiplyAlpha: Whether to premultiply the transparent channel
     ///   - x: X coordinate of area start
     ///   - y: Y coordinate of area start
-    func setImageSource(_ imageSource: MTLBuffer, _ mipLevel: Int = 0,
-                        _ flipY: Bool = false, _ premultiplyAlpha: Bool = false,
-                        _ x: Float?, _ y: Float?
-    ) {
-        (_platformTexture as! IPlatformTexture2D).setImageSource(imageSource, mipLevel, flipY, premultiplyAlpha, x, y)
+    func setImageSource(_ imageSource: MTLBuffer, _ x: Int?, _ y: Int?) {
+        (_platformTexture as! IPlatformTexture2D).setImageSource(imageSource, x, y)
+    }
+
+    func setImageSource(_ imageSource: MTLTexture) {
+        (_platformTexture as! IPlatformTexture2D).setImageSource(imageSource)
     }
 
     /// Get the pixel color buffer according to the specified area.
@@ -85,7 +84,7 @@ class Texture2D: Texture {
     ///   - width: Area width
     ///   - height: Area height
     ///   - out: Color buffer
-    func getPixelBuffer(_ x: Float, _ y: Float, _ width: Int, _ height: Int, _ out: inout [Float]) {
-        (_platformTexture as! IPlatformTexture2D).getPixelBuffer(x, y, width, height, &out)
+    func getPixelBuffer(_ x: Int, _ y: Int, _ width: Int, _ height: Int, _ mipLevel: Int, _ out: inout [Float]) {
+        (_platformTexture as! IPlatformTexture2D).getPixelBuffer(x, y, width, height, mipLevel, &out)
     }
 }

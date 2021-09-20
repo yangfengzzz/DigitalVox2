@@ -115,6 +115,8 @@
 		0447D57826F870F800272D7C /* RenderBufferDepthFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447D57726F870F800272D7C /* RenderBufferDepthFormat.swift */; };
 		0447D57A26F8941100272D7C /* RenderPipelineState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447D57926F8941100272D7C /* RenderPipelineState.swift */; };
 		0447D57C26F8C73900272D7C /* ShaderReflection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447D57B26F8C73900272D7C /* ShaderReflection.swift */; };
+		0447D57E26F94A4100272D7C /* MetalTexture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447D57D26F94A4100272D7C /* MetalTexture.swift */; };
+		0447D58026F94B7000272D7C /* MetalTexture2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447D57F26F94B7000272D7C /* MetalTexture2D.swift */; };
 		0452EC9926DFA0CD0015BFB1 /* voxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9826DFA0CD0015BFB1 /* voxApp.swift */; };
 		0452EC9B26DFA0CD0015BFB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */; };
 		0452EC9D26DFA0CD0015BFB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0452EC9C26DFA0CD0015BFB1 /* Assets.xcassets */; };
@@ -382,6 +384,8 @@
 		0447D57726F870F800272D7C /* RenderBufferDepthFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderBufferDepthFormat.swift; sourceTree = "<group>"; };
 		0447D57926F8941100272D7C /* RenderPipelineState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderPipelineState.swift; sourceTree = "<group>"; };
 		0447D57B26F8C73900272D7C /* ShaderReflection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderReflection.swift; sourceTree = "<group>"; };
+		0447D57D26F94A4100272D7C /* MetalTexture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalTexture.swift; sourceTree = "<group>"; };
+		0447D57F26F94B7000272D7C /* MetalTexture2D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalTexture2D.swift; sourceTree = "<group>"; };
 		0452EC9626DFA0CD0015BFB1 /* vox.tracing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vox.tracing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0452EC9826DFA0CD0015BFB1 /* voxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = voxApp.swift; sourceTree = "<group>"; };
 		0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -1146,6 +1150,8 @@
 			children = (
 				04E28C3726ECE7B3003A3C3B /* MetalRenderer.swift */,
 				04E28C3526ECE780003A3C3B /* MetalPrimitive.swift */,
+				0447D57D26F94A4100272D7C /* MetalTexture.swift */,
+				0447D57F26F94B7000272D7C /* MetalTexture2D.swift */,
 			);
 			path = "rhi-metal";
 			sourceTree = "<group>";
@@ -1548,6 +1554,7 @@
 				043CB44926F341AF004A0B21 /* RenderFace.swift in Sources */,
 				043CB44726F3417E004A0B21 /* BlendMode.swift in Sources */,
 				0447D57C26F8C73900272D7C /* ShaderReflection.swift in Sources */,
+				0447D58026F94B7000272D7C /* MetalTexture2D.swift in Sources */,
 				0458275D26F71D000056D134 /* MeshBuffer.swift in Sources */,
 				042BB12D26EA371500604751 /* BackgroundMode.swift in Sources */,
 				0413289D26E0C288000A4F4E /* UpdateFlagManager.swift in Sources */,
@@ -1609,6 +1616,7 @@
 				0413289926E0A607000A4F4E /* VertexAttribute.swift in Sources */,
 				0447D56326F8588900272D7C /* PBRSpecularMaterial.swift in Sources */,
 				0447D57826F870F800272D7C /* RenderBufferDepthFormat.swift in Sources */,
+				0447D57E26F94A4100272D7C /* MetalTexture.swift in Sources */,
 				0447D56126F8562300272D7C /* PBRBaseMaterial.swift in Sources */,
 				0413288A26E09FB3000A4F4E /* Mesh.swift in Sources */,
 				0447D56C26F8630B00272D7C /* TextureCubeFace.swift in Sources */,

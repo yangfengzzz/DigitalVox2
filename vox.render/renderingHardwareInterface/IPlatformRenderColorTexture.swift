@@ -18,7 +18,7 @@ protocol IPlatformRenderColorTexture: IPlatformTexture {
     ///   - height: Area height
     ///   - out: Color buffer
     func getPixelBuffer(_ face: TextureCubeFace?,
-                        _ x: Float, _ y: Float, _ width: Int, _ height: Int,
+                        _ x: Int, _ y: Int, _ width: Int, _ height: Int,
                         _ out: inout [Float]
     )
 }

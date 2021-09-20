@@ -74,9 +74,7 @@ class Texture: RefObject {
         }
     }
 
-    /**
-     * Filter mode for texture.
-     */
+    /// Filter mode for texture.
     var filterMode: MTLSamplerMipFilter {
         get {
             _filterMode

@@ -54,9 +54,8 @@ class TextureCubeMap: Texture {
     ///   - height: Data height.if it's empty, height is the height corresponding to mipLevel minus y ,
     ///   height corresponding to mipLevel is Math.max(1, this.height >> mipLevel)
     func setPixelBuffer(_ face: TextureCubeFace, _ colorBuffer: [Float],
-                        _ mipLevel: Int = 0, _ x: Float?, _ y: Float?,
-                        _ width: Int?, _ height: Int?
-    ) {
+                        _ mipLevel: Int = 0, _ x: Int?, _ y: Int?,
+                        _ width: Int?, _ height: Int?) {
         (_platformTexture as! IPlatformTextureCubeMap).setPixelBuffer(face, colorBuffer, mipLevel, x, y, width, height)
     }
 
@@ -71,8 +70,7 @@ class TextureCubeMap: Texture {
     ///   - y: Y coordinate of area start
     func setImageSource(_ face: TextureCubeFace, _ imageSource: MTLBuffer,
                         _ mipLevel: Int = 0, _ flipY: Bool = false, _ premultiplyAlpha: Bool = false,
-                        _ x: Float?, _ y: Float?
-    ) {
+                        _ x: Int?, _ y: Int?) {
         (_platformTexture as! IPlatformTextureCubeMap).setImageSource(
                 face,
                 imageSource,
@@ -93,10 +91,9 @@ class TextureCubeMap: Texture {
     ///   - height: Area height
     ///   - out: Color buffer
     func getPixelBuffer(_ face: TextureCubeFace,
-                        _ x: Float, _ y: Float,
+                        _ x: Int, _ y: Int,
                         _ width: Int, _ height: Int,
-                        _ out: inout [Float]
-    ) {
+                        _ out: inout [Float]) {
         (_platformTexture as! IPlatformTextureCubeMap).getPixelBuffer(face, x, y, width, height, &out)
     }
 }

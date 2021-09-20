@@ -48,8 +48,7 @@ class RenderDepthTexture: Texture {
     init(_ engine: Engine,
          _ width: Int, _ height: Int,
          _ format: RenderBufferDepthFormat = RenderBufferDepthFormat.Depth,
-         _ mipmap: Bool = false, _ isCube: Bool = false
-    ) {
+         _ mipmap: Bool = false, _ isCube: Bool = false) {
         _format = format;
 
         super.init(engine);

@@ -48,8 +48,7 @@ class RenderColorTexture: Texture {
     init(_ engine: Engine,
          _ width: Int, _ height: Int,
          _ format: MTLPixelFormat = .rgba8Sint,
-         _ mipmap: Bool = false, _ isCube: Bool = false
-    ) {
+         _ mipmap: Bool = false, _ isCube: Bool = false) {
         _format = format
 
         super.init(engine)
@@ -76,10 +75,9 @@ class RenderColorTexture: Texture {
     ///   - height:  Area height
     ///   - out: Color buffer
     public func getPixelBuffer(_ face: TextureCubeFace?,
-                               _ x: Float, _ y: Float,
+                               _ x: Int, _ y: Int,
                                _ width: Int, _ height: Int,
-                               _ out: inout [Float]
-    ) {
+                               _ out: inout [Float]) {
         (_platformTexture as! IPlatformRenderColorTexture).getPixelBuffer(face, x, y, width, height, &out)
     }
 

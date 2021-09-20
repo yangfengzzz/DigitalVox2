@@ -21,7 +21,7 @@ protocol IPlatformTexture2D: IPlatformTexture {
     ///   - height: Data height. if it's empty, height is the height corresponding to mipLevel minus y ,
     /// height corresponding to mipLevel is Math.max(1, this.height >> mipLevel)
     func setPixelBuffer(_ colorBuffer: [Float], _ mipLevel: Int?,
-                        _ x: Float?, _ y: Float?,
+                        _ x: Int?, _ y: Int?,
                         _ width: Int?, _ height: Int?
     )
 
@@ -33,10 +33,9 @@ protocol IPlatformTexture2D: IPlatformTexture {
     ///   - premultiplyAlpha: Whether to premultiply the transparent channel
     ///   - x: X coordinate of area start
     ///   - y: Y coordinate of area start
-    func setImageSource(_ imageSource: MTLBuffer, _ mipLevel: Int?,
-                        _ flipY: Bool?, _ premultiplyAlpha: Bool?,
-                        _ x: Float?, _ y: Float?
-    )
+    func setImageSource(_ imageSource: MTLBuffer, _ x: Int?, _ y: Int?)
+    
+    func setImageSource(_ imageSource: MTLTexture)
 
     /// Get the pixel color buffer according to the specified area.
     /// - Parameters:
@@ -45,5 +44,5 @@ protocol IPlatformTexture2D: IPlatformTexture {
     ///   - width: Area width
     ///   - height: Area height
     ///   - out: Color buffer
-    func getPixelBuffer(_ x: Float, _ y: Float, _ width: Int, _ height: Int, _ out: inout [Float])
+    func getPixelBuffer(_ x: Int, _ y: Int, _ width: Int, _ height: Int, _ mipLevel:Int, _ out: inout [Float])
 }
