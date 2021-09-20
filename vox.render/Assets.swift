@@ -46,23 +46,7 @@ class Assets {
                 _ = mesh.addSubMesh(
                         MeshBuffer(mtkSubmesh.indexBuffer.buffer, mtkSubmesh.indexBuffer.length, mtkSubmesh.indexBuffer.type),
                         mtkSubmesh.indexType, mtkSubmesh.indexCount, mtkSubmesh.primitiveType)
-
-                let mdlSubmesh = mdlSubmesh as! MDLSubmesh
-                let mat = PBRMaterial(_engine)
-                func property(with semantic: MDLMaterialSemantic) -> Texture2D? {
-                    let texture = Texture2D(_engine, 1, 1)
-                    guard let property = mdlSubmesh.material?.property(with: semantic),
-                          property.type == .string,
-                          let filename = property.stringValue
-                            else {
-                        return nil
-                    }
-                    try? texture.loadTexture(filename)
-                    return texture
-                }
-                materials.append(mat)
             }
-
 
             mtkMesh.submeshes.forEach { subMesh in
                 _ = mesh.addSubMesh(

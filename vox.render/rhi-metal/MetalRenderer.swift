@@ -10,6 +10,8 @@ import MetalKit
 
 /// Metal renderer.
 class MetalRenderer {
+    let maxAnisotropy = 8
+    
     var device: MTLDevice!
     var commandQueue: MTLCommandQueue!
     var library: MTLLibrary!
@@ -56,7 +58,7 @@ class MetalRenderer {
       descriptor.sAddressMode = .repeat
       descriptor.tAddressMode = .repeat
       descriptor.mipFilter = .linear
-      descriptor.maxAnisotropy = 8
+      descriptor.maxAnisotropy = maxAnisotropy
       let samplerState = device.makeSamplerState(descriptor: descriptor)
       return samplerState
     }
@@ -66,11 +68,21 @@ class MetalRenderer {
     }
 }
 
-extension MetalRenderer: IHardwareRenderer {
+extension MetalRenderer {
     func createPlatformPrimitive(_ primitive: Mesh) -> IPlatformPrimitive {
         GPUPrimitive(self)
     }
+    
+    func createPlatformTexture2D(_ texture2D: Texture2D)-> IPlatformTexture2D {
+        fatalError()
+    }
+    
+    func createPlatformTextureCubeMap(_ textureCube: TextureCubeMap)-> IPlatformTextureCubeMap {
+        fatalError()
+    }
+}
 
+extension MetalRenderer: IHardwareRenderer {
     func drawPrimitive(_ primitive: Mesh, _ subPrimitive: SubMesh, _ shaderProgram: ShaderProgram) {
         primitive._draw(shaderProgram, subPrimitive)
     }

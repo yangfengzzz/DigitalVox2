@@ -26,8 +26,7 @@ class Texture2D: Texture {
     ///   - format: Texture format. default  `MTLPixelFormat.rgba8Sint`
     ///   - mipmap: Whether to use multi-level texture
     init(_ engine: Engine,
-         _ width: Int,
-         _ height: Int,
+         _ width: Int, _ height: Int,
          _ format: MTLPixelFormat = .rgba8Sint,
          _ mipmap: Bool = true
     ) {
@@ -38,78 +37,55 @@ class Texture2D: Texture {
         _width = width
         _height = height
         _mipmapCount = _getMipmapCount()
+
+        _platformTexture = engine._hardwareRenderer.createPlatformTexture2D(self)
+
+        filterMode = .linear
+        wrapModeU = .repeat
+        wrapModeV = .repeat
     }
 
-    /// static method to load texture from name of image.
-    /// - Parameter imageName: name of image
-    /// - Throws: a pointer to an NSError object if an error occurred, or nil if the texture was fully loaded and initialized.
-    /// - Returns: a fully loaded and initialized Metal texture, or nil if an error occurred.
-    func loadTexture(_ imageName: String) throws {
-        let textureLoader = MTKTextureLoader(device: _engine._hardwareRenderer.device)
-
-        let textureLoaderOptions: [MTKTextureLoader.Option: Any] =
-                [.origin: MTKTextureLoader.Origin.bottomLeft,
-                 .SRGB: false,
-                 .generateMipmaps: NSNumber(booleanLiteral: true)]
-        let fileExtension =
-                URL(fileURLWithPath: imageName).pathExtension.isEmpty ?
-                        "png" : nil
-        guard let url = Bundle.main.url(forResource: imageName,
-                withExtension: fileExtension)
-                else {
-            self._platformTexture = try? textureLoader.newTexture(name: imageName,
-                    scaleFactor: 1.0,
-                    bundle: Bundle.main, options: nil)
-            if self._platformTexture == nil {
-                print("WARNING: Texture not found: \(imageName)")
-            }
-            return
-        }
-
-        self._platformTexture = try textureLoader.newTexture(URL: url,
-                options: textureLoaderOptions)
-        print("loaded texture: \(url.lastPathComponent)")
-    }
-
-    /// static method to load texture from a instance of MDLTexture
-    /// - Parameter texture: a source of texel data
-    /// - Throws: a pointer to an NSError object if an error occurred, or nil if the texture was fully loaded and initialized.
-    /// - Returns: a fully loaded and initialized Metal texture, or nil if an error occurred.
-    func loadTexture(_ texture: MDLTexture) throws -> MTLTexture? {
-        let textureLoader = MTKTextureLoader(device: _engine._hardwareRenderer.device)
-        let textureLoaderOptions: [MTKTextureLoader.Option: Any] =
-                [.origin: MTKTextureLoader.Origin.bottomLeft,
-                 .SRGB: false,
-                 .generateMipmaps: NSNumber(booleanLiteral: true)]
-
-        let texture = try? textureLoader.newTexture(texture: texture,
-                options: textureLoaderOptions)
-        return texture
-    }
-
-    /// configure a texture descriptor and create a texture using that descriptor.
+    /// Setting pixels data through color buffer data, designated area and texture mipmapping level,
+    /// it's also applicable to compressed formats.
     /// - Parameters:
-    ///   - size: size of the 2D texture image
-    ///   - label: a string that identifies the resource
-    ///   - pixelFormat: the format describing how every pixel on the texture image is stored
-    ///   - usage: options that determine how you can use the texture
-    /// - Returns: a fully loaded and initialized Metal texture
-    func buildTexture(_ size: CGSize,
-                      _ label: String,
-                      _ pixelFormat: MTLPixelFormat,
-                      _ usage: MTLTextureUsage) -> MTLTexture {
-        let descriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: pixelFormat,
-                width: Int(size.width),
-                height: Int(size.height),
-                mipmapped: false)
-        descriptor.sampleCount = 1
-        descriptor.storageMode = .private
-        descriptor.textureType = .type2D
-        descriptor.usage = usage
-        guard let texture = _engine._hardwareRenderer.device.makeTexture(descriptor: descriptor) else {
-            fatalError("Texture not created")
-        }
-        texture.label = label
-        return texture
+    ///   - colorBuffer: Color buffer data
+    ///   - mipLevel: Texture mipmapping level
+    ///   - x: X coordinate of area start
+    ///   - y: Y coordinate of area start
+    ///   - width: Data width. if it's empty, width is the width corresponding to mipLevel minus x ,
+    ///   width corresponding to mipLevel is Math.max(1, this.width >> mipLevel)
+    ///   - height: Data height. if it's empty, height is the height corresponding to mipLevel minus y ,
+    ///   height corresponding to mipLevel is Math.max(1, this.height >> mipLevel)
+    func setPixelBuffer(_ colorBuffer: [Float], _ mipLevel: Int = 0,
+                        _ x: Float?, _ y: Float?,
+                        _ width: Int?, _ height: Int?
+    ) {
+        (_platformTexture as! IPlatformTexture2D).setPixelBuffer(colorBuffer, mipLevel, x, y, width, height)
+    }
+
+    /// Setting pixels data through TexImageSource, designated area and texture mipmapping level.
+    /// - Parameters:
+    ///   - imageSource: The source of texture
+    ///   - mipLevel: Texture mipmapping level
+    ///   - flipY: Whether to flip the Y axis
+    ///   - premultiplyAlpha: Whether to premultiply the transparent channel
+    ///   - x: X coordinate of area start
+    ///   - y: Y coordinate of area start
+    func setImageSource(_ imageSource: MTLBuffer, _ mipLevel: Int = 0,
+                        _ flipY: Bool = false, _ premultiplyAlpha: Bool = false,
+                        _ x: Float?, _ y: Float?
+    ) {
+        (_platformTexture as! IPlatformTexture2D).setImageSource(imageSource, mipLevel, flipY, premultiplyAlpha, x, y)
+    }
+
+    /// Get the pixel color buffer according to the specified area.
+    /// - Parameters:
+    ///   - x: X coordinate of area start
+    ///   - y: Y coordinate of area start
+    ///   - width: Area width
+    ///   - height: Area height
+    ///   - out: Color buffer
+    func getPixelBuffer(_ x: Float, _ y: Float, _ width: Int, _ height: Int, _ out: inout [Float]) {
+        (_platformTexture as! IPlatformTexture2D).getPixelBuffer(x, y, width, height, &out)
     }
 }
