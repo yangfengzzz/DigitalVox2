@@ -93,6 +93,13 @@
 		0447D54626F803B300272D7C /* ShaderMacroCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447D54526F803B300272D7C /* ShaderMacroCollection.swift */; };
 		0447D54826F8078B00272D7C /* ShaderMacro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447D54726F8078B00272D7C /* ShaderMacro.swift */; };
 		0447D54B26F81D7500272D7C /* MacroInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447D54A26F81D7500272D7C /* MacroInfo.swift */; };
+		0447D54E26F82E0000272D7C /* Light.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447D54D26F82E0000272D7C /* Light.swift */; };
+		0447D55026F82F5200272D7C /* PointLight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447D54F26F82F5200272D7C /* PointLight.swift */; };
+		0447D55226F8309C00272D7C /* SpotLight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447D55126F8309C00272D7C /* SpotLight.swift */; };
+		0447D55426F833A100272D7C /* DirectLight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447D55326F833A100272D7C /* DirectLight.swift */; };
+		0447D55626F834BB00272D7C /* AmbientLight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447D55526F834BB00272D7C /* AmbientLight.swift */; };
+		0447D55926F8354500272D7C /* DiffuseMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447D55826F8354500272D7C /* DiffuseMode.swift */; };
+		0447D55B26F8364300272D7C /* SphericalHarmonics3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447D55A26F8364300272D7C /* SphericalHarmonics3.swift */; };
 		0452EC9926DFA0CD0015BFB1 /* voxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9826DFA0CD0015BFB1 /* voxApp.swift */; };
 		0452EC9B26DFA0CD0015BFB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */; };
 		0452EC9D26DFA0CD0015BFB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0452EC9C26DFA0CD0015BFB1 /* Assets.xcassets */; };
@@ -338,6 +345,13 @@
 		0447D54526F803B300272D7C /* ShaderMacroCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderMacroCollection.swift; sourceTree = "<group>"; };
 		0447D54726F8078B00272D7C /* ShaderMacro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderMacro.swift; sourceTree = "<group>"; };
 		0447D54A26F81D7500272D7C /* MacroInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroInfo.swift; sourceTree = "<group>"; };
+		0447D54D26F82E0000272D7C /* Light.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Light.swift; sourceTree = "<group>"; };
+		0447D54F26F82F5200272D7C /* PointLight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointLight.swift; sourceTree = "<group>"; };
+		0447D55126F8309C00272D7C /* SpotLight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotLight.swift; sourceTree = "<group>"; };
+		0447D55326F833A100272D7C /* DirectLight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectLight.swift; sourceTree = "<group>"; };
+		0447D55526F834BB00272D7C /* AmbientLight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmbientLight.swift; sourceTree = "<group>"; };
+		0447D55826F8354500272D7C /* DiffuseMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffuseMode.swift; sourceTree = "<group>"; };
+		0447D55A26F8364300272D7C /* SphericalHarmonics3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphericalHarmonics3.swift; sourceTree = "<group>"; };
 		0452EC9626DFA0CD0015BFB1 /* vox.tracing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vox.tracing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0452EC9826DFA0CD0015BFB1 /* voxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = voxApp.swift; sourceTree = "<group>"; };
 		0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -751,6 +765,27 @@
 			path = state;
 			sourceTree = "<group>";
 		};
+		0447D54C26F82DEA00272D7C /* lighting */ = {
+			isa = PBXGroup;
+			children = (
+				0447D55726F8353F00272D7C /* enums */,
+				0447D54D26F82E0000272D7C /* Light.swift */,
+				0447D54F26F82F5200272D7C /* PointLight.swift */,
+				0447D55126F8309C00272D7C /* SpotLight.swift */,
+				0447D55326F833A100272D7C /* DirectLight.swift */,
+				0447D55526F834BB00272D7C /* AmbientLight.swift */,
+			);
+			path = lighting;
+			sourceTree = "<group>";
+		};
+		0447D55726F8353F00272D7C /* enums */ = {
+			isa = PBXGroup;
+			children = (
+				0447D55826F8354500272D7C /* DiffuseMode.swift */,
+			);
+			path = enums;
+			sourceTree = "<group>";
+		};
 		0452EC9726DFA0CD0015BFB1 /* vox.tracing */ = {
 			isa = PBXGroup;
 			children = (
@@ -969,6 +1004,7 @@
 				0413288426E09F11000A4F4E /* graphic */,
 				043CB43F26F2E058004A0B21 /* material */,
 				043CB44C26F410B5004A0B21 /* texture */,
+				0447D54C26F82DEA00272D7C /* lighting */,
 				04E28C4026EDD6F8003A3C3B /* renderPipeline */,
 				043CB44226F2E0BC004A0B21 /* shader */,
 				043CB43826F0E39D004A0B21 /* controls */,
@@ -1106,6 +1142,7 @@
 				0413287A26E07BA3000A4F4E /* Ray.swift */,
 				0413287F26E08044000A4F4E /* Color.swift */,
 				0413288126E08394000A4F4E /* MathUtil.swift */,
+				0447D55A26F8364300272D7C /* SphericalHarmonics3.swift */,
 			);
 			path = math;
 			sourceTree = "<group>";
@@ -1450,6 +1487,7 @@
 				04E28C3826ECE7B3003A3C3B /* MetalRenderer.swift in Sources */,
 				043CB46726F45C18004A0B21 /* ClassPool.swift in Sources */,
 				0452ECD626DFA5360015BFB1 /* PBR.metal in Sources */,
+				0447D55226F8309C00272D7C /* SpotLight.swift in Sources */,
 				043CB47D26F56F0B004A0B21 /* StencilOperation.swift in Sources */,
 				043CB46D26F5667A004A0B21 /* ShaderPool.swift in Sources */,
 				04DB2A4226DF1E0500C15850 /* IClone.swift in Sources */,
@@ -1464,6 +1502,7 @@
 				04EFDE8026DF4C85005FBB6F /* Quaternion.swift in Sources */,
 				04EFDE7626DF1F96005FBB6F /* Vector2.swift in Sources */,
 				0458275B26F6EF0E0056D134 /* Assets.swift in Sources */,
+				0447D55626F834BB00272D7C /* AmbientLight.swift in Sources */,
 				042BB13C26F36F2600604751 /* ShaderProperty.swift in Sources */,
 				0413289226E0A1CD000A4F4E /* RefObject.swift in Sources */,
 				041B584B26F571DE00B32BD0 /* SimpleMaterial.swift in Sources */,
@@ -1478,6 +1517,7 @@
 				043CB45026F41AD6004A0B21 /* Texture2D.swift in Sources */,
 				043CB45F26F42057004A0B21 /* RenderContext.swift in Sources */,
 				047FEBF426E603CD0078CFAF /* Layer.swift in Sources */,
+				0447D54E26F82E0000272D7C /* Light.swift in Sources */,
 				0413289F26E0CBE7000A4F4E /* ShaderSimple.metal in Sources */,
 				0447D54826F8078B00272D7C /* ShaderMacro.swift in Sources */,
 				041B585726F5863700B32BD0 /* BufferMesh.swift in Sources */,
@@ -1497,6 +1537,7 @@
 				0452ECC326DFA4590015BFB1 /* EngineView.swift in Sources */,
 				0497A1E726DF150500F61DE9 /* ContentView.swift in Sources */,
 				043CB47B26F56E94004A0B21 /* CullMode.swift in Sources */,
+				0447D55426F833A100272D7C /* DirectLight.swift in Sources */,
 				043CB44B26F34405004A0B21 /* RenderQueueType.swift in Sources */,
 				043CB47726F56D1B004A0B21 /* ColorWriteMask.swift in Sources */,
 				04E28C3426ECE6F3003A3C3B /* IPlatformPrimitive.swift in Sources */,
@@ -1510,6 +1551,7 @@
 				0413288A26E09FB3000A4F4E /* Mesh.swift in Sources */,
 				043CB44E26F410CA004A0B21 /* Texture.swift in Sources */,
 				0452ECED26DFA7870015BFB1 /* Canvas.swift in Sources */,
+				0447D55026F82F5200272D7C /* PointLight.swift in Sources */,
 				0413287126E06D2E000A4F4E /* BoundingFrustum.swift in Sources */,
 				041B584D26F57BC300B32BD0 /* ShaderProgram.swift in Sources */,
 				047FEBF626E6052D0078CFAF /* Transform.swift in Sources */,
@@ -1519,6 +1561,7 @@
 				04874ED426F771F3005E3318 /* PBRMaterial.swift in Sources */,
 				04E28C3626ECE780003A3C3B /* GPUPrimitive.swift in Sources */,
 				047E7B2C26EE257E006BC3FB /* MeshRenderer.swift in Sources */,
+				0447D55B26F8364300272D7C /* SphericalHarmonics3.swift in Sources */,
 				0413288226E08394000A4F4E /* MathUtil.swift in Sources */,
 				042BB12A26EA35C100604751 /* Background.swift in Sources */,
 				0413288826E09FA5000A4F4E /* ModelMesh.swift in Sources */,
@@ -1533,6 +1576,7 @@
 				0497A1E526DF150500F61DE9 /* voxApp.swift in Sources */,
 				04E28C4226EDD722003A3C3B /* BasicRenderPipeline.swift in Sources */,
 				041B584F26F57C1500B32BD0 /* ShaderUniformBlock.swift in Sources */,
+				0447D55926F8354500272D7C /* DiffuseMode.swift in Sources */,
 				0458275F26F71D630056D134 /* VertexDescriptor.swift in Sources */,
 				047FEBF226E601750078CFAF /* Entity.swift in Sources */,
 				043CB45D26F41EA2004A0B21 /* StencilState.swift in Sources */,

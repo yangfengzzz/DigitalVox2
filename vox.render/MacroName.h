@@ -20,6 +20,9 @@ typedef enum {
     
     ALPHA_CUTOFF = 7,
     
+    USE_SH = 8,
+    USE_SPECULAR_ENV = 9,
+    
     None = 8,
 } MacroName;
 
