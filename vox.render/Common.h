@@ -34,6 +34,7 @@
 #define Common_h
 
 #import <simd/simd.h>
+#include "MacroType.h"
 
 typedef struct {
     matrix_float4x4 modelMatrix;

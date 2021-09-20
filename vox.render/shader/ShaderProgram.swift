@@ -64,11 +64,11 @@ internal class ShaderProgram {
     ///   - vertexSource: vertex name
     ///   - fragmentSource: fragment name
     private func _createProgram(_ vertexSource: String, _ fragmentSource: String) -> MTLRenderPipelineDescriptor? {
-        let vertexShader = _library.makeFunction(name: "vertex_simple")
+        let vertexShader = _library.makeFunction(name: vertexSource)
         if vertexShader == nil {
             return nil
         }
-        let fragmentShader = _library.makeFunction(name: "fragment_simple")
+        let fragmentShader = _library.makeFunction(name: fragmentSource)
         if fragmentShader == nil {
             return nil
         }

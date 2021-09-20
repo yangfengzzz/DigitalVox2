@@ -7,12 +7,19 @@
 
 import Foundation
 
+extension MacroType:Hashable {}
+
 /// Shader containing vertex and fragment source.
 class Shader {
+    static internal var _compileMacros: ShaderMacroCollection = ShaderMacroCollection();
+    
     private static var _shaderCounter: Int = 0
     private static var _shaderMap: [String: Shader] = [:]
     private static var _propertyNameMap: [String: ShaderProperty] = [:]
-
+    private static var _macroMaskMap: [[MacroType]] = [[]];
+    private static var _macroCounter: Int = 0;
+    private static var _macroMap: [MacroType: ShaderMacro] = [:]
+    
     /// The name of shader.
     var name: String
 
