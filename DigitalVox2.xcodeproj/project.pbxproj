@@ -114,6 +114,7 @@
 		0447D57626F8701D00272D7C /* RenderDepthTexture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447D57526F8701D00272D7C /* RenderDepthTexture.swift */; };
 		0447D57826F870F800272D7C /* RenderBufferDepthFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447D57726F870F800272D7C /* RenderBufferDepthFormat.swift */; };
 		0447D57A26F8941100272D7C /* RenderPipelineState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447D57926F8941100272D7C /* RenderPipelineState.swift */; };
+		0447D57C26F8C73900272D7C /* ShaderReflection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447D57B26F8C73900272D7C /* ShaderReflection.swift */; };
 		0452EC9926DFA0CD0015BFB1 /* voxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9826DFA0CD0015BFB1 /* voxApp.swift */; };
 		0452EC9B26DFA0CD0015BFB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */; };
 		0452EC9D26DFA0CD0015BFB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0452EC9C26DFA0CD0015BFB1 /* Assets.xcassets */; };
@@ -380,6 +381,7 @@
 		0447D57526F8701D00272D7C /* RenderDepthTexture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderDepthTexture.swift; sourceTree = "<group>"; };
 		0447D57726F870F800272D7C /* RenderBufferDepthFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderBufferDepthFormat.swift; sourceTree = "<group>"; };
 		0447D57926F8941100272D7C /* RenderPipelineState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderPipelineState.swift; sourceTree = "<group>"; };
+		0447D57B26F8C73900272D7C /* ShaderReflection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderReflection.swift; sourceTree = "<group>"; };
 		0452EC9626DFA0CD0015BFB1 /* vox.tracing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vox.tracing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0452EC9826DFA0CD0015BFB1 /* voxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = voxApp.swift; sourceTree = "<group>"; };
 		0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -753,6 +755,7 @@
 				042BB13B26F36F2600604751 /* ShaderProperty.swift */,
 				043CB46C26F5667A004A0B21 /* ShaderPool.swift */,
 				041B584C26F57BC300B32BD0 /* ShaderProgram.swift */,
+				0447D57B26F8C73900272D7C /* ShaderReflection.swift */,
 				041B584E26F57C1500B32BD0 /* ShaderUniformBlock.swift */,
 				041B585226F57C4200B32BD0 /* ShaderUniform.swift */,
 				0447D54526F803B300272D7C /* ShaderMacroCollection.swift */,
@@ -1544,6 +1547,7 @@
 				04DB2A4226DF1E0500C15850 /* IClone.swift in Sources */,
 				043CB44926F341AF004A0B21 /* RenderFace.swift in Sources */,
 				043CB44726F3417E004A0B21 /* BlendMode.swift in Sources */,
+				0447D57C26F8C73900272D7C /* ShaderReflection.swift in Sources */,
 				0458275D26F71D000056D134 /* MeshBuffer.swift in Sources */,
 				042BB12D26EA371500604751 /* BackgroundMode.swift in Sources */,
 				0413289D26E0C288000A4F4E /* UpdateFlagManager.swift in Sources */,

@@ -22,13 +22,13 @@ struct VertexOut {
 };
 
 vertex VertexOut vertex_simple(const VertexIn vertexIn [[stage_in]],
-                               constant matrix_float4x4 &projectionMatrix [[buffer(12)]],
-                               constant matrix_float4x4 &viewMatrix [[buffer(13)]],
-                               constant matrix_float4x4 &modelMatrix [[buffer(14)]])
+                               constant matrix_float4x4 &u_projMat [[buffer(12)]],
+                               constant matrix_float4x4 &u_viewMat [[buffer(13)]],
+                               constant matrix_float4x4 &u_modelMat [[buffer(14)]])
 {
   VertexOut out {
-    .position = projectionMatrix * viewMatrix * modelMatrix * float4(vertexIn.position, 1.0),
-    .worldPosition = (modelMatrix * float4(vertexIn.position, 1.0)).xyz,
+    .position = u_projMat * u_viewMat * u_modelMat * float4(vertexIn.position, 1.0),
+    .worldPosition = (u_modelMat * float4(vertexIn.position, 1.0)).xyz,
     .uv = vertexIn.uv
   };
   return out;

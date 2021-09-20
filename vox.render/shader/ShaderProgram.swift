@@ -13,30 +13,19 @@ internal class ShaderProgram {
 
     var id: Int
 
-    var sceneUniformBlock: ShaderUniformBlock = ShaderUniformBlock()
-    var cameraUniformBlock: ShaderUniformBlock = ShaderUniformBlock()
-    var rendererUniformBlock: ShaderUniformBlock = ShaderUniformBlock()
-    var materialUniformBlock: ShaderUniformBlock = ShaderUniformBlock()
-    var otherUniformBlock: ShaderUniformBlock = ShaderUniformBlock()
-
-    internal var _uploadRenderCount: Int = -1
-    internal var _uploadCamera: Camera!
-    internal var _uploadRenderer: Renderer!
-    internal var _uploadMaterial: Material!
-
     private var _isValid: Bool!
     private var _engine: Engine
     private var _library: MTLLibrary
     private var _vertexShader: MTLFunction?
     private var _fragmentShader: MTLFunction?
 
-    var vertexShader:MTLFunction? {
+    var vertexShader: MTLFunction? {
         get {
             _vertexShader
         }
     }
-    
-    var fragmentShader:MTLFunction? {
+
+    var fragmentShader: MTLFunction? {
         get {
             _fragmentShader
         }

@@ -48,7 +48,7 @@ extension RenderQueue {
         let cameraData = camera.shaderData
 
         //MARK:- Start Render
-        engine._hardwareRenderer.preDraw()
+        rhi.preDraw()
         for i in 0..<items.count {
             let item = items[i]
             let renderPassFlag = item.component.entity.layer
@@ -87,41 +87,25 @@ extension RenderQueue {
             if program.fragmentShader !== element.pipelineState.fragmentShader {
                 element.pipelineState.fragmentShader = program.fragmentShader
             }
-            engine._hardwareRenderer.setRenderPipelineState(element.pipelineState)
+            rhi.setRenderPipelineState(element.pipelineState)
 
             //MARK:- Load Resouces
-            let reflection = element.pipelineState.reflection
-            reflection?.vertexArguments?.forEach({ aug in
-                print(aug.name, aug.bufferDataType.rawValue, aug.index)
-            })
-            reflection?.fragmentArguments?.forEach({ aug in
-                print(aug.name, aug.bufferDataType.rawValue, aug.index)
-            })
-            print("====")
-            
-            let projectionMatrix = cameraData.getMatrix("u_projMat")
-            engine._hardwareRenderer.renderEncoder.setVertexBytes(&projectionMatrix!.elements,
-                    length: MemoryLayout<matrix_float4x4>.stride,
-                    index: 12)
-            
-            let viewMatrix = cameraData.getMatrix("u_viewMat")
-            engine._hardwareRenderer.renderEncoder.setVertexBytes(&viewMatrix!.elements,
-                    length: MemoryLayout<matrix_float4x4>.stride,
-                    index: 13)
-            
-            let modelMatrix = rendererData.getMatrix("u_modelMat")
-            engine._hardwareRenderer.renderEncoder.setVertexBytes(&modelMatrix!.elements,
-                    length: MemoryLayout<matrix_float4x4>.stride,
-                    index: 14)
+            let reflection = element.pipelineState.reflection            
+            let shaderReflection = ShaderReflection(engine, reflection!)
+            shaderReflection.groupingOtherUniformBlock()
+            shaderReflection.uploadAll(shaderReflection.sceneUniformBlock, sceneData);
+            shaderReflection.uploadAll(shaderReflection.cameraUniformBlock, cameraData);
+            shaderReflection.uploadAll(shaderReflection.rendererUniformBlock, rendererData);
+            shaderReflection.uploadAll(shaderReflection.materialUniformBlock, materialData);
 
             for (index, vertexBuffer) in element.mesh._vertexBuffer.enumerated() {
-                engine._hardwareRenderer.renderEncoder.setVertexBuffer(vertexBuffer?.buffer,
+                rhi.renderEncoder.setVertexBuffer(vertexBuffer?.buffer,
                         offset: 0, index: index)
             }
 
-            engine._hardwareRenderer.drawPrimitive(element.mesh!, element.subMesh, program)
+            rhi.drawPrimitive(element.mesh!, element.subMesh, program)
         }
-        engine._hardwareRenderer.postDraw()
+        rhi.postDraw()
     }
 
     /// Clear collection.
