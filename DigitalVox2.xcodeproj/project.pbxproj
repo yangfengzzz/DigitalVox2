@@ -333,7 +333,7 @@
 		043CB47826F56DEE004A0B21 /* CompareFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompareFunction.swift; sourceTree = "<group>"; };
 		043CB47A26F56E94004A0B21 /* CullMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CullMode.swift; sourceTree = "<group>"; };
 		043CB47C26F56F0B004A0B21 /* StencilOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StencilOperation.swift; sourceTree = "<group>"; };
-		0447D54426F8020B00272D7C /* MacroType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MacroType.h; sourceTree = "<group>"; };
+		0447D54426F8020B00272D7C /* MacroName.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MacroName.h; sourceTree = "<group>"; };
 		0447D54526F803B300272D7C /* ShaderMacroCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderMacroCollection.swift; sourceTree = "<group>"; };
 		0447D54726F8078B00272D7C /* ShaderMacro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderMacro.swift; sourceTree = "<group>"; };
 		0452EC9626DFA0CD0015BFB1 /* vox.tracing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vox.tracing.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -994,7 +994,7 @@
 				0452ECF226DFA8BD0015BFB1 /* Textures.xcassets */,
 				0452ECDF26DFA66E0015BFB1 /* models */,
 				0452ECCB26DFA5360015BFB1 /* Common.h */,
-				0447D54426F8020B00272D7C /* MacroType.h */,
+				0447D54426F8020B00272D7C /* MacroName.h */,
 				0452ECCD26DFA5360015BFB1 /* ResouceModel.swift */,
 				0452ECD026DFA5360015BFB1 /* ResouceMesh.swift */,
 				0452ECD126DFA5360015BFB1 /* ResouceSubmesh.swift */,

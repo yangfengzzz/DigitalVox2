@@ -44,13 +44,13 @@ internal class ShaderProgram {
         }
     }
 
-    init(_ engine: Engine, _ vertexSource: String, _ fragmentSource: String) {
+    init(_ engine: Engine, _ vertexSource: String, _ fragmentSource: String, _ macroName: [MacroName]) {
         id = ShaderProgram._counter
         ShaderProgram._counter += 1
 
         _engine = engine
         _library = engine._hardwareRenderer.library
-        _pipelineDescriptor = _createProgram(vertexSource, fragmentSource)
+        _pipelineDescriptor = _createProgram(vertexSource, fragmentSource, macroName)
 
         if _pipelineDescriptor != nil {
             _isValid = true
@@ -59,17 +59,32 @@ internal class ShaderProgram {
         }
     }
 
+    private func makeFunctionConstants(_ macroName: [MacroName]) -> MTLFunctionConstantValues {
+        let functionConstants = MTLFunctionConstantValues()
+        var property = true
+        macroName.forEach { name in
+            functionConstants.setConstantValue(&property, type: .bool, index: Int(name.rawValue))
+        }
+        return functionConstants
+    }
+
     /// init and link program with shader.
     /// - Parameters:
     ///   - vertexSource: vertex name
     ///   - fragmentSource: fragment name
-    private func _createProgram(_ vertexSource: String, _ fragmentSource: String) -> MTLRenderPipelineDescriptor? {
-        let vertexShader = _library.makeFunction(name: vertexSource)
-        if vertexShader == nil {
-            return nil
-        }
-        let fragmentShader = _library.makeFunction(name: fragmentSource)
-        if fragmentShader == nil {
+    private func _createProgram(_ vertexSource: String, _ fragmentSource: String,
+                                _ macroName: [MacroName]) -> MTLRenderPipelineDescriptor? {
+        let functionConstants = makeFunctionConstants(macroName)
+
+        let vertexShader: MTLFunction?
+        let fragmentShader: MTLFunction?
+        do {
+            vertexShader = try _library.makeFunction(name: vertexSource,
+                    constantValues: functionConstants)
+
+            fragmentShader = try _library.makeFunction(name: fragmentSource,
+                    constantValues: functionConstants)
+        } catch {
             return nil
         }
 
@@ -77,8 +92,8 @@ internal class ShaderProgram {
         pipelineDescriptor.vertexFunction = vertexShader
         pipelineDescriptor.fragmentFunction = fragmentShader
 
-        _vertexShader = vertexShader!
-        _fragmentShader = fragmentShader!
+        _vertexShader = vertexShader
+        _fragmentShader = fragmentShader
 
         return pipelineDescriptor
     }

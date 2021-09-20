@@ -9,12 +9,12 @@ import Foundation
 
 /// Shader macro
 class ShaderMacro {
-    var name: MacroType
+    var name: MacroName
 
     internal var _index: Int
     internal var _value: Int
 
-    internal init(name: MacroType, index: Int, value: Int) {
+    internal init(_ name: MacroName, _ index: Int, _ value: Int) {
         self.name = name
         self._index = index
         self._value = value

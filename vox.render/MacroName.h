@@ -1,12 +1,12 @@
 //
-//  MacroType.h
+//  MacroName.h
 //  DigitalVox2
 //
 //  Created by 杨丰 on 2021/9/20.
 //
 
-#ifndef MacroType_h
-#define MacroType_h
+#ifndef MacroName_h
+#define MacroName_h
 
 typedef enum {
     HAS_UV = 0,
@@ -17,6 +17,8 @@ typedef enum {
     BLENDSHAPE = 4,
     BLENDSHAPE_NORMAL = 5,
     BLENDSHAPE_TANGENT = 6,
-} MacroType;
+    
+    None = 7,
+} MacroName;
 
-#endif /* MacroType_h */
+#endif /* MacroName_h */

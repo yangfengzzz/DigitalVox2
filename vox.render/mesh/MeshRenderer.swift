@@ -39,7 +39,7 @@ class MeshRenderer: Renderer {
     override func setMaterial(_ material: Material) {
         super.setMaterial(material)
         if mesh != nil {
-            _pipelineStates.insert(makePipelineState(mesh!, material.shader._getShaderProgram(engine)), at: 0)
+            _pipelineStates.insert(makePipelineState(mesh!, material.shader._getShaderProgram(engine, ShaderMacroCollection())), at: 0)
         }
     }
 
@@ -50,7 +50,7 @@ class MeshRenderer: Renderer {
     override func setMaterial(_ index: Int, _ material: Material) {
         super.setMaterial(index, material)
         if mesh != nil {
-            _pipelineStates.insert(makePipelineState(mesh!, material.shader._getShaderProgram(engine)), at: index)
+            _pipelineStates.insert(makePipelineState(mesh!, material.shader._getShaderProgram(engine, ShaderMacroCollection())), at: index)
         }
     }
 
@@ -61,7 +61,7 @@ class MeshRenderer: Renderer {
         if mesh != nil {
             _pipelineStates.reserveCapacity(materials.count)
             materials.forEach { material in
-                _pipelineStates.append(makePipelineState(mesh!, material.shader._getShaderProgram(engine)))
+                _pipelineStates.append(makePipelineState(mesh!, material.shader._getShaderProgram(engine, ShaderMacroCollection())))
             }
         }
     }

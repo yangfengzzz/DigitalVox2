@@ -74,10 +74,10 @@ extension RenderQueue {
             // @todo: temporary solution
             material!._preRender(element)
 
-            let program = material!.shader._getShaderProgram(engine)
-            if (!program.isValid) {
-                continue
-            }
+            // let program = material!.shader._getShaderProgram(engine)
+            // if (!program.isValid) {
+            //    continue
+            // }
 
             engine._hardwareRenderer.renderEncoder.setRenderPipelineState(element.pipelineState)
 
@@ -96,7 +96,7 @@ extension RenderQueue {
             }
 
 
-            engine._hardwareRenderer.drawPrimitive(element.mesh!, element.subMesh, ShaderProgram(engine, "", ""))
+            engine._hardwareRenderer.drawPrimitive(element.mesh!, element.subMesh, ShaderProgram(engine, "", "", []))
         }
         engine._hardwareRenderer.postDraw()
     }
