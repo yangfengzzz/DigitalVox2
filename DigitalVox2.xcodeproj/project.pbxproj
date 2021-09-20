@@ -100,6 +100,10 @@
 		0447D55626F834BB00272D7C /* AmbientLight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447D55526F834BB00272D7C /* AmbientLight.swift */; };
 		0447D55926F8354500272D7C /* DiffuseMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447D55826F8354500272D7C /* DiffuseMode.swift */; };
 		0447D55B26F8364300272D7C /* SphericalHarmonics3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447D55A26F8364300272D7C /* SphericalHarmonics3.swift */; };
+		0447D55D26F845F600272D7C /* BlinnPhongMaterial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447D55C26F845F600272D7C /* BlinnPhongMaterial.swift */; };
+		0447D55F26F8550100272D7C /* UnlitMaterial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447D55E26F8550100272D7C /* UnlitMaterial.swift */; };
+		0447D56126F8562300272D7C /* PBRBaseMaterial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447D56026F8562300272D7C /* PBRBaseMaterial.swift */; };
+		0447D56326F8588900272D7C /* PBRSpecularMaterial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447D56226F8588900272D7C /* PBRSpecularMaterial.swift */; };
 		0452EC9926DFA0CD0015BFB1 /* voxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9826DFA0CD0015BFB1 /* voxApp.swift */; };
 		0452EC9B26DFA0CD0015BFB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */; };
 		0452EC9D26DFA0CD0015BFB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0452EC9C26DFA0CD0015BFB1 /* Assets.xcassets */; };
@@ -352,6 +356,10 @@
 		0447D55526F834BB00272D7C /* AmbientLight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmbientLight.swift; sourceTree = "<group>"; };
 		0447D55826F8354500272D7C /* DiffuseMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffuseMode.swift; sourceTree = "<group>"; };
 		0447D55A26F8364300272D7C /* SphericalHarmonics3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphericalHarmonics3.swift; sourceTree = "<group>"; };
+		0447D55C26F845F600272D7C /* BlinnPhongMaterial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlinnPhongMaterial.swift; sourceTree = "<group>"; };
+		0447D55E26F8550100272D7C /* UnlitMaterial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnlitMaterial.swift; sourceTree = "<group>"; };
+		0447D56026F8562300272D7C /* PBRBaseMaterial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PBRBaseMaterial.swift; sourceTree = "<group>"; };
+		0447D56226F8588900272D7C /* PBRSpecularMaterial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PBRSpecularMaterial.swift; sourceTree = "<group>"; };
 		0452EC9626DFA0CD0015BFB1 /* vox.tracing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vox.tracing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0452EC9826DFA0CD0015BFB1 /* voxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = voxApp.swift; sourceTree = "<group>"; };
 		0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -705,7 +713,11 @@
 				043CB44526F34173004A0B21 /* enums */,
 				043CB44026F2E069004A0B21 /* Material.swift */,
 				043CB46E26F567D9004A0B21 /* BaseMaterial.swift */,
+				0447D55C26F845F600272D7C /* BlinnPhongMaterial.swift */,
+				0447D55E26F8550100272D7C /* UnlitMaterial.swift */,
 				041B584A26F571DE00B32BD0 /* SimpleMaterial.swift */,
+				0447D56026F8562300272D7C /* PBRBaseMaterial.swift */,
+				0447D56226F8588900272D7C /* PBRSpecularMaterial.swift */,
 				04874ED326F771F3005E3318 /* PBRMaterial.swift */,
 			);
 			path = material;
@@ -1518,6 +1530,7 @@
 				043CB45F26F42057004A0B21 /* RenderContext.swift in Sources */,
 				047FEBF426E603CD0078CFAF /* Layer.swift in Sources */,
 				0447D54E26F82E0000272D7C /* Light.swift in Sources */,
+				0447D55D26F845F600272D7C /* BlinnPhongMaterial.swift in Sources */,
 				0413289F26E0CBE7000A4F4E /* ShaderSimple.metal in Sources */,
 				0447D54826F8078B00272D7C /* ShaderMacro.swift in Sources */,
 				041B585726F5863700B32BD0 /* BufferMesh.swift in Sources */,
@@ -1548,6 +1561,8 @@
 				0413288026E08044000A4F4E /* Color.swift in Sources */,
 				0413286D26E06648000A4F4E /* BoundingSphere.swift in Sources */,
 				0413289926E0A607000A4F4E /* VertexAttribute.swift in Sources */,
+				0447D56326F8588900272D7C /* PBRSpecularMaterial.swift in Sources */,
+				0447D56126F8562300272D7C /* PBRBaseMaterial.swift in Sources */,
 				0413288A26E09FB3000A4F4E /* Mesh.swift in Sources */,
 				043CB44E26F410CA004A0B21 /* Texture.swift in Sources */,
 				0452ECED26DFA7870015BFB1 /* Canvas.swift in Sources */,
@@ -1579,6 +1594,7 @@
 				0447D55926F8354500272D7C /* DiffuseMode.swift in Sources */,
 				0458275F26F71D630056D134 /* VertexDescriptor.swift in Sources */,
 				047FEBF226E601750078CFAF /* Entity.swift in Sources */,
+				0447D55F26F8550100272D7C /* UnlitMaterial.swift in Sources */,
 				043CB45D26F41EA2004A0B21 /* StencilState.swift in Sources */,
 				0419B6DE26E701FE00005FEA /* Script.swift in Sources */,
 				043CB47526F56CD3004A0B21 /* BlendOperation.swift in Sources */,

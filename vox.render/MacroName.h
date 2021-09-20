@@ -19,11 +19,25 @@ typedef enum {
     BLENDSHAPE_TANGENT = 6,
     
     ALPHA_CUTOFF = 7,
+    NEED_WORLDPOS = 8,
+    NEED_TILINGOFFSET = 9,
+    DIFFUSE_TEXTURE = 10,
+    SPECULAR_TEXTURE = 11,
+    EMISSIVE_TEXTURE = 12,
+    NORMAL_TEXTURE = 13,
+    OMIT_NORMAL = 14,
+    BASE_TEXTURE = 15,
+    BASE_COLORMAP = 16,
+    HAS_EMISSIVEMAP = 17,
+    HAS_OCCLUSIONMAP = 18,
+    HAS_SPECULARGLOSSINESSMAP = 19,
+    HAS_METALROUGHNESSMAP = 20,
+    IS_METALLIC_WORKFLOW = 20,
     
-    USE_SH = 8,
-    USE_SPECULAR_ENV = 9,
+    USE_SH = 10,
+    USE_SPECULAR_ENV = 11,
     
-    None = 8,
+    None = 12,
 } MacroName;
 
 #endif /* MacroName_h */

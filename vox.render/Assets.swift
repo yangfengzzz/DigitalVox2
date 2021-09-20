@@ -60,11 +60,6 @@ class Assets {
                     try? texture.loadTexture(filename)
                     return texture
                 }
-
-                mat.baseColor = property(with: MDLMaterialSemantic.baseColor)
-                mat.normal = property(with: .tangentSpaceNormal)
-                mat.roughness = property(with: .roughness)
-                mat.matConst = MaterialConstant(mdlSubmesh.material)
                 materials.append(mat)
             }
 

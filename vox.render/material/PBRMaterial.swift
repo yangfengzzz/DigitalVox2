@@ -7,53 +7,54 @@
 
 import Metal
 
-/// PBR Material.
-class PBRMaterial: BaseMaterial {
-    var _baseColor: Texture2D?
-    var _normal: Texture2D?
-    var _roughness: Texture2D?
-    var matConst: MaterialConstant? = nil
-    let functionConstants = MTLFunctionConstantValues()
-    
-    init(_ engine: Engine) {
-        super.init(engine, Shader.find("pbr")!)
-        
-        var property = false
-        functionConstants.setConstantValue(&property, type: .bool, index: 3)
-        functionConstants.setConstantValue(&property, type: .bool, index: 4)
-    }
-    
-    var baseColor:Texture2D? {
+/// PBR (Metallic-Roughness Workflow) Material.
+class PBRMaterial: PBRBaseMaterial {
+    private static var _metallicProp = Shader.getPropertyByName("u_metal")
+    private static var _roughnessProp = Shader.getPropertyByName("u_roughness")
+    private static var _metallicRoughnessTextureProp = Shader.getPropertyByName("u_metallicRoughnessSampler")
+
+    /// Metallic.
+    var metallic: Float {
         get {
-            _baseColor
+            shaderData.getFloat(PBRMaterial._metallicProp)!
         }
         set {
-            _baseColor = newValue
-            var property = _baseColor != nil
-            functionConstants.setConstantValue(&property, type: .bool, index: 0)
+            shaderData.setFloat(PBRMaterial._metallicProp, newValue)
         }
     }
-    
-    var normal:Texture2D? {
+
+    /// Roughness.
+    var roughness: Float {
         get {
-            _normal
+            shaderData.getFloat(PBRMaterial._roughnessProp)!
         }
         set {
-            _normal = newValue
-            var property = _normal != nil
-            functionConstants.setConstantValue(&property, type: .bool, index: 1)
+            shaderData.setFloat(PBRMaterial._roughnessProp, newValue)
         }
     }
-    
-    var roughness:Texture2D? {
+
+    /// Roughness metallic texture.
+    /// - Remark: G channel is roughness, B channel is metallic
+    var roughnessMetallicTexture: Texture2D? {
         get {
-            _roughness
+            (shaderData.getTexture(PBRMaterial._metallicRoughnessTextureProp) as! Texture2D)
         }
         set {
-            _roughness = newValue
-            var property = _roughness != nil
-            functionConstants.setConstantValue(&property, type: .bool, index: 2)
+            shaderData.setTexture(PBRMaterial._metallicRoughnessTextureProp, newValue!)
+            if newValue != nil {
+                shaderData.enableMacro(HAS_METALROUGHNESSMAP)
+            } else {
+                shaderData.disableMacro(HAS_METALROUGHNESSMAP)
+            }
         }
     }
-    
+
+    /// Create a pbr metallic-roughness workflow material instance.
+    /// - Parameter engine: Engine to which the material belongs
+    override init(_ engine: Engine) {
+        super.init(engine)
+        shaderData.enableMacro(IS_METALLIC_WORKFLOW)
+        shaderData.setFloat(PBRMaterial._metallicProp, 1.0)
+        shaderData.setFloat(PBRMaterial._roughnessProp, 1.0)
+    }
 }
