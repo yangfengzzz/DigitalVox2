@@ -5,7 +5,7 @@
 //  Created by 杨丰 on 2021/9/16.
 //
 
-import Foundation
+import Metal
 
 enum ShaderPropertyValueType {
     case Float(Float)
@@ -26,6 +26,8 @@ class ShaderData {
     internal var _group: ShaderDataGroup
     internal var _properties: [Int: ShaderPropertyValueType] = [:]
     internal var _macroCollection: ShaderMacroCollection = ShaderMacroCollection()
+
+    private var _variableMacros: [MacroName: (UnsafeRawPointer, MTLDataType)] = [:]
     private var _refCount: Int = 0
 
     internal init(_ group: ShaderDataGroup) {
@@ -589,6 +591,66 @@ extension ShaderData {
 
         }
         _setData(property, .TextureArray(value))
+    }
+}
+
+extension ShaderData {
+    /// Enable macro.
+    /// - Parameter macroName: Macro name
+    func enableMacro(_ macroName: MacroName) {
+        let macro = Shader.getMacroByInfo(MacroInfo(macroName))
+        _macroCollection.enable(macro)
+    }
+
+    /// Enable macro.
+    /// - Parameter macro: Shader macro
+    func enableMacro(macro: ShaderMacro) {
+        _macroCollection.enable(macro)
+    }
+
+    /// Enable macro.
+    /// - Parameters:
+    ///   - name: Macro name
+    ///   - value: Macro value
+    func enableMacro(_ name: MacroName, _ value: (UnsafeRawPointer, MTLDataType)) {
+        _enableVariableMacro(name, value)
+    }
+
+    /// Disable macro
+    /// - Parameter macroName: Macro name
+    func disableMacro(_ macroName: MacroName) {
+        // @todo: should optimization variable macros disable performance
+        let variableValue = _variableMacros[macroName]
+        if variableValue != nil {
+            _disableVariableMacro(macroName, variableValue!)
+        } else {
+            let macro = Shader.getMacroByInfo(MacroInfo(macroName))
+            _macroCollection.disable(macro)
+        }
+    }
+
+    /// Disable macro
+    /// - Parameter macro: Shader macro
+    func disableMacro(_ macro: ShaderMacro) {
+        _macroCollection.disable(macro)
+    }
+
+    private func _enableVariableMacro(_ name: MacroName, _ value: (UnsafeRawPointer, MTLDataType)) {
+        let variableValue = _variableMacros[name]
+        if (variableValue?.0 != value.0) {
+            if variableValue != nil {
+                _disableVariableMacro(name, variableValue!)
+            }
+
+            let macro = Shader.getMacroByInfo(MacroInfo(name, value.0, value.1))
+            _macroCollection.enable(macro)
+            _variableMacros[name] = value
+        }
+    }
+
+    private func _disableVariableMacro(_ name: MacroName, _ value: (UnsafeRawPointer, MTLDataType)) {
+        let oldMacro = Shader.getMacroByInfo(MacroInfo(name, value.0, value.1))
+        _macroCollection.disable(oldMacro)
     }
 }
 

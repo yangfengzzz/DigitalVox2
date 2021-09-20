@@ -9,14 +9,14 @@ import Metal
 
 struct MacroInfo {
     var name: MacroName
-    var type: MTLDataType?
-    var pointer: UnsafeRawPointer?
+    var pointer: UnsafeRawPointer? = nil
+    var type: MTLDataType? = nil
 
     init(_ name: MacroName) {
         self.name = name
     }
 
-    init(_ name: MacroName, _ type: MTLDataType, _ pointer: UnsafeRawPointer) {
+    init(_ name: MacroName, _ pointer: UnsafeRawPointer, _ type: MTLDataType) {
         self.name = name
         self.type = type
         self.pointer = pointer
