@@ -8,6 +8,7 @@
 import Foundation
 
 class BaseMaterial: Material {
+    private static var _alphaCutoffMacro: ShaderMacro = Shader.getMacroByInfo(MacroInfo(ALPHA_CUTOFF))
     private static var _alphaCutoffProp = Shader.getPropertyByName("u_alphaCutoff")
 
     private var _renderFace: RenderFace = RenderFace.Front
@@ -56,8 +57,10 @@ class BaseMaterial: Material {
             shaderData.setFloat(BaseMaterial._alphaCutoffProp, newValue)
 
             if (newValue > 0) {
+                shaderData.enableMacro(BaseMaterial._alphaCutoffMacro)
                 renderQueueType = _isTransparent ? RenderQueueType.Transparent : RenderQueueType.AlphaTest
             } else {
+                shaderData.disableMacro(BaseMaterial._alphaCutoffMacro)
                 renderQueueType = _isTransparent ? RenderQueueType.Transparent : RenderQueueType.Opaque
             }
         }

@@ -604,7 +604,7 @@ extension ShaderData {
 
     /// Enable macro.
     /// - Parameter macro: Shader macro
-    func enableMacro(macro: ShaderMacro) {
+    func enableMacro(_ macro: ShaderMacro) {
         _macroCollection.enable(macro)
     }
 

@@ -14,7 +14,7 @@ class Shader {
     private static var _shaderCounter: Int = 0
     private static var _shaderMap: [String: Shader] = [:]
     private static var _propertyNameMap: [String: ShaderProperty] = [:]
-    private static var _macroMaskMap: [[MacroInfo]] = [[]]
+    private static var _macroMaskMap: [[MacroInfo]] = []
     private static var _macroCounter: Int = 0
     private static var _macroMap: [MacroInfo: ShaderMacro] = [:]
 

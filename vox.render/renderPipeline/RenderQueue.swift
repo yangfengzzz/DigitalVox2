@@ -55,7 +55,7 @@ extension RenderQueue {
         var fragmentUniforms = FragmentUniforms()
         fragmentUniforms.tiling = 1
         fragmentUniforms.cameraPosition = camera.entity.transform.worldPosition.elements
-        
+
         for i in 0..<items.count {
             let item = items[i]
             let renderPassFlag = item.component.entity.layer
@@ -65,6 +65,7 @@ extension RenderQueue {
             }
 
             // RenderElement
+            let compileMacros = Shader._compileMacros
             let element = item
             let renderer = element.component
             let material = (replaceMaterial != nil) ? replaceMaterial : element.material
@@ -74,17 +75,24 @@ extension RenderQueue {
             // @todo: temporary solution
             material!._preRender(element)
 
-            // let program = material!.shader._getShaderProgram(engine)
-            // if (!program.isValid) {
-            //    continue
-            // }
+            // union render global macro and material self macro.
+            ShaderMacroCollection.unionCollection(
+                    renderer!._globalShaderMacro,
+                    materialData._macroCollection,
+                    compileMacros
+            )
+
+            let program = material!.shader._getShaderProgram(engine, compileMacros)
+            if (!program.isValid) {
+                continue
+            }
 
             engine._hardwareRenderer.renderEncoder.setRenderPipelineState(element.pipelineState)
 
             engine._hardwareRenderer.renderEncoder.setFragmentBytes(&fragmentUniforms,
-                                           length: MemoryLayout<FragmentUniforms>.stride,
-                                           index: Int(BufferIndexFragmentUniforms.rawValue))
-            
+                    length: MemoryLayout<FragmentUniforms>.stride,
+                    index: Int(BufferIndexFragmentUniforms.rawValue))
+
             uniforms.modelMatrix = element.component.entity.transform.worldMatrix.elements
             engine._hardwareRenderer.renderEncoder.setVertexBytes(&uniforms,
                     length: MemoryLayout<Uniforms>.stride,

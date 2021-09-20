@@ -39,6 +39,7 @@ class Camera: Component {
     /// - Remark Support bit manipulation, corresponding to Entity's layer.
     var cullingMask: Layer = Layer.Everything
 
+    internal var _globalShaderMacro: ShaderMacroCollection = ShaderMacroCollection()
     // @deepClone
     internal var _frustum: BoundingFrustum = BoundingFrustum()
     // @ignoreClone
@@ -401,8 +402,14 @@ extension Camera {
 
         _updateShaderData(context)
 
-        _renderPipeline.render(context)
+        // union scene and camera macro.
+        ShaderMacroCollection.unionCollection(
+                scene.shaderData._macroCollection,
+                shaderData._macroCollection,
+                _globalShaderMacro
+        )
 
+        _renderPipeline.render(context)
         _engine._renderCount += 1
     }
 }

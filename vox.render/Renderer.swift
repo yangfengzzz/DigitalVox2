@@ -29,7 +29,9 @@ class Renderer: Component {
     internal var _onUpdateIndex: Int = -1
     // @ignoreClone
     internal var _rendererIndex: Int = -1
-
+    // @ignoreClone
+    internal var _globalShaderMacro: ShaderMacroCollection = ShaderMacroCollection();
+    
     // @ignoreClone
     internal var _renderSortId: Int = 0
 

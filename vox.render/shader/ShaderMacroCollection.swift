@@ -22,7 +22,7 @@ internal class ShaderMacroCollection {
         if (maskStart < size) {
             if _mask.count < size {
                 _mask.reserveCapacity(size)
-                for _ in maskStart..<index {
+                for _ in maskStart..<size {
                     _mask.append(0)
                 }
             }

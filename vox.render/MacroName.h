@@ -18,7 +18,9 @@ typedef enum {
     BLENDSHAPE_NORMAL = 5,
     BLENDSHAPE_TANGENT = 6,
     
-    None = 7,
+    ALPHA_CUTOFF = 7,
+    
+    None = 8,
 } MacroName;
 
 #endif /* MacroName_h */
