@@ -12,6 +12,7 @@ import MetalKit
 class MetalRenderer {
     let maxAnisotropy = 8
 
+    var canvas: Canvas!
     var device: MTLDevice!
     var commandQueue: MTLCommandQueue!
     var library: MTLLibrary!
@@ -30,6 +31,7 @@ class MetalRenderer {
               let commandQueue = device.makeCommandQueue() else {
             fatalError("GPU not available")
         }
+        self.canvas = canvas
         self.device = device
         self.commandQueue = commandQueue
         library = device.makeDefaultLibrary()
@@ -43,7 +45,15 @@ class MetalRenderer {
         canvas.translatesAutoresizingMaskIntoConstraints = false
         canvas.framebufferOnly = false
         canvas.isMultipleTouchEnabled = true
-        canvas.clearColor = MTLClearColor(red: 0.7, green: 0.9, blue: 1, alpha: 1)
+    }
+
+    func clearRenderTarget(_ engine: Engine,
+                           _ clearFlags: CameraClearFlags
+                           = CameraClearFlags(rawValue: CameraClearFlags.Depth.rawValue | CameraClearFlags.DepthColor.rawValue)!,
+                           _ clearColor: Color
+    ) {
+        canvas.clearColor = MTLClearColor(red: Double(clearColor.r), green: Double(clearColor.g),
+                blue: Double(clearColor.b), alpha: Double(clearColor.a))
     }
 
     func buildDepthStencilState() -> MTLDepthStencilState? {

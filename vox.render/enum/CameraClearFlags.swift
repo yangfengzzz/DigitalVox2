@@ -8,11 +8,11 @@
 import Foundation
 
 /// Camera clear flags enumeration.
-enum CameraClearFlags {
+enum CameraClearFlags:Int {
     /// Clear depth and color from background.
-    case DepthColor
+    case DepthColor = 0
     /// Clear depth only.
-    case Depth
+    case Depth = 1
     /// Do nothing.
-    case None
+    case None = 2
 }

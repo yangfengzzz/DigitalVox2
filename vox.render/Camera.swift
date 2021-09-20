@@ -55,6 +55,7 @@ class Camera: Component {
     private var _isInvProjMatDirty: Bool = true
     private var _isFrustumProjectDirty: Bool = true
     private var _customAspectRatio: Float?
+    private var _renderTarget: RenderTarget? = nil
 
     // @ignoreClone
     private var _frustumViewChangeFlag: UpdateFlag
@@ -211,6 +212,27 @@ class Camera: Component {
             _projMatChange()
         }
     }
+    
+    /// Whether to enable HDR.
+    var enableHDR:Bool {
+        get {
+            fatalError("not implementation")
+        }
+        set {
+            fatalError("not implementation")
+        }
+    }
+    
+    /// RenderTarget. After setting, it will be rendered to the renderTarget. If it is empty, it will be rendered to the main canvas.
+    var renderTarget:RenderTarget? {
+        get {
+            _renderTarget
+        }
+        set {
+            _renderTarget = newValue
+        }
+    }
+
 
     /// Create the Camera component.
     /// - Parameter entity: Entity
@@ -390,7 +412,7 @@ extension Camera {
     }
 
     /// Manually call the rendering of the camera.
-    func render() {
+    func render(_ cubeFace: TextureCubeFace? = nil) {
         // compute cull frustum.
         let context = engine._renderContext
         context._setContext(self)
@@ -409,7 +431,7 @@ extension Camera {
                 _globalShaderMacro
         )
 
-        _renderPipeline.render(context)
+        _renderPipeline.render(context, cubeFace)
         _engine._renderCount += 1
     }
 }

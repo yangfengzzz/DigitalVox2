@@ -28,6 +28,7 @@ struct ContentView: View {
         asset = Assets(engine)
 
         let scene = engine.sceneManager.activeScene
+        _ = scene?.background.solidColor.setValue(r: 0.7, g: 0.9, b: 1, a: 1)
         let rootEntity = scene!.createRootEntity()
 
         // init camera

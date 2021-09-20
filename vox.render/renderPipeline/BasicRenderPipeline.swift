@@ -42,8 +42,10 @@ class BasicRenderPipeline {
 
 extension BasicRenderPipeline {
     /// Perform scene rendering.
-    /// - Parameter context: Render context
-    func render(_ context: RenderContext) {
+    /// - Parameters:
+    ///   - context: Render context
+    ///   - cubeFace: Render surface of cube texture
+    func render(_ context: RenderContext, _ cubeFace: TextureCubeFace? = nil) {
         let camera = _camera
         let opaqueQueue = _opaqueQueue
         let alphaTestQueue = _alphaTestQueue
@@ -59,14 +61,25 @@ extension BasicRenderPipeline {
         transparentQueue.sort(RenderQueue._compareFromFarToNear)
 
         for i in 0..<_renderPassArray.count {
-            _drawRenderPass(_renderPassArray[i], camera)
+            _drawRenderPass(_renderPassArray[i], camera, cubeFace)
         }
     }
 
-    private func _drawRenderPass(_ pass: RenderPass, _ camera: Camera) {
+    private func _drawRenderPass(_ pass: RenderPass, _ camera: Camera, _ cubeFace: TextureCubeFace? = nil) {
         pass.preRender(camera, _opaqueQueue, _alphaTestQueue, _transparentQueue)
 
         if (pass.enabled) {
+            let engine = camera.engine
+            let scene = camera.scene
+            let background = scene.background
+            let rhi = engine._hardwareRenderer
+            // todo RenderTarget
+            let clearFlags = pass.clearFlags ?? camera.clearFlags
+            let color = pass.clearColor ?? background.solidColor
+            if (clearFlags != CameraClearFlags.None) {
+                rhi.clearRenderTarget(camera.engine, clearFlags, color)
+            }
+
             if (pass.renderOverride) {
                 pass.render(camera, _opaqueQueue, _alphaTestQueue, _transparentQueue)
             } else {
