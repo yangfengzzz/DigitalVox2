@@ -13,11 +13,11 @@ typedef enum {
     HAS_NORMAL = 1,
     HAS_TANGENT = 2,
     HAS_VERTEXCOLOR = 3,
-    
+
     BLENDSHAPE = 4,
     BLENDSHAPE_NORMAL = 5,
     BLENDSHAPE_TANGENT = 6,
-    
+
     ALPHA_CUTOFF = 7,
     NEED_WORLDPOS = 8,
     NEED_TILINGOFFSET = 9,
@@ -33,11 +33,11 @@ typedef enum {
     HAS_SPECULARGLOSSINESSMAP = 19,
     HAS_METALROUGHNESSMAP = 20,
     IS_METALLIC_WORKFLOW = 20,
-    
-    USE_SH = 10,
-    USE_SPECULAR_ENV = 11,
-    
-    None = 12,
+
+    USE_SH = 21,
+    USE_SPECULAR_ENV = 22,
+
+    None = 25,
 } MacroName;
 
 #endif /* MacroName_h */

@@ -82,12 +82,11 @@ extension Shader {
     /// - Parameter name: Name of the shader property
     /// - Returns: Shader property
     static func getPropertyByName(_ name: String) -> ShaderProperty {
-        var propertyNameMap = Shader._propertyNameMap
-        if (propertyNameMap[name] != nil) {
-            return propertyNameMap[name]!
+        if (Shader._propertyNameMap[name] != nil) {
+            return Shader._propertyNameMap[name]!
         } else {
             let property = ShaderProperty(name)
-            propertyNameMap[name] = property
+            Shader._propertyNameMap[name] = property
             return property
         }
     }

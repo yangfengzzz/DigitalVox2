@@ -9,6 +9,7 @@ import Metal
 
 class RenderPipelineState {
     private let _engine: Engine
+    private var _reflection: MTLRenderPipelineReflection?
     private var _pipelineStateCache: MTLRenderPipelineState?
     private let _pipelineDescriptor: MTLRenderPipelineDescriptor = MTLRenderPipelineDescriptor()
     private var _updateFlag = false
@@ -22,14 +23,20 @@ class RenderPipelineState {
     var pipelineState: MTLRenderPipelineState? {
         get {
             if _updateFlag == true {
-                do {
-                    _pipelineStateCache = try _engine._hardwareRenderer.device.makeRenderPipelineState(descriptor: _pipelineDescriptor)
-                } catch let error {
-                    fatalError(error.localizedDescription)
-                }
+                _makePipelineState()
                 _updateFlag = false
             }
             return _pipelineStateCache
+        }
+    }
+
+    var reflection: MTLRenderPipelineReflection? {
+        get {
+            if _updateFlag == true {
+                _makePipelineState()
+                _updateFlag = false
+            }
+            return _reflection
         }
     }
 
@@ -66,6 +73,16 @@ class RenderPipelineState {
                 _pipelineDescriptor.fragmentFunction = newValue
                 _updateFlag = true
             }
+        }
+    }
+
+    private func _makePipelineState() {
+        do {
+            _pipelineStateCache =
+                    try _engine._hardwareRenderer.device.makeRenderPipelineState(descriptor: _pipelineDescriptor,
+                            options: MTLPipelineOption.argumentInfo, reflection: &_reflection)
+        } catch let error {
+            fatalError(error.localizedDescription)
         }
     }
 }

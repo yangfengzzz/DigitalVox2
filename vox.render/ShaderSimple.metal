@@ -18,23 +18,23 @@ struct VertexIn {
 struct VertexOut {
   float4 position [[position]];
   float3 worldPosition;
-  float3 worldNormal;
   float2 uv;
 };
 
-
 vertex VertexOut vertex_simple(const VertexIn vertexIn [[stage_in]],
-                             constant Uniforms &uniforms [[buffer(BufferIndexUniforms)]])
+                               constant matrix_float4x4 &projectionMatrix [[buffer(12)]],
+                               constant matrix_float4x4 &viewMatrix [[buffer(13)]],
+                               constant matrix_float4x4 &modelMatrix [[buffer(14)]])
 {
   VertexOut out {
-    .position = uniforms.projectionMatrix * uniforms.viewMatrix * uniforms.modelMatrix * float4(vertexIn.position, 1.0),
-    .worldPosition = (uniforms.modelMatrix * float4(vertexIn.position, 1.0)).xyz,
-    .worldNormal = uniforms.normalMatrix * vertexIn.normal,
+    .position = projectionMatrix * viewMatrix * modelMatrix * float4(vertexIn.position, 1.0),
+    .worldPosition = (modelMatrix * float4(vertexIn.position, 1.0)).xyz,
     .uv = vertexIn.uv
   };
   return out;
 }
 
-fragment float4 fragment_simple(VertexOut in [[stage_in]]) {
+fragment float4 fragment_simple(VertexOut in [[stage_in]],
+                                constant matrix_float4x4 &fragColor [[buffer(1)]]) {
     return float4(in.worldPosition, 1.0);
 }
