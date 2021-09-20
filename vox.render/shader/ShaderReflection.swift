@@ -21,7 +21,7 @@ class ShaderReflection {
     internal var _uploadCamera: Camera!
     internal var _uploadRenderer: Renderer!
     internal var _uploadMaterial: Material!
-    
+
     init(_ _engine: Engine, _ _reflection: MTLRenderPipelineReflection) {
         self._engine = _engine
         self._reflection = _reflection
@@ -41,7 +41,7 @@ extension ShaderReflection {
                 if type == .struct {
                     continue
                 }
-                
+
                 let name = aug.name
                 let location = aug.index
                 let group = Shader._getShaderPropertyGroup(name)
@@ -117,29 +117,29 @@ extension ShaderReflection {
             }
         }
     }
-    
+
     /// Grouping other data.
     func groupingOtherUniformBlock() {
         if otherUniformBlock.constUniforms.count > 0 {
-            _groupingSubOtherUniforms(&otherUniformBlock.constUniforms, false);
+            _groupingSubOtherUniforms(&otherUniformBlock.constUniforms, false)
         }
-        
+
         if otherUniformBlock.textureUniforms.count > 0 {
-            _groupingSubOtherUniforms(&otherUniformBlock.textureUniforms, true);
+            _groupingSubOtherUniforms(&otherUniformBlock.textureUniforms, true)
         }
     }
-    
+
     private func _groupingSubOtherUniforms(_ uniforms: inout [ShaderUniform], _ isTexture: Bool) {
         for i in 0..<uniforms.count {
-        let uniform = uniforms[i];
-            let group = Shader._getShaderPropertyGroup(uniform.name);
-        if (group != nil) {
-            uniforms.removeAll { u in
-                u === uniform
+            let uniform = uniforms[i]
+            let group = Shader._getShaderPropertyGroup(uniform.name)
+            if (group != nil) {
+                uniforms.removeAll { u in
+                    u === uniform
+                }
+                _groupingUniform(uniform, group, isTexture)
             }
-          _groupingUniform(uniform, group, isTexture);
         }
-      }
     }
 }
 

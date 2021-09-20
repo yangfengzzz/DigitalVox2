@@ -219,7 +219,7 @@
 		04AE165226EEE85D00201439 /* Matrix.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE165126EEE85D00201439 /* Matrix.test.swift */; };
 		04DB2A4226DF1E0500C15850 /* IClone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DB2A4126DF1E0500C15850 /* IClone.swift */; };
 		04E28C3426ECE6F3003A3C3B /* IPlatformPrimitive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E28C3326ECE6F3003A3C3B /* IPlatformPrimitive.swift */; };
-		04E28C3626ECE780003A3C3B /* GPUPrimitive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E28C3526ECE780003A3C3B /* GPUPrimitive.swift */; };
+		04E28C3626ECE780003A3C3B /* MetalPrimitive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E28C3526ECE780003A3C3B /* MetalPrimitive.swift */; };
 		04E28C3826ECE7B3003A3C3B /* MetalRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E28C3726ECE7B3003A3C3B /* MetalRenderer.swift */; };
 		04E28C3B26ECE845003A3C3B /* IHardwareRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E28C3A26ECE845003A3C3B /* IHardwareRenderer.swift */; };
 		04E28C4226EDD722003A3C3B /* BasicRenderPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E28C4126EDD722003A3C3B /* BasicRenderPipeline.swift */; };
@@ -539,7 +539,7 @@
 		04AE165126EEE85D00201439 /* Matrix.test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matrix.test.swift; sourceTree = "<group>"; };
 		04DB2A4126DF1E0500C15850 /* IClone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IClone.swift; sourceTree = "<group>"; };
 		04E28C3326ECE6F3003A3C3B /* IPlatformPrimitive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPlatformPrimitive.swift; sourceTree = "<group>"; };
-		04E28C3526ECE780003A3C3B /* GPUPrimitive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPUPrimitive.swift; sourceTree = "<group>"; };
+		04E28C3526ECE780003A3C3B /* MetalPrimitive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalPrimitive.swift; sourceTree = "<group>"; };
 		04E28C3726ECE7B3003A3C3B /* MetalRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalRenderer.swift; sourceTree = "<group>"; };
 		04E28C3A26ECE845003A3C3B /* IHardwareRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IHardwareRenderer.swift; sourceTree = "<group>"; };
 		04E28C4126EDD722003A3C3B /* BasicRenderPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicRenderPipeline.swift; sourceTree = "<group>"; };
@@ -751,16 +751,16 @@
 				043CB45326F41E37004A0B21 /* state */,
 				042BB13826F36DAA00604751 /* enums */,
 				043CB44326F2E0CD004A0B21 /* Shader.swift */,
+				043CB46C26F5667A004A0B21 /* ShaderPool.swift */,
 				047914CA26F37C0300BE5170 /* ShaderData.swift */,
 				042BB13B26F36F2600604751 /* ShaderProperty.swift */,
-				043CB46C26F5667A004A0B21 /* ShaderPool.swift */,
 				041B584C26F57BC300B32BD0 /* ShaderProgram.swift */,
 				0447D57B26F8C73900272D7C /* ShaderReflection.swift */,
 				041B584E26F57C1500B32BD0 /* ShaderUniformBlock.swift */,
 				041B585226F57C4200B32BD0 /* ShaderUniform.swift */,
-				0447D54526F803B300272D7C /* ShaderMacroCollection.swift */,
-				0447D54726F8078B00272D7C /* ShaderMacro.swift */,
 				0447D54A26F81D7500272D7C /* MacroInfo.swift */,
+				0447D54726F8078B00272D7C /* ShaderMacro.swift */,
+				0447D54526F803B300272D7C /* ShaderMacroCollection.swift */,
 			);
 			path = shader;
 			sourceTree = "<group>";
@@ -1136,6 +1136,7 @@
 			isa = PBXGroup;
 			children = (
 				04DB2A4126DF1E0500C15850 /* IClone.swift */,
+				04E28C3326ECE6F3003A3C3B /* IPlatformPrimitive.swift */,
 			);
 			path = design;
 			sourceTree = "<group>";
@@ -1143,9 +1144,8 @@
 		04E28C3226ECE6C5003A3C3B /* rhi-metal */ = {
 			isa = PBXGroup;
 			children = (
-				04E28C3326ECE6F3003A3C3B /* IPlatformPrimitive.swift */,
-				04E28C3526ECE780003A3C3B /* GPUPrimitive.swift */,
 				04E28C3726ECE7B3003A3C3B /* MetalRenderer.swift */,
+				04E28C3526ECE780003A3C3B /* MetalPrimitive.swift */,
 			);
 			path = "rhi-metal";
 			sourceTree = "<group>";
@@ -1623,7 +1623,7 @@
 				041B585326F57C4200B32BD0 /* ShaderUniform.swift in Sources */,
 				04874ED426F771F3005E3318 /* PBRMaterial.swift in Sources */,
 				0447D56E26F863D100272D7C /* IPlatformRenderTarget.swift in Sources */,
-				04E28C3626ECE780003A3C3B /* GPUPrimitive.swift in Sources */,
+				04E28C3626ECE780003A3C3B /* MetalPrimitive.swift in Sources */,
 				047E7B2C26EE257E006BC3FB /* MeshRenderer.swift in Sources */,
 				0447D55B26F8364300272D7C /* SphericalHarmonics3.swift in Sources */,
 				0413288226E08394000A4F4E /* MathUtil.swift in Sources */,

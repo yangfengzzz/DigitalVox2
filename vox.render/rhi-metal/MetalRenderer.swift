@@ -86,7 +86,7 @@ extension MetalRenderer {
 
 extension MetalRenderer {
     func createPlatformPrimitive(_ primitive: Mesh) -> IPlatformPrimitive {
-        GPUPrimitive(self)
+        MetalPrimitive(self)
     }
 
     func createPlatformTexture2D(_ texture2D: Texture2D) -> IPlatformTexture2D {
