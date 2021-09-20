@@ -108,6 +108,7 @@ final class Engine: NSObject {
     /// Update the engine loop manually. If you call engine.run(), you generally don't need to call this function.
     func update() {
         let deltaTime = 1.0 / Float(canvas.preferredFramesPerSecond)
+        _renderElementPool.resetPool()
 
         let scene = _sceneManager._activeScene
         let componentsManager = _componentsManager
@@ -144,6 +145,8 @@ final class Engine: NSObject {
         let componentsManager = _componentsManager
         let deltaTime = 1.0 / Float(canvas.preferredFramesPerSecond)
         componentsManager.callRendererOnUpdate(deltaTime)
+
+        scene._updateShaderData()
 
         if (cameras.count > 0) {
             // Sort on priority

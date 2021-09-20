@@ -12,6 +12,8 @@ class Scene: EngineObject {
     var name: String
     /// The background of the scene.
     var background: Background = Background()
+    /// Ambient light.
+    var ambientLight: AmbientLight!
     /// Scene-related shader data.
     var shaderData: ShaderData = ShaderData(ShaderDataGroup.Scene)
 
@@ -50,8 +52,10 @@ class Scene: EngineObject {
     init(_ engine: Engine, _ name: String?) {
         self.name = name != nil ? name! : ""
         shaderData._addRefCount(1)
-        
+
         super.init(engine)
+
+        ambientLight = AmbientLight(self)
     }
 }
 
@@ -192,6 +196,9 @@ extension Scene {
                 active ? entity._processActive() : entity._processInActive()
             }
         }
+    }
+
+    internal func _updateShaderData() {
     }
 }
 
