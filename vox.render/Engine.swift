@@ -25,7 +25,6 @@ final class Engine: NSObject {
     // internal var _backgroundTextureMaterial: Material
     // internal var _backgroundTextureMesh: ModelMesh
     internal var _renderCount: Int = 0
-    internal var _shaderProgramPools: [ShaderProgramPool?] = [nil]
 
     var _canvas: Canvas
     private var _sceneManager: SceneManager = SceneManager()
@@ -121,23 +120,6 @@ final class Engine: NSObject {
         }
 
         _componentsManager.callComponentDestroy()
-    }
-
-    internal func _getShaderProgramPool(_ shader: Shader) -> ShaderProgramPool {
-        let index = shader._shaderId
-        var pool = _shaderProgramPools[index]
-        if pool == nil {
-            let length = index + 1
-            if (length > _shaderProgramPools.count) {
-                _shaderProgramPools.reserveCapacity(length)
-                for _ in _shaderProgramPools.count..<length {
-                    _shaderProgramPools.append(nil)
-                }
-            }
-            pool = ShaderProgramPool()
-            _shaderProgramPools[index] = pool
-        }
-        return pool!
     }
 
     func _render(_ scene: Scene) {

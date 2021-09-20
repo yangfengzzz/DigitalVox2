@@ -38,7 +38,6 @@
 		041B584D26F57BC300B32BD0 /* ShaderProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041B584C26F57BC300B32BD0 /* ShaderProgram.swift */; };
 		041B584F26F57C1500B32BD0 /* ShaderUniformBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041B584E26F57C1500B32BD0 /* ShaderUniformBlock.swift */; };
 		041B585326F57C4200B32BD0 /* ShaderUniform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041B585226F57C4200B32BD0 /* ShaderUniform.swift */; };
-		041B585526F57FB600B32BD0 /* ShaderProgramPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041B585426F57FB600B32BD0 /* ShaderProgramPool.swift */; };
 		041B585726F5863700B32BD0 /* BufferMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041B585626F5863700B32BD0 /* BufferMesh.swift */; };
 		042BB12A26EA35C100604751 /* Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042BB12926EA35C100604751 /* Background.swift */; };
 		042BB12D26EA371500604751 /* BackgroundMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042BB12C26EA371500604751 /* BackgroundMode.swift */; };
@@ -303,7 +302,6 @@
 		041B584C26F57BC300B32BD0 /* ShaderProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderProgram.swift; sourceTree = "<group>"; };
 		041B584E26F57C1500B32BD0 /* ShaderUniformBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderUniformBlock.swift; sourceTree = "<group>"; };
 		041B585226F57C4200B32BD0 /* ShaderUniform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderUniform.swift; sourceTree = "<group>"; };
-		041B585426F57FB600B32BD0 /* ShaderProgramPool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderProgramPool.swift; sourceTree = "<group>"; };
 		041B585626F5863700B32BD0 /* BufferMesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferMesh.swift; sourceTree = "<group>"; };
 		042BB12926EA35C100604751 /* Background.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Background.swift; sourceTree = "<group>"; };
 		042BB12C26EA371500604751 /* BackgroundMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundMode.swift; sourceTree = "<group>"; };
@@ -755,7 +753,6 @@
 				042BB13B26F36F2600604751 /* ShaderProperty.swift */,
 				043CB46C26F5667A004A0B21 /* ShaderPool.swift */,
 				041B584C26F57BC300B32BD0 /* ShaderProgram.swift */,
-				041B585426F57FB600B32BD0 /* ShaderProgramPool.swift */,
 				041B584E26F57C1500B32BD0 /* ShaderUniformBlock.swift */,
 				041B585226F57C4200B32BD0 /* ShaderUniform.swift */,
 				0447D54526F803B300272D7C /* ShaderMacroCollection.swift */,
@@ -1601,7 +1598,6 @@
 				043CB47726F56D1B004A0B21 /* ColorWriteMask.swift in Sources */,
 				04E28C3426ECE6F3003A3C3B /* IPlatformPrimitive.swift in Sources */,
 				04EFDE7A26DF3072005FBB6F /* Vector3.swift in Sources */,
-				041B585526F57FB600B32BD0 /* ShaderProgramPool.swift in Sources */,
 				043CB45926F41E6F004A0B21 /* RasterState.swift in Sources */,
 				0419B6E026E7114C00005FEA /* ComponentsManager.swift in Sources */,
 				0413288026E08044000A4F4E /* Color.swift in Sources */,
