@@ -86,8 +86,14 @@ extension RenderQueue {
             if (!program.isValid) {
                 continue
             }
-
-            engine._hardwareRenderer.renderEncoder.setRenderPipelineState(element.pipelineState)
+            
+            if program.vertexShader !== element.pipelineState.vertexShader {
+                element.pipelineState.vertexShader = program.vertexShader
+            }
+            if program.fragmentShader !== element.pipelineState.fragmentShader {
+                element.pipelineState.fragmentShader = program.fragmentShader
+            }
+            engine._hardwareRenderer.setRenderPipelineState(element.pipelineState)
 
             engine._hardwareRenderer.renderEncoder.setFragmentBytes(&fragmentUniforms,
                     length: MemoryLayout<FragmentUniforms>.stride,

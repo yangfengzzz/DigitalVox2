@@ -114,6 +114,7 @@
 		0447D57426F868E100272D7C /* RenderColorTexture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447D57326F868E100272D7C /* RenderColorTexture.swift */; };
 		0447D57626F8701D00272D7C /* RenderDepthTexture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447D57526F8701D00272D7C /* RenderDepthTexture.swift */; };
 		0447D57826F870F800272D7C /* RenderBufferDepthFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447D57726F870F800272D7C /* RenderBufferDepthFormat.swift */; };
+		0447D57A26F8941100272D7C /* RenderPipelineState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447D57926F8941100272D7C /* RenderPipelineState.swift */; };
 		0452EC9926DFA0CD0015BFB1 /* voxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9826DFA0CD0015BFB1 /* voxApp.swift */; };
 		0452EC9B26DFA0CD0015BFB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */; };
 		0452EC9D26DFA0CD0015BFB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0452EC9C26DFA0CD0015BFB1 /* Assets.xcassets */; };
@@ -380,6 +381,7 @@
 		0447D57326F868E100272D7C /* RenderColorTexture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderColorTexture.swift; sourceTree = "<group>"; };
 		0447D57526F8701D00272D7C /* RenderDepthTexture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderDepthTexture.swift; sourceTree = "<group>"; };
 		0447D57726F870F800272D7C /* RenderBufferDepthFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderBufferDepthFormat.swift; sourceTree = "<group>"; };
+		0447D57926F8941100272D7C /* RenderPipelineState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderPipelineState.swift; sourceTree = "<group>"; };
 		0452EC9626DFA0CD0015BFB1 /* vox.tracing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vox.tracing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0452EC9826DFA0CD0015BFB1 /* voxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = voxApp.swift; sourceTree = "<group>"; };
 		0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -1060,6 +1062,7 @@
 				047FEBF126E601750078CFAF /* Entity.swift */,
 				047FEBF326E603CD0078CFAF /* Layer.swift */,
 				04E28C4326EDD78C003A3C3B /* Renderer.swift */,
+				0447D57926F8941100272D7C /* RenderPipelineState.swift */,
 				047FEBEF26E600E70078CFAF /* Scene.swift */,
 				042BB13526EA404200604751 /* SceneManager.swift */,
 				0419B6DD26E701FE00005FEA /* Script.swift */,
@@ -1650,6 +1653,7 @@
 				043CB44426F2E0CD004A0B21 /* Shader.swift in Sources */,
 				042BB13A26F36EDD00604751 /* ShaderDataGroup.swift in Sources */,
 				0413287526E072A9000A4F4E /* PlaneIntersectionType.swift in Sources */,
+				0447D57A26F8941100272D7C /* RenderPipelineState.swift in Sources */,
 				043CB47926F56DEE004A0B21 /* CompareFunction.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

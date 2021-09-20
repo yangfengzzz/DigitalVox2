@@ -79,6 +79,12 @@ class MetalRenderer {
 }
 
 extension MetalRenderer {
+    func setRenderPipelineState(_ state:RenderPipelineState) {
+        renderEncoder.setRenderPipelineState(state.pipelineState!)
+    }
+}
+
+extension MetalRenderer {
     func createPlatformPrimitive(_ primitive: Mesh) -> IPlatformPrimitive {
         GPUPrimitive(self)
     }

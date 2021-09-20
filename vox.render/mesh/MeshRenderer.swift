@@ -44,7 +44,9 @@ class MeshRenderer: Renderer {
     override func setMaterial(_ material: Material) {
         super.setMaterial(material)
         if mesh != nil {
-            _pipelineStates.insert(makePipelineState(mesh!, material.shader._getShaderProgram(engine, ShaderMacroCollection())), at: 0)
+            let state = RenderPipelineState(engine)
+            state.vertexDescriptor = MTKMetalVertexDescriptorFromModelIO(mesh!._vertexDescriptor._descriptor)
+            _pipelineStates.insert(state, at: 0)
         }
     }
 
@@ -55,7 +57,9 @@ class MeshRenderer: Renderer {
     override func setMaterial(_ index: Int, _ material: Material) {
         super.setMaterial(index, material)
         if mesh != nil {
-            _pipelineStates.insert(makePipelineState(mesh!, material.shader._getShaderProgram(engine, ShaderMacroCollection())), at: index)
+            let state = RenderPipelineState(engine)
+            state.vertexDescriptor = MTKMetalVertexDescriptorFromModelIO(mesh!._vertexDescriptor._descriptor)
+            _pipelineStates.insert(state, at: index)
         }
     }
 
@@ -63,10 +67,13 @@ class MeshRenderer: Renderer {
     /// - Parameter materials: All materials
     override func setMaterials(_ materials: [Material]) {
         super.setMaterials(materials)
+        let vertexDescriptor = MTKMetalVertexDescriptorFromModelIO(mesh!._vertexDescriptor._descriptor)
         if mesh != nil {
+            let state = RenderPipelineState(engine)
+            state.vertexDescriptor = vertexDescriptor
             _pipelineStates.reserveCapacity(materials.count)
             materials.forEach { material in
-                _pipelineStates.append(makePipelineState(mesh!, material.shader._getShaderProgram(engine, ShaderMacroCollection())))
+                _pipelineStates.append(state)
             }
         }
     }
@@ -114,6 +121,8 @@ class MeshRenderer: Renderer {
                     renderPipeline!.pushPrimitive(element)
                 }
             }
+        } else {
+            fatalError("mesh is nil.")
         }
     }
 
@@ -140,22 +149,5 @@ class MeshRenderer: Renderer {
             _ = worldBounds.min.setValue(x: 0, y: 0, z: 0)
             _ = worldBounds.max.setValue(x: 0, y: 0, z: 0)
         }
-    }
-
-    private func makePipelineState(_ mesh: Mesh,
-                                   _ shaderProgram: ShaderProgram) -> MTLRenderPipelineState {
-        let pipelineState: MTLRenderPipelineState
-        let pipelineDescriptor = shaderProgram.pipelineDescriptor
-
-        let vertexDescriptor = mesh._vertexDescriptor._descriptor
-        pipelineDescriptor.vertexDescriptor = MTKMetalVertexDescriptorFromModelIO(vertexDescriptor)
-        pipelineDescriptor.colorAttachments[0].pixelFormat = engine._hardwareRenderer.colorPixelFormat
-        pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
-        do {
-            pipelineState = try engine._hardwareRenderer.device.makeRenderPipelineState(descriptor: pipelineDescriptor)
-        } catch let error {
-            fatalError(error.localizedDescription)
-        }
-        return pipelineState
     }
 }

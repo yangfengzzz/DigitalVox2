@@ -27,13 +27,18 @@ internal class ShaderProgram {
     private var _isValid: Bool!
     private var _engine: Engine
     private var _library: MTLLibrary
-    private var _vertexShader: MTLFunction!
-    private var _fragmentShader: MTLFunction!
-    private var _pipelineDescriptor: MTLRenderPipelineDescriptor!
+    private var _vertexShader: MTLFunction?
+    private var _fragmentShader: MTLFunction?
 
-    var pipelineDescriptor: MTLRenderPipelineDescriptor {
+    var vertexShader:MTLFunction? {
         get {
-            _pipelineDescriptor
+            _vertexShader
+        }
+    }
+    
+    var fragmentShader:MTLFunction? {
+        get {
+            _fragmentShader
         }
     }
 
@@ -50,9 +55,9 @@ internal class ShaderProgram {
 
         _engine = engine
         _library = engine._hardwareRenderer.library
-        _pipelineDescriptor = _createProgram(vertexSource, fragmentSource, macroInfo)
+        _createProgram(vertexSource, fragmentSource, macroInfo)
 
-        if _pipelineDescriptor != nil {
+        if _vertexShader != nil && _fragmentShader != nil {
             _isValid = true
         } else {
             _isValid = false
@@ -77,28 +82,17 @@ internal class ShaderProgram {
     ///   - vertexSource: vertex name
     ///   - fragmentSource: fragment name
     private func _createProgram(_ vertexSource: String, _ fragmentSource: String,
-                                _ macroInfo: [MacroInfo]) -> MTLRenderPipelineDescriptor? {
+                                _ macroInfo: [MacroInfo]) {
         let functionConstants = makeFunctionConstants(macroInfo)
 
-        let vertexShader: MTLFunction?
-        let fragmentShader: MTLFunction?
         do {
-            vertexShader = try _library.makeFunction(name: vertexSource,
+            _vertexShader = try _library.makeFunction(name: vertexSource,
                     constantValues: functionConstants)
 
-            fragmentShader = try _library.makeFunction(name: fragmentSource,
+            _fragmentShader = try _library.makeFunction(name: fragmentSource,
                     constantValues: functionConstants)
         } catch {
-            return nil
+            return
         }
-
-        let pipelineDescriptor = MTLRenderPipelineDescriptor()
-        pipelineDescriptor.vertexFunction = vertexShader
-        pipelineDescriptor.fragmentFunction = fragmentShader
-
-        _vertexShader = vertexShader
-        _fragmentShader = fragmentShader
-
-        return pipelineDescriptor
     }
 }

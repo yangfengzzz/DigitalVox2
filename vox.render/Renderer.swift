@@ -39,7 +39,7 @@ class Renderer: Component {
     var _overrideUpdate: Bool = false
     // @shallowClone
     var _materials: [Material?] = []
-    var _pipelineStates: [MTLRenderPipelineState] = []
+    var _pipelineStates: [RenderPipelineState] = []
 
     // @ignoreClone
     private var _transformChangeFlag: UpdateFlag? = nil
