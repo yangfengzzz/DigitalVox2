@@ -9,7 +9,21 @@ import Foundation
 
 /// Simple Material.
 class SimpleMaterial: BaseMaterial {
+    private static var _diffuseColorProp = Shader.getPropertyByName("u_diffuseColor")
     private static var _baseTextureProp = Shader.getPropertyByName("u_diffuseTexture")
+    
+    /// Base color.
+    var baseColor: Color {
+        get {
+            shaderData.getColor(SimpleMaterial._diffuseColorProp)!
+        }
+        set {
+            let baseColor = shaderData.getColor(SimpleMaterial._diffuseColorProp)!
+            if (newValue !== baseColor) {
+                newValue.cloneTo(target: baseColor)
+            }
+        }
+    }
     
     /// Base texture.
     var baseTexture: Texture2D? {

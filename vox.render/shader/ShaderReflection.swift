@@ -84,9 +84,43 @@ extension ShaderReflection {
 
                 let name = aug.name
                 let location = aug.index
-                print(name, location, type.rawValue)
+                let group = Shader._getShaderPropertyGroup(name)
+
+                let shaderUniform = ShaderUniform(_engine)
+                shaderUniform.name = name
+                shaderUniform.propertyId = Shader.getPropertyByName(name)._uniqueId
+                shaderUniform.location = location
+
+                if type == .buffer {
+                    switch aug.bufferDataType {
+                    case .float:
+                        shaderUniform.applyFunc = shaderUniform.uploadFrag1f
+                        shaderUniform.cacheValue = .Float(0)
+                    case .float2:
+                        shaderUniform.applyFunc = shaderUniform.uploadFrag2f
+                        shaderUniform.cacheValue = .Vector2(Vector2(0, 0))
+                    case .float3:
+                        shaderUniform.applyFunc = shaderUniform.uploadFrag3f
+                        shaderUniform.cacheValue = .Vector3(Vector3(0, 0, 0))
+                    case .float4:
+                        shaderUniform.applyFunc = shaderUniform.uploadFrag4f
+                        shaderUniform.cacheValue = .Vector4(Vector4(0, 0, 0, 0))
+                    case .bool, .int:
+                        shaderUniform.applyFunc = shaderUniform.uploadFrag1i
+                        shaderUniform.cacheValue = .Int(0)
+                    case .float4x4:
+                        shaderUniform.applyFunc = shaderUniform.uploadFragMat4
+                    default:
+                        fatalError("unkonwn type \(type.rawValue)")
+                    }
+                } else if type == .sampler {
+                    
+                } else if type == .texture {
+                    
+                }
+
+                _groupingUniform(shaderUniform, group, false)
             }
-            print("=====")
         }
     }
 
