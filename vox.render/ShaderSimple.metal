@@ -35,6 +35,8 @@ vertex VertexOut vertex_simple(const VertexIn vertexIn [[stage_in]],
 }
 
 fragment float4 fragment_simple(VertexOut in [[stage_in]],
-                                constant matrix_float4x4 &fragColor [[buffer(1)]]) {
+                                constant float4 &basseColor [[buffer(1)]],
+                                sampler textureSampler [[sampler(0)]],
+                                texture2d<float> baseColorTexture [[texture(0)]]) {
     return float4(in.worldPosition, 1.0);
 }

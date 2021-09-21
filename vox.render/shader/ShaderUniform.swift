@@ -31,7 +31,7 @@ internal class ShaderUniform {
 }
 
 extension ShaderUniform {
-    func upload1f(_ shaderUniform: ShaderUniform, _ value: ShaderPropertyValueType) {
+    func uploadVertex1f(_ shaderUniform: ShaderUniform, _ value: ShaderPropertyValueType) {
         switch value {
         case .Float(var value):
             switch cacheValue {
@@ -50,13 +50,22 @@ extension ShaderUniform {
             return
         }
     }
-
-    func upload1fv(_ shaderUniform: ShaderUniform, _ value: ShaderPropertyValueType) {
+    
+    func uploadFrag1f(_ shaderUniform: ShaderUniform, _ value: ShaderPropertyValueType) {
         switch value {
-        case .Float32Array(var value):
-            _encoder.setVertexBytes(&value,
-                    length: MemoryLayout<Float>.stride * value.count,
-                    index: shaderUniform.location)
+        case .Float(var value):
+            switch cacheValue {
+            case .Float(let cache):
+                if cache != value {
+                    cacheValue = .Float(value)
+
+                    _encoder.setFragmentBytes(&value,
+                            length: MemoryLayout<Float>.stride,
+                            index: shaderUniform.location)
+                }
+            default:
+                return
+            }
         default:
             return
         }
@@ -64,7 +73,7 @@ extension ShaderUniform {
 }
 
 extension ShaderUniform {
-    func upload2f(_ shaderUniform: ShaderUniform, _ value: ShaderPropertyValueType) {
+    func uploadVertex2f(_ shaderUniform: ShaderUniform, _ value: ShaderPropertyValueType) {
         switch value {
         case .Vector2(let value):
             switch cacheValue {
@@ -134,12 +143,71 @@ extension ShaderUniform {
         }
     }
 
-    func upload2fv(_ shaderUniform: ShaderUniform, _ value: ShaderPropertyValueType) {
+    func uploadFrag2f(_ shaderUniform: ShaderUniform, _ value: ShaderPropertyValueType) {
         switch value {
-        case .Float32Array(var value):
-            _encoder.setVertexBytes(&value,
-                    length: MemoryLayout<Float>.stride * value.count,
-                    index: shaderUniform.location)
+        case .Vector2(let value):
+            switch cacheValue {
+            case .Vector2(let cache):
+                if cache.x != value.x || cache.y != value.y {
+                    cache.elements = value.elements
+                    cacheValue = .Vector2(cache)
+
+                    _encoder.setFragmentBytes(&cache.elements,
+                            length: MemoryLayout<SIMD2<Float>>.stride,
+                            index: shaderUniform.location)
+                }
+            default:
+                return
+            }
+
+        case .Vector3(let value):
+            switch cacheValue {
+            case .Vector2(let cache):
+                if cache.x != value.x || cache.y != value.y {
+                    cache.x = value.x
+                    cache.y = value.y
+                    cacheValue = .Vector2(cache)
+
+                    _encoder.setFragmentBytes(&cache.elements,
+                            length: MemoryLayout<SIMD2<Float>>.stride,
+                            index: shaderUniform.location)
+                }
+            default:
+                return
+            }
+
+        case .Vector4(let value):
+            switch cacheValue {
+            case .Vector2(let cache):
+                if cache.x != value.x || cache.y != value.y {
+                    cache.x = value.x
+                    cache.y = value.y
+                    cacheValue = .Vector2(cache)
+
+                    _encoder.setFragmentBytes(&cache.elements,
+                            length: MemoryLayout<SIMD2<Float>>.stride,
+                            index: shaderUniform.location)
+                }
+            default:
+                return
+            }
+
+        case .Color(let value):
+            switch cacheValue {
+            case .Vector2(let cache):
+                if cache.x != value.r || cache.y != value.g {
+                    cache.x = value.r
+                    cache.y = value.g
+                    cacheValue = .Vector2(cache)
+
+                    _encoder.setFragmentBytes(&cache.elements,
+                            length: MemoryLayout<SIMD2<Float>>.stride,
+                            index: shaderUniform.location)
+                }
+            default:
+                return
+            }
+
         default:
             return
         }
@@ -147,7 +215,7 @@ extension ShaderUniform {
 }
 
 extension ShaderUniform {
-    func upload3f(_ shaderUniform: ShaderUniform, _ value: ShaderPropertyValueType) {
+    func uploadVertex3f(_ shaderUniform: ShaderUniform, _ value: ShaderPropertyValueType) {
         switch value {
         case .Vector3(let value):
             switch cacheValue {
@@ -203,12 +271,57 @@ extension ShaderUniform {
         }
     }
 
-    func upload3fv(_ shaderUniform: ShaderUniform, _ value: ShaderPropertyValueType) {
+    func uploadFrag3f(_ shaderUniform: ShaderUniform, _ value: ShaderPropertyValueType) {
         switch value {
-        case .Float32Array(var value):
-            _encoder.setVertexBytes(&value,
-                    length: MemoryLayout<Float>.stride * value.count,
-                    index: shaderUniform.location)
+        case .Vector3(let value):
+            switch cacheValue {
+            case .Vector3(let cache):
+                if cache.x != value.x || cache.y != value.y || cache.z != value.z {
+                    cache.elements = value.elements
+                    cacheValue = .Vector3(cache)
+
+                    _encoder.setFragmentBytes(&cache.elements,
+                            length: MemoryLayout<SIMD3<Float>>.stride,
+                            index: shaderUniform.location)
+                }
+            default:
+                return
+            }
+
+        case .Vector4(let value):
+            switch cacheValue {
+            case .Vector3(let cache):
+                if cache.x != value.x || cache.y != value.y || cache.z != value.z {
+                    cache.x = value.x
+                    cache.y = value.y
+                    cache.z = value.z
+                    cacheValue = .Vector3(cache)
+
+                    _encoder.setFragmentBytes(&cache.elements,
+                            length: MemoryLayout<SIMD3<Float>>.stride,
+                            index: shaderUniform.location)
+                }
+            default:
+                return
+            }
+
+        case .Color(let value):
+            switch cacheValue {
+            case .Vector3(let cache):
+                if cache.x != value.r || cache.y != value.g || cache.z != value.b {
+                    cache.x = value.r
+                    cache.y = value.g
+                    cache.z = value.b
+                    cacheValue = .Vector3(cache)
+
+                    _encoder.setFragmentBytes(&cache.elements,
+                            length: MemoryLayout<SIMD3<Float>>.stride,
+                            index: shaderUniform.location)
+                }
+            default:
+                return
+            }
+
         default:
             return
         }
@@ -216,7 +329,7 @@ extension ShaderUniform {
 }
 
 extension ShaderUniform {
-    func upload4f(_ shaderUniform: ShaderUniform, _ value: ShaderPropertyValueType) {
+    func uploadVertex4f(_ shaderUniform: ShaderUniform, _ value: ShaderPropertyValueType) {
         switch value {
         case .Vector4(let value):
             switch cacheValue {
@@ -253,12 +366,37 @@ extension ShaderUniform {
     }
 
 
-    func upload4fv(_ shaderUniform: ShaderUniform, _ value: ShaderPropertyValueType) {
+    func uploadFrag4f(_ shaderUniform: ShaderUniform, _ value: ShaderPropertyValueType) {
         switch value {
-        case .Float32Array(var value):
-            _encoder.setVertexBytes(&value,
-                    length: MemoryLayout<Float>.stride * value.count,
-                    index: shaderUniform.location)
+        case .Vector4(let value):
+            switch cacheValue {
+            case .Vector4(let cache):
+                if cache.x != value.x || cache.y != value.y || cache.z != value.z || cache.w != value.w {
+                    cache.elements = value.elements
+                    cacheValue = .Vector4(cache)
+
+                    _encoder.setFragmentBytes(&cache.elements,
+                            length: MemoryLayout<SIMD4<Float>>.stride,
+                            index: shaderUniform.location)
+                }
+            default:
+                return
+            }
+
+        case .Color(let value):
+            switch cacheValue {
+            case .Vector4(let cache):
+                if cache.x != value.r || cache.y != value.g || cache.z != value.b || cache.w != value.a {
+                    cache.elements = value.elements
+                    cacheValue = .Vector4(cache)
+
+                    _encoder.setFragmentBytes(&cache.elements,
+                            length: MemoryLayout<SIMD4<Float>>.stride,
+                            index: shaderUniform.location)
+                }
+            default:
+                return
+            }
         default:
             return
         }
@@ -266,7 +404,7 @@ extension ShaderUniform {
 }
 
 extension ShaderUniform {
-    func upload1i(_ shaderUniform: ShaderUniform, _ value: ShaderPropertyValueType) {
+    func uploadVertex1i(_ shaderUniform: ShaderUniform, _ value: ShaderPropertyValueType) {
         switch value {
         case .Int(var value):
             switch cacheValue {
@@ -286,12 +424,21 @@ extension ShaderUniform {
         }
     }
 
-    func upload1iv(_ shaderUniform: ShaderUniform, _ value: ShaderPropertyValueType) {
+    func uploadFrag1i(_ shaderUniform: ShaderUniform, _ value: ShaderPropertyValueType) {
         switch value {
-        case .Int32Array(var value):
-            _encoder.setVertexBytes(&value,
-                    length: MemoryLayout<Int>.stride * value.count,
-                    index: shaderUniform.location)
+        case .Int(var value):
+            switch cacheValue {
+            case .Int(let cache):
+                if cache != value {
+                    cacheValue = .Int(value)
+
+                    _encoder.setFragmentBytes(&value,
+                            length: MemoryLayout<Int>.stride,
+                            index: shaderUniform.location)
+                }
+            default:
+                return
+            }
         default:
             return
         }
@@ -299,7 +446,7 @@ extension ShaderUniform {
 }
 
 extension ShaderUniform {
-    func uploadMat4(_ shaderUniform: ShaderUniform, _ value: ShaderPropertyValueType) {
+    func uploadVertexMat4(_ shaderUniform: ShaderUniform, _ value: ShaderPropertyValueType) {
         switch value {
         case .Matrix(let value):
             _encoder.setVertexBytes(&value.elements,
@@ -310,11 +457,11 @@ extension ShaderUniform {
         }
     }
 
-    func uploadMat4v(_ shaderUniform: ShaderUniform, _ value: ShaderPropertyValueType) {
+    func uploadFragMat4(_ shaderUniform: ShaderUniform, _ value: ShaderPropertyValueType) {
         switch value {
-        case .Float32Array(var value):
-            _encoder.setVertexBytes(&value,
-                    length: MemoryLayout<Float>.stride * value.count,
+        case .Matrix(let value):
+            _encoder.setFragmentBytes(&value.elements,
+                    length: MemoryLayout<matrix_float4x4>.stride,
                     index: shaderUniform.location)
         default:
             return

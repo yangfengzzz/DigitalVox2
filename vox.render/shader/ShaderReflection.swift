@@ -33,7 +33,7 @@ class ShaderReflection {
 extension ShaderReflection {
     /// record the location of uniform/attribute.
     private func _recordVertexLocation() {
-        let count = _reflection.vertexArguments?.count
+        var count = _reflection.vertexArguments?.count
         if count != nil {
             for i in 0..<count! {
                 let aug = _reflection.vertexArguments![i]
@@ -53,27 +53,40 @@ extension ShaderReflection {
 
                 switch type {
                 case .float:
-                    shaderUniform.applyFunc = shaderUniform.upload1f
+                    shaderUniform.applyFunc = shaderUniform.uploadVertex1f
                     shaderUniform.cacheValue = .Float(0)
                 case .float2:
-                    shaderUniform.applyFunc = shaderUniform.upload2f
+                    shaderUniform.applyFunc = shaderUniform.uploadVertex2f
                     shaderUniform.cacheValue = .Vector2(Vector2(0, 0))
                 case .float3:
-                    shaderUniform.applyFunc = shaderUniform.upload3f
+                    shaderUniform.applyFunc = shaderUniform.uploadVertex3f
                     shaderUniform.cacheValue = .Vector3(Vector3(0, 0, 0))
                 case .float4:
-                    shaderUniform.applyFunc = shaderUniform.upload4f
+                    shaderUniform.applyFunc = shaderUniform.uploadVertex4f
                     shaderUniform.cacheValue = .Vector4(Vector4(0, 0, 0, 0))
                 case .bool, .int:
-                    shaderUniform.applyFunc = shaderUniform.upload1i
+                    shaderUniform.applyFunc = shaderUniform.uploadVertex1i
                     shaderUniform.cacheValue = .Int(0)
                 case .float4x4:
-                    shaderUniform.applyFunc = shaderUniform.uploadMat4
+                    shaderUniform.applyFunc = shaderUniform.uploadVertexMat4
                 default:
                     fatalError("unkonwn type \(type.rawValue)")
                 }
                 _groupingUniform(shaderUniform, group, false)
             }
+        }
+        
+        count = _reflection.fragmentArguments?.count
+        if count != nil {
+            for i in 0..<count! {
+                let aug = _reflection.fragmentArguments![i]
+                let type = aug.type
+
+                let name = aug.name
+                let location = aug.index
+                print(name, location, type.rawValue)
+            }
+            print("=====")
         }
     }
 
