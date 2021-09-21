@@ -20,14 +20,14 @@ protocol IPlatformTexture2D: IPlatformTexture {
     /// width corresponding to mipLevel is Math.max(1, this.width >> mipLevel)
     ///   - height: Data height. if it's empty, height is the height corresponding to mipLevel minus y ,
     /// height corresponding to mipLevel is Math.max(1, this.height >> mipLevel)
-    func setPixelBuffer(_ colorBuffer: [Float], _ mipLevel: Int?,
-                        _ x: Int?, _ y: Int?,
-                        _ width: Int?, _ height: Int?
+    func setPixelBuffer<T>(_ colorBuffer: [T], _ mipLevel: Int?,
+                           _ x: Int?, _ y: Int?,
+                           _ width: Int?, _ height: Int?
     )
 
     /// Setting pixels data through TexImageSource, designated area and texture mipmapping level.
     /// - Parameters:
-    ///   - imageSource: The source of texture    
+    ///   - imageSource: The source of texture
     func setImageSource(_ imageSource: MTLTexture)
 
     /// Get the pixel color buffer according to the specified area.
@@ -37,5 +37,5 @@ protocol IPlatformTexture2D: IPlatformTexture {
     ///   - width: Area width
     ///   - height: Area height
     ///   - out: Color buffer
-    func getPixelBuffer(_ x: Int, _ y: Int, _ width: Int, _ height: Int, _ mipLevel:Int, _ out: inout [Float])
+    func getPixelBuffer<T>(_ x: Int, _ y: Int, _ width: Int, _ height: Int, _ mipLevel: Int, _ out: inout [T])
 }

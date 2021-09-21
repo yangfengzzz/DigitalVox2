@@ -212,9 +212,9 @@ class Camera: Component {
             _projMatChange()
         }
     }
-    
+
     /// Whether to enable HDR.
-    var enableHDR:Bool {
+    var enableHDR: Bool {
         get {
             fatalError("not implementation")
         }
@@ -222,9 +222,9 @@ class Camera: Component {
             fatalError("not implementation")
         }
     }
-    
+
     /// RenderTarget. After setting, it will be rendered to the renderTarget. If it is empty, it will be rendered to the main canvas.
-    var renderTarget:RenderTarget? {
+    var renderTarget: RenderTarget? {
         get {
             _renderTarget
         }
@@ -432,7 +432,6 @@ extension Camera {
         )
 
         _renderPipeline.render(context, cubeFace)
-        _engine._renderCount += 1
     }
 }
 

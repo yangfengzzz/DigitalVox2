@@ -12,5 +12,6 @@ internal class ShaderPool {
     static func initialization() {
         _ = Shader.create("simple", "vertex_simple", "fragment_simple");
         _ = Shader.create("pbr", "vertex_main", "fragment_mainPBR");
+        _ = Shader.create("background-texture", "vertex_main", "fragment_mainPBR");
     }
 }

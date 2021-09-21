@@ -20,11 +20,10 @@ final class Engine: NSObject {
     var _renderElementPool: ClassPool<RenderElement> = ClassPool()
     var _renderContext: RenderContext = RenderContext()
 
-    // internal var _whiteTexture2D: Texture2D
-    // internal var _whiteTextureCube: TextureCubeMap
-    // internal var _backgroundTextureMaterial: Material
-    // internal var _backgroundTextureMesh: ModelMesh
-    internal var _renderCount: Int = 0
+    internal var _whiteTexture2D: Texture2D!
+    internal var _whiteTextureCube: TextureCubeMap!
+    internal var _backgroundTextureMaterial: Material!
+    internal var _backgroundTextureMesh: ModelMesh!
 
     var _canvas: Canvas
     private var _sceneManager: SceneManager = SceneManager()
@@ -87,6 +86,7 @@ final class Engine: NSObject {
         _hardwareRenderer.reinit(canvas)
         _canvas = canvas
         _inputManager = InputManager()
+
         super.init()
         ShaderPool.initialization()
 
@@ -95,6 +95,30 @@ final class Engine: NSObject {
         _canvas.registerGesture()
         _sceneManager.activeScene = Scene(self, "DefaultScene")
         mtkView(_canvas, drawableSizeWillChange: _canvas.bounds.size)
+
+        let whitePixel: [UInt8] = [255, 255, 255, 255]
+        let whiteTexture2D = Texture2D(self, 1, 1, .rgba8Uint, false)
+        whiteTexture2D.setPixelBuffer(whitePixel)
+        whiteTexture2D.isGCIgnored = true
+
+        let whiteTextureCube = TextureCubeMap(self, 1, .rgba8Uint, false)
+        whiteTextureCube.setPixelBuffer(TextureCubeFace.PositiveX, whitePixel)
+        whiteTextureCube.setPixelBuffer(TextureCubeFace.NegativeX, whitePixel)
+        whiteTextureCube.setPixelBuffer(TextureCubeFace.PositiveY, whitePixel)
+        whiteTextureCube.setPixelBuffer(TextureCubeFace.NegativeY, whitePixel)
+        whiteTextureCube.setPixelBuffer(TextureCubeFace.PositiveZ, whitePixel)
+        whiteTextureCube.setPixelBuffer(TextureCubeFace.NegativeZ, whitePixel)
+        whiteTextureCube.isGCIgnored = true
+
+        _whiteTexture2D = whiteTexture2D
+        _whiteTextureCube = whiteTextureCube
+
+        _backgroundTextureMaterial = Material(self, Shader.find("background-texture")!)
+        _backgroundTextureMaterial.isGCIgnored = true
+        _backgroundTextureMaterial.renderState.depthState.compareFunction = CompareFunction.LessEqual
+
+        _backgroundTextureMesh = PrimitiveMesh.createPlane(self, 2, 2, 1, 1, false)
+        _backgroundTextureMesh.isGCIgnored = true
     }
 
     /// Create an entity.
@@ -115,8 +139,10 @@ final class Engine: NSObject {
             componentsManager.callScriptOnStart()
             componentsManager.callScriptOnUpdate(deltaTime)
             componentsManager.callScriptOnLateUpdate(deltaTime)
-
+            
+            _hardwareRenderer.preDraw()
             _render(scene!)
+            _hardwareRenderer.postDraw()
         }
 
         _componentsManager.callComponentDestroy()

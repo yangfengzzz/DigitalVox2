@@ -29,8 +29,8 @@ class MetalTextureCubeMap: MetalTexture {
 }
 
 extension MetalTextureCubeMap: IPlatformTextureCubeMap {
-    func setPixelBuffer(_ face: TextureCubeFace, _ colorBuffer: [Float], _ mipLevel: Int?,
-                        _ x: Int?, _ y: Int?, _ width: Int?, _ height: Int?) {
+    func setPixelBuffer<T>(_ face: TextureCubeFace, _ colorBuffer: [T], _ mipLevel: Int?,
+                           _ x: Int?, _ y: Int?, _ width: Int?, _ height: Int?) {
         let mipLevel = mipLevel != nil ? mipLevel! : 0
         let mipSize = max(1, _texture.width >> mipLevel)
 
@@ -49,7 +49,8 @@ extension MetalTextureCubeMap: IPlatformTextureCubeMap {
         _mtlTexture = imageSource.makeTextureView(pixelFormat: descriptor.pixelFormat)
     }
 
-    func getPixelBuffer(_ face: TextureCubeFace, _ x: Int, _ y: Int, _ width: Int, _ height: Int, _ mipLevel: Int, _ out: inout [Float]) {
+    func getPixelBuffer<T>(_ face: TextureCubeFace, _ x: Int, _ y: Int,
+                           _ width: Int, _ height: Int, _ mipLevel: Int, _ out: inout [T]) {
         _mtlTexture.getBytes(&out, bytesPerRow: width * MemoryLayout<Float>.stride,
                 bytesPerImage: width * height * MemoryLayout<Float>.stride,
                 from: MTLRegionMake2D(x, y, width, height), mipmapLevel: mipLevel, slice: face.rawValue)

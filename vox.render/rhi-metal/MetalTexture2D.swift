@@ -29,8 +29,8 @@ class MetalTexture2D: MetalTexture {
 }
 
 extension MetalTexture2D: IPlatformTexture2D {
-    func setPixelBuffer(_ colorBuffer: [Float], _ mipLevel: Int?, _ x: Int?, _ y: Int?,
-                        _ width: Int?, _ height: Int?) {
+    func setPixelBuffer<T>(_ colorBuffer: [T], _ mipLevel: Int?, _ x: Int?, _ y: Int?,
+                           _ width: Int?, _ height: Int?) {
         let mipLevel = mipLevel != nil ? mipLevel! : 0
         let mipWidth = max(1, _texture.width >> mipLevel)
         let mipHeight = max(1, _texture.height >> mipLevel)
@@ -49,7 +49,7 @@ extension MetalTexture2D: IPlatformTexture2D {
         _mtlTexture = imageSource.makeTextureView(pixelFormat: descriptor.pixelFormat)
     }
 
-    func getPixelBuffer(_ x: Int, _ y: Int, _ width: Int, _ height: Int, _ mipLevel: Int, _ out: inout [Float]) {
+    func getPixelBuffer<T>(_ x: Int, _ y: Int, _ width: Int, _ height: Int, _ mipLevel: Int, _ out: inout [T]) {
         _mtlTexture.getBytes(&out, bytesPerRow: width * MemoryLayout<Float>.stride,
                 from: MTLRegionMake2D(x, y, width, height), mipmapLevel: mipLevel)
     }

@@ -42,13 +42,11 @@ extension RenderQueue {
 
         let engine = camera.engine
         let scene = camera.scene
-        let renderCount = engine._renderCount
         let rhi = engine._hardwareRenderer
         let sceneData = scene.shaderData
         let cameraData = camera.shaderData
 
         //MARK:- Start Render
-        rhi.preDraw()
         for i in 0..<items.count {
             let item = items[i]
             let renderPassFlag = item.component.entity.layer
@@ -80,7 +78,7 @@ extension RenderQueue {
             if (!program.isValid) {
                 continue
             }
-            
+
             if program.vertexShader !== element.pipelineState.vertexShader {
                 element.pipelineState.vertexShader = program.vertexShader
             }
@@ -90,7 +88,7 @@ extension RenderQueue {
             rhi.setRenderPipelineState(element.pipelineState)
 
             //MARK:- Load Resouces
-            let reflection = element.pipelineState.reflection            
+            let reflection = element.pipelineState.reflection
             let shaderReflection = ShaderReflection(engine, reflection!)
             shaderReflection.groupingOtherUniformBlock()
             shaderReflection.uploadAll(shaderReflection.sceneUniformBlock, sceneData);
@@ -105,7 +103,6 @@ extension RenderQueue {
 
             rhi.drawPrimitive(element.mesh!, element.subMesh, program)
         }
-        rhi.postDraw()
     }
 
     /// Clear collection.
