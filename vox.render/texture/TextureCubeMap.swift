@@ -63,23 +63,8 @@ class TextureCubeMap: Texture {
     /// - Parameters:
     ///   - face: Cube face
     ///   - imageSource: The source of texture
-    ///   - mipLevel: Texture mipmapping level
-    ///   - flipY: Whether to flip the Y axis
-    ///   - premultiplyAlpha: Whether to premultiply the transparent channel
-    ///   - x: X coordinate of area start
-    ///   - y: Y coordinate of area start
-    func setImageSource(_ face: TextureCubeFace, _ imageSource: MTLBuffer,
-                        _ mipLevel: Int = 0, _ flipY: Bool = false, _ premultiplyAlpha: Bool = false,
-                        _ x: Int?, _ y: Int?) {
-        (_platformTexture as! IPlatformTextureCubeMap).setImageSource(
-                face,
-                imageSource,
-                mipLevel,
-                flipY,
-                premultiplyAlpha,
-                x,
-                y
-        )
+    func setImageSource(_ face: TextureCubeFace, _ imageSource: MTLTexture) {
+        (_platformTexture as! IPlatformTextureCubeMap).setImageSource(face, imageSource)
     }
 
     /// Get the pixel color buffer according to the specified cube face and area.
@@ -92,8 +77,8 @@ class TextureCubeMap: Texture {
     ///   - out: Color buffer
     func getPixelBuffer(_ face: TextureCubeFace,
                         _ x: Int, _ y: Int,
-                        _ width: Int, _ height: Int,
+                        _ width: Int, _ height: Int, _ mipLevel: Int,
                         _ out: inout [Float]) {
-        (_platformTexture as! IPlatformTextureCubeMap).getPixelBuffer(face, x, y, width, height, &out)
+        (_platformTexture as! IPlatformTextureCubeMap).getPixelBuffer(face, x, y, width, height, mipLevel, &out)
     }
 }

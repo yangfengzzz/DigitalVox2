@@ -64,15 +64,6 @@ class Texture2D: Texture {
     /// Setting pixels data through TexImageSource, designated area and texture mipmapping level.
     /// - Parameters:
     ///   - imageSource: The source of texture
-    ///   - mipLevel: Texture mipmapping level
-    ///   - flipY: Whether to flip the Y axis
-    ///   - premultiplyAlpha: Whether to premultiply the transparent channel
-    ///   - x: X coordinate of area start
-    ///   - y: Y coordinate of area start
-    func setImageSource(_ imageSource: MTLBuffer, _ x: Int?, _ y: Int?) {
-        (_platformTexture as! IPlatformTexture2D).setImageSource(imageSource, x, y)
-    }
-
     func setImageSource(_ imageSource: MTLTexture) {
         (_platformTexture as! IPlatformTexture2D).setImageSource(imageSource)
     }

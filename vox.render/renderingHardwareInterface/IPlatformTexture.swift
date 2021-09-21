@@ -23,7 +23,4 @@ protocol IPlatformTexture {
 
     /// Destroy texture.
     func destroy()
-
-    /// Generate multi-level textures based on the 0th level data.
-    func generateMipmaps()
 }

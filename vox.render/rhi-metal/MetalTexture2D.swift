@@ -10,8 +10,8 @@ import MetalKit
 class MetalTexture2D: MetalTexture {
     let descriptor: MTLTextureDescriptor
 
-    init(rhi: MetalRenderer, texture2D: Texture2D) {
-        if texture2D.mipmapCount > 0 {
+    init(_ rhi: MetalRenderer, _ texture2D: Texture2D) {
+        if texture2D._mipmap! {
             descriptor = MTLTextureDescriptor.texture2DDescriptor(
                     pixelFormat: texture2D.format, width: texture2D.width,
                     height: texture2D.height, mipmapped: true)
@@ -20,9 +20,8 @@ class MetalTexture2D: MetalTexture {
             descriptor = MTLTextureDescriptor.texture2DDescriptor(
                     pixelFormat: texture2D.format, width: texture2D.width,
                     height: texture2D.height, mipmapped: false)
-            descriptor.mipmapLevelCount = 0
         }
-        
+
         super.init(rhi, texture2D)
 
         _mtlTexture = rhi.device.makeTexture(descriptor: descriptor)
@@ -44,11 +43,6 @@ extension MetalTexture2D: IPlatformTexture2D {
         _mtlTexture.replace(region: MTLRegionMake2D(x, y, width, height),
                 mipmapLevel: mipLevel, withBytes: colorBuffer,
                 bytesPerRow: width * MemoryLayout<Float>.stride)
-    }
-
-    func setImageSource(_ imageSource: MTLBuffer, _ x: Int?, _ y: Int?) {
-        _mtlTexture = imageSource.makeTexture(descriptor: descriptor, offset: 0,
-                bytesPerRow: _texture.width * MemoryLayout<Float>.stride)
     }
 
     func setImageSource(_ imageSource: MTLTexture) {

@@ -12,12 +12,25 @@ class MetalTexture {
     internal var _texture: Texture;
     internal var _rhi: MetalRenderer;
     internal var _mtlTexture: MTLTexture!
-    internal var _descriptor = MTLSamplerDescriptor()
+
+    private var _descriptor = MTLSamplerDescriptor()
+    private var _sampleState: MTLSamplerState!
+    private var _updateFlag = false
 
     /// Create texture in Metal platform.
     init(_ rhi: MetalRenderer, _ texture: Texture) {
         _texture = texture;
         _rhi = rhi;
+    }
+
+    var sampleState: MTLSamplerState {
+        get {
+            if _updateFlag {
+                _sampleState = _rhi.device.makeSamplerState(descriptor: _descriptor)
+                _updateFlag = false
+            }
+            return _sampleState
+        }
     }
 }
 
@@ -28,6 +41,7 @@ extension MetalTexture: IPlatformTexture {
         }
         set {
             _descriptor.sAddressMode = newValue
+            _updateFlag = true
         }
     }
 
@@ -37,6 +51,7 @@ extension MetalTexture: IPlatformTexture {
         }
         set {
             _descriptor.tAddressMode = newValue
+            _updateFlag = true
         }
     }
 
@@ -46,6 +61,7 @@ extension MetalTexture: IPlatformTexture {
         }
         set {
             _descriptor.mipFilter = newValue
+            _updateFlag = true
         }
     }
 
@@ -55,12 +71,10 @@ extension MetalTexture: IPlatformTexture {
         }
         set {
             _descriptor.maxAnisotropy = newValue
+            _updateFlag = true
         }
     }
 
     func destroy() {
-    }
-
-    func generateMipmaps() {
     }
 }

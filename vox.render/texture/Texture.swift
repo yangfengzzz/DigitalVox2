@@ -118,15 +118,6 @@ class Texture: RefObject {
         }
     }
 
-    /// Generate multi-level textures based on the 0th level data.
-    func generateMipmaps() {
-        if (!_mipmap) {
-            return
-        }
-
-        _platformTexture.generateMipmaps()
-    }
-
     func _onDestroy() {
         _platformTexture.destroy()
         _platformTexture = nil

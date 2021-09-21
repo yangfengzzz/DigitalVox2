@@ -180,21 +180,6 @@ class RenderTarget: EngineObject {
         return _colorTextures[index]
     }
 
-    /// Generate the mipmap of each attachment texture of the renderTarget according to the configuration.
-    func generateMipmaps() {
-        let autoMipmaps = _depthTexture?.autoGenerateMipmaps
-        if autoMipmaps != nil && autoMipmaps! {
-            _depthTexture!.generateMipmaps()
-        }
-
-        for i in 0..<colorTextureCount {
-            let colorTexture = _colorTextures[i]
-            if (colorTexture.autoGenerateMipmaps) {
-                colorTexture.generateMipmaps()
-            }
-        }
-    }
-
     internal func _setRenderTargetFace(_ faceIndex: TextureCubeFace) {
         _platformRenderTarget.setRenderTargetFace(faceIndex)
     }

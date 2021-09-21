@@ -79,7 +79,7 @@ class MetalRenderer {
 }
 
 extension MetalRenderer {
-    func setRenderPipelineState(_ state:RenderPipelineState) {
+    func setRenderPipelineState(_ state: RenderPipelineState) {
         renderEncoder.setRenderPipelineState(state.pipelineState!)
     }
 }
@@ -90,11 +90,11 @@ extension MetalRenderer {
     }
 
     func createPlatformTexture2D(_ texture2D: Texture2D) -> IPlatformTexture2D {
-        fatalError()
+        MetalTexture2D(self, texture2D)
     }
 
     func createPlatformTextureCubeMap(_ textureCube: TextureCubeMap) -> IPlatformTextureCubeMap {
-        fatalError()
+        MetalTextureCubeMap(self, textureCube)
     }
 
     func createPlatformRenderColorTexture(_ texture: RenderColorTexture) -> IPlatformRenderColorTexture {

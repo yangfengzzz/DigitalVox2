@@ -29,15 +29,7 @@ protocol IPlatformTextureCubeMap: IPlatformTexture {
     /// - Parameters:
     ///   - face: Cube face
     ///   - imageSource: The source of texture
-    ///   - mipLevel: Texture mipmapping level
-    ///   - flipY: Whether to flip the Y axis
-    ///   - premultiplyAlpha: Whether to premultiply the transparent channel
-    ///   - x: X coordinate of area start
-    ///   - y: Y coordinate of area start
-    func setImageSource(_ face: TextureCubeFace, _ imageSource: MTLBuffer,
-                        _ mipLevel: Int?, _ flipY: Bool?, _ premultiplyAlpha: Bool?,
-                        _ x: Int?, _ y: Int?
-    )
+    func setImageSource(_ face: TextureCubeFace, _ imageSource: MTLTexture)
 
     /// Get the pixel color buffer according to the specified cube face and area.
     /// - Parameters:
@@ -49,6 +41,6 @@ protocol IPlatformTextureCubeMap: IPlatformTexture {
     ///   - out: Color buffer
     func getPixelBuffer(_ face: TextureCubeFace,
                         _ x: Int, _ y: Int, _ width: Int, _ height: Int,
-                        _ out: inout [Float]
+                        _ mipLevel: Int, _ out: inout [Float]
     )
 }
