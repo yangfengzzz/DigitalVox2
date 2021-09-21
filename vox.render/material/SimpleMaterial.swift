@@ -42,5 +42,6 @@ class SimpleMaterial: BaseMaterial {
     
     init(_ engine: Engine) {
         super.init(engine, Shader.find("simple")!)
+        shaderData.setColor(SimpleMaterial._diffuseColorProp, Color(1, 1, 1, 1))
     }
 }
