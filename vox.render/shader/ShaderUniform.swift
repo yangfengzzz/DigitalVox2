@@ -22,10 +22,13 @@ internal class ShaderUniform {
     var location: Int!
     var applyFunc: ((ShaderUniform, ShaderPropertyValueType) -> Void)!
     var cacheValue: CacheType!
+    var textureDefault: Texture!
 
+    private var _rhi: MetalRenderer
     private var _encoder: MTLRenderCommandEncoder
 
     init(_ engine: Engine) {
+        _rhi = engine._hardwareRenderer
         _encoder = engine._hardwareRenderer.renderEncoder
     }
 }
@@ -50,7 +53,7 @@ extension ShaderUniform {
             return
         }
     }
-    
+
     func uploadFrag1f(_ shaderUniform: ShaderUniform, _ value: ShaderPropertyValueType) {
         switch value {
         case .Float(var value):
@@ -463,6 +466,18 @@ extension ShaderUniform {
             _encoder.setFragmentBytes(&value.elements,
                     length: MemoryLayout<matrix_float4x4>.stride,
                     index: shaderUniform.location)
+        default:
+            return
+        }
+    }
+}
+
+extension ShaderUniform {
+    func uploadTexture(_ shaderUniform: ShaderUniform, _ value: ShaderPropertyValueType) {
+        switch value {
+        case .Texture(let value):
+            _rhi.bindTexture(value._platformTexture as! MetalTexture, shaderUniform.location)
+
         default:
             return
         }

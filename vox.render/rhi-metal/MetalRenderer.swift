@@ -136,4 +136,9 @@ extension MetalRenderer: IHardwareRenderer {
         commandBuffer.present(drawable)
         commandBuffer.commit()
     }
+
+    func bindTexture(_ texture: MetalTexture, _ location: Int) {
+        renderEncoder.setFragmentTexture(texture._mtlTexture,
+                index: location)
+    }
 }

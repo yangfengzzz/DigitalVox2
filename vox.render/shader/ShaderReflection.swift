@@ -75,7 +75,7 @@ extension ShaderReflection {
                 _groupingUniform(shaderUniform, group, false)
             }
         }
-        
+
         count = _reflection.fragmentArguments?.count
         if count != nil {
             for i in 0..<count! {
@@ -114,9 +114,10 @@ extension ShaderReflection {
                         fatalError("unkonwn type \(type.rawValue)")
                     }
                 } else if type == .sampler {
-                    
+
                 } else if type == .texture {
-                    
+                    shaderUniform.textureDefault = _engine._whiteTexture2D
+                    shaderUniform.applyFunc = shaderUniform.uploadTexture
                 }
 
                 _groupingUniform(shaderUniform, group, false)
@@ -198,6 +199,7 @@ extension ShaderReflection {
     ///   - shaderData: shader data
     func uploadAll(_ uniformBlock: ShaderUniformBlock, _ shaderData: ShaderData) {
         uploadUniforms(uniformBlock, shaderData)
+        uploadTextures(uniformBlock, shaderData)
     }
 
     /// Upload constant shader data in shader uniform block.
@@ -213,6 +215,27 @@ extension ShaderReflection {
             let data = properties[uniform.propertyId]
             if data != nil {
                 uniform.applyFunc(uniform, data!)
+            }
+        }
+    }
+
+    /// Upload texture shader data in shader uniform block.
+    /// - Parameters:
+    ///   - uniformBlock: shader Uniform block
+    ///   - shaderData: shader data
+    func uploadTextures(_ uniformBlock: ShaderUniformBlock, _ shaderData: ShaderData) {
+        let properties = shaderData._properties
+        let textureUniforms = uniformBlock.textureUniforms
+        // textureUniforms property maybe null if ShaderUniformBlock not contain any texture.
+        if !textureUniforms.isEmpty {
+            for i in 0..<textureUniforms.count {
+                let uniform = textureUniforms[i]
+                let texture = properties[uniform.propertyId]
+                if (texture != nil) {
+                    uniform.applyFunc(uniform, texture!)
+                } else {
+                    uniform.applyFunc(uniform, .Texture(uniform.textureDefault))
+                }
             }
         }
     }

@@ -12,22 +12,6 @@ struct ContentView: View {
     let engine: Engine
     let asset: Assets
 
-    let simpleMtl: SimpleMaterial
-    let color = Color()
-    @State private var r: Float = 1.0
-    @State private var g: Float = 1.0
-    @State private var b: Float = 1.0
-
-    class CubeScript: Script {
-        let speed: Float = 60
-
-        override func onUpdate(_ deltaTime: Float) {
-            let rotation = entity.transform.rotation
-            rotation.elements += deltaTime * speed
-            entity.transform.rotation = rotation
-        }
-    }
-
     init() {
         canvas = Canvas()
         engine = Engine(canvas, MetalRenderer())
@@ -44,19 +28,16 @@ struct ContentView: View {
         cameraEntity.transform.lookAt(worldPosition: Vector3(0, 0, 0), worldUp: nil)
         let _: OrbitControl = cameraEntity.addComponent()
 
-        simpleMtl = SimpleMaterial(engine)
-
-        let cubeEntity = rootEntity.createChild()
-        cubeEntity.transform.setPosition(x: 5, y: 0, z: 0)
-        let cubeRenderer: MeshRenderer = cubeEntity.addComponent()
-        let box = PrimitiveMesh.createCuboid(engine)
-        cubeRenderer.mesh = box
-        cubeRenderer.setMaterial(simpleMtl)
-        let _: CubeScript = cubeEntity.addComponent()
+        let simpleMtl = SimpleMaterial(engine)
 
         let assetEntity = rootEntity.createChild()
         let assetRenderer: MeshRenderer = assetEntity.addComponent()
         asset.load(name: "cottage1.obj")
+        let tex = try? asset.loadTexture(imageName: "cottage-color")
+        let baseTexture = Texture2D(engine, tex!.width, tex!.height, tex!.pixelFormat)
+        baseTexture.setImageSource(tex!)
+        simpleMtl.baseTexture = baseTexture
+
         assetRenderer.mesh = asset.meshes[0]
         assetRenderer.setMaterial(0, simpleMtl)
         assetRenderer.setMaterial(1, simpleMtl)
@@ -65,41 +46,7 @@ struct ContentView: View {
     }
 
     var body: some View {
-        NavigationView {
-            VStack {
-                Slider(
-                        value: $r,
-                        in: 0...1,
-                        onEditingChanged: { editing in
-                            _ = color.setValue(r: r, g: g, b: b, a: 1)
-                            simpleMtl.baseColor = color
-                        }
-                )
-                Text("Red: \(r)")
-
-                Slider(
-                        value: $g,
-                        in: 0...1,
-                        onEditingChanged: { editing in
-                            _ = color.setValue(r: r, g: g, b: b, a: 1)
-                            simpleMtl.baseColor = color
-                        }
-                )
-                Text("Green: \(g)")
-
-                Slider(
-                        value: $b,
-                        in: 0...1,
-                        onEditingChanged: { editing in
-                            _ = color.setValue(r: r, g: g, b: b, a: 1)
-                            simpleMtl.baseColor = color
-                        }
-                )
-                Text("Blue: \(b)")
-            }
-
-            EngineView(view: canvas)
-        }.frame(minWidth: 700, minHeight: 300)
+        EngineView(view: canvas)
     }
 }
 

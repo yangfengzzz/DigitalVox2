@@ -37,6 +37,8 @@ vertex VertexOut vertex_simple(const VertexIn vertexIn [[stage_in]],
 fragment float4 fragment_simple(VertexOut in [[stage_in]],
                                 constant float4 &u_diffuseColor [[buffer(1)]],
                                 sampler textureSampler [[sampler(0)]],
-                                texture2d<float> baseColorTexture [[texture(0)]]) {
-    return float4(in.worldPosition, 1.0) * u_diffuseColor;
+                                texture2d<float> u_diffuseTexture [[texture(0)]]) {
+    // extract color
+    float3 baseColor = u_diffuseTexture.sample(textureSampler, in.uv).rgb;
+    return float4(baseColor, 1.0);
 }
