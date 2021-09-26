@@ -8,7 +8,10 @@
 import Foundation
 
 class Scene: EngineObject {
-    /// Scene name. 
+    static var sceneFeatureManager = SceneFeatureManager()
+    var features: [SceneFeature] = []
+
+    /// Scene name.
     var name: String
     /// The background of the scene.
     var background: Background = Background()
@@ -209,5 +212,15 @@ extension Scene {
         oldRootEntities.removeAll { e in
             e === entity
         }
+    }
+}
+
+extension Scene {
+    static func registerFeature(Feature: SceneFeature) {
+        Scene.sceneFeatureManager.registerFeature(Feature)
+    }
+
+    func findFeature<T: SceneFeature>() -> T? {
+        return Scene.sceneFeatureManager.findFeature(self)
     }
 }

@@ -221,6 +221,9 @@
 		04AE165026EEE2C100201439 /* Vector4.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE164F26EEE2C100201439 /* Vector4.test.swift */; };
 		04AE165226EEE85D00201439 /* Matrix.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE165126EEE85D00201439 /* Matrix.test.swift */; };
 		04DB2A4226DF1E0500C15850 /* IClone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DB2A4126DF1E0500C15850 /* IClone.swift */; };
+		04DBA7DA2700B32D00C3B97C /* EngineFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DBA7D92700B32D00C3B97C /* EngineFeature.swift */; };
+		04DBA7DC2700B3C900C3B97C /* SceneFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DBA7DB2700B3C900C3B97C /* SceneFeature.swift */; };
+		04DBA7DE2700B45100C3B97C /* SceneFeatureManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DBA7DD2700B45100C3B97C /* SceneFeatureManager.swift */; };
 		04E28C3426ECE6F3003A3C3B /* IPlatformPrimitive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E28C3326ECE6F3003A3C3B /* IPlatformPrimitive.swift */; };
 		04E28C3626ECE780003A3C3B /* MetalPrimitive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E28C3526ECE780003A3C3B /* MetalPrimitive.swift */; };
 		04E28C3826ECE7B3003A3C3B /* MetalRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E28C3726ECE7B3003A3C3B /* MetalRenderer.swift */; };
@@ -544,6 +547,9 @@
 		04AE164F26EEE2C100201439 /* Vector4.test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector4.test.swift; sourceTree = "<group>"; };
 		04AE165126EEE85D00201439 /* Matrix.test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matrix.test.swift; sourceTree = "<group>"; };
 		04DB2A4126DF1E0500C15850 /* IClone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IClone.swift; sourceTree = "<group>"; };
+		04DBA7D92700B32D00C3B97C /* EngineFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineFeature.swift; sourceTree = "<group>"; };
+		04DBA7DB2700B3C900C3B97C /* SceneFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneFeature.swift; sourceTree = "<group>"; };
+		04DBA7DD2700B45100C3B97C /* SceneFeatureManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneFeatureManager.swift; sourceTree = "<group>"; };
 		04E28C3326ECE6F3003A3C3B /* IPlatformPrimitive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPlatformPrimitive.swift; sourceTree = "<group>"; };
 		04E28C3526ECE780003A3C3B /* MetalPrimitive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalPrimitive.swift; sourceTree = "<group>"; };
 		04E28C3726ECE7B3003A3C3B /* MetalRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalRenderer.swift; sourceTree = "<group>"; };
@@ -1075,6 +1081,9 @@
 				047FEBF526E6052D0078CFAF /* Transform.swift */,
 				0413289A26E0C1DD000A4F4E /* UpdateFlag.swift */,
 				0413289C26E0C288000A4F4E /* UpdateFlagManager.swift */,
+				04DBA7D92700B32D00C3B97C /* EngineFeature.swift */,
+				04DBA7DB2700B3C900C3B97C /* SceneFeature.swift */,
+				04DBA7DD2700B45100C3B97C /* SceneFeatureManager.swift */,
 				0413289E26E0CBE7000A4F4E /* ShaderSimple.metal */,
 				0452ECCC26DFA5360015BFB1 /* Shaders.metal */,
 				0452ECCA26DFA5360015BFB1 /* PBR.metal */,
@@ -1565,6 +1574,7 @@
 				043CB47126F56B95004A0B21 /* RenderTargetBlendState.swift in Sources */,
 				0452ECC526DFA4920015BFB1 /* Engine.swift in Sources */,
 				04EFDE8026DF4C85005FBB6F /* Quaternion.swift in Sources */,
+				04DBA7DA2700B32D00C3B97C /* EngineFeature.swift in Sources */,
 				04EFDE7626DF1F96005FBB6F /* Vector2.swift in Sources */,
 				0458275B26F6EF0E0056D134 /* Assets.swift in Sources */,
 				0447D55626F834BB00272D7C /* AmbientLight.swift in Sources */,
@@ -1579,6 +1589,7 @@
 				0447D57026F8640A00272D7C /* IPlatformRenderColorTexture.swift in Sources */,
 				04EFDE7C26DF3495005FBB6F /* Matrix.swift in Sources */,
 				042BB13626EA404200604751 /* SceneManager.swift in Sources */,
+				04DBA7DC2700B3C900C3B97C /* SceneFeature.swift in Sources */,
 				043CB46B26F45E3C004A0B21 /* RenderTarget.swift in Sources */,
 				0413288626E09F1F000A4F4E /* PrimitiveMesh.swift in Sources */,
 				043CB45026F41AD6004A0B21 /* Texture2D.swift in Sources */,
@@ -1615,6 +1626,7 @@
 				043CB45926F41E6F004A0B21 /* RasterState.swift in Sources */,
 				0419B6E026E7114C00005FEA /* ComponentsManager.swift in Sources */,
 				0413288026E08044000A4F4E /* Color.swift in Sources */,
+				04DBA7DE2700B45100C3B97C /* SceneFeatureManager.swift in Sources */,
 				0413286D26E06648000A4F4E /* BoundingSphere.swift in Sources */,
 				0413289926E0A607000A4F4E /* VertexAttribute.swift in Sources */,
 				0447D56326F8588900272D7C /* PBRSpecularMaterial.swift in Sources */,
