@@ -45,7 +45,7 @@ class PointLight: Light {
         }
     }
 
-    internal static func _updateShaderData(shaderData: ShaderData) {
+    internal static func _updateShaderData(_ shaderData: ShaderData) {
         let data = PointLight._combinedData
 
         shaderData.setFloatArray(PointLight._colorProperty, data.color)
@@ -53,7 +53,7 @@ class PointLight: Light {
         shaderData.setFloatArray(PointLight._distanceProperty, data.distance)
     }
 
-    internal func _appendData(lightIndex: Int) {
+    internal func _appendData(_ lightIndex: Int) {
         let colorStart = lightIndex * 3
         let positionStart = lightIndex * 3
         let distanceStart = lightIndex

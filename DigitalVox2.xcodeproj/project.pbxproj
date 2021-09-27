@@ -254,6 +254,7 @@
 		04F6AA6C27014FD400A0D6F6 /* CollisionDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F6AA6B27014FD400A0D6F6 /* CollisionDetection.swift */; };
 		04F6AA6E270151AD00A0D6F6 /* ColliderFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F6AA6D270151AD00A0D6F6 /* ColliderFeature.swift */; };
 		04F6AA702701579D00A0D6F6 /* PhysicsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F6AA6F2701579D00A0D6F6 /* PhysicsManager.swift */; };
+		04F6AA742701608500A0D6F6 /* LightFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F6AA732701608500A0D6F6 /* LightFeature.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -590,6 +591,7 @@
 		04F6AA6B27014FD400A0D6F6 /* CollisionDetection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollisionDetection.swift; sourceTree = "<group>"; };
 		04F6AA6D270151AD00A0D6F6 /* ColliderFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColliderFeature.swift; sourceTree = "<group>"; };
 		04F6AA6F2701579D00A0D6F6 /* PhysicsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsManager.swift; sourceTree = "<group>"; };
+		04F6AA732701608500A0D6F6 /* LightFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightFeature.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -845,6 +847,7 @@
 				0447D55126F8309C00272D7C /* SpotLight.swift */,
 				0447D55326F833A100272D7C /* DirectLight.swift */,
 				0447D55526F834BB00272D7C /* AmbientLight.swift */,
+				04F6AA732701608500A0D6F6 /* LightFeature.swift */,
 			);
 			path = lighting;
 			sourceTree = "<group>";
@@ -1737,6 +1740,7 @@
 				042BB13A26F36EDD00604751 /* ShaderDataGroup.swift in Sources */,
 				0413287526E072A9000A4F4E /* PlaneIntersectionType.swift in Sources */,
 				0447D57A26F8941100272D7C /* RenderPipelineState.swift in Sources */,
+				04F6AA742701608500A0D6F6 /* LightFeature.swift in Sources */,
 				043CB47926F56DEE004A0B21 /* CompareFunction.swift in Sources */,
 				04F6AA6127014B0500A0D6F6 /* ABoxCollider.swift in Sources */,
 			);

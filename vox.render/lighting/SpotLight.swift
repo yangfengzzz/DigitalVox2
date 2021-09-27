@@ -72,7 +72,7 @@ class SpotLight: Light {
     }
 
 
-    internal static func _updateShaderData(shaderData: ShaderData) {
+    internal static func _updateShaderData(_ shaderData: ShaderData) {
         let data = SpotLight._combinedData
 
         shaderData.setFloatArray(SpotLight._colorProperty, data.color)
@@ -83,7 +83,7 @@ class SpotLight: Light {
         shaderData.setFloatArray(SpotLight._penumbraCosProperty, data.penumbraCos)
     }
 
-    internal func _appendData(lightIndex: Int) {
+    internal func _appendData(_ lightIndex: Int) {
         let colorStart = lightIndex * 3
         let positionStart = lightIndex * 3
         let directionStart = lightIndex * 3

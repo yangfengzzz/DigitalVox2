@@ -32,12 +32,16 @@ typedef enum {
     HAS_OCCLUSIONMAP = 18,
     HAS_SPECULARGLOSSINESSMAP = 19,
     HAS_METALROUGHNESSMAP = 20,
-    IS_METALLIC_WORKFLOW = 20,
+    IS_METALLIC_WORKFLOW = 21,
+    
+    DIRECT_LIGHT_COUNT = 22,
+    POINT_LIGHT_COUNT = 23,
+    SPOT_LIGHT_COUNT = 24,
 
-    USE_SH = 21,
-    USE_SPECULAR_ENV = 22,
+    USE_SH = 25,
+    USE_SPECULAR_ENV = 26,
 
-    None = 25,
+    None = 27,
 } MacroName;
 
 #endif /* MacroName_h */
