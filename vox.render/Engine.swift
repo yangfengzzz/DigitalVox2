@@ -9,6 +9,8 @@ import MetalKit
 import SwiftUI
 import Logging
 
+/// TODO: delete
+let engineFeatureManager = EngineFeatureManager()
 let logger = Logger(label: "com.vox.Render.main")
 
 final class Engine: NSObject {
@@ -34,6 +36,8 @@ final class Engine: NSObject {
     private var _timeoutId: Int = 0
     private var _vSyncCounter: Int = 1
     private var _targetFrameInterval: Float = 1000 / 60
+
+    var features: [EngineFeature] = []
 
     /// The canvas to use for rendering.
     var canvas: Canvas {
@@ -139,7 +143,7 @@ final class Engine: NSObject {
             componentsManager.callScriptOnStart()
             componentsManager.callScriptOnUpdate(deltaTime)
             componentsManager.callScriptOnLateUpdate(deltaTime)
-            
+
             _hardwareRenderer.preDraw()
             _render(scene!)
             _hardwareRenderer.postDraw()
@@ -188,3 +192,12 @@ extension Engine: MTKViewDelegate {
     }
 }
 
+extension Engine {
+    func findFeature<T: EngineFeature>() -> T? {
+        engineFeatureManager.findFeature(self)
+    }
+
+    static func registerFeature(_ Feature: EngineFeature) {
+        engineFeatureManager.registerFeature(Feature)
+    }
+}
