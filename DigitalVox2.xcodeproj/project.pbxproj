@@ -244,6 +244,8 @@
 		04EFDE7E26DF49FD005FBB6F /* Matrix3x3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EFDE7D26DF49FD005FBB6F /* Matrix3x3.swift */; };
 		04EFDE8026DF4C85005FBB6F /* Quaternion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EFDE7F26DF4C85005FBB6F /* Quaternion.swift */; };
 		04EFDE8226DF4DC3005FBB6F /* Vector4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EFDE8126DF4DC3005FBB6F /* Vector4.swift */; };
+		04F6AA5B2701481600A0D6F6 /* Collider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F6AA5A2701481600A0D6F6 /* Collider.swift */; };
+		04F6AA5D2701486200A0D6F6 /* HitResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F6AA5C2701486200A0D6F6 /* HitResult.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -570,6 +572,8 @@
 		04EFDE7D26DF49FD005FBB6F /* Matrix3x3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matrix3x3.swift; sourceTree = "<group>"; };
 		04EFDE7F26DF4C85005FBB6F /* Quaternion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quaternion.swift; sourceTree = "<group>"; };
 		04EFDE8126DF4DC3005FBB6F /* Vector4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector4.swift; sourceTree = "<group>"; };
+		04F6AA5A2701481600A0D6F6 /* Collider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collider.swift; sourceTree = "<group>"; };
+		04F6AA5C2701486200A0D6F6 /* HitResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitResult.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1068,6 +1072,8 @@
 				04E28C4026EDD6F8003A3C3B /* renderPipeline */,
 				043CB44226F2E0BC004A0B21 /* shader */,
 				043CB43826F0E39D004A0B21 /* controls */,
+				04F6AA592701480100A0D6F6 /* collider */,
+				04F6AA5C2701486200A0D6F6 /* HitResult.swift */,
 				042BB12926EA35C100604751 /* Background.swift */,
 				042BB13026EA38EB00604751 /* Camera.swift */,
 				047FEBF726E6053A0078CFAF /* Component.swift */,
@@ -1219,6 +1225,14 @@
 				0447D55A26F8364300272D7C /* SphericalHarmonics3.swift */,
 			);
 			path = math;
+			sourceTree = "<group>";
+		};
+		04F6AA592701480100A0D6F6 /* collider */ = {
+			isa = PBXGroup;
+			children = (
+				04F6AA5A2701481600A0D6F6 /* Collider.swift */,
+			);
+			path = collider;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1607,6 +1621,7 @@
 				043CB45726F41E57004A0B21 /* BlendState.swift in Sources */,
 				0413286F26E06A40000A4F4E /* Plane.swift in Sources */,
 				047FEBF026E600E70078CFAF /* Scene.swift in Sources */,
+				04F6AA5D2701486200A0D6F6 /* HitResult.swift in Sources */,
 				0447D56926F8624600272D7C /* IPlatformTextureCubeMap.swift in Sources */,
 				0413289B26E0C1DD000A4F4E /* UpdateFlag.swift in Sources */,
 				043CB44126F2E069004A0B21 /* Material.swift in Sources */,
@@ -1638,6 +1653,7 @@
 				0447D57E26F94A4100272D7C /* MetalTexture.swift in Sources */,
 				0447D56126F8562300272D7C /* PBRBaseMaterial.swift in Sources */,
 				0413288A26E09FB3000A4F4E /* Mesh.swift in Sources */,
+				04F6AA5B2701481600A0D6F6 /* Collider.swift in Sources */,
 				0447D56C26F8630B00272D7C /* TextureCubeFace.swift in Sources */,
 				043CB44E26F410CA004A0B21 /* Texture.swift in Sources */,
 				0452ECED26DFA7870015BFB1 /* Canvas.swift in Sources */,

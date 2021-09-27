@@ -35,8 +35,12 @@ final class Entity: EngineObject {
         self.name = name != nil ? name! : ""
         super.init(engine)
 
-        self.transform = addComponent()
+        transform = addComponent()
+        _inverseWorldMatFlag = transform.registerWorldChangeFlag()
     }
+
+    private var _invModelMatrix: Matrix = Matrix()
+    private var _inverseWorldMatFlag: UpdateFlag!
 }
 
 //MARK:- Get/Set Methods
@@ -309,25 +313,25 @@ extension Entity {
 
     /// Destroy self.
     func destroy() {
-        let abilityArray = _components;
+        let abilityArray = _components
         for i in 0..<abilityArray.count {
-            abilityArray[i].destroy();
+            abilityArray[i].destroy()
         }
         _components = []
 
-        let children = _children;
+        let children = _children
         for i in 0..<children.count {
-            children[i].destroy();
+            children[i].destroy()
         }
         _children = []
 
         if (_parent != nil) {
-            var parentChildren = _parent!._children;
+            var parentChildren = _parent!._children
             parentChildren.removeAll { entity in
                 entity === self
             }
         }
-        _parent = nil;
+        _parent = nil
     }
 }
 
@@ -444,5 +448,16 @@ extension Entity {
                 _children[i]._setTransformDirty()
             }
         }
+    }
+}
+
+//MARK:- Depreciation
+extension Entity {
+    func getInvModelMatrix() -> Matrix {
+        if (_inverseWorldMatFlag.flag) {
+            Matrix.invert(a: transform.worldMatrix, out: _invModelMatrix)
+            _inverseWorldMatFlag.flag = false
+        }
+        return _invModelMatrix
     }
 }
