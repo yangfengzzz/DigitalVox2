@@ -13,6 +13,11 @@ enum IndexArrayType {
 }
 
 class ModelMesh: Mesh {
+    internal var _hasBlendShape: Bool = false
+    internal var _useBlendShapeNormal: Bool = false
+    internal var _useBlendShapeTangent: Bool = false
+    internal var _blendShapeTexture: Texture2D?
+
     private var _accessible: Bool = true
     private var _verticesFloat32: [Float]? = nil
     private var _verticesUint8: [UInt8]? = nil
@@ -281,11 +286,11 @@ extension ModelMesh {
             _setVertexBuffer(0, MeshBuffer(newVertexBuffer!, vertexFloatCount * MemoryLayout<Float>.stride, .vertex))
         }
     }
-    
-    private func _updateVertexDescriptor()->VertexDescriptor {
+
+    private func _updateVertexDescriptor() -> VertexDescriptor {
         let descriptr = MDLVertexDescriptor()
         descriptr.attributes[Int(Position.rawValue)] = POSITION_VERTEX_DESCRIPTOR
-        
+
         var offset = 12
         var elementCount = 3
         if (_normals != nil) {
@@ -321,7 +326,7 @@ extension ModelMesh {
                             format: .short4,
                             offset: offset,
                             bufferIndex: Int(BufferIndexVertices.rawValue))
-            
+
             offset += MemoryLayout<u_short>.stride
             elementCount += 1
         }
@@ -584,10 +589,10 @@ extension ModelMesh {
 }
 
 let POSITION_VERTEX_DESCRIPTOR = MDLVertexAttribute(
-    name: MDLVertexAttributePosition,
-    format: .float3,
-    offset: 0,
-    bufferIndex: Int(BufferIndexVertices.rawValue))
+        name: MDLVertexAttributePosition,
+        format: .float3,
+        offset: 0,
+        bufferIndex: Int(BufferIndexVertices.rawValue))
 
 enum ValueChanged: Int {
     case Position = 0x1

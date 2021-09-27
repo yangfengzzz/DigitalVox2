@@ -212,6 +212,9 @@
 		047FEC0026E6DF870078CFAF /* material_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBFF26E6DF870078CFAF /* material_data.swift */; };
 		047FEC0226E6E0320078CFAF /* environment_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEC0126E6E0320078CFAF /* environment_data.swift */; };
 		047FEC0426E6E0580078CFAF /* subdiv_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEC0326E6E0580078CFAF /* subdiv_data.swift */; };
+		04832F032701F266001AD421 /* BlendShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04832F022701F266001AD421 /* BlendShape.swift */; };
+		04832F052701F436001AD421 /* Skin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04832F042701F436001AD421 /* Skin.swift */; };
+		04832F072701F4B3001AD421 /* SkinnedMeshRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04832F062701F4B3001AD421 /* SkinnedMeshRenderer.swift */; };
 		04874ED426F771F3005E3318 /* PBRMaterial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04874ED326F771F3005E3318 /* PBRMaterial.swift */; };
 		0497A1E526DF150500F61DE9 /* voxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A1E426DF150500F61DE9 /* voxApp.swift */; };
 		0497A1E726DF150500F61DE9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A1E626DF150500F61DE9 /* ContentView.swift */; };
@@ -244,6 +247,7 @@
 		04EFDE7E26DF49FD005FBB6F /* Matrix3x3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EFDE7D26DF49FD005FBB6F /* Matrix3x3.swift */; };
 		04EFDE8026DF4C85005FBB6F /* Quaternion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EFDE7F26DF4C85005FBB6F /* Quaternion.swift */; };
 		04EFDE8226DF4DC3005FBB6F /* Vector4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EFDE8126DF4DC3005FBB6F /* Vector4.swift */; };
+		04F5B2572701F14100C36450 /* BlendShapeFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5B2562701F14100C36450 /* BlendShapeFrame.swift */; };
 		04F6AA5B2701481600A0D6F6 /* Collider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F6AA5A2701481600A0D6F6 /* Collider.swift */; };
 		04F6AA5D2701486200A0D6F6 /* HitResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F6AA5C2701486200A0D6F6 /* HitResult.swift */; };
 		04F6AA6127014B0500A0D6F6 /* ABoxCollider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F6AA6027014B0500A0D6F6 /* ABoxCollider.swift */; };
@@ -543,6 +547,9 @@
 		047FEBFF26E6DF870078CFAF /* material_data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = material_data.swift; sourceTree = "<group>"; };
 		047FEC0126E6E0320078CFAF /* environment_data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = environment_data.swift; sourceTree = "<group>"; };
 		047FEC0326E6E0580078CFAF /* subdiv_data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = subdiv_data.swift; sourceTree = "<group>"; };
+		04832F022701F266001AD421 /* BlendShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendShape.swift; sourceTree = "<group>"; };
+		04832F042701F436001AD421 /* Skin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Skin.swift; sourceTree = "<group>"; };
+		04832F062701F4B3001AD421 /* SkinnedMeshRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkinnedMeshRenderer.swift; sourceTree = "<group>"; };
 		04874ED326F771F3005E3318 /* PBRMaterial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PBRMaterial.swift; sourceTree = "<group>"; };
 		0497A1E126DF150500F61DE9 /* vox.render.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vox.render.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0497A1E426DF150500F61DE9 /* voxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = voxApp.swift; sourceTree = "<group>"; };
@@ -581,6 +588,7 @@
 		04EFDE7D26DF49FD005FBB6F /* Matrix3x3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matrix3x3.swift; sourceTree = "<group>"; };
 		04EFDE7F26DF4C85005FBB6F /* Quaternion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quaternion.swift; sourceTree = "<group>"; };
 		04EFDE8126DF4DC3005FBB6F /* Vector4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector4.swift; sourceTree = "<group>"; };
+		04F5B2562701F14100C36450 /* BlendShapeFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendShapeFrame.swift; sourceTree = "<group>"; };
 		04F6AA5A2701481600A0D6F6 /* Collider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collider.swift; sourceTree = "<group>"; };
 		04F6AA5C2701486200A0D6F6 /* HitResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitResult.swift; sourceTree = "<group>"; };
 		04F6AA6027014B0500A0D6F6 /* ABoxCollider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABoxCollider.swift; sourceTree = "<group>"; };
@@ -657,6 +665,10 @@
 				0413288726E09FA5000A4F4E /* ModelMesh.swift */,
 				041B585626F5863700B32BD0 /* BufferMesh.swift */,
 				047E7B2B26EE257E006BC3FB /* MeshRenderer.swift */,
+				04F5B2562701F14100C36450 /* BlendShapeFrame.swift */,
+				04832F022701F266001AD421 /* BlendShape.swift */,
+				04832F042701F436001AD421 /* Skin.swift */,
+				04832F062701F4B3001AD421 /* SkinnedMeshRenderer.swift */,
 			);
 			path = mesh;
 			sourceTree = "<group>";
@@ -1612,6 +1624,7 @@
 				043CB46726F45C18004A0B21 /* ClassPool.swift in Sources */,
 				0452ECD626DFA5360015BFB1 /* PBR.metal in Sources */,
 				0447D55226F8309C00272D7C /* SpotLight.swift in Sources */,
+				04832F072701F4B3001AD421 /* SkinnedMeshRenderer.swift in Sources */,
 				043CB47D26F56F0B004A0B21 /* StencilOperation.swift in Sources */,
 				043CB46D26F5667A004A0B21 /* ShaderPool.swift in Sources */,
 				04DB2A4226DF1E0500C15850 /* IClone.swift in Sources */,
@@ -1724,6 +1737,7 @@
 				043CB46126F4225D004A0B21 /* TextureCubeMap.swift in Sources */,
 				042BB13126EA38EB00604751 /* Camera.swift in Sources */,
 				0497A1E526DF150500F61DE9 /* voxApp.swift in Sources */,
+				04832F052701F436001AD421 /* Skin.swift in Sources */,
 				04E28C4226EDD722003A3C3B /* BasicRenderPipeline.swift in Sources */,
 				041B584F26F57C1500B32BD0 /* ShaderUniformBlock.swift in Sources */,
 				0447D55926F8354500272D7C /* DiffuseMode.swift in Sources */,
@@ -1735,8 +1749,10 @@
 				0419B6DE26E701FE00005FEA /* Script.swift in Sources */,
 				043CB47526F56CD3004A0B21 /* BlendOperation.swift in Sources */,
 				0413287B26E07BA3000A4F4E /* Ray.swift in Sources */,
+				04832F032701F266001AD421 /* BlendShape.swift in Sources */,
 				0447D57426F868E100272D7C /* RenderColorTexture.swift in Sources */,
 				043CB44426F2E0CD004A0B21 /* Shader.swift in Sources */,
+				04F5B2572701F14100C36450 /* BlendShapeFrame.swift in Sources */,
 				042BB13A26F36EDD00604751 /* ShaderDataGroup.swift in Sources */,
 				0413287526E072A9000A4F4E /* PlaneIntersectionType.swift in Sources */,
 				0447D57A26F8941100272D7C /* RenderPipelineState.swift in Sources */,
