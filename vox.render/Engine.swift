@@ -97,6 +97,8 @@ final class Engine: NSObject {
         _canvas.inputManager = _inputManager
         _canvas.delegate = self
         _canvas.registerGesture()
+        // TODO delete
+        engineFeatureManager.addObject(self)
         _sceneManager.activeScene = Scene(self, "DefaultScene")
         mtkView(_canvas, drawableSizeWillChange: _canvas.bounds.size)
 
@@ -137,6 +139,10 @@ final class Engine: NSObject {
         let deltaTime = 1.0 / Float(canvas.preferredFramesPerSecond)
         _renderElementPool.resetPool()
 
+        features.forEach { feature in
+            feature.preTick(self, _sceneManager._activeScene!)
+        }
+
         let scene = _sceneManager._activeScene
         let componentsManager = _componentsManager
         if (scene != nil) {
@@ -150,6 +156,10 @@ final class Engine: NSObject {
         }
 
         _componentsManager.callComponentDestroy()
+
+        features.forEach { feature in
+            feature.postTick(self, _sceneManager._activeScene!)
+        }
     }
 
     func _render(_ scene: Scene) {
@@ -170,7 +180,13 @@ final class Engine: NSObject {
                 let cameraEntity = camera.entity
                 if (camera.enabled && cameraEntity.isActiveInHierarchy) {
                     componentsManager.callCameraOnBeginRender(camera)
+                    scene.features.forEach { feature in
+                        feature.preRender(scene, camera)
+                    }
                     camera.render()
+                    scene.features.forEach { feature in
+                        feature.postRender(scene, camera)
+                    }
                     componentsManager.callCameraOnEndRender(camera)
                 }
             }

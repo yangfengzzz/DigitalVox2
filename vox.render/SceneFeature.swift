@@ -10,17 +10,17 @@ import Foundation
 /// Scene feature plug-in.
 protocol SceneFeature : AnyObject {
     /// Callback before every scene update.
-    func preUpdate(scene: Scene)
+    func preUpdate(_ scene: Scene)
 
     /// Callback after every scene update.
-    func postUpdate(scene: Scene)
+    func postUpdate(_ scene: Scene)
 
     /// Callback before scene rendering.
-    func preRender(scene: Scene, camera: Camera)
+    func preRender(_ scene: Scene, _ camera: Camera)
 
     /// Callback after scene rendering.
-    func postRender(scene: Scene, camera: Camera)
+    func postRender(_ scene: Scene, _ camera: Camera)
 
     /// Callback after the scene is destroyed.
-    func destroy(scene: Scene)
+    func destroy(_ scene: Scene)
 }

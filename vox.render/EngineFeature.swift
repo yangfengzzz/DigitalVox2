@@ -13,11 +13,11 @@ protocol EngineFeature : AnyObject {
     func preLoad(_ engine: Engine)
 
     /// Callback before every engine tick.
-    func preTick(engine: Engine, currentScene: Scene)
+    func preTick(_ engine: Engine, _ currentScene: Scene)
 
     /// Callback after every engine tick.
-    func postTick(engine: Engine, currentScene: Scene)
+    func postTick(_ engine: Engine, _ currentScene: Scene)
 
     /// Callback after the engine is destroyed.
-    func shutdown(engine: Engine)
+    func shutdown(_ engine: Engine)
 }
