@@ -56,6 +56,22 @@ class Script: Component {
     func onEndRender(_ camera: Camera) {
     }
 
+    /// Called when the collision enter.
+    /// - Parameter other: other Collider
+    func onTriggerEnter(_ other: Collider) {
+    }
+
+    /// Called when the collision stay.
+    /// - Parameter other: other Collider
+    /// - Remark: onTriggerStay is called every frame while the collision stay.
+    func onTriggerStay(_ other: Collider) {
+    }
+
+    /// Called when the collision exit.
+    /// - Parameter other: other Collider
+    func onTriggerExit(_ other: Collider) {
+    }
+
     /// Called when be disabled.
     func onDisable() {
     }

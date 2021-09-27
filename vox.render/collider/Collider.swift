@@ -11,11 +11,16 @@ import Foundation
 class Collider: Component {
     private static var _ray = Ray()
 
-    /// initialization
-    /// - Parameter entity: entity
-    required init(_ entity: Entity) {
-        super.init(entity)
+    override func _onEnable() {
+        let feature: ColliderFeature? = scene.findFeature()
+        feature?.attachCollider(self)
     }
+
+    override func _onDisable() {
+        let feature: ColliderFeature? = scene.findFeature()
+        feature?.detachCollider(self)
+    }
+
 
     func _updateHitResult(ray: Ray,
                           distance: Float,

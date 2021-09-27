@@ -250,6 +250,9 @@
 		04F6AA6327014C5800A0D6F6 /* BoxCollider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F6AA6227014C5800A0D6F6 /* BoxCollider.swift */; };
 		04F6AA6527014D0D00A0D6F6 /* ASphereCollider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F6AA6427014D0D00A0D6F6 /* ASphereCollider.swift */; };
 		04F6AA6727014E2400A0D6F6 /* SphereCollider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F6AA6627014E2400A0D6F6 /* SphereCollider.swift */; };
+		04F6AA6A27014F1800A0D6F6 /* Intersect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F6AA6927014F1800A0D6F6 /* Intersect.swift */; };
+		04F6AA6C27014FD400A0D6F6 /* CollisionDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F6AA6B27014FD400A0D6F6 /* CollisionDetection.swift */; };
+		04F6AA6E270151AD00A0D6F6 /* ColliderFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F6AA6D270151AD00A0D6F6 /* ColliderFeature.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -582,6 +585,9 @@
 		04F6AA6227014C5800A0D6F6 /* BoxCollider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxCollider.swift; sourceTree = "<group>"; };
 		04F6AA6427014D0D00A0D6F6 /* ASphereCollider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASphereCollider.swift; sourceTree = "<group>"; };
 		04F6AA6627014E2400A0D6F6 /* SphereCollider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphereCollider.swift; sourceTree = "<group>"; };
+		04F6AA6927014F1800A0D6F6 /* Intersect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intersect.swift; sourceTree = "<group>"; };
+		04F6AA6B27014FD400A0D6F6 /* CollisionDetection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollisionDetection.swift; sourceTree = "<group>"; };
+		04F6AA6D270151AD00A0D6F6 /* ColliderFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColliderFeature.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1081,6 +1087,7 @@
 				043CB44226F2E0BC004A0B21 /* shader */,
 				043CB43826F0E39D004A0B21 /* controls */,
 				04F6AA592701480100A0D6F6 /* collider */,
+				04F6AA6827014F0600A0D6F6 /* collision */,
 				04F6AA5C2701486200A0D6F6 /* HitResult.swift */,
 				042BB12926EA35C100604751 /* Background.swift */,
 				042BB13026EA38EB00604751 /* Camera.swift */,
@@ -1243,8 +1250,18 @@
 				04F6AA6227014C5800A0D6F6 /* BoxCollider.swift */,
 				04F6AA6427014D0D00A0D6F6 /* ASphereCollider.swift */,
 				04F6AA6627014E2400A0D6F6 /* SphereCollider.swift */,
+				04F6AA6D270151AD00A0D6F6 /* ColliderFeature.swift */,
 			);
 			path = collider;
+			sourceTree = "<group>";
+		};
+		04F6AA6827014F0600A0D6F6 /* collision */ = {
+			isa = PBXGroup;
+			children = (
+				04F6AA6927014F1800A0D6F6 /* Intersect.swift */,
+				04F6AA6B27014FD400A0D6F6 /* CollisionDetection.swift */,
+			);
+			path = collision;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1627,6 +1644,7 @@
 				047FEBF426E603CD0078CFAF /* Layer.swift in Sources */,
 				0447D54E26F82E0000272D7C /* Light.swift in Sources */,
 				0447D55D26F845F600272D7C /* BlinnPhongMaterial.swift in Sources */,
+				04F6AA6A27014F1800A0D6F6 /* Intersect.swift in Sources */,
 				0413289F26E0CBE7000A4F4E /* ShaderSimple.metal in Sources */,
 				0447D54826F8078B00272D7C /* ShaderMacro.swift in Sources */,
 				041B585726F5863700B32BD0 /* BufferMesh.swift in Sources */,
@@ -1658,6 +1676,7 @@
 				042A6698270142310019C2CE /* EngineFeatureManager.swift in Sources */,
 				0419B6E026E7114C00005FEA /* ComponentsManager.swift in Sources */,
 				0413288026E08044000A4F4E /* Color.swift in Sources */,
+				04F6AA6C27014FD400A0D6F6 /* CollisionDetection.swift in Sources */,
 				04DBA7DE2700B45100C3B97C /* SceneFeatureManager.swift in Sources */,
 				0413286D26E06648000A4F4E /* BoundingSphere.swift in Sources */,
 				0413289926E0A607000A4F4E /* VertexAttribute.swift in Sources */,
@@ -1682,6 +1701,7 @@
 				0447D56E26F863D100272D7C /* IPlatformRenderTarget.swift in Sources */,
 				0447D58226F953BA00272D7C /* MetalTextureCubeMap.swift in Sources */,
 				04F6AA6527014D0D00A0D6F6 /* ASphereCollider.swift in Sources */,
+				04F6AA6E270151AD00A0D6F6 /* ColliderFeature.swift in Sources */,
 				04E28C3626ECE780003A3C3B /* MetalPrimitive.swift in Sources */,
 				047E7B2C26EE257E006BC3FB /* MeshRenderer.swift in Sources */,
 				0447D55B26F8364300272D7C /* SphericalHarmonics3.swift in Sources */,
