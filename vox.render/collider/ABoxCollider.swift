@@ -22,7 +22,7 @@ class ABoxCollider: Collider {
     /// - Parameters:
     ///   - min: The minimum point of the box
     ///   - max: The maximum point of the box
-    func setBoxMinMax(min: Vector3, max: Vector3) {
+    func setBoxMinMax(_ min: Vector3, _ max: Vector3) {
         boxMin = min
         boxMax = max
 
@@ -33,7 +33,7 @@ class ABoxCollider: Collider {
     /// - Parameters:
     ///   - center: The center point
     ///   - size: The size of the bounding box
-    func setBoxCenterSize(center: Vector3, size: Vector3) {
+    func setBoxCenterSize(_ center: Vector3, _ size: Vector3) {
         let halfSize = ABoxCollider._tempVec3
         Vector3.scale(left: size, s: 0.5, out: halfSize)
         Vector3.add(left: center, right: halfSize, out: boxMax)
@@ -73,15 +73,15 @@ class ABoxCollider: Collider {
         return _corners
     }
 
-    internal override func _raycast(ray: Ray, hit: HitResult) -> Bool {
-        let localRay = _getLocalRay(ray: ray)
+    internal override func _raycast(_ ray: Ray, _ hit: HitResult) -> Bool {
+        let localRay = _getLocalRay(ray)
 
         let boundingBox = ABoxCollider._tempBox
         boxMin.cloneTo(target: boundingBox.min)
         boxMax.cloneTo(target: boundingBox.max)
         let intersect = localRay.intersectBox(box: boundingBox)
         if (intersect != -1) {
-            _updateHitResult(ray: localRay, distance: intersect, outHit: hit, origin: ray.origin)
+            _updateHitResult(localRay, intersect, hit, ray.origin)
             return true
         } else {
             return false

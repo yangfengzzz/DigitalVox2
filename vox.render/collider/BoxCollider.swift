@@ -17,7 +17,7 @@ class BoxCollider: ABoxCollider {
         }
         set {
             _center = newValue
-            setBoxCenterSize(center: _center, size: _size)
+            setBoxCenterSize(_center, _size)
         }
     }
 
@@ -27,7 +27,7 @@ class BoxCollider: ABoxCollider {
         }
         set {
             _size = newValue
-            setBoxCenterSize(center: _center, size: _size)
+            setBoxCenterSize(_center, _size)
         }
     }
 

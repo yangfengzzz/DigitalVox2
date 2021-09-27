@@ -18,12 +18,12 @@ class ASphereCollider: Collider {
     /// - Parameters:
     ///   - center: The center point of the sphere
     ///   - radius: The radius of the sphere
-    func setSphere(center: Vector3, radius: Float) {
+    func setSphere(_ center: Vector3, _ radius: Float) {
         self.center = center
         self.radius = radius
     }
 
-    internal override func _raycast(ray: Ray, hit: HitResult) -> Bool {
+    internal override func _raycast(_ ray: Ray, _ hit: HitResult) -> Bool {
         let transform = entity.transform
         let boundingSphere = ASphereCollider._tempSphere
         Vector3.transformCoordinate(v: center, m: transform!.worldMatrix, out: boundingSphere.center)
@@ -31,7 +31,7 @@ class ASphereCollider: Collider {
         boundingSphere.radius = radius * max(lossyScale.x, lossyScale.y, lossyScale.z)
         let intersect = ray.intersectSphere(sphere: boundingSphere)
         if (intersect != -1) {
-            _updateHitResult(ray: ray, distance: intersect, outHit: hit, origin: ray.origin, isWorldRay: true)
+            _updateHitResult(ray, intersect, hit, ray.origin, true)
             return true
         } else {
             return false

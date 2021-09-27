@@ -22,11 +22,11 @@ class Collider: Component {
     }
 
 
-    func _updateHitResult(ray: Ray,
-                          distance: Float,
-                          outHit: HitResult,
-                          origin: Vector3,
-                          isWorldRay: Bool = false) {
+    func _updateHitResult(_ ray: Ray,
+                          _ distance: Float,
+                          _ outHit: HitResult,
+                          _ origin: Vector3,
+                          _ isWorldRay: Bool = false) {
         _ = ray.getPoint(distance: distance, out: outHit.point)
         if (!isWorldRay) {
             Vector3.transformCoordinate(v: outHit.point, m: entity.transform.worldMatrix, out: outHit.point)
@@ -36,7 +36,7 @@ class Collider: Component {
         outHit.collider = self
     }
 
-    func _getLocalRay(ray: Ray) -> Ray {
+    func _getLocalRay(_ ray: Ray) -> Ray {
         let worldToLocal = entity.getInvModelMatrix()
         let outRay = Collider._ray
 
@@ -47,7 +47,7 @@ class Collider: Component {
         return outRay
     }
 
-    internal func _raycast(ray: Ray, hit: HitResult) -> Bool {
+    internal func _raycast(_ ray: Ray, _ hit: HitResult) -> Bool {
         fatalError("Error: use concrete type instead!")
     }
 }

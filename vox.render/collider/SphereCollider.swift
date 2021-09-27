@@ -17,7 +17,7 @@ class SphereCollider: ASphereCollider {
         }
         set {
             __center = newValue
-            self.setSphere(center: __center, radius: __radius)
+            self.setSphere(__center, __radius)
         }
     }
 
@@ -27,7 +27,7 @@ class SphereCollider: ASphereCollider {
         }
         set {
             __radius = newValue
-            self.setSphere(center: __center, radius: __radius)
+            self.setSphere(__center, __radius)
         }
     }
 
