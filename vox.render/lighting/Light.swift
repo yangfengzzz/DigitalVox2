@@ -30,4 +30,23 @@ class Light: Component {
             return _inverseViewMat
         }
     }
+
+    //MARK:- Shadow
+    internal var shadow: LightShadow?
+    private var _enableShadow = false
+    var enableShadow: Bool {
+        get {
+            _enableShadow
+        }
+        set {
+            _enableShadow = enabled
+
+            if (_enableShadow) {
+                if shadow == nil {
+                    shadow = LightShadow(self, engine, 512, 512)
+                }
+                shadow!.initShadowProjectionMatrix(self)
+            }
+        }
+    }
 }

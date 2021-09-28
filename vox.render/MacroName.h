@@ -59,6 +59,10 @@ typedef enum {
     fadeIn = 35,
     fadeOut = 36,
     
+    // Shadow
+    GENERATE_SHADOW_MAP = 37,
+    SHADOW_MAP_COUNT = 38,
+    
     None = 40,
 } MacroName;
 

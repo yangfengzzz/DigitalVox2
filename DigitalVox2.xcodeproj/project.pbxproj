@@ -223,6 +223,11 @@
 		0497A1E926DF150800F61DE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0497A1E826DF150800F61DE9 /* Assets.xcassets */; };
 		0497A1EC26DF150800F61DE9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0497A1EB26DF150800F61DE9 /* Preview Assets.xcassets */; };
 		0497A20226DF150800F61DE9 /* DigitalVox2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A20126DF150800F61DE9 /* DigitalVox2UITests.swift */; };
+		04AE07C227029F3300F1D8C5 /* LightShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE07C127029F3300F1D8C5 /* LightShadow.swift */; };
+		04AE07C42702A3AC00F1D8C5 /* ShadowMapMaterial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE07C32702A3AC00F1D8C5 /* ShadowMapMaterial.swift */; };
+		04AE07C62702A40800F1D8C5 /* ShadowMapPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE07C52702A40800F1D8C5 /* ShadowMapPass.swift */; };
+		04AE07C82702A4F800F1D8C5 /* ShadowMaterial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE07C72702A4F800F1D8C5 /* ShadowMaterial.swift */; };
+		04AE07CA2702A54F00F1D8C5 /* ShadowPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE07C92702A54F00F1D8C5 /* ShadowPass.swift */; };
 		04AE164E26EED80600201439 /* Vector3.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE164D26EED80600201439 /* Vector3.test.swift */; };
 		04AE165026EEE2C100201439 /* Vector4.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE164F26EEE2C100201439 /* Vector4.test.swift */; };
 		04AE165226EEE85D00201439 /* Matrix.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE165126EEE85D00201439 /* Matrix.test.swift */; };
@@ -568,6 +573,11 @@
 		0497A20126DF150800F61DE9 /* DigitalVox2UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitalVox2UITests.swift; sourceTree = "<group>"; };
 		0497A20326DF150800F61DE9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0497A20F26DF151700F61DE9 /* DigitalVox2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DigitalVox2.entitlements; sourceTree = "<group>"; };
+		04AE07C127029F3300F1D8C5 /* LightShadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightShadow.swift; sourceTree = "<group>"; };
+		04AE07C32702A3AC00F1D8C5 /* ShadowMapMaterial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowMapMaterial.swift; sourceTree = "<group>"; };
+		04AE07C52702A40800F1D8C5 /* ShadowMapPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowMapPass.swift; sourceTree = "<group>"; };
+		04AE07C72702A4F800F1D8C5 /* ShadowMaterial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowMaterial.swift; sourceTree = "<group>"; };
+		04AE07C92702A54F00F1D8C5 /* ShadowPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowPass.swift; sourceTree = "<group>"; };
 		04AE164D26EED80600201439 /* Vector3.test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector3.test.swift; sourceTree = "<group>"; };
 		04AE164F26EEE2C100201439 /* Vector4.test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector4.test.swift; sourceTree = "<group>"; };
 		04AE165126EEE85D00201439 /* Matrix.test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matrix.test.swift; sourceTree = "<group>"; };
@@ -1114,9 +1124,10 @@
 				0413288426E09F11000A4F4E /* graphic */,
 				043CB43F26F2E058004A0B21 /* material */,
 				043CB44C26F410B5004A0B21 /* texture */,
-				0447D54C26F82DEA00272D7C /* lighting */,
 				04E28C4026EDD6F8003A3C3B /* renderPipeline */,
 				043CB44226F2E0BC004A0B21 /* shader */,
+				0447D54C26F82DEA00272D7C /* lighting */,
+				04AE07C027029EB000F1D8C5 /* shadow */,
 				04832F082701FD2A001AD421 /* sky */,
 				04F6AA752702941F00A0D6F6 /* particle */,
 				043CB43826F0E39D004A0B21 /* controls */,
@@ -1204,6 +1215,18 @@
 				0497A20326DF150800F61DE9 /* Info.plist */,
 			);
 			path = vox.renderUITests;
+			sourceTree = "<group>";
+		};
+		04AE07C027029EB000F1D8C5 /* shadow */ = {
+			isa = PBXGroup;
+			children = (
+				04AE07C127029F3300F1D8C5 /* LightShadow.swift */,
+				04AE07C32702A3AC00F1D8C5 /* ShadowMapMaterial.swift */,
+				04AE07C52702A40800F1D8C5 /* ShadowMapPass.swift */,
+				04AE07C72702A4F800F1D8C5 /* ShadowMaterial.swift */,
+				04AE07C92702A54F00F1D8C5 /* ShadowPass.swift */,
+			);
+			path = shadow;
 			sourceTree = "<group>";
 		};
 		04DB2A4026DF1DF100C15850 /* design */ = {
@@ -1671,6 +1694,7 @@
 				042BB13C26F36F2600604751 /* ShaderProperty.swift in Sources */,
 				0413289226E0A1CD000A4F4E /* RefObject.swift in Sources */,
 				041B584B26F571DE00B32BD0 /* SimpleMaterial.swift in Sources */,
+				04AE07C62702A40800F1D8C5 /* ShadowMapPass.swift in Sources */,
 				0447D57626F8701D00272D7C /* RenderDepthTexture.swift in Sources */,
 				04E28C3B26ECE845003A3C3B /* IHardwareRenderer.swift in Sources */,
 				0452ECD726DFA5360015BFB1 /* Shaders.metal in Sources */,
@@ -1692,11 +1716,13 @@
 				0413289F26E0CBE7000A4F4E /* ShaderSimple.metal in Sources */,
 				0447D54826F8078B00272D7C /* ShaderMacro.swift in Sources */,
 				041B585726F5863700B32BD0 /* BufferMesh.swift in Sources */,
+				04AE07C42702A3AC00F1D8C5 /* ShadowMapMaterial.swift in Sources */,
 				0413289026E0A16C000A4F4E /* IRefObject.swift in Sources */,
 				043CB45726F41E57004A0B21 /* BlendState.swift in Sources */,
 				0413286F26E06A40000A4F4E /* Plane.swift in Sources */,
 				047FEBF026E600E70078CFAF /* Scene.swift in Sources */,
 				04F6AA5D2701486200A0D6F6 /* HitResult.swift in Sources */,
+				04AE07CA2702A54F00F1D8C5 /* ShadowPass.swift in Sources */,
 				0447D56926F8624600272D7C /* IPlatformTextureCubeMap.swift in Sources */,
 				0413289B26E0C1DD000A4F4E /* UpdateFlag.swift in Sources */,
 				043CB44126F2E069004A0B21 /* Material.swift in Sources */,
@@ -1705,6 +1731,7 @@
 				0447D54B26F81D7500272D7C /* MacroInfo.swift in Sources */,
 				04E28C4426EDD78C003A3C3B /* Renderer.swift in Sources */,
 				0413286B26DF86DC000A4F4E /* BoundingBox.swift in Sources */,
+				04AE07C227029F3300F1D8C5 /* LightShadow.swift in Sources */,
 				0413288D26E0A086000A4F4E /* EngineObject.swift in Sources */,
 				0447D57226F8645900272D7C /* IPlatformRenderDepthTexture.swift in Sources */,
 				0413287926E07748000A4F4E /* ContainmentType.swift in Sources */,
@@ -1744,6 +1771,7 @@
 				04EFDE8226DF4DC3005FBB6F /* Vector4.swift in Sources */,
 				043CB47326F56BAA004A0B21 /* BlendFactor.swift in Sources */,
 				041B585326F57C4200B32BD0 /* ShaderUniform.swift in Sources */,
+				04AE07C82702A4F800F1D8C5 /* ShadowMaterial.swift in Sources */,
 				04874ED426F771F3005E3318 /* PBRMaterial.swift in Sources */,
 				0447D56E26F863D100272D7C /* IPlatformRenderTarget.swift in Sources */,
 				0447D58226F953BA00272D7C /* MetalTextureCubeMap.swift in Sources */,

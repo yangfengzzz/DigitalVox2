@@ -27,7 +27,7 @@ class RenderPass {
     ///   - renderTarget: The specified Render Target
     ///   - replaceMaterial: Replaced material
     ///   - mask: Perform bit and operations with Entity.Layer to filter the objects that this Pass needs to render
-    init(_ name: String?,
+    init(_ name: String? = nil,
          _ priority: Int = 0,
          _ renderTarget: RenderTarget? = nil,
          _ replaceMaterial: Material? = nil,
