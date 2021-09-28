@@ -32,6 +32,7 @@ class Light: Component {
     }
 
     //MARK:- Shadow
+    internal var shadowMapPass: ShadowMapPass?
     internal var shadow: LightShadow?
     private var _enableShadow = false
     var enableShadow: Bool {

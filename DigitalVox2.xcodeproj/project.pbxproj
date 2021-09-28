@@ -228,6 +228,7 @@
 		04AE07C62702A40800F1D8C5 /* ShadowMapPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE07C52702A40800F1D8C5 /* ShadowMapPass.swift */; };
 		04AE07C82702A4F800F1D8C5 /* ShadowMaterial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE07C72702A4F800F1D8C5 /* ShadowMaterial.swift */; };
 		04AE07CA2702A54F00F1D8C5 /* ShadowPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE07C92702A54F00F1D8C5 /* ShadowPass.swift */; };
+		04AE07CC2702A8FA00F1D8C5 /* ShadowFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE07CB2702A8FA00F1D8C5 /* ShadowFeature.swift */; };
 		04AE164E26EED80600201439 /* Vector3.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE164D26EED80600201439 /* Vector3.test.swift */; };
 		04AE165026EEE2C100201439 /* Vector4.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE164F26EEE2C100201439 /* Vector4.test.swift */; };
 		04AE165226EEE85D00201439 /* Matrix.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE165126EEE85D00201439 /* Matrix.test.swift */; };
@@ -578,6 +579,7 @@
 		04AE07C52702A40800F1D8C5 /* ShadowMapPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowMapPass.swift; sourceTree = "<group>"; };
 		04AE07C72702A4F800F1D8C5 /* ShadowMaterial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowMaterial.swift; sourceTree = "<group>"; };
 		04AE07C92702A54F00F1D8C5 /* ShadowPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowPass.swift; sourceTree = "<group>"; };
+		04AE07CB2702A8FA00F1D8C5 /* ShadowFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowFeature.swift; sourceTree = "<group>"; };
 		04AE164D26EED80600201439 /* Vector3.test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector3.test.swift; sourceTree = "<group>"; };
 		04AE164F26EEE2C100201439 /* Vector4.test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector4.test.swift; sourceTree = "<group>"; };
 		04AE165126EEE85D00201439 /* Matrix.test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matrix.test.swift; sourceTree = "<group>"; };
@@ -1225,6 +1227,7 @@
 				04AE07C52702A40800F1D8C5 /* ShadowMapPass.swift */,
 				04AE07C72702A4F800F1D8C5 /* ShadowMaterial.swift */,
 				04AE07C92702A54F00F1D8C5 /* ShadowPass.swift */,
+				04AE07CB2702A8FA00F1D8C5 /* ShadowFeature.swift */,
 			);
 			path = shadow;
 			sourceTree = "<group>";
@@ -1676,6 +1679,7 @@
 				043CB47D26F56F0B004A0B21 /* StencilOperation.swift in Sources */,
 				043CB46D26F5667A004A0B21 /* ShaderPool.swift in Sources */,
 				04DB2A4226DF1E0500C15850 /* IClone.swift in Sources */,
+				04AE07CC2702A8FA00F1D8C5 /* ShadowFeature.swift in Sources */,
 				043CB44926F341AF004A0B21 /* RenderFace.swift in Sources */,
 				043CB44726F3417E004A0B21 /* BlendMode.swift in Sources */,
 				0447D57C26F8C73900272D7C /* ShaderReflection.swift in Sources */,

@@ -9,10 +9,14 @@ import Foundation
 
 /// RenderPass for rendering shadow.
 class ShadowPass: RenderPass {
-   static var shadowMapCount = 0
-    
-    init() {
-        super.init()
+    static var shadowMapCount = 0
+
+    override init(_ name: String? = nil,
+                  _ priority: Int = 0,
+                  _ renderTarget: RenderTarget? = nil,
+                  _ replaceMaterial: Material? = nil,
+                  _ mask: Layer = Layer.Everything) {
+        super.init(name, priority, renderTarget, replaceMaterial, mask)
         clearFlags = CameraClearFlags.None
     }
 
