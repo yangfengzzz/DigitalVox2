@@ -261,6 +261,7 @@
 		04F6AA6E270151AD00A0D6F6 /* ColliderFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F6AA6D270151AD00A0D6F6 /* ColliderFeature.swift */; };
 		04F6AA702701579D00A0D6F6 /* PhysicsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F6AA6F2701579D00A0D6F6 /* PhysicsManager.swift */; };
 		04F6AA742701608500A0D6F6 /* LightFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F6AA732701608500A0D6F6 /* LightFeature.swift */; };
+		04F6AA772702943400A0D6F6 /* ParticleRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F6AA762702943400A0D6F6 /* ParticleRenderer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -604,6 +605,7 @@
 		04F6AA6D270151AD00A0D6F6 /* ColliderFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColliderFeature.swift; sourceTree = "<group>"; };
 		04F6AA6F2701579D00A0D6F6 /* PhysicsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsManager.swift; sourceTree = "<group>"; };
 		04F6AA732701608500A0D6F6 /* LightFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightFeature.swift; sourceTree = "<group>"; };
+		04F6AA762702943400A0D6F6 /* ParticleRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticleRenderer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1116,6 +1118,7 @@
 				04E28C4026EDD6F8003A3C3B /* renderPipeline */,
 				043CB44226F2E0BC004A0B21 /* shader */,
 				04832F082701FD2A001AD421 /* sky */,
+				04F6AA752702941F00A0D6F6 /* particle */,
 				043CB43826F0E39D004A0B21 /* controls */,
 				04F6AA5C2701486200A0D6F6 /* HitResult.swift */,
 				04F6AA6F2701579D00A0D6F6 /* PhysicsManager.swift */,
@@ -1294,6 +1297,14 @@
 				04F6AA6B27014FD400A0D6F6 /* CollisionDetection.swift */,
 			);
 			path = collision;
+			sourceTree = "<group>";
+		};
+		04F6AA752702941F00A0D6F6 /* particle */ = {
+			isa = PBXGroup;
+			children = (
+				04F6AA762702943400A0D6F6 /* ParticleRenderer.swift */,
+			);
+			path = particle;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1708,6 +1719,7 @@
 				043CB45926F41E6F004A0B21 /* RasterState.swift in Sources */,
 				04832F0C2701FD82001AD421 /* SkyBoxMaterial.swift in Sources */,
 				042A6698270142310019C2CE /* EngineFeatureManager.swift in Sources */,
+				04F6AA772702943400A0D6F6 /* ParticleRenderer.swift in Sources */,
 				0419B6E026E7114C00005FEA /* ComponentsManager.swift in Sources */,
 				0413288026E08044000A4F4E /* Color.swift in Sources */,
 				04F6AA6C27014FD400A0D6F6 /* CollisionDetection.swift in Sources */,

@@ -14,14 +14,17 @@ typedef enum {
     HAS_TANGENT = 2,
     HAS_VERTEXCOLOR = 3,
 
+    // Blend Shape
     BLENDSHAPE = 4,
     BLENDSHAPE_NORMAL = 5,
     BLENDSHAPE_TANGENT = 6,
     
+    // Skin
     HAS_SKIN = 7,
     USE_JOINT_TEXTURE = 8,
     JOINTS_NUM = 9,
 
+    // Material
     ALPHA_CUTOFF = 10,
     NEED_WORLDPOS = 11,
     NEED_TILINGOFFSET = 12,
@@ -38,14 +41,25 @@ typedef enum {
     HAS_METALROUGHNESSMAP = 23,
     IS_METALLIC_WORKFLOW = 24,
     
+    // Light
     DIRECT_LIGHT_COUNT = 25,
     POINT_LIGHT_COUNT = 26,
     SPOT_LIGHT_COUNT = 27,
 
+    // Enviroment
     USE_SH = 28,
     USE_SPECULAR_ENV = 29,
-
-    None = 30,
+    
+    // Particle Render
+    particleTexture = 30,
+    rotateToVelocity = 31,
+    useOriginColor = 32,
+    ScaleByLifetime = 33,
+    TWO_Dimension = 34,
+    fadeIn = 35,
+    fadeOut = 36,
+    
+    None = 40,
 } MacroName;
 
 #endif /* MacroName_h */
