@@ -31,7 +31,7 @@ class Renderer: Component {
     internal var _rendererIndex: Int = -1
     // @ignoreClone
     internal var _globalShaderMacro: ShaderMacroCollection = ShaderMacroCollection();
-    
+
     // @ignoreClone
     internal var _renderSortId: Int = 0
 
@@ -55,6 +55,11 @@ class Renderer: Component {
     private var _normalMatrix: Matrix = Matrix()
     // @ignoreClone
     private var _materialsInstanced: [Bool] = []
+
+    /// Set whether the renderer to receive shadows.
+    public var receiveShadow: Bool = false
+    /// Set whether the renderer to cast shadows.
+    public var castShadow: Bool = false
 
     /// Material count.
     var materialCount: Int {

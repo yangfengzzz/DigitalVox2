@@ -50,7 +50,25 @@ class ShadowFeature {
     /// Update the renderPassFlag state of renderers in the scene.
     /// - Parameter renderQueue: Render queue
     func updatePassRenderFlag(_ renderQueue: RenderQueue) {
-        fatalError()
+        let items = renderQueue.items
+        for i in 0..<items.count {
+            let item = items[i]
+            let ability = item.component!
+
+            let receiveShadow = ability.receiveShadow
+            let castShadow = ability.castShadow
+            if (receiveShadow) {
+                ability.entity.layer = Layer(rawValue: ability.entity.layer.rawValue | Layer.Layer30.rawValue)! //SHADOW
+            } else if (!receiveShadow) {
+                ability.entity.layer = Layer(rawValue: ability.entity.layer.rawValue & ~Layer.Layer30.rawValue)! //SHADOW
+            }
+
+            if (castShadow) {
+                ability.entity.layer = Layer(rawValue: ability.entity.layer.rawValue | Layer.Layer31.rawValue)! //SHADOW_MAP
+            } else if (!castShadow) {
+                ability.entity.layer = Layer(rawValue: ability.entity.layer.rawValue & ~Layer.Layer31.rawValue)! //SHADOW_MAP
+            }
+        }
     }
 }
 
