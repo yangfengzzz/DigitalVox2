@@ -150,9 +150,9 @@ final class Engine: NSObject {
             componentsManager.callScriptOnUpdate(deltaTime)
             componentsManager.callScriptOnLateUpdate(deltaTime)
 
-            _hardwareRenderer.preDraw()
+            _hardwareRenderer.begin()
             _render(scene!)
-            _hardwareRenderer.postDraw()
+            _hardwareRenderer.end()
         }
 
         _componentsManager.callComponentDestroy()
@@ -183,7 +183,9 @@ final class Engine: NSObject {
                     scene.features.forEach { feature in
                         feature.preRender(scene, camera)
                     }
+                    _hardwareRenderer.beginRenderPass()
                     camera.render()
+                    _hardwareRenderer.endRenderPass()
                     scene.features.forEach { feature in
                         feature.postRender(scene, camera)
                     }

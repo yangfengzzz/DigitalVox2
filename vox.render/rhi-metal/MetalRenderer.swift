@@ -118,9 +118,23 @@ extension MetalRenderer: IHardwareRenderer {
         primitive._draw(shaderProgram, subPrimitive)
     }
 
-    func preDraw() {
+    func begin() {
+        guard let commandBuffer = commandQueue.makeCommandBuffer() else {
+            return
+        }
+        self.commandBuffer = commandBuffer
+    }
+
+    func end() {
+        guard let drawable = view.currentDrawable else {
+            return
+        }
+        commandBuffer.present(drawable)
+        commandBuffer.commit()
+    }
+    
+    func beginRenderPass() {
         guard let descriptor = view.currentRenderPassDescriptor,
-              let commandBuffer = commandQueue.makeCommandBuffer(),
               let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {
             return
         }
@@ -128,16 +142,10 @@ extension MetalRenderer: IHardwareRenderer {
         renderEncoder.setFragmentSamplerState(samplerState, index: 0)
 
         self.renderEncoder = renderEncoder
-        self.commandBuffer = commandBuffer
     }
 
-    func postDraw() {
+    func endRenderPass() {
         renderEncoder.endEncoding()
-        guard let drawable = view.currentDrawable else {
-            return
-        }
-        commandBuffer.present(drawable)
-        commandBuffer.commit()
     }
 
     func bindTexture(_ texture: MetalTexture, _ location: Int) {
