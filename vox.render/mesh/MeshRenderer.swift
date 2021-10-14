@@ -39,45 +39,6 @@ class MeshRenderer: Renderer {
         }
     }
 
-    /// Set the first material.
-    /// - Parameter material: The first material
-    override func setMaterial(_ material: Material) {
-        super.setMaterial(material)
-        if mesh != nil {
-            let state = RenderPipelineState(engine)
-            state.vertexDescriptor = MTKMetalVertexDescriptorFromModelIO(mesh!._vertexDescriptor._descriptor)
-            _pipelineStates.insert(state, at: 0)
-        }
-    }
-
-    /// Set material by index.
-    /// - Parameters:
-    ///   - index: Material index
-    ///   - material: The material
-    override func setMaterial(_ index: Int, _ material: Material) {
-        super.setMaterial(index, material)
-        if mesh != nil {
-            let state = RenderPipelineState(engine)
-            state.vertexDescriptor = MTKMetalVertexDescriptorFromModelIO(mesh!._vertexDescriptor._descriptor)
-            _pipelineStates.insert(state, at: index)
-        }
-    }
-
-    /// Set all materials.
-    /// - Parameter materials: All materials
-    override func setMaterials(_ materials: [Material]) {
-        super.setMaterials(materials)
-        let vertexDescriptor = MTKMetalVertexDescriptorFromModelIO(mesh!._vertexDescriptor._descriptor)
-        if mesh != nil {
-            let state = RenderPipelineState(engine)
-            state.vertexDescriptor = vertexDescriptor
-            _pipelineStates.reserveCapacity(materials.count)
-            materials.forEach { material in
-                _pipelineStates.append(state)
-            }
-        }
-    }
-
     override func _render(_ camera: Camera) {
         let mesh = _mesh
         if (mesh != nil) {
@@ -117,7 +78,7 @@ class MeshRenderer: Renderer {
                 }
                 if (material != nil) {
                     let element = renderElementPool.getFromPool()
-                    element.setValue(self, mesh!, subMeshes[i], material!, _pipelineStates[i])
+                    element.setValue(self, mesh!, subMeshes[i], material!)
                     renderPipeline!.pushPrimitive(element)
                 }
             }

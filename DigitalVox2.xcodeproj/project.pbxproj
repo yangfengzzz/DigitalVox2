@@ -268,6 +268,8 @@
 		04F6AA702701579D00A0D6F6 /* PhysicsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F6AA6F2701579D00A0D6F6 /* PhysicsManager.swift */; };
 		04F6AA742701608500A0D6F6 /* LightFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F6AA732701608500A0D6F6 /* LightFeature.swift */; };
 		04F6AA772702943400A0D6F6 /* ParticleRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F6AA762702943400A0D6F6 /* ParticleRenderer.swift */; };
+		04FF83BA271800E10016CFC3 /* ResourceCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FF83B9271800E10016CFC3 /* ResourceCache.swift */; };
+		04FF83BC271801550016CFC3 /* ComputePipelineState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FF83BB271801550016CFC3 /* ComputePipelineState.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -618,6 +620,8 @@
 		04F6AA6F2701579D00A0D6F6 /* PhysicsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsManager.swift; sourceTree = "<group>"; };
 		04F6AA732701608500A0D6F6 /* LightFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightFeature.swift; sourceTree = "<group>"; };
 		04F6AA762702943400A0D6F6 /* ParticleRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticleRenderer.swift; sourceTree = "<group>"; };
+		04FF83B9271800E10016CFC3 /* ResourceCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceCache.swift; sourceTree = "<group>"; };
+		04FF83BB271801550016CFC3 /* ComputePipelineState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComputePipelineState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1145,7 +1149,6 @@
 				047FEBF126E601750078CFAF /* Entity.swift */,
 				047FEBF326E603CD0078CFAF /* Layer.swift */,
 				04E28C4326EDD78C003A3C3B /* Renderer.swift */,
-				0447D57926F8941100272D7C /* RenderPipelineState.swift */,
 				047FEBEF26E600E70078CFAF /* Scene.swift */,
 				042BB13526EA404200604751 /* SceneManager.swift */,
 				0419B6DD26E701FE00005FEA /* Script.swift */,
@@ -1244,6 +1247,9 @@
 		04E28C3226ECE6C5003A3C3B /* rhi-metal */ = {
 			isa = PBXGroup;
 			children = (
+				0447D57926F8941100272D7C /* RenderPipelineState.swift */,
+				04FF83BB271801550016CFC3 /* ComputePipelineState.swift */,
+				04FF83B9271800E10016CFC3 /* ResourceCache.swift */,
 				04E28C3726ECE7B3003A3C3B /* MetalRenderer.swift */,
 				04E28C3526ECE780003A3C3B /* MetalPrimitive.swift */,
 				0447D57D26F94A4100272D7C /* MetalTexture.swift */,
@@ -1754,6 +1760,7 @@
 				0419B6E026E7114C00005FEA /* ComponentsManager.swift in Sources */,
 				0413288026E08044000A4F4E /* Color.swift in Sources */,
 				04F6AA6C27014FD400A0D6F6 /* CollisionDetection.swift in Sources */,
+				04FF83BC271801550016CFC3 /* ComputePipelineState.swift in Sources */,
 				04DBA7DE2700B45100C3B97C /* SceneFeatureManager.swift in Sources */,
 				0413286D26E06648000A4F4E /* BoundingSphere.swift in Sources */,
 				0413289926E0A607000A4F4E /* VertexAttribute.swift in Sources */,
@@ -1807,6 +1814,7 @@
 				043CB45D26F41EA2004A0B21 /* StencilState.swift in Sources */,
 				04F6AA702701579D00A0D6F6 /* PhysicsManager.swift in Sources */,
 				0419B6DE26E701FE00005FEA /* Script.swift in Sources */,
+				04FF83BA271800E10016CFC3 /* ResourceCache.swift in Sources */,
 				043CB47526F56CD3004A0B21 /* BlendOperation.swift in Sources */,
 				0413287B26E07BA3000A4F4E /* Ray.swift in Sources */,
 				04832F032701F266001AD421 /* BlendShape.swift in Sources */,

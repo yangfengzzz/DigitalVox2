@@ -14,8 +14,10 @@ class MetalRenderer {
 
     var canvas: Canvas!
     var device: MTLDevice!
+    var resouceCache: ResourceCache!
     var commandQueue: MTLCommandQueue!
     var library: MTLLibrary!
+    
     var colorPixelFormat: MTLPixelFormat!
 
     var samplerState: MTLSamplerState!
@@ -33,6 +35,7 @@ class MetalRenderer {
         }
         self.canvas = canvas
         self.device = device
+        self.resouceCache = ResourceCache(device)
         self.commandQueue = commandQueue
         library = device.makeDefaultLibrary()
 
@@ -80,7 +83,7 @@ class MetalRenderer {
 
 extension MetalRenderer {
     func setRenderPipelineState(_ state: RenderPipelineState) {
-        renderEncoder.setRenderPipelineState(state.pipelineState!)
+        renderEncoder.setRenderPipelineState(state.handle)
     }
 }
 

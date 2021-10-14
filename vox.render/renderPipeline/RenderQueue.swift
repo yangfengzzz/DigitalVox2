@@ -5,7 +5,8 @@
 //  Created by 杨丰 on 2021/9/17.
 //
 
-import Foundation
+import Metal
+import MetalKit
 
 typealias Item = RenderElement
 
@@ -79,17 +80,20 @@ extension RenderQueue {
                 continue
             }
 
-            if program.vertexShader !== element.pipelineState.vertexShader {
-                element.pipelineState.vertexShader = program.vertexShader
-            }
-            if program.fragmentShader !== element.pipelineState.fragmentShader {
-                element.pipelineState.fragmentShader = program.fragmentShader
-            }
-            rhi.setRenderPipelineState(element.pipelineState)
+            let descriptor = MTLRenderPipelineDescriptor()
+            descriptor.vertexDescriptor = MTKMetalVertexDescriptorFromModelIO(element.mesh._vertexDescriptor._descriptor)
+            descriptor.vertexFunction = program.vertexShader
+            descriptor.fragmentFunction = program.fragmentShader
+            
+            descriptor.colorAttachments[0].pixelFormat = engine._hardwareRenderer.colorPixelFormat
+            descriptor.depthAttachmentPixelFormat = .depth32Float
+            let pipelineState = rhi.resouceCache.request_graphics_pipeline(descriptor)
+            
+            rhi.setRenderPipelineState(pipelineState)
 
             //MARK:- Load Resouces
-            let reflection = element.pipelineState.reflection
-            let shaderReflection = ShaderReflection(engine, reflection!)
+            let reflection = pipelineState.reflection
+            let shaderReflection = ShaderReflection(engine, reflection)
             shaderReflection.groupingOtherUniformBlock()
             shaderReflection.uploadAll(shaderReflection.sceneUniformBlock, sceneData);
             shaderReflection.uploadAll(shaderReflection.cameraUniformBlock, cameraData);

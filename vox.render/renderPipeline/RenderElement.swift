@@ -17,16 +17,12 @@ final class RenderElement {
     var subMesh: SubMesh!
     /// Material.
     var material: Material!
-    /// Pipeline
-    var pipelineState: RenderPipelineState!
 
-    func setValue(_ component: Renderer, _ mesh: Mesh, _ subMesh: SubMesh,
-                  _ material: Material, _ pipelineState: RenderPipelineState) {
+    func setValue(_ component: Renderer, _ mesh: Mesh, _ subMesh: SubMesh, _ material: Material) {
         self.component = component
         self.mesh = mesh
         self.subMesh = subMesh
         self.material = material
-        self.pipelineState = pipelineState
     }
 }
 
