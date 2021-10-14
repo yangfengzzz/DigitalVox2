@@ -52,8 +52,15 @@ class ResourceCache {
         return pipelineState!
     }
 
-    func request_compute_pipeline(_ pipeline_state: MTLComputePipelineDescriptor) -> ComputePipelineState {
-        fatalError()
+    func request_compute_pipeline(_ pipelineDescriptor: MTLComputePipelineDescriptor) -> ComputePipelineState {
+        let hash = pipelineDescriptor.hash
+        var pipelineState = state.compute_pipelines[hash]
+        if pipelineState == nil {
+            pipelineState = ComputePipelineState(device, pipelineDescriptor)
+            state.compute_pipelines[hash] = pipelineState
+        }
+        
+        return pipelineState!
     }
 
     func clear_pipelines() {
