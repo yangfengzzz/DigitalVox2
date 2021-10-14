@@ -5,7 +5,7 @@
 //  Created by 杨丰 on 2021/9/17.
 //
 
-import Foundation
+import Metal
 
 enum DepthType {
     case RenderDepthTexture(RenderDepthTexture)
@@ -14,7 +14,7 @@ enum DepthType {
 
 /// The render target used for off-screen rendering.
 class RenderTarget: EngineObject {
-    internal var _platformRenderTarget: IPlatformRenderTarget!
+    internal var _platformRenderTarget: MTLRenderPassDescriptor!
     internal var _colorTextures: [RenderColorTexture]
     internal var _depth: DepthType?
     internal var _antiAliasing: Int
@@ -85,7 +85,7 @@ class RenderTarget: EngineObject {
 
         super.init(engine)
 
-        _platformRenderTarget = engine._hardwareRenderer.createPlatformRenderTarget(self)
+        _platformRenderTarget = MTLRenderPassDescriptor()
     }
 
     /// Create a render target through color texture and depth format.
@@ -116,7 +116,7 @@ class RenderTarget: EngineObject {
 
         super.init(engine)
 
-        _platformRenderTarget = engine._hardwareRenderer.createPlatformRenderTarget(self)
+        _platformRenderTarget = MTLRenderPassDescriptor()
     }
 
     /// Create a render target with color texture array and depth format.
@@ -145,7 +145,7 @@ class RenderTarget: EngineObject {
 
         super.init(engine)
 
-        _platformRenderTarget = engine._hardwareRenderer.createPlatformRenderTarget(self)
+        _platformRenderTarget = MTLRenderPassDescriptor()
     }
 
     /// Create a render target with color texture array and depth texture.
@@ -171,7 +171,7 @@ class RenderTarget: EngineObject {
 
         super.init(engine)
 
-        _platformRenderTarget = engine._hardwareRenderer.createPlatformRenderTarget(self)
+        _platformRenderTarget = MTLRenderPassDescriptor()
     }
 
     /// Get the render color texture by index.
@@ -181,10 +181,10 @@ class RenderTarget: EngineObject {
     }
 
     internal func _setRenderTargetFace(_ faceIndex: TextureCubeFace) {
-        _platformRenderTarget.setRenderTargetFace(faceIndex)
+        fatalError()
     }
 
     internal func _blitRenderTarget() {
-        _platformRenderTarget.blitRenderTarget()
+        fatalError()
     }
 }

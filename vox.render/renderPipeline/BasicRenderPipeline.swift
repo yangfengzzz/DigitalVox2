@@ -45,7 +45,7 @@ extension BasicRenderPipeline {
     /// - Parameters:
     ///   - context: Render context
     ///   - cubeFace: Render surface of cube texture
-    func render(_ context: RenderContext, _ cubeFace: TextureCubeFace? = nil, _ mipLevel:Int? = nil) {
+    func render(_ context: RenderContext, _ cubeFace: TextureCubeFace? = nil, _ mipLevel:Int = 0) {
         let camera = _camera
         let opaqueQueue = _opaqueQueue
         let alphaTestQueue = _alphaTestQueue
@@ -66,7 +66,7 @@ extension BasicRenderPipeline {
     }
 
     private func _drawRenderPass(_ pass: RenderPass, _ camera: Camera,
-                                 _ cubeFace: TextureCubeFace? = nil, mipLevel:Int? = nil) {
+                                 _ cubeFace: TextureCubeFace? = nil, mipLevel:Int = 0) {
         pass.preRender(camera, _opaqueQueue, _alphaTestQueue, _transparentQueue)
 
         if (pass.enabled) {

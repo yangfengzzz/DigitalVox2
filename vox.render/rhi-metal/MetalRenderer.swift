@@ -133,19 +133,40 @@ extension MetalRenderer: IHardwareRenderer {
         commandBuffer.commit()
     }
     
-    func beginRenderPass(_ renderTarget: RenderTarget?, _ camera: Camera, _ mipLevel: Int? = nil) {
+    func beginRenderPass(_ renderTarget: RenderTarget?, _ camera: Camera, _ mipLevel: Int = 0) {
         if renderTarget != nil {
-            // todo
+            guard let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderTarget!._platformRenderTarget) else {
+                return
+            }
+            self.renderEncoder = renderEncoder
+            
+            renderEncoder.setViewport(MTLViewport(originX: 0,
+                                                  originY: 0,
+                                                  width: Double(renderTarget!.width >> mipLevel),
+                                                  height: Double(renderTarget!.height >> mipLevel),
+                                                  znear: 0, zfar: 1))
         } else {
             guard let descriptor = view.currentRenderPassDescriptor,
                   let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {
                 return
             }
-            renderEncoder.setDepthStencilState(depthStencilState)
-            renderEncoder.setFragmentSamplerState(samplerState, index: 0)
-
             self.renderEncoder = renderEncoder
+
+            let viewport = camera.viewport;
+            let width = Double(view.drawableSize.width)
+            let height = Double(view.drawableSize.height)
+            
+            renderEncoder.setViewport(MTLViewport(originX: Double(viewport.x) * width,
+                                                  originY: Double(viewport.y) * height,
+                                                  width: Double(viewport.z) * width,
+                                                  height: Double(viewport.w) * height,
+                                                  znear: 0, zfar: 1))
         }
+        
+        renderEncoder.setFragmentSamplerState(samplerState, index: 0)
+
+        // todo delete
+        renderEncoder.setDepthStencilState(depthStencilState)
     }
 
     func endRenderPass() {
