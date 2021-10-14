@@ -45,7 +45,7 @@ extension BasicRenderPipeline {
     /// - Parameters:
     ///   - context: Render context
     ///   - cubeFace: Render surface of cube texture
-    func render(_ context: RenderContext, _ cubeFace: TextureCubeFace? = nil) {
+    func render(_ context: RenderContext, _ cubeFace: TextureCubeFace? = nil, _ mipLevel:Int? = nil) {
         let camera = _camera
         let opaqueQueue = _opaqueQueue
         let alphaTestQueue = _alphaTestQueue
@@ -65,7 +65,8 @@ extension BasicRenderPipeline {
         }
     }
 
-    private func _drawRenderPass(_ pass: RenderPass, _ camera: Camera, _ cubeFace: TextureCubeFace? = nil) {
+    private func _drawRenderPass(_ pass: RenderPass, _ camera: Camera,
+                                 _ cubeFace: TextureCubeFace? = nil, mipLevel:Int? = nil) {
         pass.preRender(camera, _opaqueQueue, _alphaTestQueue, _transparentQueue)
 
         if (pass.enabled) {
@@ -73,7 +74,10 @@ extension BasicRenderPipeline {
             let scene = camera.scene
             let background = scene.background
             let rhi = engine._hardwareRenderer
-            // todo RenderTarget
+            
+            let renderTarget = camera.renderTarget ?? pass.renderTarget
+            rhi.beginRenderPass(renderTarget, camera, mipLevel)
+            
             let clearFlags = pass.clearFlags ?? camera.clearFlags
             let color = pass.clearColor ?? background.solidColor
             if (clearFlags != CameraClearFlags.None) {
@@ -87,6 +91,7 @@ extension BasicRenderPipeline {
                 _alphaTestQueue.render(camera, pass.replaceMaterial, pass.mask)
                 _transparentQueue.render(camera, pass.replaceMaterial, pass.mask)
             }
+            rhi.endRenderPass()
         }
 
         pass.postRender(camera, _opaqueQueue, _alphaTestQueue, _transparentQueue)

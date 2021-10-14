@@ -183,9 +183,7 @@ final class Engine: NSObject {
                     scene.features.forEach { feature in
                         feature.preRender(scene, camera)
                     }
-                    _hardwareRenderer.beginRenderPass()
                     camera.render()
-                    _hardwareRenderer.endRenderPass()
                     scene.features.forEach { feature in
                         feature.postRender(scene, camera)
                     }

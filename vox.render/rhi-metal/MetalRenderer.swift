@@ -133,15 +133,19 @@ extension MetalRenderer: IHardwareRenderer {
         commandBuffer.commit()
     }
     
-    func beginRenderPass() {
-        guard let descriptor = view.currentRenderPassDescriptor,
-              let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {
-            return
-        }
-        renderEncoder.setDepthStencilState(depthStencilState)
-        renderEncoder.setFragmentSamplerState(samplerState, index: 0)
+    func beginRenderPass(_ renderTarget: RenderTarget?, _ camera: Camera, _ mipLevel: Int? = nil) {
+        if renderTarget != nil {
+            // todo
+        } else {
+            guard let descriptor = view.currentRenderPassDescriptor,
+                  let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {
+                return
+            }
+            renderEncoder.setDepthStencilState(depthStencilState)
+            renderEncoder.setFragmentSamplerState(samplerState, index: 0)
 
-        self.renderEncoder = renderEncoder
+            self.renderEncoder = renderEncoder
+        }
     }
 
     func endRenderPass() {

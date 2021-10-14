@@ -412,7 +412,7 @@ extension Camera {
     }
 
     /// Manually call the rendering of the camera.
-    func render(_ cubeFace: TextureCubeFace? = nil) {
+    func render(_ cubeFace: TextureCubeFace? = nil, mipLevel: Int = 0) {
         // compute cull frustum.
         let context = engine._renderContext
         context._setContext(self)
@@ -431,7 +431,7 @@ extension Camera {
                 _globalShaderMacro
         )
 
-        _renderPipeline.render(context, cubeFace)
+        _renderPipeline.render(context, cubeFace, mipLevel)
     }
 }
 
