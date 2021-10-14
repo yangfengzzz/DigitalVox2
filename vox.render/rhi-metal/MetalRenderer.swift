@@ -18,15 +18,16 @@ class MetalRenderer {
     var commandQueue: MTLCommandQueue!
     var library: MTLLibrary!
     
+    var commandBuffer: MTLCommandBuffer!
+    var renderEncoder: MTLRenderCommandEncoder!
+    var renderPassDescriptor: MTLRenderPassDescriptor!
+    
+    var view: MTKView!
+    
+    // todo delete
     var colorPixelFormat: MTLPixelFormat!
-
     var samplerState: MTLSamplerState!
     var depthStencilState: MTLDepthStencilState!
-
-    var renderEncoder: MTLRenderCommandEncoder!
-    var commandBuffer: MTLCommandBuffer!
-
-    var view: MTKView!
 
     func reinit(_ canvas: Canvas) {
         guard let device = MTLCreateSystemDefaultDevice(),
@@ -48,15 +49,6 @@ class MetalRenderer {
         canvas.translatesAutoresizingMaskIntoConstraints = false
         canvas.framebufferOnly = false
         canvas.isMultipleTouchEnabled = true
-    }
-
-    func clearRenderTarget(_ engine: Engine,
-                           _ clearFlags: CameraClearFlags
-                           = CameraClearFlags(rawValue: CameraClearFlags.Depth.rawValue | CameraClearFlags.DepthColor.rawValue)!,
-                           _ clearColor: Color
-    ) {
-        canvas.clearColor = MTLClearColor(red: Double(clearColor.r), green: Double(clearColor.g),
-                blue: Double(clearColor.b), alpha: Double(clearColor.a))
     }
 
     func buildDepthStencilState() -> MTLDepthStencilState? {
@@ -133,25 +125,64 @@ extension MetalRenderer: IHardwareRenderer {
         commandBuffer.commit()
     }
     
-    func beginRenderPass(_ renderTarget: RenderTarget?, _ camera: Camera, _ mipLevel: Int = 0) {
+    func activeRenderTarget(_ renderTarget: RenderTarget?) {
         if renderTarget != nil {
-            guard let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderTarget!._platformRenderTarget) else {
-                return
+            renderPassDescriptor = renderTarget!._platformRenderTarget
+        } else {
+            renderPassDescriptor = view.currentRenderPassDescriptor
+        }
+    }
+    
+    func clearRenderTarget(_ engine: Engine,
+                           _ clearFlags: CameraClearFlags
+                           = CameraClearFlags(rawValue: CameraClearFlags.Depth.rawValue | CameraClearFlags.DepthColor.rawValue)!,
+                           _ clearColor: Color?) {
+
+        
+        let targetBlendState = engine._lastRenderState.blendState.targetBlendState
+        let depthState = engine._lastRenderState.depthState
+        let stencilState = engine._lastRenderState.stencilState
+
+        renderPassDescriptor.depthAttachment.loadAction = .clear
+        renderPassDescriptor.stencilAttachment.loadAction = .clear
+        if (clearFlags == CameraClearFlags.DepthColor) {
+            let color = renderPassDescriptor.colorAttachments[0]
+            if (clearColor != nil) {
+                color!.clearColor = MTLClearColor(red: Double(clearColor!.r), green: Double(clearColor!.g),
+                        blue: Double(clearColor!.b), alpha: Double(clearColor!.a))
             }
-            self.renderEncoder = renderEncoder
-            
+            if (targetBlendState.colorWriteMask != ColorWriteMask.All) {
+                color!.storeAction = .store
+                targetBlendState.colorWriteMask = ColorWriteMask.All;
+            }
+        }
+        
+        if (depthState.writeEnabled != true) {
+            renderPassDescriptor.depthAttachment.storeAction = .store
+            depthState.writeEnabled = true;
+        }
+        
+        if (stencilState.writeMask != 0xff) {
+            renderPassDescriptor.stencilAttachment.storeAction = .store
+            stencilState.writeMask = 0xff;
+        }
+    }
+    
+    
+    func beginRenderPass(_ renderTarget: RenderTarget?, _ camera: Camera, _ mipLevel: Int = 0) {
+        guard let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
+            return
+        }
+        self.renderEncoder = renderEncoder
+        
+        
+        if renderTarget != nil {
             renderEncoder.setViewport(MTLViewport(originX: 0,
                                                   originY: 0,
                                                   width: Double(renderTarget!.width >> mipLevel),
                                                   height: Double(renderTarget!.height >> mipLevel),
                                                   znear: 0, zfar: 1))
         } else {
-            guard let descriptor = view.currentRenderPassDescriptor,
-                  let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {
-                return
-            }
-            self.renderEncoder = renderEncoder
-
             let viewport = camera.viewport;
             let width = Double(view.drawableSize.width)
             let height = Double(view.drawableSize.height)

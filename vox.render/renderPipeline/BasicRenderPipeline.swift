@@ -75,15 +75,18 @@ extension BasicRenderPipeline {
             let background = scene.background
             let rhi = engine._hardwareRenderer
             
+            // prepare to load render target
             let renderTarget = camera.renderTarget ?? pass.renderTarget
-            rhi.beginRenderPass(renderTarget, camera, mipLevel)
-            
+            rhi.activeRenderTarget(renderTarget)
+            // set clear flag
             let clearFlags = pass.clearFlags ?? camera.clearFlags
             let color = pass.clearColor ?? background.solidColor
             if (clearFlags != CameraClearFlags.None) {
                 rhi.clearRenderTarget(camera.engine, clearFlags, color)
             }
 
+            // command encoder
+            rhi.beginRenderPass(renderTarget, camera, mipLevel)
             if (pass.renderOverride) {
                 pass.render(camera, _opaqueQueue, _alphaTestQueue, _transparentQueue)
             } else {
