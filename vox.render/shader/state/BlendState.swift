@@ -47,11 +47,9 @@ class BlendState {
             pipelineDescriptor.colorAttachments[0].sourceAlphaBlendFactor = sourceAlphaBlendFactor
             pipelineDescriptor.colorAttachments[0].destinationAlphaBlendFactor = destinationAlphaBlendFactor
 
-
             // apply blend operation.
             pipelineDescriptor.colorAttachments[0].rgbBlendOperation = colorBlendOperation
             pipelineDescriptor.colorAttachments[0].alphaBlendOperation = alphaBlendOperation
-
 
             // apply blend color.
             hardwareRenderer.setBlendColor(blendColor.r, blendColor.g, blendColor.b, blendColor.a)
