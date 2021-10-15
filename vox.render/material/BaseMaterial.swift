@@ -11,7 +11,7 @@ class BaseMaterial: Material {
     private static var _alphaCutoffMacro: ShaderMacro = Shader.getMacroByInfo(MacroInfo(ALPHA_CUTOFF))
     private static var _alphaCutoffProp = Shader.getPropertyByName("u_alphaCutoff")
 
-    private var _renderFace: RenderFace = RenderFace.Front
+    private var _renderFace: RenderFace = RenderFace.Back
     private var _isTransparent: Bool = false
     private var _blendMode: BlendMode!
 
