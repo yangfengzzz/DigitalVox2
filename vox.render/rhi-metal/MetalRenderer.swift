@@ -17,17 +17,16 @@ class MetalRenderer {
     var resouceCache: ResourceCache!
     var commandQueue: MTLCommandQueue!
     var library: MTLLibrary!
-    
+
     var commandBuffer: MTLCommandBuffer!
     var renderEncoder: MTLRenderCommandEncoder!
     var renderPassDescriptor: MTLRenderPassDescriptor!
-    
+
     var view: MTKView!
-    
+
     // todo delete
     var colorPixelFormat: MTLPixelFormat!
     var samplerState: MTLSamplerState!
-    var depthStencilState: MTLDepthStencilState!
 
     func reinit(_ canvas: Canvas) {
         guard let device = MTLCreateSystemDefaultDevice(),
@@ -41,7 +40,6 @@ class MetalRenderer {
         library = device.makeDefaultLibrary()
 
         colorPixelFormat = canvas.colorPixelFormat
-        depthStencilState = buildDepthStencilState()
         samplerState = buildSamplerState()
 
         canvas.device = device
@@ -49,13 +47,6 @@ class MetalRenderer {
         canvas.translatesAutoresizingMaskIntoConstraints = false
         canvas.framebufferOnly = false
         canvas.isMultipleTouchEnabled = true
-    }
-
-    func buildDepthStencilState() -> MTLDepthStencilState? {
-        let descriptor = MTLDepthStencilDescriptor()
-        descriptor.depthCompareFunction = .less
-        descriptor.isDepthWriteEnabled = true
-        return device.makeDepthStencilState(descriptor: descriptor)
     }
 
     func buildSamplerState() -> MTLSamplerState? {
@@ -118,7 +109,7 @@ extension MetalRenderer {
         commandBuffer.present(drawable)
         commandBuffer.commit()
     }
-    
+
     func activeRenderTarget(_ renderTarget: RenderTarget?) {
         if renderTarget != nil {
             renderPassDescriptor = renderTarget!._platformRenderTarget
@@ -126,17 +117,12 @@ extension MetalRenderer {
             renderPassDescriptor = view.currentRenderPassDescriptor
         }
     }
-    
+
     func clearRenderTarget(_ engine: Engine,
                            _ clearFlags: CameraClearFlags
                            = CameraClearFlags(rawValue: CameraClearFlags.Depth.rawValue | CameraClearFlags.DepthColor.rawValue)!,
                            _ clearColor: Color?) {
-
-        
-        let targetBlendState = engine._lastRenderState.blendState.targetBlendState
-        let depthState = engine._lastRenderState.depthState
-        let stencilState = engine._lastRenderState.stencilState
-
+        //TODO fix
         renderPassDescriptor.depthAttachment.loadAction = .clear
         renderPassDescriptor.stencilAttachment.loadAction = .clear
         if (clearFlags == CameraClearFlags.DepthColor) {
@@ -145,53 +131,40 @@ extension MetalRenderer {
                 color!.clearColor = MTLClearColor(red: Double(clearColor!.r), green: Double(clearColor!.g),
                         blue: Double(clearColor!.b), alpha: Double(clearColor!.a))
             }
-            if (targetBlendState.colorWriteMask != .all) {
-                color!.storeAction = .store
-                targetBlendState.colorWriteMask = .all;
-            }
+            color!.storeAction = .store
         }
-        
-        if (depthState.writeEnabled != true) {
-            renderPassDescriptor.depthAttachment.storeAction = .store
-            depthState.writeEnabled = true;
-        }
-        
-        if (stencilState.writeMask != 0xff) {
-            renderPassDescriptor.stencilAttachment.storeAction = .store
-            stencilState.writeMask = 0xff;
-        }
+
+        renderPassDescriptor.depthAttachment.storeAction = .store
+
+        renderPassDescriptor.stencilAttachment.storeAction = .store
     }
-    
-    
+
     func beginRenderPass(_ renderTarget: RenderTarget?, _ camera: Camera, _ mipLevel: Int = 0) {
         guard let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
             return
         }
         self.renderEncoder = renderEncoder
-        
-        
+
+
         if renderTarget != nil {
             renderEncoder.setViewport(MTLViewport(originX: 0,
-                                                  originY: 0,
-                                                  width: Double(renderTarget!.width >> mipLevel),
-                                                  height: Double(renderTarget!.height >> mipLevel),
-                                                  znear: 0, zfar: 1))
+                    originY: 0,
+                    width: Double(renderTarget!.width >> mipLevel),
+                    height: Double(renderTarget!.height >> mipLevel),
+                    znear: 0, zfar: 1))
         } else {
-            let viewport = camera.viewport;
+            let viewport = camera.viewport
             let width = Double(view.drawableSize.width)
             let height = Double(view.drawableSize.height)
-            
-            renderEncoder.setViewport(MTLViewport(originX: Double(viewport.x) * width,
-                                                  originY: Double(viewport.y) * height,
-                                                  width: Double(viewport.z) * width,
-                                                  height: Double(viewport.w) * height,
-                                                  znear: 0, zfar: 1))
-        }
-        
-        renderEncoder.setFragmentSamplerState(samplerState, index: 0)
 
-        // todo delete
-        renderEncoder.setDepthStencilState(depthStencilState)
+            renderEncoder.setViewport(MTLViewport(originX: Double(viewport.x) * width,
+                    originY: Double(viewport.y) * height,
+                    width: Double(viewport.z) * width,
+                    height: Double(viewport.w) * height,
+                    znear: 0, zfar: 1))
+        }
+
+        renderEncoder.setFragmentSamplerState(samplerState, index: 0)
     }
 
     func endRenderPass() {
@@ -203,11 +176,27 @@ extension MetalRenderer {
     func setRenderPipelineState(_ state: RenderPipelineState) {
         renderEncoder.setRenderPipelineState(state.handle)
     }
-    
+
+    func setDepthStencilState(_ depthStencilState: MTLDepthStencilState) {
+        renderEncoder.setDepthStencilState(depthStencilState)
+    }
+
+    func setDepthBias(_ depthBias: Float, _ slopeScale: Float, _ clamp: Float) {
+        renderEncoder.setDepthBias(depthBias, slopeScale: slopeScale, clamp: clamp)
+    }
+
+    func setStencilReferenceValue(_ referenceValue: UInt32) {
+        renderEncoder.setStencilReferenceValue(referenceValue)
+    }
+
     func setBlendColor(_ red: Float, _ green: Float, _ blue: Float, _ alpha: Float) {
         renderEncoder.setBlendColor(red: red, green: green, blue: blue, alpha: alpha)
     }
-    
+
+    func setCullMode(_ cullMode: MTLCullMode) {
+        renderEncoder.setCullMode(cullMode)
+    }
+
     func bindTexture(_ texture: MetalTexture, _ location: Int) {
         renderEncoder.setFragmentTexture(texture._mtlTexture,
                 index: location)

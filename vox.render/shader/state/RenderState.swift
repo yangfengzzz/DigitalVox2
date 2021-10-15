@@ -22,7 +22,9 @@ class RenderState {
                          _ pipelineDescriptor: MTLRenderPipelineDescriptor,
                          _ depthStencilDescriptor:MTLDepthStencilDescriptor) {
         let hardwareRenderer = engine._hardwareRenderer;
-        let lastRenderState = engine._lastRenderState;
-        blendState._apply(pipelineDescriptor, depthStencilDescriptor, hardwareRenderer, lastRenderState)        
+        blendState._apply(pipelineDescriptor, depthStencilDescriptor, hardwareRenderer)
+        depthState._apply(pipelineDescriptor, depthStencilDescriptor, hardwareRenderer)
+        stencilState._apply(pipelineDescriptor, depthStencilDescriptor, hardwareRenderer)
+        rasterState._apply(pipelineDescriptor, depthStencilDescriptor, hardwareRenderer)
     }
 }

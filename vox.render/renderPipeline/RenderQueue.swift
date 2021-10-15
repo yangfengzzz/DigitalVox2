@@ -92,9 +92,11 @@ extension RenderQueue {
             material!.renderState._apply(engine, descriptor, depthStencilDescriptor)
             
             let pipelineState = rhi.resouceCache.request_graphics_pipeline(descriptor)
-            
             rhi.setRenderPipelineState(pipelineState)
-
+            
+            let depthStencilState = engine._hardwareRenderer.device.makeDepthStencilState(descriptor: depthStencilDescriptor)
+            rhi.setDepthStencilState(depthStencilState!)
+            
             //MARK:- Load Resouces
             let reflection = pipelineState.reflection
             let shaderReflection = ShaderReflection(engine, reflection)

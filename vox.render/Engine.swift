@@ -18,7 +18,6 @@ final class Engine: NSObject {
     var _hardwareRenderer: MetalRenderer
     var _inputManager: InputManager
 
-    var _lastRenderState: RenderState = RenderState()
     var _renderElementPool: ClassPool<RenderElement> = ClassPool()
     var _renderContext: RenderContext = RenderContext()
 
