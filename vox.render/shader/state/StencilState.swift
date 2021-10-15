@@ -5,7 +5,7 @@
 //  Created by 杨丰 on 2021/9/17.
 //
 
-import Foundation
+import Metal
 
 /// Stencil state.
 class StencilState {
@@ -18,19 +18,19 @@ class StencilState {
     /// Specifying a bit mask to enable or disable writing of individual bits in the stencil planes.
     var writeMask: Int = 0xff
     /// The comparison function of the reference value of the front face of the geometry and the current buffer storage value.
-    var compareFunctionFront: CompareFunction = CompareFunction.Always
+    var compareFunctionFront: MTLCompareFunction = .always
     /// The comparison function of the reference value of the back of the geometry and the current buffer storage value.
-    var compareFunctionBack: CompareFunction = CompareFunction.Always
+    var compareFunctionBack: MTLCompareFunction = .always
     /// specifying the function to use for front face when both the stencil test and the depth test pass.
-    var passOperationFront: StencilOperation = StencilOperation.Keep
+    var passOperationFront: MTLStencilOperation = .keep
     /// specifying the function to use for back face when both the stencil test and the depth test pass.
-    var passOperationBack: StencilOperation = StencilOperation.Keep
+    var passOperationBack: MTLStencilOperation = .keep
     /// specifying the function to use for front face when the stencil test fails.
-    var failOperationFront: StencilOperation = StencilOperation.Keep
+    var failOperationFront: MTLStencilOperation = .keep
     /// specifying the function to use for back face when the stencil test fails.
-    var failOperationBack: StencilOperation = StencilOperation.Keep
+    var failOperationBack: MTLStencilOperation = .keep
     /// specifying the function to use for front face when the stencil test passes, but the depth test fails.
-    var zFailOperationFront: StencilOperation = StencilOperation.Keep
+    var zFailOperationFront: MTLStencilOperation = .keep
     /// specifying the function to use for back face when the stencil test passes, but the depth test fails.
-    var zFailOperationBack: StencilOperation = StencilOperation.Keep
+    var zFailOperationBack: MTLStencilOperation = .keep
 }

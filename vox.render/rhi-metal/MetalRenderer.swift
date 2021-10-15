@@ -151,9 +151,9 @@ extension MetalRenderer: IHardwareRenderer {
                 color!.clearColor = MTLClearColor(red: Double(clearColor!.r), green: Double(clearColor!.g),
                         blue: Double(clearColor!.b), alpha: Double(clearColor!.a))
             }
-            if (targetBlendState.colorWriteMask != ColorWriteMask.All) {
+            if (targetBlendState.colorWriteMask != .all) {
                 color!.storeAction = .store
-                targetBlendState.colorWriteMask = ColorWriteMask.All;
+                targetBlendState.colorWriteMask = .all;
             }
         }
         

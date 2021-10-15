@@ -5,7 +5,7 @@
 //  Created by 杨丰 on 2021/9/17.
 //
 
-import Foundation
+import Metal
 
 /// Depth state.
 class DepthState {
@@ -14,5 +14,5 @@ class DepthState {
     /// Whether the depth value can be written.
     var writeEnabled: Bool = true
     /// Depth comparison function.
-    var compareFunction: CompareFunction = .Less
+    var compareFunction: MTLCompareFunction = .less
 }

@@ -79,13 +79,13 @@ class BaseMaterial: Material {
 
             switch (newValue) {
             case RenderFace.Front:
-                renderState.rasterState.cullMode = CullMode.Back
+                renderState.rasterState.cullMode = .back
                 break
             case RenderFace.Back:
-                renderState.rasterState.cullMode = CullMode.Front
+                renderState.rasterState.cullMode = .front
                 break
             case RenderFace.Double:
-                renderState.rasterState.cullMode = CullMode.Off
+                renderState.rasterState.cullMode = .none
                 break
             }
         }
@@ -108,20 +108,20 @@ class BaseMaterial: Material {
 
             switch (newValue) {
             case BlendMode.Normal:
-                target.sourceColorBlendFactor = BlendFactor.SourceAlpha
-                target.destinationColorBlendFactor = BlendFactor.OneMinusSourceAlpha
-                target.sourceAlphaBlendFactor = BlendFactor.One
-                target.destinationAlphaBlendFactor = BlendFactor.OneMinusSourceAlpha
-                target.alphaBlendOperation = BlendOperation.Add
-                target.colorBlendOperation = BlendOperation.Add
+                target.sourceColorBlendFactor = .sourceAlpha
+                target.destinationColorBlendFactor = .oneMinusSourceAlpha
+                target.sourceAlphaBlendFactor = .one
+                target.destinationAlphaBlendFactor = .oneMinusSourceAlpha
+                target.alphaBlendOperation = .add
+                target.colorBlendOperation = .add
                 break
             case BlendMode.Additive:
-                target.sourceColorBlendFactor = BlendFactor.SourceAlpha
-                target.destinationColorBlendFactor = BlendFactor.One
-                target.sourceAlphaBlendFactor = BlendFactor.One
-                target.destinationAlphaBlendFactor = BlendFactor.OneMinusSourceAlpha
-                target.alphaBlendOperation = BlendOperation.Add
-                target.colorBlendOperation = BlendOperation.Add
+                target.sourceColorBlendFactor = .sourceAlpha
+                target.destinationColorBlendFactor = .one
+                target.sourceAlphaBlendFactor = .one
+                target.destinationAlphaBlendFactor = .oneMinusSourceAlpha
+                target.alphaBlendOperation = .add
+                target.colorBlendOperation = .add
                 break
             }
         }

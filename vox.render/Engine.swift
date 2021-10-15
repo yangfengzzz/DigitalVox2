@@ -121,7 +121,7 @@ final class Engine: NSObject {
 
         _backgroundTextureMaterial = Material(self, Shader.find("background-texture")!)
         _backgroundTextureMaterial.isGCIgnored = true
-        _backgroundTextureMaterial.renderState.depthState.compareFunction = CompareFunction.LessEqual
+        _backgroundTextureMaterial.renderState.depthState.compareFunction = .lessEqual
 
         _backgroundTextureMesh = PrimitiveMesh.createPlane(self, 2, 2, 1, 1, false)
         _backgroundTextureMesh.isGCIgnored = true

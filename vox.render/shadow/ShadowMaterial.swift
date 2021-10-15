@@ -14,11 +14,11 @@ class ShadowMaterial: Material {
 
         let targetBlendState = renderState.blendState.targetBlendState
         targetBlendState.enabled = true
-        targetBlendState.sourceColorBlendFactor = .DestinationColor
-        targetBlendState.sourceAlphaBlendFactor = .DestinationColor
-        targetBlendState.destinationColorBlendFactor = .Zero
-        targetBlendState.destinationAlphaBlendFactor = .Zero
-        renderState.depthState.compareFunction = CompareFunction.LessEqual
+        targetBlendState.sourceColorBlendFactor = .destinationColor
+        targetBlendState.sourceAlphaBlendFactor = .destinationColor
+        targetBlendState.destinationColorBlendFactor = .zero
+        targetBlendState.destinationAlphaBlendFactor = .zero
+        renderState.depthState.compareFunction = .lessEqual
 
         renderQueueType = RenderQueueType.Transparent
     }

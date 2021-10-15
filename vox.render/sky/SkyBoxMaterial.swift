@@ -11,8 +11,8 @@ class SkyBoxMaterial: Material {
     init(_ engine: Engine) {
         super.init(engine, Shader.find("skybox")!)
 
-        renderState.rasterState.cullMode = CullMode.Off
-        renderState.depthState.compareFunction = CompareFunction.LessEqual
+        renderState.rasterState.cullMode = .none
+        renderState.depthState.compareFunction = .lessEqual
     }
 
     /// Texture cube map of the sky box material.

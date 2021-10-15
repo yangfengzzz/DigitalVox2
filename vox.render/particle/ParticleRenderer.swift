@@ -407,7 +407,7 @@ class ParticleRenderer: MeshRenderer {
                 shaderData.enableMacro(TWO_Dimension)
             } else {
                 shaderData.disableMacro(TWO_Dimension)
-                getMaterial()!.renderState.rasterState.cullMode = CullMode.Off
+                getMaterial()!.renderState.rasterState.cullMode = .none
             }
 
             _is2d = newValue
@@ -473,16 +473,16 @@ class ParticleRenderer: MeshRenderer {
 
             if (newValue == ParticleRendererBlendMode.Transparent) {
                 target.enabled = true
-                target.sourceColorBlendFactor = BlendFactor.SourceAlpha
-                target.destinationColorBlendFactor = BlendFactor.OneMinusSourceAlpha
-                target.sourceAlphaBlendFactor = BlendFactor.One
-                target.destinationAlphaBlendFactor = BlendFactor.OneMinusSourceAlpha
+                target.sourceColorBlendFactor = .sourceAlpha
+                target.destinationColorBlendFactor = .oneMinusSourceAlpha
+                target.sourceAlphaBlendFactor = .one
+                target.destinationAlphaBlendFactor = .oneMinusSourceAlpha
             } else if (newValue == ParticleRendererBlendMode.Additive) {
                 target.enabled = true
-                target.sourceColorBlendFactor = BlendFactor.SourceAlpha
-                target.destinationColorBlendFactor = BlendFactor.One
-                target.sourceAlphaBlendFactor = BlendFactor.One
-                target.destinationAlphaBlendFactor = BlendFactor.OneMinusSourceAlpha
+                target.sourceColorBlendFactor = .sourceAlpha
+                target.destinationColorBlendFactor = .one
+                target.sourceAlphaBlendFactor = .one
+                target.destinationAlphaBlendFactor = .oneMinusSourceAlpha
             }
 
             _blendMode = newValue
@@ -535,10 +535,10 @@ extension ParticleRenderer {
         let target = renderState.blendState.targetBlendState
 
         target.enabled = true
-        target.sourceColorBlendFactor = BlendFactor.SourceAlpha
-        target.destinationColorBlendFactor = BlendFactor.OneMinusSourceAlpha
-        target.sourceAlphaBlendFactor = BlendFactor.One
-        target.destinationAlphaBlendFactor = BlendFactor.OneMinusSourceAlpha
+        target.sourceColorBlendFactor = .sourceAlpha
+        target.destinationColorBlendFactor = .oneMinusSourceAlpha
+        target.sourceAlphaBlendFactor = .one
+        target.destinationAlphaBlendFactor = .oneMinusSourceAlpha
 
         renderState.depthState.writeEnabled = false
 
