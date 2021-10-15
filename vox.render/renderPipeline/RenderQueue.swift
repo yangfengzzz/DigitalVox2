@@ -89,7 +89,7 @@ extension RenderQueue {
             descriptor.depthAttachmentPixelFormat = .depth32Float
             
             let depthStencilDescriptor = MTLDepthStencilDescriptor()
-            material!.renderState._apply(descriptor, depthStencilDescriptor)
+            material!.renderState._apply(engine, descriptor, depthStencilDescriptor)
             
             let pipelineState = rhi.resouceCache.request_graphics_pipeline(descriptor)
             

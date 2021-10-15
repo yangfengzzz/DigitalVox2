@@ -233,7 +233,6 @@
 		04E28C3426ECE6F3003A3C3B /* IPlatformPrimitive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E28C3326ECE6F3003A3C3B /* IPlatformPrimitive.swift */; };
 		04E28C3626ECE780003A3C3B /* MetalPrimitive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E28C3526ECE780003A3C3B /* MetalPrimitive.swift */; };
 		04E28C3826ECE7B3003A3C3B /* MetalRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E28C3726ECE7B3003A3C3B /* MetalRenderer.swift */; };
-		04E28C3B26ECE845003A3C3B /* IHardwareRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E28C3A26ECE845003A3C3B /* IHardwareRenderer.swift */; };
 		04E28C4226EDD722003A3C3B /* BasicRenderPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E28C4126EDD722003A3C3B /* BasicRenderPipeline.swift */; };
 		04E28C4426EDD78C003A3C3B /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E28C4326EDD78C003A3C3B /* Renderer.swift */; };
 		04EA0D6A26E0F9AD00CA7833 /* math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6926E0F9AD00CA7833 /* math.swift */; };
@@ -580,7 +579,6 @@
 		04E28C3326ECE6F3003A3C3B /* IPlatformPrimitive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPlatformPrimitive.swift; sourceTree = "<group>"; };
 		04E28C3526ECE780003A3C3B /* MetalPrimitive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalPrimitive.swift; sourceTree = "<group>"; };
 		04E28C3726ECE7B3003A3C3B /* MetalRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalRenderer.swift; sourceTree = "<group>"; };
-		04E28C3A26ECE845003A3C3B /* IHardwareRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IHardwareRenderer.swift; sourceTree = "<group>"; };
 		04E28C4126EDD722003A3C3B /* BasicRenderPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicRenderPipeline.swift; sourceTree = "<group>"; };
 		04E28C4326EDD78C003A3C3B /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
 		04EA0D6926E0F9AD00CA7833 /* math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = math.swift; sourceTree = "<group>"; };
@@ -1244,7 +1242,6 @@
 		04E28C3926ECE82E003A3C3B /* renderingHardwareInterface */ = {
 			isa = PBXGroup;
 			children = (
-				04E28C3A26ECE845003A3C3B /* IHardwareRenderer.swift */,
 				0447D56426F85F6900272D7C /* IPlatformTexture.swift */,
 				0447D56626F860DF00272D7C /* IPlatformTexture2D.swift */,
 				0447D56826F8624600272D7C /* IPlatformTextureCubeMap.swift */,
@@ -1687,7 +1684,6 @@
 				041B584B26F571DE00B32BD0 /* SimpleMaterial.swift in Sources */,
 				04AE07C62702A40800F1D8C5 /* ShadowMapPass.swift in Sources */,
 				0447D57626F8701D00272D7C /* RenderDepthTexture.swift in Sources */,
-				04E28C3B26ECE845003A3C3B /* IHardwareRenderer.swift in Sources */,
 				0452ECD726DFA5360015BFB1 /* Shaders.metal in Sources */,
 				043CB46526F441EC004A0B21 /* RenderElement.swift in Sources */,
 				04EFDE7E26DF49FD005FBB6F /* Matrix3x3.swift in Sources */,

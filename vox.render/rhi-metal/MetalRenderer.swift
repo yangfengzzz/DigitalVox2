@@ -74,12 +74,6 @@ class MetalRenderer {
 }
 
 extension MetalRenderer {
-    func setRenderPipelineState(_ state: RenderPipelineState) {
-        renderEncoder.setRenderPipelineState(state.handle)
-    }
-}
-
-extension MetalRenderer {
     func createPlatformPrimitive(_ primitive: Mesh) -> IPlatformPrimitive {
         MetalPrimitive(self)
     }
@@ -105,7 +99,7 @@ extension MetalRenderer {
     }
 }
 
-extension MetalRenderer: IHardwareRenderer {
+extension MetalRenderer {
     func drawPrimitive(_ primitive: Mesh, _ subPrimitive: SubMesh, _ shaderProgram: ShaderProgram) {
         primitive._draw(shaderProgram, subPrimitive)
     }
@@ -203,7 +197,17 @@ extension MetalRenderer: IHardwareRenderer {
     func endRenderPass() {
         renderEncoder.endEncoding()
     }
+}
 
+extension MetalRenderer {
+    func setRenderPipelineState(_ state: RenderPipelineState) {
+        renderEncoder.setRenderPipelineState(state.handle)
+    }
+    
+    func setBlendColor(_ red: Float, _ green: Float, _ blue: Float, _ alpha: Float) {
+        renderEncoder.setBlendColor(red: red, green: green, blue: blue, alpha: alpha)
+    }
+    
     func bindTexture(_ texture: MetalTexture, _ location: Int) {
         renderEncoder.setFragmentTexture(texture._mtlTexture,
                 index: location)

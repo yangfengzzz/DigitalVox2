@@ -18,8 +18,11 @@ class RenderState {
     /// Raster state.
     var rasterState: RasterState = RasterState()
     
-    internal func _apply(_ pipelineDescriptor: MTLRenderPipelineDescriptor,
+    internal func _apply(_ engine: Engine,
+                         _ pipelineDescriptor: MTLRenderPipelineDescriptor,
                          _ depthStencilDescriptor:MTLDepthStencilDescriptor) {
-        fatalError()
+        let hardwareRenderer = engine._hardwareRenderer;
+        let lastRenderState = engine._lastRenderState;
+        blendState._apply(pipelineDescriptor, depthStencilDescriptor, hardwareRenderer, lastRenderState)        
     }
 }
