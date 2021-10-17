@@ -28,7 +28,7 @@ struct ContentView: View {
         cameraEntity.transform.lookAt(worldPosition: Vector3(0, 0, 0), worldUp: nil)
         let _: OrbitControl = cameraEntity.addComponent()
 
-        let simpleMtl = SimpleMaterial(engine)
+        let simpleMtl = MetalMaterial(engine)
 
         let assetEntity = rootEntity.createChild()
         let assetRenderer: MeshRenderer = assetEntity.addComponent()
