@@ -9,6 +9,8 @@
 using namespace metal;
 #import "Common.h"
 
+constant bool hasColorTexture [[function_constant(BASE_TEXTURE)]];
+
 struct VertexIn {
   float3 position [[attribute(Position)]];
   float3 normal [[attribute(Normal)]];
@@ -35,10 +37,15 @@ vertex VertexOut vertex_simple(const VertexIn vertexIn [[stage_in]],
 }
 
 fragment float4 fragment_simple(VertexOut in [[stage_in]],
-                                constant float4 &u_diffuseColor [[buffer(1)]],
+                                constant float4 &u_baseColor [[buffer(1)]],
                                 sampler textureSampler [[sampler(0)]],
-                                texture2d<float> u_diffuseTexture [[texture(0)]]) {
+                                texture2d<float> u_baseTexture [[texture(0)]]) {
     // extract color
-    float3 baseColor = u_diffuseTexture.sample(textureSampler, in.uv).rgb;
+    float3 baseColor;
+    if (hasColorTexture) {
+        baseColor = u_baseTexture.sample(textureSampler, in.uv).rgb;
+    } else {
+        baseColor = u_baseColor.xyz;
+    }
     return float4(baseColor, 1.0);
 }

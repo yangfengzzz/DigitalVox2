@@ -57,7 +57,7 @@ extension RenderQueue {
             }
 
             // RenderElement
-            let compileMacros = Shader._compileMacros
+            let compileMacros = ShaderMacroCollection()
             let element = item
             let renderer = element.component
             let material = (replaceMaterial != nil) ? replaceMaterial : element.material

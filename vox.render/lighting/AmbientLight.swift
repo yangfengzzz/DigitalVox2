@@ -9,9 +9,6 @@ import Foundation
 
 /// Ambient light.
 class AmbientLight {
-    private static var _shMacro: ShaderMacro = Shader.getMacroByInfo(MacroInfo(USE_SH))
-    private static var _specularMacro: ShaderMacro = Shader.getMacroByInfo(MacroInfo(USE_SPECULAR_ENV))
-
     private static var _diffuseColorProperty: ShaderProperty = Shader.getPropertyByName("u_envMapLight.diffuse")
     private static var _diffuseSHProperty: ShaderProperty = Shader.getPropertyByName("u_env_sh")
     private static var _diffuseIntensityProperty: ShaderProperty = Shader.getPropertyByName("u_envMapLight.diffuseIntensity")
@@ -38,9 +35,9 @@ class AmbientLight {
         set {
             _diffuseMode = newValue
             if (newValue == .SphericalHarmonics) {
-                _scene.shaderData.enableMacro(AmbientLight._shMacro)
+                _scene.shaderData.enableMacro(USE_SH)
             } else {
-                _scene.shaderData.disableMacro(AmbientLight._shMacro)
+                _scene.shaderData.disableMacro(USE_SH)
             }
         }
     }
@@ -98,9 +95,9 @@ class AmbientLight {
             if (newValue != nil) {
                 shaderData.setTexture(AmbientLight._specularTextureProperty, newValue!)
                 shaderData.setInt(AmbientLight._mipLevelProperty, _specularReflection!.mipmapCount)
-                shaderData.enableMacro(AmbientLight._specularMacro)
+                shaderData.enableMacro(USE_SPECULAR_ENV)
             } else {
-                shaderData.disableMacro(AmbientLight._specularMacro)
+                shaderData.disableMacro(USE_SPECULAR_ENV)
             }
         }
     }

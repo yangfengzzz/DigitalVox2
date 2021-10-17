@@ -9,8 +9,6 @@ import Foundation
 
 /// RenderPass for rendering shadow.
 class ShadowPass: RenderPass {
-    static var shadowMapCount = 0
-
     override init(_ name: String? = nil,
                   _ priority: Int = 0,
                   _ renderTarget: RenderTarget? = nil,
@@ -31,21 +29,21 @@ class ShadowPass: RenderPass {
         let pass = camera._renderPipeline.defaultRenderPass
         renderTarget = pass.renderTarget
 
-        ShadowPass.shadowMapCount = 0
+        var shadowMapCount = 0
 
         LightShadow.clearMap()
         for i in 0..<lights.count {
             let lgt = lights[i]
             if (lgt.enableShadow) {
-                lgt.shadow!.appendData(ShadowPass.shadowMapCount)
-                ShadowPass.shadowMapCount += 1
+                lgt.shadow!.appendData(shadowMapCount)
+                shadowMapCount += 1
             }
         }
 
-        if (ShadowPass.shadowMapCount != 0) {
+        if (shadowMapCount != 0) {
             enabled = true
             LightShadow._updateShaderData(shaderData)
-            shaderData.enableMacro(SHADOW_MAP_COUNT, (UnsafeRawPointer(&ShadowPass.shadowMapCount), .int))
+            shaderData.enableMacro(SHADOW_MAP_COUNT, (shadowMapCount, .int))
         } else {
             shaderData.disableMacro(SHADOW_MAP_COUNT)
         }

@@ -14,7 +14,6 @@ internal class ShaderProgram {
     var id: Int
 
     private var _isValid: Bool!
-    private var _engine: Engine
     private var _library: MTLLibrary
     private var _vertexShader: MTLFunction?
     private var _fragmentShader: MTLFunction?
@@ -38,12 +37,11 @@ internal class ShaderProgram {
         }
     }
 
-    init(_ engine: Engine, _ vertexSource: String, _ fragmentSource: String, _ macroInfo: [MacroInfo]) {
+    init(_ library: MTLLibrary, _ vertexSource: String, _ fragmentSource: String, _ macroInfo: ShaderMacroCollection) {
         id = ShaderProgram._counter
         ShaderProgram._counter += 1
 
-        _engine = engine
-        _library = engine._hardwareRenderer.library
+        _library = library
         _createProgram(vertexSource, fragmentSource, macroInfo)
 
         if _vertexShader != nil && _fragmentShader != nil {
@@ -53,14 +51,20 @@ internal class ShaderProgram {
         }
     }
 
-    private func makeFunctionConstants(_ macroInfo: [MacroInfo]) -> MTLFunctionConstantValues {
+    private func makeFunctionConstants(_ macroInfo: ShaderMacroCollection) -> MTLFunctionConstantValues {
         let functionConstants = MTLFunctionConstantValues()
-        var property = true
-        macroInfo.forEach { info in
-            if info.pointer == nil {
-                functionConstants.setConstantValue(&property, type: .bool, index: Int(info.name.rawValue))
+        macroInfo._value.forEach { info in
+            if info.value.1 == .bool {
+                var property:Bool
+                if info.value.0 == 1 {
+                    property = true
+                } else {
+                    property = false
+                }
+                functionConstants.setConstantValue(&property, type: .bool, index: Int(info.key.rawValue))
             } else {
-                functionConstants.setConstantValue(info.pointer!, type: info.type!, index: Int(info.name.rawValue))
+                var property = info.value.0
+                functionConstants.setConstantValue(&property, type: info.value.1, index: Int(info.key.rawValue))
             }
         }
         return functionConstants
@@ -71,7 +75,7 @@ internal class ShaderProgram {
     ///   - vertexSource: vertex name
     ///   - fragmentSource: fragment name
     private func _createProgram(_ vertexSource: String, _ fragmentSource: String,
-                                _ macroInfo: [MacroInfo]) {
+                                _ macroInfo: ShaderMacroCollection) {
         let functionConstants = makeFunctionConstants(macroInfo)
 
         do {

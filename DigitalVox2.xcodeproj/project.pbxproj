@@ -84,9 +84,6 @@
 		043CB46D26F5667A004A0B21 /* ShaderPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB46C26F5667A004A0B21 /* ShaderPool.swift */; };
 		043CB46F26F567D9004A0B21 /* BaseMaterial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB46E26F567D9004A0B21 /* BaseMaterial.swift */; };
 		043CB47126F56B95004A0B21 /* RenderTargetBlendState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB47026F56B95004A0B21 /* RenderTargetBlendState.swift */; };
-		0447D54626F803B300272D7C /* ShaderMacroCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447D54526F803B300272D7C /* ShaderMacroCollection.swift */; };
-		0447D54826F8078B00272D7C /* ShaderMacro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447D54726F8078B00272D7C /* ShaderMacro.swift */; };
-		0447D54B26F81D7500272D7C /* MacroInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447D54A26F81D7500272D7C /* MacroInfo.swift */; };
 		0447D54E26F82E0000272D7C /* Light.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447D54D26F82E0000272D7C /* Light.swift */; };
 		0447D55026F82F5200272D7C /* PointLight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447D54F26F82F5200272D7C /* PointLight.swift */; };
 		0447D55226F8309C00272D7C /* SpotLight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447D55126F8309C00272D7C /* SpotLight.swift */; };
@@ -217,6 +214,7 @@
 		0497A1E926DF150800F61DE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0497A1E826DF150800F61DE9 /* Assets.xcassets */; };
 		0497A1EC26DF150800F61DE9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0497A1EB26DF150800F61DE9 /* Preview Assets.xcassets */; };
 		0497A20226DF150800F61DE9 /* DigitalVox2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A20126DF150800F61DE9 /* DigitalVox2UITests.swift */; };
+		04A6BEAF271C4DA30024DF43 /* ShaderMacroCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447D54526F803B300272D7C /* ShaderMacroCollection.swift */; };
 		04AE07C227029F3300F1D8C5 /* LightShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE07C127029F3300F1D8C5 /* LightShadow.swift */; };
 		04AE07C42702A3AC00F1D8C5 /* ShadowMapMaterial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE07C32702A3AC00F1D8C5 /* ShadowMapMaterial.swift */; };
 		04AE07C62702A40800F1D8C5 /* ShadowMapPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE07C52702A40800F1D8C5 /* ShadowMapPass.swift */; };
@@ -378,8 +376,6 @@
 		043CB47026F56B95004A0B21 /* RenderTargetBlendState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderTargetBlendState.swift; sourceTree = "<group>"; };
 		0447D54426F8020B00272D7C /* MacroName.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MacroName.h; sourceTree = "<group>"; };
 		0447D54526F803B300272D7C /* ShaderMacroCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderMacroCollection.swift; sourceTree = "<group>"; };
-		0447D54726F8078B00272D7C /* ShaderMacro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderMacro.swift; sourceTree = "<group>"; };
-		0447D54A26F81D7500272D7C /* MacroInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroInfo.swift; sourceTree = "<group>"; };
 		0447D54D26F82E0000272D7C /* Light.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Light.swift; sourceTree = "<group>"; };
 		0447D54F26F82F5200272D7C /* PointLight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointLight.swift; sourceTree = "<group>"; };
 		0447D55126F8309C00272D7C /* SpotLight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotLight.swift; sourceTree = "<group>"; };
@@ -800,17 +796,15 @@
 			children = (
 				043CB45326F41E37004A0B21 /* state */,
 				042BB13826F36DAA00604751 /* enums */,
-				043CB44326F2E0CD004A0B21 /* Shader.swift */,
 				043CB46C26F5667A004A0B21 /* ShaderPool.swift */,
-				047914CA26F37C0300BE5170 /* ShaderData.swift */,
+				043CB44326F2E0CD004A0B21 /* Shader.swift */,
 				042BB13B26F36F2600604751 /* ShaderProperty.swift */,
 				041B584C26F57BC300B32BD0 /* ShaderProgram.swift */,
+				047914CA26F37C0300BE5170 /* ShaderData.swift */,
+				0447D54526F803B300272D7C /* ShaderMacroCollection.swift */,
 				0447D57B26F8C73900272D7C /* ShaderReflection.swift */,
 				041B584E26F57C1500B32BD0 /* ShaderUniformBlock.swift */,
 				041B585226F57C4200B32BD0 /* ShaderUniform.swift */,
-				0447D54A26F81D7500272D7C /* MacroInfo.swift */,
-				0447D54726F8078B00272D7C /* ShaderMacro.swift */,
-				0447D54526F803B300272D7C /* ShaderMacroCollection.swift */,
 			);
 			path = shader;
 			sourceTree = "<group>";
@@ -1654,7 +1648,6 @@
 				043CB45B26F41E87004A0B21 /* DepthState.swift in Sources */,
 				0452ECEF26DFA7B90015BFB1 /* InputManager.swift in Sources */,
 				0413289426E0A48F000A4F4E /* SubMesh.swift in Sources */,
-				0447D54626F803B300272D7C /* ShaderMacroCollection.swift in Sources */,
 				04E28C3826ECE7B3003A3C3B /* MetalRenderer.swift in Sources */,
 				0447D56726F860DF00272D7C /* IPlatformTexture2D.swift in Sources */,
 				043CB46726F45C18004A0B21 /* ClassPool.swift in Sources */,
@@ -1701,7 +1694,6 @@
 				0447D55D26F845F600272D7C /* BlinnPhongMaterial.swift in Sources */,
 				04F6AA6A27014F1800A0D6F6 /* Intersect.swift in Sources */,
 				0413289F26E0CBE7000A4F4E /* ShaderSimple.metal in Sources */,
-				0447D54826F8078B00272D7C /* ShaderMacro.swift in Sources */,
 				041B585726F5863700B32BD0 /* BufferMesh.swift in Sources */,
 				04AE07C42702A3AC00F1D8C5 /* ShadowMapMaterial.swift in Sources */,
 				0413289026E0A16C000A4F4E /* IRefObject.swift in Sources */,
@@ -1715,7 +1707,6 @@
 				043CB44126F2E069004A0B21 /* Material.swift in Sources */,
 				043CB46F26F567D9004A0B21 /* BaseMaterial.swift in Sources */,
 				0413287326E0723E000A4F4E /* CollisionUtil.swift in Sources */,
-				0447D54B26F81D7500272D7C /* MacroInfo.swift in Sources */,
 				04E28C4426EDD78C003A3C3B /* Renderer.swift in Sources */,
 				0413286B26DF86DC000A4F4E /* BoundingBox.swift in Sources */,
 				04AE07C227029F3300F1D8C5 /* LightShadow.swift in Sources */,
@@ -1723,6 +1714,7 @@
 				0447D57226F8645900272D7C /* IPlatformRenderDepthTexture.swift in Sources */,
 				0413287926E07748000A4F4E /* ContainmentType.swift in Sources */,
 				0452ECC326DFA4590015BFB1 /* EngineView.swift in Sources */,
+				04A6BEAF271C4DA30024DF43 /* ShaderMacroCollection.swift in Sources */,
 				0497A1E726DF150500F61DE9 /* ContentView.swift in Sources */,
 				0447D55426F833A100272D7C /* DirectLight.swift in Sources */,
 				043CB44B26F34405004A0B21 /* RenderQueueType.swift in Sources */,

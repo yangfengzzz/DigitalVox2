@@ -9,16 +9,16 @@ import Foundation
 
 /// Simple Material.
 class MetalMaterial: BaseMaterial {
-    private static var _diffuseColorProp = Shader.getPropertyByName("u_diffuseColor")
-    private static var _baseTextureProp = Shader.getPropertyByName("u_diffuseTexture")
+    private static var _baseColorProp = Shader.getPropertyByName("u_baseColor")
+    private static var _baseTextureProp = Shader.getPropertyByName("u_baseTexture")
     
     /// Base color.
     var baseColor: Color {
         get {
-            shaderData.getColor(MetalMaterial._diffuseColorProp)!
+            shaderData.getColor(MetalMaterial._baseColorProp)!
         }
         set {
-            let baseColor = shaderData.getColor(MetalMaterial._diffuseColorProp)!
+            let baseColor = shaderData.getColor(MetalMaterial._baseColorProp)!
             if (newValue !== baseColor) {
                 newValue.cloneTo(target: baseColor)
             }
@@ -31,17 +31,18 @@ class MetalMaterial: BaseMaterial {
             return (shaderData.getTexture(MetalMaterial._baseTextureProp) as! Texture2D)
         }
         set {
-            shaderData.setTexture(MetalMaterial._baseTextureProp, newValue!)
             if (newValue != nil) {
-                shaderData.enableMacro(DIFFUSE_TEXTURE)
+                shaderData.setTexture(MetalMaterial._baseTextureProp, newValue!)
+                shaderData.enableMacro(BASE_TEXTURE)
             } else {
-                shaderData.disableMacro(DIFFUSE_TEXTURE)
+                shaderData.disableMacro(BASE_TEXTURE)
             }
         }
     }
     
     init(_ engine: Engine) {
         super.init(engine, Shader.find("simple")!)
-        shaderData.setColor(MetalMaterial._diffuseColorProp, Color(1, 1, 1, 1))
+        shaderData.setColor(MetalMaterial._baseColorProp, Color(0.7, 0.3, 0.3, 1))
+        shaderData.disableMacro(BASE_TEXTURE)
     }
 }

@@ -9,10 +9,6 @@ import Foundation
 
 
 class SkinnedMeshRenderer: MeshRenderer {
-    private static var _blendShapeMacro = Shader.getMacroByInfo(MacroInfo(BLENDSHAPE))
-    private static var _blendShapeNormalMacro = Shader.getMacroByInfo(MacroInfo(BLENDSHAPE_NORMAL))
-    private static var _blendShapeTangentMacro = Shader.getMacroByInfo(MacroInfo(BLENDSHAPE_TANGENT))
-
     private static var _jointCountProperty = Shader.getPropertyByName("u_jointCount")
     private static var _jointSamplerProperty = Shader.getPropertyByName("u_jointSampler")
     private static var _jointMatrixProperty = Shader.getPropertyByName("u_jointMatrix")
@@ -68,20 +64,20 @@ class SkinnedMeshRenderer: MeshRenderer {
         let mesh = mesh as! ModelMesh
         if (mesh._hasBlendShape) {
             shaderData.setFloatArray(SkinnedMeshRenderer._blendShapeWeightsProperty, _blendShapeWeights)
-            shaderData.enableMacro(SkinnedMeshRenderer._blendShapeMacro)
+            shaderData.enableMacro(BLENDSHAPE)
 
             if (mesh._useBlendShapeNormal) {
-                shaderData.enableMacro(SkinnedMeshRenderer._blendShapeNormalMacro)
+                shaderData.enableMacro(BLENDSHAPE_NORMAL)
             } else {
-                shaderData.disableMacro(SkinnedMeshRenderer._blendShapeNormalMacro)
+                shaderData.disableMacro(BLENDSHAPE_NORMAL)
             }
             if (mesh._useBlendShapeTangent) {
-                shaderData.enableMacro(SkinnedMeshRenderer._blendShapeTangentMacro)
+                shaderData.enableMacro(BLENDSHAPE_TANGENT)
             } else {
-                shaderData.disableMacro(SkinnedMeshRenderer._blendShapeTangentMacro)
+                shaderData.disableMacro(BLENDSHAPE_TANGENT)
             }
         } else {
-            shaderData.disableMacro(SkinnedMeshRenderer._blendShapeMacro)
+            shaderData.disableMacro(BLENDSHAPE)
         }
     }
 
@@ -113,7 +109,7 @@ class SkinnedMeshRenderer: MeshRenderer {
                 let maxJoints = max(SkinnedMeshRenderer._maxJoints, joints.count)
                 SkinnedMeshRenderer._maxJoints = maxJoints
                 shaderData.disableMacro(USE_JOINT_TEXTURE)
-                shaderData.enableMacro(JOINTS_NUM, (UnsafeRawPointer(&SkinnedMeshRenderer._maxJoints), .int))
+                shaderData.enableMacro(JOINTS_NUM, (SkinnedMeshRenderer._maxJoints, .int))
             }
         } else {
             shaderData.disableMacro(HAS_SKIN)

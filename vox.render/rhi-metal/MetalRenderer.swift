@@ -35,7 +35,7 @@ class MetalRenderer {
         }
         self.canvas = canvas
         self.device = device
-        self.resouceCache = ResourceCache(device)
+        self.resouceCache = ResourceCache(self)
         self.commandQueue = commandQueue
         library = device.makeDefaultLibrary()
 

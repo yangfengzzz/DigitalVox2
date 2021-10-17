@@ -11,10 +11,6 @@ import Foundation
 class LightFeature {
     var visibleLights: [Light] = []
 
-    var directLightCount: Int = 0
-    var pointLightCount: Int = 0
-    var spotLightCount: Int = 0
-
     /// Register a light object to the current scene.
     /// - Parameter light: light
     func attachRenderLight(light: Light) {
@@ -39,9 +35,9 @@ class LightFeature {
 
     internal func _updateShaderData(shaderData: ShaderData) {
         /// ambientLight and envMapLight only use the last one in the scene
-        directLightCount = 0
-        pointLightCount = 0
-        spotLightCount = 0
+        var directLightCount = 0
+        var pointLightCount = 0
+        var spotLightCount = 0
 
         let lights = visibleLights
         for i in 0..<lights.count {
@@ -60,27 +56,21 @@ class LightFeature {
 
         if (directLightCount != 0) {
             DirectLight._updateShaderData(shaderData)
-            withUnsafePointer(to: &directLightCount) { pointer in
-                shaderData.enableMacro(DIRECT_LIGHT_COUNT, (UnsafeRawPointer(pointer), .int))
-            }
+            shaderData.enableMacro(DIRECT_LIGHT_COUNT, (directLightCount, .int))
         } else {
             shaderData.disableMacro(DIRECT_LIGHT_COUNT)
         }
 
         if (pointLightCount != 0) {
             PointLight._updateShaderData(shaderData)
-            withUnsafePointer(to: &pointLightCount) { pointer in
-                shaderData.enableMacro(POINT_LIGHT_COUNT, (UnsafeRawPointer(pointer), .int))
-            }
+            shaderData.enableMacro(POINT_LIGHT_COUNT, (pointLightCount, .int))
         } else {
             shaderData.disableMacro(POINT_LIGHT_COUNT)
         }
 
         if (spotLightCount != 0) {
             SpotLight._updateShaderData(shaderData)
-            withUnsafePointer(to: &spotLightCount) { pointer in
-                shaderData.enableMacro(SPOT_LIGHT_COUNT, (UnsafeRawPointer(pointer), .int))
-            }
+            shaderData.enableMacro(SPOT_LIGHT_COUNT, (spotLightCount, .int))
         } else {
             shaderData.disableMacro(SPOT_LIGHT_COUNT)
         }

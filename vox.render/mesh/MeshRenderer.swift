@@ -8,11 +8,6 @@
 import MetalKit
 
 class MeshRenderer: Renderer {
-    private static var _uvMacro = Shader.getMacroByInfo(MacroInfo(HAS_UV))
-    private static var _normalMacro = Shader.getMacroByInfo(MacroInfo(HAS_NORMAL))
-    private static var _tangentMacro = Shader.getMacroByInfo(MacroInfo(HAS_TANGENT))
-    private static var _vertexColorMacro = Shader.getMacroByInfo(MacroInfo(HAS_VERTEXCOLOR))
-
     // @ignoreClone
     private var _mesh: Mesh?
     // @ignoreClone
@@ -45,23 +40,23 @@ class MeshRenderer: Renderer {
             if (_meshUpdateFlag!.flag) {
                 let vertexDescriptor = mesh?._vertexDescriptor
 
-                shaderData.disableMacro(MeshRenderer._uvMacro)
-                shaderData.disableMacro(MeshRenderer._normalMacro)
-                shaderData.disableMacro(MeshRenderer._tangentMacro)
-                shaderData.disableMacro(MeshRenderer._vertexColorMacro)
+                shaderData.disableMacro(HAS_UV)
+                shaderData.disableMacro(HAS_NORMAL)
+                shaderData.disableMacro(HAS_TANGENT)
+                shaderData.disableMacro(HAS_VERTEXCOLOR)
 
                 let descriptor = vertexDescriptor!._descriptor
                 if descriptor.attributeNamed(MDLVertexAttributeTextureCoordinate) != nil {
-                    shaderData.enableMacro(MeshRenderer._uvMacro)
+                    shaderData.enableMacro(HAS_UV)
                 }
                 if descriptor.attributeNamed(MDLVertexAttributeNormal) != nil {
-                    shaderData.enableMacro(MeshRenderer._normalMacro)
+                    shaderData.enableMacro(HAS_NORMAL)
                 }
                 if descriptor.attributeNamed(MDLVertexAttributeTangent) != nil {
-                    shaderData.enableMacro(MeshRenderer._tangentMacro)
+                    shaderData.enableMacro(HAS_TANGENT)
                 }
                 if descriptor.attributeNamed(MDLVertexAttributeColor) != nil {
-                    shaderData.enableMacro(MeshRenderer._vertexColorMacro)
+                    shaderData.enableMacro(HAS_VERTEXCOLOR)
                 }
                 _meshUpdateFlag!.flag = false
             }
