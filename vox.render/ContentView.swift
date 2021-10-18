@@ -28,18 +28,8 @@ struct ContentView: View {
         cameraEntity.transform.lookAt(worldPosition: Vector3(0, 0, 0), worldUp: nil)
         let _: OrbitControl = cameraEntity.addComponent()
 
-        let simpleMtl = MetalMaterial(engine)
-
-        let assetEntity = rootEntity.createChild()
-        let assetRenderer: MeshRenderer = assetEntity.addComponent()
         asset.load(name: "cottage1.obj")
-        simpleMtl.baseTexture = try? asset.loadTexture(imageName: "cottage-color")
-
-        assetRenderer.mesh = asset.meshes[0]
-        assetRenderer.setMaterial(0, simpleMtl)
-        assetRenderer.setMaterial(1, simpleMtl)
-        assetRenderer.setMaterial(2, simpleMtl)
-        assetRenderer.setMaterial(3, simpleMtl)
+        rootEntity.addChild(asset.entities[0])
     }
 
     var body: some View {

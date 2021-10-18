@@ -9,7 +9,8 @@ import MetalKit
 
 class Assets {
     var meshes: [Mesh] = []
-    var materials: [PBRMaterial] = []
+    var materials: [MetalMaterial] = []
+    var entities:[Entity] = []
 
     private var _engine: Engine
 
@@ -38,6 +39,8 @@ class Assets {
                     bitangentAttributeNamed: MDLVertexAttributeBitangent)
             mtkMeshes.append(try! MTKMesh(mesh: mdlMesh, device: _engine._hardwareRenderer.device))
         }
+        
+        let entity = Entity(_engine, name)
 
         meshes = zip(mdlMeshes, mtkMeshes).map { (mdlMesh, mtkMesh) in
             let mesh = BufferMesh(_engine)
@@ -45,7 +48,11 @@ class Assets {
             for (index, vertexBuffer) in mtkMesh.vertexBuffers.enumerated() {
                 mesh.setVertexBufferBinding(vertexBuffer.buffer, 0, index)
             }
-
+            
+            let renderer:MeshRenderer = entity.addComponent()
+            renderer.mesh = mesh
+            
+            var subCount = 0
             zip(mdlMesh.submeshes!, mtkMesh.submeshes).forEach { (mdlSubmesh, mtkSubmesh: MTKSubmesh) in
                 let mdlSubmesh = mdlSubmesh as! MDLSubmesh
 
@@ -53,15 +60,19 @@ class Assets {
                         MeshBuffer(mtkSubmesh.indexBuffer.buffer, mtkSubmesh.indexBuffer.length, mtkSubmesh.indexBuffer.type),
                         mtkSubmesh.indexType, mtkSubmesh.indexCount, mtkSubmesh.primitiveType)
 
-                let mat = PBRMaterial(_engine)
+                let mat = MetalMaterial(_engine)
                 loadMaterial(mat, mdlSubmesh.material)
+                materials.append(mat)
+                renderer.setMaterial(subCount, mat)
+                subCount += 1
             }
 
+            entities.append(entity)
             return mesh
         }
     }
 
-    func loadMaterial(_ pbr: PBRMaterial, _ material: MDLMaterial?) {
+    func loadMaterial(_ pbr: MetalMaterial, _ material: MDLMaterial?) {
         func property(with semantic: MDLMaterialSemantic) -> MTLTexture? {
             guard let property = material?.property(with: semantic),
                   property.type == .string,
@@ -79,18 +90,11 @@ class Assets {
         }
 
         pbr.baseTexture = property(with: MDLMaterialSemantic.baseColor)
-        pbr.normalTexture = property(with: MDLMaterialSemantic.tangentSpaceNormal)
-        pbr.roughnessMetallicTexture = property(with: MDLMaterialSemantic.roughness)
-        pbr.occlusionTexture = property(with: MDLMaterialSemantic.ambientOcclusion)
         
         if let baseColor = material?.property(with: .baseColor),
             baseColor.type == .float3 {
             let color = pbr.baseColor
             pbr.baseColor = color.setValue(r: baseColor.float3Value.x, g: baseColor.float3Value.y, b: baseColor.float3Value.z, a: 1.0)
-        }
-        if let roughness = material?.property(with: .roughness),
-            roughness.type == .float3 {
-            pbr.roughness = roughness.floatValue
         }
     }
 }
