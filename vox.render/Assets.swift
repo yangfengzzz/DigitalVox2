@@ -18,15 +18,17 @@ class Assets {
         _engine = engine
     }
     
-    func loadGLTF(with name: String) {
+    func loadGLTF(with name: String, callback: @escaping ([Entity])->Void) {
         guard let assetUrl = Bundle.main.url(forResource: name, withExtension: nil) else {
             fatalError("Model: \(name) not found")
         }
-
+        
         GLTFAsset.load(with: assetUrl, options: [:]) { (progress, status, maybeAsset, maybeError, _) in
             DispatchQueue.main.async { [self] in
                 if status == .complete {
-                    load(with: name, MDLAsset(gltfAsset: maybeAsset!))
+                    let allocator = MTKMeshBufferAllocator(device: _engine._hardwareRenderer.device)
+                    load(with: name, MDLAsset(gltfAsset: maybeAsset!, bufferAllocator: allocator))
+                    callback(entities)
                 } else if let error = maybeError {
                     print("Failed to load glTF asset: \(error)")
                 }
@@ -159,7 +161,7 @@ extension Assets {
         let textureLoaderOptions: [MTKTextureLoader.Option: Any] =
                 [.origin: MTKTextureLoader.Origin.bottomLeft,
                  .SRGB: false,
-                 .textureUsage: NSNumber(value: MTLTextureUsage.pixelFormatView.rawValue),
+                 .textureUsage: NSNumber(value: MTLTextureUsage.shaderRead.rawValue),
                  .generateMipmaps: NSNumber(booleanLiteral: true)]
         let texture = try? textureLoader.newTexture(texture: texture,
                 options: textureLoaderOptions)

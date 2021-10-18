@@ -12,9 +12,9 @@ using namespace metal;
 constant bool hasColorTexture [[function_constant(BASE_TEXTURE)]];
 
 struct VertexIn {
-  float3 position [[attribute(Position)]];
-  float3 normal [[attribute(Normal)]];
-  float2 uv [[attribute(UV_0)]];
+  float3 position [[attribute(0)]];
+  float2 uv [[attribute(1)]];
+  float3 normal [[attribute(2)]];
 };
 
 struct VertexOut {
@@ -43,7 +43,7 @@ fragment float4 fragment_simple(VertexOut in [[stage_in]],
     // extract color
     float3 baseColor;
     if (hasColorTexture) {
-        baseColor = u_baseTexture.sample(textureSampler, in.uv).rgb;
+        baseColor = u_baseTexture.sample(textureSampler, float2(in.uv.x, 1.0-in.uv.y)).rgb;
     } else {
         baseColor = u_baseColor.xyz;
     }

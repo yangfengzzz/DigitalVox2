@@ -229,25 +229,19 @@ static MDLVertexFormat GLTFMDLVertexFormatForAccessor(GLTFAccessor *accessor) {
 }
 
 size_t GLTFMDLSizeForVertexFormat(MDLVertexFormat format) {
-    static int ComponentCountMask = 0x1f;
-    if (((format & MDLVertexFormatCharBits) == MDLVertexFormatCharBits) ||
-            ((format & MDLVertexFormatUCharBits) == MDLVertexFormatUCharBits) ||
-            ((format & MDLVertexFormatCharNormalizedBits) == MDLVertexFormatCharNormalizedBits) ||
-            ((format & MDLVertexFormatUCharNormalizedBits) == MDLVertexFormatUCharNormalizedBits)) {
-        return sizeof(UInt8) * (format & ComponentCountMask);
-    } else if (((format & MDLVertexFormatShortBits) == MDLVertexFormatShortBits) ||
-            ((format & MDLVertexFormatUShortBits) == MDLVertexFormatUShortBits) ||
-            ((format & MDLVertexFormatShortNormalizedBits) == MDLVertexFormatShortNormalizedBits) ||
-            ((format & MDLVertexFormatUShortNormalizedBits) == MDLVertexFormatUShortNormalizedBits) ||
-            ((format & MDLVertexFormatHalfBits) == MDLVertexFormatHalfBits)) {
-        return sizeof(UInt16) * (format & ComponentCountMask);
-    } else if (((format & MDLVertexFormatIntBits) == MDLVertexFormatIntBits) ||
-            ((format & MDLVertexFormatUIntBits) == MDLVertexFormatUIntBits) ||
-            ((format & MDLVertexFormatFloatBits) == MDLVertexFormatFloatBits)) {
-        return sizeof(UInt32) * (format & ComponentCountMask);
+    switch (format) {
+        case MDLVertexFormatFloat3:
+            return sizeof(float) * 3;
+            break;
+            
+        case MDLVertexFormatFloat2:
+            return sizeof(float) * 2;
+            break;
+            
+        default:
+            assert(false && "undefine format");
+            break;
     }
-    assert(false);
-    return 0;
 }
 
 static NSString *GLTFMDLVertexAttributeNameForSemantic(NSString *name) {
@@ -510,10 +504,16 @@ static MDLLightType GLTFMDLLightTypeForLightType(GLTFLightType lightType) {
         lightsForIdentifiers[light.identifier] = mdlLight;
     }
 
+    MDLAsset *mdlAsset = [[MDLAsset alloc] initWithBufferAllocator:bufferAllocator];
+
     // Node -> MDLNode
     for (GLTFNode *node in asset.nodes) {
         MDLObject *mdlNode = [MDLObject new];
         if (node.mesh) {
+            NSArray<MDLMesh *> *meshes = meshArraysForIdentifiers[node.mesh.identifier];
+            for (MDLMesh *mesh in meshes) {
+                [mdlNode addChild:mesh];
+            }
         }
         if (node.light) {
             MDLLight *light = lightsForIdentifiers[node.light.identifier];
@@ -523,6 +523,8 @@ static MDLLightType GLTFMDLLightTypeForLightType(GLTFLightType lightType) {
             MDLCamera *camera = camerasForIdentifiers[node.camera.identifier];
             [mdlNode addChild:camera];
         }
+        
+        [mdlAsset addObject:mdlNode];
     }
 
     // Scene -> MDLAsset
@@ -531,7 +533,6 @@ static MDLLightType GLTFMDLLightTypeForLightType(GLTFLightType lightType) {
 
     CFRelease(colorSpaceLinearSRGB);
 
-    MDLAsset *mdlAsset = [[MDLAsset alloc] initWithBufferAllocator:bufferAllocator];
     return mdlAsset;
 }
 
