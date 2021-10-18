@@ -7,7 +7,7 @@
 
 #include <metal_stdlib>
 using namespace metal;
-#import "Common.h"
+#import "ShaderCommon.h"
 
 constant bool hasColorTexture [[function_constant(BASE_TEXTURE)]];
 
