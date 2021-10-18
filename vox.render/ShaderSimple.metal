@@ -12,28 +12,27 @@ using namespace metal;
 constant bool hasColorTexture [[function_constant(BASE_TEXTURE)]];
 
 struct VertexIn {
-  float3 position [[attribute(0)]];
-  float2 uv [[attribute(1)]];
-  float3 normal [[attribute(2)]];
+    float3 position [[attribute(Position)]];
+    float3 normal [[attribute(Normal)]];
+    float2 uv [[attribute(UV_0)]];
 };
 
 struct VertexOut {
-  float4 position [[position]];
-  float3 worldPosition;
-  float2 uv;
+    float4 position [[position]];
+    float3 worldPosition;
+    float2 uv;
 };
 
 vertex VertexOut vertex_simple(const VertexIn vertexIn [[stage_in]],
                                constant matrix_float4x4 &u_projMat [[buffer(12)]],
                                constant matrix_float4x4 &u_viewMat [[buffer(13)]],
-                               constant matrix_float4x4 &u_modelMat [[buffer(14)]])
-{
-  VertexOut out {
-    .position = u_projMat * u_viewMat * u_modelMat * float4(vertexIn.position, 1.0),
-    .worldPosition = (u_modelMat * float4(vertexIn.position, 1.0)).xyz,
-    .uv = vertexIn.uv
-  };
-  return out;
+                               constant matrix_float4x4 &u_modelMat [[buffer(14)]]) {
+    VertexOut out {
+        .position = u_projMat * u_viewMat * u_modelMat * float4(vertexIn.position, 1.0),
+        .worldPosition = (u_modelMat * float4(vertexIn.position, 1.0)).xyz,
+        .uv = vertexIn.uv
+    };
+    return out;
 }
 
 fragment float4 fragment_simple(VertexOut in [[stage_in]],
@@ -43,7 +42,7 @@ fragment float4 fragment_simple(VertexOut in [[stage_in]],
     // extract color
     float3 baseColor;
     if (hasColorTexture) {
-        baseColor = u_baseTexture.sample(textureSampler, float2(in.uv.x, 1.0-in.uv.y)).rgb;
+        baseColor = u_baseTexture.sample(textureSampler, in.uv).rgb;
     } else {
         baseColor = u_baseColor.xyz;
     }

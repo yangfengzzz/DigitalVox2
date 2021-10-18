@@ -10,12 +10,14 @@ import SwiftUI
 struct ContentView: View {
     let canvas: Canvas
     let engine: Engine
-    let asset: Assets
+    let gltfLoader: GLTFAssetsLoader
+    let usdzLoader: USDZAssetsLoader
 
     init() {
         canvas = Canvas()
         engine = Engine(canvas, MetalRenderer())
-        asset = Assets(engine)
+        gltfLoader = GLTFAssetsLoader(engine)
+        usdzLoader = USDZAssetsLoader(engine)
 
         let scene = engine.sceneManager.activeScene
         _ = scene?.background.solidColor.setValue(r: 0.7, g: 0.9, b: 1, a: 1)
@@ -28,7 +30,11 @@ struct ContentView: View {
         cameraEntity.transform.lookAt(worldPosition: Vector3(0, 0, 0), worldUp: nil)
         let _: OrbitControl = cameraEntity.addComponent()
 
-        asset.loadGLTF(with: "DamagedHelmet.glb") { entities in
+        usdzLoader.load(with: "cottage1.obj") { entities in
+            rootEntity.addChild(entities[0])
+        }
+
+        gltfLoader.load(with: "DamagedHelmet.glb") { entities in
             rootEntity.addChild(entities[0])
         }
     }

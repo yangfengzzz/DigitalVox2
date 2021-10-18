@@ -157,5 +157,7 @@ class PBRBaseMaterial: BaseMaterial {
 
         shaderData.setFloat(PBRBaseMaterial._normalTextureIntensityProp, 1)
         shaderData.setFloat(PBRBaseMaterial._occlusionTextureIntensityProp, 1)
+        
+        shaderData.disableMacro(BASE_COLORMAP)
     }
 }

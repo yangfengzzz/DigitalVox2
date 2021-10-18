@@ -1,5 +1,5 @@
 //
-//  Assets.swift
+//  USDZAssetsLoader.swift
 //  vox.render
 //
 //  Created by 杨丰 on 2021/9/19.
@@ -7,36 +7,18 @@
 
 import MetalKit
 
-class Assets {
+class USDZAssetsLoader {
     var meshes: [Mesh] = []
     var materials: [MetalMaterial] = []
-    var entities:[Entity] = []
+    var entities: [Entity] = []
 
     private var _engine: Engine
 
     init(_ engine: Engine) {
         _engine = engine
     }
-    
-    func loadGLTF(with name: String, callback: @escaping ([Entity])->Void) {
-        guard let assetUrl = Bundle.main.url(forResource: name, withExtension: nil) else {
-            fatalError("Model: \(name) not found")
-        }
-        
-        GLTFAsset.load(with: assetUrl, options: [:]) { (progress, status, maybeAsset, maybeError, _) in
-            DispatchQueue.main.async { [self] in
-                if status == .complete {
-                    let allocator = MTKMeshBufferAllocator(device: _engine._hardwareRenderer.device)
-                    load(with: name, MDLAsset(gltfAsset: maybeAsset!, bufferAllocator: allocator))
-                    callback(entities)
-                } else if let error = maybeError {
-                    print("Failed to load glTF asset: \(error)")
-                }
-            }
-        }
-    }
-    
-    func loadUSDZ(with name: String) {
+
+    func load(with name: String, callback: @escaping ([Entity]) -> Void) {
         guard let assetUrl = Bundle.main.url(forResource: name, withExtension: nil) else {
             fatalError("Model: \(name) not found")
         }
@@ -44,6 +26,7 @@ class Assets {
         load(with: name, MDLAsset(url: assetUrl,
                 vertexDescriptor: MDLVertexDescriptor.defaultVertexDescriptor,
                 bufferAllocator: allocator))
+        callback(entities)
     }
 
     func load(with name: String, _ asset: MDLAsset) {
@@ -59,7 +42,7 @@ class Assets {
                     bitangentAttributeNamed: MDLVertexAttributeBitangent)
             mtkMeshes.append(try! MTKMesh(mesh: mdlMesh, device: _engine._hardwareRenderer.device))
         }
-        
+
         let entity = Entity(_engine, name)
 
         meshes = zip(mdlMeshes, mtkMeshes).map { (mdlMesh, mtkMesh) in
@@ -68,10 +51,10 @@ class Assets {
             for (index, vertexBuffer) in mtkMesh.vertexBuffers.enumerated() {
                 mesh.setVertexBufferBinding(vertexBuffer.buffer, 0, index)
             }
-            
-            let renderer:MeshRenderer = entity.addComponent()
+
+            let renderer: MeshRenderer = entity.addComponent()
             renderer.mesh = mesh
-            
+
             var subCount = 0
             zip(mdlMesh.submeshes!, mtkMesh.submeshes).forEach { (mdlSubmesh, mtkSubmesh: MTKSubmesh) in
                 let mdlSubmesh = mdlSubmesh as! MDLSubmesh
@@ -110,16 +93,16 @@ class Assets {
         }
 
         pbr.baseTexture = property(with: MDLMaterialSemantic.baseColor)
-        
+
         if let baseColor = material?.property(with: .baseColor),
-            baseColor.type == .float3 {
+           baseColor.type == .float3 {
             let color = pbr.baseColor
             pbr.baseColor = color.setValue(r: baseColor.float3Value.x, g: baseColor.float3Value.y, b: baseColor.float3Value.z, a: 1.0)
         }
     }
 }
 
-extension Assets {
+extension USDZAssetsLoader {
     /// static method to load texture from name of image.
     /// - Parameter imageName: name of image
     /// - Throws: a pointer to an NSError object if an error occurred, or nil if the texture was fully loaded and initialized.
@@ -227,7 +210,7 @@ extension Assets {
         return arrayTexture
     }
 
-    /// conﬁgure a texture descriptor and create a texture using that descriptor.
+    /// configure a texture descriptor and create a texture using that descriptor.
     /// - Parameters:
     ///   - size: size of the 2D texture image
     ///   - label: a string that identifies the resource
