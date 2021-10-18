@@ -68,26 +68,6 @@ extension MetalRenderer {
     func createPlatformPrimitive(_ primitive: Mesh) -> IPlatformPrimitive {
         MetalPrimitive(self)
     }
-
-    func createPlatformTexture2D(_ texture2D: Texture2D) -> IPlatformTexture2D {
-        MetalTexture2D(self, texture2D)
-    }
-
-    func createPlatformTextureCubeMap(_ textureCube: TextureCubeMap) -> IPlatformTextureCubeMap {
-        MetalTextureCubeMap(self, textureCube)
-    }
-
-    func createPlatformRenderColorTexture(_ texture: RenderColorTexture) -> IPlatformRenderColorTexture {
-        fatalError()
-    }
-
-    func createPlatformRenderDepthTexture(_ texture: RenderDepthTexture) -> IPlatformRenderDepthTexture {
-        fatalError()
-    }
-
-    func createPlatformRenderTarget(_ target: RenderTarget) -> IPlatformRenderTarget {
-        fatalError()
-    }
 }
 
 extension MetalRenderer {
@@ -197,8 +177,7 @@ extension MetalRenderer {
         renderEncoder.setCullMode(cullMode)
     }
 
-    func bindTexture(_ texture: MetalTexture, _ location: Int) {
-        renderEncoder.setFragmentTexture(texture._mtlTexture,
-                index: location)
+    func bindTexture(_ texture: MTLTexture, _ location: Int) {
+        renderEncoder.setFragmentTexture(texture, index: location)
     }
 }

@@ -8,20 +8,20 @@
 import Metal
 
 enum DepthType {
-    case RenderDepthTexture(RenderDepthTexture)
-    case RenderBufferDepthFormat(RenderBufferDepthFormat)
+    case RenderDepthTexture(MTLTexture)
+    case RenderBufferDepthFormat(MTLPixelFormat)
 }
 
 /// The render target used for off-screen rendering.
 class RenderTarget: EngineObject {
     internal var _platformRenderTarget: MTLRenderPassDescriptor!
-    internal var _colorTextures: [RenderColorTexture]
+    internal var _colorTextures: [MTLTexture]
     internal var _depth: DepthType?
     internal var _antiAliasing: Int
 
     private var _width: Int
     private var _height: Int
-    private var _depthTexture: RenderDepthTexture?
+    private var _depthTexture: MTLTexture?
 
     /// Render target width.
     var width: Int {
@@ -45,7 +45,7 @@ class RenderTarget: EngineObject {
     }
 
     /// Depth texture.
-    var depthTexture: RenderDepthTexture? {
+    var depthTexture: MTLTexture? {
         get {
             _depthTexture
         }
@@ -69,8 +69,8 @@ class RenderTarget: EngineObject {
     ///   - antiAliasing: Anti-aliasing level, default is 1
     init(_ engine: Engine,
          _ width: Int, _ height: Int,
-         _ colorTexture: RenderColorTexture,
-         _ depthFormat: RenderBufferDepthFormat? = nil,
+         _ colorTexture: MTLTexture,
+         _ depthFormat: MTLPixelFormat? = nil,
          _ antiAliasing: Int = 1) {
         _width = width
         _height = height
@@ -99,8 +99,8 @@ class RenderTarget: EngineObject {
     ///   - antiAliasing: Anti-aliasing level, default is 1
     init(_ engine: Engine,
          _ width: Int, _ height: Int,
-         _ colorTexture: RenderColorTexture?,
-         _ depthTexture: RenderDepthTexture,
+         _ colorTexture: MTLTexture?,
+         _ depthTexture: MTLTexture,
          _ antiAliasing: Int = 1) {
         _width = width
         _height = height
@@ -129,8 +129,8 @@ class RenderTarget: EngineObject {
     ///   - antiAliasing: Anti-aliasing level, default is 1
     init(_ engine: Engine,
          _ width: Int, _ height: Int,
-         _ colorTextures: [RenderColorTexture],
-         _ depthFormat: RenderBufferDepthFormat? = nil,
+         _ colorTextures: [MTLTexture],
+         _ depthFormat: MTLPixelFormat? = nil,
          _ antiAliasing: Int = 1) {
         _width = width
         _height = height
@@ -158,8 +158,8 @@ class RenderTarget: EngineObject {
     ///   - antiAliasing: Anti-aliasing level, default is 1
     init(_ engine: Engine,
          _ width: Int, height: Int,
-         _ colorTextures: [RenderColorTexture],
-         _ depthTexture: RenderDepthTexture,
+         _ colorTextures: [MTLTexture],
+         _ depthTexture: MTLTexture,
          _ antiAliasing: Int = 1) {
         _width = width
         _height = height
@@ -176,7 +176,7 @@ class RenderTarget: EngineObject {
 
     /// Get the render color texture by index.
     /// - Parameter index: index
-    func getColorTexture(_ index: Int = 0) -> RenderColorTexture? {
+    func getColorTexture(_ index: Int = 0) -> MTLTexture? {
         return _colorTextures[index]
     }
 

@@ -5,7 +5,7 @@
 //  Created by 杨丰 on 2021/9/20.
 //
 
-import Foundation
+import Metal
 
 /// PBR (Physically-Based Rendering) Material.
 class PBRBaseMaterial: BaseMaterial {
@@ -35,13 +35,13 @@ class PBRBaseMaterial: BaseMaterial {
     }
 
     /// Base texture.
-    var baseTexture: Texture2D? {
+    var baseTexture: MTLTexture? {
         get {
-            (shaderData.getTexture(PBRBaseMaterial._baseTextureProp) as! Texture2D)
+            shaderData.getTexture(PBRBaseMaterial._baseTextureProp)
         }
         set {
-            shaderData.setTexture(PBRBaseMaterial._baseTextureProp, newValue!)
             if newValue != nil {
+                shaderData.setTexture(PBRBaseMaterial._baseTextureProp, newValue!)
                 shaderData.enableMacro(BASE_COLORMAP)
             } else {
                 shaderData.disableMacro(BASE_COLORMAP)
@@ -50,13 +50,13 @@ class PBRBaseMaterial: BaseMaterial {
     }
 
     /// Normal texture.
-    var normalTexture: Texture2D? {
+    var normalTexture: MTLTexture? {
         get {
-            (shaderData.getTexture(PBRBaseMaterial._normalTextureProp) as! Texture2D)
+            shaderData.getTexture(PBRBaseMaterial._normalTextureProp)
         }
         set {
-            shaderData.setTexture(PBRBaseMaterial._normalTextureProp, newValue!)
             if newValue != nil {
+                shaderData.setTexture(PBRBaseMaterial._normalTextureProp, newValue!)
                 shaderData.enableMacro(NORMAL_TEXTURE)
             } else {
                 shaderData.disableMacro(NORMAL_TEXTURE)
@@ -89,9 +89,9 @@ class PBRBaseMaterial: BaseMaterial {
     }
 
     /// Emissive texture.
-    var emissiveTexture: Texture2D? {
+    var emissiveTexture: MTLTexture? {
         get {
-            (shaderData.getTexture(PBRBaseMaterial._emissiveTextureProp) as! Texture2D)
+            shaderData.getTexture(PBRBaseMaterial._emissiveTextureProp)
         }
         set {
             shaderData.setTexture(PBRBaseMaterial._emissiveTextureProp, newValue!)
@@ -104,13 +104,13 @@ class PBRBaseMaterial: BaseMaterial {
     }
 
     /// Occlusion texture.
-    var occlusionTexture: Texture2D? {
+    var occlusionTexture: MTLTexture? {
         get {
-            (shaderData.getTexture(PBRBaseMaterial._occlusionTextureProp) as! Texture2D)
+            shaderData.getTexture(PBRBaseMaterial._occlusionTextureProp)
         }
         set {
-            shaderData.setTexture(PBRBaseMaterial._occlusionTextureProp, newValue!)
             if newValue != nil {
+                shaderData.setTexture(PBRBaseMaterial._occlusionTextureProp, newValue!)
                 shaderData.enableMacro(HAS_OCCLUSIONMAP)
             } else {
                 shaderData.disableMacro(HAS_OCCLUSIONMAP)

@@ -5,7 +5,7 @@
 //  Created by 杨丰 on 2021/9/28.
 //
 
-import Foundation
+import Metal
 
 /// Shadow manager.
 class LightShadow {
@@ -43,7 +43,7 @@ class LightShadow {
             intensity: [Float].init(repeating: 0, count: LightShadow._maxLight),
             radius: [Float].init(repeating: 0, count: LightShadow._maxLight),
             mapSize: [Float].init(repeating: 0, count: 2 * LightShadow._maxLight),
-            map: [RenderColorTexture].init()
+            map: [MTLTexture].init()
     )
 
     private var _mapSize: Vector2
@@ -64,12 +64,16 @@ class LightShadow {
     /// Generate the projection matrix used by the shadow map.
     var projectionMatrix: Matrix = Matrix()
 
-    init(_ light: Light, _ engine: Engine, _ width: Float = 512, _ height: Float = 512) {
+    init(_ light: Light, _ engine: Engine, _ width: Int = 512, _ height: Int = 512) {
         self.light = light
 
-        _mapSize = Vector2(width, height)
-        _renderTarget = RenderTarget(engine, Int(width), Int(height),
-                RenderColorTexture(engine, Int(width), Int(height)))
+        _mapSize = Vector2(Float(width), Float(height))
+
+        let descriptor = MTLTextureDescriptor()
+        descriptor.width = width
+        descriptor.height = height
+        _renderTarget = RenderTarget(engine, width, height,
+                engine._hardwareRenderer.device.makeTexture(descriptor: descriptor)!)
     }
 
     /// The RenderTarget corresponding to the shadow map.
@@ -80,7 +84,7 @@ class LightShadow {
     }
 
     /// Shadow map's color render texture.
-    var map: RenderColorTexture {
+    var map: MTLTexture {
         get {
             _renderTarget.getColorTexture()!
         }

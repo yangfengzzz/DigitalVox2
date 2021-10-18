@@ -22,7 +22,7 @@ internal class ShaderUniform {
     var location: Int!
     var applyFunc: ((ShaderUniform, ShaderPropertyValueType) -> Void)!
     var cacheValue: CacheType!
-    var textureDefault: Texture!
+    var textureDefault: MTLTexture!
 
     private var _rhi: MetalRenderer
     private var _encoder: MTLRenderCommandEncoder
@@ -476,7 +476,7 @@ extension ShaderUniform {
     func uploadTexture(_ shaderUniform: ShaderUniform, _ value: ShaderPropertyValueType) {
         switch value {
         case .Texture(let value):
-            _rhi.bindTexture(value._platformTexture as! MetalTexture, shaderUniform.location)
+            _rhi.bindTexture(value, shaderUniform.location)
 
         default:
             return

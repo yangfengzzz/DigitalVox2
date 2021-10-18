@@ -33,10 +33,7 @@ struct ContentView: View {
         let assetEntity = rootEntity.createChild()
         let assetRenderer: MeshRenderer = assetEntity.addComponent()
         asset.load(name: "cottage1.obj")
-        let tex = try? asset.loadTexture(imageName: "cottage-color")
-        let baseTexture = Texture2D(engine, tex!.width, tex!.height, tex!.pixelFormat)
-        baseTexture.setImageSource(tex!)
-        simpleMtl.baseTexture = baseTexture
+        simpleMtl.baseTexture = try? asset.loadTexture(imageName: "cottage-color")
 
         assetRenderer.mesh = asset.meshes[0]
         assetRenderer.setMaterial(0, simpleMtl)

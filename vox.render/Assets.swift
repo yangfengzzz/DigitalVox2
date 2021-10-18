@@ -25,10 +25,10 @@ class Assets {
         let asset = MDLAsset(url: assetUrl,
                 vertexDescriptor: MDLVertexDescriptor.defaultVertexDescriptor,
                 bufferAllocator: allocator)
-        
+
         // load Model I/O textures
         asset.loadTextures()
-        
+
         var mtkMeshes: [MTKMesh] = []
         let mdlMeshes = asset.childObjects(of: MDLMesh.self) as! [MDLMesh]
         _ = mdlMeshes.map { mdlMesh in
@@ -52,7 +52,7 @@ class Assets {
                 _ = mesh.addSubMesh(
                         MeshBuffer(mtkSubmesh.indexBuffer.buffer, mtkSubmesh.indexBuffer.length, mtkSubmesh.indexBuffer.type),
                         mtkSubmesh.indexType, mtkSubmesh.indexCount, mtkSubmesh.primitiveType)
-                
+
                 let mat = PBRMaterial(_engine)
                 loadMaterial(mat, mdlSubmesh.material)
             }
@@ -60,50 +60,28 @@ class Assets {
             return mesh
         }
     }
-    
-    func loadMaterial(_ pbr:PBRMaterial, _ material: MDLMaterial?) {
+
+    func loadMaterial(_ pbr: PBRMaterial, _ material: MDLMaterial?) {
         func property(with semantic: MDLMaterialSemantic) -> MTLTexture? {
             guard let property = material?.property(with: semantic),
-                property.type == .string,
-                let filename = property.stringValue,
-                let texture = try? loadTexture(imageName: filename)
-                else {
-                    if let property = material?.property(with: semantic),
-                        property.type == .texture,
-                        let mdlTexture = property.textureSamplerValue?.texture {
-                        return try? loadTexture(texture: mdlTexture)
-                    }
-                    return nil
+                  property.type == .string,
+                  let filename = property.stringValue,
+                  let texture = try? loadTexture(imageName: filename)
+                    else {
+                if let property = material?.property(with: semantic),
+                   property.type == .texture,
+                   let mdlTexture = property.textureSamplerValue?.texture {
+                    return try? loadTexture(texture: mdlTexture)
+                }
+                return nil
             }
             return texture
         }
-        var tex = property(with: MDLMaterialSemantic.baseColor)
-        if tex != nil {
-            let baseTeure = Texture2D(_engine, tex!.width, tex!.height, tex!.pixelFormat)
-            baseTeure.setImageSource(tex!)
-            pbr.baseTexture = baseTeure
-        }
-        
-        tex = property(with: MDLMaterialSemantic.tangentSpaceNormal)
-        if tex != nil {
-            let normal = Texture2D(_engine, tex!.width, tex!.height, tex!.pixelFormat)
-            normal.setImageSource(tex!)
-            pbr.normalTexture = normal
-        }
-        
-        tex = property(with: MDLMaterialSemantic.roughness)
-        if tex != nil {
-            let roughness = Texture2D(_engine, tex!.width, tex!.height, tex!.pixelFormat)
-            roughness.setImageSource(tex!)
-            pbr.roughnessMetallicTexture = roughness
-        }
-        
-        tex = property(with: MDLMaterialSemantic.ambientOcclusion)
-        if tex != nil {
-            let ao = Texture2D(_engine, tex!.width, tex!.height, tex!.pixelFormat)
-            ao.setImageSource(tex!)
-            pbr.occlusionTexture = ao
-        }
+
+        pbr.baseTexture = property(with: MDLMaterialSemantic.baseColor)
+        pbr.normalTexture = property(with: MDLMaterialSemantic.tangentSpaceNormal)
+        pbr.roughnessMetallicTexture = property(with: MDLMaterialSemantic.roughness)
+        pbr.occlusionTexture = property(with: MDLMaterialSemantic.ambientOcclusion)
     }
 }
 

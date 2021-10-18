@@ -5,7 +5,7 @@
 //  Created by 杨丰 on 2021/9/20.
 //
 
-import Foundation
+import Metal
 
 /// Blinn-phong Material.
 class BlinnPhongMaterial: BaseMaterial {
@@ -35,9 +35,9 @@ class BlinnPhongMaterial: BaseMaterial {
     }
 
     /// Base texture.
-    var baseTexture: Texture2D? {
+    var baseTexture: MTLTexture? {
         get {
-            return (shaderData.getTexture(BlinnPhongMaterial._baseTextureProp) as! Texture2D)
+            shaderData.getTexture(BlinnPhongMaterial._baseTextureProp)
         }
         set {
             shaderData.setTexture(BlinnPhongMaterial._baseTextureProp, newValue!)
@@ -63,9 +63,9 @@ class BlinnPhongMaterial: BaseMaterial {
     }
 
     /// Specular texture.
-    var specularTexture: Texture2D? {
+    var specularTexture: MTLTexture? {
         get {
-            (shaderData.getTexture(BlinnPhongMaterial._specularTextureProp) as! Texture2D)
+            shaderData.getTexture(BlinnPhongMaterial._specularTextureProp)
         }
         set {
             shaderData.setTexture(BlinnPhongMaterial._specularTextureProp, newValue!)
@@ -91,9 +91,9 @@ class BlinnPhongMaterial: BaseMaterial {
     }
 
     /// Emissive texture.
-    var emissiveTexture: Texture2D? {
+    var emissiveTexture: MTLTexture? {
         get {
-            (shaderData.getTexture(BlinnPhongMaterial._emissiveTextureProp) as! Texture2D)
+            shaderData.getTexture(BlinnPhongMaterial._emissiveTextureProp)
         }
         set {
             shaderData.setTexture(BlinnPhongMaterial._emissiveTextureProp, newValue!)
@@ -106,9 +106,9 @@ class BlinnPhongMaterial: BaseMaterial {
     }
 
     /// Normal texture.
-    var normalTexture: Texture2D? {
+    var normalTexture: MTLTexture? {
         get {
-            (shaderData.getTexture(BlinnPhongMaterial._normalTextureProp) as! Texture2D)
+            shaderData.getTexture(BlinnPhongMaterial._normalTextureProp)
         }
         set {
             shaderData.setTexture(BlinnPhongMaterial._normalTextureProp, newValue!)

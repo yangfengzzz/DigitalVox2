@@ -5,8 +5,7 @@
 //  Created by 杨丰 on 2021/9/27.
 //
 
-import Foundation
-
+import Metal
 
 class SkinnedMeshRenderer: MeshRenderer {
     private static var _jointCountProperty = Shader.getPropertyByName("u_jointCount")
@@ -21,7 +20,8 @@ class SkinnedMeshRenderer: MeshRenderer {
     // @ignoreClone
     public var jointNodes: [Entity?] = []
     // @ignoreClone
-    public var jointTexture: Texture2D?
+    public var jointTexture: MTLTexture?
+    public var jointSampler: MTLSamplerState?
 
     // @ignoreClone
     private var _hasInitJoints: Bool = false
@@ -180,13 +180,22 @@ class SkinnedMeshRenderer: MeshRenderer {
     /// Generate joint texture.
     /// Format: (4 * RGBA) * jointCont
     func createJointTexture() {
-        if self.jointTexture == nil {
-            let engine = self.engine
-            self.jointTexture = Texture2D(engine, 4, self.jointNodes.count, .rgba32Sint, false)
-            self.jointTexture!.filterMode = .nearest
-            self.shaderData.enableMacro(USE_JOINT_TEXTURE)
-            self.shaderData.setTexture(SkinnedMeshRenderer._jointSamplerProperty, self.jointTexture!)
+        if jointTexture == nil {
+            let descriptor = MTLTextureDescriptor()
+            descriptor.width = 4
+            descriptor.height = jointNodes.count
+            descriptor.pixelFormat = .rgba32Sint
+            jointTexture = engine._hardwareRenderer.device.makeTexture(descriptor: descriptor)
+            jointTexture!.replace(region: MTLRegionMake2D(0, 0, descriptor.width, descriptor.height),
+                    mipmapLevel: 1, withBytes: matrixPalette,
+                    bytesPerRow: descriptor.width * MemoryLayout<Int32>.stride * 4)
+
+            let sampler = MTLSamplerDescriptor()
+            sampler.minFilter = .nearest
+            jointSampler = engine._hardwareRenderer.device.makeSamplerState(descriptor: sampler)
+
+            shaderData.enableMacro(USE_JOINT_TEXTURE)
+            shaderData.setTexture(SkinnedMeshRenderer._jointSamplerProperty, self.jointTexture!)
         }
-        self.jointTexture!.setPixelBuffer(self.matrixPalette)
     }
 }

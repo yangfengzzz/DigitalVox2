@@ -5,7 +5,7 @@
 //  Created by 杨丰 on 2021/9/20.
 //
 
-import Foundation
+import Metal
 
 /// Unlit Material.
 class UnlitMaterial: BaseMaterial {
@@ -27,9 +27,9 @@ class UnlitMaterial: BaseMaterial {
     }
 
     /// Base texture.
-    var baseTexture: Texture2D? {
+    var baseTexture: MTLTexture? {
         get {
-            (shaderData.getTexture(UnlitMaterial._baseTextureProp) as! Texture2D)
+            shaderData.getTexture(UnlitMaterial._baseTextureProp)
         }
         set {
             shaderData.setTexture(UnlitMaterial._baseTextureProp, newValue!)

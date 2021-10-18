@@ -5,7 +5,7 @@
 //  Created by 杨丰 on 2021/9/27.
 //
 
-import Foundation
+import Metal
 
 class SkyBoxMaterial: Material {
     init(_ engine: Engine) {
@@ -16,12 +16,12 @@ class SkyBoxMaterial: Material {
     }
 
     /// Texture cube map of the sky box material.
-    var textureCubeMap: TextureCubeMap {
+    var textureCubeMap: MTLTexture? {
         get {
-            shaderData.getTexture("u_cube") as! TextureCubeMap
+            shaderData.getTexture("u_cube")
         }
         set {
-            shaderData.setTexture("u_cube", newValue)
+            shaderData.setTexture("u_cube", newValue!)
         }
     }
 }

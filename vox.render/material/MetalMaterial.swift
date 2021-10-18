@@ -5,13 +5,13 @@
 //  Created by 杨丰 on 2021/9/18.
 //
 
-import Foundation
+import Metal
 
 /// Simple Material.
 class MetalMaterial: BaseMaterial {
     private static var _baseColorProp = Shader.getPropertyByName("u_baseColor")
     private static var _baseTextureProp = Shader.getPropertyByName("u_baseTexture")
-    
+
     /// Base color.
     var baseColor: Color {
         get {
@@ -24,11 +24,11 @@ class MetalMaterial: BaseMaterial {
             }
         }
     }
-    
+
     /// Base texture.
-    var baseTexture: Texture2D? {
+    var baseTexture: MTLTexture? {
         get {
-            return (shaderData.getTexture(MetalMaterial._baseTextureProp) as! Texture2D)
+            shaderData.getTexture(MetalMaterial._baseTextureProp)
         }
         set {
             if (newValue != nil) {
@@ -39,7 +39,7 @@ class MetalMaterial: BaseMaterial {
             }
         }
     }
-    
+
     init(_ engine: Engine) {
         super.init(engine, Shader.find("simple")!)
         shaderData.setColor(MetalMaterial._baseColorProp, Color(0.7, 0.3, 0.3, 1))

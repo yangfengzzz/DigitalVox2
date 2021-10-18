@@ -15,8 +15,8 @@ enum ShaderPropertyValueType {
     case Vector4(Vector4)
     case Color(Color)
     case Matrix(Matrix)
-    case Texture(Texture)
-    case TextureArray([Texture])
+    case Texture(MTLTexture)
+    case TextureArray([MTLTexture])
     case Int32Array([Int])
     case Float32Array([Float])
 }
@@ -470,7 +470,7 @@ extension ShaderData {
     /// Get texture by shader property name.
     /// - Parameter propertyName: Shader property name
     /// - Returns: Texture
-    func getTexture(_ propertyName: String) -> Texture? {
+    func getTexture(_ propertyName: String) -> MTLTexture? {
         let p = _getData(propertyName)
         switch p {
         case .Texture(let value):
@@ -483,7 +483,7 @@ extension ShaderData {
     /// Get texture by shader property.
     /// - Parameter property: Shader property
     /// - Returns: Texture
-    func getTexture(_ property: ShaderProperty) -> Texture? {
+    func getTexture(_ property: ShaderProperty) -> MTLTexture? {
         let p = _getData(property)
         switch p {
         case .Texture(let value):
@@ -497,14 +497,7 @@ extension ShaderData {
     /// - Parameters:
     ///   - propertyName: Shader property name
     ///   - value: Texture
-    func setTexture(_ propertyName: String, _ value: Texture) {
-        if (_getRefCount() > 0) {
-            let lastValue: Texture? = getTexture(propertyName)
-            if lastValue != nil {
-                lastValue!._addRefCount(-1)
-            }
-            value._addRefCount(1)
-        }
+    func setTexture(_ propertyName: String, _ value: MTLTexture) {
         _setData(propertyName, .Texture(value))
     }
 
@@ -512,21 +505,14 @@ extension ShaderData {
     /// - Parameters:
     ///   - property: Shader property
     ///   - value: Texture
-    func setTexture(_ property: ShaderProperty, _ value: Texture) {
-        if (_getRefCount() > 0) {
-            let lastValue: Texture? = getTexture(property)
-            if lastValue != nil {
-                lastValue!._addRefCount(-1)
-            }
-            value._addRefCount(1)
-        }
+    func setTexture(_ property: ShaderProperty, _ value: MTLTexture) {
         _setData(property, .Texture(value))
     }
 
     /// Get texture array by shader property name.
     /// - Parameter propertyName: Shader property name
     /// - Returns: Texture array
-    func getTextureArray(_ propertyName: String) -> [Texture]? {
+    func getTextureArray(_ propertyName: String) -> [MTLTexture]? {
         let p = _getData(propertyName)
         switch p {
         case .TextureArray(let value):
@@ -539,7 +525,7 @@ extension ShaderData {
     /// Get texture array by shader property.
     /// - Parameter property: Shader property
     /// - Returns: Texture array
-    func getTextureArray(_ property: ShaderProperty) -> [Texture]? {
+    func getTextureArray(_ property: ShaderProperty) -> [MTLTexture]? {
         let p = _getData(property)
         switch p {
         case .TextureArray(let value):
@@ -553,20 +539,7 @@ extension ShaderData {
     /// - Parameters:
     ///   - propertyName: Shader property name
     ///   - value: Texture array
-    func setTextureArray(_ propertyName: String, _ value: [Texture]) {
-        if (_getRefCount() > 0) {
-            let lastValue = getTextureArray(propertyName)
-            if (lastValue != nil) {
-                for i in 0..<lastValue!.count {
-                    lastValue![i]._addRefCount(-1)
-                }
-            }
-
-            for i in 0..<value.count {
-                value[i]._addRefCount(1)
-            }
-
-        }
+    func setTextureArray(_ propertyName: String, _ value: [MTLTexture]) {
         _setData(propertyName, .TextureArray(value))
     }
 
@@ -574,20 +547,7 @@ extension ShaderData {
     /// - Parameters:
     ///   - property: Shader property
     ///   - value: Texture array
-    func setTextureArray(_ property: ShaderProperty, _ value: [Texture]) {
-        if (_getRefCount() > 0) {
-            let lastValue = getTextureArray(property)
-            if (lastValue != nil) {
-                for i in 0..<lastValue!.count {
-                    lastValue![i]._addRefCount(-1)
-                }
-            }
-
-            for i in 0..<value.count {
-                value[i]._addRefCount(1)
-            }
-
-        }
+    func setTextureArray(_ property: ShaderProperty, _ value: [MTLTexture]) {
         _setData(property, .TextureArray(value))
     }
 }

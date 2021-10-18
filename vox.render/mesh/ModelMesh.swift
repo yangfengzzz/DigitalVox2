@@ -16,7 +16,7 @@ class ModelMesh: Mesh {
     internal var _hasBlendShape: Bool = false
     internal var _useBlendShapeNormal: Bool = false
     internal var _useBlendShapeTangent: Bool = false
-    internal var _blendShapeTexture: Texture2D?
+    internal var _blendShapeTexture: MTLTexture?
 
     private var _accessible: Bool = true
     private var _verticesFloat32: [Float]? = nil

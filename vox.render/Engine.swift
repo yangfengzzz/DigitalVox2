@@ -21,8 +21,8 @@ final class Engine: NSObject {
     var _renderElementPool: ClassPool<RenderElement> = ClassPool()
     var _renderContext: RenderContext = RenderContext()
 
-    internal var _whiteTexture2D: Texture2D!
-    internal var _whiteTextureCube: TextureCubeMap!
+    internal var _whiteTexture2D: MTLTexture!
+    internal var _whiteTextureCube: MTLTexture!
     internal var _backgroundTextureMaterial: Material!
     internal var _backgroundTextureMesh: ModelMesh!
 
@@ -102,21 +102,33 @@ final class Engine: NSObject {
         mtkView(_canvas, drawableSizeWillChange: _canvas.bounds.size)
 
         let whitePixel: [UInt8] = [255, 255, 255, 255]
-        let whiteTexture2D = Texture2D(self, 1, 1, .rgba8Uint, false)
-        whiteTexture2D.setPixelBuffer(whitePixel)
-        whiteTexture2D.isGCIgnored = true
+        let bytes = 4 * MemoryLayout<UInt8>.stride
+        let whiteTextureDescriptor = MTLTextureDescriptor()
+        whiteTextureDescriptor.width = 1
+        whiteTextureDescriptor.height = 1
+        whiteTextureDescriptor.pixelFormat = .rgba8Uint
+        whiteTextureDescriptor.textureType = .type2D
+        _whiteTexture2D = hardwareRenderer.device.makeTexture(descriptor: whiteTextureDescriptor)
+        _whiteTexture2D!.replace(region: MTLRegionMake2D(0, 0, 1, 1), mipmapLevel: 0, withBytes: whitePixel, bytesPerRow: bytes)
 
-        let whiteTextureCube = TextureCubeMap(self, 1, .rgba8Uint, false)
-        whiteTextureCube.setPixelBuffer(TextureCubeFace.PositiveX, whitePixel)
-        whiteTextureCube.setPixelBuffer(TextureCubeFace.NegativeX, whitePixel)
-        whiteTextureCube.setPixelBuffer(TextureCubeFace.PositiveY, whitePixel)
-        whiteTextureCube.setPixelBuffer(TextureCubeFace.NegativeY, whitePixel)
-        whiteTextureCube.setPixelBuffer(TextureCubeFace.PositiveZ, whitePixel)
-        whiteTextureCube.setPixelBuffer(TextureCubeFace.NegativeZ, whitePixel)
-        whiteTextureCube.isGCIgnored = true
-
-        _whiteTexture2D = whiteTexture2D
-        _whiteTextureCube = whiteTextureCube
+        let whiteTextureCubeDescriptor = MTLTextureDescriptor()
+        whiteTextureCubeDescriptor.width = 1
+        whiteTextureCubeDescriptor.height = 1
+        whiteTextureCubeDescriptor.pixelFormat = .rgba8Uint
+        whiteTextureCubeDescriptor.textureType = .typeCube
+        let _whiteTextureCube = hardwareRenderer.device.makeTexture(descriptor: whiteTextureCubeDescriptor)
+        _whiteTextureCube?.replace(region: MTLRegionMake2D(0, 0, 1, 1), mipmapLevel: 0, slice: 0, withBytes: whitePixel,
+                bytesPerRow: bytes, bytesPerImage: bytes)
+        _whiteTextureCube?.replace(region: MTLRegionMake2D(0, 0, 1, 1), mipmapLevel: 0, slice: 1, withBytes: whitePixel,
+                bytesPerRow: bytes, bytesPerImage: bytes)
+        _whiteTextureCube?.replace(region: MTLRegionMake2D(0, 0, 1, 1), mipmapLevel: 0, slice: 2, withBytes: whitePixel,
+                bytesPerRow: bytes, bytesPerImage: bytes)
+        _whiteTextureCube?.replace(region: MTLRegionMake2D(0, 0, 1, 1), mipmapLevel: 0, slice: 3, withBytes: whitePixel,
+                bytesPerRow: bytes, bytesPerImage: bytes)
+        _whiteTextureCube?.replace(region: MTLRegionMake2D(0, 0, 1, 1), mipmapLevel: 0, slice: 4, withBytes: whitePixel,
+                bytesPerRow: bytes, bytesPerImage: bytes)
+        _whiteTextureCube?.replace(region: MTLRegionMake2D(0, 0, 1, 1), mipmapLevel: 0, slice: 5, withBytes: whitePixel,
+                bytesPerRow: bytes, bytesPerImage: bytes)
 
         _backgroundTextureMaterial = Material(self, Shader.find("background-texture")!)
         _backgroundTextureMaterial.isGCIgnored = true

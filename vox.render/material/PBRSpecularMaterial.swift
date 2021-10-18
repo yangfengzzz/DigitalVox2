@@ -5,8 +5,7 @@
 //  Created by 杨丰 on 2021/9/20.
 //
 
-import Foundation
-
+import Metal
 
 /// PBR (Specular-Glossiness Workflow) Material.
 class PBRSpecularMaterial: PBRBaseMaterial {
@@ -39,9 +38,9 @@ class PBRSpecularMaterial: PBRBaseMaterial {
 
     /// Specular glossiness texture.
     /// - Remark: RGB is specular, A is glossiness
-    var specularGlossinessTexture: Texture2D? {
+    var specularGlossinessTexture: MTLTexture? {
         get {
-            (shaderData.getTexture(PBRSpecularMaterial._specularGlossinessTextureProp) as! Texture2D)
+            shaderData.getTexture(PBRSpecularMaterial._specularGlossinessTextureProp)
         }
         set {
             shaderData.setTexture(PBRSpecularMaterial._specularGlossinessTextureProp, newValue!)

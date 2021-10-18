@@ -35,13 +35,13 @@ class PBRMaterial: PBRBaseMaterial {
 
     /// Roughness metallic texture.
     /// - Remark: G channel is roughness, B channel is metallic
-    var roughnessMetallicTexture: Texture2D? {
+    var roughnessMetallicTexture: MTLTexture? {
         get {
-            (shaderData.getTexture(PBRMaterial._metallicRoughnessTextureProp) as! Texture2D)
+            shaderData.getTexture(PBRMaterial._metallicRoughnessTextureProp)
         }
         set {
-            shaderData.setTexture(PBRMaterial._metallicRoughnessTextureProp, newValue!)
             if newValue != nil {
+                shaderData.setTexture(PBRMaterial._metallicRoughnessTextureProp, newValue!)
                 shaderData.enableMacro(HAS_METALROUGHNESSMAP)
             } else {
                 shaderData.disableMacro(HAS_METALROUGHNESSMAP)

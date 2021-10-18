@@ -5,7 +5,7 @@
 //  Created by 杨丰 on 2021/9/20.
 //
 
-import Foundation
+import Metal
 
 /// Ambient light.
 class AmbientLight {
@@ -22,7 +22,7 @@ class AmbientLight {
     private var _diffuseSphericalHarmonics: SphericalHarmonics3?
     private var _diffuseSolidColor: Color = Color(0.212, 0.227, 0.259)
     private var _diffuseIntensity: Float = 1.0
-    private var _specularReflection: TextureCubeMap?
+    private var _specularReflection: MTLTexture?
     private var _specularIntensity: Float = 1.0
     private var _diffuseMode: DiffuseMode = .SolidColor
     private var _shArray: [Float] = [Float](repeating: 0, count: 27)
@@ -83,7 +83,7 @@ class AmbientLight {
     }
 
     /// Specular reflection texture.
-    var specularTexture: TextureCubeMap? {
+    var specularTexture: MTLTexture? {
         get {
             _specularReflection
         }
@@ -94,7 +94,7 @@ class AmbientLight {
 
             if (newValue != nil) {
                 shaderData.setTexture(AmbientLight._specularTextureProperty, newValue!)
-                shaderData.setInt(AmbientLight._mipLevelProperty, _specularReflection!.mipmapCount)
+                shaderData.setInt(AmbientLight._mipLevelProperty, _specularReflection!.mipmapLevelCount)
                 shaderData.enableMacro(USE_SPECULAR_ENV)
             } else {
                 shaderData.disableMacro(USE_SPECULAR_ENV)

@@ -5,7 +5,6 @@
 //  Created by 杨丰 on 2021/9/28.
 //
 
-import Foundation
 import Metal
 
 enum DirtyFlagType: Int {
@@ -81,7 +80,7 @@ class ParticleRenderer: MeshRenderer {
     public var spriteSheet: [(x: Float, y: Float, w: Float, h: Float)] = []
 
     /// Texture of particle.
-    var texture: Texture? {
+    var texture: MTLTexture? {
         get {
             getMaterial()!.shaderData.getTexture("u_texture")
         }
