@@ -81,7 +81,7 @@ extension RenderQueue {
             }
 
             let descriptor = MTLRenderPipelineDescriptor()
-            descriptor.vertexDescriptor = MTKMetalVertexDescriptorFromModelIO(element.mesh._vertexDescriptor._descriptor)
+            descriptor.vertexDescriptor = MTKMetalVertexDescriptorFromModelIO(element.mesh._vertexDescriptor)
             descriptor.vertexFunction = program.vertexShader
             descriptor.fragmentFunction = program.fragmentShader
             

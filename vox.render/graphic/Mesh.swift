@@ -15,7 +15,7 @@ class Mesh: RefObject {
 
     var _vertexBuffer: [MeshBuffer?] = []
     var _vertexCount: Int = 0
-    var _vertexDescriptor: VertexDescriptor = VertexDescriptor()
+    var _vertexDescriptor: MDLVertexDescriptor = MDLVertexDescriptor()
     var _subMeshes: [SubMesh] = []
 
     internal var _instanceCount: Int = 0

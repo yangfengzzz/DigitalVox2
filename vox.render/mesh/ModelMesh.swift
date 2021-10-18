@@ -287,7 +287,7 @@ extension ModelMesh {
         }
     }
 
-    private func _updateVertexDescriptor() -> VertexDescriptor {
+    private func _updateVertexDescriptor() -> MDLVertexDescriptor {
         let descriptr = MDLVertexDescriptor()
         descriptr.attributes[Int(Position.rawValue)] = POSITION_VERTEX_DESCRIPTOR
 
@@ -414,7 +414,7 @@ extension ModelMesh {
         descriptr.layouts[0] = MDLVertexBufferLayout(stride: offset)
 
         _elementCount = elementCount
-        return VertexDescriptor(descriptr)
+        return descriptr
     }
 
     private func _updateVertices(vertices: inout [Float32]) {

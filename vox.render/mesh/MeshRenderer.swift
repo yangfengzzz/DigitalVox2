@@ -45,17 +45,16 @@ class MeshRenderer: Renderer {
                 shaderData.disableMacro(HAS_TANGENT)
                 shaderData.disableMacro(HAS_VERTEXCOLOR)
 
-                let descriptor = vertexDescriptor!._descriptor
-                if descriptor.attributeNamed(MDLVertexAttributeTextureCoordinate) != nil {
+                if vertexDescriptor!.attributeNamed(MDLVertexAttributeTextureCoordinate) != nil {
                     shaderData.enableMacro(HAS_UV)
                 }
-                if descriptor.attributeNamed(MDLVertexAttributeNormal) != nil {
+                if vertexDescriptor!.attributeNamed(MDLVertexAttributeNormal) != nil {
                     shaderData.enableMacro(HAS_NORMAL)
                 }
-                if descriptor.attributeNamed(MDLVertexAttributeTangent) != nil {
+                if vertexDescriptor!.attributeNamed(MDLVertexAttributeTangent) != nil {
                     shaderData.enableMacro(HAS_TANGENT)
                 }
-                if descriptor.attributeNamed(MDLVertexAttributeColor) != nil {
+                if vertexDescriptor!.attributeNamed(MDLVertexAttributeColor) != nil {
                     shaderData.enableMacro(HAS_VERTEXCOLOR)
                 }
                 _meshUpdateFlag!.flag = false

@@ -41,7 +41,7 @@ class Assets {
 
         meshes = zip(mdlMeshes, mtkMeshes).map { (mdlMesh, mtkMesh) in
             let mesh = BufferMesh(_engine)
-            mesh.setVertexDescriptor(VertexDescriptor(mdlMesh.vertexDescriptor))
+            mesh.setVertexDescriptor(mdlMesh.vertexDescriptor)
             for (index, vertexBuffer) in mtkMesh.vertexBuffers.enumerated() {
                 mesh.setVertexBufferBinding(vertexBuffer.buffer, 0, index)
             }
@@ -218,4 +218,38 @@ extension Assets {
         texture.label = label
         return texture
     }
+}
+
+extension MDLVertexDescriptor {
+    static var defaultVertexDescriptor: MDLVertexDescriptor = {
+        let vertexDescriptor = MDLVertexDescriptor()
+        var offset = 0
+
+        // position attribute
+        vertexDescriptor.attributes[Int(Position.rawValue)]
+                = MDLVertexAttribute(name: MDLVertexAttributePosition,
+                format: .float3,
+                offset: 0,
+                bufferIndex: Int(BufferIndexVertices.rawValue))
+        offset += MemoryLayout<Float>.stride * 3
+
+        // normal attribute
+        vertexDescriptor.attributes[Int(Normal.rawValue)] =
+                MDLVertexAttribute(name: MDLVertexAttributeNormal,
+                        format: .float3,
+                        offset: offset,
+                        bufferIndex: Int(BufferIndexVertices.rawValue))
+        offset += MemoryLayout<Float>.stride * 3
+
+        // uv attribute
+        vertexDescriptor.attributes[Int(UV_0.rawValue)] =
+                MDLVertexAttribute(name: MDLVertexAttributeTextureCoordinate,
+                        format: .float2,
+                        offset: offset,
+                        bufferIndex: Int(BufferIndexVertices.rawValue))
+        offset += MemoryLayout<Float>.stride * 2
+
+        vertexDescriptor.layouts[0] = MDLVertexBufferLayout(stride: offset)
+        return vertexDescriptor
+    }()
 }

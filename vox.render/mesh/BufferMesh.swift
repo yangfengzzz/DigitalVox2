@@ -27,7 +27,7 @@ class BufferMesh: Mesh {
     }
 
     /// Vertex element collection.
-    var vertexDescriptor: VertexDescriptor {
+    var vertexDescriptor: MDLVertexDescriptor {
         get {
             _vertexDescriptor
         }
@@ -38,7 +38,7 @@ class BufferMesh: Mesh {
 extension BufferMesh {
     /// Set vertex descriptor.
     /// - Parameter descriptor: Vertex element collection
-    func setVertexDescriptor(_ descriptor: VertexDescriptor) {
+    func setVertexDescriptor(_ descriptor: MDLVertexDescriptor) {
         _vertexDescriptor = descriptor
     }
 }
