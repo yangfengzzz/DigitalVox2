@@ -13,8 +13,6 @@ class Mesh: RefObject {
     /// The bounding volume of the mesh.
     var bounds: BoundingBox = BoundingBox()
 
-    var _platformPrimitive: IPlatformPrimitive!
-
     var _vertexBuffer: [MeshBuffer?] = []
     var _vertexCount: Int = 0
     var _vertexDescriptor: VertexDescriptor = VertexDescriptor()
@@ -44,7 +42,6 @@ class Mesh: RefObject {
     init(_ engine: Engine, _ name: String? = nil) {
         super.init(engine)
         self.name = name
-        _platformPrimitive = _engine._hardwareRenderer.createPlatformPrimitive(self)
     }
 
     /// Add sub-mesh, each sub-mesh can correspond to an independent material.
@@ -81,9 +78,5 @@ class Mesh: RefObject {
 
     func _setVertexBuffer(_ index: Int, _ buffer: MeshBuffer) {
         _vertexBuffer.insert(buffer, at: index)
-    }
-
-    internal func _draw(_ shaderProgram: ShaderProgram, _ subMesh: SubMesh) {
-        _platformPrimitive.draw(shaderProgram, subMesh)
     }
 }

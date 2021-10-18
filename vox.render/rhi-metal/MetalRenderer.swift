@@ -65,16 +65,6 @@ class MetalRenderer {
 }
 
 extension MetalRenderer {
-    func createPlatformPrimitive(_ primitive: Mesh) -> IPlatformPrimitive {
-        MetalPrimitive(self)
-    }
-}
-
-extension MetalRenderer {
-    func drawPrimitive(_ primitive: Mesh, _ subPrimitive: SubMesh, _ shaderProgram: ShaderProgram) {
-        primitive._draw(shaderProgram, subPrimitive)
-    }
-
     func begin() {
         guard let commandBuffer = commandQueue.makeCommandBuffer() else {
             return
@@ -179,5 +169,12 @@ extension MetalRenderer {
 
     func bindTexture(_ texture: MTLTexture, _ location: Int) {
         renderEncoder.setFragmentTexture(texture, index: location)
+    }
+    
+    func drawPrimitive(_ subPrimitive: SubMesh) {
+        renderEncoder.drawIndexedPrimitives(type: subPrimitive.topology, indexCount: subPrimitive.indexCount,
+                                            indexType: subPrimitive.indexType,
+                                            indexBuffer: subPrimitive.indexBuffer!.buffer,
+                                            indexBufferOffset: subPrimitive.indexBuffer!.offset)
     }
 }

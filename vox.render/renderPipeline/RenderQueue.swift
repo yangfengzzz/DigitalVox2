@@ -111,7 +111,7 @@ extension RenderQueue {
                         offset: 0, index: index)
             }
 
-            rhi.drawPrimitive(element.mesh!, element.subMesh, program)
+            rhi.drawPrimitive(element.subMesh)
         }
     }
 
