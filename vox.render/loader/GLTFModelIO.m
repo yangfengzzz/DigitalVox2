@@ -19,12 +19,12 @@
 @end
 
 typedef NS_OPTIONS(long long, GLTFMDLColorMask) {
-    GLTFMDLColorMaskNone   = 0,
-    GLTFMDLColorMaskRed    = 1 << 3,
-    GLTFMDLColorMaskGreen  = 1 << 2,
-    GLTFMDLColorMaskBlue   = 1 << 1,
-    GLTFMDLColorMaskAlpha  = 1 << 0,
-    GLTFMDLColorMaskAll    = (1 << 4) - 1
+    GLTFMDLColorMaskNone = 0,
+    GLTFMDLColorMaskRed = 1 << 3,
+    GLTFMDLColorMaskGreen = 1 << 2,
+    GLTFMDLColorMaskBlue = 1 << 1,
+    GLTFMDLColorMaskAlpha = 1 << 0,
+    GLTFMDLColorMaskAll = (1 << 4) - 1
 };
 
 @interface MDLTextureSampler (GLTFMDLPrivateFields)
@@ -33,8 +33,8 @@ typedef NS_OPTIONS(long long, GLTFMDLColorMask) {
 // them in this way breaks the App Store rules against using private API. However, since they
 // are required for interoperating correctly with other frameworks (e.g. SceneKit), it's probably
 // safe to assume they'll be around for a while.
-@property (nonatomic, assign) UInt64 mappingChannel;
-@property (nonatomic, assign) GLTFMDLColorMask textureComponents;
+@property(nonatomic, assign) UInt64 mappingChannel;
+@property(nonatomic, assign) GLTFMDLColorMask textureComponents;
 @end
 
 @interface MDLTextureSampler (GLTFCopyingExtensions)
@@ -63,9 +63,8 @@ static MDLMaterialTextureFilterMode GLTFMDLTextureFilterModeForMagFilter(GLTFMag
 }
 
 static void GLTFMDLGetFilterModesForMinMipFilter(GLTFMinMipFilter filter,
-                                                 MDLMaterialTextureFilterMode *outMinFilter,
-                                                 MDLMaterialMipMapFilterMode *outMipFilter)
-{
+        MDLMaterialTextureFilterMode *outMinFilter,
+        MDLMaterialMipMapFilterMode *outMipFilter) {
     if (outMinFilter) {
         switch (filter) {
             case GLTFMinMipFilterNearest:
@@ -149,7 +148,8 @@ static MDLVertexFormat GLTFMDLVertexFormatForAccessor(GLTFAccessor *accessor) {
                     return accessor.isNormalized ? MDLVertexFormatChar3Normalized : MDLVertexFormatChar3;
                 case GLTFValueDimensionVector4:
                     return accessor.isNormalized ? MDLVertexFormatChar4Normalized : MDLVertexFormatChar4;
-                default: break;
+                default:
+                    break;
             }
             break;
         case GLTFComponentTypeUnsignedByte:
@@ -162,7 +162,8 @@ static MDLVertexFormat GLTFMDLVertexFormatForAccessor(GLTFAccessor *accessor) {
                     return accessor.isNormalized ? MDLVertexFormatUChar3Normalized : MDLVertexFormatUChar3;
                 case GLTFValueDimensionVector4:
                     return accessor.isNormalized ? MDLVertexFormatUChar4Normalized : MDLVertexFormatUChar4;
-                default: break;
+                default:
+                    break;
             }
             break;
         case GLTFComponentTypeShort:
@@ -175,7 +176,8 @@ static MDLVertexFormat GLTFMDLVertexFormatForAccessor(GLTFAccessor *accessor) {
                     return accessor.isNormalized ? MDLVertexFormatShort3Normalized : MDLVertexFormatShort3;
                 case GLTFValueDimensionVector4:
                     return accessor.isNormalized ? MDLVertexFormatShort4Normalized : MDLVertexFormatShort4;
-                default: break;
+                default:
+                    break;
             }
             break;
         case GLTFComponentTypeUnsignedShort:
@@ -188,7 +190,8 @@ static MDLVertexFormat GLTFMDLVertexFormatForAccessor(GLTFAccessor *accessor) {
                     return accessor.isNormalized ? MDLVertexFormatUShort3Normalized : MDLVertexFormatUShort3;
                 case GLTFValueDimensionVector4:
                     return accessor.isNormalized ? MDLVertexFormatUShort4Normalized : MDLVertexFormatUShort4;
-                default: break;
+                default:
+                    break;
             }
             break;
         case GLTFComponentTypeUnsignedInt:
@@ -201,7 +204,8 @@ static MDLVertexFormat GLTFMDLVertexFormatForAccessor(GLTFAccessor *accessor) {
                     return MDLVertexFormatUInt3;
                 case GLTFValueDimensionVector4:
                     return MDLVertexFormatUInt4;
-                default: break;
+                default:
+                    break;
             }
             break;
         case GLTFComponentTypeFloat:
@@ -214,7 +218,8 @@ static MDLVertexFormat GLTFMDLVertexFormatForAccessor(GLTFAccessor *accessor) {
                     return MDLVertexFormatFloat3;
                 case GLTFValueDimensionVector4:
                     return MDLVertexFormatFloat4;
-                default: break;
+                default:
+                    break;
             }
             break;
         default:
@@ -226,22 +231,19 @@ static MDLVertexFormat GLTFMDLVertexFormatForAccessor(GLTFAccessor *accessor) {
 size_t GLTFMDLSizeForVertexFormat(MDLVertexFormat format) {
     static int ComponentCountMask = 0x1f;
     if (((format & MDLVertexFormatCharBits) == MDLVertexFormatCharBits) ||
-        ((format & MDLVertexFormatUCharBits) == MDLVertexFormatUCharBits) ||
-        ((format & MDLVertexFormatCharNormalizedBits) == MDLVertexFormatCharNormalizedBits) ||
-        ((format & MDLVertexFormatUCharNormalizedBits) == MDLVertexFormatUCharNormalizedBits))
-    {
+            ((format & MDLVertexFormatUCharBits) == MDLVertexFormatUCharBits) ||
+            ((format & MDLVertexFormatCharNormalizedBits) == MDLVertexFormatCharNormalizedBits) ||
+            ((format & MDLVertexFormatUCharNormalizedBits) == MDLVertexFormatUCharNormalizedBits)) {
         return sizeof(UInt8) * (format & ComponentCountMask);
     } else if (((format & MDLVertexFormatShortBits) == MDLVertexFormatShortBits) ||
-               ((format & MDLVertexFormatUShortBits) == MDLVertexFormatUShortBits) ||
-               ((format & MDLVertexFormatShortNormalizedBits) == MDLVertexFormatShortNormalizedBits) ||
-               ((format & MDLVertexFormatUShortNormalizedBits) == MDLVertexFormatUShortNormalizedBits) ||
-               ((format & MDLVertexFormatHalfBits) == MDLVertexFormatHalfBits))
-    {
+            ((format & MDLVertexFormatUShortBits) == MDLVertexFormatUShortBits) ||
+            ((format & MDLVertexFormatShortNormalizedBits) == MDLVertexFormatShortNormalizedBits) ||
+            ((format & MDLVertexFormatUShortNormalizedBits) == MDLVertexFormatUShortNormalizedBits) ||
+            ((format & MDLVertexFormatHalfBits) == MDLVertexFormatHalfBits)) {
         return sizeof(UInt16) * (format & ComponentCountMask);
     } else if (((format & MDLVertexFormatIntBits) == MDLVertexFormatIntBits) ||
-               ((format & MDLVertexFormatUIntBits) == MDLVertexFormatUIntBits) ||
-               ((format & MDLVertexFormatFloatBits) == MDLVertexFormatFloatBits))
-    {
+            ((format & MDLVertexFormatUIntBits) == MDLVertexFormatUIntBits) ||
+            ((format & MDLVertexFormatFloatBits) == MDLVertexFormatFloatBits)) {
         return sizeof(UInt32) * (format & ComponentCountMask);
     }
     assert(false);
@@ -284,12 +286,11 @@ static MDLLightType GLTFMDLLightTypeForLightType(GLTFLightType lightType) {
     return [self assetWithGLTFAsset:asset bufferAllocator:nil];
 }
 
-+ (instancetype)assetWithGLTFAsset:(GLTFAsset *)asset bufferAllocator:(id <MDLMeshBufferAllocator>)bufferAllocator
-{
++ (instancetype)assetWithGLTFAsset:(GLTFAsset *)asset bufferAllocator:(id <MDLMeshBufferAllocator>)bufferAllocator {
     if (bufferAllocator == nil) {
         bufferAllocator = [MDLMeshBufferDataAllocator new];
     }
-    
+
     //NSMutableDictionary<NSUUID *, id<MDLMeshBuffer>> *buffersForIdentifiers = [NSMutableDictionary dictionary];
     //for (GLTFBuffer *buffer in asset.buffers) {
     //    if (buffer.data) {
@@ -300,7 +301,7 @@ static MDLLightType GLTFMDLLightTypeForLightType(GLTFLightType lightType) {
     //        buffersForIdentifiers[buffer.identifier] = mdlBuffer;
     //    }
     //}
-    
+
     NSMutableDictionary<NSUUID *, MDLTexture *> *texturesForImageIdenfiers = [NSMutableDictionary dictionary];
     for (GLTFImage *image in asset.images) {
         MDLTexture *mdlTexture = nil;
@@ -308,14 +309,14 @@ static MDLLightType GLTFMDLLightTypeForLightType(GLTFLightType lightType) {
             mdlTexture = [[MDLURLTexture alloc] initWithURL:image.uri name:image.name];
         } else {
             CGImageRef cgImage = [image newCGImage];
-            int width = (int)CGImageGetWidth(cgImage);
-            int height = (int)CGImageGetHeight(cgImage);
+            int width = (int) CGImageGetWidth(cgImage);
+            int height = (int) CGImageGetHeight(cgImage);
             CGDataProviderRef dataProvider = CGImageGetDataProvider(cgImage);
             CFDataRef data = CGDataProviderCopyData(dataProvider); // hate
-            mdlTexture = [[MDLTexture alloc] initWithData:(__bridge_transfer NSData *)data
+            mdlTexture = [[MDLTexture alloc] initWithData:(__bridge_transfer NSData *) data
                                             topLeftOrigin:YES
                                                      name:image.name
-                                               dimensions:(vector_int2){ width, height }
+                                               dimensions:(vector_int2) {width, height}
                                                 rowStride:width * 4
                                              channelCount:4
                                           channelEncoding:MDLTextureChannelEncodingUInt8
@@ -324,7 +325,7 @@ static MDLLightType GLTFMDLLightTypeForLightType(GLTFLightType lightType) {
         }
         texturesForImageIdenfiers[image.identifier] = mdlTexture;
     }
-    
+
     NSMutableDictionary <NSUUID *, MDLTextureFilter *> *filtersForSamplerIdentifiers = [NSMutableDictionary dictionary];
     for (GLTFTextureSampler *sampler in asset.samplers) {
         MDLTextureFilter *filter = [MDLTextureFilter new];
@@ -335,10 +336,10 @@ static MDLLightType GLTFMDLLightTypeForLightType(GLTFLightType lightType) {
         GLTFMDLGetFilterModesForMinMipFilter(sampler.minMipFilter, &minFilter, &mipFilter);
         filter.minFilter = minFilter;
         filter.mipFilter = mipFilter;
-        
+
         filter.sWrapMode = GLTFMDLTextureWrapModeForMode(sampler.wrapS);
         filter.tWrapMode = GLTFMDLTextureWrapModeForMode(sampler.wrapT);
-        
+
         filtersForSamplerIdentifiers[sampler.identifier] = filter;
     }
 
@@ -373,7 +374,7 @@ static MDLLightType GLTFMDLLightTypeForLightType(GLTFLightType lightType) {
             metallicSampler.mappingChannel = material.metallicRoughness.metallicRoughnessTexture.texCoord;
             metallicSampler.textureComponents = GLTFMDLColorMaskBlue;
             func.metallic.textureSamplerValue = metallicSampler;
-            
+
             MDLTextureSampler *roughnessSampler = [MDLTextureSampler new];
             roughnessSampler.texture = metallicRoughnessSampler.texture;
             roughnessSampler.hardwareFilter = metallicRoughnessSampler.hardwareFilter;
@@ -411,15 +412,15 @@ static MDLLightType GLTFMDLLightTypeForLightType(GLTFLightType lightType) {
             GLTFAccessor *indexAccessor = primitive.indices;
             GLTFBufferView *indexBufferView = indexAccessor.bufferView;
             GLTFBuffer *indexBuffer = indexBufferView.buffer;
-            
+
             assert(primitive.indices.componentType == GLTFComponentTypeUnsignedShort ||
-                   primitive.indices.componentType == GLTFComponentTypeUnsignedInt);
+                    primitive.indices.componentType == GLTFComponentTypeUnsignedInt);
             size_t indexSize = primitive.indices.componentType == GLTFComponentTypeUnsignedShort ? sizeof(UInt16) : sizeof(UInt32);
             assert(indexBufferView.stride == 0 || indexBufferView.stride == indexSize);
-            NSData *indexData = [NSData dataWithBytesNoCopy:(void *)indexBuffer.data.bytes + indexBufferView.offset + indexAccessor.offset
+            NSData *indexData = [NSData dataWithBytesNoCopy:(void *) indexBuffer.data.bytes + indexBufferView.offset + indexAccessor.offset
                                                      length:primitive.indices.count * indexSize
                                                freeWhenDone:NO];
-            id<MDLMeshBuffer> mdlIndexBuffer = [bufferAllocator newBufferWithData:indexData type:MDLMeshBufferTypeIndex];
+            id <MDLMeshBuffer> mdlIndexBuffer = [bufferAllocator newBufferWithData:indexData type:MDLMeshBufferTypeIndex];
             MDLMaterial *material = materialsForIdentifiers[primitive.material.identifier];
             MDLSubmesh *submesh = [[MDLSubmesh alloc] initWithName:primitive.name
                                                        indexBuffer:mdlIndexBuffer
@@ -427,7 +428,7 @@ static MDLLightType GLTFMDLLightTypeForLightType(GLTFLightType lightType) {
                                                          indexType:GLTFMDLIndexBitDepthForComponentType(primitive.indices.componentType)
                                                       geometryType:GLTFMDLGeometryTypeForPrimitiveType(primitive.primitiveType)
                                                           material:material];
-            
+
             MDLVertexDescriptor *vertexDescriptor = [MDLVertexDescriptor new];
             int attrIndex = 0;
             int vertexCount = 0;
@@ -438,12 +439,12 @@ static MDLLightType GLTFMDLLightTypeForLightType(GLTFLightType lightType) {
                 GLTFBuffer *attrBuffer = attrBufferView.buffer;
                 MDLVertexFormat mdlFormat = GLTFMDLVertexFormatForAccessor(attrAccessor);
                 size_t formatSize = GLTFMDLSizeForVertexFormat(mdlFormat);
-                NSData *attrData = [NSData dataWithBytesNoCopy:(void *)attrBuffer.data.bytes + attrBufferView.offset + attrAccessor.offset
-                                                         length:attrAccessor.count * formatSize
-                                                   freeWhenDone:NO];
-                id<MDLMeshBuffer> vertexBuffer = [bufferAllocator newBufferWithData:attrData type:MDLMeshBufferTypeVertex];
+                NSData *attrData = [NSData dataWithBytesNoCopy:(void *) attrBuffer.data.bytes + attrBufferView.offset + attrAccessor.offset
+                                                        length:attrAccessor.count * formatSize
+                                                  freeWhenDone:NO];
+                id <MDLMeshBuffer> vertexBuffer = [bufferAllocator newBufferWithData:attrData type:MDLMeshBufferTypeVertex];
                 [vertexBuffers addObject:vertexBuffer];
-                vertexCount = (int)attrAccessor.count;
+                vertexCount = (int) attrAccessor.count;
                 vertexDescriptor.attributes[attrIndex].bufferIndex = attrIndex;
                 vertexDescriptor.attributes[attrIndex].format = mdlFormat;
                 vertexDescriptor.attributes[attrIndex].name = GLTFMDLVertexAttributeNameForSemantic(key);
@@ -460,7 +461,7 @@ static MDLLightType GLTFMDLLightTypeForLightType(GLTFLightType lightType) {
         }
         meshArraysForIdentifiers[mesh.identifier] = mdlMeshes;
     }
-    
+
     NSMutableDictionary<NSUUID *, MDLCamera *> *camerasForIdentifiers = [NSMutableDictionary dictionary];
     for (GLTFCamera *camera in asset.cameras) {
         MDLCamera *mdlCamera = [MDLCamera new];
@@ -479,7 +480,7 @@ static MDLLightType GLTFMDLLightTypeForLightType(GLTFLightType lightType) {
         }
         camerasForIdentifiers[camera.identifier] = mdlCamera;
     }
-    
+
     // Light -> MDLLight
     CGColorSpaceRef colorSpaceLinearSRGB = CGColorSpaceCreateWithName(kCGColorSpaceLinearSRGB);
 
@@ -488,7 +489,7 @@ static MDLLightType GLTFMDLLightTypeForLightType(GLTFLightType lightType) {
         MDLPhysicallyPlausibleLight *mdlLight = [MDLPhysicallyPlausibleLight new];
         mdlLight.name = light.name;
         mdlLight.lightType = GLTFMDLLightTypeForLightType(light.type);
-        CGFloat rgba[] = { light.color[0], light.color[1], light.color[2], 1.0 };
+        CGFloat rgba[] = {light.color[0], light.color[1], light.color[2], 1.0};
         CGColorRef lightColor = CGColorCreate(colorSpaceLinearSRGB, rgba);
         mdlLight.color = lightColor;
         CGColorRelease(lightColor);
@@ -508,9 +509,8 @@ static MDLLightType GLTFMDLLightTypeForLightType(GLTFLightType lightType) {
         // TODO: Range and attenuation.
         lightsForIdentifiers[light.identifier] = mdlLight;
     }
-    
+
     // Node -> MDLNode
-    NSMutableDictionary<NSUUID *, MDLObject *> *nodesForIdentifiers = [NSMutableDictionary dictionary];
     for (GLTFNode *node in asset.nodes) {
         MDLObject *mdlNode = [MDLObject new];
         if (node.mesh) {
@@ -524,9 +524,9 @@ static MDLLightType GLTFMDLLightTypeForLightType(GLTFLightType lightType) {
             [mdlNode addChild:camera];
         }
     }
-    
+
     // Scene -> MDLAsset
-    
+
     // Animation, Skin ??
 
     CFRelease(colorSpaceLinearSRGB);

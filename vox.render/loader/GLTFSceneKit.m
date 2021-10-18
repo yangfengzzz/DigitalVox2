@@ -18,10 +18,10 @@ static SCNFilterMode GLTFSCNFilterModeForMagFilter(GLTFMagFilter filter) {
     }
 }
 
-static void GLTFSCNGetFilterModeForMinMipFilter(GLTFMinMipFilter filter,
-                                                SCNFilterMode *outMinFilter,
-                                                SCNFilterMode *outMipFilter)
-{
+static void GLTFSCNGetFilterModeForMinMipFilter(
+        GLTFMinMipFilter filter,
+        SCNFilterMode *outMinFilter,
+        SCNFilterMode *outMipFilter) {
     if (outMinFilter) {
         switch (filter) {
             case GLTFMinMipFilterNearest:
@@ -66,8 +66,8 @@ static SCNWrapMode GLTFSCNWrapModeForMode(GLTFAddressMode mode) {
 }
 
 static NSData *GLTFLineIndexDataForLineLoopIndexData(NSData *_Nonnull lineLoopIndexData,
-                                                     int lineLoopIndexCount,
-                                                     int bytesPerIndex) {
+        int lineLoopIndexCount,
+        int bytesPerIndex) {
     if (lineLoopIndexCount < 2) {
         return nil;
     }
@@ -76,7 +76,7 @@ static NSData *GLTFLineIndexDataForLineLoopIndexData(NSData *_Nonnull lineLoopIn
     size_t bufferSize = lineIndexCount * bytesPerIndex;
     unsigned char *lineIndices = malloc(bufferSize);
     unsigned char *lineIndicesCursor = lineIndices;
-    unsigned char *lineLoopIndices = (unsigned char *)lineLoopIndexData.bytes;
+    unsigned char *lineLoopIndices = (unsigned char *) lineLoopIndexData.bytes;
 
     // Create a line from the last index element to the first index element.
     int lastLineIndexOffset = (lineIndexCount - 1) * bytesPerIndex;
@@ -98,8 +98,8 @@ static NSData *GLTFLineIndexDataForLineLoopIndexData(NSData *_Nonnull lineLoopIn
 }
 
 static NSData *GLTFLineIndexDataForLineStripIndexData(NSData *_Nonnull lineStripIndexData,
-                                                      int lineStripIndexCount,
-                                                      int bytesPerIndex) {
+        int lineStripIndexCount,
+        int bytesPerIndex) {
     if (lineStripIndexCount < 2) {
         return nil;
     }
@@ -108,15 +108,15 @@ static NSData *GLTFLineIndexDataForLineStripIndexData(NSData *_Nonnull lineStrip
     size_t bufferSize = lineIndexCount * bytesPerIndex;
     unsigned char *lineIndices = malloc(bufferSize);
     unsigned char *lineIndicesCursor = lineIndices;
-    unsigned char *lineStripIndices = (unsigned char *)lineStripIndexData.bytes;
+    unsigned char *lineStripIndices = (unsigned char *) lineStripIndexData.bytes;
 
     // Place the first and last indices.
     int lastLineIndexOffset = (lineIndexCount - 1) * bytesPerIndex;
     int lastLineStripIndexOffset = (lineStripIndexCount - 1) * bytesPerIndex;
     memcpy(lineIndicesCursor, lineStripIndices, bytesPerIndex);
     memcpy(lineIndicesCursor + lastLineIndexOffset,
-           lineStripIndices + lastLineStripIndexOffset,
-           bytesPerIndex);
+            lineStripIndices + lastLineStripIndexOffset,
+            bytesPerIndex);
     lineIndicesCursor += bytesPerIndex;
 
     // Duplicate all indices in-between.
@@ -133,8 +133,8 @@ static NSData *GLTFLineIndexDataForLineStripIndexData(NSData *_Nonnull lineStrip
 }
 
 static NSData *GLTFTrianglesIndexDataForTriangleFanIndexData(NSData *_Nonnull triangleFanIndexData,
-                                                             int triangleFanIndexCount,
-                                                             int bytesPerIndex) {
+        int triangleFanIndexCount,
+        int bytesPerIndex) {
     if (triangleFanIndexCount < 3) {
         return nil;
     }
@@ -143,7 +143,7 @@ static NSData *GLTFTrianglesIndexDataForTriangleFanIndexData(NSData *_Nonnull tr
     size_t bufferSize = trianglesIndexCount * bytesPerIndex;
     unsigned char *trianglesIndices = malloc(bufferSize);
     unsigned char *trianglesIndicesCursor = trianglesIndices;
-    unsigned char *triangleFanIndices = (unsigned char *)triangleFanIndexData.bytes;
+    unsigned char *triangleFanIndices = (unsigned char *) triangleFanIndexData.bytes;
 
     for (int i = 1; i < triangleFanIndexCount; ++i) {
         memcpy(trianglesIndicesCursor, triangleFanIndices, bytesPerIndex);
@@ -158,9 +158,9 @@ static NSData *GLTFTrianglesIndexDataForTriangleFanIndexData(NSData *_Nonnull tr
 }
 
 static SCNGeometryElement *GLTFSCNGeometryElementForIndexData(NSData *indexData,
-                                                              int indexCount,
-                                                              int bytesPerIndex,
-                                                              GLTFPrimitive *primitive) {
+        int indexCount,
+        int bytesPerIndex,
+        GLTFPrimitive *primitive) {
     NSData *finalIndexData = indexData;
     SCNGeometryPrimitiveType primitiveType;
     int primitiveCount;
@@ -264,7 +264,7 @@ static NSData *GLTFPackedUInt16DataFromPackedUInt8(UInt8 *bytes, size_t count) {
     UInt16 *shorts = malloc(bufferSize);
     // This is begging to be parallelized. Can this be done with Accelerate?
     for (int i = 0; i < count; ++i) {
-        shorts[i] = (UInt16)bytes[i];
+        shorts[i] = (UInt16) bytes[i];
     }
     return [NSData dataWithBytesNoCopy:shorts length:bufferSize freeWhenDone:YES];
 }
@@ -277,7 +277,7 @@ static NSData *GLTFSCNPackedDataForAccessor(GLTFAccessor *accessor) {
     size_t elementSize = bytesPerComponent * componentCount;
     size_t bufferLength = elementSize * accessor.count;
     void *bytes = malloc(elementSize * accessor.count);
-    void *bufferViewBaseAddr = (void *)buffer.data.bytes + bufferView.offset;
+    void *bufferViewBaseAddr = (void *) buffer.data.bytes + bufferView.offset;
     if (bufferView.stride == 0 || bufferView.stride == elementSize) {
         // Fast path
         memcpy(bytes, bufferViewBaseAddr + accessor.offset, accessor.count * elementSize);
@@ -291,9 +291,9 @@ static NSData *GLTFSCNPackedDataForAccessor(GLTFAccessor *accessor) {
     }
     if (accessor.sparse) {
         assert(accessor.sparse.indexComponentType == GLTFComponentTypeUnsignedShort ||
-               accessor.sparse.indexComponentType == GLTFComponentTypeUnsignedInt);
+                accessor.sparse.indexComponentType == GLTFComponentTypeUnsignedInt);
         const void *baseSparseIndexBufferViewPtr = accessor.sparse.indices.buffer.data.bytes +
-                                                   accessor.sparse.indices.offset;
+                accessor.sparse.indices.offset;
         const void *baseSparseIndexAccessorPtr = baseSparseIndexBufferViewPtr + accessor.sparse.indexOffset;
 
         const void *baseValueBufferViewPtr = accessor.sparse.values.buffer.data.bytes + accessor.sparse.values.offset;
@@ -303,13 +303,13 @@ static NSData *GLTFSCNPackedDataForAccessor(GLTFAccessor *accessor) {
         void *baseDestPtr = bytes;
 
         if (accessor.sparse.indexComponentType == GLTFComponentTypeUnsignedShort) {
-            const UInt16 *sparseIndices = (UInt16 *)baseSparseIndexAccessorPtr;
+            const UInt16 *sparseIndices = (UInt16 *) baseSparseIndexAccessorPtr;
             for (int i = 0; i < accessor.sparse.count; ++i) {
                 UInt16 sparseIndex = sparseIndices[i];
                 memcpy(baseDestPtr + sparseIndex * elementSize, baseSrcPtr + (i * srcValueStride), elementSize);
             }
         } else if (accessor.sparse.indexComponentType == GLTFComponentTypeUnsignedInt) {
-            const UInt32 *sparseIndices = (UInt32 *)baseSparseIndexAccessorPtr;
+            const UInt32 *sparseIndices = (UInt32 *) baseSparseIndexAccessorPtr;
             for (int i = 0; i < accessor.sparse.count; ++i) {
                 UInt32 sparseIndex = sparseIndices[i];
                 memcpy(baseDestPtr + sparseIndex * elementSize, baseSrcPtr + (i * srcValueStride), elementSize);
@@ -388,7 +388,7 @@ static NSArray<NSArray<NSNumber *> *> *GLTFWeightsArraysForAccessor(GLTFAccessor
         [weights addObject:[NSMutableArray arrayWithCapacity:targetCount]];
     }
     const void *bufferViewBaseAddr = accessor.bufferView.buffer.data.bytes + accessor.bufferView.offset;
-    const float *values = (float *)(bufferViewBaseAddr + accessor.offset);
+    const float *values = (float *) (bufferViewBaseAddr + accessor.offset);
     for (int k = 0; k < keyframeCount; ++k) {
         for (int t = 0; t < targetCount; ++t) {
             [weights[t] addObject:@(values[k * targetCount + t])];
@@ -406,10 +406,22 @@ static NSArray<NSValue *> *GLTFSCNMatrix4ArrayFromAccessor(GLTFAccessor *accesso
     for (int i = 0; i < accessor.count; ++i) {
         const float *M = bufferViewBaseAddr + (i * (accessor.bufferView.stride ?: elementSize)) + accessor.offset;
         SCNMatrix4 m;
-        m.m11 = M[ 0]; m.m12 = M[ 1]; m.m13 = M[ 2]; m.m14 = M[ 3];
-        m.m21 = M[ 4]; m.m22 = M[ 5]; m.m23 = M[ 6]; m.m24 = M[ 7];
-        m.m31 = M[ 8]; m.m32 = M[ 9]; m.m33 = M[10]; m.m34 = M[11];
-        m.m41 = M[12]; m.m42 = M[13]; m.m43 = M[14]; m.m44 = M[15];
+        m.m11 = M[0];
+        m.m12 = M[1];
+        m.m13 = M[2];
+        m.m14 = M[3];
+        m.m21 = M[4];
+        m.m22 = M[5];
+        m.m23 = M[6];
+        m.m24 = M[7];
+        m.m31 = M[8];
+        m.m32 = M[9];
+        m.m33 = M[10];
+        m.m34 = M[11];
+        m.m41 = M[12];
+        m.m42 = M[13];
+        m.m43 = M[14];
+        m.m44 = M[15];
         NSValue *value = [NSValue valueWithSCNMatrix4:m];
         [values addObject:value];
     }
@@ -443,18 +455,18 @@ static float GLTFLuminanceFromRGB(simd_float4 rgba) {
 @end
 
 @interface GLTFSCNSceneSource ()
-@property (nonatomic, copy) NSDictionary *properties;
-@property (nonatomic, copy) NSArray<SCNMaterial *> *materials;
-@property (nonatomic, copy) NSArray<SCNLight *> *lights;
-@property (nonatomic, copy) NSArray<SCNCamera *> *cameras;
-@property (nonatomic, copy) NSArray<SCNNode *> *nodes;
-@property (nonatomic, copy) NSArray<SCNGeometry *> *geometries;
-@property (nonatomic, copy) NSArray<SCNSkinner *> *skinners;
-@property (nonatomic, copy) NSArray<SCNMorpher *> *morphers;
-@property (nonatomic, copy) NSArray<SCNScene *> *scenes;
-@property (nonatomic, copy) NSArray<GLTFSCNAnimation *> *animations;
-@property (nonatomic, strong) SCNScene *defaultScene;
-@property (nonatomic, strong) GLTFAsset *asset;
+@property(nonatomic, copy) NSDictionary *properties;
+@property(nonatomic, copy) NSArray<SCNMaterial *> *materials;
+@property(nonatomic, copy) NSArray<SCNLight *> *lights;
+@property(nonatomic, copy) NSArray<SCNCamera *> *cameras;
+@property(nonatomic, copy) NSArray<SCNNode *> *nodes;
+@property(nonatomic, copy) NSArray<SCNGeometry *> *geometries;
+@property(nonatomic, copy) NSArray<SCNSkinner *> *skinners;
+@property(nonatomic, copy) NSArray<SCNMorpher *> *morphers;
+@property(nonatomic, copy) NSArray<SCNScene *> *scenes;
+@property(nonatomic, copy) NSArray<GLTFSCNAnimation *> *animations;
+@property(nonatomic, strong) SCNScene *defaultScene;
+@property(nonatomic, strong) GLTFAsset *asset;
 @end
 
 @implementation GLTFSCNSceneSource
@@ -484,7 +496,7 @@ static float GLTFLuminanceFromRGB(simd_float4 rgba) {
     NSMutableDictionary<NSUUID *, id> *imagesForIdentfiers = [NSMutableDictionary dictionary];
     for (GLTFImage *image in self.asset.images) {
         CGImageRef cgImage = [image newCGImage];
-        imagesForIdentfiers[image.identifier] = (__bridge_transfer id)cgImage;
+        imagesForIdentfiers[image.identifier] = (__bridge_transfer id) cgImage;
     }
 
     CGColorSpaceRef colorSpaceLinearSRGB = CGColorSpaceCreateWithName(kCGColorSpaceLinearSRGB);
@@ -492,8 +504,8 @@ static float GLTFLuminanceFromRGB(simd_float4 rgba) {
     SCNMaterial *defaultMaterial = [SCNMaterial material];
     defaultMaterial.lightingModelName = SCNLightingModelPhysicallyBased;
     defaultMaterial.locksAmbientWithDiffuse = YES;
-    CGFloat defaultBaseColorFactor[] = { 1.0, 1.0, 1.0, 1.0 };
-    defaultMaterial.diffuse.contents = (__bridge_transfer id)CGColorCreate(colorSpaceLinearSRGB, &defaultBaseColorFactor[0]);
+    CGFloat defaultBaseColorFactor[] = {1.0, 1.0, 1.0, 1.0};
+    defaultMaterial.diffuse.contents = (__bridge_transfer id) CGColorCreate(colorSpaceLinearSRGB, &defaultBaseColorFactor[0]);
     defaultMaterial.metalness.contents = @(1.0);
     defaultMaterial.roughness.contents = @(1.0);
 
@@ -522,8 +534,8 @@ static float GLTFLuminanceFromRGB(simd_float4 rgba) {
             } else {
                 SCNMaterialProperty *baseColorProperty = scnMaterial.diffuse;
                 simd_float4 rgba = material.metallicRoughness.baseColorFactor;
-                CGFloat rgbad[] = { rgba[0], rgba[1], rgba[2], rgba[3] };
-                baseColorProperty.contents = (__bridge_transfer id)CGColorCreate(colorSpaceLinearSRGB, rgbad);
+                CGFloat rgbad[] = {rgba[0], rgba[1], rgba[2], rgba[3]};
+                baseColorProperty.contents = (__bridge_transfer id) CGColorCreate(colorSpaceLinearSRGB, rgbad);
             }
             if (material.metallicRoughness.metallicRoughnessTexture) {
                 GLTFTextureParams *metallicRoughnessTexture = material.metallicRoughness.metallicRoughnessTexture;
@@ -557,8 +569,8 @@ static float GLTFLuminanceFromRGB(simd_float4 rgba) {
             } else {
                 SCNMaterialProperty *diffuseProperty = scnMaterial.diffuse;
                 simd_float4 rgba = material.specularGlossiness.diffuseFactor;
-                CGFloat rgbad[] = { rgba[0], rgba[1], rgba[2], rgba[3] };
-                diffuseProperty.contents = (__bridge_transfer id)CGColorCreate(colorSpaceLinearSRGB, rgbad);
+                CGFloat rgbad[] = {rgba[0], rgba[1], rgba[2], rgba[3]};
+                diffuseProperty.contents = (__bridge_transfer id) CGColorCreate(colorSpaceLinearSRGB, rgbad);
             }
             // TODO: Remainder of specular-glossiness model
         }
@@ -576,8 +588,8 @@ static float GLTFLuminanceFromRGB(simd_float4 rgba) {
         } else {
             SCNMaterialProperty *emissiveProperty = scnMaterial.emission;
             simd_float3 rgb = material.emissiveFactor;
-            CGFloat rgbad[] = { rgb[0], rgb[1], rgb[2], 1.0 };
-            emissiveProperty.contents = (__bridge_transfer id)CGColorCreate(colorSpaceLinearSRGB, &rgbad[0]);
+            CGFloat rgbad[] = {rgb[0], rgb[1], rgb[2], 1.0};
+            emissiveProperty.contents = (__bridge_transfer id) CGColorCreate(colorSpaceLinearSRGB, &rgbad[0]);
         }
         if (material.occlusionTexture) {
             GLTFTextureParams *occlusionTexture = material.occlusionTexture;
@@ -617,10 +629,10 @@ static float GLTFLuminanceFromRGB(simd_float4 rgba) {
         NSString *unpremulSurfaceDiffuse = [NSString stringWithFormat:@"if (_surface.diffuse.a > 0.0f) {\n\t_surface.diffuse.rgb /= _surface.diffuse.a;\n}"];
         if (material.alphaMode == GLTFAlphaModeMask) {
             NSString *alphaTestFragment = [NSString stringWithFormat:@"if (_output.color.a < %f) {\n\tdiscard_fragment();\n}", material.alphaCutoff];
-            scnMaterial.shaderModifiers = @{ SCNShaderModifierEntryPointSurface : unpremulSurfaceDiffuse,
-                                             SCNShaderModifierEntryPointFragment : alphaTestFragment };
+            scnMaterial.shaderModifiers = @{SCNShaderModifierEntryPointSurface: unpremulSurfaceDiffuse,
+                    SCNShaderModifierEntryPointFragment: alphaTestFragment};
         } else if (material.alphaMode == GLTFAlphaModeOpaque) {
-            scnMaterial.shaderModifiers = @{ SCNShaderModifierEntryPointSurface : unpremulSurfaceDiffuse };
+            scnMaterial.shaderModifiers = @{SCNShaderModifierEntryPointSurface: unpremulSurfaceDiffuse};
         }
         materialsForIdentifiers[material.identifier] = scnMaterial;
     }
@@ -632,7 +644,7 @@ static float GLTFLuminanceFromRGB(simd_float4 rgba) {
             int vertexCount = 0;
             GLTFAccessor *positionAccessor = primitive.attributes[GLTFAttributeSemanticPosition];
             if (positionAccessor != nil) {
-                vertexCount = (int)positionAccessor.count;
+                vertexCount = (int) positionAccessor.count;
             }
             SCNMaterial *material = materialsForIdentifiers[primitive.material.identifier];
             NSData *indexData = nil;
@@ -643,21 +655,18 @@ static float GLTFLuminanceFromRGB(simd_float4 rgba) {
                 GLTFBufferView *indexBufferView = indexAccessor.bufferView;
                 assert(indexBufferView.stride == 0 || indexBufferView.stride == indexSize);
                 GLTFBuffer *indexBuffer = indexBufferView.buffer;
-                indexCount = (int)primitive.indices.count;
-                if((indexAccessor.componentType == GLTFComponentTypeUnsignedShort) ||
-                   (indexAccessor.componentType == GLTFComponentTypeUnsignedInt))
-                {
+                indexCount = (int) primitive.indices.count;
+                if ((indexAccessor.componentType == GLTFComponentTypeUnsignedShort) ||
+                        (indexAccessor.componentType == GLTFComponentTypeUnsignedInt)) {
                     indexSize = indexAccessor.componentType == GLTFComponentTypeUnsignedInt ? sizeof(UInt32) : sizeof(UInt16);
-                    indexData = [NSData dataWithBytesNoCopy:(void *)indexBuffer.data.bytes + indexBufferView.offset + indexAccessor.offset
-                                                             length:indexCount * indexSize
-                                                       freeWhenDone:NO];
-                }
-                else
-                {
+                    indexData = [NSData dataWithBytesNoCopy:(void *) indexBuffer.data.bytes + indexBufferView.offset + indexAccessor.offset
+                                                     length:indexCount * indexSize
+                                               freeWhenDone:NO];
+                } else {
                     assert(indexAccessor.componentType == GLTFComponentTypeUnsignedByte);
                     // We don't directly support 8-bit indices, but converting them is simple enough
                     indexSize = sizeof(UInt16);
-                    void *bufferViewBaseAddr = (void *)indexBuffer.data.bytes + indexBufferView.offset;
+                    void *bufferViewBaseAddr = (void *) indexBuffer.data.bytes + indexBufferView.offset;
                     indexData = GLTFPackedUInt16DataFromPackedUInt8(bufferViewBaseAddr + indexAccessor.offset, indexCount);
                 }
             }
@@ -704,8 +713,8 @@ static float GLTFLuminanceFromRGB(simd_float4 rgba) {
     for (GLTFLight *light in self.asset.lights) {
         SCNLight *scnLight = [SCNLight light];
         scnLight.name = light.name;
-        CGFloat rgba[] = { light.color[0], light.color[1], light.color[2], 1.0 };
-        scnLight.color = (__bridge_transfer id)CGColorCreate(colorSpaceLinearSRGB, rgba);
+        CGFloat rgba[] = {light.color[0], light.color[1], light.color[2], 1.0};
+        scnLight.color = (__bridge_transfer id) CGColorCreate(colorSpaceLinearSRGB, rgba);
         switch (light.type) {
             case GLTFLightTypeDirectional:
                 scnLight.intensity = light.intensity; // TODO: Convert from lux to lumens? How?
@@ -782,7 +791,7 @@ static float GLTFLuminanceFromRGB(simd_float4 rgba) {
                             GLTFAccessor *targetAccessor = target[key];
                             [sources addObject:GLTFSCNGeometrySourceForAccessor(targetAccessor, key)];
                         }
-                        SCNGeometry* geom = [SCNGeometry geometryWithSources:sources
+                        SCNGeometry *geom = [SCNGeometry geometryWithSources:sources
                                                                     elements:@[element]];
                         if (index < node.mesh.targetNames.count) {
                             geom.name = node.mesh.targetNames[index];
@@ -811,8 +820,8 @@ static float GLTFLuminanceFromRGB(simd_float4 rgba) {
                 SCNGeometrySource *boneWeights = [skinnedNode.geometry geometrySourcesForSemantic:SCNGeometrySourceSemanticBoneWeights].firstObject;
                 SCNGeometrySource *boneIndices = [skinnedNode.geometry geometrySourcesForSemantic:SCNGeometrySourceSemanticBoneIndices].firstObject;
                 if ((boneIndices.vectorCount != boneWeights.vectorCount) ||
-                    ((boneIndices.data.length / boneIndices.vectorCount / boneIndices.bytesPerComponent) !=
-                     (boneWeights.data.length / boneWeights.vectorCount / boneWeights.bytesPerComponent))) {
+                        ((boneIndices.data.length / boneIndices.vectorCount / boneIndices.bytesPerComponent) !=
+                                (boneWeights.data.length / boneWeights.vectorCount / boneWeights.bytesPerComponent))) {
                     // If these conditions fail, we won't be able to create a skinner, so don't bother
                     continue;
                 }

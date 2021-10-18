@@ -12,13 +12,14 @@ extern NSString *const GLTFAssetPropertyKeyExtensionsUsed;
 extern NSString *const GLTFAssetPropertyKeyExtensionsRequired;
 
 @interface GLTFSCNAnimationChannel : NSObject
-@property (nonatomic, strong) SCNNode *target;
-@property (nonatomic, strong) SCNAnimation *animation;
+@property(nonatomic, strong) SCNNode *target;
+@property(nonatomic, strong) SCNAnimation *animation;
 @end
 
 @interface GLTFSCNAnimation : NSObject
-@property (nonatomic, copy) NSString *name;
-@property (nonatomic, copy) NSArray<GLTFSCNAnimationChannel *> *channels;
+@property(nonatomic, copy) NSString *name;
+@property(nonatomic, copy) NSArray<GLTFSCNAnimationChannel *> *channels;
+
 - (void)play;
 @end
 
@@ -28,14 +29,14 @@ extern NSString *const GLTFAssetPropertyKeyExtensionsRequired;
 
 @interface GLTFSCNSceneSource : NSObject
 
-@property (nonatomic, nullable, readonly) SCNScene *defaultScene;
-@property (nonatomic, readonly) NSArray<SCNScene *> *scenes;
-@property (nonatomic, readonly) NSArray<SCNNode *> *nodes;
-@property (nonatomic, readonly) NSArray<SCNLight *> *lights;
-@property (nonatomic, readonly) NSArray<SCNCamera *> *cameras;
-@property (nonatomic, readonly) NSArray<SCNGeometry *> *geometries;
-@property (nonatomic, readonly) NSArray<SCNMaterial *> *materials;
-@property (nonatomic, readonly) NSArray<GLTFSCNAnimation *> *animations;
+@property(nonatomic, nullable, readonly) SCNScene *defaultScene;
+@property(nonatomic, readonly) NSArray<SCNScene *> *scenes;
+@property(nonatomic, readonly) NSArray<SCNNode *> *nodes;
+@property(nonatomic, readonly) NSArray<SCNLight *> *lights;
+@property(nonatomic, readonly) NSArray<SCNCamera *> *cameras;
+@property(nonatomic, readonly) NSArray<SCNGeometry *> *geometries;
+@property(nonatomic, readonly) NSArray<SCNMaterial *> *materials;
+@property(nonatomic, readonly) NSArray<GLTFSCNAnimation *> *animations;
 
 - (instancetype)initWithAsset:(GLTFAsset *)asset;
 

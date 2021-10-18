@@ -36,22 +36,22 @@ typedef NS_ENUM(NSInteger, GLTFPrimitiveType) {
 
 typedef NS_ENUM(NSInteger, GLTFMagFilter) {
     GLTFMagFilterNearest = 0x2600,
-    GLTFMagFilterLinear  = 0x2601
+    GLTFMagFilterLinear = 0x2601
 };
 
 typedef NS_ENUM(NSInteger, GLTFMinMipFilter) {
-    GLTFMinMipFilterNearest        = 0x2600,
-    GLTFMinMipFilterLinear         = 0x2601,
+    GLTFMinMipFilterNearest = 0x2600,
+    GLTFMinMipFilterLinear = 0x2601,
     GLTFMinMipFilterNearestNearest = 0x2700,
-    GLTFMinMipFilterLinearNearest  = 0x2701,
-    GLTFMinMipFilterNearestLinear  = 0x2702,
-    GLTFMinMipFilterLinearLinear   = 0x2703
+    GLTFMinMipFilterLinearNearest = 0x2701,
+    GLTFMinMipFilterNearestLinear = 0x2702,
+    GLTFMinMipFilterLinearLinear = 0x2703
 };
 
 typedef NS_ENUM(NSInteger, GLTFAddressMode) {
-    GLTFAddressModeClampToEdge    = 0x812F,
+    GLTFAddressModeClampToEdge = 0x812F,
     GLTFAddressModeMirroredRepeat = 0x8370,
-    GLTFAddressModeRepeat         = 0x2901
+    GLTFAddressModeRepeat = 0x2901
 };
 
 typedef NS_ENUM(NSInteger, GLTFAlphaMode) {

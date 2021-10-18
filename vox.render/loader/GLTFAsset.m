@@ -64,7 +64,8 @@ int GLTFComponentCountForDimension(GLTFValueDimension dim) {
             return 9;
         case GLTFValueDimensionMatrix4:
             return 16;
-        default: break;
+        default:
+            break;
     }
     return 0;
 }
@@ -86,17 +87,15 @@ int GLTFComponentCountForDimension(GLTFValueDimension dim) {
 
 + (nullable instancetype)assetWithURL:(NSURL *)url
                               options:(NSDictionary<GLTFAssetLoadingOption, id> *)options
-                                error:(NSError **)error
-{
+                                error:(NSError **)error {
     __block NSError *internalError = nil;
     __block GLTFAsset *maybeAsset = nil;
     dispatch_semaphore_t loadSemaphore = dispatch_semaphore_create(1);
     [self loadAssetWithURL:url options:options handler:^(float progress,
-                                                         GLTFAssetStatus status,
-                                                         GLTFAsset *asset,
-                                                         NSError *error,
-                                                         BOOL *stop)
-    {
+            GLTFAssetStatus status,
+            GLTFAsset *asset,
+            NSError *error,
+            BOOL *stop) {
         if (status == GLTFAssetStatusError || status == GLTFAssetStatusComplete) {
             internalError = error;
             maybeAsset = asset;
@@ -112,17 +111,15 @@ int GLTFComponentCountForDimension(GLTFValueDimension dim) {
 
 + (nullable instancetype)assetWithData:(NSData *)data
                                options:(NSDictionary<GLTFAssetLoadingOption, id> *)options
-                                 error:(NSError **)error
-{
+                                 error:(NSError **)error {
     __block NSError *internalError = nil;
     __block GLTFAsset *maybeAsset = nil;
     dispatch_semaphore_t loadSemaphore = dispatch_semaphore_create(1);
     [self loadAssetWithData:data options:options handler:^(float progress,
-                                                         GLTFAssetStatus status,
-                                                         GLTFAsset *asset,
-                                                         NSError *error,
-                                                         BOOL *stop)
-    {
+            GLTFAssetStatus status,
+            GLTFAsset *asset,
+            NSError *error,
+            BOOL *stop) {
         if (status == GLTFAssetStatusError || status == GLTFAssetStatusComplete) {
             internalError = error;
             maybeAsset = asset;
@@ -138,15 +135,13 @@ int GLTFComponentCountForDimension(GLTFValueDimension dim) {
 
 + (void)loadAssetWithURL:(NSURL *)url
                  options:(NSDictionary<GLTFAssetLoadingOption, id> *)options
-                 handler:(nullable GLTFAssetLoadingHandler)handler
-{
+                 handler:(nullable GLTFAssetLoadingHandler)handler {
     [GLTFAssetReader loadAssetWithURL:url options:options handler:handler];
 }
 
 + (void)loadAssetWithData:(NSData *)data
                   options:(NSDictionary<GLTFAssetLoadingOption, id> *)options
-                  handler:(nullable GLTFAssetLoadingHandler)handler
-{
+                  handler:(nullable GLTFAssetLoadingHandler)handler {
     [GLTFAssetReader loadAssetWithData:data options:options handler:handler];
 }
 
@@ -176,13 +171,12 @@ int GLTFComponentCountForDimension(GLTFValueDimension dim) {
 
 @implementation GLTFAccessor
 
-- (instancetype)initWithBufferView:(GLTFBufferView * _Nullable)bufferView
+- (instancetype)initWithBufferView:(GLTFBufferView *_Nullable)bufferView
                             offset:(NSInteger)offset
                      componentType:(GLTFComponentType)componentType
                          dimension:(GLTFValueDimension)dimension
                              count:(NSInteger)count
-                        normalized:(BOOL)normalized
-{
+                        normalized:(BOOL)normalized {
     if (self = [super init]) {
         _bufferView = bufferView;
         _offset = offset;
@@ -201,8 +195,7 @@ int GLTFComponentCountForDimension(GLTFValueDimension dim) {
 @implementation GLTFAnimation
 
 - (instancetype)initWithChannels:(NSArray<GLTFAnimationChannel *> *)channels
-                        samplers:(NSArray<GLTFAnimationSampler *> *)samplers
-{
+                        samplers:(NSArray<GLTFAnimationSampler *> *)samplers {
     if (self = [super init]) {
         _channels = [channels copy];
         _samplers = [samplers copy];
@@ -226,8 +219,7 @@ int GLTFComponentCountForDimension(GLTFValueDimension dim) {
 @implementation GLTFAnimationChannel
 
 - (instancetype)initWithTarget:(GLTFAnimationTarget *)target
-                       sampler:(GLTFAnimationSampler *)sampler
-{
+                       sampler:(GLTFAnimationSampler *)sampler {
     if (self = [super init]) {
         _target = target;
         _sampler = sampler;
@@ -274,8 +266,7 @@ int GLTFComponentCountForDimension(GLTFValueDimension dim) {
 - (instancetype)initWithBuffer:(GLTFBuffer *)buffer
                         length:(NSInteger)length
                         offset:(NSInteger)offset
-                        stride:(NSInteger)stride
-{
+                        stride:(NSInteger)stride {
     if (self = [super init]) {
         _buffer = buffer;
         _length = length;
@@ -359,7 +350,7 @@ int GLTFComponentCountForDimension(GLTFValueDimension dim) {
         imageSource = CGImageSourceCreateWithData(sourceData, NULL);
         CFRelease(sourceData);
     } else if (self.uri) {
-        imageSource = CGImageSourceCreateWithURL((__bridge CFURLRef)_uri, NULL);
+        imageSource = CGImageSourceCreateWithURL((__bridge CFURLRef) _uri, NULL);
     }
     if (imageSource) {
         CGImageRef image = CGImageSourceCreateImageAtIndex(imageSource, 0, NULL);
@@ -380,7 +371,7 @@ int GLTFComponentCountForDimension(GLTFValueDimension dim) {
 - (instancetype)initWithType:(GLTFLightType)type {
     if (self = [super init]) {
         _type = type;
-        _color = (simd_float3){ 1.0f, 1.0f, 1.0f };
+        _color = (simd_float3) {1.0f, 1.0f, 1.0f};
         _intensity = 1.0f;
         _range = -1.0f;
         _innerConeAngle = 0.0f;
@@ -395,7 +386,7 @@ int GLTFComponentCountForDimension(GLTFValueDimension dim) {
 
 - (instancetype)init {
     if (self = [super init]) {
-        _baseColorFactor = (simd_float4){ 1.0f, 1.0f, 1.0f, 1.0f };
+        _baseColorFactor = (simd_float4) {1.0f, 1.0f, 1.0f, 1.0f};
         _metallicFactor = 1.0f;
         _roughnessFactor = 1.0;
     }
@@ -408,8 +399,8 @@ int GLTFComponentCountForDimension(GLTFValueDimension dim) {
 
 - (instancetype)init {
     if (self = [super init]) {
-        _diffuseFactor = (simd_float4){ 1.0f, 1.0f, 1.0f, 1.0f };
-        _specularFactor = (simd_float3){ 1.0f, 1.0f, 1.0f };
+        _diffuseFactor = (simd_float4) {1.0f, 1.0f, 1.0f, 1.0f};
+        _specularFactor = (simd_float3) {1.0f, 1.0f, 1.0f};
         _glossinessFactor = 1.0;
     }
     return self;
@@ -424,7 +415,7 @@ int GLTFComponentCountForDimension(GLTFValueDimension dim) {
 
 - (instancetype)init {
     if (self = [super init]) {
-        _emissiveFactor = (simd_float3){ 0.0f, 0.0f, 0.0f };
+        _emissiveFactor = (simd_float3) {0.0f, 0.0f, 0.0f};
         _alphaMode = GLTFAlphaModeOpaque;
         _alphaCutoff = 0.5f;
         _doubleSided = NO;
@@ -452,15 +443,13 @@ int GLTFComponentCountForDimension(GLTFValueDimension dim) {
 @implementation GLTFPrimitive
 
 - (instancetype)initWithPrimitiveType:(GLTFPrimitiveType)primitiveType
-                           attributes:(NSDictionary<NSString *, GLTFAccessor *> *)attributes
-{
+                           attributes:(NSDictionary<NSString *, GLTFAccessor *> *)attributes {
     return [self initWithPrimitiveType:primitiveType attributes:attributes indices:nil];
 }
 
 - (instancetype)initWithPrimitiveType:(GLTFPrimitiveType)primitiveType
                            attributes:(NSDictionary<NSString *, GLTFAccessor *> *)attributes
-                              indices:(GLTFAccessor *)indices
-{
+                              indices:(GLTFAccessor *)indices {
     if (self = [super init]) {
         _primitiveType = primitiveType;
         _attributes = [attributes copy];
@@ -473,7 +462,7 @@ int GLTFComponentCountForDimension(GLTFValueDimension dim) {
 
 @implementation GLTFNode
 
-@synthesize childNodes=_childNodes;
+@synthesize childNodes = _childNodes;
 
 - (instancetype)init {
     if (self = [super init]) {
@@ -530,8 +519,7 @@ int GLTFComponentCountForDimension(GLTFValueDimension dim) {
                        indices:(GLTFBufferView *)indices
                    indexOffset:(NSInteger)indexOffset
             indexComponentType:(GLTFComponentType)indexComponentType
-                         count:(NSInteger)count
-{
+                         count:(NSInteger)count {
     if (self = [super init]) {
         _values = values;
         _valueOffset = valueOffset;
@@ -549,7 +537,7 @@ int GLTFComponentCountForDimension(GLTFValueDimension dim) {
 
 - (instancetype)init {
     if (self = [super init]) {
-        _scale = (simd_float2){ 1.0f, 1.0f };
+        _scale = (simd_float2) {1.0f, 1.0f};
     }
     return self;
 }
@@ -558,22 +546,22 @@ int GLTFComponentCountForDimension(GLTFValueDimension dim) {
     float c = cosf(_rotation);
     float s = sinf(_rotation);
     simd_float4x4 S = {{
-        { _scale.x,     0.0f, 0.0f, 0.0f },
-        {     0.0f, _scale.y, 0.0f, 0.0f },
-        {     0.0f,     0.0f, 1.0f, 0.0f },
-        {     0.0f,     0.0f, 0.0f, 1.0f }
+            {_scale.x, 0.0f, 0.0f, 0.0f},
+            {0.0f, _scale.y, 0.0f, 0.0f},
+            {0.0f, 0.0f, 1.0f, 0.0f},
+            {0.0f, 0.0f, 0.0f, 1.0f}
     }};
     simd_float4x4 R = {{
-        {    c,   -s, 0.0f, 0.0f },
-        {    s,    c, 0.0f, 0.0f },
-        { 0.0f, 0.0f, 1.0f, 0.0f },
-        { 0.0f, 0.0f, 0.0f, 1.0f }
+            {c, -s, 0.0f, 0.0f},
+            {s, c, 0.0f, 0.0f},
+            {0.0f, 0.0f, 1.0f, 0.0f},
+            {0.0f, 0.0f, 0.0f, 1.0f}
     }};
     simd_float4x4 T = {{
-        {      1.0f,      0.0f, 0.0f, 0.0f },
-        {      0.0f,      1.0f, 0.0f, 0.0f },
-        {      0.0f,      0.0f, 1.0f, 0.0f },
-        { _offset.x, _offset.y, 0.0f, 1.0f }
+            {1.0f, 0.0f, 0.0f, 0.0f},
+            {0.0f, 1.0f, 0.0f, 0.0f},
+            {0.0f, 0.0f, 1.0f, 0.0f},
+            {_offset.x, _offset.y, 0.0f, 1.0f}
     }};
     return simd_mul(T, simd_mul(R, S));
 }

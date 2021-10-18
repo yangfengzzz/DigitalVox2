@@ -2,6 +2,7 @@
 #import "GLTFAssetReader.h"
 
 #define CGLTF_IMPLEMENTATION
+
 #import "cgltf.h"
 
 static NSString *const GLTFErrorDomain = @"com.metalbyexample.gltfkit2";
@@ -16,17 +17,17 @@ enum GLTFErrorCode {
 @end
 
 @interface GLTFUniqueNameGenerator ()
-@property (nonatomic, strong) NSMutableDictionary<NSString *, NSNumber *> *countsForPrefixes;
+@property(nonatomic, strong) NSMutableDictionary<NSString *, NSNumber *> *countsForPrefixes;
 @end
 
 @interface GLTFAssetReader () {
     cgltf_data *gltf;
 }
-@property (class, nonatomic, readonly) dispatch_queue_t loaderQueue;
-@property (nonatomic, nullable, strong) NSURL *assetURL;
-@property (nonatomic, nullable, strong) NSString *lastAccessedPath;
-@property (nonatomic, strong) GLTFAsset *asset;
-@property (nonatomic, strong) GLTFUniqueNameGenerator *nameGenerator;
+@property(class, nonatomic, readonly) dispatch_queue_t loaderQueue;
+@property(nonatomic, nullable, strong) NSURL *assetURL;
+@property(nonatomic, nullable, strong) NSString *lastAccessedPath;
+@property(nonatomic, strong) GLTFAsset *asset;
+@property(nonatomic, strong) GLTFUniqueNameGenerator *nameGenerator;
 @end
 
 @implementation GLTFUniqueNameGenerator
@@ -51,23 +52,23 @@ enum GLTFErrorCode {
 @end
 
 static GLTFComponentType GLTFComponentTypeForType(cgltf_component_type type) {
-    return (GLTFComponentType)type;
+    return (GLTFComponentType) type;
 }
 
 static GLTFValueDimension GLTFDimensionForAccessorType(cgltf_type type) {
-    return (GLTFValueDimension)type;
+    return (GLTFValueDimension) type;
 }
 
 static GLTFAlphaMode GLTFAlphaModeFromMode(cgltf_alpha_mode mode) {
-    return (GLTFAlphaMode)mode;
+    return (GLTFAlphaMode) mode;
 }
 
 static GLTFPrimitiveType GLTFPrimitiveTypeFromType(cgltf_primitive_type type) {
-    return (GLTFPrimitiveType)type;
+    return (GLTFPrimitiveType) type;
 }
 
 static GLTFInterpolationMode GLTFInterpolationModeForType(cgltf_interpolation_type type) {
-    return (GLTFInterpolationMode)type;
+    return (GLTFInterpolationMode) type;
 }
 
 static NSString *GLTFTargetPathForPath(cgltf_animation_path_type path) {
@@ -86,12 +87,11 @@ static NSString *GLTFTargetPathForPath(cgltf_animation_path_type path) {
 }
 
 static GLTFLightType GLTFLightTypeForType(cgltf_light_type type) {
-    return (GLTFLightType)type;
+    return (GLTFLightType) type;
 }
 
-static cgltf_result GLTFReadFile(const struct cgltf_memory_options *memory_options, const struct cgltf_file_options *file_options, const char *path, cgltf_size *size, void **data)
-{
-    GLTFAssetReader *reader = (__bridge GLTFAssetReader *)file_options->user_data;
+static cgltf_result GLTFReadFile(const struct cgltf_memory_options *memory_options, const struct cgltf_file_options *file_options, const char *path, cgltf_size *size, void **data) {
+    GLTFAssetReader *reader = (__bridge GLTFAssetReader *) file_options->user_data;
     reader.lastAccessedPath = [NSString stringWithUTF8String:path];
     return cgltf_default_file_read(memory_options, file_options, path, size, data);
 }
@@ -119,7 +119,7 @@ static NSError *GLTFErrorForCGLTFStatus(cgltf_result result, NSString *_Nullable
             break;
         case cgltf_result_file_not_found:
             description = [NSString stringWithFormat:@"The file at %@ could not be found",
-                           failedFilePath ?: @"the provided path"];
+                                                     failedFilePath ?: @"the provided path"];
             break;
         case cgltf_result_io_error:
             description = @"An I/O error occurred.";
@@ -136,17 +136,17 @@ static NSError *GLTFErrorForCGLTFStatus(cgltf_result result, NSString *_Nullable
     }
 
     return [NSError errorWithDomain:GLTFErrorDomain code:(result + 1000) userInfo:@{
-        NSLocalizedDescriptionKey : description
+            NSLocalizedDescriptionKey: description
     }];
 }
 
-_Nullable id GLTFObjectFromExtras(char const* json, cgltf_extras extras, NSError **outError) {
+_Nullable id GLTFObjectFromExtras(char const *json, cgltf_extras extras, NSError **outError) {
     size_t length = extras.end_offset - extras.start_offset;
     if (length == 0) {
         return nil;
     }
     NSError *internalError = nil;
-    NSData *jsonData = [NSData dataWithBytesNoCopy:(void *)(json + extras.start_offset)
+    NSData *jsonData = [NSData dataWithBytesNoCopy:(void *) (json + extras.start_offset)
                                             length:length
                                       freeWhenDone:NO];
     id obj = [NSJSONSerialization JSONObjectWithData:jsonData
@@ -200,8 +200,7 @@ static dispatch_queue_t _loaderQueue;
 
 + (void)loadAssetWithURL:(NSURL *)url
                  options:(NSDictionary<GLTFAssetLoadingOption, id> *)options
-                 handler:(nullable GLTFAssetLoadingHandler)handler
-{
+                 handler:(nullable GLTFAssetLoadingHandler)handler {
     dispatch_async(self.loaderQueue, ^{
         GLTFAssetReader *loader = [GLTFAssetReader new];
         [loader syncLoadAssetWithURL:url data:nil options:options handler:handler];
@@ -210,8 +209,7 @@ static dispatch_queue_t _loaderQueue;
 
 + (void)loadAssetWithData:(NSData *)data
                   options:(NSDictionary<GLTFAssetLoadingOption, id> *)options
-                  handler:(nullable GLTFAssetLoadingHandler)handler
-{
+                  handler:(nullable GLTFAssetLoadingHandler)handler {
     dispatch_async(self.loaderQueue, ^{
         GLTFAssetReader *loader = [GLTFAssetReader new];
         [loader syncLoadAssetWithURL:nil data:data options:options handler:handler];
@@ -225,11 +223,10 @@ static dispatch_queue_t _loaderQueue;
     return self;
 }
 
-- (void)syncLoadAssetWithURL:(NSURL * _Nullable)assetURL
-                        data:(NSData * _Nullable)data
+- (void)syncLoadAssetWithURL:(NSURL *_Nullable)assetURL
+                        data:(NSData *_Nullable)data
                      options:(NSDictionary<GLTFAssetLoadingOption, id> *)options
-                     handler:(nullable GLTFAssetLoadingHandler)handler
-{
+                     handler:(nullable GLTFAssetLoadingHandler)handler {
     self.assetURL = assetURL;
 
     if (assetURL) {
@@ -242,7 +239,7 @@ static dispatch_queue_t _loaderQueue;
             NSError *error = [NSError errorWithDomain:GLTFErrorDomain
                                                  code:GLTFErrorCodeNoDataToLoad
                                              userInfo:
-                              @{ NSLocalizedDescriptionKey : @"URL and data cannot both be nil when loading asset" }];
+                                                     @{NSLocalizedDescriptionKey: @"URL and data cannot both be nil when loading asset"}];
             handler(1.0, GLTFAssetStatusError, nil, error, &stop);
         }
         return;
@@ -257,7 +254,7 @@ static dispatch_queue_t _loaderQueue;
 
     cgltf_options parseOptions = {0};
     parseOptions.file.read = GLTFReadFile;
-    parseOptions.file.user_data = (__bridge void *)self;
+    parseOptions.file.user_data = (__bridge void *) self;
     cgltf_result result = cgltf_parse(&parseOptions, internalData.bytes, internalData.length, &gltf);
 
     if (result != cgltf_result_success) {
@@ -288,7 +285,7 @@ static dispatch_queue_t _loaderQueue;
             buffer = [[GLTFBuffer alloc] initWithLength:b->size];
         }
         buffer.name = b->name ? [NSString stringWithUTF8String:b->name]
-                              : [self.nameGenerator nextUniqueNameWithPrefix:@"Buffer"];
+                : [self.nameGenerator nextUniqueNameWithPrefix:@"Buffer"];
         buffer.extensions = GLTFConvertExtensions(b->extensions, b->extensions_count, nil);
         buffer.extras = GLTFObjectFromExtras(gltf->json, b->extras, nil);
         [buffers addObject:buffer];
@@ -306,7 +303,7 @@ static dispatch_queue_t _loaderQueue;
                                                                      offset:bv->offset
                                                                      stride:bv->stride];
         bufferView.name = bv->name ? [NSString stringWithUTF8String:bv->name]
-                                   : [self.nameGenerator nextUniqueNameWithPrefix:@"BufferView"];
+                : [self.nameGenerator nextUniqueNameWithPrefix:@"BufferView"];
         bufferView.extensions = GLTFConvertExtensions(bv->extensions, bv->extensions_count, nil);
         bufferView.extras = GLTFObjectFromExtras(gltf->json, bv->extras, nil);
         [bufferViews addObject:bufferView];
@@ -314,8 +311,7 @@ static dispatch_queue_t _loaderQueue;
     return bufferViews;
 }
 
-- (NSArray *)convertAccessors
-{
+- (NSArray *)convertAccessors {
     NSMutableArray *accessors = [NSMutableArray arrayWithCapacity:gltf->accessors_count];
     for (int i = 0; i < gltf->accessors_count; ++i) {
         cgltf_accessor *a = gltf->accessors + i;
@@ -370,7 +366,7 @@ static dispatch_queue_t _loaderQueue;
         }
 
         accessor.name = a->name ? [NSString stringWithUTF8String:a->name]
-                                : [self.nameGenerator nextUniqueNameWithPrefix:@"Accessor"];
+                : [self.nameGenerator nextUniqueNameWithPrefix:@"Accessor"];
         accessor.extensions = GLTFConvertExtensions(a->extensions, a->extensions_count, nil);
         accessor.extras = GLTFObjectFromExtras(gltf->json, a->extras, nil);
         [accessors addObject:accessor];
@@ -378,8 +374,7 @@ static dispatch_queue_t _loaderQueue;
     return accessors;
 }
 
-- (NSArray *)convertTextureSamplers
-{
+- (NSArray *)convertTextureSamplers {
     NSMutableArray *textureSamplers = [NSMutableArray arrayWithCapacity:gltf->samplers_count];
     for (int i = 0; i < gltf->samplers_count; ++i) {
         cgltf_sampler *s = gltf->samplers + i;
@@ -389,7 +384,7 @@ static dispatch_queue_t _loaderQueue;
         sampler.wrapS = s->wrap_s;
         sampler.wrapT = s->wrap_t;
         sampler.name = s->name ? [NSString stringWithUTF8String:s->name]
-                               : [self.nameGenerator nextUniqueNameWithPrefix:@"Sampler"];
+                : [self.nameGenerator nextUniqueNameWithPrefix:@"Sampler"];
         sampler.extensions = GLTFConvertExtensions(s->extensions, s->extensions_count, nil);
         sampler.extras = GLTFObjectFromExtras(gltf->json, s->extras, nil);
         [textureSamplers addObject:sampler];
@@ -397,8 +392,7 @@ static dispatch_queue_t _loaderQueue;
     return textureSamplers;
 }
 
-- (NSArray *)convertImages
-{
+- (NSArray *)convertImages {
     NSMutableArray *images = [NSMutableArray arrayWithCapacity:gltf->images_count];
     for (int i = 0; i < gltf->images_count; ++i) {
         cgltf_image *img = gltf->images + i;
@@ -415,7 +409,7 @@ static dispatch_queue_t _loaderQueue;
             image = [[GLTFImage alloc] initWithURI:imageURI];
         }
         image.name = img->name ? [NSString stringWithUTF8String:img->name]
-                               : [self.nameGenerator nextUniqueNameWithPrefix:@"Image"];
+                : [self.nameGenerator nextUniqueNameWithPrefix:@"Image"];
         image.extensions = GLTFConvertExtensions(img->extensions, img->extensions_count, nil);
         image.extras = GLTFObjectFromExtras(gltf->json, img->extras, nil);
         [images addObject:image];
@@ -423,8 +417,7 @@ static dispatch_queue_t _loaderQueue;
     return images;
 }
 
-- (NSArray *)convertTextures
-{
+- (NSArray *)convertTextures {
     NSMutableArray *textures = [NSMutableArray arrayWithCapacity:gltf->textures_count];
     for (int i = 0; i < gltf->textures_count; ++i) {
         cgltf_texture *t = gltf->textures + i;
@@ -441,7 +434,7 @@ static dispatch_queue_t _loaderQueue;
         GLTFTexture *texture = [[GLTFTexture alloc] initWithSource:image];
         texture.sampler = sampler;
         texture.name = t->name ? [NSString stringWithUTF8String:t->name]
-                               : [self.nameGenerator nextUniqueNameWithPrefix:@"Texture"];
+                : [self.nameGenerator nextUniqueNameWithPrefix:@"Texture"];
         texture.extensions = GLTFConvertExtensions(t->extensions, t->extensions_count, nil);
         texture.extras = GLTFObjectFromExtras(gltf->json, t->extras, nil);
         [textures addObject:texture];
@@ -457,9 +450,9 @@ static dispatch_queue_t _loaderQueue;
     params.texCoord = tv->texcoord;
     if (tv->has_transform) {
         GLTFTextureTransform *transform = [GLTFTextureTransform new];
-        transform.offset = (simd_float2){ tv->transform.offset[0], tv->transform.offset[1] };
+        transform.offset = (simd_float2) {tv->transform.offset[0], tv->transform.offset[1]};
         transform.rotation = tv->transform.rotation;
-        transform.scale = (simd_float2){ tv->transform.scale[0], tv->transform.scale[1] };
+        transform.scale = (simd_float2) {tv->transform.scale[0], tv->transform.scale[1]};
         transform.texCoord = tv->transform.texcoord;
         params.transform = transform;
     }
@@ -468,8 +461,7 @@ static dispatch_queue_t _loaderQueue;
     return params;
 }
 
-- (NSArray *)convertMaterials
-{
+- (NSArray *)convertMaterials {
     NSMutableArray *materials = [NSMutableArray arrayWithCapacity:gltf->materials_count];
     for (int i = 0; i < gltf->materials_count; ++i) {
         cgltf_material *m = gltf->materials + i;
@@ -484,14 +476,14 @@ static dispatch_queue_t _loaderQueue;
             material.emissiveTexture = [self textureParamsFromTextureView:&m->emissive_texture];
         }
         float *emissive = m->emissive_factor;
-        material.emissiveFactor = (simd_float3){ emissive[0], emissive[1], emissive[2] };
+        material.emissiveFactor = (simd_float3) {emissive[0], emissive[1], emissive[2]};
         material.alphaMode = GLTFAlphaModeFromMode(m->alpha_mode);
         material.alphaCutoff = m->alpha_cutoff;
-        material.doubleSided = (BOOL)m->double_sided;
+        material.doubleSided = (BOOL) m->double_sided;
         if (m->has_pbr_metallic_roughness) {
             GLTFPBRMetallicRoughnessParams *pbr = [GLTFPBRMetallicRoughnessParams new];
             float *baseColor = m->pbr_metallic_roughness.base_color_factor;
-            pbr.baseColorFactor = (simd_float4){ baseColor[0], baseColor[1], baseColor[2], baseColor[3] };
+            pbr.baseColorFactor = (simd_float4) {baseColor[0], baseColor[1], baseColor[2], baseColor[3]};
             if (m->pbr_metallic_roughness.base_color_texture.texture) {
                 pbr.baseColorTexture = [self textureParamsFromTextureView:&m->pbr_metallic_roughness.base_color_texture];
             }
@@ -504,12 +496,12 @@ static dispatch_queue_t _loaderQueue;
         } else if (m->has_pbr_specular_glossiness) {
             GLTFPBRSpecularGlossinessParams *pbr = [GLTFPBRSpecularGlossinessParams new];
             float *diffuseFactor = m->pbr_specular_glossiness.diffuse_factor;
-            pbr.diffuseFactor = (simd_float4){ diffuseFactor[0], diffuseFactor[1], diffuseFactor[2], diffuseFactor[3] };
+            pbr.diffuseFactor = (simd_float4) {diffuseFactor[0], diffuseFactor[1], diffuseFactor[2], diffuseFactor[3]};
             if (m->pbr_specular_glossiness.diffuse_texture.texture) {
                 pbr.diffuseTexture = [self textureParamsFromTextureView:&m->pbr_specular_glossiness.diffuse_texture];
             }
             float *specularFactor = m->pbr_specular_glossiness.specular_factor;
-            pbr.specularFactor = (simd_float3){ specularFactor[0], specularFactor[1], specularFactor[2] };
+            pbr.specularFactor = (simd_float3) {specularFactor[0], specularFactor[1], specularFactor[2]};
             pbr.glossinessFactor = m->pbr_specular_glossiness.glossiness_factor;
             if (m->pbr_specular_glossiness.specular_glossiness_texture.texture) {
                 pbr.specularGlossinessTexture = [self textureParamsFromTextureView:&m->pbr_specular_glossiness.specular_glossiness_texture];
@@ -536,7 +528,7 @@ static dispatch_queue_t _loaderQueue;
         }
         // TODO: sheen
         material.name = m->name ? [NSString stringWithUTF8String:m->name]
-                                : [self.nameGenerator nextUniqueNameWithPrefix:@"Material"];
+                : [self.nameGenerator nextUniqueNameWithPrefix:@"Material"];
         material.extensions = GLTFConvertExtensions(m->extensions, m->extensions_count, nil);
         material.extras = GLTFObjectFromExtras(gltf->json, m->extras, nil);
         [materials addObject:material];
@@ -544,8 +536,7 @@ static dispatch_queue_t _loaderQueue;
     return materials;
 }
 
-- (NSArray *)convertMeshes
-{
+- (NSArray *)convertMeshes {
     NSMutableArray *meshes = [NSMutableArray arrayWithCapacity:gltf->meshes_count];
     for (int i = 0; i < gltf->meshes_count; ++i) {
         cgltf_mesh *m = gltf->meshes + i;
@@ -601,15 +592,14 @@ static dispatch_queue_t _loaderQueue;
         }
         mesh.primitives = primitives;
 
-        NSMutableArray * targetNames = [NSMutableArray array];
-        for (int j = 0; j < m->target_names_count; j++)
-        {
-            [targetNames addObject: [NSString stringWithUTF8String:m->target_names[j]]];
+        NSMutableArray *targetNames = [NSMutableArray array];
+        for (int j = 0; j < m->target_names_count; j++) {
+            [targetNames addObject:[NSString stringWithUTF8String:m->target_names[j]]];
         }
         mesh.targetNames = targetNames;
 
         mesh.name = m->name ? [NSString stringWithUTF8String:m->name]
-                            : [self.nameGenerator nextUniqueNameWithPrefix:@"Mesh"];
+                : [self.nameGenerator nextUniqueNameWithPrefix:@"Mesh"];
         mesh.extensions = GLTFConvertExtensions(m->extensions, m->extensions_count, nil);
         mesh.extras = GLTFObjectFromExtras(gltf->json, m->extras, nil);
         [meshes addObject:mesh];
@@ -617,8 +607,7 @@ static dispatch_queue_t _loaderQueue;
     return meshes;
 }
 
-- (NSArray *)convertCameras
-{
+- (NSArray *)convertCameras {
     NSMutableArray *cameras = [NSMutableArray array];
     for (int i = 0; i < gltf->cameras_count; ++i) {
         cgltf_camera *c = gltf->cameras + i;
@@ -641,7 +630,7 @@ static dispatch_queue_t _loaderQueue;
             camera = [GLTFCamera new]; // Got an invalid camera, so just make a dummy to occupy the slot
         }
         camera.name = c->name ? [NSString stringWithUTF8String:c->name]
-                              : [self.nameGenerator nextUniqueNameWithPrefix:@"Camera"];
+                : [self.nameGenerator nextUniqueNameWithPrefix:@"Camera"];
         camera.extensions = GLTFConvertExtensions(c->extensions, c->extensions_count, nil);
         camera.extras = GLTFObjectFromExtras(gltf->json, c->extras, nil);
         [cameras addObject:camera];
@@ -649,13 +638,12 @@ static dispatch_queue_t _loaderQueue;
     return cameras;
 }
 
-- (NSArray *)convertLights
-{
+- (NSArray *)convertLights {
     NSMutableArray *lights = [NSMutableArray array];
     for (int i = 0; i < gltf->lights_count; ++i) {
         cgltf_light *l = gltf->lights + i;
         GLTFLight *light = [[GLTFLight alloc] initWithType:GLTFLightTypeForType(l->type)];
-        light.color = (simd_float3){ l->color[0], l->color[1], l->color[2] };
+        light.color = (simd_float3) {l->color[0], l->color[1], l->color[2]};
         light.intensity = l->intensity;
         light.range = l->range;
         if (l->type == cgltf_light_type_spot) {
@@ -667,8 +655,7 @@ static dispatch_queue_t _loaderQueue;
     return lights;
 }
 
-- (NSArray *)convertNodes
-{
+- (NSArray *)convertNodes {
     NSMutableArray *nodes = [NSMutableArray array];
     for (int i = 0; i < gltf->nodes_count; ++i) {
         cgltf_node *n = gltf->nodes + i;
@@ -713,7 +700,7 @@ static dispatch_queue_t _loaderQueue;
         }
         // TODO: morph target weights
         node.name = n->name ? [NSString stringWithUTF8String:n->name]
-                            : [self.nameGenerator nextUniqueNameWithPrefix:@"Node"];
+                : [self.nameGenerator nextUniqueNameWithPrefix:@"Node"];
         node.extensions = GLTFConvertExtensions(n->extensions, n->extensions_count, nil);
         node.extras = GLTFObjectFromExtras(gltf->json, n->extras, nil);
         [nodes addObject:node];
@@ -734,8 +721,7 @@ static dispatch_queue_t _loaderQueue;
     return nodes;
 }
 
-- (NSArray *)convertSkins
-{
+- (NSArray *)convertSkins {
     NSMutableArray *skins = [NSMutableArray array];
     for (int i = 0; i < gltf->skins_count; ++i) {
         cgltf_skin *s = gltf->skins + i;
@@ -757,7 +743,7 @@ static dispatch_queue_t _loaderQueue;
             skin.skeleton = skeletonRoot;
         }
         skin.name = s->name ? [NSString stringWithUTF8String:s->name]
-                            : [self.nameGenerator nextUniqueNameWithPrefix:@"Skin"];
+                : [self.nameGenerator nextUniqueNameWithPrefix:@"Skin"];
         skin.extensions = GLTFConvertExtensions(s->extensions, s->extensions_count, nil);
         skin.extras = GLTFObjectFromExtras(gltf->json, s->extras, nil);
         [skins addObject:skin];
@@ -775,8 +761,7 @@ static dispatch_queue_t _loaderQueue;
     return skins;
 }
 
-- (NSArray *)convertAnimations
-{
+- (NSArray *)convertAnimations {
     NSMutableArray *animations = [NSMutableArray array];
     for (int i = 0; i < gltf->animations_count; ++i) {
         cgltf_animation *a = gltf->animations + i;
@@ -810,15 +795,14 @@ static dispatch_queue_t _loaderQueue;
         }
         GLTFAnimation *animation = [[GLTFAnimation alloc] initWithChannels:channels samplers:samplers];
         animation.name = a->name ? [NSString stringWithUTF8String:a->name]
-                                 : [self.nameGenerator nextUniqueNameWithPrefix:@"Animation"];
+                : [self.nameGenerator nextUniqueNameWithPrefix:@"Animation"];
         animation.extras = GLTFObjectFromExtras(gltf->json, a->extras, nil);
         [animations addObject:animation];
     }
     return animations;
 }
 
-- (NSArray *)convertScenes
-{
+- (NSArray *)convertScenes {
     NSMutableArray *scenes = [NSMutableArray array];
     for (int i = 0; i < gltf->scenes_count; ++i) {
         cgltf_scene *s = gltf->scenes + i;
@@ -831,7 +815,7 @@ static dispatch_queue_t _loaderQueue;
         }
         scene.nodes = rootNodes;
         scene.name = s->name ? [NSString stringWithUTF8String:s->name]
-                             : [self.nameGenerator nextUniqueNameWithPrefix:@"Scene"];
+                : [self.nameGenerator nextUniqueNameWithPrefix:@"Scene"];
         scene.extensions = GLTFConvertExtensions(s->extensions, s->extensions_count, nil);
         scene.extras = GLTFObjectFromExtras(gltf->json, s->extras, nil);
         [scenes addObject:scene];
