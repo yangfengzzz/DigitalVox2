@@ -47,7 +47,7 @@ class LightShadow {
     )
 
     private var _mapSize: Vector2
-    private var _renderTarget: RenderTarget
+    private var _renderTarget: MTLRenderPassDescriptor
 
     /// Shadow's light.
     var light: Light
@@ -72,12 +72,12 @@ class LightShadow {
         let descriptor = MTLTextureDescriptor()
         descriptor.width = width
         descriptor.height = height
-        _renderTarget = RenderTarget(engine, width, height,
-                engine._hardwareRenderer.device.makeTexture(descriptor: descriptor)!)
+        _renderTarget = MTLRenderPassDescriptor()
+        _renderTarget.colorAttachments[0].texture = engine._hardwareRenderer.device.makeTexture(descriptor: descriptor)!
     }
 
     /// The RenderTarget corresponding to the shadow map.
-    var renderTarget: RenderTarget {
+    var renderTarget: MTLRenderPassDescriptor {
         get {
             _renderTarget
         }
@@ -86,7 +86,7 @@ class LightShadow {
     /// Shadow map's color render texture.
     var map: MTLTexture {
         get {
-            _renderTarget.getColorTexture()!
+            _renderTarget.colorAttachments[0].texture!
         }
     }
 

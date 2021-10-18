@@ -5,7 +5,7 @@
 //  Created by 杨丰 on 2021/9/12.
 //
 
-import Foundation
+import Metal
 
 /// Basic render pipeline.
 class BasicRenderPipeline {
@@ -45,7 +45,7 @@ extension BasicRenderPipeline {
     /// - Parameters:
     ///   - context: Render context
     ///   - cubeFace: Render surface of cube texture
-    func render(_ context: RenderContext, _ cubeFace: TextureCubeFace? = nil, _ mipLevel:Int = 0) {
+    func render(_ context: RenderContext, _ cubeFace: TextureCubeFace? = nil, _ mipLevel: Int = 0) {
         let camera = _camera
         let opaqueQueue = _opaqueQueue
         let alphaTestQueue = _alphaTestQueue
@@ -66,7 +66,7 @@ extension BasicRenderPipeline {
     }
 
     private func _drawRenderPass(_ pass: RenderPass, _ camera: Camera,
-                                 _ cubeFace: TextureCubeFace? = nil, mipLevel:Int = 0) {
+                                 _ cubeFace: TextureCubeFace? = nil, mipLevel: Int = 0) {
         pass.preRender(camera, _opaqueQueue, _alphaTestQueue, _transparentQueue)
 
         if (pass.enabled) {
@@ -74,7 +74,7 @@ extension BasicRenderPipeline {
             let scene = camera.scene
             let background = scene.background
             let rhi = engine._hardwareRenderer
-            
+
             // prepare to load render target
             let renderTarget = camera.renderTarget ?? pass.renderTarget
             rhi.activeRenderTarget(renderTarget)
@@ -144,7 +144,7 @@ extension BasicRenderPipeline {
     ///   - mask: Perform bit and operations with Entity.Layer to filter the objects that this Pass needs to render
     func addRenderPass(_ name: String,
                        _ priority: Int = 0,
-                       _ renderTarget: RenderTarget? = nil,
+                       _ renderTarget: MTLRenderPassDescriptor? = nil,
                        _ replaceMaterial: Material? = nil,
                        _ mask: Layer = Layer.Everything) {
         let renderPass = RenderPass(name, priority, renderTarget, replaceMaterial, mask)

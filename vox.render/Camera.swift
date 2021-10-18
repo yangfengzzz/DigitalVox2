@@ -5,7 +5,7 @@
 //  Created by 杨丰 on 2021/9/9.
 //
 
-import Foundation
+import Metal
 
 class MathTemp {
     static var tempMat4 = Matrix()
@@ -55,7 +55,7 @@ class Camera: Component {
     private var _isInvProjMatDirty: Bool = true
     private var _isFrustumProjectDirty: Bool = true
     private var _customAspectRatio: Float?
-    private var _renderTarget: RenderTarget? = nil
+    private var _renderTarget: MTLRenderPassDescriptor? = nil
 
     // @ignoreClone
     private var _frustumViewChangeFlag: UpdateFlag
@@ -224,7 +224,7 @@ class Camera: Component {
     }
 
     /// RenderTarget. After setting, it will be rendered to the renderTarget. If it is empty, it will be rendered to the main canvas.
-    var renderTarget: RenderTarget? {
+    var renderTarget: MTLRenderPassDescriptor? {
         get {
             _renderTarget
         }

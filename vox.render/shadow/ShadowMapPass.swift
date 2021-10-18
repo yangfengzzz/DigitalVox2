@@ -5,7 +5,7 @@
 //  Created by 杨丰 on 2021/9/28.
 //
 
-import Foundation
+import Metal
 
 /// RenderPass for rendering shadow map.
 class ShadowMapPass: RenderPass {
@@ -19,7 +19,7 @@ class ShadowMapPass: RenderPass {
     ///   - light: The light that the shadow belongs to
     init(_ name: String,
          _ priority: Int,
-         _ renderTarget: RenderTarget,
+         _ renderTarget: MTLRenderPassDescriptor,
          _ replaceMaterial: Material,
          _ mask: Layer,
          _ light: Light) {

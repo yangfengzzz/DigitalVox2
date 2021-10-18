@@ -5,7 +5,7 @@
 //  Created by 杨丰 on 2021/9/17.
 //
 
-import Foundation
+import Metal
 
 var passNum = 0
 
@@ -13,7 +13,7 @@ class RenderPass {
     public var name: String
     public var enabled: Bool
     public var priority: Int
-    public var renderTarget: RenderTarget?
+    public var renderTarget: MTLRenderPassDescriptor?
     public var replaceMaterial: Material?
     public var mask: Layer
     public var renderOverride: Bool
@@ -29,7 +29,7 @@ class RenderPass {
     ///   - mask: Perform bit and operations with Entity.Layer to filter the objects that this Pass needs to render
     init(_ name: String? = nil,
          _ priority: Int = 0,
-         _ renderTarget: RenderTarget? = nil,
+         _ renderTarget: MTLRenderPassDescriptor? = nil,
          _ replaceMaterial: Material? = nil,
          _ mask: Layer = Layer.Everything
     ) {

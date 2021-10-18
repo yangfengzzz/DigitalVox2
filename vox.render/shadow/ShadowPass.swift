@@ -5,13 +5,13 @@
 //  Created by 杨丰 on 2021/9/28.
 //
 
-import Foundation
+import Metal
 
 /// RenderPass for rendering shadow.
 class ShadowPass: RenderPass {
     override init(_ name: String? = nil,
                   _ priority: Int = 0,
-                  _ renderTarget: RenderTarget? = nil,
+                  _ renderTarget: MTLRenderPassDescriptor? = nil,
                   _ replaceMaterial: Material? = nil,
                   _ mask: Layer = Layer.Everything) {
         super.init(name, priority, renderTarget, replaceMaterial, mask)

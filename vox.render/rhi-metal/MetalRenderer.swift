@@ -80,9 +80,9 @@ extension MetalRenderer {
         commandBuffer.commit()
     }
 
-    func activeRenderTarget(_ renderTarget: RenderTarget?) {
+    func activeRenderTarget(_ renderTarget: MTLRenderPassDescriptor?) {
         if renderTarget != nil {
-            renderPassDescriptor = renderTarget!._platformRenderTarget
+            renderPassDescriptor = renderTarget
         } else {
             renderPassDescriptor = view.currentRenderPassDescriptor
         }
@@ -109,7 +109,7 @@ extension MetalRenderer {
         renderPassDescriptor.stencilAttachment.storeAction = .store
     }
 
-    func beginRenderPass(_ renderTarget: RenderTarget?, _ camera: Camera, _ mipLevel: Int = 0) {
+    func beginRenderPass(_ renderTarget: MTLRenderPassDescriptor?, _ camera: Camera, _ mipLevel: Int = 0) {
         guard let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
             return
         }
@@ -119,8 +119,8 @@ extension MetalRenderer {
         if renderTarget != nil {
             renderEncoder.setViewport(MTLViewport(originX: 0,
                     originY: 0,
-                    width: Double(renderTarget!.width >> mipLevel),
-                    height: Double(renderTarget!.height >> mipLevel),
+                    width: Double(renderTarget!.colorAttachments[0].texture!.width >> mipLevel),
+                    height: Double(renderTarget!.colorAttachments[0].texture!.height >> mipLevel),
                     znear: 0, zfar: 1))
         } else {
             let viewport = camera.viewport
@@ -170,11 +170,11 @@ extension MetalRenderer {
     func bindTexture(_ texture: MTLTexture, _ location: Int) {
         renderEncoder.setFragmentTexture(texture, index: location)
     }
-    
+
     func drawPrimitive(_ subPrimitive: SubMesh) {
         renderEncoder.drawIndexedPrimitives(type: subPrimitive.topology, indexCount: subPrimitive.indexCount,
-                                            indexType: subPrimitive.indexType,
-                                            indexBuffer: subPrimitive.indexBuffer!.buffer,
-                                            indexBufferOffset: subPrimitive.indexBuffer!.offset)
+                indexType: subPrimitive.indexType,
+                indexBuffer: subPrimitive.indexBuffer!.buffer,
+                indexBufferOffset: subPrimitive.indexBuffer!.offset)
     }
 }
