@@ -82,6 +82,16 @@ class Assets {
         pbr.normalTexture = property(with: MDLMaterialSemantic.tangentSpaceNormal)
         pbr.roughnessMetallicTexture = property(with: MDLMaterialSemantic.roughness)
         pbr.occlusionTexture = property(with: MDLMaterialSemantic.ambientOcclusion)
+        
+        if let baseColor = material?.property(with: .baseColor),
+            baseColor.type == .float3 {
+            let color = pbr.baseColor
+            pbr.baseColor = color.setValue(r: baseColor.float3Value.x, g: baseColor.float3Value.y, b: baseColor.float3Value.z, a: 1.0)
+        }
+        if let roughness = material?.property(with: .roughness),
+            roughness.type == .float3 {
+            pbr.roughness = roughness.floatValue
+        }
     }
 }
 
