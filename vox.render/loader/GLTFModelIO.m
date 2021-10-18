@@ -1,5 +1,6 @@
 
 #import "GLTFModelIO.h"
+#import "ShaderCommon.h"
 
 @interface MDLTextureFilter (GLTFCopyingExtensions)
 - (id)GLTF_copy;
@@ -244,6 +245,40 @@ size_t GLTFMDLSizeForVertexFormat(MDLVertexFormat format) {
     }
 }
 
+static int GLTFMDLVertexAttributeIndexForSemantic(NSString *name) {
+    if ([name isEqualToString:GLTFAttributeSemanticPosition]) {
+        return Position;
+    } else if ([name isEqualToString:GLTFAttributeSemanticNormal]) {
+        return Normal;
+    } else if ([name isEqualToString:GLTFAttributeSemanticTangent]) {
+        return Tangent;
+    } else if ([name isEqualToString:GLTFAttributeSemanticTexcoord0]) {
+        return UV_0;
+    } else if ([name isEqualToString:GLTFAttributeSemanticTexcoord1]) {
+        return UV_1;
+    } else if ([name isEqualToString:GLTFAttributeSemanticTexcoord2]) {
+        return UV_2;
+    } else if ([name isEqualToString:GLTFAttributeSemanticTexcoord3]) {
+        return UV_3;
+    } else if ([name isEqualToString:GLTFAttributeSemanticTexcoord4]) {
+        return UV_4;
+    } else if ([name isEqualToString:GLTFAttributeSemanticTexcoord5]) {
+        return UV_5;
+    } else if ([name isEqualToString:GLTFAttributeSemanticTexcoord6]) {
+        return UV_6;
+    } else if ([name isEqualToString:GLTFAttributeSemanticTexcoord7]) {
+        return UV_7;
+    } else if ([name hasPrefix:@"COLOR_"]) {
+        return Color_0;
+    } else if ([name hasPrefix:@"JOINTS_"]) {
+        return Joints_0;
+    } else if ([name hasPrefix:@"WEIGHTS_"]) {
+        return Weights_0;
+    }
+    assert(false);
+}
+
+
 static NSString *GLTFMDLVertexAttributeNameForSemantic(NSString *name) {
     if ([name isEqualToString:GLTFAttributeSemanticPosition]) {
         return MDLVertexAttributePosition;
@@ -439,10 +474,12 @@ static MDLLightType GLTFMDLLightTypeForLightType(GLTFLightType lightType) {
                 id <MDLMeshBuffer> vertexBuffer = [bufferAllocator newBufferWithData:attrData type:MDLMeshBufferTypeVertex];
                 [vertexBuffers addObject:vertexBuffer];
                 vertexCount = (int) attrAccessor.count;
-                vertexDescriptor.attributes[attrIndex].bufferIndex = attrIndex;
-                vertexDescriptor.attributes[attrIndex].format = mdlFormat;
-                vertexDescriptor.attributes[attrIndex].name = GLTFMDLVertexAttributeNameForSemantic(key);
-                vertexDescriptor.attributes[attrIndex].offset = 0;
+                
+                int index = GLTFMDLVertexAttributeIndexForSemantic(key);
+                vertexDescriptor.attributes[index].bufferIndex = attrIndex;
+                vertexDescriptor.attributes[index].format = mdlFormat;
+                vertexDescriptor.attributes[index].name = GLTFMDLVertexAttributeNameForSemantic(key);
+                vertexDescriptor.attributes[index].offset = 0;
                 vertexDescriptor.layouts[attrIndex].stride = attrBufferView.stride ? attrBufferView.stride : formatSize;
                 ++attrIndex;
             }

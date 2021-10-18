@@ -35,9 +35,9 @@ using namespace metal;
 constant bool hasColorTexture [[function_constant(BASE_COLORMAP)]];
 
 struct VertexIn {
-    float3 position [[attribute(0)]];
-    float2 uv [[attribute(1)]];
-    float3 normal [[attribute(2)]];
+    float3 position [[attribute(Position)]];
+    float3 normal [[attribute(Normal)]];
+    float2 uv [[attribute(UV_0)]];
 };
 
 struct VertexOut {
