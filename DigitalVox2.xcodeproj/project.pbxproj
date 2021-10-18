@@ -31,7 +31,6 @@
 		04198A17271D3AF800871A26 /* GLTFModelIO.m in Sources */ = {isa = PBXBuildFile; fileRef = 04198A0B271D3AF800871A26 /* GLTFModelIO.m */; };
 		04198A18271D3AF900871A26 /* GLTFAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 04198A0F271D3AF800871A26 /* GLTFAsset.m */; };
 		04198A19271D3AF900871A26 /* GLTFSceneKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 04198A13271D3AF800871A26 /* GLTFSceneKit.m */; };
-		04198A1E271D3F7900871A26 /* gltfAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04198A1D271D3F7900871A26 /* gltfAssets.swift */; };
 		04198A20271D401700871A26 /* DamagedHelmet.glb in Resources */ = {isa = PBXBuildFile; fileRef = 04198A1F271D401700871A26 /* DamagedHelmet.glb */; };
 		0419B6D626E6E30300005FEA /* instance_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D526E6E30300005FEA /* instance_data.swift */; };
 		0419B6D826E6E5CE00005FEA /* shading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D726E6E5CE00005FEA /* shading.swift */; };
@@ -317,7 +316,6 @@
 		04198A14271D3AF800871A26 /* GLTFSceneKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLTFSceneKit.h; sourceTree = "<group>"; };
 		04198A15271D3AF800871A26 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		04198A1C271D3C2700871A26 /* ShaderCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderCommon.h; sourceTree = "<group>"; };
-		04198A1D271D3F7900871A26 /* gltfAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gltfAssets.swift; sourceTree = "<group>"; };
 		04198A1F271D401700871A26 /* DamagedHelmet.glb */ = {isa = PBXFileReference; lastKnownFileType = file; path = DamagedHelmet.glb; sourceTree = "<group>"; };
 		0419B6D526E6E30300005FEA /* instance_data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = instance_data.swift; sourceTree = "<group>"; };
 		0419B6D726E6E5CE00005FEA /* shading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = shading.swift; sourceTree = "<group>"; };
@@ -1116,7 +1114,6 @@
 				04DB2A4026DF1DF100C15850 /* design */,
 				04E28C3226ECE6C5003A3C3B /* rhi-metal */,
 				0458275A26F6EF0E0056D134 /* Assets.swift */,
-				04198A1D271D3F7900871A26 /* gltfAssets.swift */,
 				0497A1E826DF150800F61DE9 /* Assets.xcassets */,
 				0452ECF226DFA8BD0015BFB1 /* Textures.xcassets */,
 				0452ECDF26DFA66E0015BFB1 /* models */,
@@ -1636,7 +1633,6 @@
 				043CB46526F441EC004A0B21 /* RenderElement.swift in Sources */,
 				04EFDE7E26DF49FD005FBB6F /* Matrix3x3.swift in Sources */,
 				04EFDE7C26DF3495005FBB6F /* Matrix.swift in Sources */,
-				04198A1E271D3F7900871A26 /* gltfAssets.swift in Sources */,
 				042BB13626EA404200604751 /* SceneManager.swift in Sources */,
 				04F6AA6327014C5800A0D6F6 /* BoxCollider.swift in Sources */,
 				04DBA7DC2700B3C900C3B97C /* SceneFeature.swift in Sources */,

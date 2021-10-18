@@ -28,10 +28,10 @@ struct ContentView: View {
         cameraEntity.transform.lookAt(worldPosition: Vector3(0, 0, 0), worldUp: nil)
         let _: OrbitControl = cameraEntity.addComponent()
 
-        asset.load(name: "cottage1.obj")
+        asset.loadUSDZ(with: "cottage1.obj")
         rootEntity.addChild(asset.entities[0])
         
-        GLTFAssets.load(fileName: "DamagedHelmet", ext: "glb")
+        asset.loadGLTF(with: "DamagedHelmet.glb")        
     }
 
     var body: some View {

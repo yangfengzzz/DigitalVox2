@@ -17,16 +17,34 @@ class Assets {
     init(_ engine: Engine) {
         _engine = engine
     }
+    
+    func loadGLTF(with name: String) {
+        guard let assetUrl = Bundle.main.url(forResource: name, withExtension: nil) else {
+            fatalError("Model: \(name) not found")
+        }
 
-    func load(name: String) {
+        GLTFAsset.load(with: assetUrl, options: [:]) { (progress, status, maybeAsset, maybeError, _) in
+            DispatchQueue.main.async { [self] in
+                if status == .complete {
+                    load(with: name, MDLAsset(gltfAsset: maybeAsset!))
+                } else if let error = maybeError {
+                    print("Failed to load glTF asset: \(error)")
+                }
+            }
+        }
+    }
+    
+    func loadUSDZ(with name: String) {
         guard let assetUrl = Bundle.main.url(forResource: name, withExtension: nil) else {
             fatalError("Model: \(name) not found")
         }
         let allocator = MTKMeshBufferAllocator(device: _engine._hardwareRenderer.device)
-        let asset = MDLAsset(url: assetUrl,
+        load(with: name, MDLAsset(url: assetUrl,
                 vertexDescriptor: MDLVertexDescriptor.defaultVertexDescriptor,
-                bufferAllocator: allocator)
+                bufferAllocator: allocator))
+    }
 
+    func load(with name: String, _ asset: MDLAsset) {
         // load Model I/O textures
         asset.loadTextures()
 
