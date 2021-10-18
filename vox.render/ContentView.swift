@@ -30,6 +30,8 @@ struct ContentView: View {
 
         asset.load(name: "cottage1.obj")
         rootEntity.addChild(asset.entities[0])
+        
+        GLTFAssets.load(fileName: "DamagedHelmet", ext: "glb")
     }
 
     var body: some View {
