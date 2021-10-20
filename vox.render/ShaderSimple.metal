@@ -7,9 +7,7 @@
 
 #include <metal_stdlib>
 using namespace metal;
-#import "ShaderCommon.h"
-
-constant bool hasColorTexture [[function_constant(BASE_TEXTURE)]];
+#import "functionConstant.metal"
 
 struct VertexIn {
     float3 position [[attribute(Position)]];
@@ -41,7 +39,7 @@ fragment float4 fragment_simple(VertexOut in [[stage_in]],
                                 texture2d<float> u_baseTexture [[texture(0)]]) {
     // extract color
     float3 baseColor;
-    if (hasColorTexture) {
+    if (baseTexture) {
         baseColor = u_baseTexture.sample(textureSampler, in.uv).rgb;
     } else {
         baseColor = u_baseColor.xyz;

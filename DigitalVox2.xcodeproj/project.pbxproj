@@ -202,6 +202,9 @@
 		0497A1EC26DF150800F61DE9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0497A1EB26DF150800F61DE9 /* Preview Assets.xcassets */; };
 		0497A20226DF150800F61DE9 /* DigitalVox2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A20126DF150800F61DE9 /* DigitalVox2UITests.swift */; };
 		04A6BEAF271C4DA30024DF43 /* ShaderMacroCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447D54526F803B300272D7C /* ShaderMacroCollection.swift */; };
+		04A6BEB127204F3C0024DF43 /* common_vert.metal in Sources */ = {isa = PBXBuildFile; fileRef = 04A6BEB027204F3C0024DF43 /* common_vert.metal */; };
+		04A6BEB327204FE20024DF43 /* blinn-phong.metal in Sources */ = {isa = PBXBuildFile; fileRef = 04A6BEB227204FE20024DF43 /* blinn-phong.metal */; };
+		04A6BEB52720DCD80024DF43 /* functionConstant.metal in Sources */ = {isa = PBXBuildFile; fileRef = 04A6BEB42720DCD80024DF43 /* functionConstant.metal */; };
 		04AE07C227029F3300F1D8C5 /* LightShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE07C127029F3300F1D8C5 /* LightShadow.swift */; };
 		04AE07C42702A3AC00F1D8C5 /* ShadowMapMaterial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE07C32702A3AC00F1D8C5 /* ShadowMapMaterial.swift */; };
 		04AE07C62702A40800F1D8C5 /* ShadowMapPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE07C52702A40800F1D8C5 /* ShadowMapPass.swift */; };
@@ -538,6 +541,9 @@
 		0497A20126DF150800F61DE9 /* DigitalVox2UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitalVox2UITests.swift; sourceTree = "<group>"; };
 		0497A20326DF150800F61DE9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0497A20F26DF151700F61DE9 /* DigitalVox2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DigitalVox2.entitlements; sourceTree = "<group>"; };
+		04A6BEB027204F3C0024DF43 /* common_vert.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = common_vert.metal; sourceTree = "<group>"; };
+		04A6BEB227204FE20024DF43 /* blinn-phong.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = "blinn-phong.metal"; sourceTree = "<group>"; };
+		04A6BEB42720DCD80024DF43 /* functionConstant.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = functionConstant.metal; sourceTree = "<group>"; };
 		04AE07C127029F3300F1D8C5 /* LightShadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightShadow.swift; sourceTree = "<group>"; };
 		04AE07C32702A3AC00F1D8C5 /* ShadowMapMaterial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowMapMaterial.swift; sourceTree = "<group>"; };
 		04AE07C52702A40800F1D8C5 /* ShadowMapPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowMapPass.swift; sourceTree = "<group>"; };
@@ -1108,8 +1114,6 @@
 				042A6697270142310019C2CE /* EngineFeatureManager.swift */,
 				04DBA7DB2700B3C900C3B97C /* SceneFeature.swift */,
 				04DBA7DD2700B45100C3B97C /* SceneFeatureManager.swift */,
-				0413289E26E0CBE7000A4F4E /* ShaderSimple.metal */,
-				0452ECCA26DFA5360015BFB1 /* PBRSimple.metal */,
 				04DB2A4026DF1DF100C15850 /* design */,
 				04E28C3226ECE6C5003A3C3B /* rhi-metal */,
 				0458275A26F6EF0E0056D134 /* USDZAssetsLoader.swift */,
@@ -1120,9 +1124,14 @@
 				0452ECCB26DFA5360015BFB1 /* Common.h */,
 				04198A1C271D3C2700871A26 /* ShaderCommon.h */,
 				0447D54426F8020B00272D7C /* MacroName.h */,
+				04A6BEB42720DCD80024DF43 /* functionConstant.metal */,
 				0497A1EA26DF150800F61DE9 /* Preview Content */,
 				0497A1ED26DF150800F61DE9 /* Info.plist */,
 				0497A20F26DF151700F61DE9 /* DigitalVox2.entitlements */,
+				0413289E26E0CBE7000A4F4E /* ShaderSimple.metal */,
+				0452ECCA26DFA5360015BFB1 /* PBRSimple.metal */,
+				04A6BEB027204F3C0024DF43 /* common_vert.metal */,
+				04A6BEB227204FE20024DF43 /* blinn-phong.metal */,
 			);
 			path = vox.render;
 			sourceTree = "<group>";
@@ -1605,6 +1614,7 @@
 				04E28C3826ECE7B3003A3C3B /* MetalRenderer.swift in Sources */,
 				043CB46726F45C18004A0B21 /* ClassPool.swift in Sources */,
 				0452ECD626DFA5360015BFB1 /* PBRSimple.metal in Sources */,
+				04A6BEB127204F3C0024DF43 /* common_vert.metal in Sources */,
 				0447D55226F8309C00272D7C /* SpotLight.swift in Sources */,
 				04832F072701F4B3001AD421 /* SkinnedMeshRenderer.swift in Sources */,
 				043CB46D26F5667A004A0B21 /* ShaderPool.swift in Sources */,
@@ -1641,6 +1651,7 @@
 				0447D54E26F82E0000272D7C /* Light.swift in Sources */,
 				0447D55D26F845F600272D7C /* BlinnPhongMaterial.swift in Sources */,
 				04F6AA6A27014F1800A0D6F6 /* Intersect.swift in Sources */,
+				04A6BEB327204FE20024DF43 /* blinn-phong.metal in Sources */,
 				04198A16271D3AF800871A26 /* GLTFAssetReader.m in Sources */,
 				0413289F26E0CBE7000A4F4E /* ShaderSimple.metal in Sources */,
 				041B585726F5863700B32BD0 /* BufferMesh.swift in Sources */,
@@ -1719,6 +1730,7 @@
 				04F6AA702701579D00A0D6F6 /* PhysicsManager.swift in Sources */,
 				0419B6DE26E701FE00005FEA /* Script.swift in Sources */,
 				04FF83BA271800E10016CFC3 /* ResourceCache.swift in Sources */,
+				04A6BEB52720DCD80024DF43 /* functionConstant.metal in Sources */,
 				0413287B26E07BA3000A4F4E /* Ray.swift in Sources */,
 				04832F032701F266001AD421 /* BlendShape.swift in Sources */,
 				043CB44426F2E0CD004A0B21 /* Shader.swift in Sources */,

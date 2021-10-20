@@ -51,19 +51,19 @@ typedef enum {
     USE_SPECULAR_ENV = 29,
     
     // Particle Render
-    particleTexture = 30,
-    rotateToVelocity = 31,
-    useOriginColor = 32,
-    ScaleByLifetime = 33,
-    TWO_Dimension = 34,
-    fadeIn = 35,
-    fadeOut = 36,
+    PARTICLE_TEXTURE = 30,
+    ROTATE_TO_VELOCITY = 31,
+    USE_ORIGIN_COLOR = 32,
+    SCALE_BY_LIFE_TIME = 33,
+    TWO_DIMENSION = 34,
+    FADE_IN = 35,
+    FADE_OUT = 36,
     
     // Shadow
     GENERATE_SHADOW_MAP = 37,
     SHADOW_MAP_COUNT = 38,
     
-    None = 40,
+    None = 39,
 } MacroName;
 
 #endif /* MacroName_h */
