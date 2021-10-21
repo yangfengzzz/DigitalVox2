@@ -1125,13 +1125,13 @@
 				04198A1C271D3C2700871A26 /* ShaderCommon.h */,
 				0447D54426F8020B00272D7C /* MacroName.h */,
 				04A6BEB42720DCD80024DF43 /* functionConstant.metal */,
+				04A6BEB227204FE20024DF43 /* blinn-phong.metal */,
 				0497A1EA26DF150800F61DE9 /* Preview Content */,
 				0497A1ED26DF150800F61DE9 /* Info.plist */,
 				0497A20F26DF151700F61DE9 /* DigitalVox2.entitlements */,
 				0413289E26E0CBE7000A4F4E /* ShaderSimple.metal */,
 				0452ECCA26DFA5360015BFB1 /* PBRSimple.metal */,
 				04A6BEB027204F3C0024DF43 /* common_vert.metal */,
-				04A6BEB227204FE20024DF43 /* blinn-phong.metal */,
 			);
 			path = vox.render;
 			sourceTree = "<group>";
