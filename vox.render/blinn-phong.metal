@@ -181,9 +181,207 @@ vertex VertexOut vertex_blinn_phong(const VertexIn vertexIn [[stage_in]],
     return out;
 }
 
+struct EnvMapLight {
+    float3 diffuse;
+    float mipMapLevel;
+    float diffuseIntensity;
+    float specularIntensity;
+    matrix_float4x4 transformMatrix;
+};
+
+struct DirectLight {
+    float3 color;
+    float3 direction;
+};
+
+struct PointLight {
+    float3 color;
+    float3 position;
+    float distance;
+};
+
+struct SpotLight {
+    float3 color;
+    float3 position;
+    float3 direction;
+    float distance;
+    float angleCos;
+    float penumbraCos;
+};
+
+float3 getNormal(VertexOut in, float u_normalIntensity,
+                 sampler smp, texture2d<float> u_normalTexture,
+                 bool is_front_face) {
+    float3 n;
+    if (normalTexture) {
+        matrix_float3x3 tbn;
+        if (!hasTangent) {
+            float3 pos_dx = dfdx(in.v_pos);
+            float3 pos_dy = dfdy(in.v_pos);
+            float3 tex_dx = dfdx(float3(in.v_uv, 0.0));
+            float3 tex_dy = dfdy(float3(in.v_uv, 0.0));
+            float3 t = (tex_dy.y * pos_dx - tex_dx.x * pos_dy) / (tex_dx.x * tex_dy.y - tex_dy.x * tex_dx.y);//fix
+            float3 ng;
+            if (hasNormal) {
+                ng = normalize(in.v_normal);
+            } else {
+                ng = normalize( cross(pos_dx, pos_dy) );
+            }
+            t = normalize(t - ng * dot(ng, t));
+            float3 b = normalize(cross(ng, t));
+            tbn = matrix_float3x3(t, b, ng);
+        } else {
+            tbn = matrix_float3x3(in.normalW, in.tangentW, in.bitangentW);
+        }
+        n = u_normalTexture.sample(smp, in.v_uv).rgb;
+        n = normalize(tbn * ((2.0 * n - 1.0) * float3(u_normalIntensity, u_normalIntensity, 1.0)));
+    } else {
+        if (hasNormal) {
+            n = normalize(in.v_normal);
+        } else {
+            float3 pos_dx = dfdx(in.v_pos);
+            float3 pos_dy = dfdy(in.v_pos);
+            n = normalize( cross(pos_dx, pos_dy) );
+        }
+    }
+    
+    n *= float( is_front_face ) * 2.0 - 1.0;
+    return n;
+}
+
 fragment float4 fragment_blinn_phong(VertexOut in [[stage_in]],
-                                     constant float4 &u_baseColor [[buffer(1)]],
                                      sampler textureSampler [[sampler(0)]],
-                                     texture2d<float> u_baseColorSampler [[texture(0)]]) {
-    return float4(0.5, 0.5, 0.5, 1.0);
+                                     constant matrix_float4x4 &u_localMat [[buffer(0)]],
+                                     constant matrix_float4x4 &u_modelMat [[buffer(1)]],
+                                     constant matrix_float4x4 &u_viewMat [[buffer(2)]],
+                                     constant matrix_float4x4 &u_projMat [[buffer(3)]],
+                                     constant matrix_float4x4 &u_MVMat [[buffer(4)]],
+                                     constant matrix_float4x4 &u_MVPMat [[buffer(5)]],
+                                     constant matrix_float4x4 &u_normalMat [[buffer(6)]],
+                                     constant float3 &u_cameraPos [[buffer(7)]],
+                                     constant EnvMapLight &u_envMapLight [[buffer(8)]],
+                                     constant float3 *u_env_sh [[buffer(9), function_constant(useSH)]],
+                                     texturecube<float> u_env_specularTexture [[texture(0), function_constant(useSpecularEnv)]],
+                                     constant float3 *u_directLightColor [[buffer(10), function_constant(directLightCount)]],
+                                     constant float3 *u_directLightDirection [[buffer(11), function_constant(directLightCount)]],
+                                     constant float3 *u_pointLightColor [[buffer(12), function_constant(pointLightCount)]],
+                                     constant float3 *u_pointLightPosition [[buffer(13), function_constant(pointLightCount)]],
+                                     constant float *u_pointLightDistance [[buffer(14), function_constant(pointLightCount)]],
+                                     constant float3 *u_spotLightColor [[buffer(15), function_constant(spotLightCount)]],
+                                     constant float3 *u_spotLightPosition [[buffer(16), function_constant(spotLightCount)]],
+                                     constant float3 *u_spotLightDirection [[buffer(17), function_constant(spotLightCount)]],
+                                     constant float *u_spotLightDistance [[buffer(18), function_constant(spotLightCount)]],
+                                     constant float *u_spotLightAngleCos [[buffer(19), function_constant(spotLightCount)]],
+                                     constant float *u_spotLightPenumbraCos [[buffer(20), function_constant(spotLightCount)]],
+                                     constant float4 &u_emissiveColor [[buffer(21)]],
+                                     constant float4 &u_diffuseColor [[buffer(22)]],
+                                     constant float4 &u_specularColor [[buffer(23)]],
+                                     constant float &u_shininess [[buffer(24)]],
+                                     constant float &u_normalIntensity [[buffer(25)]],
+                                     constant float &u_alphaCutoff [[buffer(26)]],
+                                     texture2d<float> u_emissiveTexture [[texture(1), function_constant(emissiveTexture)]],
+                                     texture2d<float> u_diffuseTexture [[texture(2), function_constant(diffuseTexture)]],
+                                     texture2d<float> u_specularTexture [[texture(3), function_constant(specularTexture)]],
+                                     texture2d<float> u_normalTexture [[texture(4), function_constant(normalTexture)]],
+                                     bool is_front_face [[front_facing]]) {
+    float4 ambient = float4(0.0);
+    float4 emission = u_emissiveColor;
+    float4 diffuse = u_diffuseColor;
+    float4 specular = u_specularColor;
+    if (emissiveTexture) {
+        emission *= u_emissiveTexture.sample(textureSampler, in.v_uv);
+    }
+    if (diffuseTexture) {
+        diffuse *= u_diffuseTexture.sample(textureSampler, in.v_uv);
+    }
+    if (hasVertexColor) {
+        diffuse *= in.v_color;
+    }
+    if (specularTexture) {
+        specular *= u_specularTexture.sample(textureSampler, in.v_uv);
+    }
+    ambient = float4(u_envMapLight.diffuse * u_envMapLight.diffuseIntensity, 1.0) * diffuse;
+    
+    float3 V;
+    if (needWorldPos) {
+        V =  normalize( u_cameraPos - in.v_pos );
+    }
+    
+    float3 N = getNormal(in, u_normalIntensity, textureSampler, u_normalTexture, is_front_face);
+    float3 lightDiffuse = float3( 0.0, 0.0, 0.0 );
+    float3 lightSpecular = float3( 0.0, 0.0, 0.0 );
+    if (directLightCount) {
+        DirectLight directionalLight;
+
+        for( int i = 0; i < directLightCount; i++ ) {
+            directionalLight.color = u_directLightColor[i];
+            directionalLight.direction = u_directLightDirection[i];
+
+            float d = max(dot(N, -directionalLight.direction), 0.0);
+            lightDiffuse += directionalLight.color * d;
+
+            float3 halfDir = normalize( V - directionalLight.direction );
+            float s = pow( clamp( dot( N, halfDir ), 0.0, 1.0 ), u_shininess );
+            lightSpecular += directionalLight.color * s;
+        }
+    }
+    if (pointLightCount) {
+        PointLight pointLight;
+
+        for( int i = 0; i < pointLightCount; i++ ) {
+            pointLight.color = u_pointLightColor[i];
+            pointLight.position = u_pointLightPosition[i];
+            pointLight.distance = u_pointLightDistance[i];
+
+            float3 direction = in.v_pos - pointLight.position;
+            float dist = length( direction );
+            direction /= dist;
+            float decay = clamp(1.0 - pow(dist / pointLight.distance, 4.0), 0.0, 1.0);
+
+            float d =  max( dot( N, -direction ), 0.0 ) * decay;
+            lightDiffuse += pointLight.color * d;
+
+            float3 halfDir = normalize( V - direction );
+            float s = pow( clamp( dot( N, halfDir ), 0.0, 1.0 ), u_shininess )  * decay;
+            lightSpecular += pointLight.color * s;
+        }
+    }
+    if (spotLightCount) {
+        SpotLight spotLight;
+
+        for( int i = 0; i < spotLightCount; i++) {
+            spotLight.color = u_spotLightColor[i];
+            spotLight.position = u_spotLightPosition[i];
+            spotLight.direction = u_spotLightDirection[i];
+            spotLight.distance = u_spotLightDistance[i];
+            spotLight.angleCos = u_spotLightAngleCos[i];
+            spotLight.penumbraCos = u_spotLightPenumbraCos[i];
+
+            float3 direction = spotLight.position - in.v_pos;
+            float lightDistance = length( direction );
+            direction /= lightDistance;
+            float angleCos = dot( direction, -spotLight.direction );
+            float decay = clamp(1.0 - pow(lightDistance/spotLight.distance, 4.0), 0.0, 1.0);
+            float spotEffect = smoothstep( spotLight.penumbraCos, spotLight.angleCos, angleCos );
+            float decayTotal = decay * spotEffect;
+            float d = max( dot( N, direction ), 0.0 )  * decayTotal;
+            lightDiffuse += spotLight.color * d;
+
+            float3 halfDir = normalize( V + direction );
+            float s = pow( clamp( dot( N, halfDir ), 0.0, 1.0 ), u_shininess ) * decayTotal;
+            lightSpecular += spotLight.color * s;
+        }
+    }
+    
+    diffuse *= float4( lightDiffuse, 1.0 );
+    specular *= float4( lightSpecular, 1.0 );
+    if (alphaCutoff) {
+        if( diffuse.a < u_alphaCutoff ) {
+            discard_fragment();
+        }
+    }
+    
+    float4 final_color = emission + ambient + diffuse + specular;
+    final_color.a = diffuse.a;
+    return final_color;
 }
