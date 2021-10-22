@@ -17,9 +17,15 @@ constant bool hasVertexColor [[function_constant(HAS_VERTEXCOLOR)]];
 constant bool isBlendShape [[function_constant(BLENDSHAPE)]];
 constant bool hasBlendShapeNormal [[function_constant(BLENDSHAPE_NORMAL)]];
 constant bool hasBlendShapeTangent [[function_constant(BLENDSHAPE_TANGENT)]];
+constant bool isBlendShapeAndHasBlendShapeNormal = isBlendShape && hasBlendShapeNormal;
+constant bool isBlendShapeAndhasBlendShapeTangent = isBlendShape && hasBlendShapeTangent;
+
 
 constant bool hasSkin [[function_constant(HAS_SKIN)]];
 constant bool hasJointTexture [[function_constant(USE_JOINT_TEXTURE)]];
+constant bool hasSkinAndHasJointTexture = hasSkin && hasJointTexture;
+constant bool hasSkinNotHasJointTexture = hasSkin && !hasJointTexture;
+
 constant int jointsNum [[function_constant(JOINTS_NUM)]];
 
 constant bool alphaCutoff [[function_constant(ALPHA_CUTOFF)]];
@@ -29,7 +35,15 @@ constant bool diffuseTexture [[function_constant(DIFFUSE_TEXTURE)]];
 constant bool specularTexture [[function_constant(SPECULAR_TEXTURE)]];
 constant bool emissiveTexture [[function_constant(EMISSIVE_TEXTURE)]];
 constant bool normalTexture [[function_constant(NORMAL_TEXTURE)]];
+
 constant bool omitNormal [[function_constant(OMIT_NORMAL)]];
+constant bool notOmitNormalAndHasNormal = !omitNormal && hasNormal;
+constant bool notOmitNormalAndHasTangent = !omitNormal && hasTangent;
+
+constant bool hasNormalAndHasTangentAndNormalTexture = hasNormal && hasTangent && normalTexture;
+constant bool hasNormalNotHasTangentNotNormalTexture = hasNormal && (!hasTangent || !normalTexture);
+
+
 constant bool baseTexture [[function_constant(BASE_TEXTURE)]];
 constant bool baseColorMap [[function_constant(BASE_COLORMAP)]];
 constant bool hasEmissiveMap [[function_constant(HAS_EMISSIVEMAP)]];
