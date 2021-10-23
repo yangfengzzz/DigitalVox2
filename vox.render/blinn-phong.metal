@@ -42,7 +42,7 @@ struct VertexOut {
     float3 v_normal [[function_constant(hasNormalNotHasTangentOrHasNormalTexture)]];
 };
 
-vertex VertexOut vertex_blinn_phong(const VertexIn vertexIn [[stage_in]],
+vertex VertexOut vertex_blinn_phong(const VertexIn in [[stage_in]],
                                     constant matrix_float4x4 &u_localMat [[buffer(0)]],
                                     constant matrix_float4x4 &u_modelMat [[buffer(1)]],
                                     constant matrix_float4x4 &u_viewMat [[buffer(2)]],
@@ -62,35 +62,35 @@ vertex VertexOut vertex_blinn_phong(const VertexIn vertexIn [[stage_in]],
     VertexOut out;
     
     // begin position
-    float4 position = float4( vertexIn.position, 1.0);
+    float4 position = float4( in.position, 1.0);
     
     //begin normal
     float3 normal;
     float4 tangent;
     if (hasNormal) {
-        normal = vertexIn.NORMAL;
+        normal = in.NORMAL;
         if (hasTangent && hasNormalTexture) {
-            tangent = vertexIn.TANGENT;
+            tangent = in.TANGENT;
         }
     }
     
     //blendshape
     if (hasBlendShape) {
-        position.xyz += vertexIn.POSITION_BS0 * u_blendShapeWeights[0];
-        position.xyz += vertexIn.POSITION_BS1 * u_blendShapeWeights[1];
-        position.xyz += vertexIn.POSITION_BS2 * u_blendShapeWeights[2];
-        position.xyz += vertexIn.POSITION_BS3 * u_blendShapeWeights[3];
+        position.xyz += in.POSITION_BS0 * u_blendShapeWeights[0];
+        position.xyz += in.POSITION_BS1 * u_blendShapeWeights[1];
+        position.xyz += in.POSITION_BS2 * u_blendShapeWeights[2];
+        position.xyz += in.POSITION_BS3 * u_blendShapeWeights[3];
         if (hasNormal && hasBlendShapeNormal) {
-            normal.xyz += vertexIn.NORMAL_BS0 * u_blendShapeWeights[0];
-            normal.xyz += vertexIn.NORMAL_BS1 * u_blendShapeWeights[1];
-            normal.xyz += vertexIn.NORMAL_BS2 * u_blendShapeWeights[2];
-            normal.xyz += vertexIn.NORMAL_BS3 * u_blendShapeWeights[3];
+            normal.xyz += in.NORMAL_BS0 * u_blendShapeWeights[0];
+            normal.xyz += in.NORMAL_BS1 * u_blendShapeWeights[1];
+            normal.xyz += in.NORMAL_BS2 * u_blendShapeWeights[2];
+            normal.xyz += in.NORMAL_BS3 * u_blendShapeWeights[3];
         }
         if (hasTangent && hasNormalTexture && hasBlendShapeTangent) {
-            tangent.xyz += vertexIn.TANGENT_BS0 * u_blendShapeWeights[0];
-            tangent.xyz += vertexIn.TANGENT_BS1 * u_blendShapeWeights[1];
-            tangent.xyz += vertexIn.TANGENT_BS2 * u_blendShapeWeights[2];
-            tangent.xyz += vertexIn.TANGENT_BS3 * u_blendShapeWeights[3];
+            tangent.xyz += in.TANGENT_BS0 * u_blendShapeWeights[0];
+            tangent.xyz += in.TANGENT_BS1 * u_blendShapeWeights[1];
+            tangent.xyz += in.TANGENT_BS2 * u_blendShapeWeights[2];
+            tangent.xyz += in.TANGENT_BS3 * u_blendShapeWeights[3];
         }
     }
     
@@ -99,16 +99,16 @@ vertex VertexOut vertex_blinn_phong(const VertexIn vertexIn [[stage_in]],
         matrix_float4x4 skinMatrix;
         if (hasJointTexture) {
             skinMatrix =
-            vertexIn.WEIGHTS_0.x * getJointMatrix(u_jointSampler, u_jointTexture, vertexIn.JOINTS_0.x, u_jointCount) +
-            vertexIn.WEIGHTS_0.y * getJointMatrix(u_jointSampler, u_jointTexture, vertexIn.JOINTS_0.y, u_jointCount) +
-            vertexIn.WEIGHTS_0.z * getJointMatrix(u_jointSampler, u_jointTexture, vertexIn.JOINTS_0.z, u_jointCount) +
-            vertexIn.WEIGHTS_0.w * getJointMatrix(u_jointSampler, u_jointTexture, vertexIn.JOINTS_0.w, u_jointCount);
+            in.WEIGHTS_0.x * getJointMatrix(u_jointSampler, u_jointTexture, in.JOINTS_0.x, u_jointCount) +
+            in.WEIGHTS_0.y * getJointMatrix(u_jointSampler, u_jointTexture, in.JOINTS_0.y, u_jointCount) +
+            in.WEIGHTS_0.z * getJointMatrix(u_jointSampler, u_jointTexture, in.JOINTS_0.z, u_jointCount) +
+            in.WEIGHTS_0.w * getJointMatrix(u_jointSampler, u_jointTexture, in.JOINTS_0.w, u_jointCount);
         } else {
             skinMatrix =
-            vertexIn.WEIGHTS_0.x * u_jointMatrix[int(vertexIn.JOINTS_0.x)] +
-            vertexIn.WEIGHTS_0.y * u_jointMatrix[int(vertexIn.JOINTS_0.y)] +
-            vertexIn.WEIGHTS_0.z * u_jointMatrix[int(vertexIn.JOINTS_0.z)] +
-            vertexIn.WEIGHTS_0.w * u_jointMatrix[int(vertexIn.JOINTS_0.w)];
+            in.WEIGHTS_0.x * u_jointMatrix[int(in.JOINTS_0.x)] +
+            in.WEIGHTS_0.y * u_jointMatrix[int(in.JOINTS_0.y)] +
+            in.WEIGHTS_0.z * u_jointMatrix[int(in.JOINTS_0.z)] +
+            in.WEIGHTS_0.w * u_jointMatrix[int(in.JOINTS_0.w)];
         }
         position = skinMatrix * position;
         if (hasNormal && !omitNormal) {
@@ -121,7 +121,7 @@ vertex VertexOut vertex_blinn_phong(const VertexIn vertexIn [[stage_in]],
     
     // uv
     if (hasUV) {
-        out.v_uv = vertexIn.TEXCOORD_0;
+        out.v_uv = in.TEXCOORD_0;
     } else {
         out.v_uv = float2(0.0, 0.0);
     }
@@ -131,7 +131,7 @@ vertex VertexOut vertex_blinn_phong(const VertexIn vertexIn [[stage_in]],
     
     // color
     if (hasVertexColor) {
-        out.v_color = vertexIn.COLOR_0;
+        out.v_color = in.COLOR_0;
     }
     
     // normal
@@ -298,14 +298,14 @@ fragment float4 fragment_blinn_phong(VertexOut in [[stage_in]],
     float3 lightSpecular = float3( 0.0, 0.0, 0.0 );
     if (hasDirectLight) {
         DirectLight directionalLight;
-
+        
         for( int i = 0; i < directLightCount; i++ ) {
             directionalLight.color = u_directLightColor[i];
             directionalLight.direction = u_directLightDirection[i];
-
+            
             float d = max(dot(N, -directionalLight.direction), 0.0);
             lightDiffuse += directionalLight.color * d;
-
+            
             float3 halfDir = normalize( V - directionalLight.direction );
             float s = pow( clamp( dot( N, halfDir ), 0.0, 1.0 ), u_shininess );
             lightSpecular += directionalLight.color * s;
@@ -313,20 +313,20 @@ fragment float4 fragment_blinn_phong(VertexOut in [[stage_in]],
     }
     if (hasPointLight) {
         PointLight pointLight;
-
+        
         for( int i = 0; i < pointLightCount; i++ ) {
             pointLight.color = u_pointLightColor[i];
             pointLight.position = u_pointLightPosition[i];
             pointLight.distance = u_pointLightDistance[i];
-
+            
             float3 direction = in.v_pos - pointLight.position;
             float dist = length( direction );
             direction /= dist;
             float decay = clamp(1.0 - pow(dist / pointLight.distance, 4.0), 0.0, 1.0);
-
+            
             float d =  max( dot( N, -direction ), 0.0 ) * decay;
             lightDiffuse += pointLight.color * d;
-
+            
             float3 halfDir = normalize( V - direction );
             float s = pow( clamp( dot( N, halfDir ), 0.0, 1.0 ), u_shininess )  * decay;
             lightSpecular += pointLight.color * s;
@@ -334,7 +334,7 @@ fragment float4 fragment_blinn_phong(VertexOut in [[stage_in]],
     }
     if (hasSpotLight) {
         SpotLight spotLight;
-
+        
         for( int i = 0; i < spotLightCount; i++) {
             spotLight.color = u_spotLightColor[i];
             spotLight.position = u_spotLightPosition[i];
@@ -342,7 +342,7 @@ fragment float4 fragment_blinn_phong(VertexOut in [[stage_in]],
             spotLight.distance = u_spotLightDistance[i];
             spotLight.angleCos = u_spotLightAngleCos[i];
             spotLight.penumbraCos = u_spotLightPenumbraCos[i];
-
+            
             float3 direction = spotLight.position - in.v_pos;
             float lightDistance = length( direction );
             direction /= lightDistance;
@@ -352,7 +352,7 @@ fragment float4 fragment_blinn_phong(VertexOut in [[stage_in]],
             float decayTotal = decay * spotEffect;
             float d = max( dot( N, direction ), 0.0 )  * decayTotal;
             lightDiffuse += spotLight.color * d;
-
+            
             float3 halfDir = normalize( V + direction );
             float s = pow( clamp( dot( N, halfDir ), 0.0, 1.0 ), u_shininess ) * decayTotal;
             lightSpecular += spotLight.color * s;
