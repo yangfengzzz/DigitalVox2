@@ -204,7 +204,7 @@
 		04A6BEAF271C4DA30024DF43 /* ShaderMacroCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447D54526F803B300272D7C /* ShaderMacroCollection.swift */; };
 		04A6BEB127204F3C0024DF43 /* common_vert.metal in Sources */ = {isa = PBXBuildFile; fileRef = 04A6BEB027204F3C0024DF43 /* common_vert.metal */; };
 		04A6BEB327204FE20024DF43 /* blinn-phong.metal in Sources */ = {isa = PBXBuildFile; fileRef = 04A6BEB227204FE20024DF43 /* blinn-phong.metal */; };
-		04A6BEB52720DCD80024DF43 /* functionConstant.metal in Sources */ = {isa = PBXBuildFile; fileRef = 04A6BEB42720DCD80024DF43 /* functionConstant.metal */; };
+		04A6BEB52720DCD80024DF43 /* function-constant.metal in Sources */ = {isa = PBXBuildFile; fileRef = 04A6BEB42720DCD80024DF43 /* function-constant.metal */; };
 		04AE07C227029F3300F1D8C5 /* LightShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE07C127029F3300F1D8C5 /* LightShadow.swift */; };
 		04AE07C42702A3AC00F1D8C5 /* ShadowMapMaterial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE07C32702A3AC00F1D8C5 /* ShadowMapMaterial.swift */; };
 		04AE07C62702A40800F1D8C5 /* ShadowMapPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE07C52702A40800F1D8C5 /* ShadowMapPass.swift */; };
@@ -543,7 +543,7 @@
 		0497A20F26DF151700F61DE9 /* DigitalVox2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DigitalVox2.entitlements; sourceTree = "<group>"; };
 		04A6BEB027204F3C0024DF43 /* common_vert.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = common_vert.metal; sourceTree = "<group>"; };
 		04A6BEB227204FE20024DF43 /* blinn-phong.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = "blinn-phong.metal"; sourceTree = "<group>"; };
-		04A6BEB42720DCD80024DF43 /* functionConstant.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = functionConstant.metal; sourceTree = "<group>"; };
+		04A6BEB42720DCD80024DF43 /* function-constant.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = "function-constant.metal"; sourceTree = "<group>"; };
 		04AE07C127029F3300F1D8C5 /* LightShadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightShadow.swift; sourceTree = "<group>"; };
 		04AE07C32702A3AC00F1D8C5 /* ShadowMapMaterial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowMapMaterial.swift; sourceTree = "<group>"; };
 		04AE07C52702A40800F1D8C5 /* ShadowMapPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowMapPass.swift; sourceTree = "<group>"; };
@@ -1124,7 +1124,7 @@
 				0452ECCB26DFA5360015BFB1 /* Common.h */,
 				04198A1C271D3C2700871A26 /* ShaderCommon.h */,
 				0447D54426F8020B00272D7C /* MacroName.h */,
-				04A6BEB42720DCD80024DF43 /* functionConstant.metal */,
+				04A6BEB42720DCD80024DF43 /* function-constant.metal */,
 				04A6BEB227204FE20024DF43 /* blinn-phong.metal */,
 				0497A1EA26DF150800F61DE9 /* Preview Content */,
 				0497A1ED26DF150800F61DE9 /* Info.plist */,
@@ -1730,7 +1730,7 @@
 				04F6AA702701579D00A0D6F6 /* PhysicsManager.swift in Sources */,
 				0419B6DE26E701FE00005FEA /* Script.swift in Sources */,
 				04FF83BA271800E10016CFC3 /* ResourceCache.swift in Sources */,
-				04A6BEB52720DCD80024DF43 /* functionConstant.metal in Sources */,
+				04A6BEB52720DCD80024DF43 /* function-constant.metal in Sources */,
 				0413287B26E07BA3000A4F4E /* Ray.swift in Sources */,
 				04832F032701F266001AD421 /* BlendShape.swift in Sources */,
 				043CB44426F2E0CD004A0B21 /* Shader.swift in Sources */,
