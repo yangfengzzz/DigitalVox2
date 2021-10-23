@@ -9,7 +9,7 @@
 using namespace metal;
 #include "function-constant.metal"
 
-struct VertexIn {
+typedef struct {
     float3 position [[attribute(Position)]];
     float3 NORMAL [[attribute(Normal), function_constant(notOmitNormalAndHasNormal)]];
     float4 COLOR_0 [[attribute(Color_0), function_constant(hasVertexColor)]];
@@ -29,12 +29,12 @@ struct VertexIn {
     float3 TANGENT_BS1 [[attribute(21), function_constant(hasBlendShapeAndhasBlendShapeTangent)]];
     float3 TANGENT_BS2 [[attribute(22), function_constant(hasBlendShapeAndhasBlendShapeTangent)]];
     float3 TANGENT_BS3 [[attribute(23), function_constant(hasBlendShapeAndhasBlendShapeTangent)]];
-};
+} VertexIn;
 
-struct VertexOut {
+typedef struct {
     float4 position [[position]];
     float2 v_uv;
-};
+} VertexOut;
 
 vertex VertexOut vertex_unlit(const VertexIn in [[stage_in]],
                               constant matrix_float4x4 &u_MVPMat [[buffer(0)]],

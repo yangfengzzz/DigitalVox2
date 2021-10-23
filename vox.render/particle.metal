@@ -9,7 +9,7 @@
 using namespace metal;
 #include "function-constant.metal"
 
-struct VertexIn {
+typedef struct {
     float3 a_position [[attribute(0)]];
     float3 a_velocity [[attribute(1)]];
     float3 a_acceleration [[attribute(2)]];
@@ -20,14 +20,14 @@ struct VertexIn {
     
     float3 a_uv [[attribute(6)]];
     float2 a_normalizedUv [[attribute(7)]];
-};
+} VertexIn;
 
-struct VertexOut {
+typedef struct {
     float4 position [[position]];
     float4 v_color;
     float v_lifeLeft;
     float2 v_uv;
-};
+} VertexOut;
 
 matrix_float2x2 rotation2d(float angle) {
     float s = sin(angle);

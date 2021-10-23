@@ -9,7 +9,7 @@
 using namespace metal;
 #include "function-constant.metal"
 
-struct VertexIn {
+typedef struct {
     float3 position [[attribute(Position)]];
     float3 NORMAL [[attribute(Normal), function_constant(notOmitNormalAndHasNormal)]];
     float4 COLOR_0 [[attribute(Color_0), function_constant(hasVertexColor)]];
@@ -29,9 +29,9 @@ struct VertexIn {
     float3 TANGENT_BS1 [[attribute(21), function_constant(hasBlendShapeAndhasBlendShapeTangent)]];
     float3 TANGENT_BS2 [[attribute(22), function_constant(hasBlendShapeAndhasBlendShapeTangent)]];
     float3 TANGENT_BS3 [[attribute(23), function_constant(hasBlendShapeAndhasBlendShapeTangent)]];
-};
+} VertexIn;
 
-struct VertexOut {
+typedef struct {
     float4 position [[position]];
     float3 v_pos [[function_constant(needWorldPos)]];
     float2 v_uv;
@@ -40,7 +40,7 @@ struct VertexOut {
     float3 tangentW [[function_constant(hasNormalAndHasTangentAndHasNormalTexture)]];
     float3 bitangentW [[function_constant(hasNormalAndHasTangentAndHasNormalTexture)]];
     float3 v_normal [[function_constant(hasNormalNotHasTangentOrHasNormalTexture)]];
-};
+} VertexOut;
 
 vertex VertexOut vertex_blinn_phong(const VertexIn in [[stage_in]],
                                     constant matrix_float4x4 &u_localMat [[buffer(0)]],
@@ -167,33 +167,33 @@ vertex VertexOut vertex_blinn_phong(const VertexIn in [[stage_in]],
     return out;
 }
 
-struct EnvMapLight {
+typedef struct {
     float3 diffuse;
     float mipMapLevel;
     float diffuseIntensity;
     float specularIntensity;
     matrix_float4x4 transformMatrix;
-};
+} EnvMapLight;
 
-struct DirectLight {
+typedef struct {
     float3 color;
     float3 direction;
-};
+} DirectLight;
 
-struct PointLight {
+typedef struct {
     float3 color;
     float3 position;
     float distance;
-};
+} PointLight;
 
-struct SpotLight {
+typedef struct {
     float3 color;
     float3 position;
     float3 direction;
     float distance;
     float angleCos;
     float penumbraCos;
-};
+} SpotLight;
 
 float3 getNormal(VertexOut in, float u_normalIntensity,
                  sampler smp, texture2d<float> u_normalTexture,

@@ -9,15 +9,15 @@
 using namespace metal;
 #include "function-constant.metal"
 
-struct VertexIn {
+typedef struct {
     float3 position [[attribute(Position)]];
     float2 TEXCOORD_0 [[attribute(UV_0)]];
-};
+} VertexIn;
 
-struct VertexOut {
+typedef struct {
     float4 position [[position]];
     float2 v_uv;
-};
+} VertexOut;
 
 vertex VertexOut vertex_background_texture(const VertexIn vertexIn [[stage_in]]) {
     VertexOut out;

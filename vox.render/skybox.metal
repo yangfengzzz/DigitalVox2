@@ -9,14 +9,14 @@
 using namespace metal;
 #include "function-constant.metal"
 
-struct VertexIn {
+typedef struct {
     float3 position [[attribute(Position)]];
-};
+} VertexIn;
 
-struct VertexOut {
+typedef struct {
     float4 position [[position]];
     float3 v_cubeUV;
-};
+} VertexOut;
 
 vertex VertexOut vertex_skybox(const VertexIn in [[stage_in]],
                                constant matrix_float4x4 &u_mvpNoscale [[buffer(0)]]) {
