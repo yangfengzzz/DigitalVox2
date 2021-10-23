@@ -62,7 +62,7 @@ typedef enum {
     NEED_SCALE_BY_LIFE_TIME = 33,
     NEED_FADE_IN = 34,
     NEED_FADE_OUT = 35,
-    IS_TWO_DIMENSION = 36,
+    IS_2D = 36,
 
     // Shadow
     NEED_GENERATE_SHADOW_MAP = 37,

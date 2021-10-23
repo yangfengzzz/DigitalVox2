@@ -403,9 +403,9 @@ class ParticleRenderer: MeshRenderer {
         }
         set {
             if (newValue) {
-                shaderData.enableMacro(IS_TWO_DIMENSION)
+                shaderData.enableMacro(IS_2D)
             } else {
-                shaderData.disableMacro(IS_TWO_DIMENSION)
+                shaderData.disableMacro(IS_2D)
                 getMaterial()!.renderState.rasterState.cullMode = .none
             }
 
