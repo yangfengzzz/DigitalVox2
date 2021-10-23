@@ -11,6 +11,6 @@ import Foundation
 class ShadowMapMaterial: Material {
     init(_ engine: Engine) {
         super.init(engine, Shader.find("shadow-map")!)
-        shaderData.enableMacro(GENERATE_SHADOW_MAP)
+        shaderData.enableMacro(NEED_GENERATE_SHADOW_MAP)
     }
 }

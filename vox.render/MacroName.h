@@ -8,6 +8,11 @@
 #ifndef MacroName_h
 #define MacroName_h
 
+// int have no verb, other will use:
+// HAS_ : Resouce
+// OMMIT_ : Omit Resouce
+// NEED_ : Shader Operation
+// IS_ : Shader control flow
 typedef enum {
     HAS_UV = 0,
     HAS_NORMAL = 1,
@@ -47,20 +52,20 @@ typedef enum {
     SPOT_LIGHT_COUNT = 27,
 
     // Enviroment
-    USE_SH = 28,
-    USE_SPECULAR_ENV = 29,
+    HAS_SH = 28,
+    HAS_SPECULAR_ENV = 29,
     
     // Particle Render
-    PARTICLE_TEXTURE = 30,
-    ROTATE_TO_VELOCITY = 31,
-    USE_ORIGIN_COLOR = 32,
-    SCALE_BY_LIFE_TIME = 33,
-    TWO_DIMENSION = 34,
-    FADE_IN = 35,
-    FADE_OUT = 36,
-    
+    HAS_PARTICLE_TEXTURE = 30,
+    NEED_ROTATE_TO_VELOCITY = 31,
+    NEED_USE_ORIGIN_COLOR = 32,
+    NEED_SCALE_BY_LIFE_TIME = 33,
+    NEED_FADE_IN = 34,
+    NEED_FADE_OUT = 35,
+    IS_TWO_DIMENSION = 36,
+
     // Shadow
-    GENERATE_SHADOW_MAP = 37,
+    NEED_GENERATE_SHADOW_MAP = 37,
     SHADOW_MAP_COUNT = 38,
     
     None = 39,

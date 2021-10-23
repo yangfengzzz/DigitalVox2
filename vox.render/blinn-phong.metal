@@ -172,7 +172,7 @@ vertex VertexOut vertex_blinn_phong(const VertexIn vertexIn [[stage_in]],
     }
     
     // shadow && position
-    if (generateShadowMap) {
+    if (needGenerateShadowMap) {
         out.position = u_projMatFromLight * u_viewMatFromLight * u_modelMat * position;
     } else {
         out.position = u_MVPMat * position;
@@ -260,19 +260,19 @@ fragment float4 fragment_blinn_phong(VertexOut in [[stage_in]],
                                      constant matrix_float4x4 &u_normalMat [[buffer(6)]],
                                      constant float3 &u_cameraPos [[buffer(7)]],
                                      constant EnvMapLight &u_envMapLight [[buffer(8)]],
-                                     constant float3 *u_env_sh [[buffer(9), function_constant(useSH)]],
-                                     texturecube<float> u_env_specularTexture [[texture(0), function_constant(useSpecularEnv)]],
-                                     constant float3 *u_directLightColor [[buffer(10), function_constant(directLightCount)]],
-                                     constant float3 *u_directLightDirection [[buffer(11), function_constant(directLightCount)]],
-                                     constant float3 *u_pointLightColor [[buffer(12), function_constant(pointLightCount)]],
-                                     constant float3 *u_pointLightPosition [[buffer(13), function_constant(pointLightCount)]],
-                                     constant float *u_pointLightDistance [[buffer(14), function_constant(pointLightCount)]],
-                                     constant float3 *u_spotLightColor [[buffer(15), function_constant(spotLightCount)]],
-                                     constant float3 *u_spotLightPosition [[buffer(16), function_constant(spotLightCount)]],
-                                     constant float3 *u_spotLightDirection [[buffer(17), function_constant(spotLightCount)]],
-                                     constant float *u_spotLightDistance [[buffer(18), function_constant(spotLightCount)]],
-                                     constant float *u_spotLightAngleCos [[buffer(19), function_constant(spotLightCount)]],
-                                     constant float *u_spotLightPenumbraCos [[buffer(20), function_constant(spotLightCount)]],
+                                     constant float3 *u_env_sh [[buffer(9), function_constant(hasSH)]],
+                                     texturecube<float> u_env_specularTexture [[texture(0), function_constant(hasSpecularEnv)]],
+                                     constant float3 *u_directLightColor [[buffer(10), function_constant(hasDirectLight)]],
+                                     constant float3 *u_directLightDirection [[buffer(11), function_constant(hasDirectLight)]],
+                                     constant float3 *u_pointLightColor [[buffer(12), function_constant(hasPointLight)]],
+                                     constant float3 *u_pointLightPosition [[buffer(13), function_constant(hasPointLight)]],
+                                     constant float *u_pointLightDistance [[buffer(14), function_constant(hasPointLight)]],
+                                     constant float3 *u_spotLightColor [[buffer(15), function_constant(hasSpotLight)]],
+                                     constant float3 *u_spotLightPosition [[buffer(16), function_constant(hasSpotLight)]],
+                                     constant float3 *u_spotLightDirection [[buffer(17), function_constant(hasSpotLight)]],
+                                     constant float *u_spotLightDistance [[buffer(18), function_constant(hasSpotLight)]],
+                                     constant float *u_spotLightAngleCos [[buffer(19), function_constant(hasSpotLight)]],
+                                     constant float *u_spotLightPenumbraCos [[buffer(20), function_constant(hasSpotLight)]],
                                      constant float4 &u_emissiveColor [[buffer(21)]],
                                      constant float4 &u_diffuseColor [[buffer(22)]],
                                      constant float4 &u_specularColor [[buffer(23)]],
@@ -310,7 +310,7 @@ fragment float4 fragment_blinn_phong(VertexOut in [[stage_in]],
     float3 N = getNormal(in, u_normalIntensity, textureSampler, u_normalTexture, is_front_face);
     float3 lightDiffuse = float3( 0.0, 0.0, 0.0 );
     float3 lightSpecular = float3( 0.0, 0.0, 0.0 );
-    if (directLightCount) {
+    if (hasDirectLight) {
         DirectLight directionalLight;
 
         for( int i = 0; i < directLightCount; i++ ) {
@@ -325,7 +325,7 @@ fragment float4 fragment_blinn_phong(VertexOut in [[stage_in]],
             lightSpecular += directionalLight.color * s;
         }
     }
-    if (pointLightCount) {
+    if (hasPointLight) {
         PointLight pointLight;
 
         for( int i = 0; i < pointLightCount; i++ ) {
@@ -346,7 +346,7 @@ fragment float4 fragment_blinn_phong(VertexOut in [[stage_in]],
             lightSpecular += pointLight.color * s;
         }
     }
-    if (spotLightCount) {
+    if (hasSpotLight) {
         SpotLight spotLight;
 
         for( int i = 0; i < spotLightCount; i++) {

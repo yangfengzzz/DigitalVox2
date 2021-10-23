@@ -48,19 +48,22 @@ constant bool hasMetalRoughnessMap [[function_constant(HAS_METALROUGHNESSMAP)]];
 constant bool isMetallicWorkFlow [[function_constant(IS_METALLIC_WORKFLOW)]];
 
 constant int directLightCount [[function_constant(DIRECT_LIGHT_COUNT)]];
+constant bool hasDirectLight = directLightCount > 0;
 constant int pointLightCount [[function_constant(POINT_LIGHT_COUNT)]];
+constant bool hasPointLight = pointLightCount > 0;
 constant int spotLightCount [[function_constant(SPOT_LIGHT_COUNT)]];
+constant bool hasSpotLight = spotLightCount > 0;
 
-constant bool useSH [[function_constant(USE_SH)]];
-constant bool useSpecularEnv [[function_constant(USE_SPECULAR_ENV)]];
+constant bool hasSH [[function_constant(HAS_SH)]];
+constant bool hasSpecularEnv [[function_constant(HAS_SPECULAR_ENV)]];
 
-constant bool particleTexture [[function_constant(PARTICLE_TEXTURE)]];
-constant bool rotateToVelocity [[function_constant(ROTATE_TO_VELOCITY)]];
-constant bool useOriginColor [[function_constant(USE_ORIGIN_COLOR)]];
-constant bool ScaleByLifetime [[function_constant(SCALE_BY_LIFE_TIME)]];
-constant bool twoDimension [[function_constant(TWO_DIMENSION)]];
-constant bool fadeIn [[function_constant(FADE_IN)]];
-constant bool fadeOut [[function_constant(FADE_OUT)]];
+constant bool hasParticleTexture [[function_constant(HAS_PARTICLE_TEXTURE)]];
+constant bool needRotateToVelocity [[function_constant(NEED_ROTATE_TO_VELOCITY)]];
+constant bool needUseOriginColor [[function_constant(NEED_USE_ORIGIN_COLOR)]];
+constant bool needScaleByLifetime [[function_constant(NEED_SCALE_BY_LIFE_TIME)]];
+constant bool needFadeIn [[function_constant(NEED_FADE_IN)]];
+constant bool needFadeOut [[function_constant(NEED_FADE_OUT)]];
+constant bool isTwoDimension [[function_constant(IS_TWO_DIMENSION)]];
 
-constant bool generateShadowMap [[function_constant(GENERATE_SHADOW_MAP)]];
+constant bool needGenerateShadowMap [[function_constant(NEED_GENERATE_SHADOW_MAP)]];
 constant int shadowMapCount [[function_constant(SHADOW_MAP_COUNT)]];

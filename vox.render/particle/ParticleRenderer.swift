@@ -86,10 +86,10 @@ class ParticleRenderer: MeshRenderer {
         }
         set {
             if (newValue != nil) {
-                shaderData.enableMacro(PARTICLE_TEXTURE)
+                shaderData.enableMacro(HAS_PARTICLE_TEXTURE)
                 getMaterial()!.shaderData.setTexture("u_texture", newValue!)
             } else {
-                shaderData.disableMacro(PARTICLE_TEXTURE)
+                shaderData.disableMacro(HAS_PARTICLE_TEXTURE)
             }
         }
     }
@@ -355,9 +355,9 @@ class ParticleRenderer: MeshRenderer {
         }
         set {
             if (newValue) {
-                shaderData.enableMacro(ROTATE_TO_VELOCITY)
+                shaderData.enableMacro(NEED_ROTATE_TO_VELOCITY)
             } else {
-                shaderData.disableMacro(ROTATE_TO_VELOCITY)
+                shaderData.disableMacro(NEED_ROTATE_TO_VELOCITY)
             }
 
             _isRotateToVelocity = newValue
@@ -371,9 +371,9 @@ class ParticleRenderer: MeshRenderer {
         }
         set {
             if (newValue) {
-                shaderData.enableMacro(USE_ORIGIN_COLOR)
+                shaderData.enableMacro(NEED_USE_ORIGIN_COLOR)
             } else {
-                shaderData.disableMacro(USE_ORIGIN_COLOR)
+                shaderData.disableMacro(NEED_USE_ORIGIN_COLOR)
             }
 
             _isUseOriginColor = newValue
@@ -387,9 +387,9 @@ class ParticleRenderer: MeshRenderer {
         }
         set {
             if (newValue) {
-                shaderData.enableMacro(SCALE_BY_LIFE_TIME)
+                shaderData.enableMacro(NEED_SCALE_BY_LIFE_TIME)
             } else {
-                shaderData.disableMacro(SCALE_BY_LIFE_TIME)
+                shaderData.disableMacro(NEED_SCALE_BY_LIFE_TIME)
             }
 
             _isScaleByLifetime = newValue
@@ -403,9 +403,9 @@ class ParticleRenderer: MeshRenderer {
         }
         set {
             if (newValue) {
-                shaderData.enableMacro(TWO_DIMENSION)
+                shaderData.enableMacro(IS_TWO_DIMENSION)
             } else {
-                shaderData.disableMacro(TWO_DIMENSION)
+                shaderData.disableMacro(IS_TWO_DIMENSION)
                 getMaterial()!.renderState.rasterState.cullMode = .none
             }
 
@@ -420,9 +420,9 @@ class ParticleRenderer: MeshRenderer {
         }
         set {
             if (newValue) {
-                shaderData.enableMacro(FADE_IN)
+                shaderData.enableMacro(NEED_FADE_IN)
             } else {
-                shaderData.disableMacro(FADE_IN)
+                shaderData.disableMacro(NEED_FADE_IN)
             }
 
             _isFadeIn = newValue
@@ -436,9 +436,9 @@ class ParticleRenderer: MeshRenderer {
         }
         set {
             if (newValue) {
-                shaderData.enableMacro(FADE_OUT)
+                shaderData.enableMacro(NEED_FADE_OUT)
             } else {
-                shaderData.disableMacro(FADE_OUT)
+                shaderData.disableMacro(NEED_FADE_OUT)
             }
 
             _isFadeOut = newValue

@@ -35,9 +35,9 @@ class AmbientLight {
         set {
             _diffuseMode = newValue
             if (newValue == .SphericalHarmonics) {
-                _scene.shaderData.enableMacro(USE_SH)
+                _scene.shaderData.enableMacro(HAS_SH)
             } else {
-                _scene.shaderData.disableMacro(USE_SH)
+                _scene.shaderData.disableMacro(HAS_SH)
             }
         }
     }
@@ -95,9 +95,9 @@ class AmbientLight {
             if (newValue != nil) {
                 shaderData.setTexture(AmbientLight._specularTextureProperty, newValue!)
                 shaderData.setInt(AmbientLight._mipLevelProperty, _specularReflection!.mipmapLevelCount)
-                shaderData.enableMacro(USE_SPECULAR_ENV)
+                shaderData.enableMacro(HAS_SPECULAR_ENV)
             } else {
-                shaderData.disableMacro(USE_SPECULAR_ENV)
+                shaderData.disableMacro(HAS_SPECULAR_ENV)
             }
         }
     }
