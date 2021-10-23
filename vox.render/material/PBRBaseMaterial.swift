@@ -42,9 +42,9 @@ class PBRBaseMaterial: BaseMaterial {
         set {
             if newValue != nil {
                 shaderData.setTexture(PBRBaseMaterial._baseTextureProp, newValue!)
-                shaderData.enableMacro(BASE_COLORMAP)
+                shaderData.enableMacro(HAS_BASE_COLORMAP)
             } else {
-                shaderData.disableMacro(BASE_COLORMAP)
+                shaderData.disableMacro(HAS_BASE_COLORMAP)
             }
         }
     }
@@ -57,9 +57,9 @@ class PBRBaseMaterial: BaseMaterial {
         set {
             if newValue != nil {
                 shaderData.setTexture(PBRBaseMaterial._normalTextureProp, newValue!)
-                shaderData.enableMacro(NORMAL_TEXTURE)
+                shaderData.enableMacro(HAS_NORMAL_TEXTURE)
             } else {
-                shaderData.disableMacro(NORMAL_TEXTURE)
+                shaderData.disableMacro(HAS_NORMAL_TEXTURE)
             }
         }
     }
@@ -158,6 +158,6 @@ class PBRBaseMaterial: BaseMaterial {
         shaderData.setFloat(PBRBaseMaterial._normalTextureIntensityProp, 1)
         shaderData.setFloat(PBRBaseMaterial._occlusionTextureIntensityProp, 1)
         
-        shaderData.disableMacro(BASE_COLORMAP)
+        shaderData.disableMacro(HAS_BASE_COLORMAP)
     }
 }

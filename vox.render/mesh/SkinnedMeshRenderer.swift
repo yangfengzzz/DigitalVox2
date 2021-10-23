@@ -64,20 +64,20 @@ class SkinnedMeshRenderer: MeshRenderer {
         let mesh = mesh as! ModelMesh
         if (mesh._hasBlendShape) {
             shaderData.setFloatArray(SkinnedMeshRenderer._blendShapeWeightsProperty, _blendShapeWeights)
-            shaderData.enableMacro(BLENDSHAPE)
+            shaderData.enableMacro(HAS_BLENDSHAPE)
 
             if (mesh._useBlendShapeNormal) {
-                shaderData.enableMacro(BLENDSHAPE_NORMAL)
+                shaderData.enableMacro(HAS_BLENDSHAPE_NORMAL)
             } else {
-                shaderData.disableMacro(BLENDSHAPE_NORMAL)
+                shaderData.disableMacro(HAS_BLENDSHAPE_NORMAL)
             }
             if (mesh._useBlendShapeTangent) {
-                shaderData.enableMacro(BLENDSHAPE_TANGENT)
+                shaderData.enableMacro(HAS_BLENDSHAPE_TANGENT)
             } else {
-                shaderData.disableMacro(BLENDSHAPE_TANGENT)
+                shaderData.disableMacro(HAS_BLENDSHAPE_TANGENT)
             }
         } else {
-            shaderData.disableMacro(BLENDSHAPE)
+            shaderData.disableMacro(HAS_BLENDSHAPE)
         }
     }
 
@@ -108,7 +108,7 @@ class SkinnedMeshRenderer: MeshRenderer {
             } else {
                 let maxJoints = max(SkinnedMeshRenderer._maxJoints, joints.count)
                 SkinnedMeshRenderer._maxJoints = maxJoints
-                shaderData.disableMacro(USE_JOINT_TEXTURE)
+                shaderData.disableMacro(HAS_JOINT_TEXTURE)
                 shaderData.enableMacro(JOINTS_NUM, (SkinnedMeshRenderer._maxJoints, .int))
             }
         } else {
@@ -194,7 +194,7 @@ class SkinnedMeshRenderer: MeshRenderer {
             sampler.minFilter = .nearest
             jointSampler = engine._hardwareRenderer.device.makeSamplerState(descriptor: sampler)
 
-            shaderData.enableMacro(USE_JOINT_TEXTURE)
+            shaderData.enableMacro(HAS_JOINT_TEXTURE)
             shaderData.setTexture(SkinnedMeshRenderer._jointSamplerProperty, self.jointTexture!)
         }
     }

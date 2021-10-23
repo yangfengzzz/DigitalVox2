@@ -56,10 +56,10 @@ class BaseMaterial: Material {
             shaderData.setFloat(BaseMaterial._alphaCutoffProp, newValue)
 
             if (newValue > 0) {
-                shaderData.enableMacro(ALPHA_CUTOFF)
+                shaderData.enableMacro(NEED_ALPHA_CUTOFF)
                 renderQueueType = _isTransparent ? RenderQueueType.Transparent : RenderQueueType.AlphaTest
             } else {
-                shaderData.disableMacro(ALPHA_CUTOFF)
+                shaderData.disableMacro(NEED_ALPHA_CUTOFF)
                 renderQueueType = _isTransparent ? RenderQueueType.Transparent : RenderQueueType.Opaque
             }
         }

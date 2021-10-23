@@ -34,9 +34,9 @@ class UnlitMaterial: BaseMaterial {
         set {
             shaderData.setTexture(UnlitMaterial._baseTextureProp, newValue!)
             if newValue != nil {
-                shaderData.enableMacro(BASE_TEXTURE)
+                shaderData.enableMacro(HAS_BASE_TEXTURE)
             } else {
-                shaderData.disableMacro(BASE_TEXTURE)
+                shaderData.disableMacro(HAS_BASE_TEXTURE)
             }
         }
     }

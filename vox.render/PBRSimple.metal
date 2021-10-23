@@ -62,7 +62,7 @@ fragment float4 fragment_pbr(VertexOut in [[stage_in]],
                              texture2d<float> u_baseColorSampler [[texture(0)]]) {
     // extract color
     float3 baseColor;
-    if (baseColorMap) {
+    if (hasBaseColorMap) {
         baseColor = u_baseColorSampler.sample(textureSampler, in.uv).rgb;
     } else {
         baseColor = u_baseColor.xyz;

@@ -42,9 +42,9 @@ class BlinnPhongMaterial: BaseMaterial {
         set {
             shaderData.setTexture(BlinnPhongMaterial._baseTextureProp, newValue!)
             if (newValue != nil) {
-                shaderData.enableMacro(DIFFUSE_TEXTURE)
+                shaderData.enableMacro(HAS_DIFFUSE_TEXTURE)
             } else {
-                shaderData.disableMacro(DIFFUSE_TEXTURE)
+                shaderData.disableMacro(HAS_DIFFUSE_TEXTURE)
             }
         }
     }
@@ -70,9 +70,9 @@ class BlinnPhongMaterial: BaseMaterial {
         set {
             shaderData.setTexture(BlinnPhongMaterial._specularTextureProp, newValue!)
             if newValue != nil {
-                shaderData.enableMacro(SPECULAR_TEXTURE)
+                shaderData.enableMacro(HAS_SPECULAR_TEXTURE)
             } else {
-                shaderData.disableMacro(SPECULAR_TEXTURE)
+                shaderData.disableMacro(HAS_SPECULAR_TEXTURE)
             }
         }
     }
@@ -98,9 +98,9 @@ class BlinnPhongMaterial: BaseMaterial {
         set {
             shaderData.setTexture(BlinnPhongMaterial._emissiveTextureProp, newValue!)
             if newValue != nil {
-                shaderData.enableMacro(EMISSIVE_TEXTURE)
+                shaderData.enableMacro(HAS_EMISSIVE_TEXTURE)
             } else {
-                shaderData.disableMacro(EMISSIVE_TEXTURE)
+                shaderData.disableMacro(HAS_EMISSIVE_TEXTURE)
             }
         }
     }
@@ -113,9 +113,9 @@ class BlinnPhongMaterial: BaseMaterial {
         set {
             shaderData.setTexture(BlinnPhongMaterial._normalTextureProp, newValue!)
             if newValue != nil {
-                shaderData.enableMacro(NORMAL_TEXTURE)
+                shaderData.enableMacro(HAS_NORMAL_TEXTURE)
             } else {
-                shaderData.disableMacro(NORMAL_TEXTURE)
+                shaderData.disableMacro(HAS_NORMAL_TEXTURE)
             }
         }
     }

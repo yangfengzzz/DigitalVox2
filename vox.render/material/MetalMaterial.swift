@@ -33,9 +33,9 @@ class MetalMaterial: BaseMaterial {
         set {
             if (newValue != nil) {
                 shaderData.setTexture(MetalMaterial._baseTextureProp, newValue!)
-                shaderData.enableMacro(BASE_TEXTURE)
+                shaderData.enableMacro(HAS_BASE_TEXTURE)
             } else {
-                shaderData.disableMacro(BASE_TEXTURE)
+                shaderData.disableMacro(HAS_BASE_TEXTURE)
             }
         }
     }
@@ -43,6 +43,6 @@ class MetalMaterial: BaseMaterial {
     init(_ engine: Engine) {
         super.init(engine, Shader.find("simple")!)
         shaderData.setColor(MetalMaterial._baseColorProp, Color(0.7, 0.3, 0.3, 1))
-        shaderData.disableMacro(BASE_TEXTURE)
+        shaderData.disableMacro(HAS_BASE_TEXTURE)
     }
 }

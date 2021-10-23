@@ -17,18 +17,18 @@ struct VertexIn {
     float4 JOINTS_0 [[attribute(Joints_0), function_constant(hasSkin)]];
     float4 TANGENT [[attribute(Tangent), function_constant(notOmitNormalAndHasTangent)]];
     float2 TEXCOORD_0 [[attribute(UV_0), function_constant(hasUV)]];
-    float3 POSITION_BS0 [[attribute(10), function_constant(isBlendShape)]];
-    float3 POSITION_BS1 [[attribute(11), function_constant(isBlendShape)]];
-    float3 POSITION_BS2 [[attribute(12), function_constant(isBlendShape)]];
-    float3 POSITION_BS3 [[attribute(13), function_constant(isBlendShape)]];
-    float3 NORMAL_BS0 [[attribute(16), function_constant(isBlendShapeAndHasBlendShapeNormal)]];
-    float3 NORMAL_BS1 [[attribute(17), function_constant(isBlendShapeAndHasBlendShapeNormal)]];
-    float3 NORMAL_BS2 [[attribute(18), function_constant(isBlendShapeAndHasBlendShapeNormal)]];
-    float3 NORMAL_BS3 [[attribute(19), function_constant(isBlendShapeAndHasBlendShapeNormal)]];
-    float3 TANGENT_BS0 [[attribute(20), function_constant(isBlendShapeAndhasBlendShapeTangent)]];
-    float3 TANGENT_BS1 [[attribute(21), function_constant(isBlendShapeAndhasBlendShapeTangent)]];
-    float3 TANGENT_BS2 [[attribute(22), function_constant(isBlendShapeAndhasBlendShapeTangent)]];
-    float3 TANGENT_BS3 [[attribute(23), function_constant(isBlendShapeAndhasBlendShapeTangent)]];
+    float3 POSITION_BS0 [[attribute(10), function_constant(hasBlendShape)]];
+    float3 POSITION_BS1 [[attribute(11), function_constant(hasBlendShape)]];
+    float3 POSITION_BS2 [[attribute(12), function_constant(hasBlendShape)]];
+    float3 POSITION_BS3 [[attribute(13), function_constant(hasBlendShape)]];
+    float3 NORMAL_BS0 [[attribute(16), function_constant(hasBlendShapeAndHasBlendShapeNormal)]];
+    float3 NORMAL_BS1 [[attribute(17), function_constant(hasBlendShapeAndHasBlendShapeNormal)]];
+    float3 NORMAL_BS2 [[attribute(18), function_constant(hasBlendShapeAndHasBlendShapeNormal)]];
+    float3 NORMAL_BS3 [[attribute(19), function_constant(hasBlendShapeAndHasBlendShapeNormal)]];
+    float3 TANGENT_BS0 [[attribute(20), function_constant(hasBlendShapeAndhasBlendShapeTangent)]];
+    float3 TANGENT_BS1 [[attribute(21), function_constant(hasBlendShapeAndhasBlendShapeTangent)]];
+    float3 TANGENT_BS2 [[attribute(22), function_constant(hasBlendShapeAndhasBlendShapeTangent)]];
+    float3 TANGENT_BS3 [[attribute(23), function_constant(hasBlendShapeAndhasBlendShapeTangent)]];
 };
 
 struct VertexOut {
@@ -36,10 +36,10 @@ struct VertexOut {
     float3 v_pos [[function_constant(needWorldPos)]];
     float2 v_uv;
     float4 v_color [[function_constant(hasVertexColor)]];
-    float3 normalW [[function_constant(hasNormalAndHasTangentAndNormalTexture)]];
-    float3 tangentW [[function_constant(hasNormalAndHasTangentAndNormalTexture)]];
-    float3 bitangentW [[function_constant(hasNormalAndHasTangentAndNormalTexture)]];
-    float3 v_normal [[function_constant(hasNormalNotHasTangentNotNormalTexture)]];
+    float3 normalW [[function_constant(hasNormalAndHasTangentAndHasNormalTexture)]];
+    float3 tangentW [[function_constant(hasNormalAndHasTangentAndHasNormalTexture)]];
+    float3 bitangentW [[function_constant(hasNormalAndHasTangentAndHasNormalTexture)]];
+    float3 v_normal [[function_constant(hasNormalNotHasTangentOrHasNormalTexture)]];
 };
 
 float4x4 getJointMatrix(sampler smp, texture2d<float> joint_tex,
@@ -72,7 +72,7 @@ vertex VertexOut vertex_blinn_phong(const VertexIn vertexIn [[stage_in]],
                                     texture2d<float> u_jointTexture [[texture(0), function_constant(hasSkinAndHasJointTexture)]],
                                     constant int &u_jointCount [[buffer(11), function_constant(hasSkinAndHasJointTexture)]],
                                     constant matrix_float4x4 *u_jointMatrix [[buffer(12), function_constant(hasSkinNotHasJointTexture)]],
-                                    constant float *u_blendShapeWeights [[buffer(13), function_constant(isBlendShape)]]) {
+                                    constant float *u_blendShapeWeights [[buffer(13), function_constant(hasBlendShape)]]) {
     VertexOut out;
     
     // begin position
@@ -83,13 +83,13 @@ vertex VertexOut vertex_blinn_phong(const VertexIn vertexIn [[stage_in]],
     float4 tangent;
     if (hasNormal) {
         normal = vertexIn.NORMAL;
-        if (hasTangent && normalTexture) {
+        if (hasTangent && hasNormalTexture) {
             tangent = vertexIn.TANGENT;
         }
     }
     
     //blendshape
-    if (isBlendShape) {
+    if (hasBlendShape) {
         position.xyz += vertexIn.POSITION_BS0 * u_blendShapeWeights[0];
         position.xyz += vertexIn.POSITION_BS1 * u_blendShapeWeights[1];
         position.xyz += vertexIn.POSITION_BS2 * u_blendShapeWeights[2];
@@ -100,7 +100,7 @@ vertex VertexOut vertex_blinn_phong(const VertexIn vertexIn [[stage_in]],
             normal.xyz += vertexIn.NORMAL_BS2 * u_blendShapeWeights[2];
             normal.xyz += vertexIn.NORMAL_BS3 * u_blendShapeWeights[3];
         }
-        if (hasTangent && normalTexture && hasBlendShapeTangent) {
+        if (hasTangent && hasNormalTexture && hasBlendShapeTangent) {
             tangent.xyz += vertexIn.TANGENT_BS0 * u_blendShapeWeights[0];
             tangent.xyz += vertexIn.TANGENT_BS1 * u_blendShapeWeights[1];
             tangent.xyz += vertexIn.TANGENT_BS2 * u_blendShapeWeights[2];
@@ -127,7 +127,7 @@ vertex VertexOut vertex_blinn_phong(const VertexIn vertexIn [[stage_in]],
         position = skinMatrix * position;
         if (hasNormal && !omitNormal) {
             normal = float4( skinMatrix * float4( normal, 0.0 ) ).xyz;
-            if (hasTangent && normalTexture) {
+            if (hasTangent && hasNormalTexture) {
                 tangent.xyz = float4( skinMatrix * float4( tangent.xyz, 0.0 ) ).xyz;
             }
         }
@@ -150,7 +150,7 @@ vertex VertexOut vertex_blinn_phong(const VertexIn vertexIn [[stage_in]],
     
     // normal
     if (hasNormal) {
-        if (hasTangent && normalTexture) {
+        if (hasTangent && hasNormalTexture) {
             out.normalW = normalize( float3x3(u_MVMat.columns[0].xyz,
                                               u_MVMat.columns[1].xyz,
                                               u_MVMat.columns[2].xyz) * normal.xyz);
@@ -213,7 +213,7 @@ float3 getNormal(VertexOut in, float u_normalIntensity,
                  sampler smp, texture2d<float> u_normalTexture,
                  bool is_front_face) {
     float3 n;
-    if (normalTexture) {
+    if (hasNormalTexture) {
         matrix_float3x3 tbn;
         if (!hasTangent) {
             float3 pos_dx = dfdx(in.v_pos);
@@ -279,25 +279,25 @@ fragment float4 fragment_blinn_phong(VertexOut in [[stage_in]],
                                      constant float &u_shininess [[buffer(24)]],
                                      constant float &u_normalIntensity [[buffer(25)]],
                                      constant float &u_alphaCutoff [[buffer(26)]],
-                                     texture2d<float> u_emissiveTexture [[texture(1), function_constant(emissiveTexture)]],
-                                     texture2d<float> u_diffuseTexture [[texture(2), function_constant(diffuseTexture)]],
-                                     texture2d<float> u_specularTexture [[texture(3), function_constant(specularTexture)]],
-                                     texture2d<float> u_normalTexture [[texture(4), function_constant(normalTexture)]],
+                                     texture2d<float> u_emissiveTexture [[texture(1), function_constant(hasEmissiveTexture)]],
+                                     texture2d<float> u_diffuseTexture [[texture(2), function_constant(hasDiffuseTexture)]],
+                                     texture2d<float> u_specularTexture [[texture(3), function_constant(hasSpecularTexture)]],
+                                     texture2d<float> u_normalTexture [[texture(4), function_constant(hasNormalTexture)]],
                                      bool is_front_face [[front_facing]]) {
     float4 ambient = float4(0.0);
     float4 emission = u_emissiveColor;
     float4 diffuse = u_diffuseColor;
     float4 specular = u_specularColor;
-    if (emissiveTexture) {
+    if (hasEmissiveTexture) {
         emission *= u_emissiveTexture.sample(textureSampler, in.v_uv);
     }
-    if (diffuseTexture) {
+    if (hasDiffuseTexture) {
         diffuse *= u_diffuseTexture.sample(textureSampler, in.v_uv);
     }
     if (hasVertexColor) {
         diffuse *= in.v_color;
     }
-    if (specularTexture) {
+    if (hasSpecularTexture) {
         specular *= u_specularTexture.sample(textureSampler, in.v_uv);
     }
     ambient = float4(u_envMapLight.diffuse * u_envMapLight.diffuseIntensity, 1.0) * diffuse;
@@ -375,7 +375,7 @@ fragment float4 fragment_blinn_phong(VertexOut in [[stage_in]],
     
     diffuse *= float4( lightDiffuse, 1.0 );
     specular *= float4( lightSpecular, 1.0 );
-    if (alphaCutoff) {
+    if (needAlphaCutoff) {
         if( diffuse.a < u_alphaCutoff ) {
             discard_fragment();
         }
