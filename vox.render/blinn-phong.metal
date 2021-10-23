@@ -42,20 +42,6 @@ struct VertexOut {
     float3 v_normal [[function_constant(hasNormalNotHasTangentOrHasNormalTexture)]];
 };
 
-float4x4 getJointMatrix(sampler smp, texture2d<float> joint_tex,
-                        float index, int u_jointCount) {
-    float base = index / u_jointCount;
-    float hf = 0.5 / u_jointCount;
-    float v = base + hf;
-    
-    float4 m0 = joint_tex.sample(smp, float2(0.125, v));
-    float4 m1 = joint_tex.sample(smp, float2(0.375, v));
-    float4 m2 = joint_tex.sample(smp, float2(0.625, v));
-    float4 m3 = joint_tex.sample(smp, float2(0.875, v));
-    
-    return float4x4(m0, m1, m2, m3);
-}
-
 vertex VertexOut vertex_blinn_phong(const VertexIn vertexIn [[stage_in]],
                                     constant matrix_float4x4 &u_localMat [[buffer(0)]],
                                     constant matrix_float4x4 &u_modelMat [[buffer(1)]],

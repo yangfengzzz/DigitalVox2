@@ -209,6 +209,8 @@
 		04A6BEBB2723BC6F0024DF43 /* particle.metal in Sources */ = {isa = PBXBuildFile; fileRef = 04A6BEBA2723BC6F0024DF43 /* particle.metal */; };
 		04A6BEBD2723F5650024DF43 /* skybox.metal in Sources */ = {isa = PBXBuildFile; fileRef = 04A6BEBC2723F5650024DF43 /* skybox.metal */; };
 		04A6BEBF2723F6840024DF43 /* unlit.metal in Sources */ = {isa = PBXBuildFile; fileRef = 04A6BEBE2723F6840024DF43 /* unlit.metal */; };
+		04A6BEC12723F9E50024DF43 /* pbr.metal in Sources */ = {isa = PBXBuildFile; fileRef = 04A6BEC02723F9E50024DF43 /* pbr.metal */; };
+		04A6BEC32723FBCB0024DF43 /* function-common.metal in Sources */ = {isa = PBXBuildFile; fileRef = 04A6BEC22723FBCB0024DF43 /* function-common.metal */; };
 		04AE07C227029F3300F1D8C5 /* LightShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE07C127029F3300F1D8C5 /* LightShadow.swift */; };
 		04AE07C42702A3AC00F1D8C5 /* ShadowMapMaterial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE07C32702A3AC00F1D8C5 /* ShadowMapMaterial.swift */; };
 		04AE07C62702A40800F1D8C5 /* ShadowMapPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE07C52702A40800F1D8C5 /* ShadowMapPass.swift */; };
@@ -552,6 +554,8 @@
 		04A6BEBA2723BC6F0024DF43 /* particle.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = particle.metal; sourceTree = "<group>"; };
 		04A6BEBC2723F5650024DF43 /* skybox.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = skybox.metal; sourceTree = "<group>"; };
 		04A6BEBE2723F6840024DF43 /* unlit.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = unlit.metal; sourceTree = "<group>"; };
+		04A6BEC02723F9E50024DF43 /* pbr.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = pbr.metal; sourceTree = "<group>"; };
+		04A6BEC22723FBCB0024DF43 /* function-common.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = "function-common.metal"; sourceTree = "<group>"; };
 		04AE07C127029F3300F1D8C5 /* LightShadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightShadow.swift; sourceTree = "<group>"; };
 		04AE07C32702A3AC00F1D8C5 /* ShadowMapMaterial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowMapMaterial.swift; sourceTree = "<group>"; };
 		04AE07C52702A40800F1D8C5 /* ShadowMapPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowMapPass.swift; sourceTree = "<group>"; };
@@ -1130,14 +1134,16 @@
 				0452ECF226DFA8BD0015BFB1 /* Textures.xcassets */,
 				0452ECDF26DFA66E0015BFB1 /* models */,
 				0452ECCB26DFA5360015BFB1 /* Common.h */,
-				04198A1C271D3C2700871A26 /* ShaderCommon.h */,
 				0447D54426F8020B00272D7C /* MacroName.h */,
+				04198A1C271D3C2700871A26 /* ShaderCommon.h */,
+				04A6BEC22723FBCB0024DF43 /* function-common.metal */,
 				04A6BEB42720DCD80024DF43 /* function-constant.metal */,
-				04A6BEB227204FE20024DF43 /* blinn-phong.metal */,
 				04A6BEBC2723F5650024DF43 /* skybox.metal */,
 				04A6BEB82723B5D00024DF43 /* background-texture.metal */,
 				04A6BEBA2723BC6F0024DF43 /* particle.metal */,
 				04A6BEBE2723F6840024DF43 /* unlit.metal */,
+				04A6BEB227204FE20024DF43 /* blinn-phong.metal */,
+				04A6BEC02723F9E50024DF43 /* pbr.metal */,
 				0497A1EA26DF150800F61DE9 /* Preview Content */,
 				0497A1ED26DF150800F61DE9 /* Info.plist */,
 				0497A20F26DF151700F61DE9 /* DigitalVox2.entitlements */,
@@ -1620,6 +1626,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				043CB46326F441C3004A0B21 /* RenderQueue.swift in Sources */,
+				04A6BEC32723FBCB0024DF43 /* function-common.metal in Sources */,
 				043CB45B26F41E87004A0B21 /* DepthState.swift in Sources */,
 				0452ECEF26DFA7B90015BFB1 /* InputManager.swift in Sources */,
 				0413289426E0A48F000A4F4E /* SubMesh.swift in Sources */,
@@ -1677,6 +1684,7 @@
 				04AE07CA2702A54F00F1D8C5 /* ShadowPass.swift in Sources */,
 				0413289B26E0C1DD000A4F4E /* UpdateFlag.swift in Sources */,
 				043CB44126F2E069004A0B21 /* Material.swift in Sources */,
+				04A6BEC12723F9E50024DF43 /* pbr.metal in Sources */,
 				043CB46F26F567D9004A0B21 /* BaseMaterial.swift in Sources */,
 				0413287326E0723E000A4F4E /* CollisionUtil.swift in Sources */,
 				04A6BEBB2723BC6F0024DF43 /* particle.metal in Sources */,

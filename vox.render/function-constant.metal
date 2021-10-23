@@ -67,3 +67,7 @@ constant bool is2D [[function_constant(IS_2D)]];
 
 constant bool needGenerateShadowMap [[function_constant(NEED_GENERATE_SHADOW_MAP)]];
 constant int shadowMapCount [[function_constant(SHADOW_MAP_COUNT)]];
+
+//MARK: - Function Signature
+float4x4 getJointMatrix(sampler smp, texture2d<float> joint_tex,
+                        float index, int u_jointCount);
