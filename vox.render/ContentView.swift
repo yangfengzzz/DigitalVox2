@@ -33,11 +33,6 @@ struct ContentView: View {
         usdzLoader.load(with: "cottage1.obj") { entities in
             rootEntity.addChild(entities[0])
         }
-
-//        gltfLoader.load(with: "DamagedHelmet.glb") { entities in
-//            entities[0].transform.setRotation(x: 90, y: 0, z: 0)
-//            rootEntity.addChild(entities[0])
-//        }
     }
 
     var body: some View {
