@@ -13,6 +13,7 @@
 // OMMIT_ : Omit Resouce
 // NEED_ : Shader Operation
 // IS_ : Shader control flow
+// _COUNT: type int constant
 typedef enum {
     HAS_UV = 0,
     HAS_NORMAL = 1,
@@ -27,7 +28,7 @@ typedef enum {
     // Skin
     HAS_SKIN = 7,
     HAS_JOINT_TEXTURE = 8,
-    JOINTS_NUM = 9,
+    JOINTS_COUNT = 9,
 
     // Material
     NEED_ALPHA_CUTOFF = 10,

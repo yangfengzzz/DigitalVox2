@@ -27,7 +27,7 @@ constant bool hasSkin [[function_constant(HAS_SKIN)]];
 constant bool hasJointTexture [[function_constant(HAS_JOINT_TEXTURE)]];
 constant bool hasSkinAndHasJointTexture = hasSkin && hasJointTexture;
 constant bool hasSkinNotHasJointTexture = hasSkin && !hasJointTexture;
-constant int jointsNum [[function_constant(JOINTS_NUM)]];
+constant int jointsCount [[function_constant(JOINTS_COUNT)]];
 
 constant bool needAlphaCutoff [[function_constant(NEED_ALPHA_CUTOFF)]];
 constant bool needWorldPos [[function_constant(NEED_WORLDPOS)]];

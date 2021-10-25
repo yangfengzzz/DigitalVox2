@@ -109,7 +109,7 @@ class SkinnedMeshRenderer: MeshRenderer {
                 let maxJoints = max(SkinnedMeshRenderer._maxJoints, joints.count)
                 SkinnedMeshRenderer._maxJoints = maxJoints
                 shaderData.disableMacro(HAS_JOINT_TEXTURE)
-                shaderData.enableMacro(JOINTS_NUM, (SkinnedMeshRenderer._maxJoints, .int))
+                shaderData.enableMacro(JOINTS_COUNT, (SkinnedMeshRenderer._maxJoints, .int))
             }
         } else {
             shaderData.disableMacro(HAS_SKIN)
