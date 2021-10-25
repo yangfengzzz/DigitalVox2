@@ -53,9 +53,31 @@ internal class ShaderProgram {
 
     private func makeFunctionConstants(_ macroInfo: ShaderMacroCollection) -> MTLFunctionConstantValues {
         let functionConstants = MTLFunctionConstantValues()
+        for i in 0..<(TOTAL_COUNT.rawValue) {
+            var macro = macroInfo._value[MacroName(i)]
+            if macro == nil {
+                macro = ShaderMacroCollection.defaultValue[MacroName(i)]
+            }
+
+            var value = macro!.0
+            let type = macro!.1
+            if type == .bool {
+                var property: Bool
+                if value == 1 {
+                    property = true
+                } else {
+                    property = false
+                }
+                functionConstants.setConstantValue(&property, type: .bool, index: Int(i))
+            } else {
+                functionConstants.setConstantValue(&value, type: type, index: Int(i))
+            }
+        }
+
+
         macroInfo._value.forEach { info in
             if info.value.1 == .bool {
-                var property:Bool
+                var property: Bool
                 if info.value.0 == 1 {
                     property = true
                 } else {

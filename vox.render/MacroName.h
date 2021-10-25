@@ -69,7 +69,7 @@ typedef enum {
     NEED_GENERATE_SHADOW_MAP = 37,
     SHADOW_MAP_COUNT = 38,
     
-    None = 39,
+    TOTAL_COUNT = 39,
 } MacroName;
 
 #endif /* MacroName_h */
