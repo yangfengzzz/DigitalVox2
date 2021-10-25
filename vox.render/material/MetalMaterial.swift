@@ -43,6 +43,5 @@ class MetalMaterial: BaseMaterial {
     init(_ engine: Engine) {
         super.init(engine, Shader.find("simple")!)
         shaderData.setColor(MetalMaterial._baseColorProp, Color(0.7, 0.3, 0.3, 1))
-        shaderData.disableMacro(HAS_BASE_TEXTURE)
     }
 }

@@ -147,7 +147,6 @@ class PBRBaseMaterial: BaseMaterial {
     init(_ engine: Engine) {
         super.init(engine, Shader.find("pbr")!)
 
-
         shaderData.enableMacro(NEED_WORLDPOS)
         shaderData.enableMacro(NEED_TILINGOFFSET)
 
@@ -157,7 +156,5 @@ class PBRBaseMaterial: BaseMaterial {
 
         shaderData.setFloat(PBRBaseMaterial._normalTextureIntensityProp, 1)
         shaderData.setFloat(PBRBaseMaterial._occlusionTextureIntensityProp, 1)
-        
-        shaderData.disableMacro(HAS_BASE_COLORMAP)
     }
 }
