@@ -205,9 +205,9 @@ fragment float4 fragment_simple(VertexOut in [[stage_in]],
     // compute Lambertian diffuse
     float nDotl = max(0.001, saturate(dot(lighting.normal, lighting.lightDirection)));
     float3 diffuseColor = u_directLightColor[0] * baseColor * nDotl * ambientOcclusion;
-    diffuseColor *= 1.0 - metallic;
+    diffuseColor *= metallic;
     
     float4 finalColor = float4(specularOutput + diffuseColor, 1.0);
     
-    return float4(baseColor, 1.0);
+    return finalColor;
 }
