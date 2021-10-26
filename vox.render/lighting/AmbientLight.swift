@@ -9,23 +9,16 @@ import Metal
 
 /// Ambient light.
 class AmbientLight {
-    private static var _diffuseColorProperty: ShaderProperty = Shader.getPropertyByName("u_envMapLight.diffuse")
     private static var _diffuseSHProperty: ShaderProperty = Shader.getPropertyByName("u_env_sh")
-    private static var _diffuseIntensityProperty: ShaderProperty = Shader.getPropertyByName("u_envMapLight.diffuseIntensity")
-    private static var _specularTextureProperty: ShaderProperty = Shader.getPropertyByName("u_env_specularSampler")
-    private static var _specularIntensityProperty: ShaderProperty = Shader.getPropertyByName(
-            "u_envMapLight.specularIntensity"
-    )
-    private static var _mipLevelProperty: ShaderProperty = Shader.getPropertyByName("u_envMapLight.mipMapLevel")
+    private static var _envMapProperty: ShaderProperty = Shader.getPropertyByName("u_envMapLight")
+    private static var _specularTextureProperty: ShaderProperty = Shader.getPropertyByName("u_env_specularTexture")
 
     private var _scene: Scene
-    private var _diffuseSphericalHarmonics: SphericalHarmonics3?
-    private var _diffuseSolidColor: Color = Color(0.212, 0.227, 0.259)
-    private var _diffuseIntensity: Float = 1.0
-    private var _specularReflection: MTLTexture?
-    private var _specularIntensity: Float = 1.0
     private var _diffuseMode: DiffuseMode = .SolidColor
+    private var _diffuseSphericalHarmonics: SphericalHarmonics3?
     private var _shArray: [Float] = [Float](repeating: 0, count: 27)
+    private var _envMapLight = EnvMapLight()
+    private var _specularReflection: MTLTexture?
 
     /// Diffuse mode of ambient light.
     var diffuseMode: DiffuseMode {
@@ -44,13 +37,14 @@ class AmbientLight {
 
     /// Diffuse reflection solid color.
     /// - Remark: Effective when diffuse reflection mode is `DiffuseMode.SolidColor`.
-    var diffuseSolidColor: Color {
+    var diffuseSolidColor: Vector3 {
         get {
-            _diffuseSolidColor
+            Vector3(_envMapLight.diffuse.x, _envMapLight.diffuse.y, _envMapLight.diffuse.z)
         }
         set {
-            if (newValue !== _diffuseSolidColor) {
-                newValue.cloneTo(target: _diffuseSolidColor)
+            if (newValue.elements != _envMapLight.diffuse) {
+                _envMapLight.diffuse = newValue.elements
+                _scene.shaderData.setAny(AmbientLight._envMapProperty, _envMapLight)
             }
         }
     }
@@ -74,11 +68,11 @@ class AmbientLight {
     /// Diffuse reflection intensity.
     var diffuseIntensity: Float {
         get {
-            _diffuseIntensity
+            _envMapLight.diffuseIntensity
         }
         set {
-            _diffuseIntensity = newValue
-            _scene.shaderData.setFloat(AmbientLight._diffuseIntensityProperty, newValue)
+            _envMapLight.diffuseIntensity = newValue
+            _scene.shaderData.setAny(AmbientLight._envMapProperty, _envMapLight)
         }
     }
 
@@ -94,8 +88,10 @@ class AmbientLight {
 
             if (newValue != nil) {
                 shaderData.setTexture(AmbientLight._specularTextureProperty, newValue!)
-                shaderData.setInt(AmbientLight._mipLevelProperty, _specularReflection!.mipmapLevelCount)
                 shaderData.enableMacro(HAS_SPECULAR_ENV)
+
+                _envMapLight.mipMapLevel = Int32(_specularReflection!.mipmapLevelCount)
+                _scene.shaderData.setAny(AmbientLight._envMapProperty, _envMapLight)
             } else {
                 shaderData.disableMacro(HAS_SPECULAR_ENV)
             }
@@ -105,11 +101,11 @@ class AmbientLight {
     /// Specular reflection intensity.
     var specularIntensity: Float {
         get {
-            _specularIntensity
+            _envMapLight.specularIntensity
         }
         set {
-            _specularIntensity = newValue
-            _scene.shaderData.setFloat(AmbientLight._specularIntensityProperty, newValue)
+            _envMapLight.specularIntensity = newValue
+            _scene.shaderData.setAny(AmbientLight._envMapProperty, _envMapLight)
         }
     }
 
@@ -117,9 +113,10 @@ class AmbientLight {
         _scene = scene
 
         let shaderData = _scene.shaderData
-        shaderData.setColor(AmbientLight._diffuseColorProperty, _diffuseSolidColor)
-        shaderData.setFloat(AmbientLight._diffuseIntensityProperty, _diffuseIntensity)
-        shaderData.setFloat(AmbientLight._specularIntensityProperty, _specularIntensity)
+        _envMapLight.diffuse = [0.212, 0.227, 0.259]
+        _envMapLight.diffuseIntensity = 1.0
+        _envMapLight.specularIntensity = 1.0
+        shaderData.setAny(AmbientLight._envMapProperty, _envMapLight)
     }
 
     private func _preComputeSH(_ sh: SphericalHarmonics3, _ out: inout [Float]) -> [Float] {

@@ -23,6 +23,7 @@ internal class ShaderUniform {
     var applyFunc: ((ShaderUniform, ShaderPropertyValueType) -> Void)!
     var cacheValue: CacheType!
     var textureDefault: MTLTexture!
+    var bufferDataSize: Int!
 
     private var _rhi: MetalRenderer
     private var _encoder: MTLRenderCommandEncoder
@@ -493,6 +494,19 @@ extension ShaderUniform {
         case .MatrixArray(var value):
             _encoder.setFragmentBytes(&value,
                     length: MemoryLayout<matrix_float4x4>.stride * value.count,
+                    index: shaderUniform.location)
+        default:
+            return
+        }
+    }
+}
+
+extension ShaderUniform {
+    func uploadFragAny(_ shaderUniform: ShaderUniform, _ value: ShaderPropertyValueType) {
+        switch value {
+        case .AnyType(var value):
+            _encoder.setFragmentBytes(&value,
+                    length: bufferDataSize,
                     index: shaderUniform.location)
         default:
             return

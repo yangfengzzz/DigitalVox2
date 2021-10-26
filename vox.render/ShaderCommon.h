@@ -84,4 +84,12 @@ typedef struct {
     float shininess;
 } MaterialConstant;
 
+typedef struct {
+    vector_float3 diffuse;
+    int mipMapLevel;
+    float diffuseIntensity;
+    float specularIntensity;
+    matrix_float4x4 transformMatrix;
+} EnvMapLight;
+
 #endif /* ShaderCommon_h */

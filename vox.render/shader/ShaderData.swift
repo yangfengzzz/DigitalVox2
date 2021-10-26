@@ -25,6 +25,8 @@ enum ShaderPropertyValueType {
     case ColorArray([SIMD4<Float>])
     case MatrixArray([matrix_float4x4])
     case TextureArray([MTLTexture])
+
+    case AnyType(Any)
 }
 
 ///  Shader data collection,Correspondence includes shader properties data and macros data.
@@ -77,6 +79,51 @@ class ShaderData {
 }
 
 extension ShaderData {
+    //MARK: - Any
+    /// Get float by shader property name.
+    /// - Parameter propertyName: Shader property name
+    /// - Returns: Float
+    func getAny(_ propertyName: String) -> Any? {
+        let p = _getData(propertyName)
+        switch p {
+        case .AnyType(let value):
+            return value
+        default:
+            return nil
+        }
+    }
+
+    /// Get float by shader property.
+    /// - Parameter property: Shader property
+    /// - Returns: Float
+    func getAny(_ property: ShaderProperty) -> Any? {
+        let p = _getData(property)
+        switch p {
+        case .AnyType(let value):
+            return value
+        default:
+            return nil
+        }
+    }
+
+    /// Set float by shader property name.
+    /// - Remark: Corresponding float shader property type.
+    /// - Parameters:
+    ///   - propertyName: Shader property name
+    ///   - value: Float
+    func setAny(_ propertyName: String, _ value: Any) {
+        _setData(propertyName, .AnyType(value))
+    }
+
+    /// Set float by shader property.
+    /// - Remark: Corresponding float shader property type.
+    /// - Parameters:
+    ///   - property: Shader property
+    ///   - value: Float
+    func setAny(_ property: ShaderProperty, _ value: Any) {
+        _setData(property, .AnyType(value))
+    }
+
     //MARK: - Float
     /// Get float by shader property name.
     /// - Parameter propertyName: Shader property name
@@ -830,6 +877,8 @@ extension ShaderData: IClone {
         var targetProperties = target._properties
         properties.forEach { (k: Int, property: ShaderPropertyValueType) in
             switch property {
+            case .AnyType(let property):
+                targetProperties[k] = .AnyType(property)
             case .Float(let property):
                 targetProperties[k] = .Float(property)
             case .FloatArray(let property):

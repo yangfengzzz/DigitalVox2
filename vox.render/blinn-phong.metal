@@ -168,14 +168,6 @@ vertex VertexOut vertex_blinn_phong(const VertexIn in [[stage_in]],
 }
 
 typedef struct {
-    float3 diffuse;
-    float mipMapLevel;
-    float diffuseIntensity;
-    float specularIntensity;
-    matrix_float4x4 transformMatrix;
-} EnvMapLight;
-
-typedef struct {
     float3 color;
     float3 direction;
 } DirectLight;

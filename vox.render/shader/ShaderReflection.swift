@@ -92,6 +92,7 @@ extension ShaderReflection {
                 shaderUniform.location = location
 
                 if type == .buffer {
+                    shaderUniform.bufferDataSize = aug.bufferDataSize
                     switch aug.bufferDataType {
                     case .float:
                         shaderUniform.applyFunc = shaderUniform.uploadFrag1f
@@ -110,8 +111,10 @@ extension ShaderReflection {
                         shaderUniform.cacheValue = .Int(0)
                     case .float4x4:
                         shaderUniform.applyFunc = shaderUniform.uploadFragMat4
+                    case .struct:
+                        shaderUniform.applyFunc = shaderUniform.uploadFragAny
                     default:
-                        fatalError("unkonwn type \(type.rawValue)")
+                        print(aug)
                     }
                 } else if type == .sampler {
 
