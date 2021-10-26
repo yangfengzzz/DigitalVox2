@@ -378,9 +378,11 @@ fragment float4 fragment_pbr(VertexOut in [[stage_in]],
                              texture2d<float> u_baseColorTexture [[texture(1), function_constant(hasBaseColorMap)]],
                              texture2d<float> u_normalTexture [[texture(2), function_constant(hasNormalTexture)]],
                              texture2d<float> u_emissiveTexture [[texture(3), function_constant(hasEmissiveMap)]],
-                             texture2d<float> u_metallicRoughnessTexture [[texture(4), function_constant(hasMetalRoughnessMap)]],
-                             texture2d<float> u_specularGlossinessTexture [[texture(5), function_constant(hasSpecularGlossinessMap)]],
-                             texture2d<float> u_occlusionTexture [[texture(6), function_constant(hasOcclusionMap)]],
+                             texture2d<float> u_metallicTexture [[texture(4), function_constant(hasMetalMap)]],
+                             texture2d<float> u_roughnessTexture [[texture(5), function_constant(hasRoughnessMap)]],
+                             texture2d<float> u_specularTexture [[texture(6), function_constant(hasSpecularMap)]],
+                             texture2d<float> u_glossinessTexture [[texture(7), function_constant(hasGlossinessMap)]],
+                             texture2d<float> u_occlusionTexture [[texture(8), function_constant(hasOcclusionMap)]],
                              bool is_front_face [[front_facing]]) {
     //MARK: - pbr_begin_frag
     float3 normal = getPbrNormal(in, u_normalIntensity, textureSampler, u_normalTexture, is_front_face);
@@ -412,16 +414,24 @@ fragment float4 fragment_pbr(VertexOut in [[stage_in]],
         }
     }
     
-    if (hasMetalRoughnessMap) {
-        float4 metalRoughMapColor = u_metallicRoughnessTexture.sample(textureSampler, in.v_uv);
-        roughnessFactor *= metalRoughMapColor.g;
-        metalnessFactor *= metalRoughMapColor.b;
+    if (hasRoughnessMap) {
+        float4 roughMapColor = u_roughnessTexture.sample(textureSampler, in.v_uv);
+        roughnessFactor *= roughMapColor.r;
     }
     
-    if (hasSpecularGlossinessMap) {
-        float4 specularGlossinessColor = u_specularGlossinessTexture.sample(textureSampler, in.v_uv );
-        specularFactor *= specularGlossinessColor.rgb;
-        glossinessFactor *= specularGlossinessColor.a;
+    if (hasMetalMap) {
+        float4 metalMapColor = u_metallicTexture.sample(textureSampler, in.v_uv);
+        metalnessFactor *= metalMapColor.r;
+    }
+    
+    if (hasGlossinessMap) {
+        float4 glossinessColor = u_glossinessTexture.sample(textureSampler, in.v_uv );
+        glossinessFactor *= glossinessColor.a;
+    }
+    
+    if (hasSpecularMap) {
+        float4 specularColor = u_specularTexture.sample(textureSampler, in.v_uv );
+        specularFactor *= specularColor.rgb;
     }
     
     if (isMetallicWorkFlow) {

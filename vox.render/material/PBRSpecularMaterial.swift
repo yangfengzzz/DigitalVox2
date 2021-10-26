@@ -13,8 +13,9 @@ class PBRSpecularMaterial: PBRBaseMaterial {
 
     private static var _specularColorProp = Shader.getPropertyByName("u_specularColor")
 
-    private static var _specularGlossinessTextureProp = Shader.getPropertyByName("u_specularGlossinessTexture")
-
+    private static var _glossinessTextureProp = Shader.getPropertyByName("u_glossinessTexture")
+    private static var _specularTextureProp = Shader.getPropertyByName("u_specularTexture")
+    
     /// Specular color.
     var specularColor: Color {
         get {
@@ -39,17 +40,31 @@ class PBRSpecularMaterial: PBRBaseMaterial {
     }
 
     /// Specular glossiness texture.
-    /// - Remark: RGB is specular, A is glossiness
-    var specularGlossinessTexture: MTLTexture? {
+    var glossinessTexture: MTLTexture? {
         get {
-            shaderData.getTexture(PBRSpecularMaterial._specularGlossinessTextureProp)
+            shaderData.getTexture(PBRSpecularMaterial._glossinessTextureProp)
         }
         set {
-            shaderData.setTexture(PBRSpecularMaterial._specularGlossinessTextureProp, newValue!)
+            shaderData.setTexture(PBRSpecularMaterial._glossinessTextureProp, newValue!)
             if newValue != nil {
-                shaderData.enableMacro(HAS_SPECULARGLOSSINESSMAP)
+                shaderData.enableMacro(HAS_GLOSSINESSMAP)
             } else {
-                shaderData.disableMacro(HAS_SPECULARGLOSSINESSMAP)
+                shaderData.disableMacro(HAS_GLOSSINESSMAP)
+            }
+        }
+    }
+    
+    /// Specular glossiness texture.
+    var specularTexture: MTLTexture? {
+        get {
+            shaderData.getTexture(PBRSpecularMaterial._specularTextureProp)
+        }
+        set {
+            shaderData.setTexture(PBRSpecularMaterial._specularTextureProp, newValue!)
+            if newValue != nil {
+                shaderData.enableMacro(HAS_SPECULARMAP)
+            } else {
+                shaderData.disableMacro(HAS_SPECULARMAP)
             }
         }
     }

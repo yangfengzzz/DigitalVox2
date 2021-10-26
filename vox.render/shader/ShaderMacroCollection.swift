@@ -54,8 +54,10 @@ internal class ShaderMacroCollection {
         HAS_BASE_COLORMAP: (0, .bool),
         HAS_EMISSIVEMAP: (0, .bool),
         HAS_OCCLUSIONMAP: (0, .bool),
-        HAS_SPECULARGLOSSINESSMAP: (0, .bool),
-        HAS_METALROUGHNESSMAP: (0, .bool),
+        HAS_SPECULARMAP: (0, .bool),
+        HAS_GLOSSINESSMAP: (0, .bool),
+        HAS_METALMAP: (0, .bool),
+        HAS_ROUGHNESSMAP: (0, .bool),
         IS_METALLIC_WORKFLOW: (0, .bool),
 
         // Light

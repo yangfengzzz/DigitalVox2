@@ -12,7 +12,8 @@ class PBRMaterial: PBRBaseMaterial {
     private static var _metallicProp = Shader.getPropertyByName("u_metal")
     private static var _roughnessProp = Shader.getPropertyByName("u_roughness")
     
-    private static var _metallicRoughnessTextureProp = Shader.getPropertyByName("u_metallicRoughnessTexture")
+    private static var _metallicTextureProp = Shader.getPropertyByName("u_metallicTexture")
+    private static var _roughnessTextureProp = Shader.getPropertyByName("u_roughnessTexture")
 
     /// Metallic.
     var metallic: Float {
@@ -35,17 +36,31 @@ class PBRMaterial: PBRBaseMaterial {
     }
 
     /// Roughness metallic texture.
-    /// - Remark: G channel is roughness, B channel is metallic
-    var roughnessMetallicTexture: MTLTexture? {
+    var roughnessTexture: MTLTexture? {
         get {
-            shaderData.getTexture(PBRMaterial._metallicRoughnessTextureProp)
+            shaderData.getTexture(PBRMaterial._roughnessTextureProp)
         }
         set {
             if newValue != nil {
-                shaderData.setTexture(PBRMaterial._metallicRoughnessTextureProp, newValue!)
-                shaderData.enableMacro(HAS_METALROUGHNESSMAP)
+                shaderData.setTexture(PBRMaterial._roughnessTextureProp, newValue!)
+                shaderData.enableMacro(HAS_ROUGHNESSMAP)
             } else {
-                shaderData.disableMacro(HAS_METALROUGHNESSMAP)
+                shaderData.disableMacro(HAS_ROUGHNESSMAP)
+            }
+        }
+    }
+    
+    /// Roughness metallic texture.
+    var metallicTexture: MTLTexture? {
+        get {
+            shaderData.getTexture(PBRMaterial._roughnessTextureProp)
+        }
+        set {
+            if newValue != nil {
+                shaderData.setTexture(PBRMaterial._roughnessTextureProp, newValue!)
+                shaderData.enableMacro(HAS_METALMAP)
+            } else {
+                shaderData.disableMacro(HAS_METALMAP)
             }
         }
     }
