@@ -17,16 +17,16 @@ class SpotLight: Light {
     private static var _penumbraCosProperty: ShaderProperty = Shader.getPropertyByName("u_spotLightPenumbraCos")
 
     private static var _combinedData = (
-            color: [Float](repeating: 0, count: 3 * Light._maxLight),
-            position: [Float](repeating: 0, count: 3 * Light._maxLight),
-            direction: [Float](repeating: 0, count: 3 * Light._maxLight),
+            color: [Vector3](repeating: Vector3(), count: Light._maxLight),
+            position: [Vector3](repeating: Vector3(), count: Light._maxLight),
+            direction: [Vector3](repeating: Vector3(), count: Light._maxLight),
             distance: [Float](repeating: 0, count: Light._maxLight),
             angleCos: [Float](repeating: 0, count: Light._maxLight),
             penumbraCos: [Float](repeating: 0, count: Light._maxLight)
     )
 
     /// Light color.
-    var color: Color = Color(1, 1, 1, 1)
+    var color: Vector3 = Vector3(1, 1, 1)
     /// Light intensity.
     var intensity: Float = 1.0
     /// Defines a distance cutoff at which the light's intensity must be considered zero.
@@ -37,7 +37,7 @@ class SpotLight: Light {
     var penumbra: Float = Float.pi / 12
 
     private var _forward: Vector3 = Vector3()
-    private var _lightColor: Color = Color(1, 1, 1, 1)
+    private var _lightColor: Vector3 = Vector3(1, 1, 1)
     private var _inverseDirection: Vector3 = Vector3()
 
     /// Get light position.
@@ -61,12 +61,11 @@ class SpotLight: Light {
     }
 
     /// Get the final light color.
-    var lightColor: Color {
+    var lightColor: Vector3 {
         get {
-            _lightColor.r = color.r * intensity
-            _lightColor.g = color.g * intensity
-            _lightColor.b = color.b * intensity
-            _lightColor.a = color.a * intensity
+            _lightColor.x = color.x * intensity
+            _lightColor.y = color.y * intensity
+            _lightColor.z = color.z * intensity
             return _lightColor
         }
     }
@@ -75,9 +74,9 @@ class SpotLight: Light {
     internal static func _updateShaderData(_ shaderData: ShaderData) {
         let data = SpotLight._combinedData
 
-        shaderData.setFloatArray(SpotLight._colorProperty, data.color)
-        shaderData.setFloatArray(SpotLight._positionProperty, data.position)
-        shaderData.setFloatArray(SpotLight._directionProperty, data.direction)
+        shaderData.setVector3Array(SpotLight._colorProperty, data.color)
+        shaderData.setVector3Array(SpotLight._positionProperty, data.position)
+        shaderData.setVector3Array(SpotLight._directionProperty, data.direction)
         shaderData.setFloatArray(SpotLight._distanceProperty, data.distance)
         shaderData.setFloatArray(SpotLight._angleCosProperty, data.angleCos)
         shaderData.setFloatArray(SpotLight._penumbraCosProperty, data.penumbraCos)
@@ -91,15 +90,9 @@ class SpotLight: Light {
         let penumbraCosStart = lightIndex
         let angleCosStart = lightIndex
 
-        SpotLight._combinedData.color[colorStart] = lightColor.r
-        SpotLight._combinedData.color[colorStart + 1] = lightColor.g
-        SpotLight._combinedData.color[colorStart + 2] = lightColor.b
-        SpotLight._combinedData.position[positionStart] = position.x
-        SpotLight._combinedData.position[positionStart + 1] = position.y
-        SpotLight._combinedData.position[positionStart + 2] = position.z
-        SpotLight._combinedData.direction[directionStart] = direction.x
-        SpotLight._combinedData.direction[directionStart + 1] = direction.y
-        SpotLight._combinedData.direction[directionStart + 2] = direction.z
+        SpotLight._combinedData.color[colorStart] = lightColor
+        SpotLight._combinedData.position[positionStart] = position
+        SpotLight._combinedData.direction[directionStart] = direction
         SpotLight._combinedData.distance[distanceStart] = distance
         SpotLight._combinedData.angleCos[angleCosStart] = cos(angle)
         SpotLight._combinedData.penumbraCos[penumbraCosStart] = cos(angle + penumbra)

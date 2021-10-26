@@ -13,19 +13,19 @@ class PointLight: Light {
     private static var _positionProperty: ShaderProperty = Shader.getPropertyByName("u_pointLightPosition")
     private static var _distanceProperty: ShaderProperty = Shader.getPropertyByName("u_pointLightDistance")
     private static var _combinedData = (
-            color: [Float](repeating: 0, count: Light._maxLight),
-            position: [Float](repeating: 0, count: 3 * Light._maxLight),
+            color: [Vector3](repeating: Vector3(), count: Light._maxLight),
+            position: [Vector3](repeating: Vector3(), count: Light._maxLight),
             distance: [Float](repeating: 0, count: Light._maxLight)
     )
 
     /// Light color.
-    var color: Color = Color(1, 1, 1, 1)
+    var color: Vector3 = Vector3(1, 1, 1)
     /// Light intensity.
     var intensity: Float = 1.0
     /// Defines a distance cutoff at which the light's intensity must be considered zero.
     var distance: Float = 100
 
-    private var _lightColor: Color = Color(1, 1, 1, 1)
+    private var _lightColor: Vector3 = Vector3(1, 1, 1)
 
     /// Get light position.
     var position: Vector3 {
@@ -35,12 +35,11 @@ class PointLight: Light {
     }
 
     /// Get the final light color.
-    var lightColor: Color {
+    var lightColor: Vector3 {
         get {
-            _lightColor.r = color.r * intensity
-            _lightColor.g = color.g * intensity
-            _lightColor.b = color.b * intensity
-            _lightColor.a = color.a * intensity
+            _lightColor.x = color.x * intensity
+            _lightColor.y = color.y * intensity
+            _lightColor.z = color.z * intensity
             return _lightColor
         }
     }
@@ -48,8 +47,8 @@ class PointLight: Light {
     internal static func _updateShaderData(_ shaderData: ShaderData) {
         let data = PointLight._combinedData
 
-        shaderData.setFloatArray(PointLight._colorProperty, data.color)
-        shaderData.setFloatArray(PointLight._positionProperty, data.position)
+        shaderData.setVector3Array(PointLight._colorProperty, data.color)
+        shaderData.setVector3Array(PointLight._positionProperty, data.position)
         shaderData.setFloatArray(PointLight._distanceProperty, data.distance)
     }
 
@@ -58,12 +57,8 @@ class PointLight: Light {
         let positionStart = lightIndex * 3
         let distanceStart = lightIndex
 
-        PointLight._combinedData.color[colorStart] = lightColor.r
-        PointLight._combinedData.color[colorStart + 1] = lightColor.g
-        PointLight._combinedData.color[colorStart + 2] = lightColor.b
-        PointLight._combinedData.position[positionStart] = position.x
-        PointLight._combinedData.position[positionStart + 1] = position.y
-        PointLight._combinedData.position[positionStart + 2] = position.z
+        PointLight._combinedData.color[colorStart] = lightColor
+        PointLight._combinedData.position[positionStart] = position
         PointLight._combinedData.distance[distanceStart] = distance
     }
 }

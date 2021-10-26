@@ -8,17 +8,23 @@
 import Metal
 
 enum ShaderPropertyValueType {
-    case Float(Float)
     case Int(Int)
+    case Float(Float)
     case Vector2(Vector2)
     case Vector3(Vector3)
     case Vector4(Vector4)
     case Color(Color)
     case Matrix(Matrix)
     case Texture(MTLTexture)
+
+    case IntArray([Int])
+    case FloatArray([Float])
+    case Vector2Array([Vector2])
+    case Vector3Array([Vector3])
+    case Vector4Array([Vector4])
+    case ColorArray([Color])
+    case MatrixArray([Matrix])
     case TextureArray([MTLTexture])
-    case Int32Array([Int])
-    case Float32Array([Float])
 }
 
 ///  Shader data collection,Correspondence includes shader properties data and macros data.
@@ -71,6 +77,7 @@ class ShaderData {
 }
 
 extension ShaderData {
+    //MARK: - Float
     /// Get float by shader property name.
     /// - Parameter propertyName: Shader property name
     /// - Returns: Float
@@ -115,6 +122,52 @@ extension ShaderData {
         _setData(property, .Float(value))
     }
 
+    //MARK: - FloatArray
+    /// Get float array by shader property name.
+    /// - Parameter propertyName: Shader property name
+    /// - Returns: Float array
+    func getFloatArray(_ propertyName: String) -> [Float]? {
+        let p = _getData(propertyName)
+        switch p {
+        case .FloatArray(let value):
+            return value
+        default:
+            return nil
+        }
+    }
+
+    /// Get float array by shader property.
+    /// - Parameter property: Shader property
+    /// - Returns: Float array
+    func getFloatArray(_ property: ShaderProperty) -> [Float]? {
+        let p = _getData(property)
+        switch p {
+        case .FloatArray(let value):
+            return value
+        default:
+            return nil
+        }
+    }
+
+    /// Set float array by shader property name.
+    /// - Remark: Correspondence includes float array、vec2 array、vec3 array、vec4 array and matrix array shader property type.
+    /// - Parameters:
+    ///   - propertyName:  Shader property name
+    ///   - value: Float array
+    func setFloatArray(_ propertyName: String, _ value: [Float]) {
+        _setData(propertyName, .FloatArray(value))
+    }
+
+    /// Set float array by shader property.
+    /// - Remark: Correspondence includes float array、vec2 array、vec3 array、vec4 array and matrix array shader property type.
+    /// - Parameters:
+    ///   - property: Shader property
+    ///   - value: Float array
+    func setFloatArray(_ property: ShaderProperty, _ value: [Float]) {
+        _setData(property, .FloatArray(value))
+    }
+
+    //MARK: - Int
     /// Get int by shader property name.
     /// - Parameter propertyName: Shader property name
     /// - Returns: Int
@@ -159,57 +212,14 @@ extension ShaderData {
         _setData(property, .Int(value))
     }
 
-    /// Get float array by shader property name.
-    /// - Parameter propertyName: Shader property name
-    /// - Returns: Float array
-    func getFloatArray(_ propertyName: String) -> [Float]? {
-        let p = _getData(propertyName)
-        switch p {
-        case .Float32Array(let value):
-            return value
-        default:
-            return nil
-        }
-    }
-
-    /// Get float array by shader property.
-    /// - Parameter property: Shader property
-    /// - Returns: Float array
-    func getFloatArray(_ property: ShaderProperty) -> [Float]? {
-        let p = _getData(property)
-        switch p {
-        case .Float32Array(let value):
-            return value
-        default:
-            return nil
-        }
-    }
-
-    /// Set float array by shader property name.
-    /// - Remark: Correspondence includes float array、vec2 array、vec3 array、vec4 array and matrix array shader property type.
-    /// - Parameters:
-    ///   - propertyName:  Shader property name
-    ///   - value: Float array
-    func setFloatArray(_ propertyName: String, _ value: [Float]) {
-        _setData(propertyName, .Float32Array(value))
-    }
-
-    /// Set float array by shader property.
-    /// - Remark: Correspondence includes float array、vec2 array、vec3 array、vec4 array and matrix array shader property type.
-    /// - Parameters:
-    ///   - property: Shader property
-    ///   - value: Float array
-    func setFloatArray(_ property: ShaderProperty, _ value: [Float]) {
-        _setData(property, .Float32Array(value))
-    }
-
+    //MARK: - IntArray
     /// Get int array by shader property name.
     /// - Parameter propertyName: Shader property name
     /// - Returns: Int Array
     func getIntArray(_ propertyName: String) -> [Int]? {
         let p = _getData(propertyName)
         switch p {
-        case .Int32Array(let value):
+        case .IntArray(let value):
             return value
         default:
             return nil
@@ -222,7 +232,7 @@ extension ShaderData {
     func getIntArray(_ property: ShaderProperty) -> [Int]? {
         let p = _getData(property)
         switch p {
-        case .Int32Array(let value):
+        case .IntArray(let value):
             return value
         default:
             return nil
@@ -235,7 +245,7 @@ extension ShaderData {
     ///   - propertyName: Shader property name
     ///   - value: Int Array
     func setIntArray(_ propertyName: String, _ value: [Int]) {
-        _setData(propertyName, .Int32Array(value))
+        _setData(propertyName, .IntArray(value))
     }
 
     /// Set int array by shader property.
@@ -244,9 +254,10 @@ extension ShaderData {
     ///   - property: Shader property
     ///   - value: Int Array
     func setIntArray(_ property: ShaderProperty, _ value: [Int]) {
-        _setData(property, .Int32Array(value))
+        _setData(property, .IntArray(value))
     }
 
+    //MARK: - Vector2
     /// Get two-dimensional from shader property name.
     /// - Parameter propertyName: Shader property name
     /// - Returns: Two-dimensional vector
@@ -291,6 +302,52 @@ extension ShaderData {
         _setData(property, .Vector2(value))
     }
 
+    //MARK: - Vector2Array
+    /// Get float array by shader property name.
+    /// - Parameter propertyName: Shader property name
+    /// - Returns: Float array
+    func getVector2Array(_ propertyName: String) -> [Vector2]? {
+        let p = _getData(propertyName)
+        switch p {
+        case .Vector2Array(let value):
+            return value
+        default:
+            return nil
+        }
+    }
+
+    /// Get float array by shader property.
+    /// - Parameter property: Shader property
+    /// - Returns: Float array
+    func getVector2Array(_ property: ShaderProperty) -> [Vector2]? {
+        let p = _getData(property)
+        switch p {
+        case .Vector2Array(let value):
+            return value
+        default:
+            return nil
+        }
+    }
+
+    /// Set float array by shader property name.
+    /// - Remark: Correspondence includes float array、vec2 array、vec3 array、vec4 array and matrix array shader property type.
+    /// - Parameters:
+    ///   - propertyName:  Shader property name
+    ///   - value: Float array
+    func setVector2Array(_ propertyName: String, _ value: [Vector2]) {
+        _setData(propertyName, .Vector2Array(value))
+    }
+
+    /// Set float array by shader property.
+    /// - Remark: Correspondence includes float array、vec2 array、vec3 array、vec4 array and matrix array shader property type.
+    /// - Parameters:
+    ///   - property: Shader property
+    ///   - value: Float array
+    func setVector2Array(_ property: ShaderProperty, _ value: [Vector2]) {
+        _setData(property, .Vector2Array(value))
+    }
+
+    //MARK: - Vector3
     /// Get vector3 by shader property name.
     /// - Parameter propertyName: Shader property name
     /// - Returns: Three-dimensional vector
@@ -335,6 +392,52 @@ extension ShaderData {
         _setData(property, .Vector3(value))
     }
 
+    //MARK: - Vector3Array
+    /// Get float array by shader property name.
+    /// - Parameter propertyName: Shader property name
+    /// - Returns: Float array
+    func getVector3Array(_ propertyName: String) -> [Vector3]? {
+        let p = _getData(propertyName)
+        switch p {
+        case .Vector3Array(let value):
+            return value
+        default:
+            return nil
+        }
+    }
+
+    /// Get float array by shader property.
+    /// - Parameter property: Shader property
+    /// - Returns: Float array
+    func getVector3Array(_ property: ShaderProperty) -> [Vector3]? {
+        let p = _getData(property)
+        switch p {
+        case .Vector3Array(let value):
+            return value
+        default:
+            return nil
+        }
+    }
+
+    /// Set float array by shader property name.
+    /// - Remark: Correspondence includes float array、vec2 array、vec3 array、vec4 array and matrix array shader property type.
+    /// - Parameters:
+    ///   - propertyName:  Shader property name
+    ///   - value: Float array
+    func setVector3Array(_ propertyName: String, _ value: [Vector3]) {
+        _setData(propertyName, .Vector3Array(value))
+    }
+
+    /// Set float array by shader property.
+    /// - Remark: Correspondence includes float array、vec2 array、vec3 array、vec4 array and matrix array shader property type.
+    /// - Parameters:
+    ///   - property: Shader property
+    ///   - value: Float array
+    func setVector3Array(_ property: ShaderProperty, _ value: [Vector3]) {
+        _setData(property, .Vector3Array(value))
+    }
+
+    //MARK: - Vector4
     /// Get vector4 by shader property name.
     /// - Parameter propertyName: Shader property name
     /// - Returns: Four-dimensional vector
@@ -379,6 +482,52 @@ extension ShaderData {
         _setData(property, .Vector4(value))
     }
 
+    //MARK: - Vector4Array
+    /// Get float array by shader property name.
+    /// - Parameter propertyName: Shader property name
+    /// - Returns: Float array
+    func getVector4Array(_ propertyName: String) -> [Vector4]? {
+        let p = _getData(propertyName)
+        switch p {
+        case .Vector4Array(let value):
+            return value
+        default:
+            return nil
+        }
+    }
+
+    /// Get float array by shader property.
+    /// - Parameter property: Shader property
+    /// - Returns: Float array
+    func getVector4Array(_ property: ShaderProperty) -> [Vector4]? {
+        let p = _getData(property)
+        switch p {
+        case .Vector4Array(let value):
+            return value
+        default:
+            return nil
+        }
+    }
+
+    /// Set float array by shader property name.
+    /// - Remark: Correspondence includes float array、vec2 array、vec3 array、vec4 array and matrix array shader property type.
+    /// - Parameters:
+    ///   - propertyName:  Shader property name
+    ///   - value: Float array
+    func setVector4Array(_ propertyName: String, _ value: [Vector4]) {
+        _setData(propertyName, .Vector4Array(value))
+    }
+
+    /// Set float array by shader property.
+    /// - Remark: Correspondence includes float array、vec2 array、vec3 array、vec4 array and matrix array shader property type.
+    /// - Parameters:
+    ///   - property: Shader property
+    ///   - value: Float array
+    func setVector4Array(_ property: ShaderProperty, _ value: [Vector4]) {
+        _setData(property, .Vector4Array(value))
+    }
+
+    //MARK: - Matrix
     /// Get matrix by shader property name.
     /// - Parameter propertyName: Shader property name
     /// - Returns: Matrix
@@ -423,6 +572,52 @@ extension ShaderData {
         _setData(property, .Matrix(value))
     }
 
+    //MARK: - Matrix4Array
+    /// Get float array by shader property name.
+    /// - Parameter propertyName: Shader property name
+    /// - Returns: Float array
+    func getMatrixArray(_ propertyName: String) -> [Matrix]? {
+        let p = _getData(propertyName)
+        switch p {
+        case .MatrixArray(let value):
+            return value
+        default:
+            return nil
+        }
+    }
+
+    /// Get float array by shader property.
+    /// - Parameter property: Shader property
+    /// - Returns: Float array
+    func getMatrixArray(_ property: ShaderProperty) -> [Matrix]? {
+        let p = _getData(property)
+        switch p {
+        case .MatrixArray(let value):
+            return value
+        default:
+            return nil
+        }
+    }
+
+    /// Set float array by shader property name.
+    /// - Remark: Correspondence includes float array、vec2 array、vec3 array、vec4 array and matrix array shader property type.
+    /// - Parameters:
+    ///   - propertyName:  Shader property name
+    ///   - value: Float array
+    func setMatrixArray(_ propertyName: String, _ value: [Matrix]) {
+        _setData(propertyName, .MatrixArray(value))
+    }
+
+    /// Set float array by shader property.
+    /// - Remark: Correspondence includes float array、vec2 array、vec3 array、vec4 array and matrix array shader property type.
+    /// - Parameters:
+    ///   - property: Shader property
+    ///   - value: Float array
+    func setMatrixArray(_ property: ShaderProperty, _ value: [Matrix]) {
+        _setData(property, .MatrixArray(value))
+    }
+
+    //MARK: - Color
     /// Get color by shader property name.
     /// - Parameter propertyName: Shader property name
     /// - Returns: Color
@@ -467,6 +662,52 @@ extension ShaderData {
         _setData(property, .Color(value))
     }
 
+    //MARK: - ColorArray
+    /// Get float array by shader property name.
+    /// - Parameter propertyName: Shader property name
+    /// - Returns: Float array
+    func getColorArray(_ propertyName: String) -> [Color]? {
+        let p = _getData(propertyName)
+        switch p {
+        case .ColorArray(let value):
+            return value
+        default:
+            return nil
+        }
+    }
+
+    /// Get float array by shader property.
+    /// - Parameter property: Shader property
+    /// - Returns: Float array
+    func getColorArray(_ property: ShaderProperty) -> [Color]? {
+        let p = _getData(property)
+        switch p {
+        case .ColorArray(let value):
+            return value
+        default:
+            return nil
+        }
+    }
+
+    /// Set float array by shader property name.
+    /// - Remark: Correspondence includes float array、vec2 array、vec3 array、vec4 array and matrix array shader property type.
+    /// - Parameters:
+    ///   - propertyName:  Shader property name
+    ///   - value: Float array
+    func setColorArray(_ propertyName: String, _ value: [Color]) {
+        _setData(propertyName, .ColorArray(value))
+    }
+
+    /// Set float array by shader property.
+    /// - Remark: Correspondence includes float array、vec2 array、vec3 array、vec4 array and matrix array shader property type.
+    /// - Parameters:
+    ///   - property: Shader property
+    ///   - value: Float array
+    func setColorArray(_ property: ShaderProperty, _ value: [Color]) {
+        _setData(property, .ColorArray(value))
+    }
+
+    //MARK: - Texture
     /// Get texture by shader property name.
     /// - Parameter propertyName: Shader property name
     /// - Returns: Texture
@@ -509,6 +750,7 @@ extension ShaderData {
         _setData(property, .Texture(value))
     }
 
+    //MARK: - TextureArray
     /// Get texture array by shader property name.
     /// - Parameter propertyName: Shader property name
     /// - Returns: Texture array
@@ -590,22 +832,32 @@ extension ShaderData: IClone {
             switch property {
             case .Float(let property):
                 targetProperties[k] = .Float(property)
+            case .FloatArray(let property):
+                targetProperties[k] = .FloatArray(property)
             case .Int(let property):
                 targetProperties[k] = .Int(property)
+            case .IntArray(let property):
+                targetProperties[k] = .IntArray(property)
             case .Vector2(let property):
                 targetProperties[k] = .Vector2(property.clone())
+            case .Vector2Array(let property):
+                targetProperties[k] = .Vector2Array(property)
             case .Vector3(let property):
                 targetProperties[k] = .Vector3(property.clone())
+            case .Vector3Array(let property):
+                targetProperties[k] = .Vector3Array(property)
             case .Vector4(let property):
                 targetProperties[k] = .Vector4(property.clone())
+            case .Vector4Array(let property):
+                targetProperties[k] = .Vector4Array(property)
             case .Color(let property):
                 targetProperties[k] = .Color(property.clone())
+            case .ColorArray(let property):
+                targetProperties[k] = .ColorArray(property)
             case .Matrix(let property):
                 targetProperties[k] = .Matrix(property.clone())
-            case .Float32Array(let property):
-                targetProperties[k] = .Float32Array(property)
-            case .Int32Array(let property):
-                targetProperties[k] = .Int32Array(property)
+            case .MatrixArray(let property):
+                targetProperties[k] = .MatrixArray(property)
             case .TextureArray(let property):
                 targetProperties[k] = .TextureArray(property)
             case .Texture(let property):

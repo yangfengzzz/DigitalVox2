@@ -20,12 +20,12 @@ class LightShadow {
     internal static func _updateShaderData(_ shaderData: ShaderData) {
         let data = LightShadow._combinedData
 
-        shaderData.setFloatArray(LightShadow._viewMatFromLightProperty, data.viewMatrix)
-        shaderData.setFloatArray(LightShadow._projMatFromLightProperty, data.projectionMatrix)
+        shaderData.setMatrixArray(LightShadow._viewMatFromLightProperty, data.viewMatrix)
+        shaderData.setMatrixArray(LightShadow._projMatFromLightProperty, data.projectionMatrix)
         shaderData.setFloatArray(LightShadow._shadowBiasProperty, data.bias)
         shaderData.setFloatArray(LightShadow._shadowIntensityProperty, data.intensity)
         shaderData.setFloatArray(LightShadow._shadowRadiusProperty, data.radius)
-        shaderData.setFloatArray(LightShadow._shadowMapSizeProperty, data.mapSize)
+        shaderData.setVector2Array(LightShadow._shadowMapSizeProperty, data.mapSize)
         shaderData.setTextureArray(LightShadow._shadowMapsProperty, data.map)
     }
 
@@ -37,12 +37,12 @@ class LightShadow {
     private static var _maxLight = 3
 
     private static var _combinedData = (
-            viewMatrix: [Float].init(repeating: 0, count: 16 * LightShadow._maxLight),
-            projectionMatrix: [Float].init(repeating: 0, count: 16 * LightShadow._maxLight),
+            viewMatrix: [Matrix].init(repeating: Matrix(), count: LightShadow._maxLight),
+            projectionMatrix: [Matrix].init(repeating: Matrix(), count: LightShadow._maxLight),
             bias: [Float].init(repeating: 0, count: LightShadow._maxLight),
             intensity: [Float].init(repeating: 0, count: LightShadow._maxLight),
             radius: [Float].init(repeating: 0, count: LightShadow._maxLight),
-            mapSize: [Float].init(repeating: 0, count: 2 * LightShadow._maxLight),
+            mapSize: [Vector2].init(repeating: Vector2(), count: LightShadow._maxLight),
             map: [MTLTexture].init()
     )
 
@@ -132,51 +132,12 @@ class LightShadow {
         let mapSizeStart = lightIndex * 2
         let mapStart = lightIndex
 
-        LightShadow._combinedData.viewMatrix[viewStart + 0] = light.viewMatrix.elements.columns.0[0]
-        LightShadow._combinedData.viewMatrix[viewStart + 1] = light.viewMatrix.elements.columns.0[1]
-        LightShadow._combinedData.viewMatrix[viewStart + 2] = light.viewMatrix.elements.columns.0[2]
-        LightShadow._combinedData.viewMatrix[viewStart + 3] = light.viewMatrix.elements.columns.0[3]
-
-        LightShadow._combinedData.viewMatrix[viewStart + 4] = light.viewMatrix.elements.columns.1[0]
-        LightShadow._combinedData.viewMatrix[viewStart + 5] = light.viewMatrix.elements.columns.1[1]
-        LightShadow._combinedData.viewMatrix[viewStart + 6] = light.viewMatrix.elements.columns.1[2]
-        LightShadow._combinedData.viewMatrix[viewStart + 7] = light.viewMatrix.elements.columns.1[3]
-
-        LightShadow._combinedData.viewMatrix[viewStart + 8] = light.viewMatrix.elements.columns.2[0]
-        LightShadow._combinedData.viewMatrix[viewStart + 9] = light.viewMatrix.elements.columns.2[1]
-        LightShadow._combinedData.viewMatrix[viewStart + 10] = light.viewMatrix.elements.columns.2[2]
-        LightShadow._combinedData.viewMatrix[viewStart + 11] = light.viewMatrix.elements.columns.2[3]
-
-        LightShadow._combinedData.viewMatrix[viewStart + 12] = light.viewMatrix.elements.columns.3[0]
-        LightShadow._combinedData.viewMatrix[viewStart + 13] = light.viewMatrix.elements.columns.3[1]
-        LightShadow._combinedData.viewMatrix[viewStart + 14] = light.viewMatrix.elements.columns.3[2]
-        LightShadow._combinedData.viewMatrix[viewStart + 15] = light.viewMatrix.elements.columns.3[3]
-
-        LightShadow._combinedData.projectionMatrix[projectionStart + 0] = projectionMatrix.elements.columns.0[0]
-        LightShadow._combinedData.projectionMatrix[projectionStart + 1] = projectionMatrix.elements.columns.0[1]
-        LightShadow._combinedData.projectionMatrix[projectionStart + 2] = projectionMatrix.elements.columns.0[2]
-        LightShadow._combinedData.projectionMatrix[projectionStart + 3] = projectionMatrix.elements.columns.0[3]
-
-        LightShadow._combinedData.projectionMatrix[projectionStart + 4] = projectionMatrix.elements.columns.1[0]
-        LightShadow._combinedData.projectionMatrix[projectionStart + 5] = projectionMatrix.elements.columns.1[1]
-        LightShadow._combinedData.projectionMatrix[projectionStart + 6] = projectionMatrix.elements.columns.1[2]
-        LightShadow._combinedData.projectionMatrix[projectionStart + 7] = projectionMatrix.elements.columns.1[3]
-
-        LightShadow._combinedData.projectionMatrix[projectionStart + 8] = projectionMatrix.elements.columns.2[0]
-        LightShadow._combinedData.projectionMatrix[projectionStart + 9] = projectionMatrix.elements.columns.2[1]
-        LightShadow._combinedData.projectionMatrix[projectionStart + 10] = projectionMatrix.elements.columns.2[2]
-        LightShadow._combinedData.projectionMatrix[projectionStart + 11] = projectionMatrix.elements.columns.2[3]
-
-        LightShadow._combinedData.projectionMatrix[projectionStart + 12] = projectionMatrix.elements.columns.3[0]
-        LightShadow._combinedData.projectionMatrix[projectionStart + 13] = projectionMatrix.elements.columns.3[1]
-        LightShadow._combinedData.projectionMatrix[projectionStart + 14] = projectionMatrix.elements.columns.3[2]
-        LightShadow._combinedData.projectionMatrix[projectionStart + 15] = projectionMatrix.elements.columns.3[3]
-
+        LightShadow._combinedData.viewMatrix[viewStart] = light.viewMatrix
+        LightShadow._combinedData.projectionMatrix[projectionStart] = projectionMatrix
         LightShadow._combinedData.bias[biasStart] = bias
         LightShadow._combinedData.intensity[intensityStart] = intensity
         LightShadow._combinedData.radius[radiusStart] = radius
-        LightShadow._combinedData.mapSize[mapSizeStart] = mapSize.x
-        LightShadow._combinedData.mapSize[mapSizeStart + 1] = mapSize.y
+        LightShadow._combinedData.mapSize[mapSizeStart] = mapSize
         LightShadow._combinedData.map[mapStart] = map
     }
 }
