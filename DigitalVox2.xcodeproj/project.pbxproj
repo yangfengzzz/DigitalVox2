@@ -106,7 +106,6 @@
 		0452ECB626DFA0CD0015BFB1 /* vox_tracingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECB526DFA0CD0015BFB1 /* vox_tracingUITests.swift */; };
 		0452ECC326DFA4590015BFB1 /* EngineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECC226DFA4590015BFB1 /* EngineView.swift */; };
 		0452ECC526DFA4920015BFB1 /* Engine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECC426DFA4920015BFB1 /* Engine.swift */; };
-		0452ECD626DFA5360015BFB1 /* PBRSimple.metal in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECCA26DFA5360015BFB1 /* PBRSimple.metal */; };
 		0452ECE626DFA6A10015BFB1 /* cube.obj in Resources */ = {isa = PBXBuildFile; fileRef = 0452ECE026DFA6A10015BFB1 /* cube.obj */; };
 		0452ECE726DFA6A10015BFB1 /* cube.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 0452ECE126DFA6A10015BFB1 /* cube.mtl */; };
 		0452ECE826DFA6A10015BFB1 /* cottage1.obj in Resources */ = {isa = PBXBuildFile; fileRef = 0452ECE226DFA6A10015BFB1 /* cottage1.obj */; };
@@ -201,7 +200,6 @@
 		0497A1EC26DF150800F61DE9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0497A1EB26DF150800F61DE9 /* Preview Assets.xcassets */; };
 		0497A20226DF150800F61DE9 /* DigitalVox2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A20126DF150800F61DE9 /* DigitalVox2UITests.swift */; };
 		04A6BEAF271C4DA30024DF43 /* ShaderMacroCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447D54526F803B300272D7C /* ShaderMacroCollection.swift */; };
-		04A6BEB127204F3C0024DF43 /* common_vert.metal in Sources */ = {isa = PBXBuildFile; fileRef = 04A6BEB027204F3C0024DF43 /* common_vert.metal */; };
 		04A6BEB327204FE20024DF43 /* blinn-phong.metal in Sources */ = {isa = PBXBuildFile; fileRef = 04A6BEB227204FE20024DF43 /* blinn-phong.metal */; };
 		04A6BEB52720DCD80024DF43 /* function-constant.metal in Sources */ = {isa = PBXBuildFile; fileRef = 04A6BEB42720DCD80024DF43 /* function-constant.metal */; };
 		04A6BEB92723B5D00024DF43 /* background-texture.metal in Sources */ = {isa = PBXBuildFile; fileRef = 04A6BEB82723B5D00024DF43 /* background-texture.metal */; };
@@ -410,7 +408,6 @@
 		0452ECC126DFA0DE0015BFB1 /* vox.tracing.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = vox.tracing.entitlements; sourceTree = "<group>"; };
 		0452ECC226DFA4590015BFB1 /* EngineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineView.swift; sourceTree = "<group>"; };
 		0452ECC426DFA4920015BFB1 /* Engine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Engine.swift; sourceTree = "<group>"; };
-		0452ECCA26DFA5360015BFB1 /* PBRSimple.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = PBRSimple.metal; sourceTree = "<group>"; };
 		0452ECCB26DFA5360015BFB1 /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
 		0452ECE026DFA6A10015BFB1 /* cube.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube.obj; sourceTree = "<group>"; };
 		0452ECE126DFA6A10015BFB1 /* cube.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube.mtl; sourceTree = "<group>"; };
@@ -546,7 +543,6 @@
 		0497A20126DF150800F61DE9 /* DigitalVox2UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitalVox2UITests.swift; sourceTree = "<group>"; };
 		0497A20326DF150800F61DE9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0497A20F26DF151700F61DE9 /* DigitalVox2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DigitalVox2.entitlements; sourceTree = "<group>"; };
-		04A6BEB027204F3C0024DF43 /* common_vert.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = common_vert.metal; sourceTree = "<group>"; };
 		04A6BEB227204FE20024DF43 /* blinn-phong.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = "blinn-phong.metal"; sourceTree = "<group>"; };
 		04A6BEB42720DCD80024DF43 /* function-constant.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = "function-constant.metal"; sourceTree = "<group>"; };
 		04A6BEB82723B5D00024DF43 /* background-texture.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = "background-texture.metal"; sourceTree = "<group>"; };
@@ -1148,8 +1144,6 @@
 				0497A1ED26DF150800F61DE9 /* Info.plist */,
 				0497A20F26DF151700F61DE9 /* DigitalVox2.entitlements */,
 				0413289E26E0CBE7000A4F4E /* ShaderSimple.metal */,
-				0452ECCA26DFA5360015BFB1 /* PBRSimple.metal */,
-				04A6BEB027204F3C0024DF43 /* common_vert.metal */,
 			);
 			path = vox.render;
 			sourceTree = "<group>";
@@ -1632,8 +1626,6 @@
 				0413289426E0A48F000A4F4E /* SubMesh.swift in Sources */,
 				04E28C3826ECE7B3003A3C3B /* MetalRenderer.swift in Sources */,
 				043CB46726F45C18004A0B21 /* ClassPool.swift in Sources */,
-				0452ECD626DFA5360015BFB1 /* PBRSimple.metal in Sources */,
-				04A6BEB127204F3C0024DF43 /* common_vert.metal in Sources */,
 				0447D55226F8309C00272D7C /* SpotLight.swift in Sources */,
 				04832F072701F4B3001AD421 /* SkinnedMeshRenderer.swift in Sources */,
 				043CB46D26F5667A004A0B21 /* ShaderPool.swift in Sources */,
