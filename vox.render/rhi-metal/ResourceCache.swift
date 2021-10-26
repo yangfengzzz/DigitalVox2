@@ -52,7 +52,7 @@ class ResourceCache {
         let hash = pipelineDescriptor.hash
         var pipelineState = state.graphics_pipelines[hash]
         if pipelineState == nil {
-            pipelineState = RenderPipelineState(render!.device, pipelineDescriptor)
+            pipelineState = RenderPipelineState(render!, pipelineDescriptor)
             state.graphics_pipelines[hash] = pipelineState
         }
         

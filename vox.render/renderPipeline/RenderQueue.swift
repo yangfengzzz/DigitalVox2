@@ -98,13 +98,11 @@ extension RenderQueue {
             rhi.setDepthStencilState(depthStencilState!)
             
             //MARK:- Load Resouces
-            let reflection = pipelineState.reflection
-            let shaderReflection = ShaderReflection(engine, reflection)
-            shaderReflection.groupingOtherUniformBlock()
-            shaderReflection.uploadAll(shaderReflection.sceneUniformBlock, sceneData);
-            shaderReflection.uploadAll(shaderReflection.cameraUniformBlock, cameraData);
-            shaderReflection.uploadAll(shaderReflection.rendererUniformBlock, rendererData);
-            shaderReflection.uploadAll(shaderReflection.materialUniformBlock, materialData);
+            pipelineState.groupingOtherUniformBlock()
+            pipelineState.uploadAll(pipelineState.sceneUniformBlock, sceneData);
+            pipelineState.uploadAll(pipelineState.cameraUniformBlock, cameraData);
+            pipelineState.uploadAll(pipelineState.rendererUniformBlock, rendererData);
+            pipelineState.uploadAll(pipelineState.materialUniformBlock, materialData);
 
             for (index, vertexBuffer) in element.mesh._vertexBuffer.enumerated() {
                 rhi.renderEncoder.setVertexBuffer(vertexBuffer?.buffer,
