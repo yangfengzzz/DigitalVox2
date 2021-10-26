@@ -15,6 +15,18 @@ class Light: Component {
     private var _viewMat: Matrix = Matrix()
     private var _inverseViewMat: Matrix = Matrix()
 
+    /// Mount to the current Scene.
+    internal override func _onEnable() {
+        let lightFeature: LightFeature? = scene.findFeature()
+        lightFeature!.attachRenderLight(self)
+    }
+
+    /// Unmount from the current Scene.
+    internal override func _onDisable() {
+        let lightFeature: LightFeature? = scene.findFeature()
+        lightFeature!.detachRenderLight(self)
+    }
+
     /// View matrix.
     var viewMatrix: Matrix {
         get {
@@ -31,7 +43,7 @@ class Light: Component {
         }
     }
 
-    //MARK:- Shadow
+    //MARK: - Shadow
     internal var shadowMapPass: ShadowMapPass?
     internal var shadow: LightShadow?
     private var _enableShadow = false

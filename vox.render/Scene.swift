@@ -8,7 +8,6 @@
 import Foundation
 
 class Scene: EngineObject {
-    static var sceneFeatureManager = SceneFeatureManager()
     var features: [SceneFeature] = []
 
     /// Scene name.
@@ -59,6 +58,8 @@ class Scene: EngineObject {
         super.init(engine)
 
         ambientLight = AmbientLight(self)
+
+        registerFeature(LightFeature())
     }
 }
 
@@ -124,7 +125,7 @@ extension Scene {
     /// - Parameter index: Index
     /// - Returns: Entity
     func getRootEntity(_ index: Int = 0) -> Entity? {
-        return _rootEntities[index]
+        _rootEntities[index]
     }
 
     /// Find entity globally by name.
@@ -202,6 +203,8 @@ extension Scene {
     }
 
     internal func _updateShaderData() {
+        let lightMgr: LightFeature? = findFeature()
+        lightMgr!._updateShaderData(shaderData)
     }
 }
 
@@ -216,11 +219,18 @@ extension Scene {
 }
 
 extension Scene {
-    static func registerFeature(Feature: SceneFeature) {
-        Scene.sceneFeatureManager.registerFeature(Feature)
+    func registerFeature(_ Feature: SceneFeature) {
+        features.append(Feature)
     }
 
     func findFeature<T: SceneFeature>() -> T? {
-        return Scene.sceneFeatureManager.findFeature(self)
+        for i in 0..<features.count {
+            let feature = features[i]
+
+            if (feature is T) {
+                return (feature as! T)
+            }
+        }
+        return nil
     }
 }

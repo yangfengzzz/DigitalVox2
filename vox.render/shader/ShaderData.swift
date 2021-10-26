@@ -812,7 +812,7 @@ extension ShaderData {
     /// Disable macro
     /// - Parameter macroName: Macro name
     func disableMacro(_ macroName: MacroName) {
-        _macroCollection._value[macroName] = (0, .bool)
+        _macroCollection._value.removeValue(forKey: macroName)
     }
 }
 

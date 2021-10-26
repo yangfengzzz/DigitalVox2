@@ -145,6 +145,7 @@
 		0452ED3A26E0F50A0015BFB1 /* quat4f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ED3726E0F50A0015BFB1 /* quat4f.swift */; };
 		0452ED3B26E0F50A0015BFB1 /* frame3f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ED3826E0F50A0015BFB1 /* frame3f.swift */; };
 		0452ED3C26E0F50A0015BFB1 /* frame2f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ED3926E0F50A0015BFB1 /* frame2f.swift */; };
+		0454C7692727C6CD00E7EC29 /* SceneFeatureManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DBA7DD2700B45100C3B97C /* SceneFeatureManager.swift */; };
 		0458275B26F6EF0E0056D134 /* USDZAssetsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0458275A26F6EF0E0056D134 /* USDZAssetsLoader.swift */; };
 		0458275D26F71D000056D134 /* MeshBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0458275C26F71D000056D134 /* MeshBuffer.swift */; };
 		047914CB26F37C0300BE5170 /* ShaderData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047914CA26F37C0300BE5170 /* ShaderData.swift */; };
@@ -221,7 +222,6 @@
 		04DB2A4226DF1E0500C15850 /* IClone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DB2A4126DF1E0500C15850 /* IClone.swift */; };
 		04DBA7DA2700B32D00C3B97C /* EngineFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DBA7D92700B32D00C3B97C /* EngineFeature.swift */; };
 		04DBA7DC2700B3C900C3B97C /* SceneFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DBA7DB2700B3C900C3B97C /* SceneFeature.swift */; };
-		04DBA7DE2700B45100C3B97C /* SceneFeatureManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DBA7DD2700B45100C3B97C /* SceneFeatureManager.swift */; };
 		04E28C3826ECE7B3003A3C3B /* MetalRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E28C3726ECE7B3003A3C3B /* MetalRenderer.swift */; };
 		04E28C4226EDD722003A3C3B /* BasicRenderPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E28C4126EDD722003A3C3B /* BasicRenderPipeline.swift */; };
 		04E28C4426EDD78C003A3C3B /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E28C4326EDD78C003A3C3B /* Renderer.swift */; };
@@ -1700,7 +1700,6 @@
 				0413288026E08044000A4F4E /* Color.swift in Sources */,
 				04F6AA6C27014FD400A0D6F6 /* CollisionDetection.swift in Sources */,
 				04FF83BC271801550016CFC3 /* ComputePipelineState.swift in Sources */,
-				04DBA7DE2700B45100C3B97C /* SceneFeatureManager.swift in Sources */,
 				0413286D26E06648000A4F4E /* BoundingSphere.swift in Sources */,
 				0447D56326F8588900272D7C /* PBRSpecularMaterial.swift in Sources */,
 				0447D56126F8562300272D7C /* PBRBaseMaterial.swift in Sources */,
@@ -1753,6 +1752,7 @@
 				04F5B2572701F14100C36450 /* BlendShapeFrame.swift in Sources */,
 				042BB13A26F36EDD00604751 /* ShaderDataGroup.swift in Sources */,
 				0413287526E072A9000A4F4E /* PlaneIntersectionType.swift in Sources */,
+				0454C7692727C6CD00E7EC29 /* SceneFeatureManager.swift in Sources */,
 				0447D57A26F8941100272D7C /* RenderPipelineState.swift in Sources */,
 				04F6AA742701608500A0D6F6 /* LightFeature.swift in Sources */,
 				04F6AA6127014B0500A0D6F6 /* ABoxCollider.swift in Sources */,

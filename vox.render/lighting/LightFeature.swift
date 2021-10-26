@@ -13,7 +13,7 @@ class LightFeature {
 
     /// Register a light object to the current scene.
     /// - Parameter light: light
-    func attachRenderLight(light: Light) {
+    func attachRenderLight(_ light: Light) {
         let isContain = visibleLights.contains { l in
             l === light
         }
@@ -27,13 +27,13 @@ class LightFeature {
 
     /// Remove a light object from the current scene.
     /// - Parameter light: light
-    func detachRenderLight(light: Light) {
+    func detachRenderLight(_ light: Light) {
         visibleLights.removeAll { l in
             l === light
         }
     }
 
-    internal func _updateShaderData(shaderData: ShaderData) {
+    internal func _updateShaderData(_ shaderData: ShaderData) {
         /// ambientLight and envMapLight only use the last one in the scene
         var directLightCount = 0
         var pointLightCount = 0
@@ -79,22 +79,17 @@ class LightFeature {
 
 extension LightFeature: SceneFeature {
     func preUpdate(_ scene: Scene) {
-        fatalError()
     }
 
     func postUpdate(_ scene: Scene) {
-        fatalError()
     }
 
     func preRender(_ scene: Scene, _ camera: Camera) {
-        fatalError()
     }
 
     func postRender(_ scene: Scene, _ camera: Camera) {
-        fatalError()
     }
 
     func destroy(_ scene: Scene) {
-        fatalError()
     }
 }
