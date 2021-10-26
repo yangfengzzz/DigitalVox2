@@ -49,7 +49,17 @@ vertex VertexOut vertex_simple(const VertexIn vertexIn [[stage_in]],
 
 fragment float4 fragment_simple(VertexOut in [[stage_in]],
                                 sampler textureSampler [[sampler(0)]],
-                                constant float4 &u_baseColor [[buffer(1)]],
+                                //pbr base frag define
+                                constant float &u_alphaCutoff [[buffer(21)]],
+                                constant float4 &u_baseColor [[buffer(22)]],
+                                constant float &u_metal [[buffer(23)]],
+                                constant float &u_roughness [[buffer(24)]],
+                                constant float3 &u_specularColor [[buffer(25)]],
+                                constant float &u_glossinessFactor [[buffer(26)]],
+                                constant float3 &u_emissiveColor [[buffer(27)]],
+                                constant float &u_normalIntensity [[buffer(28)]],
+                                constant float &u_occlusionStrength [[buffer(29)]],
+                                // pbr_texture_frag_define
                                 texture2d<float> u_baseColorTexture [[texture(1), function_constant(hasBaseColorMap)]],
                                 texture2d<float> u_normalTexture [[texture(2), function_constant(hasNormalTexture)]],
                                 texture2d<float> u_emissiveTexture [[texture(3), function_constant(hasEmissiveMap)]],

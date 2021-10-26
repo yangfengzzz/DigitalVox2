@@ -9,7 +9,7 @@ import MetalKit
 
 class USDZAssetsLoader {
     var meshes: [Mesh] = []
-    var materials: [MetalMaterial] = []
+    var materials: [PBRMaterial] = []
     var entities: [Entity] = []
 
     private var _engine: Engine
@@ -63,7 +63,7 @@ class USDZAssetsLoader {
                         MeshBuffer(mtkSubmesh.indexBuffer.buffer, mtkSubmesh.indexBuffer.length, mtkSubmesh.indexBuffer.type),
                         mtkSubmesh.indexType, mtkSubmesh.indexCount, mtkSubmesh.primitiveType)
 
-                let mat = MetalMaterial(_engine)
+                let mat = PBRMaterial(_engine)
                 loadMaterial(mat, mdlSubmesh.material)
                 materials.append(mat)
                 renderer.setMaterial(subCount, mat)
@@ -75,7 +75,7 @@ class USDZAssetsLoader {
         }
     }
 
-    func loadMaterial(_ pbr: MetalMaterial, _ material: MDLMaterial?) {
+    func loadMaterial(_ pbr: PBRMaterial, _ material: MDLMaterial?) {
         func property(with semantic: MDLMaterialSemantic) -> MTLTexture? {
             guard let property = material?.property(with: semantic),
                   property.type == .string,

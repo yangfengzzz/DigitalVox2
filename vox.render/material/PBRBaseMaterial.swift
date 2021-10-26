@@ -146,7 +146,7 @@ class PBRBaseMaterial: BaseMaterial {
     /// Create a pbr base material instance.
     /// - Parameter engine: Engine to which the material belongs
     init(_ engine: Engine) {
-        super.init(engine, Shader.find("pbr")!)
+        super.init(engine, Shader.find("simple")!)
 
         shaderData.enableMacro(NEED_WORLDPOS)
         shaderData.enableMacro(NEED_TILINGOFFSET)

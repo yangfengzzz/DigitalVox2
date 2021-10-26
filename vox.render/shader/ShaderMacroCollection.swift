@@ -20,11 +20,8 @@ internal class ShaderMacroCollection {
     ///   - right: input macro collection
     ///   - out: union output macro collection
     static func unionCollection(_ left: ShaderMacroCollection, _ right: ShaderMacroCollection, _ result: ShaderMacroCollection) {
-        left._value.forEach { (key: MacroName, value: (Int, MTLDataType)) in
-            result._value[key] = value
-        }
-        right._value.forEach { (key: MacroName, value: (Int, MTLDataType)) in
-            result._value[key] = value
+        result._value = left._value.merging(right._value) { l, r in
+            r
         }
     }
 
@@ -83,6 +80,31 @@ internal class ShaderMacroCollection {
         NEED_GENERATE_SHADOW_MAP: (0, .bool),
         SHADOW_MAP_COUNT: (0, .int),
     ]
+
+    static var defaultFunctionConstant = ShaderMacroCollection.createDefaultFunction()
+
+    static func createDefaultFunction() -> MTLFunctionConstantValues {
+        let functionConstants = MTLFunctionConstantValues()
+        for i in 0..<(TOTAL_COUNT.rawValue) {
+            let macro = ShaderMacroCollection.defaultValue[MacroName(i)]!
+
+            var value = macro.0
+            let type = macro.1
+            if type == .bool {
+                var property: Bool
+                if value == 1 {
+                    property = true
+                } else {
+                    property = false
+                }
+                functionConstants.setConstantValue(&property, type: .bool, index: Int(i))
+            } else {
+                functionConstants.setConstantValue(&value, type: type, index: Int(i))
+            }
+        }
+
+        return functionConstants
+    }
 }
 
 extension ShaderMacroCollection: Hashable {
@@ -97,7 +119,9 @@ extension ShaderMacroCollection: Hashable {
     }
 
     func hash(into hasher: inout Hasher) {
-        _value.forEach { (key: MacroName, value: (Int, MTLDataType)) in
+        _value.sorted { l, r in
+            l.key.rawValue < r.key.rawValue
+        }.forEach { (key: MacroName, value: (Int, MTLDataType)) in
             hasher.combine(key)
             hasher.combine(value.0)
         }
