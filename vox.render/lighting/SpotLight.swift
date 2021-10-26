@@ -17,9 +17,9 @@ class SpotLight: Light {
     private static var _penumbraCosProperty: ShaderProperty = Shader.getPropertyByName("u_spotLightPenumbraCos")
 
     private static var _combinedData = (
-            color: [Vector3](repeating: Vector3(), count: Light._maxLight),
-            position: [Vector3](repeating: Vector3(), count: Light._maxLight),
-            direction: [Vector3](repeating: Vector3(), count: Light._maxLight),
+            color: [SIMD3<Float>](repeating: SIMD3<Float>(), count: Light._maxLight),
+            position: [SIMD3<Float>](repeating: SIMD3<Float>(), count: Light._maxLight),
+            direction: [SIMD3<Float>](repeating: SIMD3<Float>(), count: Light._maxLight),
             distance: [Float](repeating: 0, count: Light._maxLight),
             angleCos: [Float](repeating: 0, count: Light._maxLight),
             penumbraCos: [Float](repeating: 0, count: Light._maxLight)
@@ -83,18 +83,11 @@ class SpotLight: Light {
     }
 
     internal func _appendData(_ lightIndex: Int) {
-        let colorStart = lightIndex * 3
-        let positionStart = lightIndex * 3
-        let directionStart = lightIndex * 3
-        let distanceStart = lightIndex
-        let penumbraCosStart = lightIndex
-        let angleCosStart = lightIndex
-
-        SpotLight._combinedData.color[colorStart] = lightColor
-        SpotLight._combinedData.position[positionStart] = position
-        SpotLight._combinedData.direction[directionStart] = direction
-        SpotLight._combinedData.distance[distanceStart] = distance
-        SpotLight._combinedData.angleCos[angleCosStart] = cos(angle)
-        SpotLight._combinedData.penumbraCos[penumbraCosStart] = cos(angle + penumbra)
+        SpotLight._combinedData.color[lightIndex] = lightColor.elements
+        SpotLight._combinedData.position[lightIndex] = position.elements
+        SpotLight._combinedData.direction[lightIndex] = direction.elements
+        SpotLight._combinedData.distance[lightIndex] = distance
+        SpotLight._combinedData.angleCos[lightIndex] = cos(angle)
+        SpotLight._combinedData.penumbraCos[lightIndex] = cos(angle + penumbra)
     }
 }

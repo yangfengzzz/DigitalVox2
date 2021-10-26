@@ -37,12 +37,12 @@ class LightShadow {
     private static var _maxLight = 3
 
     private static var _combinedData = (
-            viewMatrix: [Matrix].init(repeating: Matrix(), count: LightShadow._maxLight),
-            projectionMatrix: [Matrix].init(repeating: Matrix(), count: LightShadow._maxLight),
+            viewMatrix: [matrix_float4x4].init(repeating: matrix_float4x4(), count: LightShadow._maxLight),
+            projectionMatrix: [matrix_float4x4].init(repeating: matrix_float4x4(), count: LightShadow._maxLight),
             bias: [Float].init(repeating: 0, count: LightShadow._maxLight),
             intensity: [Float].init(repeating: 0, count: LightShadow._maxLight),
             radius: [Float].init(repeating: 0, count: LightShadow._maxLight),
-            mapSize: [Vector2].init(repeating: Vector2(), count: LightShadow._maxLight),
+            mapSize: [SIMD2<Float>].init(repeating: SIMD2<Float>(), count: LightShadow._maxLight),
             map: [MTLTexture].init()
     )
 
@@ -124,20 +124,12 @@ class LightShadow {
     }
 
     func appendData(_ lightIndex: Int) {
-        let viewStart = lightIndex * 16
-        let projectionStart = lightIndex * 16
-        let biasStart = lightIndex
-        let intensityStart = lightIndex
-        let radiusStart = lightIndex
-        let mapSizeStart = lightIndex * 2
-        let mapStart = lightIndex
-
-        LightShadow._combinedData.viewMatrix[viewStart] = light.viewMatrix
-        LightShadow._combinedData.projectionMatrix[projectionStart] = projectionMatrix
-        LightShadow._combinedData.bias[biasStart] = bias
-        LightShadow._combinedData.intensity[intensityStart] = intensity
-        LightShadow._combinedData.radius[radiusStart] = radius
-        LightShadow._combinedData.mapSize[mapSizeStart] = mapSize
-        LightShadow._combinedData.map[mapStart] = map
+        LightShadow._combinedData.viewMatrix[lightIndex] = light.viewMatrix.elements
+        LightShadow._combinedData.projectionMatrix[lightIndex] = projectionMatrix.elements
+        LightShadow._combinedData.bias[lightIndex] = bias
+        LightShadow._combinedData.intensity[lightIndex] = intensity
+        LightShadow._combinedData.radius[lightIndex] = radius
+        LightShadow._combinedData.mapSize[lightIndex] = mapSize.elements
+        LightShadow._combinedData.map[lightIndex] = map
     }
 }

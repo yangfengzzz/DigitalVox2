@@ -69,6 +69,10 @@ extension ShaderUniform {
             default:
                 return
             }
+        case .FloatArray(var value):
+            _encoder.setFragmentBytes(&value,
+                    length: MemoryLayout<Float>.stride * value.count,
+                    index: shaderUniform.location)
         default:
             return
         }
@@ -211,6 +215,11 @@ extension ShaderUniform {
                 return
             }
 
+        case .Vector2Array(var value):
+            _encoder.setFragmentBytes(&value,
+                    length: MemoryLayout<SIMD2<Float>>.stride * value.count,
+                    index: shaderUniform.location)
+
         default:
             return
         }
@@ -325,6 +334,10 @@ extension ShaderUniform {
                 return
             }
 
+        case .Vector3Array(var value):
+            _encoder.setFragmentBytes(&value,
+                    length: MemoryLayout<SIMD3<Float>>.stride * value.count,
+                    index: shaderUniform.location)
         default:
             return
         }
@@ -400,6 +413,11 @@ extension ShaderUniform {
             default:
                 return
             }
+
+        case .Vector4Array(var value):
+            _encoder.setFragmentBytes(&value,
+                    length: MemoryLayout<SIMD4<Float>>.stride * value.count,
+                    index: shaderUniform.location)
         default:
             return
         }
@@ -442,6 +460,11 @@ extension ShaderUniform {
             default:
                 return
             }
+
+        case .IntArray(var value):
+            _encoder.setFragmentBytes(&value,
+                    length: MemoryLayout<Int>.stride * value.count,
+                    index: shaderUniform.location)
         default:
             return
         }
@@ -465,6 +488,11 @@ extension ShaderUniform {
         case .Matrix(let value):
             _encoder.setFragmentBytes(&value.elements,
                     length: MemoryLayout<matrix_float4x4>.stride,
+                    index: shaderUniform.location)
+
+        case .MatrixArray(var value):
+            _encoder.setFragmentBytes(&value,
+                    length: MemoryLayout<matrix_float4x4>.stride * value.count,
                     index: shaderUniform.location)
         default:
             return

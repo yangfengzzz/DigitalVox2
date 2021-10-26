@@ -19,11 +19,11 @@ enum ShaderPropertyValueType {
 
     case IntArray([Int])
     case FloatArray([Float])
-    case Vector2Array([Vector2])
-    case Vector3Array([Vector3])
-    case Vector4Array([Vector4])
-    case ColorArray([Color])
-    case MatrixArray([Matrix])
+    case Vector2Array([SIMD2<Float>])
+    case Vector3Array([SIMD3<Float>])
+    case Vector4Array([SIMD4<Float>])
+    case ColorArray([SIMD4<Float>])
+    case MatrixArray([matrix_float4x4])
     case TextureArray([MTLTexture])
 }
 
@@ -306,7 +306,7 @@ extension ShaderData {
     /// Get float array by shader property name.
     /// - Parameter propertyName: Shader property name
     /// - Returns: Float array
-    func getVector2Array(_ propertyName: String) -> [Vector2]? {
+    func getVector2Array(_ propertyName: String) -> [SIMD2<Float>]? {
         let p = _getData(propertyName)
         switch p {
         case .Vector2Array(let value):
@@ -319,7 +319,7 @@ extension ShaderData {
     /// Get float array by shader property.
     /// - Parameter property: Shader property
     /// - Returns: Float array
-    func getVector2Array(_ property: ShaderProperty) -> [Vector2]? {
+    func getVector2Array(_ property: ShaderProperty) -> [SIMD2<Float>]? {
         let p = _getData(property)
         switch p {
         case .Vector2Array(let value):
@@ -334,7 +334,7 @@ extension ShaderData {
     /// - Parameters:
     ///   - propertyName:  Shader property name
     ///   - value: Float array
-    func setVector2Array(_ propertyName: String, _ value: [Vector2]) {
+    func setVector2Array(_ propertyName: String, _ value: [SIMD2<Float>]) {
         _setData(propertyName, .Vector2Array(value))
     }
 
@@ -343,7 +343,7 @@ extension ShaderData {
     /// - Parameters:
     ///   - property: Shader property
     ///   - value: Float array
-    func setVector2Array(_ property: ShaderProperty, _ value: [Vector2]) {
+    func setVector2Array(_ property: ShaderProperty, _ value: [SIMD2<Float>]) {
         _setData(property, .Vector2Array(value))
     }
 
@@ -396,7 +396,7 @@ extension ShaderData {
     /// Get float array by shader property name.
     /// - Parameter propertyName: Shader property name
     /// - Returns: Float array
-    func getVector3Array(_ propertyName: String) -> [Vector3]? {
+    func getVector3Array(_ propertyName: String) -> [SIMD3<Float>]? {
         let p = _getData(propertyName)
         switch p {
         case .Vector3Array(let value):
@@ -409,7 +409,7 @@ extension ShaderData {
     /// Get float array by shader property.
     /// - Parameter property: Shader property
     /// - Returns: Float array
-    func getVector3Array(_ property: ShaderProperty) -> [Vector3]? {
+    func getVector3Array(_ property: ShaderProperty) -> [SIMD3<Float>]? {
         let p = _getData(property)
         switch p {
         case .Vector3Array(let value):
@@ -424,7 +424,7 @@ extension ShaderData {
     /// - Parameters:
     ///   - propertyName:  Shader property name
     ///   - value: Float array
-    func setVector3Array(_ propertyName: String, _ value: [Vector3]) {
+    func setVector3Array(_ propertyName: String, _ value: [SIMD3<Float>]) {
         _setData(propertyName, .Vector3Array(value))
     }
 
@@ -433,7 +433,7 @@ extension ShaderData {
     /// - Parameters:
     ///   - property: Shader property
     ///   - value: Float array
-    func setVector3Array(_ property: ShaderProperty, _ value: [Vector3]) {
+    func setVector3Array(_ property: ShaderProperty, _ value: [SIMD3<Float>]) {
         _setData(property, .Vector3Array(value))
     }
 
@@ -486,7 +486,7 @@ extension ShaderData {
     /// Get float array by shader property name.
     /// - Parameter propertyName: Shader property name
     /// - Returns: Float array
-    func getVector4Array(_ propertyName: String) -> [Vector4]? {
+    func getVector4Array(_ propertyName: String) -> [SIMD4<Float>]? {
         let p = _getData(propertyName)
         switch p {
         case .Vector4Array(let value):
@@ -499,7 +499,7 @@ extension ShaderData {
     /// Get float array by shader property.
     /// - Parameter property: Shader property
     /// - Returns: Float array
-    func getVector4Array(_ property: ShaderProperty) -> [Vector4]? {
+    func getVector4Array(_ property: ShaderProperty) -> [SIMD4<Float>]? {
         let p = _getData(property)
         switch p {
         case .Vector4Array(let value):
@@ -514,7 +514,7 @@ extension ShaderData {
     /// - Parameters:
     ///   - propertyName:  Shader property name
     ///   - value: Float array
-    func setVector4Array(_ propertyName: String, _ value: [Vector4]) {
+    func setVector4Array(_ propertyName: String, _ value: [SIMD4<Float>]) {
         _setData(propertyName, .Vector4Array(value))
     }
 
@@ -523,7 +523,7 @@ extension ShaderData {
     /// - Parameters:
     ///   - property: Shader property
     ///   - value: Float array
-    func setVector4Array(_ property: ShaderProperty, _ value: [Vector4]) {
+    func setVector4Array(_ property: ShaderProperty, _ value: [SIMD4<Float>]) {
         _setData(property, .Vector4Array(value))
     }
 
@@ -576,7 +576,7 @@ extension ShaderData {
     /// Get float array by shader property name.
     /// - Parameter propertyName: Shader property name
     /// - Returns: Float array
-    func getMatrixArray(_ propertyName: String) -> [Matrix]? {
+    func getMatrixArray(_ propertyName: String) -> [matrix_float4x4]? {
         let p = _getData(propertyName)
         switch p {
         case .MatrixArray(let value):
@@ -589,7 +589,7 @@ extension ShaderData {
     /// Get float array by shader property.
     /// - Parameter property: Shader property
     /// - Returns: Float array
-    func getMatrixArray(_ property: ShaderProperty) -> [Matrix]? {
+    func getMatrixArray(_ property: ShaderProperty) -> [matrix_float4x4]? {
         let p = _getData(property)
         switch p {
         case .MatrixArray(let value):
@@ -604,7 +604,7 @@ extension ShaderData {
     /// - Parameters:
     ///   - propertyName:  Shader property name
     ///   - value: Float array
-    func setMatrixArray(_ propertyName: String, _ value: [Matrix]) {
+    func setMatrixArray(_ propertyName: String, _ value: [matrix_float4x4]) {
         _setData(propertyName, .MatrixArray(value))
     }
 
@@ -613,7 +613,7 @@ extension ShaderData {
     /// - Parameters:
     ///   - property: Shader property
     ///   - value: Float array
-    func setMatrixArray(_ property: ShaderProperty, _ value: [Matrix]) {
+    func setMatrixArray(_ property: ShaderProperty, _ value: [matrix_float4x4]) {
         _setData(property, .MatrixArray(value))
     }
 
@@ -666,7 +666,7 @@ extension ShaderData {
     /// Get float array by shader property name.
     /// - Parameter propertyName: Shader property name
     /// - Returns: Float array
-    func getColorArray(_ propertyName: String) -> [Color]? {
+    func getColorArray(_ propertyName: String) -> [SIMD4<Float>]? {
         let p = _getData(propertyName)
         switch p {
         case .ColorArray(let value):
@@ -679,7 +679,7 @@ extension ShaderData {
     /// Get float array by shader property.
     /// - Parameter property: Shader property
     /// - Returns: Float array
-    func getColorArray(_ property: ShaderProperty) -> [Color]? {
+    func getColorArray(_ property: ShaderProperty) -> [SIMD4<Float>]? {
         let p = _getData(property)
         switch p {
         case .ColorArray(let value):
@@ -694,7 +694,7 @@ extension ShaderData {
     /// - Parameters:
     ///   - propertyName:  Shader property name
     ///   - value: Float array
-    func setColorArray(_ propertyName: String, _ value: [Color]) {
+    func setColorArray(_ propertyName: String, _ value: [SIMD4<Float>]) {
         _setData(propertyName, .ColorArray(value))
     }
 
@@ -703,7 +703,7 @@ extension ShaderData {
     /// - Parameters:
     ///   - property: Shader property
     ///   - value: Float array
-    func setColorArray(_ property: ShaderProperty, _ value: [Color]) {
+    func setColorArray(_ property: ShaderProperty, _ value: [SIMD4<Float>]) {
         _setData(property, .ColorArray(value))
     }
 

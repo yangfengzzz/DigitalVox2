@@ -13,8 +13,8 @@ class DirectLight: Light {
     private static var _directionProperty: ShaderProperty = Shader.getPropertyByName("u_directLightDirection")
 
     private static var _combinedData = (
-            color: [Vector3](repeating: Vector3(), count: Light._maxLight),
-            direction: [Vector3](repeating: Vector3(), count: Light._maxLight)
+            color: [SIMD3<Float>](repeating: SIMD3<Float>(), count: Light._maxLight),
+            direction: [SIMD3<Float>](repeating: SIMD3<Float>(), count: Light._maxLight)
     )
 
     var color: Vector3 = Vector3(0.5, 0.5, 0.5)
@@ -57,10 +57,7 @@ class DirectLight: Light {
     }
 
     internal func _appendData(_ lightIndex: Int) {
-        let colorStart = lightIndex * 3
-        let directionStart = lightIndex * 3
-
-        DirectLight._combinedData.color[colorStart] = lightColor
-        DirectLight._combinedData.direction[directionStart] = direction
+        DirectLight._combinedData.color[lightIndex] = lightColor.elements
+        DirectLight._combinedData.direction[lightIndex] = direction.elements
     }
 }

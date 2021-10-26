@@ -13,8 +13,8 @@ class PointLight: Light {
     private static var _positionProperty: ShaderProperty = Shader.getPropertyByName("u_pointLightPosition")
     private static var _distanceProperty: ShaderProperty = Shader.getPropertyByName("u_pointLightDistance")
     private static var _combinedData = (
-            color: [Vector3](repeating: Vector3(), count: Light._maxLight),
-            position: [Vector3](repeating: Vector3(), count: Light._maxLight),
+            color: [SIMD3<Float>](repeating: SIMD3<Float>(), count: Light._maxLight),
+            position: [SIMD3<Float>](repeating: SIMD3<Float>(), count: Light._maxLight),
             distance: [Float](repeating: 0, count: Light._maxLight)
     )
 
@@ -53,12 +53,8 @@ class PointLight: Light {
     }
 
     internal func _appendData(_ lightIndex: Int) {
-        let colorStart = lightIndex * 3
-        let positionStart = lightIndex * 3
-        let distanceStart = lightIndex
-
-        PointLight._combinedData.color[colorStart] = lightColor
-        PointLight._combinedData.position[positionStart] = position
-        PointLight._combinedData.distance[distanceStart] = distance
+        PointLight._combinedData.color[lightIndex] = lightColor.elements
+        PointLight._combinedData.position[lightIndex] = position.elements
+        PointLight._combinedData.distance[lightIndex] = distance
     }
 }
