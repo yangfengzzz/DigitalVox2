@@ -9,9 +9,11 @@ import Metal
 
 /// PBR (Specular-Glossiness Workflow) Material.
 class PBRSpecularMaterial: PBRBaseMaterial {
-    private static var _specularColorProp = Shader.getPropertyByName("u_specularColor")
     private static var _glossinessProp = Shader.getPropertyByName("u_glossinessFactor")
-    private static var _specularGlossinessTextureProp = Shader.getPropertyByName("u_specularGlossinessSampler")
+
+    private static var _specularColorProp = Shader.getPropertyByName("u_specularColor")
+
+    private static var _specularGlossinessTextureProp = Shader.getPropertyByName("u_specularGlossinessTexture")
 
     /// Specular color.
     var specularColor: Color {

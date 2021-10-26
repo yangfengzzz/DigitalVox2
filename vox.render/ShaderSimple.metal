@@ -48,13 +48,18 @@ vertex VertexOut vertex_simple(const VertexIn vertexIn [[stage_in]],
 }
 
 fragment float4 fragment_simple(VertexOut in [[stage_in]],
-                                constant float4 &u_baseColor [[buffer(1)]],
                                 sampler textureSampler [[sampler(0)]],
-                                texture2d<float> u_baseTexture [[texture(0)]]) {
+                                constant float4 &u_baseColor [[buffer(1)]],
+                                texture2d<float> u_baseColorTexture [[texture(1), function_constant(hasBaseColorMap)]],
+                                texture2d<float> u_normalTexture [[texture(2), function_constant(hasNormalTexture)]],
+                                texture2d<float> u_emissiveTexture [[texture(3), function_constant(hasEmissiveMap)]],
+                                texture2d<float> u_metallicRoughnessTexture [[texture(4), function_constant(hasMetalRoughnessMap)]],
+                                texture2d<float> u_specularGlossinessTexture [[texture(5), function_constant(hasSpecularGlossinessMap)]],
+                                texture2d<float> u_occlusionTexture [[texture(6), function_constant(hasOcclusionMap)]]) {
     // extract color
     float3 baseColor;
-    if (hasBaseTexture) {
-        baseColor = u_baseTexture.sample(textureSampler, in.uv).rgb;
+    if (hasBaseColorMap) {
+        baseColor = u_baseColorTexture.sample(textureSampler, in.uv).rgb;
     } else {
         baseColor = u_baseColor.xyz;
     }

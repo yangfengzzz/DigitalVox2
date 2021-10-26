@@ -11,7 +11,8 @@ import Metal
 class PBRMaterial: PBRBaseMaterial {
     private static var _metallicProp = Shader.getPropertyByName("u_metal")
     private static var _roughnessProp = Shader.getPropertyByName("u_roughness")
-    private static var _metallicRoughnessTextureProp = Shader.getPropertyByName("u_metallicRoughnessSampler")
+    
+    private static var _metallicRoughnessTextureProp = Shader.getPropertyByName("u_metallicRoughnessTexture")
 
     /// Metallic.
     var metallic: Float {

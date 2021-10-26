@@ -9,16 +9,17 @@ import Metal
 
 /// PBR (Physically-Based Rendering) Material.
 class PBRBaseMaterial: BaseMaterial {
-    private static var _baseColorProp = Shader.getPropertyByName("u_baseColor")
-    private static var _emissiveColorProp = Shader.getPropertyByName("u_emissiveColor")
     private static var _tilingOffsetProp = Shader.getPropertyByName("u_tilingOffset")
-    private static var _baseTextureProp = Shader.getPropertyByName("u_baseColorSampler")
-    private static var _normalTextureProp = Shader.getPropertyByName("u_normalTexture")
     private static var _normalTextureIntensityProp = Shader.getPropertyByName("u_normalIntensity")
     private static var _occlusionTextureIntensityProp = Shader.getPropertyByName("u_occlusionStrength")
+    
+    private static var _baseColorProp = Shader.getPropertyByName("u_baseColor")
+    private static var _emissiveColorProp = Shader.getPropertyByName("u_emissiveColor")
 
-    private static var _emissiveTextureProp = Shader.getPropertyByName("u_emissiveSampler")
-    private static var _occlusionTextureProp = Shader.getPropertyByName("u_occlusionSampler")
+    private static var _baseTextureProp = Shader.getPropertyByName("u_baseColorTexture")
+    private static var _normalTextureProp = Shader.getPropertyByName("u_normalTexture")
+    private static var _emissiveTextureProp = Shader.getPropertyByName("u_emissiveTexture")
+    private static var _occlusionTextureProp = Shader.getPropertyByName("u_occlusionTexture")
 
 
     /// Base color.

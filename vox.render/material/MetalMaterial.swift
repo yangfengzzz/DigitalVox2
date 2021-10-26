@@ -9,8 +9,17 @@ import Metal
 
 /// Simple Material.
 class MetalMaterial: BaseMaterial {
+    private static var _tilingOffsetProp = Shader.getPropertyByName("u_tilingOffset")
+    private static var _normalTextureIntensityProp = Shader.getPropertyByName("u_normalIntensity")
+    private static var _occlusionTextureIntensityProp = Shader.getPropertyByName("u_occlusionStrength")
+    
     private static var _baseColorProp = Shader.getPropertyByName("u_baseColor")
-    private static var _baseTextureProp = Shader.getPropertyByName("u_baseTexture")
+    private static var _emissiveColorProp = Shader.getPropertyByName("u_emissiveColor")
+
+    private static var _baseTextureProp = Shader.getPropertyByName("u_baseColorTexture")
+    private static var _normalTextureProp = Shader.getPropertyByName("u_normalTexture")
+    private static var _emissiveTextureProp = Shader.getPropertyByName("u_emissiveTexture")
+    private static var _occlusionTextureProp = Shader.getPropertyByName("u_occlusionTexture")
 
     /// Base color.
     var baseColor: Color {
@@ -33,9 +42,9 @@ class MetalMaterial: BaseMaterial {
         set {
             if (newValue != nil) {
                 shaderData.setTexture(MetalMaterial._baseTextureProp, newValue!)
-                shaderData.enableMacro(HAS_BASE_TEXTURE)
+                shaderData.enableMacro(HAS_BASE_COLORMAP)
             } else {
-                shaderData.disableMacro(HAS_BASE_TEXTURE)
+                shaderData.disableMacro(HAS_BASE_COLORMAP)
             }
         }
     }
