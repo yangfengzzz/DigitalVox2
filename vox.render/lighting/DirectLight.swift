@@ -18,7 +18,7 @@ class DirectLight: Light {
     )
 
     var color: Vector3 = Vector3(1, 1, 1)
-    var intensity: Float = 1
+    var intensity: Float = 0.5
 
     private var _forward: Vector3 = Vector3()
     private var _lightColor: Vector3 = Vector3(1, 1, 1)

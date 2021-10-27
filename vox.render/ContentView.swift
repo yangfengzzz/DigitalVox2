@@ -33,6 +33,11 @@ struct ContentView: View {
         scene?.background.sky.load("sky")
         
         let rootEntity = scene!.createRootEntity()
+        
+        let directLightNode = rootEntity.createChild("dir_light")
+        let _: DirectLight = directLightNode.addComponent()
+        directLightNode.transform.setPosition(x: 0, y: 0, z: 3)
+        directLightNode.transform.lookAt(worldPosition: Vector3(0, 0, 0), worldUp: nil)
 
         // init camera
         let cameraEntity = rootEntity.createChild("camera")
