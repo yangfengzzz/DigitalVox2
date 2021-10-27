@@ -8,8 +8,11 @@
 import Metal
 
 class SkyBoxMaterial: Material {
-    init(_ engine: Engine) {
-        super.init(engine, Shader.find("skybox")!)
+    private var _scene:Scene
+    
+    init(_ scene: Scene) {
+        self._scene = scene
+        super.init(scene.engine, Shader.find("skybox")!)
 
         renderState.rasterState.cullMode = .none
         renderState.depthState.compareFunction = .lessEqual
@@ -18,10 +21,10 @@ class SkyBoxMaterial: Material {
     /// Texture cube map of the sky box material.
     var textureCubeMap: MTLTexture? {
         get {
-            shaderData.getTexture("u_cube")
+            _scene.shaderData.getTexture("u_cube")
         }
         set {
-            shaderData.setTexture("u_cube", newValue!)
+            _scene.shaderData.setTexture("u_cube", newValue!)
         }
     }
 }

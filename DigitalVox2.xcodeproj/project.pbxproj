@@ -219,6 +219,9 @@
 		04AE165026EEE2C100201439 /* Vector4.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE164F26EEE2C100201439 /* Vector4.test.swift */; };
 		04AE165226EEE85D00201439 /* Matrix.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE165126EEE85D00201439 /* Matrix.test.swift */; };
 		04AE2413272812F200D62587 /* Mando_Helmet.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 04AE2412272812F200D62587 /* Mando_Helmet.usdz */; };
+		04AE2421272911EF00D62587 /* IBLLight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE2420272911EF00D62587 /* IBLLight.swift */; };
+		04AE2423272913ED00D62587 /* BRDF.metal in Sources */ = {isa = PBXBuildFile; fileRef = 04AE2422272913ED00D62587 /* BRDF.metal */; };
+		04AE2425272916DC00D62587 /* irradiance.png in Resources */ = {isa = PBXBuildFile; fileRef = 04AE2424272916DC00D62587 /* irradiance.png */; };
 		04DB2A4226DF1E0500C15850 /* IClone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DB2A4126DF1E0500C15850 /* IClone.swift */; };
 		04DBA7DA2700B32D00C3B97C /* EngineFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DBA7D92700B32D00C3B97C /* EngineFeature.swift */; };
 		04DBA7DC2700B3C900C3B97C /* SceneFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DBA7DB2700B3C900C3B97C /* SceneFeature.swift */; };
@@ -561,6 +564,9 @@
 		04AE164F26EEE2C100201439 /* Vector4.test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector4.test.swift; sourceTree = "<group>"; };
 		04AE165126EEE85D00201439 /* Matrix.test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matrix.test.swift; sourceTree = "<group>"; };
 		04AE2412272812F200D62587 /* Mando_Helmet.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = Mando_Helmet.usdz; sourceTree = "<group>"; };
+		04AE2420272911EF00D62587 /* IBLLight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IBLLight.swift; sourceTree = "<group>"; };
+		04AE2422272913ED00D62587 /* BRDF.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = BRDF.metal; sourceTree = "<group>"; };
+		04AE2424272916DC00D62587 /* irradiance.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = irradiance.png; sourceTree = "<group>"; };
 		04DB2A4126DF1E0500C15850 /* IClone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IClone.swift; sourceTree = "<group>"; };
 		04DBA7D92700B32D00C3B97C /* EngineFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineFeature.swift; sourceTree = "<group>"; };
 		04DBA7DB2700B3C900C3B97C /* SceneFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneFeature.swift; sourceTree = "<group>"; };
@@ -849,8 +855,9 @@
 				0447D54F26F82F5200272D7C /* PointLight.swift */,
 				0447D55126F8309C00272D7C /* SpotLight.swift */,
 				0447D55326F833A100272D7C /* DirectLight.swift */,
-				0447D55526F834BB00272D7C /* AmbientLight.swift */,
 				04F6AA732701608500A0D6F6 /* LightFeature.swift */,
+				0447D55526F834BB00272D7C /* AmbientLight.swift */,
+				04AE2420272911EF00D62587 /* IBLLight.swift */,
 			);
 			path = lighting;
 			sourceTree = "<group>";
@@ -1144,6 +1151,7 @@
 				0497A1ED26DF150800F61DE9 /* Info.plist */,
 				0497A20F26DF151700F61DE9 /* DigitalVox2.entitlements */,
 				0413289E26E0CBE7000A4F4E /* ShaderSimple.metal */,
+				04AE2422272913ED00D62587 /* BRDF.metal */,
 			);
 			path = vox.render;
 			sourceTree = "<group>";
@@ -1204,6 +1212,7 @@
 		04AE241F2728F2CD00D62587 /* textures */ = {
 			isa = PBXGroup;
 			children = (
+				04AE2424272916DC00D62587 /* irradiance.png */,
 				0452ECF226DFA8BD0015BFB1 /* Textures.xcassets */,
 			);
 			path = textures;
@@ -1506,6 +1515,7 @@
 				0452ECEA26DFA6A10015BFB1 /* cottage2.mtl in Resources */,
 				0452ECE626DFA6A10015BFB1 /* cube.obj in Resources */,
 				0452ECE926DFA6A10015BFB1 /* cottage1.mtl in Resources */,
+				04AE2425272916DC00D62587 /* irradiance.png in Resources */,
 				0452ECF326DFA8BD0015BFB1 /* Textures.xcassets in Resources */,
 				04198A20271D401700871A26 /* DamagedHelmet.glb in Resources */,
 				0497A1EC26DF150800F61DE9 /* Preview Assets.xcassets in Resources */,
@@ -1636,6 +1646,7 @@
 				04E28C3826ECE7B3003A3C3B /* MetalRenderer.swift in Sources */,
 				043CB46726F45C18004A0B21 /* ClassPool.swift in Sources */,
 				0447D55226F8309C00272D7C /* SpotLight.swift in Sources */,
+				04AE2421272911EF00D62587 /* IBLLight.swift in Sources */,
 				04832F072701F4B3001AD421 /* SkinnedMeshRenderer.swift in Sources */,
 				043CB46D26F5667A004A0B21 /* ShaderPool.swift in Sources */,
 				04DB2A4226DF1E0500C15850 /* IClone.swift in Sources */,
@@ -1687,6 +1698,7 @@
 				043CB46F26F567D9004A0B21 /* BaseMaterial.swift in Sources */,
 				0413287326E0723E000A4F4E /* CollisionUtil.swift in Sources */,
 				04A6BEBB2723BC6F0024DF43 /* particle.metal in Sources */,
+				04AE2423272913ED00D62587 /* BRDF.metal in Sources */,
 				04E28C4426EDD78C003A3C3B /* Renderer.swift in Sources */,
 				0413286B26DF86DC000A4F4E /* BoundingBox.swift in Sources */,
 				04AE07C227029F3300F1D8C5 /* LightShadow.swift in Sources */,

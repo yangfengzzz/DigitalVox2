@@ -22,11 +22,14 @@ class Sky {
     /// Mesh of the sky. 
     var mesh: BufferMesh
     internal var _matrix: Matrix = Matrix()
+    private var _scene: Scene
     private var _engine: Engine
 
-    init(_ _engine: Engine) {
-        self._engine = _engine
-        material = SkyBoxMaterial(_engine)
+    init(_ _scene: Scene) {
+        self._scene = _scene
+        self._engine = _scene.engine
+
+        material = SkyBoxMaterial(_scene)
         mesh = BufferMesh(_engine)
     }
 

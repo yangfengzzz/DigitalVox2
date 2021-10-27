@@ -13,9 +13,11 @@ class Scene: EngineObject {
     /// Scene name.
     var name: String
     /// The background of the scene.
-    var background: Background
+    var background: Background!
     /// Ambient light.
     var ambientLight: AmbientLight!
+    /// IBL Light
+    var iblLight: IBLLight!
     /// Scene-related shader data.
     var shaderData: ShaderData = ShaderData(ShaderDataGroup.Scene)
 
@@ -54,10 +56,11 @@ class Scene: EngineObject {
     init(_ engine: Engine, _ name: String?) {
         self.name = name != nil ? name! : ""
         shaderData._addRefCount(1)
-        background = Background(engine)
         super.init(engine)
 
+        background = Background(self)
         ambientLight = AmbientLight(self)
+        iblLight = IBLLight(self)
 
         registerFeature(LightFeature())
     }

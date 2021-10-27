@@ -23,8 +23,8 @@ class Background {
     /// Background sky.
     /// - Remark: When `mode` is `BackgroundMode.Sky`, the property will take effects.
     var sky: Sky
-    
-    init(_ engine:Engine) {
-        sky = Sky(engine)
+
+    init(_ scene: Scene) {
+        sky = Sky(scene)
     }
 }

@@ -80,7 +80,7 @@ extension BasicRenderPipeline {
             rhi.activeRenderTarget(renderTarget)
             // set clear flag
             let clearFlags = pass.clearFlags ?? camera.clearFlags
-            let color = pass.clearColor ?? background.solidColor
+            let color = pass.clearColor ?? background!.solidColor
             if (clearFlags != CameraClearFlags.None) {
                 rhi.clearRenderTarget(camera.engine, clearFlags, color)
             }
@@ -92,8 +92,8 @@ extension BasicRenderPipeline {
             } else {
                 _opaqueQueue.render(camera, pass.replaceMaterial, pass.mask)
                 _alphaTestQueue.render(camera, pass.replaceMaterial, pass.mask)
-                if (background.mode == .Sky) {
-                    _drawSky(engine, camera, background.sky)
+                if (background!.mode == .Sky) {
+                    _drawSky(engine, camera, background!.sky)
                 }
                 _transparentQueue.render(camera, pass.replaceMaterial, pass.mask)
             }
@@ -122,7 +122,8 @@ extension BasicRenderPipeline {
         let mesh = sky.mesh
         let _matrix = sky._matrix
         let rhi = engine._hardwareRenderer
-        let shaderData = material.shaderData
+        let scene = camera.scene
+        let shaderData = scene.shaderData
 
         let compileMacros = ShaderMacroCollection()
         ShaderMacroCollection.unionCollection(
@@ -161,7 +162,7 @@ extension BasicRenderPipeline {
         rhi.setDepthStencilState(depthStencilState!)
 
         pipelineState.groupingOtherUniformBlock()
-        pipelineState.uploadAll(pipelineState.materialUniformBlock, shaderData)
+        pipelineState.uploadAll(pipelineState.sceneUniformBlock, shaderData)
 
         for (index, vertexBuffer) in mesh._vertexBuffer.enumerated() {
             rhi.renderEncoder.setVertexBuffer(vertexBuffer?.buffer,
