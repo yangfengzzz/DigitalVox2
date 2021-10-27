@@ -5,7 +5,7 @@
 //  Created by 杨丰 on 2021/9/12.
 //
 
-import Metal
+import MetalKit
 
 /// Basic render pipeline.
 class BasicRenderPipeline {
@@ -92,6 +92,9 @@ extension BasicRenderPipeline {
             } else {
                 _opaqueQueue.render(camera, pass.replaceMaterial, pass.mask)
                 _alphaTestQueue.render(camera, pass.replaceMaterial, pass.mask)
+                if (background.mode == .Sky) {
+                    _drawSky(engine, camera, background.sky)
+                }
                 _transparentQueue.render(camera, pass.replaceMaterial, pass.mask)
             }
             rhi.endRenderPass()
@@ -112,6 +115,72 @@ extension BasicRenderPipeline {
         } else {
             _opaqueQueue.pushPrimitive(element)
         }
+    }
+
+    private func _drawSky(_ engine: Engine, _ camera: Camera, _ sky: Sky) {
+        let material = sky.material
+        let mesh = sky.mesh
+        let _matrix = sky._matrix
+        guard let material = material else {
+            logger.warning("The material of sky is not defined.")
+            return
+        }
+
+        guard let mesh = mesh else {
+            logger.warning("The mesh of sky is not defined.")
+            return
+        }
+
+        let rhi = engine._hardwareRenderer
+        let shaderData = material.shaderData
+
+        let compileMacros = ShaderMacroCollection()
+        ShaderMacroCollection.unionCollection(
+                camera._globalShaderMacro,
+                shaderData._macroCollection,
+                compileMacros
+        )
+
+        let viewMatrix = camera.viewMatrix
+        let projectionMatrix = camera.projectionMatrix
+        viewMatrix.cloneTo(target: _matrix)
+        _matrix.elements.columns.3[0] = 0
+        _matrix.elements.columns.3[1] = 0
+        _matrix.elements.columns.3[2] = 0
+        Matrix.multiply(left: projectionMatrix, right: _matrix, out: _matrix)
+        shaderData.setMatrix("u_mvpNoscale", _matrix)
+
+        let program = material.shader._getShaderProgram(engine, compileMacros)
+        if (!program.isValid) {
+            return
+        }
+
+        let descriptor = MTLRenderPipelineDescriptor()
+        descriptor.vertexDescriptor = MTKMetalVertexDescriptorFromModelIO(mesh._vertexDescriptor)
+        descriptor.vertexFunction = program.vertexShader
+        descriptor.fragmentFunction = program.fragmentShader
+
+        descriptor.colorAttachments[0].pixelFormat = engine._hardwareRenderer.colorPixelFormat
+        descriptor.depthAttachmentPixelFormat = .depth32Float
+
+        let depthStencilDescriptor = MTLDepthStencilDescriptor()
+        material.renderState._apply(engine, descriptor, depthStencilDescriptor)
+
+        let pipelineState = rhi.resouceCache.request_graphics_pipeline(descriptor)
+        rhi.setRenderPipelineState(pipelineState)
+
+        let depthStencilState = engine._hardwareRenderer.device.makeDepthStencilState(descriptor: depthStencilDescriptor)
+        rhi.setDepthStencilState(depthStencilState!)
+
+        pipelineState.groupingOtherUniformBlock()
+        pipelineState.uploadAll(pipelineState.materialUniformBlock, shaderData)
+
+        for (index, vertexBuffer) in mesh._vertexBuffer.enumerated() {
+            rhi.renderEncoder.setVertexBuffer(vertexBuffer?.buffer,
+                    offset: 0, index: index)
+        }
+
+        rhi.drawPrimitive(mesh.subMesh!)
     }
 }
 
