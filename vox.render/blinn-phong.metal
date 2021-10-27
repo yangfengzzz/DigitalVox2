@@ -267,7 +267,7 @@ fragment float4 fragment_blinn_phong(VertexOut in [[stage_in]],
     float4 diffuse = u_diffuseColor;
     float4 specular = u_specularColor;
     if (hasEmissiveTexture) {
-        emission *= u_emissiveTexture.sample(textureSampler, in.v_uv);
+        emission = u_emissiveTexture.sample(textureSampler, in.v_uv);
     }
     if (hasDiffuseTexture) {
         diffuse *= u_diffuseTexture.sample(textureSampler, in.v_uv);

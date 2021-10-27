@@ -40,8 +40,8 @@ class BlinnPhongMaterial: BaseMaterial {
             shaderData.getTexture(BlinnPhongMaterial._baseTextureProp)
         }
         set {
-            shaderData.setTexture(BlinnPhongMaterial._baseTextureProp, newValue!)
             if (newValue != nil) {
+                shaderData.setTexture(BlinnPhongMaterial._baseTextureProp, newValue!)
                 shaderData.enableMacro(HAS_DIFFUSE_TEXTURE)
             } else {
                 shaderData.disableMacro(HAS_DIFFUSE_TEXTURE)
@@ -68,8 +68,8 @@ class BlinnPhongMaterial: BaseMaterial {
             shaderData.getTexture(BlinnPhongMaterial._specularTextureProp)
         }
         set {
-            shaderData.setTexture(BlinnPhongMaterial._specularTextureProp, newValue!)
             if newValue != nil {
+                shaderData.setTexture(BlinnPhongMaterial._specularTextureProp, newValue!)
                 shaderData.enableMacro(HAS_SPECULAR_TEXTURE)
             } else {
                 shaderData.disableMacro(HAS_SPECULAR_TEXTURE)
@@ -96,8 +96,8 @@ class BlinnPhongMaterial: BaseMaterial {
             shaderData.getTexture(BlinnPhongMaterial._emissiveTextureProp)
         }
         set {
-            shaderData.setTexture(BlinnPhongMaterial._emissiveTextureProp, newValue!)
             if newValue != nil {
+                shaderData.setTexture(BlinnPhongMaterial._emissiveTextureProp, newValue!)
                 shaderData.enableMacro(HAS_EMISSIVE_TEXTURE)
             } else {
                 shaderData.disableMacro(HAS_EMISSIVE_TEXTURE)
