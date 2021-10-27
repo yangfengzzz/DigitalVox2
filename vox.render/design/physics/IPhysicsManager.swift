@@ -30,5 +30,5 @@ protocol IPhysicsManager {
     /// Casts a ray through the Scene and returns the first hit.
     func raycast(_ ray: Ray,
                  _ distance: Float,
-                 _ outHitResult: ((Float, Float, Vector3, Vector3) -> Void)?) -> Bool
+                 _ outHitResult: ((Int, Float, Vector3, Vector3) -> Void)?) -> Bool
 }

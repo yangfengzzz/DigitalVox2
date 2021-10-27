@@ -42,7 +42,7 @@ class DisorderedArray<T: EmptyInit> {
     /// The replaced item is used to reset its index.
     /// - Parameter index: index
     /// - Returns: The replaced item is used to reset its index.
-    func deleteByIndex(index: Int) -> T? {
+    func deleteByIndex(_ index: Int) -> T? {
         var end: T? = nil
         let lastIndex = length - 1
         if (index != lastIndex) {

@@ -9,11 +9,11 @@ import Foundation
 
 /// Physics material describes how to handle colliding objects (friction, bounciness).
 class LitePhysicsMaterial: IPhysicsMaterial {
-    init(staticFriction: Float,
-         dynamicFriction: Float,
-         bounciness: Float,
-         frictionCombine: Float,
-         bounceCombine: Float) {
+    init(_ staticFriction: Float,
+         _ dynamicFriction: Float,
+         _ bounciness: Float,
+         _ frictionCombine: Float,
+         _ bounceCombine: Float) {
     }
 
     func setBounciness(_ value: Float) {

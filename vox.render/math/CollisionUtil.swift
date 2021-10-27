@@ -257,6 +257,52 @@ extension CollisionUtil {
         return distance
     }
 
+    /// Check whether the boxes intersect.
+    /// - Parameters:
+    ///   - boxA: The first box to check
+    ///   - boxB: The second box to check
+    /// - Returns: True if the boxes intersect, false otherwise
+    static func intersectsBoxAndBox(boxA: BoundingBox, boxB: BoundingBox) -> Bool {
+        if (boxA.min.x > boxB.max.x || boxB.min.x > boxA.max.x) {
+            return false
+        }
+
+        if (boxA.min.y > boxB.max.y || boxB.min.y > boxA.max.y) {
+            return false
+        }
+
+        return !(boxA.min.z > boxB.max.z || boxB.min.z > boxA.max.z)
+    }
+
+    /// Check whether the spheres intersect.
+    /// - Parameters:
+    ///   - sphereA: The first sphere to check
+    ///   - sphereB: The second sphere to check
+    /// - Returns: True if the spheres intersect, false otherwise
+    static func intersectsSphereAndSphere(sphereA: BoundingSphere, sphereB: BoundingSphere) -> Bool {
+        let radiisum = sphereA.radius + sphereB.radius
+        return Vector3.distanceSquared(left: sphereA.center, right: sphereB.center) < radiisum * radiisum
+    }
+
+    /// Check whether the sphere and the box intersect.
+    /// - Parameters:
+    ///   - sphere: The sphere to check
+    ///   - box: The box to check
+    /// - Returns: True if the sphere and the box intersect, false otherwise
+    static func intersectsSphereAndBox(sphere: BoundingSphere, box: BoundingBox) -> Bool {
+        let center = sphere.center
+
+        let closestPoint = CollisionUtil._tempVec30
+        _ = closestPoint.setValue(
+                x: max(box.min.x, min(center.x, box.max.x)),
+                y: max(box.min.y, min(center.y, box.max.y)),
+                z: max(box.min.z, min(center.z, box.max.z))
+        )
+
+        let distance = Vector3.distanceSquared(left: center, right: closestPoint)
+        return distance <= sphere.radius * sphere.radius
+    }
+
     /// Get whether or not a specified bounding box intersects with this frustum (Contains or Intersects).
     /// - Parameters:
     ///   - frustum: The frustum

@@ -170,6 +170,8 @@
 		045B06572729560D003E4B68 /* LiteStaticCollider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045B06562729560D003E4B68 /* LiteStaticCollider.swift */; };
 		045B06592729565D003E4B68 /* LiteDynamicCollider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045B06582729565D003E4B68 /* LiteDynamicCollider.swift */; };
 		045B065B27295772003E4B68 /* DisorderedArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045B065A27295772003E4B68 /* DisorderedArray.swift */; };
+		045B065D27295A68003E4B68 /* LitePhysicsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045B065C27295A68003E4B68 /* LitePhysicsManager.swift */; };
+		045B065F2729831A003E4B68 /* LitePhysics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045B065E2729831A003E4B68 /* LitePhysics.swift */; };
 		047914CB26F37C0300BE5170 /* ShaderData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047914CA26F37C0300BE5170 /* ShaderData.swift */; };
 		047E7B2C26EE257E006BC3FB /* MeshRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047E7B2B26EE257E006BC3FB /* MeshRenderer.swift */; };
 		047FEB7026E1BA4A0078CFAF /* shape_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEB6F26E1BA4A0078CFAF /* shape_data.swift */; };
@@ -499,6 +501,8 @@
 		045B06562729560D003E4B68 /* LiteStaticCollider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteStaticCollider.swift; sourceTree = "<group>"; };
 		045B06582729565D003E4B68 /* LiteDynamicCollider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteDynamicCollider.swift; sourceTree = "<group>"; };
 		045B065A27295772003E4B68 /* DisorderedArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisorderedArray.swift; sourceTree = "<group>"; };
+		045B065C27295A68003E4B68 /* LitePhysicsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LitePhysicsManager.swift; sourceTree = "<group>"; };
+		045B065E2729831A003E4B68 /* LitePhysics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LitePhysics.swift; sourceTree = "<group>"; };
 		047914CA26F37C0300BE5170 /* ShaderData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderData.swift; sourceTree = "<group>"; };
 		047E7B2B26EE257E006BC3FB /* MeshRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeshRenderer.swift; sourceTree = "<group>"; };
 		047FEB6F26E1BA4A0078CFAF /* shape_data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = shape_data.swift; sourceTree = "<group>"; };
@@ -1108,6 +1112,8 @@
 				045B065027294CFD003E4B68 /* LiteCollider.swift */,
 				045B06562729560D003E4B68 /* LiteStaticCollider.swift */,
 				045B06582729565D003E4B68 /* LiteDynamicCollider.swift */,
+				045B065C27295A68003E4B68 /* LitePhysicsManager.swift */,
+				045B065E2729831A003E4B68 /* LitePhysics.swift */,
 			);
 			path = "physics-lite";
 			sourceTree = "<group>";
@@ -1760,6 +1766,7 @@
 				045B064427294460003E4B68 /* LitePhysicsMaterial.swift in Sources */,
 				042BB12D26EA371500604751 /* BackgroundMode.swift in Sources */,
 				0413289D26E0C288000A4F4E /* UpdateFlagManager.swift in Sources */,
+				045B065F2729831A003E4B68 /* LitePhysics.swift in Sources */,
 				043CB43C26F0E51E004A0B21 /* OrbitControl.swift in Sources */,
 				0444B3F6271CF94A00772249 /* TextureCubeFace.swift in Sources */,
 				043CB47126F56B95004A0B21 /* RenderTargetBlendState.swift in Sources */,
@@ -1837,6 +1844,7 @@
 				0413286D26E06648000A4F4E /* BoundingSphere.swift in Sources */,
 				0447D56326F8588900272D7C /* PBRSpecularMaterial.swift in Sources */,
 				0447D56126F8562300272D7C /* PBRBaseMaterial.swift in Sources */,
+				045B065D27295A68003E4B68 /* LitePhysicsManager.swift in Sources */,
 				0413288A26E09FB3000A4F4E /* Mesh.swift in Sources */,
 				04F6AA5B2701481600A0D6F6 /* Collider.swift in Sources */,
 				0452ECED26DFA7870015BFB1 /* Canvas.swift in Sources */,
