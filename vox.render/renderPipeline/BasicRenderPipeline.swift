@@ -121,16 +121,6 @@ extension BasicRenderPipeline {
         let material = sky.material
         let mesh = sky.mesh
         let _matrix = sky._matrix
-        guard let material = material else {
-            logger.warning("The material of sky is not defined.")
-            return
-        }
-
-        guard let mesh = mesh else {
-            logger.warning("The mesh of sky is not defined.")
-            return
-        }
-
         let rhi = engine._hardwareRenderer
         let shaderData = material.shaderData
 

@@ -13,7 +13,7 @@ class Scene: EngineObject {
     /// Scene name.
     var name: String
     /// The background of the scene.
-    var background: Background = Background()
+    var background: Background
     /// Ambient light.
     var ambientLight: AmbientLight!
     /// Scene-related shader data.
@@ -54,7 +54,7 @@ class Scene: EngineObject {
     init(_ engine: Engine, _ name: String?) {
         self.name = name != nil ? name! : ""
         shaderData._addRefCount(1)
-
+        background = Background(engine)
         super.init(engine)
 
         ambientLight = AmbientLight(self)
