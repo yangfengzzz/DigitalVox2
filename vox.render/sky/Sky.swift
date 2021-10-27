@@ -39,7 +39,7 @@ class Sky {
             let mtkMesh = try MTKMesh(mesh: cube,
                     device: _engine._hardwareRenderer.device)
 
-            mesh.setVertexDescriptor(mtkMesh.vertexDescriptor)
+            mesh.setVertexDescriptor(cube.vertexDescriptor)
             for (index, vertexBuffer) in mtkMesh.vertexBuffers.enumerated() {
                 mesh.setVertexBufferBinding(vertexBuffer.buffer, 0, index)
             }

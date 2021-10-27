@@ -134,9 +134,7 @@ extension BasicRenderPipeline {
         let viewMatrix = camera.viewMatrix
         let projectionMatrix = camera.projectionMatrix
         viewMatrix.cloneTo(target: _matrix)
-        _matrix.elements.columns.3[0] = 0
-        _matrix.elements.columns.3[1] = 0
-        _matrix.elements.columns.3[2] = 0
+        _matrix.elements.columns.3 = [0, 0, 0, 1]
         Matrix.multiply(left: projectionMatrix, right: _matrix, out: _matrix)
         shaderData.setMatrix("u_mvpNoscale", _matrix)
 

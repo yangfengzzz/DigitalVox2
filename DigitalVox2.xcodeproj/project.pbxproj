@@ -1126,7 +1126,7 @@
 				0458275A26F6EF0E0056D134 /* USDZAssetsLoader.swift */,
 				04198A21271D697500871A26 /* GLTFAssetLoader.swift */,
 				0497A1E826DF150800F61DE9 /* Assets.xcassets */,
-				0452ECF226DFA8BD0015BFB1 /* Textures.xcassets */,
+				04AE241F2728F2CD00D62587 /* textures */,
 				0452ECDF26DFA66E0015BFB1 /* models */,
 				0452ECCB26DFA5360015BFB1 /* Common.h */,
 				0447D54426F8020B00272D7C /* MacroName.h */,
@@ -1199,6 +1199,14 @@
 				04AE07CB2702A8FA00F1D8C5 /* ShadowFeature.swift */,
 			);
 			path = shadow;
+			sourceTree = "<group>";
+		};
+		04AE241F2728F2CD00D62587 /* textures */ = {
+			isa = PBXGroup;
+			children = (
+				0452ECF226DFA8BD0015BFB1 /* Textures.xcassets */,
+			);
+			path = textures;
 			sourceTree = "<group>";
 		};
 		04DB2A4026DF1DF100C15850 /* design */ = {

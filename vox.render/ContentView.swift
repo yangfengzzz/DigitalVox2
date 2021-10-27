@@ -20,7 +20,9 @@ struct ContentView: View {
         usdzLoader = USDZAssetsLoader(engine)
 
         let scene = engine.sceneManager.activeScene
-        _ = scene?.background.solidColor.setValue(r: 0.8, g: 0.8, b: 0.8, a: 1)
+        scene?.background.mode = .Sky
+        scene?.background.sky.load("sky")
+        
         let rootEntity = scene!.createRootEntity()
 
         let ambientLight = scene!.ambientLight

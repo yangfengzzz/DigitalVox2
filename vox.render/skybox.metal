@@ -19,12 +19,11 @@ typedef struct {
 } VertexOut;
 
 vertex VertexOut vertex_skybox(const VertexIn in [[stage_in]],
-                               constant matrix_float4x4 &u_mvpNoscale [[buffer(0)]]) {
+                               constant matrix_float4x4 &u_mvpNoscale [[buffer(10)]]) {
     VertexOut out;
     
     out.v_cubeUV = in.position.xyz;
-    out.position = u_mvpNoscale * float4( in.position, 1.0 );
-    out.position.z = out.position.w;
+    out.position = (u_mvpNoscale * float4( in.position, 1.0 )).xyww;
     return out;
 }
 
