@@ -158,6 +158,13 @@
 		045B063D272942AF003E4B68 /* ICapsuleColliderShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045B063C272942AF003E4B68 /* ICapsuleColliderShape.swift */; };
 		045B063F272942FA003E4B68 /* IPlaneColliderShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045B063E272942FA003E4B68 /* IPlaneColliderShape.swift */; };
 		045B064127294321003E4B68 /* ISphereColliderShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045B064027294321003E4B68 /* ISphereColliderShape.swift */; };
+		045B064427294460003E4B68 /* LitePhysicsMaterial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045B064327294460003E4B68 /* LitePhysicsMaterial.swift */; };
+		045B064727294530003E4B68 /* LiteColliderShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045B064627294530003E4B68 /* LiteColliderShape.swift */; };
+		045B0649272945CC003E4B68 /* LiteTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045B0648272945CB003E4B68 /* LiteTransform.swift */; };
+		045B064B27294630003E4B68 /* LiteUpdateFlagManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045B064A27294630003E4B68 /* LiteUpdateFlagManager.swift */; };
+		045B064D2729463C003E4B68 /* LiteUpdateFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045B064C2729463C003E4B68 /* LiteUpdateFlag.swift */; };
+		045B064F27294C62003E4B68 /* LiteHitResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045B064E27294C62003E4B68 /* LiteHitResult.swift */; };
+		045B065127294CFD003E4B68 /* LiteCollider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045B065027294CFD003E4B68 /* LiteCollider.swift */; };
 		047914CB26F37C0300BE5170 /* ShaderData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047914CA26F37C0300BE5170 /* ShaderData.swift */; };
 		047E7B2C26EE257E006BC3FB /* MeshRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047E7B2B26EE257E006BC3FB /* MeshRenderer.swift */; };
 		047FEB7026E1BA4A0078CFAF /* shape_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEB6F26E1BA4A0078CFAF /* shape_data.swift */; };
@@ -475,6 +482,13 @@
 		045B063C272942AF003E4B68 /* ICapsuleColliderShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICapsuleColliderShape.swift; sourceTree = "<group>"; };
 		045B063E272942FA003E4B68 /* IPlaneColliderShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPlaneColliderShape.swift; sourceTree = "<group>"; };
 		045B064027294321003E4B68 /* ISphereColliderShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ISphereColliderShape.swift; sourceTree = "<group>"; };
+		045B064327294460003E4B68 /* LitePhysicsMaterial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LitePhysicsMaterial.swift; sourceTree = "<group>"; };
+		045B064627294530003E4B68 /* LiteColliderShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteColliderShape.swift; sourceTree = "<group>"; };
+		045B0648272945CB003E4B68 /* LiteTransform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteTransform.swift; sourceTree = "<group>"; };
+		045B064A27294630003E4B68 /* LiteUpdateFlagManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteUpdateFlagManager.swift; sourceTree = "<group>"; };
+		045B064C2729463C003E4B68 /* LiteUpdateFlag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteUpdateFlag.swift; sourceTree = "<group>"; };
+		045B064E27294C62003E4B68 /* LiteHitResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteHitResult.swift; sourceTree = "<group>"; };
+		045B065027294CFD003E4B68 /* LiteCollider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteCollider.swift; sourceTree = "<group>"; };
 		047914CA26F37C0300BE5170 /* ShaderData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderData.swift; sourceTree = "<group>"; };
 		047E7B2B26EE257E006BC3FB /* MeshRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeshRenderer.swift; sourceTree = "<group>"; };
 		047FEB6F26E1BA4A0078CFAF /* shape_data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = shape_data.swift; sourceTree = "<group>"; };
@@ -1072,6 +1086,28 @@
 			path = shape;
 			sourceTree = "<group>";
 		};
+		045B064227294442003E4B68 /* physics-lite */ = {
+			isa = PBXGroup;
+			children = (
+				045B064527294525003E4B68 /* shape */,
+				045B064327294460003E4B68 /* LitePhysicsMaterial.swift */,
+				045B0648272945CB003E4B68 /* LiteTransform.swift */,
+				045B064A27294630003E4B68 /* LiteUpdateFlagManager.swift */,
+				045B064C2729463C003E4B68 /* LiteUpdateFlag.swift */,
+				045B064E27294C62003E4B68 /* LiteHitResult.swift */,
+				045B065027294CFD003E4B68 /* LiteCollider.swift */,
+			);
+			path = "physics-lite";
+			sourceTree = "<group>";
+		};
+		045B064527294525003E4B68 /* shape */ = {
+			isa = PBXGroup;
+			children = (
+				045B064627294530003E4B68 /* LiteColliderShape.swift */,
+			);
+			path = shape;
+			sourceTree = "<group>";
+		};
 		047FEBCA26E5A1130078CFAF /* images */ = {
 			isa = PBXGroup;
 			children = (
@@ -1195,6 +1231,7 @@
 				04A6BEB227204FE20024DF43 /* blinn-phong.metal */,
 				04A6BEC02723F9E50024DF43 /* pbr.metal */,
 				04A6BEC4272453320024DF43 /* shadow-map.metal */,
+				045B064227294442003E4B68 /* physics-lite */,
 				0497A1EA26DF150800F61DE9 /* Preview Content */,
 				0497A1ED26DF150800F61DE9 /* Info.plist */,
 				0497A20F26DF151700F61DE9 /* DigitalVox2.entitlements */,
@@ -1699,10 +1736,12 @@
 				04832F072701F4B3001AD421 /* SkinnedMeshRenderer.swift in Sources */,
 				043CB46D26F5667A004A0B21 /* ShaderPool.swift in Sources */,
 				04DB2A4226DF1E0500C15850 /* IClone.swift in Sources */,
+				045B064F27294C62003E4B68 /* LiteHitResult.swift in Sources */,
 				04AE07CC2702A8FA00F1D8C5 /* ShadowFeature.swift in Sources */,
 				043CB44926F341AF004A0B21 /* RenderFace.swift in Sources */,
 				043CB44726F3417E004A0B21 /* BlendMode.swift in Sources */,
 				0458275D26F71D000056D134 /* MeshBuffer.swift in Sources */,
+				045B064427294460003E4B68 /* LitePhysicsMaterial.swift in Sources */,
 				042BB12D26EA371500604751 /* BackgroundMode.swift in Sources */,
 				0413289D26E0C288000A4F4E /* UpdateFlagManager.swift in Sources */,
 				043CB43C26F0E51E004A0B21 /* OrbitControl.swift in Sources */,
@@ -1754,6 +1793,8 @@
 				04E28C4426EDD78C003A3C3B /* Renderer.swift in Sources */,
 				0413286B26DF86DC000A4F4E /* BoundingBox.swift in Sources */,
 				04AE07C227029F3300F1D8C5 /* LightShadow.swift in Sources */,
+				045B064D2729463C003E4B68 /* LiteUpdateFlag.swift in Sources */,
+				045B0649272945CC003E4B68 /* LiteTransform.swift in Sources */,
 				0413288D26E0A086000A4F4E /* EngineObject.swift in Sources */,
 				0413287926E07748000A4F4E /* ContainmentType.swift in Sources */,
 				04198A22271D697500871A26 /* GLTFAssetLoader.swift in Sources */,
@@ -1769,6 +1810,7 @@
 				042A6698270142310019C2CE /* EngineFeatureManager.swift in Sources */,
 				04F6AA772702943400A0D6F6 /* ParticleRenderer.swift in Sources */,
 				0419B6E026E7114C00005FEA /* ComponentsManager.swift in Sources */,
+				045B065127294CFD003E4B68 /* LiteCollider.swift in Sources */,
 				0413288026E08044000A4F4E /* Color.swift in Sources */,
 				045B063027293F7D003E4B68 /* IColliderShape.swift in Sources */,
 				04F6AA6C27014FD400A0D6F6 /* CollisionDetection.swift in Sources */,
@@ -1793,6 +1835,7 @@
 				04874ED426F771F3005E3318 /* PBRMaterial.swift in Sources */,
 				045B064127294321003E4B68 /* ISphereColliderShape.swift in Sources */,
 				04F6AA6527014D0D00A0D6F6 /* ASphereCollider.swift in Sources */,
+				045B064B27294630003E4B68 /* LiteUpdateFlagManager.swift in Sources */,
 				04F6AA6E270151AD00A0D6F6 /* ColliderFeature.swift in Sources */,
 				047E7B2C26EE257E006BC3FB /* MeshRenderer.swift in Sources */,
 				0447D55B26F8364300272D7C /* SphericalHarmonics3.swift in Sources */,
@@ -1805,6 +1848,7 @@
 				047914CB26F37C0300BE5170 /* ShaderData.swift in Sources */,
 				047FEBF826E6053A0078CFAF /* Component.swift in Sources */,
 				043CB45526F41E44004A0B21 /* RenderState.swift in Sources */,
+				045B064727294530003E4B68 /* LiteColliderShape.swift in Sources */,
 				042BB12F26EA379700604751 /* CameraClearFlags.swift in Sources */,
 				043CB43A26F0E3B7004A0B21 /* Spherical.swift in Sources */,
 				043CB46926F45DCD004A0B21 /* RenderPass.swift in Sources */,
