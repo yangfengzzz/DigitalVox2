@@ -52,7 +52,7 @@ class LiteBoxColliderShape: LiteColliderShape, IBoxColliderShape {
         _boxMax.cloneTo(target: boundingBox.max);
         let rayDistance = localRay.intersectBox(box: boundingBox);
         if (rayDistance != -1) {
-            self._updateHitResult(localRay, rayDistance, hit, ray.origin);
+            _updateHitResult(localRay, rayDistance, hit, ray.origin);
             return true;
         } else {
             return false;
@@ -62,7 +62,7 @@ class LiteBoxColliderShape: LiteColliderShape, IBoxColliderShape {
     private func _setBondingBox() {
         let center = _transform.position
 
-        Vector3.add(left: center, right: _halfSize, out: self._boxMax);
-        Vector3.subtract(left: center, right: _halfSize, out: self._boxMin);
+        Vector3.add(left: center, right: _halfSize, out: _boxMax);
+        Vector3.subtract(left: center, right: _halfSize, out: _boxMin);
     }
 }
