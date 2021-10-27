@@ -45,8 +45,8 @@ class PBRSpecularMaterial: PBRBaseMaterial {
             shaderData.getTexture(PBRSpecularMaterial._glossinessTextureProp)
         }
         set {
-            shaderData.setTexture(PBRSpecularMaterial._glossinessTextureProp, newValue!)
             if newValue != nil {
+                shaderData.setTexture(PBRSpecularMaterial._glossinessTextureProp, newValue!)
                 shaderData.enableMacro(HAS_GLOSSINESSMAP)
             } else {
                 shaderData.disableMacro(HAS_GLOSSINESSMAP)
@@ -60,8 +60,8 @@ class PBRSpecularMaterial: PBRBaseMaterial {
             shaderData.getTexture(PBRSpecularMaterial._specularTextureProp)
         }
         set {
-            shaderData.setTexture(PBRSpecularMaterial._specularTextureProp, newValue!)
             if newValue != nil {
+                shaderData.setTexture(PBRSpecularMaterial._specularTextureProp, newValue!)
                 shaderData.enableMacro(HAS_SPECULARMAP)
             } else {
                 shaderData.disableMacro(HAS_SPECULARMAP)

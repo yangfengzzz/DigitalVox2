@@ -95,8 +95,8 @@ class PBRBaseMaterial: BaseMaterial {
             shaderData.getTexture(PBRBaseMaterial._emissiveTextureProp)
         }
         set {
-            shaderData.setTexture(PBRBaseMaterial._emissiveTextureProp, newValue!)
             if newValue != nil {
+                shaderData.setTexture(PBRBaseMaterial._emissiveTextureProp, newValue!)
                 shaderData.enableMacro(HAS_EMISSIVEMAP)
             } else {
                 shaderData.disableMacro(HAS_EMISSIVEMAP)

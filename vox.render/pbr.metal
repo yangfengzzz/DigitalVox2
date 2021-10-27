@@ -516,7 +516,7 @@ fragment float4 fragment_pbr(VertexOut in [[stage_in]],
     if (hasEmissiveMap) {
         float4 emissiveMapColor = u_emissiveTexture.sample(textureSampler, in.v_uv);
         emissiveMapColor = SRGBtoLINEAR(emissiveMapColor);
-        totalEmissiveRadiance *= emissiveMapColor.rgb;
+        totalEmissiveRadiance = emissiveMapColor.rgb;
     }
     
     float3 outgoingLight = reflectedLight.directDiffuse + reflectedLight.indirectDiffuse

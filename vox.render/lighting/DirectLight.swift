@@ -17,7 +17,7 @@ class DirectLight: Light {
             direction: [SIMD3<Float>](repeating: SIMD3<Float>(), count: Light._maxLight)
     )
 
-    var color: Vector3 = Vector3(0.5, 0.5, 0.5)
+    var color: Vector3 = Vector3(1, 1, 1)
     var intensity: Float = 1
 
     private var _forward: Vector3 = Vector3()

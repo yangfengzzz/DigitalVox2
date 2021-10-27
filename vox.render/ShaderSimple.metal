@@ -195,7 +195,7 @@ fragment float4 fragment_simple(VertexOut in [[stage_in]],
     lighting.viewDirection = viewDirection;
     lighting.baseColor = baseColor;
     lighting.normal = normal;
-    lighting.metallic = metallic;
+    lighting.metallic = 1-metallic;
     lighting.roughness = roughness;
     lighting.ambientOcclusion = ambientOcclusion;
     lighting.lightColor = u_directLightColor[0];
@@ -207,7 +207,13 @@ fragment float4 fragment_simple(VertexOut in [[stage_in]],
     float3 diffuseColor = u_directLightColor[0] * baseColor * nDotl * ambientOcclusion;
     diffuseColor *= metallic;
     
-    float4 finalColor = float4(specularOutput + diffuseColor, 1.0);
+    float4 emissiveMapColor = float4(0.0);
+    if (hasEmissiveMap) {
+        emissiveMapColor = u_emissiveTexture.sample(textureSampler, in.uv);
+        emissiveMapColor = clamp(emissiveMapColor, float4(0, 0, 0, 0), float4(1,1,1,1));
+    }
+    
+    float4 finalColor = float4(specularOutput + diffuseColor + emissiveMapColor.rgb, 1);
     
     return finalColor;
 }

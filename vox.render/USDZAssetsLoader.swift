@@ -44,7 +44,6 @@ class USDZAssetsLoader {
         }
 
         let entity = Entity(_engine, name)
-
         meshes = zip(mdlMeshes, mtkMeshes).map { (mdlMesh, mtkMesh) in
             let mesh = BufferMesh(_engine)
             mesh.setVertexDescriptor(mdlMesh.vertexDescriptor)
@@ -52,7 +51,8 @@ class USDZAssetsLoader {
                 mesh.setVertexBufferBinding(vertexBuffer.buffer, 0, index)
             }
 
-            let renderer: MeshRenderer = entity.addComponent()
+            let childEntity:Entity = entity.createChild(nil)
+            let renderer: MeshRenderer = childEntity.addComponent()
             renderer.mesh = mesh
 
             var subCount = 0
@@ -70,9 +70,9 @@ class USDZAssetsLoader {
                 subCount += 1
             }
 
-            entities.append(entity)
             return mesh
         }
+        entities.append(entity)
     }
 
     func loadMaterial(_ pbr: PBRMaterial, _ material: MDLMaterial?) {
@@ -93,11 +93,19 @@ class USDZAssetsLoader {
         }
 
         pbr.baseTexture = property(with: MDLMaterialSemantic.baseColor)
+        pbr.metallicTexture = property(with: MDLMaterialSemantic.metallic)
+        pbr.normalTexture = property(with: MDLMaterialSemantic.tangentSpaceNormal)
+        pbr.emissiveTexture = property(with: MDLMaterialSemantic.emission)
+        pbr.occlusionTexture = property(with: MDLMaterialSemantic.ambientOcclusion)
 
         if let baseColor = material?.property(with: .baseColor),
            baseColor.type == .float3 {
             let color = pbr.baseColor
             pbr.baseColor = color.setValue(r: baseColor.float3Value.x, g: baseColor.float3Value.y, b: baseColor.float3Value.z, a: 1.0)
+        }
+        if let roughness = material?.property(with: .roughness),
+          roughness.type == .float3 {
+          pbr.roughness = roughness.floatValue
         }
     }
 }
@@ -145,7 +153,7 @@ extension USDZAssetsLoader {
                 [.origin: MTKTextureLoader.Origin.bottomLeft,
                  .SRGB: false,
                  .textureUsage: NSNumber(value: MTLTextureUsage.shaderRead.rawValue),
-                 .generateMipmaps: NSNumber(booleanLiteral: true)]
+                 .generateMipmaps: NSNumber(booleanLiteral: false)]
         let texture = try? textureLoader.newTexture(texture: texture,
                 options: textureLoaderOptions)
         return texture
