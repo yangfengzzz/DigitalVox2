@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol EmptyInit {
+protocol EmptyInit : AnyObject {
     init()
 }
 
