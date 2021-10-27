@@ -10,20 +10,20 @@ import Foundation
 /// Interface for physics collider shape.
 protocol IColliderShape {
     /// Set unique id of the collider shape.
-    func setUniqueID(id: Int)
+    func setUniqueID(_ id: Int)
 
     /// Set local position.
-    func setPosition(position: Vector3)
+    func setPosition(_ position: Vector3)
 
     /// Set world scale of shape.
-    func setWorldScale(scale: Vector3)
+    func setWorldScale(_ scale: Vector3)
 
     /// Set physics material on shape.
-    func setMaterial(material: IPhysicsMaterial)
+    func setMaterial(_ material: IPhysicsMaterial)
 
     /// Set trigger or not.
-    func setIsTrigger(value: Bool)
+    func setIsTrigger(_ value: Bool)
 
     /// Set scene query or not.
-    func setIsSceneQuery(value: Bool)
+    func setIsSceneQuery(_ value: Bool)
 }

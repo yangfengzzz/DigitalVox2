@@ -165,6 +165,7 @@
 		045B064D2729463C003E4B68 /* LiteUpdateFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045B064C2729463C003E4B68 /* LiteUpdateFlag.swift */; };
 		045B064F27294C62003E4B68 /* LiteHitResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045B064E27294C62003E4B68 /* LiteHitResult.swift */; };
 		045B065127294CFD003E4B68 /* LiteCollider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045B065027294CFD003E4B68 /* LiteCollider.swift */; };
+		045B065327295320003E4B68 /* LiteBoxColliderShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045B065227295320003E4B68 /* LiteBoxColliderShape.swift */; };
 		047914CB26F37C0300BE5170 /* ShaderData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047914CA26F37C0300BE5170 /* ShaderData.swift */; };
 		047E7B2C26EE257E006BC3FB /* MeshRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047E7B2B26EE257E006BC3FB /* MeshRenderer.swift */; };
 		047FEB7026E1BA4A0078CFAF /* shape_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEB6F26E1BA4A0078CFAF /* shape_data.swift */; };
@@ -489,6 +490,7 @@
 		045B064C2729463C003E4B68 /* LiteUpdateFlag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteUpdateFlag.swift; sourceTree = "<group>"; };
 		045B064E27294C62003E4B68 /* LiteHitResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteHitResult.swift; sourceTree = "<group>"; };
 		045B065027294CFD003E4B68 /* LiteCollider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteCollider.swift; sourceTree = "<group>"; };
+		045B065227295320003E4B68 /* LiteBoxColliderShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteBoxColliderShape.swift; sourceTree = "<group>"; };
 		047914CA26F37C0300BE5170 /* ShaderData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderData.swift; sourceTree = "<group>"; };
 		047E7B2B26EE257E006BC3FB /* MeshRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeshRenderer.swift; sourceTree = "<group>"; };
 		047FEB6F26E1BA4A0078CFAF /* shape_data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = shape_data.swift; sourceTree = "<group>"; };
@@ -1104,6 +1106,7 @@
 			isa = PBXGroup;
 			children = (
 				045B064627294530003E4B68 /* LiteColliderShape.swift */,
+				045B065227295320003E4B68 /* LiteBoxColliderShape.swift */,
 			);
 			path = shape;
 			sourceTree = "<group>";
@@ -1763,6 +1766,7 @@
 				042BB13626EA404200604751 /* SceneManager.swift in Sources */,
 				04F6AA6327014C5800A0D6F6 /* BoxCollider.swift in Sources */,
 				04DBA7DC2700B3C900C3B97C /* SceneFeature.swift in Sources */,
+				045B065327295320003E4B68 /* LiteBoxColliderShape.swift in Sources */,
 				0413288626E09F1F000A4F4E /* PrimitiveMesh.swift in Sources */,
 				04A6BEBD2723F5650024DF43 /* skybox.metal in Sources */,
 				043CB45F26F42057004A0B21 /* RenderContext.swift in Sources */,

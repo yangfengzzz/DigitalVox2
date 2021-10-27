@@ -10,17 +10,17 @@ import Foundation
 /// Interface of physics material.
 protocol IPhysicsMaterial {
     /// Set the coefficient of bounciness.
-    func setBounciness(value: Float)
+    func setBounciness(_ value: Float)
 
     /// Set the coefficient of dynamic friction.
-    func setDynamicFriction(value: Float)
+    func setDynamicFriction(_ value: Float)
 
     /// Set the coefficient of static friction.
-    func setStaticFriction(value: Float)
+    func setStaticFriction(_ value: Float)
 
     /// Set the bounciness combine mode.
-    func setBounceCombine(value: Float)
+    func setBounceCombine(_ value: Float)
 
     /// Set the friction combine mode.
-    func setFrictionCombine(value: Float)
+    func setFrictionCombine(_ value: Float)
 }

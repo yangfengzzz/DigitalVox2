@@ -23,8 +23,8 @@ protocol IDynamicCollider: ICollider {
     var isKinematic: Bool { get set }
 
     /// Apply a force to the dynamic collider.
-    func addForce(force: Vector3)
+    func addForce(_ force: Vector3)
 
     /// Apply a torque to the dynamic collider.
-    func addTorque(torque: Vector3)
+    func addTorque(_ torque: Vector3)
 }

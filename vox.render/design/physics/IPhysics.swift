@@ -10,38 +10,38 @@ import Foundation
 /// The interface of physics creation.
 protocol IPhysics {
     /// Create physics manager.
-    func createPhysicsManager(onContactEnter: ((Float, Float) -> Void)?,
-                              onContactExit: ((Float, Float) -> Void)?,
-                              onContactStay: ((Float, Float) -> Void)?,
-                              onTriggerEnter: ((Float, Float) -> Void)?,
-                              onTriggerExit: ((Float, Float) -> Void)?,
-                              onTriggerStay: ((Float, Float) -> Void)?) -> IPhysicsManager
+    func createPhysicsManager(_ onContactEnter: ((Float, Float) -> Void)?,
+                              _ onContactExit: ((Float, Float) -> Void)?,
+                              _ onContactStay: ((Float, Float) -> Void)?,
+                              _ onTriggerEnter: ((Float, Float) -> Void)?,
+                              _ onTriggerExit: ((Float, Float) -> Void)?,
+                              _ onTriggerStay: ((Float, Float) -> Void)?) -> IPhysicsManager
 
     /// Create dynamic collider.
-    func createDynamicCollider(position: Vector3, rotation: Quaternion) -> IDynamicCollider
+    func createDynamicCollider(_ position: Vector3, _ rotation: Quaternion) -> IDynamicCollider
 
     /// Create static collider.
-    func createStaticCollider(position: Vector3, rotation: Quaternion) -> IStaticCollider
+    func createStaticCollider(_ position: Vector3, _ rotation: Quaternion) -> IStaticCollider
 
     /// Create physics material.
-    func createPhysicsMaterial(staticFriction: Float,
-                               dynamicFriction: Float,
-                               bounciness: Float,
-                               frictionCombine: Float,
-                               bounceCombine: Float) -> IPhysicsMaterial
+    func createPhysicsMaterial(_ staticFriction: Float,
+                               _ dynamicFriction: Float,
+                               _ bounciness: Float,
+                               _ frictionCombine: Float,
+                               _ bounceCombine: Float) -> IPhysicsMaterial
 
     /// Create box collider shape.
-    func createBoxColliderShape(uniqueID: Int, size: Vector3, material: IPhysicsMaterial) -> IBoxColliderShape
+    func createBoxColliderShape(_ uniqueID: Int, _ size: Vector3, _ material: IPhysicsMaterial) -> IBoxColliderShape
 
     /// Create sphere collider shape.
-    func createSphereColliderShape(uniqueID: Int, radius: Float, material: IPhysicsMaterial) -> ISphereColliderShape
+    func createSphereColliderShape(_ uniqueID: Int, _ radius: Float, _ material: IPhysicsMaterial) -> ISphereColliderShape
 
     /// Create plane collider shape.
-    func createPlaneColliderShape(uniqueID: Int, material: IPhysicsMaterial) -> IPlaneColliderShape
+    func createPlaneColliderShape(_ uniqueID: Int, _ material: IPhysicsMaterial) -> IPlaneColliderShape
 
     /// Create capsule collider shape.
-    func createCapsuleColliderShape(uniqueID: Int,
-                                    radius: Float,
-                                    height: Float,
-                                    material: IPhysicsMaterial) -> ICapsuleColliderShape
+    func createCapsuleColliderShape(_ uniqueID: Int,
+                                    _ radius: Float,
+                                    _ height: Float,
+                                    _ material: IPhysicsMaterial) -> ICapsuleColliderShape
 }

@@ -10,5 +10,5 @@ import Foundation
 /// Interface of physics sphere collider shape.
 protocol ISphereColliderShape: IColliderShape {
     /// Set radius of sphere.
-    func setRadius(radius: Float)
+    func setRadius(_ radius: Float)
 }

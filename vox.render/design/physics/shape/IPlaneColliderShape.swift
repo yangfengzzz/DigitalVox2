@@ -10,5 +10,5 @@ import Foundation
 /// Interface of physics plane collider shape.
 protocol IPlaneColliderShape: IColliderShape {
     /// Set local rotation.
-    func setRotation(normal: Vector3)
+    func setRotation(_ normal: Vector3)
 }
