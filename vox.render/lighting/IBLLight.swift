@@ -8,7 +8,6 @@
 import Foundation
 
 class IBLLight {
-    private static var _skyboxTextureProperty: ShaderProperty = Shader.getPropertyByName("u_skybox")
     private static var _skyboxDiffuseTextureProperty: ShaderProperty = Shader.getPropertyByName("u_skyboxDiffuse")
     private static var _brdfLutTextureProperty: ShaderProperty = Shader.getPropertyByName("u_brdfLut")
 
@@ -28,6 +27,9 @@ class IBLLight {
             fatalError(error.localizedDescription)
         }
         brdfLut = buildBRDF()
+        
+        _scene.shaderData.setTexture(IBLLight._skyboxDiffuseTextureProperty, diffuseTexture!)
+        _scene.shaderData.setTexture(IBLLight._brdfLutTextureProperty, brdfLut!)
     }
 
     func buildBRDF() -> MTLTexture? {

@@ -145,7 +145,10 @@ fragment float4 fragment_simple(VertexOut in [[stage_in]],
                                 texture2d<float> u_roughnessTexture [[texture(5), function_constant(hasRoughnessMap)]],
                                 texture2d<float> u_specularTexture [[texture(6), function_constant(hasSpecularMap)]],
                                 texture2d<float> u_glossinessTexture [[texture(7), function_constant(hasGlossinessMap)]],
-                                texture2d<float> u_occlusionTexture [[texture(8), function_constant(hasOcclusionMap)]]) {
+                                texture2d<float> u_occlusionTexture [[texture(8), function_constant(hasOcclusionMap)]],
+                                texturecube<float> u_skybox [[texture(9)]],
+                                texturecube<float> u_skyboxDiffuse [[texture(10)]],
+                                texture2d<float> u_brdfLut [[texture(11)]]) {
     // extract color
     float3 baseColor;
     if (hasBaseColorMap) {
@@ -187,25 +190,25 @@ fragment float4 fragment_simple(VertexOut in [[stage_in]],
     }
     normal = normalize(normal);
     
-    float3 viewDirection = normalize(u_cameraPos - in.worldPosition);
+    float4 diffuse = u_skyboxDiffuse.sample(textureSampler, normal);
+    diffuse = mix(pow(diffuse, 0.5), diffuse, metallic);
+
+    float3 viewDirection = in.worldPosition.xyz - u_cameraPos;
+    float3 textureCoordinates = reflect(viewDirection, normal);
+
+    constexpr sampler s(filter::linear, mip_filter::linear);
+    float3 prefilteredColor = u_skybox.sample(s, textureCoordinates,
+                                            level(roughness * 10)).rgb;
+
+    float nDotV = saturate(dot(normal, normalize(-viewDirection)));
+    float2 envBRDF = u_brdfLut.sample(s, float2(roughness, nDotV)).rg;
     
-    // all the necessary components are in place
-    Lighting lighting;
-    lighting.lightDirection = u_directLightDirection[0];
-    lighting.viewDirection = viewDirection;
-    lighting.baseColor = baseColor;
-    lighting.normal = normal;
-    lighting.metallic = 1-metallic;
-    lighting.roughness = roughness;
-    lighting.ambientOcclusion = ambientOcclusion;
-    lighting.lightColor = u_directLightColor[0];
+    float3 f0 = mix(0.04, baseColor.rgb, metallic);
+    float3 specularIBL = f0 * envBRDF.r + envBRDF.g;
     
-    float3 specularOutput = render(lighting);
-    
-    // compute Lambertian diffuse
-    float nDotl = max(0.001, saturate(dot(lighting.normal, lighting.lightDirection)));
-    float3 diffuseColor = u_directLightColor[0] * baseColor * nDotl * ambientOcclusion;
-    diffuseColor *= metallic;
+    float3 specular = prefilteredColor * specularIBL;
+    float4 color = diffuse * float4(baseColor, 1) + float4(specular, 1);
+    color *= ambientOcclusion;
     
     float4 emissiveMapColor = float4(0.0);
     if (hasEmissiveMap) {
@@ -213,7 +216,5 @@ fragment float4 fragment_simple(VertexOut in [[stage_in]],
         emissiveMapColor = clamp(emissiveMapColor, float4(0, 0, 0, 0), float4(1,1,1,1));
     }
     
-    float4 finalColor = float4(specularOutput + diffuseColor + emissiveMapColor.rgb, 1);
-    
-    return finalColor;
+    return color + emissiveMapColor;
 }
