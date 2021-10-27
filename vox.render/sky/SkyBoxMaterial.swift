@@ -21,10 +21,10 @@ class SkyBoxMaterial: Material {
     /// Texture cube map of the sky box material.
     var textureCubeMap: MTLTexture? {
         get {
-            _scene.shaderData.getTexture("u_cube")
+            _scene.shaderData.getTexture("u_skybox")
         }
         set {
-            _scene.shaderData.setTexture("u_cube", newValue!)
+            _scene.shaderData.setTexture("u_skybox", newValue!)
         }
     }
 }

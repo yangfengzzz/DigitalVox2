@@ -92,11 +92,12 @@ class USDZAssetsLoader {
             return texture
         }
 
-        pbr.baseTexture = property(with: MDLMaterialSemantic.baseColor)
-        pbr.metallicTexture = property(with: MDLMaterialSemantic.metallic)
-        pbr.normalTexture = property(with: MDLMaterialSemantic.tangentSpaceNormal)
-        pbr.emissiveTexture = property(with: MDLMaterialSemantic.emission)
-        pbr.occlusionTexture = property(with: MDLMaterialSemantic.ambientOcclusion)
+        pbr.baseTexture = property(with: .baseColor)
+        pbr.normalTexture = property(with: .tangentSpaceNormal)
+        pbr.roughnessTexture = property(with: .roughness)
+        pbr.metallicTexture = property(with: .metallic)
+        pbr.occlusionTexture = property(with: .ambientOcclusion)
+        pbr.emissiveTexture = property(with: .emission)
 
         if let baseColor = material?.property(with: .baseColor),
            baseColor.type == .float3 {
