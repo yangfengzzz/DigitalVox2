@@ -9,6 +9,9 @@ import Foundation
 
 /// PhysX object creation.
 class PhysXPhysics: IPhysics {
+    /// Physx physics object
+    internal static var _pxPhysics: CPxPhysics!
+    
     static func createPhysicsManager(_ onContactEnter: ((Int, Int) -> Void)?,
                                      _ onContactExit: ((Int, Int) -> Void)?,
                                      _ onContactStay: ((Int, Int) -> Void)?,
@@ -52,5 +55,9 @@ class PhysXPhysics: IPhysics {
     static func createCapsuleColliderShape(_ uniqueID: Int, _ radius: Float, _ height: Float,
                                            _ material: IPhysicsMaterial) -> ICapsuleColliderShape {
         fatalError()
+    }
+    
+    private static func _init() {
+        _pxPhysics = CPxPhysics()
     }
 }

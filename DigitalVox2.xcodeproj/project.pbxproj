@@ -197,6 +197,7 @@
 		041BAECE272A6E0A006268D5 /* cube.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 0452ECE126DFA6A10015BFB1 /* cube.mtl */; };
 		041BAECF272A6E0A006268D5 /* cottage1.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 0452ECE326DFA6A10015BFB1 /* cottage1.mtl */; };
 		041BAED0272A6E0A006268D5 /* Mando_Helmet.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 04AE2412272812F200D62587 /* Mando_Helmet.usdz */; };
+		041BAED5272A8B21006268D5 /* CPxMaterial.mm in Sources */ = {isa = PBXBuildFile; fileRef = 041BAED4272A8B21006268D5 /* CPxMaterial.mm */; };
 		042BB13426EA3EA400604751 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 042BB13326EA3EA400604751 /* Logging */; };
 		042C841226E4A7AE00BD3733 /* sampling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042C841126E4A7AE00BD3733 /* sampling.swift */; };
 		043CB42326EF590B004A0B21 /* Matrix3x3.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB42226EF590B004A0B21 /* Matrix3x3.test.swift */; };
@@ -398,6 +399,9 @@
 		041BADED272A4FA6006268D5 /* vox.oasisUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = vox.oasisUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		041BADF1272A4FA6006268D5 /* vox_oasisUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = vox_oasisUITests.swift; sourceTree = "<group>"; };
 		041BADF3272A4FA6006268D5 /* vox_oasisUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = vox_oasisUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		041BAED3272A8AFE006268D5 /* CPxMaterial.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPxMaterial.h; sourceTree = "<group>"; };
+		041BAED4272A8B21006268D5 /* CPxMaterial.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CPxMaterial.mm; sourceTree = "<group>"; };
+		041BAED8272A900C006268D5 /* CPxMaterial+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CPxMaterial+Internal.h"; sourceTree = "<group>"; };
 		041D1C46272A354600322BDF /* BoxColliderShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxColliderShape.swift; sourceTree = "<group>"; };
 		041D1C48272A360300322BDF /* CapsuleColliderShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapsuleColliderShape.swift; sourceTree = "<group>"; };
 		041D1C4A272A36B600322BDF /* PlaneColliderShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaneColliderShape.swift; sourceTree = "<group>"; };
@@ -943,8 +947,11 @@
 			isa = PBXGroup;
 			children = (
 				041D1C53272A3FD400322BDF /* PhysXPhysics.swift */,
-				041D1C55272A452B00322BDF /* CPxPhysics.mm */,
 				041D1C57272A453700322BDF /* CPxPhysics.h */,
+				041D1C55272A452B00322BDF /* CPxPhysics.mm */,
+				041BAED3272A8AFE006268D5 /* CPxMaterial.h */,
+				041BAED8272A900C006268D5 /* CPxMaterial+Internal.h */,
+				041BAED4272A8B21006268D5 /* CPxMaterial.mm */,
 			);
 			path = "physics-physx";
 			sourceTree = "<group>";
@@ -1962,6 +1969,7 @@
 				041BAE02272A500F006268D5 /* Renderer.swift in Sources */,
 				041BAEAA272A514D006268D5 /* IStaticCollider.swift in Sources */,
 				041BAE1C272A5046006268D5 /* background-texture.metal in Sources */,
+				041BAED5272A8B21006268D5 /* CPxMaterial.mm in Sources */,
 				041BAE96272A5141006268D5 /* HitResult.swift in Sources */,
 				041BAE43272A50ED006268D5 /* BlendShapeFrame.swift in Sources */,
 				041BAE3B272A50E6006268D5 /* PlaneIntersectionType.swift in Sources */,

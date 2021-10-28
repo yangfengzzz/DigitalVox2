@@ -6,6 +6,7 @@
 //
 
 #import "CPxPhysics.h"
+#import "CPxMaterial+Internal.h"
 #import "PxPhysicsAPI.h"
 
 using namespace physx;
@@ -29,7 +30,14 @@ using namespace physx;
     PxDefaultErrorCallback gErrorCallback;
     physx::PxFoundation *gFoundation = PxCreateFoundation(PX_PHYSICS_VERSION, gAllocator, gErrorCallback);
 
-    _physics = PxCreatePhysics(PX_PHYSICS_VERSION, *gFoundation, PxTolerancesScale(), false, NULL);
+    _physics = PxCreatePhysics(PX_PHYSICS_VERSION, *gFoundation, PxTolerancesScale(), false, nullptr);
 }
+
+- (CPxMaterial *)createMaterialWithStaticFriction:(float)staticFriction
+                                  dynamicFriction:(float)dynamicFriction
+                                      restitution:(float)restitution {
+    return [[CPxMaterial alloc] initWithMaterial:_physics->createMaterial(staticFriction, dynamicFriction, restitution)];
+}
+
 
 @end

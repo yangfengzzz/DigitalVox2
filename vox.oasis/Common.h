@@ -36,4 +36,7 @@
 #include "ShaderCommon.h"
 #include "GLTFKit2.h"
 
+#include "CPxPhysics.h"
+#include "CPxMaterial.h"
+
 #endif /* Common_h */

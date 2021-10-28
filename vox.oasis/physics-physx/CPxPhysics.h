@@ -9,9 +9,12 @@
 #define CPxPhysics_h
 
 #import <Foundation/Foundation.h>
+#import "CPxMaterial.h"
 
 @interface CPxPhysics : NSObject
-
+- (CPxMaterial *)createMaterialWithStaticFriction:(float)staticFriction
+                                  dynamicFriction:(float)dynamicFriction
+                                      restitution:(float)restitution;
 @end
 
 #endif /* CPxPhysics_h */
