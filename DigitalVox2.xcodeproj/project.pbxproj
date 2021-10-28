@@ -50,6 +50,7 @@
 		041D1C4F272A389300322BDF /* StaticCollider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041D1C4E272A389300322BDF /* StaticCollider.swift */; };
 		041D1C51272A38F800322BDF /* DynamicCollider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041D1C50272A38F800322BDF /* DynamicCollider.swift */; };
 		041D1C54272A3FD400322BDF /* PhysXPhysics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041D1C53272A3FD400322BDF /* PhysXPhysics.swift */; };
+		041D1C56272A452B00322BDF /* CPxPhysics.mm in Sources */ = {isa = PBXBuildFile; fileRef = 041D1C55272A452B00322BDF /* CPxPhysics.mm */; };
 		042291B6272A23E3003A4C8B /* PhysicsMaterialCombineMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042291B5272A23E3003A4C8B /* PhysicsMaterialCombineMode.swift */; };
 		042291B8272A2443003A4C8B /* PhysicsMaterial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042291B7272A2443003A4C8B /* PhysicsMaterial.swift */; };
 		042291BB272A2579003A4C8B /* ColliderShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042291BA272A2579003A4C8B /* ColliderShape.swift */; };
@@ -374,6 +375,8 @@
 		041D1C4E272A389300322BDF /* StaticCollider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticCollider.swift; sourceTree = "<group>"; };
 		041D1C50272A38F800322BDF /* DynamicCollider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicCollider.swift; sourceTree = "<group>"; };
 		041D1C53272A3FD400322BDF /* PhysXPhysics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXPhysics.swift; sourceTree = "<group>"; };
+		041D1C55272A452B00322BDF /* CPxPhysics.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CPxPhysics.mm; sourceTree = "<group>"; };
+		041D1C57272A453700322BDF /* CPxPhysics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPxPhysics.h; sourceTree = "<group>"; };
 		042291B5272A23E3003A4C8B /* PhysicsMaterialCombineMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsMaterialCombineMode.swift; sourceTree = "<group>"; };
 		042291B7272A2443003A4C8B /* PhysicsMaterial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsMaterial.swift; sourceTree = "<group>"; };
 		042291BA272A2579003A4C8B /* ColliderShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColliderShape.swift; sourceTree = "<group>"; };
@@ -784,6 +787,8 @@
 			isa = PBXGroup;
 			children = (
 				041D1C53272A3FD400322BDF /* PhysXPhysics.swift */,
+				041D1C55272A452B00322BDF /* CPxPhysics.mm */,
+				041D1C57272A453700322BDF /* CPxPhysics.h */,
 			);
 			path = "physics-physx";
 			sourceTree = "<group>";
@@ -1809,6 +1814,7 @@
 				0458275B26F6EF0E0056D134 /* USDZAssetsLoader.swift in Sources */,
 				0447D55626F834BB00272D7C /* AmbientLight.swift in Sources */,
 				042BB13C26F36F2600604751 /* ShaderProperty.swift in Sources */,
+				041D1C56272A452B00322BDF /* CPxPhysics.mm in Sources */,
 				045B062E27293EE2003E4B68 /* IPhysicsMaterial.swift in Sources */,
 				0413289226E0A1CD000A4F4E /* RefObject.swift in Sources */,
 				04AE07C62702A40800F1D8C5 /* ShadowMapPass.swift in Sources */,
@@ -2265,17 +2271,52 @@
 				DEVELOPMENT_ASSET_PATHS = "\"vox.render/Preview Content\"";
 				DEVELOPMENT_TEAM = 4SL5L673UU;
 				ENABLE_PREVIEWS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = (
+					"'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",
+					DISABLE_CUDA_PHYSX,
+					PX_PHYSX_CORE_EXPORTS,
+					_DEBUG,
+					"'PX_DEBUG=1'",
+					"'PX_CHECKED=1'",
+					"'PX_NVTX=0'",
+					"'PX_SUPPORT_PVD=1'",
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = vox.render/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = /Users/yangfeng/Desktop/PhysX/physx/bin/ios.arm_64/debug;
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = DigitalVox2.DigitalVox2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = vox.render/Common.h;
 				SWIFT_VERSION = 5.0;
+				SYSTEM_HEADER_SEARCH_PATHS = (
+					/Users/yangfeng/Desktop/PhysX/physx/source/common/src/mac,
+					/Users/yangfeng/Desktop/PhysX/physx/include,
+					/Users/yangfeng/Desktop/PhysX/physx/source/common/include,
+					/Users/yangfeng/Desktop/PhysX/physx/source/common/src,
+					/Users/yangfeng/Desktop/PhysX/physx/source/geomutils/include,
+					/Users/yangfeng/Desktop/PhysX/physx/source/geomutils/src,
+					/Users/yangfeng/Desktop/PhysX/physx/source/geomutils/src/contact,
+					/Users/yangfeng/Desktop/PhysX/physx/source/geomutils/src/common,
+					/Users/yangfeng/Desktop/PhysX/physx/source/geomutils/src/convex,
+					/Users/yangfeng/Desktop/PhysX/physx/source/geomutils/src/distance,
+					/Users/yangfeng/Desktop/PhysX/physx/source/geomutils/src/sweep,
+					/Users/yangfeng/Desktop/PhysX/physx/source/geomutils/src/gjk,
+					/Users/yangfeng/Desktop/PhysX/physx/source/geomutils/src/intersection,
+					/Users/yangfeng/Desktop/PhysX/physx/source/geomutils/src/mesh,
+					/Users/yangfeng/Desktop/PhysX/physx/source/geomutils/src/hf,
+					/Users/yangfeng/Desktop/PhysX/physx/source/geomutils/src/pcm,
+					/Users/yangfeng/Desktop/PhysX/physx/source/geomutils/src/ccd,
+					/Users/yangfeng/Desktop/PhysX/physx/source/physxgpu/include,
+					/Users/yangfeng/Desktop/PhysX/physx/../pxshared/include,
+					/Users/yangfeng/Desktop/PhysX/physx/source/foundation/include,
+				);
 				TARGETED_DEVICE_FAMILY = "1,2,6";
 			};
 			name = Debug;
@@ -2291,17 +2332,49 @@
 				DEVELOPMENT_ASSET_PATHS = "\"vox.render/Preview Content\"";
 				DEVELOPMENT_TEAM = 4SL5L673UU;
 				ENABLE_PREVIEWS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = (
+					"'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",
+					DISABLE_CUDA_PHYSX,
+					PX_PHYSX_CORE_EXPORTS,
+					NDEBUG,
+					"'PX_SUPPORT_PVD=0'",
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = vox.render/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = /Users/yangfeng/Desktop/PhysX/physx/bin/ios.arm_64/release;
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = DigitalVox2.DigitalVox2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = vox.render/Common.h;
 				SWIFT_VERSION = 5.0;
+				SYSTEM_HEADER_SEARCH_PATHS = (
+					/Users/yangfeng/Desktop/PhysX/physx/source/common/src/mac,
+					/Users/yangfeng/Desktop/PhysX/physx/include,
+					/Users/yangfeng/Desktop/PhysX/physx/source/common/include,
+					/Users/yangfeng/Desktop/PhysX/physx/source/common/src,
+					/Users/yangfeng/Desktop/PhysX/physx/source/geomutils/include,
+					/Users/yangfeng/Desktop/PhysX/physx/source/geomutils/src,
+					/Users/yangfeng/Desktop/PhysX/physx/source/geomutils/src/contact,
+					/Users/yangfeng/Desktop/PhysX/physx/source/geomutils/src/common,
+					/Users/yangfeng/Desktop/PhysX/physx/source/geomutils/src/convex,
+					/Users/yangfeng/Desktop/PhysX/physx/source/geomutils/src/distance,
+					/Users/yangfeng/Desktop/PhysX/physx/source/geomutils/src/sweep,
+					/Users/yangfeng/Desktop/PhysX/physx/source/geomutils/src/gjk,
+					/Users/yangfeng/Desktop/PhysX/physx/source/geomutils/src/intersection,
+					/Users/yangfeng/Desktop/PhysX/physx/source/geomutils/src/mesh,
+					/Users/yangfeng/Desktop/PhysX/physx/source/geomutils/src/hf,
+					/Users/yangfeng/Desktop/PhysX/physx/source/geomutils/src/pcm,
+					/Users/yangfeng/Desktop/PhysX/physx/source/geomutils/src/ccd,
+					/Users/yangfeng/Desktop/PhysX/physx/source/physxgpu/include,
+					/Users/yangfeng/Desktop/PhysX/physx/../pxshared/include,
+					/Users/yangfeng/Desktop/PhysX/physx/source/foundation/include,
+				);
 				TARGETED_DEVICE_FAMILY = "1,2,6";
 			};
 			name = Release;
