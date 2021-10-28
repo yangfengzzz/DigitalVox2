@@ -26,9 +26,22 @@ class PhysXBoxColliderShape: PhysXColliderShape, IBoxColliderShape {
                 hy: _halfSize.y * _scale.y,
                 hz: _halfSize.z * _scale.z
         )
+        _allocShape(material)
+        _setLocalPose()
+        setUniqueID(uniqueID)
     }
 
     func setSize(_ size: Vector3) {
-        fatalError()
+        _ = _halfSize.setValue(x: size.x * 0.5, y: size.y * 0.5, z: size.z * 0.5)
+        Vector3.multiply(left: _halfSize, right: _scale, out: PhysXBoxColliderShape._tempHalfExtents)
+        _pxGeometry.halfExtents = PhysXBoxColliderShape._tempHalfExtents
+        _pxShape.setGeometry(_pxGeometry)
+    }
+
+    func setWorldScale(scale: Vector3) {
+        scale.cloneTo(target: _scale)
+        Vector3.multiply(left: _halfSize, right: _scale, out: PhysXBoxColliderShape._tempHalfExtents)
+        _pxGeometry.halfExtents = PhysXBoxColliderShape._tempHalfExtents
+        _pxShape.setGeometry(_pxGeometry)
     }
 }

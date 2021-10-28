@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0452EC9526DFA0CD0015BFB1"
-               BuildableName = "vox.tracing.app"
-               BlueprintName = "vox.tracing"
+               BlueprintIdentifier = "041BADD2272A4FA4006268D5"
+               BuildableName = "vox.oasis.app"
+               BlueprintName = "vox.oasis"
                ReferencedContainer = "container:DigitalVox2.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,9 +32,19 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0452ECA526DFA0CD0015BFB1"
-               BuildableName = "vox.tracingTests.xctest"
-               BlueprintName = "vox.tracingTests"
+               BlueprintIdentifier = "041BADE2272A4FA6006268D5"
+               BuildableName = "vox.oasisTests.xctest"
+               BlueprintName = "vox.oasisTests"
+               ReferencedContainer = "container:DigitalVox2.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "041BADEC272A4FA6006268D5"
+               BuildableName = "vox.oasisUITests.xctest"
+               BlueprintName = "vox.oasisUITests"
                ReferencedContainer = "container:DigitalVox2.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -54,9 +64,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "0452EC9526DFA0CD0015BFB1"
-            BuildableName = "vox.tracing.app"
-            BlueprintName = "vox.tracing"
+            BlueprintIdentifier = "041BADD2272A4FA4006268D5"
+            BuildableName = "vox.oasis.app"
+            BlueprintName = "vox.oasis"
             ReferencedContainer = "container:DigitalVox2.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -67,15 +77,16 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "0452EC9526DFA0CD0015BFB1"
-            BuildableName = "vox.tracing.app"
-            BlueprintName = "vox.tracing"
+            BlueprintIdentifier = "041BADD2272A4FA4006268D5"
+            BuildableName = "vox.oasis.app"
+            BlueprintName = "vox.oasis"
             ReferencedContainer = "container:DigitalVox2.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

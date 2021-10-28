@@ -19,7 +19,9 @@
                                       restitution:(float)restitution;
 
 - (CPxShape *)createShapeWithGeometry:(CPxGeometry *)geometry
-                             material:(CPxMaterial *)material;
+                             material:(CPxMaterial *)material
+                          isExclusive:(bool)isExclusive
+                           shapeFlags:(uint8_t)shapeFlags;
 @end
 
 #endif /* CPxPhysics_h */

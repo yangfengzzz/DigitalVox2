@@ -42,8 +42,11 @@ using namespace physx;
 }
 
 - (CPxShape *)createShapeWithGeometry:(CPxGeometry *)geometry
-                             material:(CPxMaterial *)material {
-    return [[CPxShape alloc] initWithShape:_physics->createShape(*geometry.c_geometry, *material.c_material, false)];
+                             material:(CPxMaterial *)material
+                          isExclusive:(bool)isExclusive
+                           shapeFlags:(uint8_t)shapeFlags {
+    return [[CPxShape alloc] initWithShape:_physics->createShape(*geometry.c_geometry, *material.c_material,
+            isExclusive, PxShapeFlags(shapeFlags))];
 }
 
 
