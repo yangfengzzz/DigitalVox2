@@ -10,11 +10,16 @@
 
 #import <Foundation/Foundation.h>
 #import "CPxMaterial.h"
+#import "CPxGeometry.h"
+#import "CPxShape.h"
 
 @interface CPxPhysics : NSObject
 - (CPxMaterial *)createMaterialWithStaticFriction:(float)staticFriction
                                   dynamicFriction:(float)dynamicFriction
                                       restitution:(float)restitution;
+
+- (CPxShape *)createShapeWithGeometry:(CPxGeometry *)geometry
+                             material:(CPxMaterial *)material;
 @end
 
 #endif /* CPxPhysics_h */

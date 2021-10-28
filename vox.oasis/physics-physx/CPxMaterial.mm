@@ -9,55 +9,54 @@
 #import "CPxMaterial+Internal.h"
 
 @implementation CPxMaterial {
-    PxMaterial *_material;
 }
 
 - (instancetype)initWithMaterial:(PxMaterial *)material {
     self = [super init];
     if (self) {
-        _material = material;
+        _c_material = material;
     }
     return self;
 }
 
 - (void)setDynamicFriction:(float)coef {
-    _material->setDynamicFriction(coef);
+    _c_material->setDynamicFriction(coef);
 }
 
 - (float)getDynamicFriction {
-    return _material->getDynamicFriction();
+    return _c_material->getDynamicFriction();
 }
 
 - (void)setStaticFriction:(float)coef {
-    _material->setStaticFriction(coef);
+    _c_material->setStaticFriction(coef);
 }
 
 - (float)getStaticFriction {
-    return _material->getStaticFriction();
+    return _c_material->getStaticFriction();
 }
 
 - (void)setRestitution:(float)rest {
-    _material->setRestitution(rest);
+    _c_material->setRestitution(rest);
 }
 
 - (float)getRestitution {
-    return _material->getRestitution();
+    return _c_material->getRestitution();
 }
 
 - (void)setFrictionCombineMode:(int)combMode {
-    _material->setFrictionCombineMode(PxCombineMode::Enum(combMode));
+    _c_material->setFrictionCombineMode(PxCombineMode::Enum(combMode));
 }
 
 - (int)getFrictionCombineMode {
-    return _material->getFrictionCombineMode();
+    return _c_material->getFrictionCombineMode();
 }
 
 - (void)setRestitutionCombineMode:(int)combMode {
-    _material->setRestitutionCombineMode(PxCombineMode::Enum(combMode));
+    _c_material->setRestitutionCombineMode(PxCombineMode::Enum(combMode));
 }
 
 - (int)getRestitutionCombineMode {
-    return _material->getRestitutionCombineMode();
+    return _c_material->getRestitutionCombineMode();
 }
 
 @end

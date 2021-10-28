@@ -15,7 +15,9 @@ using namespace physx;
 
 @interface CPxMaterial ()
 
-- (instancetype)initWithMaterial: (PxMaterial*)material;
+@property(nonatomic, readonly) PxMaterial *c_material;
+
+- (instancetype)initWithMaterial:(PxMaterial *)material;
 
 @end
 

@@ -6,14 +6,18 @@
 //
 
 #import "CPxGeometry.h"
+#import "CPxGeometry+Internal.h"
 
 @implementation CPxGeometry {
 }
 
 // MARK: - Initialization
 
-- (instancetype)init {
+- (instancetype)initWithGeometry:(PxGeometry *)geometry {
     self = [super init];
+    if (self) {
+        _c_geometry = geometry;
+    }
     return self;
 }
 

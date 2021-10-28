@@ -202,7 +202,8 @@
 		041BAEDD272A99EE006268D5 /* PhysXColliderShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041BAEDC272A99EE006268D5 /* PhysXColliderShape.swift */; };
 		041BAEE0272A9AA1006268D5 /* CPxBoxGeometry.mm in Sources */ = {isa = PBXBuildFile; fileRef = 041BAEDF272A9AA1006268D5 /* CPxBoxGeometry.mm */; };
 		041BAEE3272A9C6D006268D5 /* PhysXBoxColliderShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041BAEE2272A9C6D006268D5 /* PhysXBoxColliderShape.swift */; };
-		041BAEE5272A9DF4006268D5 /* CPxGeometry.m in Sources */ = {isa = PBXBuildFile; fileRef = 041BAEE4272A9DF4006268D5 /* CPxGeometry.m */; };
+		041BAEE5272A9DF4006268D5 /* CPxGeometry.mm in Sources */ = {isa = PBXBuildFile; fileRef = 041BAEE4272A9DF4006268D5 /* CPxGeometry.mm */; };
+		041BAEE8272A9F81006268D5 /* CPxShape.mm in Sources */ = {isa = PBXBuildFile; fileRef = 041BAEE7272A9F81006268D5 /* CPxShape.mm */; };
 		042BB13426EA3EA400604751 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 042BB13326EA3EA400604751 /* Logging */; };
 		042C841226E4A7AE00BD3733 /* sampling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042C841126E4A7AE00BD3733 /* sampling.swift */; };
 		043CB42326EF590B004A0B21 /* Matrix3x3.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB42226EF590B004A0B21 /* Matrix3x3.test.swift */; };
@@ -413,7 +414,11 @@
 		041BAEDF272A9AA1006268D5 /* CPxBoxGeometry.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CPxBoxGeometry.mm; sourceTree = "<group>"; };
 		041BAEE1272A9C29006268D5 /* CPxGeometry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPxGeometry.h; sourceTree = "<group>"; };
 		041BAEE2272A9C6D006268D5 /* PhysXBoxColliderShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXBoxColliderShape.swift; sourceTree = "<group>"; };
-		041BAEE4272A9DF4006268D5 /* CPxGeometry.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CPxGeometry.m; sourceTree = "<group>"; };
+		041BAEE4272A9DF4006268D5 /* CPxGeometry.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CPxGeometry.mm; sourceTree = "<group>"; };
+		041BAEE6272A9F70006268D5 /* CPxShape.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPxShape.h; sourceTree = "<group>"; };
+		041BAEE7272A9F81006268D5 /* CPxShape.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CPxShape.mm; sourceTree = "<group>"; };
+		041BAEEA272A9FAA006268D5 /* CPxShape+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CPxShape+Internal.h"; sourceTree = "<group>"; };
+		041BAEEB272AA1BC006268D5 /* CPxGeometry+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CPxGeometry+Internal.h"; sourceTree = "<group>"; };
 		041D1C46272A354600322BDF /* BoxColliderShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxColliderShape.swift; sourceTree = "<group>"; };
 		041D1C48272A360300322BDF /* CapsuleColliderShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapsuleColliderShape.swift; sourceTree = "<group>"; };
 		041D1C4A272A36B600322BDF /* PlaneColliderShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaneColliderShape.swift; sourceTree = "<group>"; };
@@ -976,9 +981,13 @@
 				041BAED8272A900C006268D5 /* CPxMaterial+Internal.h */,
 				041BAED4272A8B21006268D5 /* CPxMaterial.mm */,
 				041BAEE1272A9C29006268D5 /* CPxGeometry.h */,
-				041BAEE4272A9DF4006268D5 /* CPxGeometry.m */,
+				041BAEEB272AA1BC006268D5 /* CPxGeometry+Internal.h */,
+				041BAEE4272A9DF4006268D5 /* CPxGeometry.mm */,
 				041BAEDE272A9A95006268D5 /* CPxBoxGeometry.h */,
 				041BAEDF272A9AA1006268D5 /* CPxBoxGeometry.mm */,
+				041BAEE6272A9F70006268D5 /* CPxShape.h */,
+				041BAEEA272A9FAA006268D5 /* CPxShape+Internal.h */,
+				041BAEE7272A9F81006268D5 /* CPxShape.mm */,
 			);
 			path = "physics-physx";
 			sourceTree = "<group>";
@@ -2001,7 +2010,7 @@
 				041BAED5272A8B21006268D5 /* CPxMaterial.mm in Sources */,
 				041BAE96272A5141006268D5 /* HitResult.swift in Sources */,
 				041BAE43272A50ED006268D5 /* BlendShapeFrame.swift in Sources */,
-				041BAEE5272A9DF4006268D5 /* CPxGeometry.m in Sources */,
+				041BAEE5272A9DF4006268D5 /* CPxGeometry.mm in Sources */,
 				041BAE3B272A50E6006268D5 /* PlaneIntersectionType.swift in Sources */,
 				041BAE76272A512B006268D5 /* GLTFModelIO.m in Sources */,
 				041BAE38272A50E6006268D5 /* Vector4.swift in Sources */,
@@ -2014,6 +2023,7 @@
 				041BAE47272A50F2006268D5 /* Mesh.swift in Sources */,
 				041BAE65272A510C006268D5 /* ShaderUniform.swift in Sources */,
 				041BAE81272A513B006268D5 /* Spherical.swift in Sources */,
+				041BAEE8272A9F81006268D5 /* CPxShape.mm in Sources */,
 				041BAEBE272A5166006268D5 /* LiteCollider.swift in Sources */,
 				041BAE67272A5111006268D5 /* DirectLight.swift in Sources */,
 				041BAE71272A5117006268D5 /* ShadowMapPass.swift in Sources */,
