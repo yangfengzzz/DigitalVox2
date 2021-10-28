@@ -49,6 +49,7 @@
 		041D1C4D272A382700322BDF /* SphereColliderShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041D1C4C272A382700322BDF /* SphereColliderShape.swift */; };
 		041D1C4F272A389300322BDF /* StaticCollider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041D1C4E272A389300322BDF /* StaticCollider.swift */; };
 		041D1C51272A38F800322BDF /* DynamicCollider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041D1C50272A38F800322BDF /* DynamicCollider.swift */; };
+		041D1C54272A3FD400322BDF /* PhysXPhysics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041D1C53272A3FD400322BDF /* PhysXPhysics.swift */; };
 		042291B6272A23E3003A4C8B /* PhysicsMaterialCombineMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042291B5272A23E3003A4C8B /* PhysicsMaterialCombineMode.swift */; };
 		042291B8272A2443003A4C8B /* PhysicsMaterial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042291B7272A2443003A4C8B /* PhysicsMaterial.swift */; };
 		042291BB272A2579003A4C8B /* ColliderShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042291BA272A2579003A4C8B /* ColliderShape.swift */; };
@@ -372,6 +373,7 @@
 		041D1C4C272A382700322BDF /* SphereColliderShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphereColliderShape.swift; sourceTree = "<group>"; };
 		041D1C4E272A389300322BDF /* StaticCollider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticCollider.swift; sourceTree = "<group>"; };
 		041D1C50272A38F800322BDF /* DynamicCollider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicCollider.swift; sourceTree = "<group>"; };
+		041D1C53272A3FD400322BDF /* PhysXPhysics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXPhysics.swift; sourceTree = "<group>"; };
 		042291B5272A23E3003A4C8B /* PhysicsMaterialCombineMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsMaterialCombineMode.swift; sourceTree = "<group>"; };
 		042291B7272A2443003A4C8B /* PhysicsMaterial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsMaterial.swift; sourceTree = "<group>"; };
 		042291BA272A2579003A4C8B /* ColliderShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColliderShape.swift; sourceTree = "<group>"; };
@@ -776,6 +778,14 @@
 				04198A15271D3AF800871A26 /* README.md */,
 			);
 			path = loader;
+			sourceTree = "<group>";
+		};
+		041D1C52272A3FC600322BDF /* physics-physx */ = {
+			isa = PBXGroup;
+			children = (
+				041D1C53272A3FD400322BDF /* PhysXPhysics.swift */,
+			);
+			path = "physics-physx";
 			sourceTree = "<group>";
 		};
 		042291B9272A254A003A4C8B /* shape */ = {
@@ -1292,6 +1302,7 @@
 				04A6BEC02723F9E50024DF43 /* pbr.metal */,
 				04A6BEC4272453320024DF43 /* shadow-map.metal */,
 				045B064227294442003E4B68 /* physics-lite */,
+				041D1C52272A3FC600322BDF /* physics-physx */,
 				0497A1EA26DF150800F61DE9 /* Preview Content */,
 				0497A1ED26DF150800F61DE9 /* Info.plist */,
 				0497A20F26DF151700F61DE9 /* DigitalVox2.entitlements */,
@@ -1862,6 +1873,7 @@
 				04FF83BC271801550016CFC3 /* ComputePipelineState.swift in Sources */,
 				0413286D26E06648000A4F4E /* BoundingSphere.swift in Sources */,
 				0447D56326F8588900272D7C /* PBRSpecularMaterial.swift in Sources */,
+				041D1C54272A3FD400322BDF /* PhysXPhysics.swift in Sources */,
 				0447D56126F8562300272D7C /* PBRBaseMaterial.swift in Sources */,
 				045B065D27295A68003E4B68 /* LitePhysicsManager.swift in Sources */,
 				0413288A26E09FB3000A4F4E /* Mesh.swift in Sources */,
