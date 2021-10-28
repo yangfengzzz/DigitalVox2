@@ -27,6 +27,9 @@ class ComponentsManager {
 
     // Delay dispose active/inActive Pool
     private var _componentsContainerPool: [[Component]] = [[]]
+
+    // Physics
+    private var _colliders: [Collider] = []
 }
 
 extension ComponentsManager {
@@ -39,6 +42,17 @@ extension ComponentsManager {
         let replaced = _renderers.remove(at: renderer._rendererIndex)
         replaced._rendererIndex = renderer._rendererIndex
         renderer._rendererIndex = -1
+    }
+
+    func addCollider(_ collider: Collider) {
+        collider._index = _colliders.count
+        _colliders.append(collider)
+    }
+
+    func removeCollider(_ collider: Collider) {
+        let replaced = _colliders.remove(at: collider._index)
+        replaced._index = collider._index
+        collider._index = -1
     }
 
     func addOnStartScript(_ script: Script) {
@@ -198,6 +212,20 @@ extension ComponentsManager {
         for i in 0..<camComps.count {
             let camComp = camComps[i]
             (camComp as? Script)?.onEndRender(camera)
+        }
+    }
+
+    func callColliderOnUpdate() {
+        let elements = _colliders
+        for i in 0..<_colliders.count {
+            elements[i]._onUpdate()
+        }
+    }
+
+    func callColliderOnLateUpdate() {
+        let elements = _colliders
+        for i in 0..<_colliders.count {
+            elements[i]._onLateUpdate()
         }
     }
 }

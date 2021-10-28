@@ -10,7 +10,7 @@ import Foundation
 /// Structure used to get information back from a raycast or a sweep.
 class HitResult {
     /// The collider that was hit.
-    var collider: Entity? = nil
+    var entity: Entity? = nil
     /// The distance from the origin to the hit point.
     var distance: Float = 0
     /// The hit point of the collider that was hit in world space.

@@ -43,6 +43,11 @@
 		041B584F26F57C1500B32BD0 /* ShaderUniformBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041B584E26F57C1500B32BD0 /* ShaderUniformBlock.swift */; };
 		041B585326F57C4200B32BD0 /* ShaderUniform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041B585226F57C4200B32BD0 /* ShaderUniform.swift */; };
 		041B585726F5863700B32BD0 /* BufferMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041B585626F5863700B32BD0 /* BufferMesh.swift */; };
+		042291B6272A23E3003A4C8B /* PhysicsMaterialCombineMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042291B5272A23E3003A4C8B /* PhysicsMaterialCombineMode.swift */; };
+		042291B8272A2443003A4C8B /* PhysicsMaterial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042291B7272A2443003A4C8B /* PhysicsMaterial.swift */; };
+		042291BB272A2579003A4C8B /* ColliderShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042291BA272A2579003A4C8B /* ColliderShape.swift */; };
+		042291BD272A25B3003A4C8B /* Collider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042291BC272A25B3003A4C8B /* Collider.swift */; };
+		042291BE272A29D6003A4C8B /* PhysicsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F6AA6F2701579D00A0D6F6 /* PhysicsManager.swift */; };
 		042A6698270142310019C2CE /* EngineFeatureManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042A6697270142310019C2CE /* EngineFeatureManager.swift */; };
 		042BB12A26EA35C100604751 /* Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042BB12926EA35C100604751 /* Background.swift */; };
 		042BB12D26EA371500604751 /* BackgroundMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042BB12C26EA371500604751 /* BackgroundMode.swift */; };
@@ -355,6 +360,10 @@
 		041B584E26F57C1500B32BD0 /* ShaderUniformBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderUniformBlock.swift; sourceTree = "<group>"; };
 		041B585226F57C4200B32BD0 /* ShaderUniform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderUniform.swift; sourceTree = "<group>"; };
 		041B585626F5863700B32BD0 /* BufferMesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferMesh.swift; sourceTree = "<group>"; };
+		042291B5272A23E3003A4C8B /* PhysicsMaterialCombineMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsMaterialCombineMode.swift; sourceTree = "<group>"; };
+		042291B7272A2443003A4C8B /* PhysicsMaterial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsMaterial.swift; sourceTree = "<group>"; };
+		042291BA272A2579003A4C8B /* ColliderShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColliderShape.swift; sourceTree = "<group>"; };
+		042291BC272A25B3003A4C8B /* Collider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collider.swift; sourceTree = "<group>"; };
 		042A6697270142310019C2CE /* EngineFeatureManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineFeatureManager.swift; sourceTree = "<group>"; };
 		042BB12926EA35C100604751 /* Background.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Background.swift; sourceTree = "<group>"; };
 		042BB12C26EA371500604751 /* BackgroundMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundMode.swift; sourceTree = "<group>"; };
@@ -757,6 +766,14 @@
 			path = loader;
 			sourceTree = "<group>";
 		};
+		042291B9272A254A003A4C8B /* shape */ = {
+			isa = PBXGroup;
+			children = (
+				042291BA272A2579003A4C8B /* ColliderShape.swift */,
+			);
+			path = shape;
+			sourceTree = "<group>";
+		};
 		042BB12B26EA370600604751 /* enum */ = {
 			isa = PBXGroup;
 			children = (
@@ -1117,8 +1134,11 @@
 			isa = PBXGroup;
 			children = (
 				045B06612729857C003E4B68 /* enums */,
+				042291B9272A254A003A4C8B /* shape */,
 				04F6AA5C2701486200A0D6F6 /* HitResult.swift */,
 				04F6AA6F2701579D00A0D6F6 /* PhysicsManager.swift */,
+				042291B7272A2443003A4C8B /* PhysicsMaterial.swift */,
+				042291BC272A25B3003A4C8B /* Collider.swift */,
 			);
 			path = physics;
 			sourceTree = "<group>";
@@ -1127,6 +1147,7 @@
 			isa = PBXGroup;
 			children = (
 				045B066227298591003E4B68 /* ColliderShapeUpAxis.swift */,
+				042291B5272A23E3003A4C8B /* PhysicsMaterialCombineMode.swift */,
 			);
 			path = enums;
 			sourceTree = "<group>";
@@ -1746,6 +1767,7 @@
 				0413289D26E0C288000A4F4E /* UpdateFlagManager.swift in Sources */,
 				045B065F2729831A003E4B68 /* LitePhysics.swift in Sources */,
 				043CB43C26F0E51E004A0B21 /* OrbitControl.swift in Sources */,
+				042291BD272A25B3003A4C8B /* Collider.swift in Sources */,
 				0444B3F6271CF94A00772249 /* TextureCubeFace.swift in Sources */,
 				043CB47126F56B95004A0B21 /* RenderTargetBlendState.swift in Sources */,
 				0452ECC526DFA4920015BFB1 /* Engine.swift in Sources */,
@@ -1801,6 +1823,7 @@
 				0452ECC326DFA4590015BFB1 /* EngineView.swift in Sources */,
 				04A6BEAF271C4DA30024DF43 /* ShaderMacroCollection.swift in Sources */,
 				0497A1E726DF150500F61DE9 /* ContentView.swift in Sources */,
+				042291B8272A2443003A4C8B /* PhysicsMaterial.swift in Sources */,
 				04A6BEB92723B5D00024DF43 /* background-texture.metal in Sources */,
 				0447D55426F833A100272D7C /* DirectLight.swift in Sources */,
 				043CB44B26F34405004A0B21 /* RenderQueueType.swift in Sources */,
@@ -1824,6 +1847,7 @@
 				0447D55026F82F5200272D7C /* PointLight.swift in Sources */,
 				045B06342729403C003E4B68 /* IDynamicCollider.swift in Sources */,
 				0413287126E06D2E000A4F4E /* BoundingFrustum.swift in Sources */,
+				042291BB272A2579003A4C8B /* ColliderShape.swift in Sources */,
 				04198A18271D3AF900871A26 /* GLTFAsset.m in Sources */,
 				04832F0A2701FD3C001AD421 /* Sky.swift in Sources */,
 				041B584D26F57BC300B32BD0 /* ShaderProgram.swift in Sources */,
@@ -1842,6 +1866,7 @@
 				042BB12A26EA35C100604751 /* Background.swift in Sources */,
 				045B062C27293ECE003E4B68 /* ICollider.swift in Sources */,
 				0413288826E09FA5000A4F4E /* ModelMesh.swift in Sources */,
+				042291BE272A29D6003A4C8B /* PhysicsManager.swift in Sources */,
 				047914CB26F37C0300BE5170 /* ShaderData.swift in Sources */,
 				047FEBF826E6053A0078CFAF /* Component.swift in Sources */,
 				043CB45526F41E44004A0B21 /* RenderState.swift in Sources */,
@@ -1866,6 +1891,7 @@
 				0419B6DE26E701FE00005FEA /* Script.swift in Sources */,
 				04FF83BA271800E10016CFC3 /* ResourceCache.swift in Sources */,
 				04A6BEB52720DCD80024DF43 /* function-constant.metal in Sources */,
+				042291B6272A23E3003A4C8B /* PhysicsMaterialCombineMode.swift in Sources */,
 				0413287B26E07BA3000A4F4E /* Ray.swift in Sources */,
 				04832F032701F266001AD421 /* BlendShape.swift in Sources */,
 				04A6BEC5272453320024DF43 /* shadow-map.metal in Sources */,
@@ -2198,13 +2224,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = vox.render/DigitalVox2.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"vox.render/Preview Content\"";
 				DEVELOPMENT_TEAM = 4SL5L673UU;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = vox.render/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.7;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2224,13 +2250,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = vox.render/DigitalVox2.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"vox.render/Preview Content\"";
 				DEVELOPMENT_TEAM = 4SL5L673UU;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = vox.render/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.7;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

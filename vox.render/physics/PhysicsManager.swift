@@ -7,43 +7,102 @@
 
 import Foundation
 
-/// Manager for physical scenes.
+/// A physics manager is a collection of bodies and constraints which can interact.
 class PhysicsManager {
-    private static var _currentHit: HitResult = HitResult()
+    internal static var _nativePhysics: IPhysics.Type!
 
-    private let _engine: Engine
+    private var _nativePhysicsManager: IPhysicsManager!
+    private var _physicalObjectsMap: [Int: ColliderShape] = [:]
 
-    internal init(_ engine: Engine) {
-        _engine = engine
+    init() {
+        _nativePhysicsManager = PhysicsManager._nativePhysics.createPhysicsManager(
+                { (obj1: Int, obj2: Int) in },
+                { (obj1: Int, obj2: Int) in },
+                { (obj1: Int, obj2: Int) in },
+                { (obj1: Int, obj2: Int) in
+                    let shape1 = self._physicalObjectsMap[obj1]
+                    let shape2 = self._physicalObjectsMap[obj2]
+
+                    var scripts = shape1!.collider!.entity._scripts
+                    for i in 0..<scripts.count {
+                        scripts[i].onTriggerEnter(shape2!)
+                    }
+
+                    scripts = shape2!.collider!.entity._scripts
+                    for i in 0..<scripts.count {
+                        scripts[i].onTriggerEnter(shape1!)
+                    }
+                },
+                { (obj1: Int, obj2: Int) in
+                    let shape1 = self._physicalObjectsMap[obj1]
+                    let shape2 = self._physicalObjectsMap[obj2]
+
+                    var scripts = shape1!.collider!.entity._scripts
+                    for i in 0..<scripts.count {
+                        scripts[i].onTriggerExit(shape2!)
+                    }
+
+                    scripts = shape2!.collider!.entity._scripts
+                    for i in 0..<scripts.count {
+                        scripts[i].onTriggerExit(shape1!)
+                    }
+                },
+                { (obj1: Int, obj2: Int) in
+                    let shape1 = self._physicalObjectsMap[obj1]
+                    let shape2 = self._physicalObjectsMap[obj2]
+
+                    var scripts = shape1!.collider!.entity._scripts
+                    for i in 0..<scripts.count {
+                        scripts[i].onTriggerStay(shape2!)
+                    }
+
+                    scripts = shape2!.collider!.entity._scripts
+                    for i in 0..<scripts.count {
+                        scripts[i].onTriggerStay(shape1!)
+                    }
+                }
+        )
     }
 
+    /// Call on every frame to update pose of objects.
+    internal func _update(_  deltaTime: Float) {
+        _nativePhysicsManager.update(deltaTime)
+    }
+
+    /// Add ColliderShape into the manager.
+    /// - Parameter colliderShape: The Collider Shape.
+    internal func _addColliderShape(_  colliderShape: ColliderShape) {
+        _physicalObjectsMap[colliderShape.id] = colliderShape
+        _nativePhysicsManager.addColliderShape(colliderShape._nativeShape)
+    }
+
+    /// Remove ColliderShape.
+    /// - Parameter colliderShape: The Collider Shape.
+    internal func _removeColliderShape(_ colliderShape: ColliderShape) {
+        _physicalObjectsMap.removeValue(forKey: colliderShape.id)
+        _nativePhysicsManager.removeColliderShape(colliderShape._nativeShape)
+    }
+
+    /// Add collider into the manager.
+    /// - Parameter collider: StaticCollider or DynamicCollider.
+    internal func _addCollider(_  collider: Collider) {
+        _nativePhysicsManager.addCollider(collider._nativeCollider)
+    }
+
+    /// Remove collider.
+    /// - Parameter collider: StaticCollider or DynamicCollider.
+    internal func _removeCollider(_  collider: Collider) {
+        _nativePhysicsManager.removeCollider(collider._nativeCollider)
+    }
+}
+
+//MARK: - Raycast
+extension PhysicsManager {    
     /// Casts a ray through the Scene and returns the first hit.
     /// - Parameter ray: The ray
     /// - Returns: Returns true if the ray intersects with a Collider, otherwise false.
     func raycast(ray: Ray) -> Bool {
-        let cf: ColliderFeature? = _engine.sceneManager.activeScene!.findFeature()
-        let colliders = cf!.colliders
-
-        let distance = Float.greatestFiniteMagnitude
-        let layerMask = Layer.Everything
-
-        var isHit = false
-        let curHit = PhysicsManager._currentHit
-        for i in 0..<colliders.count {
-            let collider = colliders[i]
-
-            if (collider.entity.layer.rawValue & layerMask.rawValue) == 0 {
-                continue
-            }
-
-            if (collider._raycast(ray, curHit)) {
-                isHit = true
-                if (curHit.distance < distance) {
-                    return true
-                }
-            }
-        }
-        return isHit
+        _nativePhysicsManager.raycast(ray, Float.greatestFiniteMagnitude, nil)
     }
 
     /// Casts a ray through the Scene and returns the first hit.
@@ -52,42 +111,29 @@ class PhysicsManager {
     ///   - outHitResult: If true is returned, outHitResult will contain more detailed collision information
     /// - Returns: Returns true if the ray intersects with a Collider, otherwise false.
     func raycast(ray: Ray, outHitResult: HitResult) -> Bool {
-        let cf: ColliderFeature? = _engine.sceneManager.activeScene!.findFeature()
-        let colliders = cf!.colliders
-
         let hitResult: HitResult = outHitResult
-        var distance = Float.greatestFiniteMagnitude
+        let distance = Float.greatestFiniteMagnitude
         let layerMask = Layer.Everything
 
-        var isHit = false
-        let curHit = PhysicsManager._currentHit
-        for i in 0..<colliders.count {
-            let collider = colliders[i]
+        let result = _nativePhysicsManager.raycast(ray, distance, { [self](idx, distance, position, normal) in
+            hitResult.entity = _physicalObjectsMap[idx]!._collider!.entity
+            hitResult.distance = distance
+            normal.cloneTo(target: hitResult.normal)
+            position.cloneTo(target: hitResult.point)
+        })
 
-            if (collider.entity.layer.rawValue & layerMask.rawValue) == 0 {
-                continue
-            }
-
-            if (collider._raycast(ray, curHit)) {
-                isHit = true
-                if (curHit.distance < distance) {
-                    curHit.normal.cloneTo(target: hitResult.normal)
-                    curHit.point.cloneTo(target: hitResult.point)
-                    hitResult.distance = curHit.distance
-                    hitResult.collider = curHit.collider
-
-                    distance = curHit.distance
-                }
+        if (result) {
+            if (hitResult.entity!.layer.rawValue & layerMask.rawValue != 0) {
+                return true
+            } else {
+                hitResult.entity = nil
+                hitResult.distance = 0
+                _ = hitResult.point.setValue(x: 0, y: 0, z: 0)
+                _ = hitResult.normal.setValue(x: 0, y: 0, z: 0)
+                return false
             }
         }
-
-        if !isHit {
-            hitResult.collider = nil
-            hitResult.distance = 0
-            _ = hitResult.point.setValue(x: 0, y: 0, z: 0)
-            _ = hitResult.normal.setValue(x: 0, y: 0, z: 0)
-        }
-        return isHit
+        return false
     }
 
     /// Casts a ray through the Scene and returns the first hit.
@@ -96,29 +142,7 @@ class PhysicsManager {
     ///   - distance: The max distance the ray should check
     /// - Returns: Returns true if the ray intersects with a Collider, otherwise false.
     func raycast(ray: Ray, distance: Float) -> Bool {
-        let cf: ColliderFeature? = _engine.sceneManager.activeScene!.findFeature()
-        let colliders = cf!.colliders
-
-        let layerMask = Layer.Everything
-
-        var isHit = false
-        let curHit = PhysicsManager._currentHit
-        for i in 0..<colliders.count {
-            let collider = colliders[i]
-
-            if (collider.entity.layer.rawValue & layerMask.rawValue) == 0 {
-                continue
-            }
-
-            if (collider._raycast(ray, curHit)) {
-                isHit = true
-                if (curHit.distance < distance) {
-                    return true
-                }
-            }
-        }
-
-        return isHit
+        _nativePhysicsManager.raycast(ray, distance, nil)
     }
 
     /// Casts a ray through the Scene and returns the first hit.
@@ -128,42 +152,28 @@ class PhysicsManager {
     ///   - outHitResult: If true is returned, outHitResult will contain more detailed collision information
     /// - Returns: Returns true if the ray intersects with a Collider, otherwise false.
     func raycast(ray: Ray, distance: Float, outHitResult: HitResult) -> Bool {
-        let cf: ColliderFeature? = _engine.sceneManager.activeScene!.findFeature()
-        let colliders = cf!.colliders
-
         let hitResult: HitResult = outHitResult
-        var distance = distance
         let layerMask = Layer.Everything
 
-        var isHit = false
-        let curHit = PhysicsManager._currentHit
-        for i in 0..<colliders.count {
-            let collider = colliders[i]
+        let result = _nativePhysicsManager.raycast(ray, distance, { [self](idx, distance, position, normal) in
+            hitResult.entity = _physicalObjectsMap[idx]!._collider!.entity
+            hitResult.distance = distance
+            normal.cloneTo(target: hitResult.normal)
+            position.cloneTo(target: hitResult.point)
+        })
 
-            if (collider.entity.layer.rawValue & layerMask.rawValue) == 0 {
-                continue
-            }
-
-            if (collider._raycast(ray, curHit)) {
-                isHit = true
-                if (curHit.distance < distance) {
-                    curHit.normal.cloneTo(target: hitResult.normal)
-                    curHit.point.cloneTo(target: hitResult.point)
-                    hitResult.distance = curHit.distance
-                    hitResult.collider = curHit.collider
-
-                    distance = curHit.distance
-                }
+        if (result) {
+            if (hitResult.entity!.layer.rawValue & layerMask.rawValue != 0) {
+                return true
+            } else {
+                hitResult.entity = nil
+                hitResult.distance = 0
+                _ = hitResult.point.setValue(x: 0, y: 0, z: 0)
+                _ = hitResult.normal.setValue(x: 0, y: 0, z: 0)
+                return false
             }
         }
-
-        if !isHit {
-            hitResult.collider = nil
-            hitResult.distance = 0
-            _ = hitResult.point.setValue(x: 0, y: 0, z: 0)
-            _ = hitResult.normal.setValue(x: 0, y: 0, z: 0)
-        }
-        return isHit
+        return false
     }
 
     /// Casts a ray through the Scene and returns the first hit.
@@ -173,25 +183,7 @@ class PhysicsManager {
     ///   - layerMask: Layer mask that is used to selectively ignore Colliders when casting
     /// - Returns: Returns true if the ray intersects with a Collider, otherwise false.
     func raycast(ray: Ray, distance: Float, layerMask: Layer) -> Bool {
-        let cf: ColliderFeature? = _engine.sceneManager.activeScene!.findFeature()
-        let colliders = cf!.colliders
-
-        var isHit = false
-        let curHit = PhysicsManager._currentHit
-        for i in 0..<colliders.count {
-            let collider = colliders[i]
-            if (collider.entity.layer.rawValue & layerMask.rawValue) == 0 {
-                continue
-            }
-
-            if (collider._raycast(ray, curHit)) {
-                isHit = true
-                if (curHit.distance < distance) {
-                    return true
-                }
-            }
-        }
-        return isHit
+        _nativePhysicsManager.raycast(ray, distance, nil)
     }
 
     /// Casts a ray through the Scene and returns the first hit.
@@ -202,39 +194,26 @@ class PhysicsManager {
     ///   - outHitResult: If true is returned, outHitResult will contain more detailed collision information
     /// - Returns: Returns true if the ray intersects with a Collider, otherwise false.
     func raycast(ray: Ray, distance: Float, layerMask: Layer, outHitResult: HitResult) -> Bool {
-        let cf: ColliderFeature? = _engine.sceneManager.activeScene!.findFeature()
-        let colliders = cf!.colliders
+        let hitResult = outHitResult
 
-        let hitResult: HitResult = outHitResult
-        var distance = distance
+        let result = _nativePhysicsManager.raycast(ray, distance, { [self](idx, distance, position, normal) in
+            hitResult.entity = _physicalObjectsMap[idx]!._collider!.entity
+            hitResult.distance = distance
+            normal.cloneTo(target: hitResult.normal)
+            position.cloneTo(target: hitResult.point)
+        })
 
-        var isHit = false
-        let curHit = PhysicsManager._currentHit
-        for i in 0..<colliders.count {
-            let collider = colliders[i]
-            if (collider.entity.layer.rawValue & layerMask.rawValue) == 0 {
-                continue
-            }
-
-            if (collider._raycast(ray, curHit)) {
-                isHit = true
-                if (curHit.distance < distance) {
-                    curHit.normal.cloneTo(target: hitResult.normal)
-                    curHit.point.cloneTo(target: hitResult.point)
-                    hitResult.distance = curHit.distance
-                    hitResult.collider = curHit.collider
-
-                    distance = curHit.distance
-                }
+        if (result) {
+            if (hitResult.entity!.layer.rawValue & layerMask.rawValue != 0) {
+                return true
+            } else {
+                hitResult.entity = nil
+                hitResult.distance = 0
+                _ = hitResult.point.setValue(x: 0, y: 0, z: 0)
+                _ = hitResult.normal.setValue(x: 0, y: 0, z: 0)
+                return false
             }
         }
-
-        if !isHit {
-            hitResult.collider = nil
-            hitResult.distance = 0
-            _ = hitResult.point.setValue(x: 0, y: 0, z: 0)
-            _ = hitResult.normal.setValue(x: 0, y: 0, z: 0)
-        }
-        return isHit
+        return false
     }
 }

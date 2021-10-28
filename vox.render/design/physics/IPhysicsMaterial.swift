@@ -19,8 +19,8 @@ protocol IPhysicsMaterial {
     func setStaticFriction(_ value: Float)
 
     /// Set the bounciness combine mode.
-    func setBounceCombine(_ value: Float)
+    func setBounceCombine(_ value: Int)
 
     /// Set the friction combine mode.
-    func setFrictionCombine(_ value: Float)
+    func setFrictionCombine(_ value: Int)
 }

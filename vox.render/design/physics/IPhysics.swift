@@ -27,8 +27,8 @@ protocol IPhysics {
     static func createPhysicsMaterial(_ staticFriction: Float,
                                       _ dynamicFriction: Float,
                                       _ bounciness: Float,
-                                      _ frictionCombine: Float,
-                                      _ bounceCombine: Float) -> IPhysicsMaterial
+                                      _ frictionCombine: Int,
+                                      _ bounceCombine: Int) -> IPhysicsMaterial
 
     /// Create box collider shape.
     static func createBoxColliderShape(_ uniqueID: Int, _ size: Vector3, _ material: IPhysicsMaterial) -> IBoxColliderShape

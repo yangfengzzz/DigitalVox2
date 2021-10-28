@@ -14,6 +14,9 @@ let engineFeatureManager = EngineFeatureManager()
 let logger = Logger(label: "com.vox.Render.main")
 
 final class Engine: NSObject {
+    /// Physics manager of Engine.
+    var physicsManager: PhysicsManager?
+
     var _componentsManager: ComponentsManager = ComponentsManager()
     var _hardwareRenderer: MetalRenderer
     var _inputManager: InputManager
@@ -84,11 +87,16 @@ final class Engine: NSObject {
         }
     }
 
-    init(_ canvas: Canvas, _ hardwareRenderer: MetalRenderer) {
+    init(_ canvas: Canvas, _ hardwareRenderer: MetalRenderer, physics: IPhysics.Type? = nil) {
         _hardwareRenderer = hardwareRenderer
         _hardwareRenderer.reinit(canvas)
         _canvas = canvas
         _inputManager = InputManager()
+
+        if (physics != nil) {
+            PhysicsManager._nativePhysics = physics!
+            physicsManager = PhysicsManager()
+        }
 
         super.init()
         ShaderPool.initialization()
@@ -157,6 +165,12 @@ final class Engine: NSObject {
         let scene = _sceneManager._activeScene
         let componentsManager = _componentsManager
         if (scene != nil) {
+            if (physicsManager != nil) {
+                componentsManager.callColliderOnUpdate()
+                physicsManager!._update(deltaTime)
+                componentsManager.callColliderOnLateUpdate()
+            }
+
             componentsManager.callScriptOnStart()
             componentsManager.callScriptOnUpdate(deltaTime)
             componentsManager.callScriptOnLateUpdate(deltaTime)

@@ -37,8 +37,8 @@ class LitePhysics: IPhysics {
             _ staticFriction: Float,
             _ dynamicFriction: Float,
             _ bounciness: Float,
-            _ frictionCombine: Float,
-            _ bounceCombine: Float
+            _ frictionCombine: Int,
+            _ bounceCombine: Int
     ) -> IPhysicsMaterial {
         LitePhysicsMaterial(staticFriction, dynamicFriction, bounciness, frictionCombine, bounceCombine)
     }

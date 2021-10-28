@@ -12,8 +12,8 @@ class LitePhysicsMaterial: IPhysicsMaterial {
     init(_ staticFriction: Float,
          _ dynamicFriction: Float,
          _ bounciness: Float,
-         _ frictionCombine: Float,
-         _ bounceCombine: Float) {
+         _ frictionCombine: Int,
+         _ bounceCombine: Int) {
     }
 
     func setBounciness(_ value: Float) {
@@ -28,11 +28,11 @@ class LitePhysicsMaterial: IPhysicsMaterial {
         fatalError("Physics-lite don't support physics material. Use Physics-PhysX instead!");
     }
 
-    func setBounceCombine(_ value: Float) {
+    func setBounceCombine(_ value: Int) {
         fatalError("Physics-lite don't support physics material. Use Physics-PhysX instead!");
     }
 
-    func setFrictionCombine(_ value: Float) {
+    func setFrictionCombine(_ value: Int) {
         fatalError("Physics-lite don't support physics material. Use Physics-PhysX instead!");
     }
 }
