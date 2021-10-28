@@ -16,5 +16,5 @@ protocol ICapsuleColliderShape: IColliderShape {
     func setHeight(_ height: Float)
 
     /// Set up axis of capsule.
-    func setUpAxis(_ upAxis: Float)
+    func setUpAxis(_ upAxis: Int)
 }

@@ -97,11 +97,11 @@ class PhysicsManager {
 }
 
 //MARK: - Raycast
-extension PhysicsManager {    
+extension PhysicsManager {
     /// Casts a ray through the Scene and returns the first hit.
     /// - Parameter ray: The ray
     /// - Returns: Returns true if the ray intersects with a Collider, otherwise false.
-    func raycast(ray: Ray) -> Bool {
+    func raycast(_ ray: Ray) -> Bool {
         _nativePhysicsManager.raycast(ray, Float.greatestFiniteMagnitude, nil)
     }
 
@@ -110,7 +110,7 @@ extension PhysicsManager {
     ///   - ray: The ray
     ///   - outHitResult: If true is returned, outHitResult will contain more detailed collision information
     /// - Returns: Returns true if the ray intersects with a Collider, otherwise false.
-    func raycast(ray: Ray, outHitResult: HitResult) -> Bool {
+    func raycast(_ ray: Ray, _ outHitResult: HitResult) -> Bool {
         let hitResult: HitResult = outHitResult
         let distance = Float.greatestFiniteMagnitude
         let layerMask = Layer.Everything
@@ -141,7 +141,7 @@ extension PhysicsManager {
     ///   - ray: The ray
     ///   - distance: The max distance the ray should check
     /// - Returns: Returns true if the ray intersects with a Collider, otherwise false.
-    func raycast(ray: Ray, distance: Float) -> Bool {
+    func raycast(_ ray: Ray, _ distance: Float) -> Bool {
         _nativePhysicsManager.raycast(ray, distance, nil)
     }
 
@@ -151,7 +151,7 @@ extension PhysicsManager {
     ///   - distance: The max distance the ray should check
     ///   - outHitResult: If true is returned, outHitResult will contain more detailed collision information
     /// - Returns: Returns true if the ray intersects with a Collider, otherwise false.
-    func raycast(ray: Ray, distance: Float, outHitResult: HitResult) -> Bool {
+    func raycast(_ ray: Ray, _ distance: Float, _ outHitResult: HitResult) -> Bool {
         let hitResult: HitResult = outHitResult
         let layerMask = Layer.Everything
 
@@ -182,7 +182,7 @@ extension PhysicsManager {
     ///   - distance: The max distance the ray should check
     ///   - layerMask: Layer mask that is used to selectively ignore Colliders when casting
     /// - Returns: Returns true if the ray intersects with a Collider, otherwise false.
-    func raycast(ray: Ray, distance: Float, layerMask: Layer) -> Bool {
+    func raycast(_ ray: Ray, _ distance: Float, _ layerMask: Layer) -> Bool {
         _nativePhysicsManager.raycast(ray, distance, nil)
     }
 
@@ -193,7 +193,7 @@ extension PhysicsManager {
     ///   - layerMask: Layer mask that is used to selectively ignore Colliders when casting
     ///   - outHitResult: If true is returned, outHitResult will contain more detailed collision information
     /// - Returns: Returns true if the ray intersects with a Collider, otherwise false.
-    func raycast(ray: Ray, distance: Float, layerMask: Layer, outHitResult: HitResult) -> Bool {
+    func raycast(_ ray: Ray, _ distance: Float, _ layerMask: Layer, _ outHitResult: HitResult) -> Bool {
         let hitResult = outHitResult
 
         let result = _nativePhysicsManager.raycast(ray, distance, { [self](idx, distance, position, normal) in

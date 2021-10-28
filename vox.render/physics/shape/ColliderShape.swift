@@ -82,7 +82,7 @@ class ColliderShape {
     ///   - x: The x component of the vector, default 0
     ///   - y: The y component of the vector, default 0
     ///   - z: The z component of the vector, default 0
-    func setPosition(x: Float, y: Float, z: Float) {
+    func setPosition(_ x: Float, _ y: Float, _ z: Float) {
         _ = _position.setValue(x: x, y: y, z: z)
         _nativeShape.setPosition(_position)
     }

@@ -8,7 +8,7 @@
 import Foundation
 
 /// The up axis of the collider shape.
-enum ColliderShapeUpAxis {
+enum ColliderShapeUpAxis: Int {
     /// Up axis is X.
     case X
     /// Up axis is Y.
