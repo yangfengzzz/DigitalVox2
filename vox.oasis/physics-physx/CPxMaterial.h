@@ -14,13 +14,23 @@
 
 - (void)setDynamicFriction:(float)coef;
 
+- (float)getDynamicFriction;
+
 - (void)setStaticFriction:(float)coef;
+
+- (float)getStaticFriction;
 
 - (void)setRestitution:(float)rest;
 
+- (float)getRestitution;
+
 - (void)setFrictionCombineMode:(int)combMode;
 
+- (int)getFrictionCombineMode;
+
 - (void)setRestitutionCombineMode:(int)combMode;
+
+- (int)getRestitutionCombineMode;
 
 @end
 
