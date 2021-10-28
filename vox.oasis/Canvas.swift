@@ -9,7 +9,8 @@ import MetalKit
 
 class Canvas: MTKView {
     var inputManager: InputManager?
-    static var previousScale: CGFloat = 1
+    // for mouse movement
+    var trackingArea: NSTrackingArea?
 
     init() {
         super.init(frame: .zero, device: nil)
@@ -21,40 +22,76 @@ class Canvas: MTKView {
 }
 
 extension Canvas {
-    override func viewDidMoveToWindow() {
-        super.viewDidMoveToWindow()
-    }
-
-    func registerGesture() {
-        let pinch = NSMagnificationGestureRecognizer(target: self,
-                action: #selector(handlePinch(gesture:)))
-        addGestureRecognizer(pinch);
-    }
-
-    @objc func handlePinch(gesture: NSMagnificationGestureRecognizer) {
-        inputManager?.zoomUsing(delta: gesture.magnification - Canvas.previousScale)
-        Canvas.previousScale = gesture.magnification
-        if gesture.state == .ended {
-            Canvas.previousScale = 1
+    override func updateTrackingAreas() {
+        guard let window = NSApplication.shared.mainWindow else {
+            return
         }
+        window.acceptsMouseMovedEvents = true
+        CGDisplayHideCursor(CGMainDisplayID())
+
+        if let trackingArea = trackingArea {
+            removeTrackingArea(trackingArea)
+        }
+
+        let options: NSTrackingArea.Options = [.activeAlways, .inVisibleRect, .mouseMoved]
+        trackingArea = NSTrackingArea(rect: self.bounds, options: options,
+                owner: self, userInfo: nil)
+        addTrackingArea(trackingArea!)
     }
-    
-    override func touchesBegan(with event: NSEvent) {
+
+    override var acceptsFirstResponder: Bool {
+        true
+    }
+
+    override func acceptsFirstMouse(for event: NSEvent?) -> Bool {
+        true
+    }
+
+    override func keyDown(with event: NSEvent) {
+        guard let key = KeyboardControl(rawValue: event.keyCode) else {
+          return
+        }
+        let state: InputState = event.isARepeat ? .continued : .began
+        inputManager?.processEvent(key: key, state: state)
+    }
+
+    override func keyUp(with event: NSEvent) {
+        guard let key = KeyboardControl(rawValue: event.keyCode) else {
+          return
+        }
+        inputManager?.processEvent(key: key, state: .ended)
+    }
+
+    override func mouseDown(with event: NSEvent) {
         inputManager?.processEvent(state: .began, event: event)
-        super.touchesBegan(with: event)
     }
-    
-    override func touchesMoved(with event: NSEvent) {
-        inputManager?.processEvent(state: .moved, event: event)
-        super.touchesMoved(with: event)
-    }
-    
-    override func touchesEnded(with event: NSEvent) {
+
+    override func mouseUp(with event: NSEvent) {
         inputManager?.processEvent(state: .ended, event: event)
-        super.touchesEnded(with: event)
     }
-    
-    override func touchesCancelled(with event: NSEvent) {
-        super.touchesCancelled(with: event)
+
+    override func mouseDragged(with event: NSEvent) {
+        inputManager?.processEvent(state: .moved, event: event)
+    }
+
+    override func rightMouseDown(with event: NSEvent) {
+        inputManager?.processEvent(state: .began, event: event)
+    }
+
+    override func rightMouseUp(with event: NSEvent) {
+        inputManager?.processEvent(state: .ended, event: event)
+    }
+
+    override func rightMouseDragged(with event: NSEvent) {
+        inputManager?.processEvent(state: .moved, event: event)
+    }
+
+    override func scrollWheel(with event: NSEvent) {
+        inputManager?.zoomUsing(delta: event.deltaY)
+    }
+}
+
+extension Canvas {
+    func registerGesture() {
     }
 }

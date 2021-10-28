@@ -53,7 +53,7 @@ class OrbitControl: Script {
     /// Rotation speed, default is 1.0 .
     var rotateSpeed: Float = 1.0
     /// Whether to enable keyboard.
-    var enableKeys: Bool = false
+    var enableKeys: Bool = true
 
     var touchFingers: (ORBIT: Int, ZOOM: Int, PAN: Int)
     var STATE: (
@@ -77,15 +77,6 @@ class OrbitControl: Script {
     private var _isMouseUp: Bool = true
     private var _vPan: Vector3 = Vector3()
     private var _state: Int
-    private var _rotateStart: Vector2 = Vector2()
-    private var _rotateEnd: Vector2 = Vector2()
-    private var _rotateDelta: Vector2 = Vector2()
-    private var _panStart: Vector2 = Vector2()
-    private var _panEnd: Vector2 = Vector2()
-    private var _panDelta: Vector2 = Vector2()
-    private var _zoomStart: Vector2 = Vector2()
-    private var _zoomEnd: Vector2 = Vector2()
-    private var _zoomDelta: Vector2 = Vector2()
 
     required init(_ entity: Entity) {
         camera = entity
@@ -111,6 +102,12 @@ class OrbitControl: Script {
     }
 
     func bindEvent() {
+        if !engine._inputManager.directionKeysDown.isEmpty {
+            engine._inputManager.directionKeysDown.forEach { touch in
+                onKeyDown(touch)
+            }
+        }
+
         if !engine._inputManager.beginEvent.isEmpty {
             engine._inputManager.beginEvent.forEach { touch in
                 onMouseDown(touch)
@@ -283,52 +280,34 @@ class OrbitControl: Script {
 extension OrbitControl {
     /// Rotation parameter update on mouse click.
     func handleMouseDownRotate(_ event: NSEvent) {
-        _ = _rotateStart.setValue(x: Float(event.locationInWindow.x), y: Float(event.locationInWindow.y))
     }
 
     /// Zoom parameter update on mouse click.
     func handleMouseDownZoom(_ event: NSEvent) {
-        _ = _zoomStart.setValue(x: Float(event.locationInWindow.x), y: Float(event.locationInWindow.y))
     }
 
     /// Pan parameter update on mouse click.
     func handleMouseDownPan(_ event: NSEvent) {
-        _ = _panStart.setValue(x: Float(event.locationInWindow.x), y: Float(event.locationInWindow.y))
     }
 
     /// Rotation parameter update when the mouse moves.
     func handleMouseMoveRotate(_ event: NSEvent) {
-        _ = _rotateEnd.setValue(x: Float(event.locationInWindow.x), y: Float(event.locationInWindow.y))
-        Vector2.subtract(left: _rotateEnd, right: _rotateStart, out: _rotateDelta)
-
-        rotateLeft(2 * Float.pi * (_rotateDelta.x / Float(event.window!.contentView!.bounds.width)) * rotateSpeed)
-        rotateUp(2 * Float.pi * (_rotateDelta.y / Float(event.window!.contentView!.bounds.height)) * rotateSpeed)
-
-        _rotateEnd.cloneTo(target: _rotateStart)
+        rotateLeft(2 * Float.pi * (Float(event.deltaX) / Float(event.window!.contentView!.bounds.width)) * rotateSpeed)
+        rotateUp(2 * Float.pi * (Float(event.deltaY) / Float(event.window!.contentView!.bounds.height)) * rotateSpeed)
     }
 
     /// Zoom parameters update when the mouse moves.
     func handleMouseMoveZoom(_ event: NSEvent) {
-        _ = _zoomEnd.setValue(x: Float(event.locationInWindow.x), y: Float(event.locationInWindow.y))
-        Vector2.subtract(left: _zoomEnd, right: _zoomStart, out: _zoomDelta)
-
-        if (_zoomDelta.y > 0) {
+        if (event.deltaY > 0) {
             zoomOut(getZoomScale())
-        } else if (_zoomDelta.y < 0) {
+        } else if (event.deltaY < 0) {
             zoomIn(getZoomScale())
         }
-
-        _zoomEnd.cloneTo(target: _zoomStart)
     }
 
     /// Pan parameters update when the mouse moves.
     func handleMouseMovePan(_ event: NSEvent) {
-        _ = _panEnd.setValue(x: Float(event.locationInWindow.x), y: Float(event.locationInWindow.y))
-        Vector2.subtract(left: _panEnd, right: _panStart, out: _panDelta)
-
-        pan(_panDelta.x, _panDelta.y)
-
-        _panEnd.cloneTo(target: _panStart)
+        pan(Float(event.deltaX), Float(event.deltaY))
     }
 
     /// Zoom parameter update when the mouse wheel is scrolled.
@@ -341,95 +320,23 @@ extension OrbitControl {
     }
 
     /// Pan parameter update when keyboard is pressed.
-    func handleKeyDown(_ event: NSEvent) {
-        switch (event.type) {
-        case .keyUp:
+    func handleKeyDown(_ event: KeyboardControl) {
+        switch (event) {
+        case .up:
             pan(0, keyPanSpeed)
             break
-        case .keyDown:
+        case .down:
             pan(0, -keyPanSpeed)
+            break
+        case .left:
+            pan(keyPanSpeed, 0)
+            break
+        case .right:
+            pan(-keyPanSpeed, 0)
             break
         default:
             break
         }
-    }
-}
-
-//MARK: - Touch Event
-extension OrbitControl {
-    /// Rotation parameter update when touch is dropped.
-    func handleTouchStartRotate(_ event: NSTouch) {
-        let loc = event.location(in: nil)
-        _ = _rotateStart.setValue(x: Float(loc.x), y: Float(loc.y))
-    }
-
-    ///  Zoom parameter update when touch down.
-    func handleTouchStartZoom(_ event: NSTouch) {
-        let loc = event.location(in: nil)
-        let preLoc = event.previousLocation(in: nil)
-
-        let dx = loc.x - preLoc.x
-        let dy = loc.y - preLoc.y
-
-        let distance = sqrt(dx * dx + dy * dy)
-
-        _ = _zoomStart.setValue(x: 0, y: Float(distance))
-    }
-
-    /// Update the translation parameter when touch down.
-    func handleTouchStartPan(_ event: NSTouch) {
-        let loc = event.location(in: nil)
-        _ = _panStart.setValue(x: Float(loc.x), y: Float(loc.y))
-    }
-
-    /// Rotation parameter update when touch to move.
-    func handleTouchMoveRotate(_ event: NSTouch) {
-        let loc = event.location(in: nil)
-        _ = _rotateEnd.setValue(x: Float(loc.x), y: Float(loc.y))
-        Vector2.subtract(left: _rotateEnd, right: _rotateStart, out: _rotateDelta)
-
-        let clientWidth = Float(engine.canvas.bounds.width)
-        let clientHeight = Float(engine.canvas.bounds.height)
-
-        rotateLeft(((2 * Float.pi * _rotateDelta.x) / clientWidth) * rotateSpeed)
-        rotateUp(((2 * Float.pi * _rotateDelta.y) / clientHeight) * rotateSpeed)
-
-        _rotateEnd.cloneTo(target: _rotateStart)
-    }
-
-    /// Zoom parameter update when touch to move.
-    func handleTouchMoveZoom(_ event: NSTouch) {
-        let loc = event.location(in: nil)
-        let preLoc = event.previousLocation(in: nil)
-
-        let dx = loc.x - preLoc.x
-        let dy = loc.y - preLoc.y
-
-        let distance = sqrt(dx * dx + dy * dy)
-
-        _ = _zoomEnd.setValue(x: 0, y: Float(distance))
-
-        Vector2.subtract(left: _zoomEnd, right: _zoomStart, out: _zoomDelta)
-
-        if (_zoomDelta.y > 0) {
-            zoomIn(getZoomScale())
-        } else if (_zoomDelta.y < 0) {
-            zoomOut(getZoomScale())
-        }
-
-        _zoomEnd.cloneTo(target: _zoomStart)
-    }
-
-    /// Pan parameter update when touch moves.
-    func handleTouchMovePan(_ event: NSTouch) {
-        let loc = event.location(in: nil)
-        _ = _panEnd.setValue(x: Float(loc.x), y: Float(loc.y))
-
-        Vector2.subtract(left: _panEnd, right: _panStart, out: _panDelta)
-
-        pan(_panDelta.x, _panDelta.y)
-
-        _panEnd.cloneTo(target: _panStart)
     }
 }
 
@@ -452,7 +359,7 @@ extension OrbitControl {
             _state = STATE.ROTATE
             break
 
-        case .otherMouseDown:
+        case .scrollWheel:
             if (enableZoom == false) {
                 return
             }
@@ -533,7 +440,7 @@ extension OrbitControl {
     }
 
     /// Total handling of keyboard down events.
-    func onKeyDown(_ event: NSEvent) {
+    func onKeyDown(_ event: KeyboardControl) {
         if (enabled == false || enableKeys == false || enablePan == false) {
             return
         }
