@@ -37,6 +37,16 @@
                ReferencedContainer = "container:DigitalVox2.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "0497A1FC26DF150800F61DE9"
+               BuildableName = "vox.renderUITests.xctest"
+               BlueprintName = "vox.renderUITests"
+               ReferencedContainer = "container:DigitalVox2.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

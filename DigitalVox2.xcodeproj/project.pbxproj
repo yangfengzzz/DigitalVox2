@@ -43,6 +43,13 @@
 		041B584F26F57C1500B32BD0 /* ShaderUniformBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041B584E26F57C1500B32BD0 /* ShaderUniformBlock.swift */; };
 		041B585326F57C4200B32BD0 /* ShaderUniform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041B585226F57C4200B32BD0 /* ShaderUniform.swift */; };
 		041B585726F5863700B32BD0 /* BufferMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041B585626F5863700B32BD0 /* BufferMesh.swift */; };
+		041BADD6272A4FA4006268D5 /* voxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041BADD5272A4FA4006268D5 /* voxApp.swift */; };
+		041BADD8272A4FA4006268D5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041BADD7272A4FA4006268D5 /* ContentView.swift */; };
+		041BADDA272A4FA5006268D5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 041BADD9272A4FA5006268D5 /* Assets.xcassets */; };
+		041BADDD272A4FA5006268D5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 041BADDC272A4FA5006268D5 /* Preview Assets.xcassets */; };
+		041BADE8272A4FA6006268D5 /* vox_oasisTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041BADE7272A4FA6006268D5 /* vox_oasisTests.swift */; };
+		041BADF2272A4FA6006268D5 /* vox_oasisUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041BADF1272A4FA6006268D5 /* vox_oasisUITests.swift */; };
+		041BADF4272A4FA6006268D5 /* vox_oasisUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041BADF3272A4FA6006268D5 /* vox_oasisUITestsLaunchTests.swift */; };
 		041D1C47272A354600322BDF /* BoxColliderShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041D1C46272A354600322BDF /* BoxColliderShape.swift */; };
 		041D1C49272A360300322BDF /* CapsuleColliderShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041D1C48272A360300322BDF /* CapsuleColliderShape.swift */; };
 		041D1C4B272A36B600322BDF /* PlaneColliderShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041D1C4A272A36B600322BDF /* PlaneColliderShape.swift */; };
@@ -289,6 +296,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		041BADE4272A4FA6006268D5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0497A1D926DF150500F61DE9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 041BADD2272A4FA4006268D5;
+			remoteInfo = vox.oasis;
+		};
+		041BADEE272A4FA6006268D5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0497A1D926DF150500F61DE9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 041BADD2272A4FA4006268D5;
+			remoteInfo = vox.oasis;
+		};
 		0452ECA726DFA0CD0015BFB1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0497A1D926DF150500F61DE9 /* Project object */;
@@ -368,6 +389,17 @@
 		041B584E26F57C1500B32BD0 /* ShaderUniformBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderUniformBlock.swift; sourceTree = "<group>"; };
 		041B585226F57C4200B32BD0 /* ShaderUniform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderUniform.swift; sourceTree = "<group>"; };
 		041B585626F5863700B32BD0 /* BufferMesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferMesh.swift; sourceTree = "<group>"; };
+		041BADD3272A4FA4006268D5 /* vox.oasis.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vox.oasis.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		041BADD5272A4FA4006268D5 /* voxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = voxApp.swift; sourceTree = "<group>"; };
+		041BADD7272A4FA4006268D5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		041BADD9272A4FA5006268D5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		041BADDC272A4FA5006268D5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		041BADDE272A4FA5006268D5 /* vox_oasis.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = vox_oasis.entitlements; sourceTree = "<group>"; };
+		041BADE3272A4FA6006268D5 /* vox.oasisTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = vox.oasisTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		041BADE7272A4FA6006268D5 /* vox_oasisTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = vox_oasisTests.swift; sourceTree = "<group>"; };
+		041BADED272A4FA6006268D5 /* vox.oasisUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = vox.oasisUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		041BADF1272A4FA6006268D5 /* vox_oasisUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = vox_oasisUITests.swift; sourceTree = "<group>"; };
+		041BADF3272A4FA6006268D5 /* vox_oasisUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = vox_oasisUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		041D1C46272A354600322BDF /* BoxColliderShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxColliderShape.swift; sourceTree = "<group>"; };
 		041D1C48272A360300322BDF /* CapsuleColliderShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapsuleColliderShape.swift; sourceTree = "<group>"; };
 		041D1C4A272A36B600322BDF /* PlaneColliderShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaneColliderShape.swift; sourceTree = "<group>"; };
@@ -665,6 +697,27 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		041BADD0272A4FA4006268D5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		041BADE0272A4FA6006268D5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		041BADEA272A4FA6006268D5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		0452EC9326DFA0CD0015BFB1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -781,6 +834,43 @@
 				04198A15271D3AF800871A26 /* README.md */,
 			);
 			path = loader;
+			sourceTree = "<group>";
+		};
+		041BADD4272A4FA4006268D5 /* vox.oasis */ = {
+			isa = PBXGroup;
+			children = (
+				041BADD5272A4FA4006268D5 /* voxApp.swift */,
+				041BADD7272A4FA4006268D5 /* ContentView.swift */,
+				041BADD9272A4FA5006268D5 /* Assets.xcassets */,
+				041BADDE272A4FA5006268D5 /* vox_oasis.entitlements */,
+				041BADDB272A4FA5006268D5 /* Preview Content */,
+			);
+			path = vox.oasis;
+			sourceTree = "<group>";
+		};
+		041BADDB272A4FA5006268D5 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				041BADDC272A4FA5006268D5 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		041BADE6272A4FA6006268D5 /* vox.oasisTests */ = {
+			isa = PBXGroup;
+			children = (
+				041BADE7272A4FA6006268D5 /* vox_oasisTests.swift */,
+			);
+			path = vox.oasisTests;
+			sourceTree = "<group>";
+		};
+		041BADF0272A4FA6006268D5 /* vox.oasisUITests */ = {
+			isa = PBXGroup;
+			children = (
+				041BADF1272A4FA6006268D5 /* vox_oasisUITests.swift */,
+				041BADF3272A4FA6006268D5 /* vox_oasisUITestsLaunchTests.swift */,
+			);
+			path = vox.oasisUITests;
 			sourceTree = "<group>";
 		};
 		041D1C52272A3FC600322BDF /* physics-physx */ = {
@@ -1227,6 +1317,9 @@
 				0452EC9726DFA0CD0015BFB1 /* vox.tracing */,
 				0452ECA926DFA0CD0015BFB1 /* vox.tracingTests */,
 				0452ECB426DFA0CD0015BFB1 /* vox.tracingUITests */,
+				041BADD4272A4FA4006268D5 /* vox.oasis */,
+				041BADE6272A4FA6006268D5 /* vox.oasisTests */,
+				041BADF0272A4FA6006268D5 /* vox.oasisUITests */,
 				0497A1E226DF150500F61DE9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -1240,6 +1333,9 @@
 				0452EC9626DFA0CD0015BFB1 /* vox.tracing.app */,
 				0452ECA626DFA0CD0015BFB1 /* vox.tracingTests.xctest */,
 				0452ECB126DFA0CD0015BFB1 /* vox.tracingUITests.xctest */,
+				041BADD3272A4FA4006268D5 /* vox.oasis.app */,
+				041BADE3272A4FA6006268D5 /* vox.oasisTests.xctest */,
+				041BADED272A4FA6006268D5 /* vox.oasisUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1446,6 +1542,59 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		041BADD2272A4FA4006268D5 /* vox.oasis */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 041BADF5272A4FA6006268D5 /* Build configuration list for PBXNativeTarget "vox.oasis" */;
+			buildPhases = (
+				041BADCF272A4FA4006268D5 /* Sources */,
+				041BADD0272A4FA4006268D5 /* Frameworks */,
+				041BADD1272A4FA4006268D5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = vox.oasis;
+			productName = vox.oasis;
+			productReference = 041BADD3272A4FA4006268D5 /* vox.oasis.app */;
+			productType = "com.apple.product-type.application";
+		};
+		041BADE2272A4FA6006268D5 /* vox.oasisTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 041BADF8272A4FA6006268D5 /* Build configuration list for PBXNativeTarget "vox.oasisTests" */;
+			buildPhases = (
+				041BADDF272A4FA6006268D5 /* Sources */,
+				041BADE0272A4FA6006268D5 /* Frameworks */,
+				041BADE1272A4FA6006268D5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				041BADE5272A4FA6006268D5 /* PBXTargetDependency */,
+			);
+			name = vox.oasisTests;
+			productName = vox.oasisTests;
+			productReference = 041BADE3272A4FA6006268D5 /* vox.oasisTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		041BADEC272A4FA6006268D5 /* vox.oasisUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 041BADFB272A4FA6006268D5 /* Build configuration list for PBXNativeTarget "vox.oasisUITests" */;
+			buildPhases = (
+				041BADE9272A4FA6006268D5 /* Sources */,
+				041BADEA272A4FA6006268D5 /* Frameworks */,
+				041BADEB272A4FA6006268D5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				041BADEF272A4FA6006268D5 /* PBXTargetDependency */,
+			);
+			name = vox.oasisUITests;
+			productName = vox.oasisUITests;
+			productReference = 041BADED272A4FA6006268D5 /* vox.oasisUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		0452EC9526DFA0CD0015BFB1 /* vox.tracing */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0452ECBE26DFA0CD0015BFB1 /* Build configuration list for PBXNativeTarget "vox.tracing" */;
@@ -1561,9 +1710,20 @@
 		0497A1D926DF150500F61DE9 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1250;
+				LastSwiftUpdateCheck = 1310;
 				LastUpgradeCheck = 1250;
 				TargetAttributes = {
+					041BADD2272A4FA4006268D5 = {
+						CreatedOnToolsVersion = 13.1;
+					};
+					041BADE2272A4FA6006268D5 = {
+						CreatedOnToolsVersion = 13.1;
+						TestTargetID = 041BADD2272A4FA4006268D5;
+					};
+					041BADEC272A4FA6006268D5 = {
+						CreatedOnToolsVersion = 13.1;
+						TestTargetID = 041BADD2272A4FA4006268D5;
+					};
 					0452EC9526DFA0CD0015BFB1 = {
 						CreatedOnToolsVersion = 12.5.1;
 					};
@@ -1610,11 +1770,37 @@
 				0452EC9526DFA0CD0015BFB1 /* vox.tracing */,
 				0452ECA526DFA0CD0015BFB1 /* vox.tracingTests */,
 				0452ECB026DFA0CD0015BFB1 /* vox.tracingUITests */,
+				041BADD2272A4FA4006268D5 /* vox.oasis */,
+				041BADE2272A4FA6006268D5 /* vox.oasisTests */,
+				041BADEC272A4FA6006268D5 /* vox.oasisUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		041BADD1272A4FA4006268D5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				041BADDD272A4FA5006268D5 /* Preview Assets.xcassets in Resources */,
+				041BADDA272A4FA5006268D5 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		041BADE1272A4FA6006268D5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		041BADEB272A4FA6006268D5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		0452EC9426DFA0CD0015BFB1 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1684,6 +1870,32 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		041BADCF272A4FA4006268D5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				041BADD8272A4FA4006268D5 /* ContentView.swift in Sources */,
+				041BADD6272A4FA4006268D5 /* voxApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		041BADDF272A4FA6006268D5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				041BADE8272A4FA6006268D5 /* vox_oasisTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		041BADE9272A4FA6006268D5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				041BADF4272A4FA6006268D5 /* vox_oasisUITestsLaunchTests.swift in Sources */,
+				041BADF2272A4FA6006268D5 /* vox_oasisUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		0452EC9226DFA0CD0015BFB1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1983,6 +2195,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		041BADE5272A4FA6006268D5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 041BADD2272A4FA4006268D5 /* vox.oasis */;
+			targetProxy = 041BADE4272A4FA6006268D5 /* PBXContainerItemProxy */;
+		};
+		041BADEF272A4FA6006268D5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 041BADD2272A4FA4006268D5 /* vox.oasis */;
+			targetProxy = 041BADEE272A4FA6006268D5 /* PBXContainerItemProxy */;
+		};
 		0452ECA826DFA0CD0015BFB1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 0452EC9526DFA0CD0015BFB1 /* vox.tracing */;
@@ -2006,6 +2228,172 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		041BADF6272A4FA6006268D5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_ENTITLEMENTS = vox.oasis/vox_oasis.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"vox.oasis/Preview Content\"";
+				DEVELOPMENT_TEAM = 4SL5L673UU;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "DigitalVox2.vox-oasis";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		041BADF7272A4FA6006268D5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_ENTITLEMENTS = vox.oasis/vox_oasis.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"vox.oasis/Preview Content\"";
+				DEVELOPMENT_TEAM = 4SL5L673UU;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "DigitalVox2.vox-oasis";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		041BADF9272A4FA6006268D5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4SL5L673UU;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "DigitalVox2.vox-oasisTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/vox.oasis.app/Contents/MacOS/vox.oasis";
+			};
+			name = Debug;
+		};
+		041BADFA272A4FA6006268D5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4SL5L673UU;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "DigitalVox2.vox-oasisTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/vox.oasis.app/Contents/MacOS/vox.oasis";
+			};
+			name = Release;
+		};
+		041BADFC272A4FA6006268D5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4SL5L673UU;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "DigitalVox2.vox-oasisUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = vox.oasis;
+			};
+			name = Debug;
+		};
+		041BADFD272A4FA6006268D5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4SL5L673UU;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "DigitalVox2.vox-oasisUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = vox.oasis;
+			};
+			name = Release;
+		};
 		0452ECB826DFA0CD0015BFB1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2470,6 +2858,33 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		041BADF5272A4FA6006268D5 /* Build configuration list for PBXNativeTarget "vox.oasis" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				041BADF6272A4FA6006268D5 /* Debug */,
+				041BADF7272A4FA6006268D5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		041BADF8272A4FA6006268D5 /* Build configuration list for PBXNativeTarget "vox.oasisTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				041BADF9272A4FA6006268D5 /* Debug */,
+				041BADFA272A4FA6006268D5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		041BADFB272A4FA6006268D5 /* Build configuration list for PBXNativeTarget "vox.oasisUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				041BADFC272A4FA6006268D5 /* Debug */,
+				041BADFD272A4FA6006268D5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		0452ECBE26DFA0CD0015BFB1 /* Build configuration list for PBXNativeTarget "vox.tracing" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
