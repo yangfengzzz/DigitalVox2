@@ -34,14 +34,14 @@ class PhysXBoxColliderShape: PhysXColliderShape, IBoxColliderShape {
     func setSize(_ size: Vector3) {
         _ = _halfSize.setValue(x: size.x * 0.5, y: size.y * 0.5, z: size.z * 0.5)
         Vector3.multiply(left: _halfSize, right: _scale, out: PhysXBoxColliderShape._tempHalfExtents)
-        _pxGeometry.halfExtents = PhysXBoxColliderShape._tempHalfExtents
+        (_pxGeometry as! CPxBoxGeometry).halfExtents = PhysXBoxColliderShape._tempHalfExtents.elements
         _pxShape.setGeometry(_pxGeometry)
     }
 
     func setWorldScale(scale: Vector3) {
         scale.cloneTo(target: _scale)
         Vector3.multiply(left: _halfSize, right: _scale, out: PhysXBoxColliderShape._tempHalfExtents)
-        _pxGeometry.halfExtents = PhysXBoxColliderShape._tempHalfExtents
+        (_pxGeometry as! CPxBoxGeometry).halfExtents = PhysXBoxColliderShape._tempHalfExtents.elements
         _pxShape.setGeometry(_pxGeometry)
     }
 }

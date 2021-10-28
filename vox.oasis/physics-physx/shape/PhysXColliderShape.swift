@@ -27,7 +27,7 @@ class PhysXColliderShape: IColliderShape {
     var _scale: Vector3 = Vector3(1, 1, 1)
 
     private var _shapeFlags: UInt8 = ShapeFlag.SCENE_QUERY_SHAPE.rawValue | ShapeFlag.SIMULATION_SHAPE.rawValue
-    private var _pxMaterials: [CPxMaterial] = []
+    private var _pxMaterial: CPxMaterial!
 
     internal var _pxShape: CPxShape!
     internal var _pxGeometry: CPxGeometry!
@@ -48,8 +48,8 @@ class PhysXColliderShape: IColliderShape {
     }
 
     func setMaterial(_ material: IPhysicsMaterial) {
-        _pxMaterials[0] = (material as! PhysXPhysicsMaterial)._pxMaterial
-        _pxShape.setMaterials(_pxMaterials)
+        _pxMaterial = (material as! PhysXPhysicsMaterial)._pxMaterial
+        _pxShape.setMaterial(_pxMaterial)
     }
 
     func setIsTrigger(_ value: Bool) {
@@ -69,10 +69,7 @@ class PhysXColliderShape: IColliderShape {
     }
 
     func _setLocalPose() {
-        let transform = PhysXColliderShape.transform
-        transform.translation = _position
-        transform.rotation = _rotation
-        _pxShape.setLocalPose(PhysXColliderShape.transform)
+        _pxShape.setLocalPose(_position.elements, rotation: _rotation.elements)
     }
 
     func _allocShape(_ material: PhysXPhysicsMaterial) {

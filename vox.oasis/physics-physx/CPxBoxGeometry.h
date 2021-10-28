@@ -9,8 +9,11 @@
 #define CPxBoxGeometry_h
 
 #import "CPxGeometry.h"
+#import <simd/simd.h>
 
 @interface CPxBoxGeometry : CPxGeometry
+
+@property(nonatomic, assign) simd_float3 halfExtents;
 
 - (instancetype)initWithHx:(float)hx hy:(float)hy hz:(float)hz;
 

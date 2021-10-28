@@ -8,6 +8,8 @@
 #import "CPxShape.h"
 #import "CPxShape+Internal.h"
 #import "CPxGeometry+Internal.h"
+#import "CPxMaterial+Internal.h"
+#include <vector>
 
 @implementation CPxShape {
     PxShape *_shape;
@@ -31,6 +33,17 @@
 
 - (void)setGeometry:(CPxGeometry *)geometry {
     _shape->setGeometry(*geometry.c_geometry);
+}
+
+- (void)setLocalPose:(simd_float3)position rotation:(simd_quatf)rotation {
+    _shape->setLocalPose(PxTransform(PxVec3(position.x, position.y, position.z),
+            PxQuat(rotation.vector.x, rotation.vector.y, rotation.vector.z, rotation.vector.w)));
+}
+
+- (void)setMaterial:(CPxMaterial *)material {
+    std::vector<PxMaterial *> materials(1, nullptr);
+    materials[0] = material.c_material;
+    _shape->setMaterials(materials.data(), materials.size());
 }
 
 @end
