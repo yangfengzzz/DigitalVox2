@@ -38,5 +38,6 @@
 
 #include "CPxPhysics.h"
 #include "CPxMaterial.h"
+#include "CPxBoxGeometry.h"
 
 #endif /* Common_h */

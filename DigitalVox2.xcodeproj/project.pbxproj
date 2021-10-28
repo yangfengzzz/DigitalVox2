@@ -199,6 +199,10 @@
 		041BAED0272A6E0A006268D5 /* Mando_Helmet.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 04AE2412272812F200D62587 /* Mando_Helmet.usdz */; };
 		041BAED5272A8B21006268D5 /* CPxMaterial.mm in Sources */ = {isa = PBXBuildFile; fileRef = 041BAED4272A8B21006268D5 /* CPxMaterial.mm */; };
 		041BAEDA272A949F006268D5 /* PhysXPhysicsMaterial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041BAED9272A949F006268D5 /* PhysXPhysicsMaterial.swift */; };
+		041BAEDD272A99EE006268D5 /* PhysXColliderShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041BAEDC272A99EE006268D5 /* PhysXColliderShape.swift */; };
+		041BAEE0272A9AA1006268D5 /* CPxBoxGeometry.mm in Sources */ = {isa = PBXBuildFile; fileRef = 041BAEDF272A9AA1006268D5 /* CPxBoxGeometry.mm */; };
+		041BAEE3272A9C6D006268D5 /* PhysXBoxColliderShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041BAEE2272A9C6D006268D5 /* PhysXBoxColliderShape.swift */; };
+		041BAEE5272A9DF4006268D5 /* CPxGeometry.m in Sources */ = {isa = PBXBuildFile; fileRef = 041BAEE4272A9DF4006268D5 /* CPxGeometry.m */; };
 		042BB13426EA3EA400604751 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 042BB13326EA3EA400604751 /* Logging */; };
 		042C841226E4A7AE00BD3733 /* sampling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042C841126E4A7AE00BD3733 /* sampling.swift */; };
 		043CB42326EF590B004A0B21 /* Matrix3x3.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB42226EF590B004A0B21 /* Matrix3x3.test.swift */; };
@@ -404,6 +408,12 @@
 		041BAED4272A8B21006268D5 /* CPxMaterial.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CPxMaterial.mm; sourceTree = "<group>"; };
 		041BAED8272A900C006268D5 /* CPxMaterial+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CPxMaterial+Internal.h"; sourceTree = "<group>"; };
 		041BAED9272A949F006268D5 /* PhysXPhysicsMaterial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXPhysicsMaterial.swift; sourceTree = "<group>"; };
+		041BAEDC272A99EE006268D5 /* PhysXColliderShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXColliderShape.swift; sourceTree = "<group>"; };
+		041BAEDE272A9A95006268D5 /* CPxBoxGeometry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPxBoxGeometry.h; sourceTree = "<group>"; };
+		041BAEDF272A9AA1006268D5 /* CPxBoxGeometry.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CPxBoxGeometry.mm; sourceTree = "<group>"; };
+		041BAEE1272A9C29006268D5 /* CPxGeometry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPxGeometry.h; sourceTree = "<group>"; };
+		041BAEE2272A9C6D006268D5 /* PhysXBoxColliderShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXBoxColliderShape.swift; sourceTree = "<group>"; };
+		041BAEE4272A9DF4006268D5 /* CPxGeometry.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CPxGeometry.m; sourceTree = "<group>"; };
 		041D1C46272A354600322BDF /* BoxColliderShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxColliderShape.swift; sourceTree = "<group>"; };
 		041D1C48272A360300322BDF /* CapsuleColliderShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapsuleColliderShape.swift; sourceTree = "<group>"; };
 		041D1C4A272A36B600322BDF /* PlaneColliderShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaneColliderShape.swift; sourceTree = "<group>"; };
@@ -945,9 +955,19 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		041BAEDB272A99D9006268D5 /* shape */ = {
+			isa = PBXGroup;
+			children = (
+				041BAEDC272A99EE006268D5 /* PhysXColliderShape.swift */,
+				041BAEE2272A9C6D006268D5 /* PhysXBoxColliderShape.swift */,
+			);
+			path = shape;
+			sourceTree = "<group>";
+		};
 		041D1C52272A3FC600322BDF /* physics-physx */ = {
 			isa = PBXGroup;
 			children = (
+				041BAEDB272A99D9006268D5 /* shape */,
 				041D1C53272A3FD400322BDF /* PhysXPhysics.swift */,
 				041BAED9272A949F006268D5 /* PhysXPhysicsMaterial.swift */,
 				041D1C57272A453700322BDF /* CPxPhysics.h */,
@@ -955,6 +975,10 @@
 				041BAED3272A8AFE006268D5 /* CPxMaterial.h */,
 				041BAED8272A900C006268D5 /* CPxMaterial+Internal.h */,
 				041BAED4272A8B21006268D5 /* CPxMaterial.mm */,
+				041BAEE1272A9C29006268D5 /* CPxGeometry.h */,
+				041BAEE4272A9DF4006268D5 /* CPxGeometry.m */,
+				041BAEDE272A9A95006268D5 /* CPxBoxGeometry.h */,
+				041BAEDF272A9AA1006268D5 /* CPxBoxGeometry.mm */,
 			);
 			path = "physics-physx";
 			sourceTree = "<group>";
@@ -1905,6 +1929,7 @@
 				041BAE7B272A512B006268D5 /* Sky.swift in Sources */,
 				041BAE5C272A510C006268D5 /* RenderState.swift in Sources */,
 				041BAE6E272A5111006268D5 /* AmbientLight.swift in Sources */,
+				041BAEE3272A9C6D006268D5 /* PhysXBoxColliderShape.swift in Sources */,
 				041BAE6F272A5117006268D5 /* ShadowMapMaterial.swift in Sources */,
 				041BAE35272A50E6006268D5 /* Color.swift in Sources */,
 				041BAEA3272A514D006268D5 /* IPhysics.swift in Sources */,
@@ -1955,6 +1980,7 @@
 				041BAE5D272A510C006268D5 /* BlendState.swift in Sources */,
 				041BAE48272A50FB006268D5 /* BlendMode.swift in Sources */,
 				041BAE06272A500F006268D5 /* GLTFAssetLoader.swift in Sources */,
+				041BAEDD272A99EE006268D5 /* PhysXColliderShape.swift in Sources */,
 				041BAE66272A510C006268D5 /* ShaderUniformBlock.swift in Sources */,
 				041BAE74272A5117006268D5 /* ShadowMaterial.swift in Sources */,
 				041BAEC1272A516E006268D5 /* BRDF.metal in Sources */,
@@ -1975,6 +2001,7 @@
 				041BAED5272A8B21006268D5 /* CPxMaterial.mm in Sources */,
 				041BAE96272A5141006268D5 /* HitResult.swift in Sources */,
 				041BAE43272A50ED006268D5 /* BlendShapeFrame.swift in Sources */,
+				041BAEE5272A9DF4006268D5 /* CPxGeometry.m in Sources */,
 				041BAE3B272A50E6006268D5 /* PlaneIntersectionType.swift in Sources */,
 				041BAE76272A512B006268D5 /* GLTFModelIO.m in Sources */,
 				041BAE38272A50E6006268D5 /* Vector4.swift in Sources */,
@@ -2014,6 +2041,7 @@
 				041BAE5F272A510C006268D5 /* ShaderProperty.swift in Sources */,
 				041BAE6A272A5111006268D5 /* SpotLight.swift in Sources */,
 				041BAE39272A50E6006268D5 /* BoundingBox.swift in Sources */,
+				041BAEE0272A9AA1006268D5 /* CPxBoxGeometry.mm in Sources */,
 				041BAE18272A5046006268D5 /* shadow-map.metal in Sources */,
 				041BAE53272A5100006268D5 /* RenderElement.swift in Sources */,
 				041BAE37272A50E6006268D5 /* MathUtil.swift in Sources */,
