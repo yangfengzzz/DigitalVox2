@@ -13,89 +13,101 @@ class ComponentsManager {
     private static var _tempVector1 = Vector3()
 
     // Script
-    private var _onStartScripts: [Script] = []
-    private var _onUpdateScripts: [Script] = []
-    private var _onLateUpdateScripts: [Script] = []
+    private var _onStartScripts: DisorderedArray<Script> = DisorderedArray()
+    private var _onUpdateScripts: DisorderedArray<Script> = DisorderedArray()
+    private var _onLateUpdateScripts: DisorderedArray<Script> = DisorderedArray()
     private var _destroyComponents: [Script] = []
 
     // Animation
-    private var _onUpdateAnimations: [Component] = []
+    private var _onUpdateAnimations: DisorderedArray<Component> = DisorderedArray()
 
     // Render
-    private var _renderers: [Renderer] = []
-    private var _onUpdateRenderers: [Renderer] = []
+    private var _renderers: DisorderedArray<Renderer> = DisorderedArray()
+    private var _onUpdateRenderers: DisorderedArray<Renderer> = DisorderedArray()
 
     // Delay dispose active/inActive Pool
     private var _componentsContainerPool: [[Component]] = [[]]
 
     // Physics
-    private var _colliders: [Collider] = []
+    private var _colliders: DisorderedArray<Collider> = DisorderedArray()
 }
 
 extension ComponentsManager {
     func addRenderer(_ renderer: Renderer) {
-        renderer._rendererIndex = _renderers.count
-        _renderers.append(renderer)
+        renderer._rendererIndex = _renderers.length
+        _renderers.add(renderer)
     }
 
     func removeRenderer(_ renderer: Renderer) {
-        let replaced = _renderers.remove(at: renderer._rendererIndex)
-        replaced._rendererIndex = renderer._rendererIndex
+        let replaced = _renderers.deleteByIndex(renderer._rendererIndex)
+        if replaced != nil {
+            replaced!._rendererIndex = renderer._rendererIndex
+        }
         renderer._rendererIndex = -1
     }
 
     func addCollider(_ collider: Collider) {
-        collider._index = _colliders.count
-        _colliders.append(collider)
+        collider._index = _colliders.length
+        _colliders.add(collider)
     }
 
     func removeCollider(_ collider: Collider) {
-        let replaced = _colliders.remove(at: collider._index)
-        replaced._index = collider._index
+        let replaced = _colliders.deleteByIndex(collider._index)
+        if replaced != nil {
+            replaced!._index = collider._index
+        }
         collider._index = -1
     }
 
     func addOnStartScript(_ script: Script) {
-        script._onStartIndex = _onStartScripts.count
-        _onStartScripts.append(script)
+        script._onStartIndex = _onStartScripts.length
+        _onStartScripts.add(script)
     }
 
     func removeOnStartScript(_ script: Script) {
-        let replaced = _onStartScripts.remove(at: script._onStartIndex)
-        replaced._onStartIndex = script._onStartIndex
+        let replaced = _onStartScripts.deleteByIndex(script._onStartIndex)
+        if replaced != nil {
+            replaced!._onStartIndex = script._onStartIndex
+        }
         script._onStartIndex = -1
     }
 
     func addOnUpdateScript(_ script: Script) {
-        script._onUpdateIndex = _onUpdateScripts.count
-        _onUpdateScripts.append(script)
+        script._onUpdateIndex = _onUpdateScripts.length
+        _onUpdateScripts.add(script)
     }
 
     func removeOnUpdateScript(_ script: Script) {
-        let replaced = _onUpdateScripts.remove(at: script._onUpdateIndex)
-        replaced._onUpdateIndex = script._onUpdateIndex
+        let replaced = _onUpdateScripts.deleteByIndex(script._onUpdateIndex)
+        if replaced != nil {
+            replaced!._onUpdateIndex = script._onUpdateIndex
+        }
         script._onUpdateIndex = -1
     }
 
     func addOnLateUpdateScript(_ script: Script) {
-        script._onLateUpdateIndex = _onLateUpdateScripts.count
-        _onLateUpdateScripts.append(script)
+        script._onLateUpdateIndex = _onLateUpdateScripts.length
+        _onLateUpdateScripts.add(script)
     }
 
     func removeOnLateUpdateScript(_ script: Script) {
-        let replaced = _onLateUpdateScripts.remove(at: script._onLateUpdateIndex)
-        replaced._onLateUpdateIndex = script._onLateUpdateIndex
+        let replaced = _onLateUpdateScripts.deleteByIndex(script._onLateUpdateIndex)
+        if replaced != nil {
+            replaced!._onLateUpdateIndex = script._onLateUpdateIndex
+        }
         script._onLateUpdateIndex = -1
     }
 
     func addOnUpdateRenderers(_ renderer: Renderer) {
-        renderer._onUpdateIndex = _onUpdateRenderers.count
-        _onUpdateRenderers.append(renderer)
+        renderer._onUpdateIndex = _onUpdateRenderers.length
+        _onUpdateRenderers.add(renderer)
     }
 
     func removeOnUpdateRenderers(_ renderer: Renderer) {
-        let replaced = _onUpdateRenderers.remove(at: renderer._onUpdateIndex)
-        replaced._onUpdateIndex = renderer._onUpdateIndex
+        let replaced = _onUpdateRenderers.deleteByIndex(renderer._onUpdateIndex)
+        if replaced != nil {
+            replaced!._onUpdateIndex = renderer._onUpdateIndex
+        }
         renderer._onUpdateIndex = -1
     }
 
@@ -103,25 +115,26 @@ extension ComponentsManager {
         _destroyComponents.append(component)
     }
 
+    //MARK: - Execute Components
     func callScriptOnStart() {
-        var onStartScripts = _onStartScripts
-        if (onStartScripts.count > 0) {
-            let elements = onStartScripts
+        let onStartScripts = _onStartScripts
+        if (onStartScripts.length > 0) {
+            let elements = onStartScripts._elements
             // The 'onStartScripts.length' maybe add if you add some Script with addComponent() in some Script's onStart()
-            for i in 0..<onStartScripts.count {
-                let script = elements[i]
+            for i in 0..<onStartScripts.length {
+                let script = elements[i]!
                 script._started = true
                 script._onStartIndex = -1
                 script.onStart()
             }
-            onStartScripts = []
+            onStartScripts.length = 0
         }
     }
 
     func callScriptOnUpdate(_ deltaTime: Float) {
-        let elements = _onUpdateScripts
-        for i in 0..<_onUpdateScripts.count {
-            let element = elements[i]
+        let elements = _onUpdateScripts._elements
+        for i in 0..<_onUpdateScripts.length {
+            let element = elements[i]!
             if (element._started) {
                 element.onUpdate(deltaTime)
             }
@@ -129,9 +142,9 @@ extension ComponentsManager {
     }
 
     func callScriptOnLateUpdate(_ deltaTime: Float) {
-        let elements = _onLateUpdateScripts
-        for i in 0..<_onLateUpdateScripts.count {
-            let element = elements[i]
+        let elements = _onLateUpdateScripts._elements
+        for i in 0..<_onLateUpdateScripts.length {
+            let element = elements[i]!
             if (element._started) {
                 element.onLateUpdate(deltaTime)
             }
@@ -139,17 +152,17 @@ extension ComponentsManager {
     }
 
     func callRendererOnUpdate(_ deltaTime: Float) {
-        let elements = _onUpdateRenderers
-        for i in 0..<_onUpdateRenderers.count {
-            elements[i].update(deltaTime)
+        let elements = _onUpdateRenderers._elements
+        for i in 0..<_onUpdateRenderers.length {
+            elements[i]!.update(deltaTime)
         }
     }
 
     func callRender(_ context: RenderContext) {
         let camera = context._camera
-        let elements = _renderers
-        for i in 0..<_renderers.count {
-            let element = elements[i]
+        let elements = _renderers._elements
+        for i in 0..<_renderers.length {
+            let element = elements[i]!
 
             // filter by camera culling mask.
             if (camera!.cullingMask.rawValue & element._entity.layer.rawValue) == 0 {
@@ -216,16 +229,16 @@ extension ComponentsManager {
     }
 
     func callColliderOnUpdate() {
-        let elements = _colliders
-        for i in 0..<_colliders.count {
-            elements[i]._onUpdate()
+        let elements = _colliders._elements
+        for i in 0..<_colliders.length {
+            elements[i]!._onUpdate()
         }
     }
 
     func callColliderOnLateUpdate() {
-        let elements = _colliders
-        for i in 0..<_colliders.count {
-            elements[i]._onLateUpdate()
+        let elements = _colliders._elements
+        for i in 0..<_colliders.length {
+            elements[i]!._onLateUpdate()
         }
     }
 }

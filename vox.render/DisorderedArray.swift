@@ -8,7 +8,7 @@
 import Foundation
 
 /// High-performance unordered array, delete uses exchange method to improve performance, internal capacity only increases.
-class DisorderedArray<T:AnyObject> {
+class DisorderedArray<T: AnyObject> {
     var _elements: [T?] = []
 
     var length: Int = 0
