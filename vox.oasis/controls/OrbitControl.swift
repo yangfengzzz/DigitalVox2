@@ -282,13 +282,13 @@ class OrbitControl: Script {
 //MARK:- Touch Event
 extension OrbitControl {
     /// Rotation parameter update when touch is dropped.
-    func handleTouchStartRotate(_ event: UITouch) {
+    func handleTouchStartRotate(_ event: NSTouch) {
         let loc = event.location(in: nil)
         _ = _rotateStart.setValue(x: Float(loc.x), y: Float(loc.y))
     }
 
     ///  Zoom parameter update when touch down.
-    func handleTouchStartZoom(_ event: UITouch) {
+    func handleTouchStartZoom(_ event: NSTouch) {
         let loc = event.location(in: nil)
         let preLoc = event.previousLocation(in: nil)
 
@@ -301,13 +301,13 @@ extension OrbitControl {
     }
 
     /// Update the translation parameter when touch down.
-    func handleTouchStartPan(_ event: UITouch) {
+    func handleTouchStartPan(_ event: NSTouch) {
         let loc = event.location(in: nil)
         _ = _panStart.setValue(x: Float(loc.x), y: Float(loc.y))
     }
 
     /// Rotation parameter update when touch to move.
-    func handleTouchMoveRotate(_ event: UITouch) {
+    func handleTouchMoveRotate(_ event: NSTouch) {
         let loc = event.location(in: nil)
         _ = _rotateEnd.setValue(x: Float(loc.x), y: Float(loc.y))
         Vector2.subtract(left: _rotateEnd, right: _rotateStart, out: _rotateDelta)
@@ -322,7 +322,7 @@ extension OrbitControl {
     }
 
     /// Zoom parameter update when touch to move.
-    func handleTouchMoveZoom(_ event: UITouch) {
+    func handleTouchMoveZoom(_ event: NSTouch) {
         let loc = event.location(in: nil)
         let preLoc = event.previousLocation(in: nil)
 
@@ -345,7 +345,7 @@ extension OrbitControl {
     }
 
     /// Pan parameter update when touch moves.
-    func handleTouchMovePan(_ event: UITouch) {
+    func handleTouchMovePan(_ event: NSTouch) {
         let loc = event.location(in: nil)
         _ = _panEnd.setValue(x: Float(loc.x), y: Float(loc.y))
 
@@ -357,7 +357,7 @@ extension OrbitControl {
     }
 
     /// Total handling of touch start events.
-    func onTouchStart(_ event: UITouch) {
+    func onTouchStart(_ event: NSTouch) {
         if (enabled == false) {
             return
         }
@@ -401,7 +401,7 @@ extension OrbitControl {
     }
 
     /// Total handling of touch movement events.
-    func onTouchMove(_ event: UITouch) {
+    func onTouchMove(_ event: NSTouch) {
         if (enabled == false) {
             return
         }

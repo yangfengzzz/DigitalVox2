@@ -42,7 +42,7 @@ extension InputController {
 }
 
 extension InputController {
-    func processEvent(touches: Set<UITouch>, state: InputState, event: UIEvent?) {
+    func processEvent(touches: Set<NSTouch>, state: InputState, event: NSEvent?) {
         switch state {
         case .began, .moved:
             forward = false

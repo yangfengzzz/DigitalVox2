@@ -46,7 +46,6 @@ class MetalRenderer {
         canvas.depthStencilPixelFormat = .depth32Float
         canvas.translatesAutoresizingMaskIntoConstraints = false
         canvas.framebufferOnly = false
-        canvas.isMultipleTouchEnabled = true
     }
 
     func buildSamplerState() -> MTLSamplerState? {

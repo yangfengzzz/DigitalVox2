@@ -8,15 +8,15 @@
 import MetalKit
 
 class InputManager {
-    var beginEvent: Set<UITouch> = []
-    var movedEvent: Set<UITouch> = []
-    var endedEvent: Set<UITouch> = []
+    var beginEvent: Set<NSTouch> = []
+    var movedEvent: Set<NSTouch> = []
+    var endedEvent: Set<NSTouch> = []
     
     var zoom:[CGFloat] = []
 }
 
 extension InputManager {
-    func processEvent(touches: Set<UITouch>, state: InputState, event: UIEvent?) {
+    func processEvent(touches: Set<NSTouch>, state: InputState, event: NSEvent?) {
         switch state {
         case .began:
             beginEvent = beginEvent.union(touches)
