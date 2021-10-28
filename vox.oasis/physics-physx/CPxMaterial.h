@@ -12,6 +12,16 @@
 
 @interface CPxMaterial : NSObject
 
+- (void)setDynamicFriction:(float)coef;
+
+- (void)setStaticFriction:(float)coef;
+
+- (void)setRestitution:(float)rest;
+
+- (void)setFrictionCombineMode:(int)combMode;
+
+- (void)setRestitutionCombineMode:(int)combMode;
+
 @end
 
 #endif /* CPxMaterial_h */
