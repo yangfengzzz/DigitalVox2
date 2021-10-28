@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		04198A20271D401700871A26 /* DamagedHelmet.glb in Resources */ = {isa = PBXBuildFile; fileRef = 04198A1F271D401700871A26 /* DamagedHelmet.glb */; };
 		0419B6D626E6E30300005FEA /* instance_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D526E6E30300005FEA /* instance_data.swift */; };
 		0419B6D826E6E5CE00005FEA /* shading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D726E6E5CE00005FEA /* shading.swift */; };
 		0419B6DA26E6EA3900005FEA /* trace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D926E6EA3900005FEA /* trace.swift */; };
@@ -188,6 +187,16 @@
 		041BAEC2272A516E006268D5 /* CPxPhysics.mm in Sources */ = {isa = PBXBuildFile; fileRef = 041D1C55272A452B00322BDF /* CPxPhysics.mm */; };
 		041BAEC3272A516E006268D5 /* PhysXPhysics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041D1C53272A3FD400322BDF /* PhysXPhysics.swift */; };
 		041BAEC4272A516E006268D5 /* ShaderSimple.metal in Sources */ = {isa = PBXBuildFile; fileRef = 0413289E26E0CBE7000A4F4E /* ShaderSimple.metal */; };
+		041BAEC7272A6E00006268D5 /* irradiance.png in Resources */ = {isa = PBXBuildFile; fileRef = 04AE2424272916DC00D62587 /* irradiance.png */; };
+		041BAEC8272A6E00006268D5 /* Textures.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0452ECF226DFA8BD0015BFB1 /* Textures.xcassets */; };
+		041BAEC9272A6E0A006268D5 /* cottage2.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 0452ECE426DFA6A10015BFB1 /* cottage2.mtl */; };
+		041BAECA272A6E0A006268D5 /* cube.obj in Resources */ = {isa = PBXBuildFile; fileRef = 0452ECE026DFA6A10015BFB1 /* cube.obj */; };
+		041BAECB272A6E0A006268D5 /* DamagedHelmet.glb in Resources */ = {isa = PBXBuildFile; fileRef = 04198A1F271D401700871A26 /* DamagedHelmet.glb */; };
+		041BAECC272A6E0A006268D5 /* cottage1.obj in Resources */ = {isa = PBXBuildFile; fileRef = 0452ECE226DFA6A10015BFB1 /* cottage1.obj */; };
+		041BAECD272A6E0A006268D5 /* cottage2.obj in Resources */ = {isa = PBXBuildFile; fileRef = 0452ECE526DFA6A10015BFB1 /* cottage2.obj */; };
+		041BAECE272A6E0A006268D5 /* cube.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 0452ECE126DFA6A10015BFB1 /* cube.mtl */; };
+		041BAECF272A6E0A006268D5 /* cottage1.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 0452ECE326DFA6A10015BFB1 /* cottage1.mtl */; };
+		041BAED0272A6E0A006268D5 /* Mando_Helmet.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 04AE2412272812F200D62587 /* Mando_Helmet.usdz */; };
 		042BB13426EA3EA400604751 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 042BB13326EA3EA400604751 /* Logging */; };
 		042C841226E4A7AE00BD3733 /* sampling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042C841126E4A7AE00BD3733 /* sampling.swift */; };
 		043CB42326EF590B004A0B21 /* Matrix3x3.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB42226EF590B004A0B21 /* Matrix3x3.test.swift */; };
@@ -207,13 +216,6 @@
 		0452ECA026DFA0CD0015BFB1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0452EC9F26DFA0CD0015BFB1 /* Preview Assets.xcassets */; };
 		0452ECAB26DFA0CD0015BFB1 /* vox_tracingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECAA26DFA0CD0015BFB1 /* vox_tracingTests.swift */; };
 		0452ECB626DFA0CD0015BFB1 /* vox_tracingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECB526DFA0CD0015BFB1 /* vox_tracingUITests.swift */; };
-		0452ECE626DFA6A10015BFB1 /* cube.obj in Resources */ = {isa = PBXBuildFile; fileRef = 0452ECE026DFA6A10015BFB1 /* cube.obj */; };
-		0452ECE726DFA6A10015BFB1 /* cube.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 0452ECE126DFA6A10015BFB1 /* cube.mtl */; };
-		0452ECE826DFA6A10015BFB1 /* cottage1.obj in Resources */ = {isa = PBXBuildFile; fileRef = 0452ECE226DFA6A10015BFB1 /* cottage1.obj */; };
-		0452ECE926DFA6A10015BFB1 /* cottage1.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 0452ECE326DFA6A10015BFB1 /* cottage1.mtl */; };
-		0452ECEA26DFA6A10015BFB1 /* cottage2.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 0452ECE426DFA6A10015BFB1 /* cottage2.mtl */; };
-		0452ECEB26DFA6A10015BFB1 /* cottage2.obj in Resources */ = {isa = PBXBuildFile; fileRef = 0452ECE526DFA6A10015BFB1 /* cottage2.obj */; };
-		0452ECF326DFA8BD0015BFB1 /* Textures.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0452ECF226DFA8BD0015BFB1 /* Textures.xcassets */; };
 		0452ECF626DFAEAB0015BFB1 /* RayRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECF426DFAEA30015BFB1 /* RayRenderer.swift */; };
 		0452ECF826DFAECE0015BFB1 /* RayRendererExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECF726DFAECE0015BFB1 /* RayRendererExtension.swift */; };
 		0452ECFA26DFAEE70015BFB1 /* Raytracing.metal in Sources */ = {isa = PBXBuildFile; fileRef = 0452ECF926DFAEE70015BFB1 /* Raytracing.metal */; };
@@ -284,8 +286,6 @@
 		04AE164E26EED80600201439 /* Vector3.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE164D26EED80600201439 /* Vector3.test.swift */; };
 		04AE165026EEE2C100201439 /* Vector4.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE164F26EEE2C100201439 /* Vector4.test.swift */; };
 		04AE165226EEE85D00201439 /* Matrix.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE165126EEE85D00201439 /* Matrix.test.swift */; };
-		04AE2413272812F200D62587 /* Mando_Helmet.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 04AE2412272812F200D62587 /* Mando_Helmet.usdz */; };
-		04AE2425272916DC00D62587 /* irradiance.png in Resources */ = {isa = PBXBuildFile; fileRef = 04AE2424272916DC00D62587 /* irradiance.png */; };
 		04EA0D6A26E0F9AD00CA7833 /* math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6926E0F9AD00CA7833 /* math.swift */; };
 		04EA0D6C26E1204200CA7833 /* bbox2f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6B26E1204200CA7833 /* bbox2f.swift */; };
 		04EA0D6E26E1204F00CA7833 /* bbox3f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6D26E1204F00CA7833 /* bbox3f.swift */; };
@@ -1791,8 +1791,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				041BAE78272A512B006268D5 /* README.md in Resources */,
+				041BAED0272A6E0A006268D5 /* Mando_Helmet.usdz in Resources */,
+				041BAECC272A6E0A006268D5 /* cottage1.obj in Resources */,
 				041BADDD272A4FA5006268D5 /* Preview Assets.xcassets in Resources */,
 				041BADDA272A4FA5006268D5 /* Assets.xcassets in Resources */,
+				041BAECD272A6E0A006268D5 /* cottage2.obj in Resources */,
+				041BAEC8272A6E00006268D5 /* Textures.xcassets in Resources */,
+				041BAEC9272A6E0A006268D5 /* cottage2.mtl in Resources */,
+				041BAECF272A6E0A006268D5 /* cottage1.mtl in Resources */,
+				041BAEC7272A6E00006268D5 /* irradiance.png in Resources */,
+				041BAECE272A6E0A006268D5 /* cube.mtl in Resources */,
+				041BAECB272A6E0A006268D5 /* DamagedHelmet.glb in Resources */,
+				041BAECA272A6E0A006268D5 /* cube.obj in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1847,18 +1857,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0452ECEA26DFA6A10015BFB1 /* cottage2.mtl in Resources */,
-				0452ECE626DFA6A10015BFB1 /* cube.obj in Resources */,
-				0452ECE926DFA6A10015BFB1 /* cottage1.mtl in Resources */,
-				04AE2425272916DC00D62587 /* irradiance.png in Resources */,
-				0452ECF326DFA8BD0015BFB1 /* Textures.xcassets in Resources */,
-				04198A20271D401700871A26 /* DamagedHelmet.glb in Resources */,
 				0497A1EC26DF150800F61DE9 /* Preview Assets.xcassets in Resources */,
-				0452ECE726DFA6A10015BFB1 /* cube.mtl in Resources */,
 				0497A1E926DF150800F61DE9 /* Assets.xcassets in Resources */,
-				0452ECEB26DFA6A10015BFB1 /* cottage2.obj in Resources */,
-				04AE2413272812F200D62587 /* Mando_Helmet.usdz in Resources */,
-				0452ECE826DFA6A10015BFB1 /* cottage1.obj in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2266,9 +2266,16 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = /Users/yangfeng/Desktop/PhysX/physx/bin/ios.arm_64/debug;
+				LIBRARY_SEARCH_PATHS = /Users/yangfeng/Desktop/PhysX/physx/bin/mac.x86_64/debug;
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-lPhysX_static_64",
+					"-lPhysXCommon_static_64",
+					"-lPhysXFoundation_static_64",
+					"-lPhysXPvdSDK_static_64",
+					"-lPhysXExtensions_static_64",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "DigitalVox2.vox-oasis";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -2328,9 +2335,16 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = /Users/yangfeng/Desktop/PhysX/physx/bin/ios.arm_64/release;
+				LIBRARY_SEARCH_PATHS = /Users/yangfeng/Desktop/PhysX/physx/bin/mac.x86_64/release;
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-lPhysX_static_64",
+					"-lPhysXCommon_static_64",
+					"-lPhysXFoundation_static_64",
+					"-lPhysXPvdSDK_static_64",
+					"-lPhysXExtensions_static_64",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "DigitalVox2.vox-oasis";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;

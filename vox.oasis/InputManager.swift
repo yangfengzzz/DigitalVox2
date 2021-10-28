@@ -8,22 +8,22 @@
 import MetalKit
 
 class InputManager {
-    var beginEvent: Set<NSTouch> = []
-    var movedEvent: Set<NSTouch> = []
-    var endedEvent: Set<NSTouch> = []
+    var beginEvent: Set<NSEvent> = []
+    var movedEvent: Set<NSEvent> = []
+    var endedEvent: Set<NSEvent> = []
     
     var zoom:[CGFloat] = []
 }
 
 extension InputManager {
-    func processEvent(touches: Set<NSTouch>, state: InputState, event: NSEvent?) {
+    func processEvent(state: InputState, event: NSEvent) {
         switch state {
         case .began:
-            beginEvent = beginEvent.union(touches)
+            _ = beginEvent.insert(event)
         case .moved:
-            movedEvent = movedEvent.union(touches)
+            _ = movedEvent.insert(event)
         case .ended:
-            endedEvent = endedEvent.union(touches)
+            _ = endedEvent.insert(event)
         default:
             break
         }

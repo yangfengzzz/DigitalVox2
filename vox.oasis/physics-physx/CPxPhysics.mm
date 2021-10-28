@@ -11,7 +11,7 @@
 using namespace physx;
 
 @implementation CPxPhysics {
-    PxPhysics* _physics;
+    PxPhysics *_physics;
 }
 
 // MARK: - Initialization
@@ -25,11 +25,11 @@ using namespace physx;
 }
 
 - (void)initializePhysics {
-//    PxDefaultAllocator        gAllocator;
-//    PxDefaultErrorCallback    gErrorCallback;
-//    physx::PxFoundation* gFoundation = PxCreateFoundation(PX_PHYSICS_VERSION, gAllocator, gErrorCallback);
-//
-//    _physics = PxCreatePhysics(PX_PHYSICS_VERSION, *gFoundation, PxTolerancesScale(), false, NULL);
+    PxDefaultAllocator gAllocator;
+    PxDefaultErrorCallback gErrorCallback;
+    physx::PxFoundation *gFoundation = PxCreateFoundation(PX_PHYSICS_VERSION, gAllocator, gErrorCallback);
+
+    _physics = PxCreatePhysics(PX_PHYSICS_VERSION, *gFoundation, PxTolerancesScale(), false, NULL);
 }
 
 @end
