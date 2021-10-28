@@ -211,7 +211,7 @@ class LitePhysicsManager: IPhysicsManager {
         var i = 0
         var n = _currentEvents.length
         while i < n {
-            let event = _currentEvents.get(i)
+            let event = _currentEvents.get(i)!
             if (!event.needUpdate) {
                 if (event.state == TriggerEventState.Enter) {
                     _onTriggerEnter!(event.index1, event.index2)

@@ -8,13 +8,13 @@
 import Foundation
 
 /// High-performance unordered array, delete uses exchange method to improve performance, internal capacity only increases.
-class DisorderedArray<T: EmptyInit> {
-    var _elements: [T] = []
+class DisorderedArray<T:AnyObject> {
+    var _elements: [T?] = []
 
     var length: Int = 0
 
     init(_ count: Int = 0) {
-        _elements = [T](repeating: T(), count: count)
+        _elements = [T?](repeating: nil, count: count)
     }
 
     func add(_ element: T) {
@@ -28,11 +28,15 @@ class DisorderedArray<T: EmptyInit> {
 
     func delete(_ element: T) {
         _elements.removeAll { e in
-            e === element
+            if e == nil {
+                return false
+            } else {
+                return e! === element
+            }
         }
     }
 
-    func get(_ index: Int) -> T {
+    func get(_ index: Int) -> T? {
         if (index >= length) {
             fatalError("Index is out of range.")
         }
