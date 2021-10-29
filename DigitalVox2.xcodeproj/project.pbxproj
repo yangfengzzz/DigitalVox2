@@ -267,6 +267,7 @@
 		0452ED3A26E0F50A0015BFB1 /* quat4f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ED3726E0F50A0015BFB1 /* quat4f.swift */; };
 		0452ED3B26E0F50A0015BFB1 /* frame3f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ED3826E0F50A0015BFB1 /* frame3f.swift */; };
 		0452ED3C26E0F50A0015BFB1 /* frame2f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ED3926E0F50A0015BFB1 /* frame2f.swift */; };
+		04605EFB272BC09800400350 /* PhysXView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04605EFA272BC09800400350 /* PhysXView.swift */; };
 		047FEB7026E1BA4A0078CFAF /* shape_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEB6F26E1BA4A0078CFAF /* shape_data.swift */; };
 		047FEB7226E1BC570078CFAF /* fvshape_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEB7126E1BC570078CFAF /* fvshape_data.swift */; };
 		047FEB7426E1BD590078CFAF /* shape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEB7326E1BD590078CFAF /* shape.swift */; };
@@ -612,6 +613,7 @@
 		045B065C27295A68003E4B68 /* LitePhysicsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LitePhysicsManager.swift; sourceTree = "<group>"; };
 		045B065E2729831A003E4B68 /* LitePhysics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LitePhysics.swift; sourceTree = "<group>"; };
 		045B066227298591003E4B68 /* ColliderShapeUpAxis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColliderShapeUpAxis.swift; sourceTree = "<group>"; };
+		04605EFA272BC09800400350 /* PhysXView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXView.swift; sourceTree = "<group>"; };
 		047914CA26F37C0300BE5170 /* ShaderData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderData.swift; sourceTree = "<group>"; };
 		047E7B2B26EE257E006BC3FB /* MeshRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeshRenderer.swift; sourceTree = "<group>"; };
 		047FEB6F26E1BA4A0078CFAF /* shape_data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = shape_data.swift; sourceTree = "<group>"; };
@@ -1452,6 +1454,7 @@
 			isa = PBXGroup;
 			children = (
 				0497A1E626DF150500F61DE9 /* SceneLoaderView.swift */,
+				04605EFA272BC09800400350 /* PhysXView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -2094,6 +2097,7 @@
 				041BAEE5272A9DF4006268D5 /* CPxGeometry.mm in Sources */,
 				041BAE3B272A50E6006268D5 /* PlaneIntersectionType.swift in Sources */,
 				041BAE76272A512B006268D5 /* GLTFModelIO.m in Sources */,
+				04605EFB272BC09800400350 /* PhysXView.swift in Sources */,
 				041BAE38272A50E6006268D5 /* Vector4.swift in Sources */,
 				041BAEBD272A5166006268D5 /* LiteBoxColliderShape.swift in Sources */,
 				041BAE72272A5117006268D5 /* ShadowFeature.swift in Sources */,

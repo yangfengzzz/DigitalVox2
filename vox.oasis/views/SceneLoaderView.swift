@@ -12,10 +12,10 @@ struct SceneLoaderView: View {
     let engine: Engine
     let gltfLoader: GLTFAssetsLoader
     let usdzLoader: USDZAssetsLoader
-    
-    class Rotation : Script {
-        var angle:Float = 0
-        
+
+    class Rotation: Script {
+        var angle: Float = 0
+
         override func onUpdate(_ deltaTime: Float) {
             angle += 0.5
             entity.transform.setRotation(x: 0, y: angle, z: 0)
@@ -31,9 +31,9 @@ struct SceneLoaderView: View {
         let scene = engine.sceneManager.activeScene
         scene?.background.mode = .Sky
         scene?.background.sky.load("sky")
-        
+
         let rootEntity = scene!.createRootEntity()
-        
+
         let directLightNode = rootEntity.createChild("dir_light")
         let _: DirectLight = directLightNode.addComponent()
         directLightNode.transform.setPosition(x: 0, y: 0, z: 3)
@@ -50,7 +50,7 @@ struct SceneLoaderView: View {
             entities[0].transform.setPosition(x: 0, y: -2, z: 0)
             entities[0].transform.setScale(x: 0.1, y: 0.1, z: 0.1)
             entities[0].transform.setRotation(x: 0, y: 90, z: 0)
-            let _:Rotation = entities[0].addComponent()
+            let _: Rotation = entities[0].addComponent()
             rootEntity.addChild(entities[0])
         }
     }
@@ -60,7 +60,7 @@ struct SceneLoaderView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct SceneLoaderView_Previews: PreviewProvider {
     static var previews: some View {
         SceneLoaderView()
     }
