@@ -214,6 +214,8 @@
 		041BAF01272B76F7006268D5 /* CPxRigidActor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 041BAF00272B76F7006268D5 /* CPxRigidActor.mm */; };
 		041BAF04272B7737006268D5 /* CPxRigidStatic.mm in Sources */ = {isa = PBXBuildFile; fileRef = 041BAF03272B7737006268D5 /* CPxRigidStatic.mm */; };
 		041BAF0A272B7F9D006268D5 /* CPxRigidDynamic.mm in Sources */ = {isa = PBXBuildFile; fileRef = 041BAF09272B7F9D006268D5 /* CPxRigidDynamic.mm */; };
+		041BAF0C272B823A006268D5 /* PhysXStaticCollider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041BAF0B272B823A006268D5 /* PhysXStaticCollider.swift */; };
+		041BAF0E272B82CB006268D5 /* PhysXDynamicCollider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041BAF0D272B82CB006268D5 /* PhysXDynamicCollider.swift */; };
 		042BB13426EA3EA400604751 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 042BB13326EA3EA400604751 /* Logging */; };
 		042C841226E4A7AE00BD3733 /* sampling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042C841126E4A7AE00BD3733 /* sampling.swift */; };
 		043CB42326EF590B004A0B21 /* Matrix3x3.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB42226EF590B004A0B21 /* Matrix3x3.test.swift */; };
@@ -448,6 +450,8 @@
 		041BAF07272B7F5E006268D5 /* CPxRigidDynamic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPxRigidDynamic.h; sourceTree = "<group>"; };
 		041BAF08272B7F93006268D5 /* CPxRigidDynamic+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CPxRigidDynamic+Internal.h"; sourceTree = "<group>"; };
 		041BAF09272B7F9D006268D5 /* CPxRigidDynamic.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CPxRigidDynamic.mm; sourceTree = "<group>"; };
+		041BAF0B272B823A006268D5 /* PhysXStaticCollider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXStaticCollider.swift; sourceTree = "<group>"; };
+		041BAF0D272B82CB006268D5 /* PhysXDynamicCollider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXDynamicCollider.swift; sourceTree = "<group>"; };
 		041D1C46272A354600322BDF /* BoxColliderShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxColliderShape.swift; sourceTree = "<group>"; };
 		041D1C48272A360300322BDF /* CapsuleColliderShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapsuleColliderShape.swift; sourceTree = "<group>"; };
 		041D1C4A272A36B600322BDF /* PlaneColliderShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaneColliderShape.swift; sourceTree = "<group>"; };
@@ -1008,6 +1012,8 @@
 				041D1C53272A3FD400322BDF /* PhysXPhysics.swift */,
 				041BAED9272A949F006268D5 /* PhysXPhysicsMaterial.swift */,
 				041BAEFC272B7575006268D5 /* PhysXCollider.swift */,
+				041BAF0B272B823A006268D5 /* PhysXStaticCollider.swift */,
+				041BAF0D272B82CB006268D5 /* PhysXDynamicCollider.swift */,
 				041D1C57272A453700322BDF /* CPxPhysics.h */,
 				041D1C55272A452B00322BDF /* CPxPhysics.mm */,
 				041BAED3272A8AFE006268D5 /* CPxMaterial.h */,
@@ -1982,6 +1988,7 @@
 				041BAF01272B76F7006268D5 /* CPxRigidActor.mm in Sources */,
 				041BAE13272A500F006268D5 /* UpdateFlag.swift in Sources */,
 				041BAE1B272A5046006268D5 /* particle.metal in Sources */,
+				041BAF0C272B823A006268D5 /* PhysXStaticCollider.swift in Sources */,
 				041BAEC2272A516E006268D5 /* CPxPhysics.mm in Sources */,
 				041BAE2A272A50D9006268D5 /* EngineObject.swift in Sources */,
 				041BAE40272A50ED006268D5 /* SkinnedMeshRenderer.swift in Sources */,
@@ -2041,6 +2048,7 @@
 				041BAE4C272A50FB006268D5 /* PBRBaseMaterial.swift in Sources */,
 				041BAE5D272A510C006268D5 /* BlendState.swift in Sources */,
 				041BAE48272A50FB006268D5 /* BlendMode.swift in Sources */,
+				041BAF0E272B82CB006268D5 /* PhysXDynamicCollider.swift in Sources */,
 				041BAE06272A500F006268D5 /* GLTFAssetLoader.swift in Sources */,
 				041BAEDD272A99EE006268D5 /* PhysXColliderShape.swift in Sources */,
 				041BAE66272A510C006268D5 /* ShaderUniformBlock.swift in Sources */,

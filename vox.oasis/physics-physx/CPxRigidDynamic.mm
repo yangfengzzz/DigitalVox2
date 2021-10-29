@@ -19,4 +19,12 @@
     return self;
 }
 
+- (void)addForceWith:(simd_float3)force {
+    static_cast<PxRigidDynamic *>(super.c_actor)->addForce(PxVec3(force.x, force.y, force.z));
+}
+
+- (void)addTorqueWith:(simd_float3)torque {
+    static_cast<PxRigidDynamic *>(super.c_actor)->addTorque(PxVec3(torque.x, torque.y, torque.z));
+}
+
 @end

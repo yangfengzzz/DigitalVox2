@@ -13,6 +13,10 @@
 
 @interface CPxRigidDynamic : CPxRigidActor
 
+- (void) addForceWith: (simd_float3)force;
+
+- (void) addTorqueWith: (simd_float3)torque;
+
 @end
 
 #endif /* CPxRigidDynamic_h */
