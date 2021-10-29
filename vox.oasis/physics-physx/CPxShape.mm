@@ -67,8 +67,7 @@
             assert(false && "out of bounds");
             break;
     }
-
-
+    return -1;
 }
 
 @end
