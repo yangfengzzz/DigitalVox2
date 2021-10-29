@@ -38,7 +38,7 @@ class PhysXBoxColliderShape: PhysXColliderShape, IBoxColliderShape {
         _pxShape.setGeometry(_pxGeometry)
     }
 
-    func setWorldScale(scale: Vector3) {
+    override func setWorldScale(_ scale: Vector3) {
         scale.cloneTo(target: _scale)
         Vector3.multiply(left: _halfSize, right: _scale, out: PhysXBoxColliderShape._tempHalfExtents)
         (_pxGeometry as! CPxBoxGeometry).halfExtents = PhysXBoxColliderShape._tempHalfExtents.elements

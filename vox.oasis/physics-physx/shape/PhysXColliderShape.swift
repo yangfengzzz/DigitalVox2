@@ -21,7 +21,6 @@ enum ShapeFlag: UInt8 {
 class PhysXColliderShape: IColliderShape {
     static var halfSqrt: Float = 0.70710678118655
 
-
     var _position: Vector3 = Vector3()
     var _rotation: Quaternion = Quaternion(0, 0, PhysXColliderShape.halfSqrt, PhysXColliderShape.halfSqrt)
     var _scale: Vector3 = Vector3(1, 1, 1)

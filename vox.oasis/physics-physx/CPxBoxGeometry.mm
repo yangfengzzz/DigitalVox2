@@ -21,8 +21,8 @@ using namespace physx;
     return self;
 }
 
-- (void)sethalfExtents:(simd_float3)margin {
-    static_cast<PxBoxGeometry *>(super.c_geometry)->halfExtents = PxVec3(margin.x, margin.y, margin.z);
+- (void)setHalfExtents:(simd_float3)halfExtents {
+    static_cast<PxBoxGeometry *>(super.c_geometry)->halfExtents = PxVec3(halfExtents.x, halfExtents.y, halfExtents.z);
 }
 
 - (simd_float3)halfExtents {
