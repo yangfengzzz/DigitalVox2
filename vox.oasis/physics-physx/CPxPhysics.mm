@@ -13,12 +13,16 @@
 #import "CPxRigidDynamic+Internal.h"
 #import "CPxScene+Internal.h"
 #import "PxPhysicsAPI.h"
+#import "extensions/PxExtensionsAPI.h"
 #include <functional>
 
 using namespace physx;
 
 @implementation CPxPhysics {
     PxPhysics *_physics;
+    
+    PxDefaultAllocator gAllocator;
+    PxDefaultErrorCallback gErrorCallback;
 }
 
 // MARK: - Initialization
@@ -32,11 +36,13 @@ using namespace physx;
 }
 
 - (void)initializePhysics {
-    PxDefaultAllocator gAllocator;
-    PxDefaultErrorCallback gErrorCallback;
     physx::PxFoundation *gFoundation = PxCreateFoundation(PX_PHYSICS_VERSION, gAllocator, gErrorCallback);
 
     _physics = PxCreatePhysics(PX_PHYSICS_VERSION, *gFoundation, PxTolerancesScale(), false, nullptr);
+}
+
+- (bool) initExtensions {
+    return PxInitExtensions(*_physics, nullptr);
 }
 
 - (CPxMaterial *)createMaterialWithStaticFriction:(float)staticFriction

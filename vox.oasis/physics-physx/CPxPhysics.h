@@ -18,6 +18,8 @@
 #import "CPxScene.h"
 
 @interface CPxPhysics : NSObject
+- (bool) initExtensions;
+
 - (CPxMaterial *_Nonnull)createMaterialWithStaticFriction:(float)staticFriction
                                           dynamicFriction:(float)dynamicFriction
                                               restitution:(float)restitution;

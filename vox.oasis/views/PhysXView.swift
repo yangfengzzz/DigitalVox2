@@ -13,8 +13,8 @@ struct PhysXView: View {
 
     init() {
         canvas = Canvas()
-        // PhysXPhysics.initialization()
-        engine = Engine(canvas, MetalRenderer(), physics: LitePhysics.self)
+        PhysXPhysics.initialization()
+        engine = Engine(canvas, MetalRenderer(), physics: PhysXPhysics.self)
         let scene = engine.sceneManager.activeScene
         let rootEntity = scene!.createRootEntity()
 

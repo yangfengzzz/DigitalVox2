@@ -62,5 +62,6 @@ class PhysXPhysics: IPhysics {
 
     static func initialization() {
         _pxPhysics = CPxPhysics()
+        _pxPhysics.initExtensions()
     }
 }
