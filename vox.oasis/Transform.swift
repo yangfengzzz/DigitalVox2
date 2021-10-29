@@ -228,7 +228,7 @@ extension Transform {
                 if (_getParentTransform() != nil) {
                     let scaleMat = _getScaleMatrix()
                     let e = scaleMat.elements
-                    _ = _lossyWorldScale.setValue(x: e.columns.0[0], y: e.columns.1[0], z: e.columns.2[0])
+                    _ = _lossyWorldScale.setValue(x: e.columns.0[0], y: e.columns.1[1], z: e.columns.2[2])
                 } else {
                     _scale.cloneTo(target: _lossyWorldScale)
                 }

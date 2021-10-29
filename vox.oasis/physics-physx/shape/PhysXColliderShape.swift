@@ -75,7 +75,7 @@ class PhysXColliderShape: IColliderShape {
         _pxShape = PhysXPhysics._pxPhysics.createShape(
                 with: _pxGeometry,
                 material: material._pxMaterial,
-                isExclusive: false,
+                isExclusive: true,
                 shapeFlags: _shapeFlags
         )
     }
