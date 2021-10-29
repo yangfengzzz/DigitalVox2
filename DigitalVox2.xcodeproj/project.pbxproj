@@ -208,6 +208,8 @@
 		041BAEF0272B6F74006268D5 /* CPxPlaneGeometry.mm in Sources */ = {isa = PBXBuildFile; fileRef = 041BAEEF272B6F74006268D5 /* CPxPlaneGeometry.mm */; };
 		041BAEF5272B6FA0006268D5 /* CPxSphereGeometry.mm in Sources */ = {isa = PBXBuildFile; fileRef = 041BAEF4272B6FA0006268D5 /* CPxSphereGeometry.mm */; };
 		041BAEF7272B71C9006268D5 /* PhysXSphereColliderShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041BAEF6272B71C9006268D5 /* PhysXSphereColliderShape.swift */; };
+		041BAEF9272B7305006268D5 /* PhysXCapsuleColliderShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041BAEF8272B7305006268D5 /* PhysXCapsuleColliderShape.swift */; };
+		041BAEFB272B74A3006268D5 /* PhysXPlaneColliderShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041BAEFA272B74A3006268D5 /* PhysXPlaneColliderShape.swift */; };
 		042BB13426EA3EA400604751 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 042BB13326EA3EA400604751 /* Logging */; };
 		042C841226E4A7AE00BD3733 /* sampling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042C841126E4A7AE00BD3733 /* sampling.swift */; };
 		043CB42326EF590B004A0B21 /* Matrix3x3.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB42226EF590B004A0B21 /* Matrix3x3.test.swift */; };
@@ -430,6 +432,8 @@
 		041BAEF3272B6F98006268D5 /* CPxSphereGeometry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPxSphereGeometry.h; sourceTree = "<group>"; };
 		041BAEF4272B6FA0006268D5 /* CPxSphereGeometry.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CPxSphereGeometry.mm; sourceTree = "<group>"; };
 		041BAEF6272B71C9006268D5 /* PhysXSphereColliderShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXSphereColliderShape.swift; sourceTree = "<group>"; };
+		041BAEF8272B7305006268D5 /* PhysXCapsuleColliderShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXCapsuleColliderShape.swift; sourceTree = "<group>"; };
+		041BAEFA272B74A3006268D5 /* PhysXPlaneColliderShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXPlaneColliderShape.swift; sourceTree = "<group>"; };
 		041D1C46272A354600322BDF /* BoxColliderShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxColliderShape.swift; sourceTree = "<group>"; };
 		041D1C48272A360300322BDF /* CapsuleColliderShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapsuleColliderShape.swift; sourceTree = "<group>"; };
 		041D1C4A272A36B600322BDF /* PlaneColliderShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaneColliderShape.swift; sourceTree = "<group>"; };
@@ -977,6 +981,8 @@
 				041BAEDC272A99EE006268D5 /* PhysXColliderShape.swift */,
 				041BAEE2272A9C6D006268D5 /* PhysXBoxColliderShape.swift */,
 				041BAEF6272B71C9006268D5 /* PhysXSphereColliderShape.swift */,
+				041BAEF8272B7305006268D5 /* PhysXCapsuleColliderShape.swift */,
+				041BAEFA272B74A3006268D5 /* PhysXPlaneColliderShape.swift */,
 			);
 			path = shape;
 			sourceTree = "<group>";
@@ -2006,6 +2012,7 @@
 				041BAE50272A50FB006268D5 /* PBRMaterial.swift in Sources */,
 				041BAE22272A5046006268D5 /* pbr.metal in Sources */,
 				041BAE58272A510C006268D5 /* DepthState.swift in Sources */,
+				041BAEF9272B7305006268D5 /* PhysXCapsuleColliderShape.swift in Sources */,
 				041BAE4C272A50FB006268D5 /* PBRBaseMaterial.swift in Sources */,
 				041BAE5D272A510C006268D5 /* BlendState.swift in Sources */,
 				041BAE48272A50FB006268D5 /* BlendMode.swift in Sources */,
@@ -2080,6 +2087,7 @@
 				041BAE7E272A513B006268D5 /* ColliderShapeUpAxis.swift in Sources */,
 				041BAE1F272A5046006268D5 /* unlit.metal in Sources */,
 				041BAE5B272A510C006268D5 /* Shader.swift in Sources */,
+				041BAEFB272B74A3006268D5 /* PhysXPlaneColliderShape.swift in Sources */,
 				041BAE7D272A512B006268D5 /* GLTFAssetReader.m in Sources */,
 				041BAE54272A5100006268D5 /* RenderPass.swift in Sources */,
 				041BAE64272A510C006268D5 /* ShaderMacroCollection.swift in Sources */,
