@@ -15,6 +15,7 @@
 #import "CPxShape.h"
 #import "CPxRigidStatic.h"
 #import "CPxRigidDynamic.h"
+#import "CPxScene.h"
 
 @interface CPxPhysics : NSObject
 - (CPxMaterial *)createMaterialWithStaticFriction:(float)staticFriction
@@ -29,6 +30,8 @@
 - (CPxRigidStatic *)createRigidStaticWithPosition:(simd_float3)position rotation:(simd_quatf)rotation;
 
 - (CPxRigidDynamic *)createRigidDynamicWithPosition:(simd_float3)position rotation:(simd_quatf)rotation;
+
+- (CPxScene *)createScene;
 
 @end
 

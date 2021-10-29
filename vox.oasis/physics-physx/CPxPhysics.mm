@@ -11,6 +11,7 @@
 #import "CPxShape+Internal.h"
 #import "CPxRigidStatic+Internal.h"
 #import "CPxRigidDynamic+Internal.h"
+#import "CPxScene+Internal.h"
 #import "PxPhysicsAPI.h"
 
 using namespace physx;
@@ -66,5 +67,14 @@ using namespace physx;
                             rotation.vector.z, rotation.vector.w)))];
 }
 
+- (CPxScene *)createScene {
+    PxSceneDesc sceneDesc(_physics->getTolerancesScale());
+    sceneDesc.gravity = PxVec3(0.0f, -9.81f, 0.0f);
+    PxDefaultCpuDispatcher *gDispatcher = PxDefaultCpuDispatcherCreate(1);
+    sceneDesc.cpuDispatcher = gDispatcher;
+    sceneDesc.filterShader = PxDefaultSimulationFilterShader;
+
+    return [[CPxScene alloc] initWithScene:_physics->createScene(sceneDesc)];
+}
 
 @end

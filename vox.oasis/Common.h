@@ -47,5 +47,6 @@
 #include "CPxRigidActor.h"
 #include "CPxRigidStatic.h"
 #include "CPxRigidDynamic.h"
+#include "CPxScene.h"
 
 #endif /* Common_h */
