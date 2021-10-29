@@ -20,7 +20,11 @@ class PhysXPhysicsManager: IPhysicsManager {
          _ onTriggerEnter: ((Int, Int) -> Void)?,
          _ onTriggerExit: ((Int, Int) -> Void)?,
          _ onTriggerStay: ((Int, Int) -> Void)?) {
-        _pxScene = PhysXPhysics._pxPhysics.createScene()
+        _pxScene = PhysXPhysics._pxPhysics.createScene({ (obj1: CPxShape?, obj2: CPxShape?) in },
+                onContactExit: { (obj1: CPxShape?, obj2: CPxShape?) in },
+                onContactStay: { (obj1: CPxShape?, obj2: CPxShape?) in },
+                onTriggerEnter: { (obj1: CPxShape?, obj2: CPxShape?) in },
+                onTriggerExit: { (obj1: CPxShape?, obj2: CPxShape?) in })
     }
 
     func setGravity(_ gravity: Vector3) {
