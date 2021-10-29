@@ -45,4 +45,30 @@
     _c_shape->setMaterials(materials.data(), static_cast<PxU16>(materials.size()));
 }
 
+- (int)getQueryFilterData:(int)index {
+    switch (index) {
+        case 0:
+            return _c_shape->getQueryFilterData().word0;
+            break;
+
+        case 1:
+            return _c_shape->getQueryFilterData().word1;
+            break;
+
+        case 2:
+            return _c_shape->getQueryFilterData().word2;
+            break;
+
+        case 3:
+            return _c_shape->getQueryFilterData().word3;
+            break;
+
+        default:
+            assert(false && "out of bounds");
+            break;
+    }
+
+
+}
+
 @end

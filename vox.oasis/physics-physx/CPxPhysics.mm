@@ -134,14 +134,17 @@ using namespace physx;
     };
 
     PxSimulationEventCallbackWrapper *simulationEventCallback =
-            new PxSimulationEventCallbackWrapper(onContactEnter, onContactExit, onContactStay, onTriggerEnter, onTriggerExit, onTriggerStay);
+            new PxSimulationEventCallbackWrapper(onContactEnter, onContactExit, onContactStay,
+                    onTriggerEnter, onTriggerExit, onTriggerStay);
 
     PxSceneDesc sceneDesc(_physics->getTolerancesScale());
     sceneDesc.gravity = PxVec3(0.0f, -9.81f, 0.0f);
-    PxDefaultCpuDispatcher *gDispatcher = PxDefaultCpuDispatcherCreate(1);
-    sceneDesc.cpuDispatcher = gDispatcher;
+    sceneDesc.cpuDispatcher = PxDefaultCpuDispatcherCreate(1);
     sceneDesc.filterShader = PxDefaultSimulationFilterShader;
     sceneDesc.simulationEventCallback = simulationEventCallback;
+    sceneDesc.kineKineFilteringMode = PxPairFilteringMode::eKEEP;
+    sceneDesc.staticKineFilteringMode = PxPairFilteringMode::eKEEP;
+    sceneDesc.flags |= PxSceneFlag::eENABLE_CCD;
 
     return [[CPxScene alloc] initWithScene:_physics->createScene(sceneDesc)];
 }

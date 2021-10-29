@@ -140,7 +140,7 @@ class LitePhysicsManager: IPhysicsManager {
     }
 
     private func _getTrigger(_ index1: Int, _ index2: Int) -> TriggerEvent {
-        let event = _eventPool.count != 0 ? _eventPool.popLast() : TriggerEvent(index1: index1, index2: index2)
+        let event = _eventPool.count != 0 ? _eventPool.popLast() : TriggerEvent(index1, index2)
         _eventMap[index1]![index2] = event
         return event!
     }
@@ -282,7 +282,7 @@ class TriggerEvent: EmptyInit {
         state = .Exit
     }
 
-    init(index1: Int, index2: Int) {
+    init(_ index1: Int, _ index2: Int) {
         self.index1 = index1
         self.index2 = index2
         state = .Exit

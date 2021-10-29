@@ -18,25 +18,25 @@
 #import "CPxScene.h"
 
 @interface CPxPhysics : NSObject
-- (CPxMaterial *)createMaterialWithStaticFriction:(float)staticFriction
-                                  dynamicFriction:(float)dynamicFriction
-                                      restitution:(float)restitution;
+- (CPxMaterial *_Nonnull)createMaterialWithStaticFriction:(float)staticFriction
+                                          dynamicFriction:(float)dynamicFriction
+                                              restitution:(float)restitution;
 
-- (CPxShape *)createShapeWithGeometry:(CPxGeometry *)geometry
-                             material:(CPxMaterial *)material
-                          isExclusive:(bool)isExclusive
-                           shapeFlags:(uint8_t)shapeFlags;
+- (CPxShape *_Nonnull)createShapeWithGeometry:(CPxGeometry *_Nonnull)geometry
+                                     material:(CPxMaterial *_Nonnull)material
+                                  isExclusive:(bool)isExclusive
+                                   shapeFlags:(uint8_t)shapeFlags;
 
-- (CPxRigidStatic *)createRigidStaticWithPosition:(simd_float3)position rotation:(simd_quatf)rotation;
+- (CPxRigidStatic *_Nonnull)createRigidStaticWithPosition:(simd_float3)position rotation:(simd_quatf)rotation;
 
-- (CPxRigidDynamic *)createRigidDynamicWithPosition:(simd_float3)position rotation:(simd_quatf)rotation;
+- (CPxRigidDynamic *_Nonnull)createRigidDynamicWithPosition:(simd_float3)position rotation:(simd_quatf)rotation;
 
-- (CPxScene *)createSceneWith:(void (^ _Nullable)(CPxShape *_Nonnull obj1, CPxShape *_Nonnull obj2))onContactEnter
-                onContactExit:(void (^ _Nullable)(CPxShape *_Nonnull obj1, CPxShape *_Nonnull obj2))onContactExit
-                onContactStay:(void (^ _Nullable)(CPxShape *_Nonnull obj1, CPxShape *_Nonnull obj2))onContactStay
-               onTriggerEnter:(void (^ _Nullable)(CPxShape *_Nonnull obj1, CPxShape *_Nonnull obj2))onTriggerEnter
-                onTriggerExit:(void (^ _Nullable)(CPxShape *_Nonnull obj1, CPxShape *_Nonnull obj2))onTriggerExit
-                onTriggerStay:(void (^ _Nullable)(CPxShape *_Nonnull obj1, CPxShape *_Nonnull obj2))onTriggerStay;
+- (CPxScene *_Nonnull)createSceneWith:(void (^ _Nullable)(CPxShape *_Nonnull obj1, CPxShape *_Nonnull obj2))onContactEnter
+                        onContactExit:(void (^ _Nullable)(CPxShape *_Nonnull obj1, CPxShape *_Nonnull obj2))onContactExit
+                        onContactStay:(void (^ _Nullable)(CPxShape *_Nonnull obj1, CPxShape *_Nonnull obj2))onContactStay
+                       onTriggerEnter:(void (^ _Nullable)(CPxShape *_Nonnull obj1, CPxShape *_Nonnull obj2))onTriggerEnter
+                        onTriggerExit:(void (^ _Nullable)(CPxShape *_Nonnull obj1, CPxShape *_Nonnull obj2))onTriggerExit
+                        onTriggerStay:(void (^ _Nullable)(CPxShape *_Nonnull obj1, CPxShape *_Nonnull obj2))onTriggerStay;
 
 
 @end

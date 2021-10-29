@@ -28,11 +28,10 @@ class PhysXPhysicsMaterial: IPhysicsMaterial {
          _ bounciness: Float,
          _ frictionCombine: CombineMode,
          _ bounceCombine: CombineMode) {
-        let pxMaterial = PhysXPhysics._pxPhysics.createMaterial(
+        _pxMaterial = PhysXPhysics._pxPhysics.createMaterial(
                 withStaticFriction: staticFriction,
                 dynamicFriction: dynamicFriction,
                 restitution: bounciness)
-        _pxMaterial = pxMaterial!
 
         _pxMaterial.setFrictionCombineMode(Int32(frictionCombine.rawValue))
         _pxMaterial.setRestitutionCombineMode(Int32(bounceCombine.rawValue))

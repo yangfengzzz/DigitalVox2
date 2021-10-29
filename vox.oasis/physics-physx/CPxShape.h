@@ -25,6 +25,8 @@
 
 - (void)setMaterial:(CPxMaterial *)material;
 
+- (int)getQueryFilterData:(int)index;
+
 @end
 
 #endif /* CPxShape_h */
