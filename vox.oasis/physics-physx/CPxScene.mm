@@ -43,5 +43,32 @@ using namespace physx;
     _scene->removeActor(*actor.c_actor);
 }
 
+- (bool)raycastSingleWith:(simd_float3)origin
+                  unitDir:(simd_float3)unitDir
+                 distance:(float)distance
+              outPosition:(simd_float3 *)outPosition
+                outNormal:(simd_float3 *)outNormal
+              outDistance:(float *)outDistance
+                 outIndex:(int *)outIndex {
+    PxRaycastHit hit = PxRaycastHit();
+    PxSceneQueryFilterData filterData = PxSceneQueryFilterData();
+    filterData.flags = PxQueryFlags(PxQueryFlag::eSTATIC | PxQueryFlag::eDYNAMIC);
+
+    bool result = PxSceneQueryExt::raycastSingle(*_scene,
+            PxVec3(origin.x, origin.y, origin.z),
+            PxVec3(unitDir.x, unitDir.y, unitDir.z),
+            distance, PxHitFlags(PxHitFlag::eDEFAULT),
+            hit, filterData);
+
+    if (result) {
+        *outPosition = simd_make_float3(hit.position.x, hit.position.y, hit.position.z);
+        *outNormal = simd_make_float3(hit.normal.x, hit.normal.y, hit.normal.z);
+        *outDistance = hit.distance;
+        *outIndex = hit.shape->getQueryFilterData().word0;
+    }
+
+    return result;
+}
+
 
 @end

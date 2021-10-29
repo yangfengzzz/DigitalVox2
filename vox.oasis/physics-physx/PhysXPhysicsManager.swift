@@ -101,7 +101,24 @@ class PhysXPhysicsManager: IPhysicsManager {
 
     func raycast(_ ray: Ray, _ distance: Float,
                  _ outHitResult: ((Int, Float, Vector3, Vector3) -> Void)?) -> Bool {
-        fatalError()
+        var index: Int32 = 0
+        var distance: Float = 0
+
+        let result = _pxScene.raycastSingle(
+                with: ray.origin.elements,
+                unitDir: ray.direction.elements,
+                distance: distance,
+                outPosition: &PhysXPhysicsManager._tempPosition.elements,
+                outNormal: &PhysXPhysicsManager._tempNormal.elements,
+                outDistance: &distance,
+                outIndex: &index
+        )
+
+        if (result && outHitResult != nil) {
+            outHitResult!(Int(index), distance, PhysXPhysicsManager._tempPosition, PhysXPhysicsManager._tempNormal)
+        }
+
+        return result
     }
 
     private func _simulate(_ elapsedTime: Float) {

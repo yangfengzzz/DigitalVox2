@@ -24,6 +24,14 @@
 
 - (void)removeActorWith:(CPxRigidActor *)actor;
 
+- (bool)raycastSingleWith:(simd_float3)origin
+                  unitDir:(simd_float3)unitDir
+                 distance:(float)distance
+              outPosition:(simd_float3 *)outPosition
+                outNormal:(simd_float3 *)outNormal
+              outDistance:(float *)outDistance
+                 outIndex:(int *)outIndex;
+
 @end
 
 #endif /* CPxScene_h */
