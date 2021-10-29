@@ -506,9 +506,10 @@ extension ShaderUniform {
     
     func uploadFragAny(_ shaderUniform: ShaderUniform, _ value: ShaderPropertyValueType) {
         switch value {
-        case .AnyType(var value):
-            _rhi.renderEncoder.setFragmentBytes(&value,
-                    length: bufferDataSize,
+        case .AnyType(let value):
+            var data = value as! EnvMapLight
+            _rhi.renderEncoder.setFragmentBytes(&data,
+                                                length: bufferDataSize,
                     index: shaderUniform.location)
         default:
             return
