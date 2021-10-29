@@ -64,6 +64,7 @@ struct PhysXView: View {
         let sphereCollider: DynamicCollider = sphereEntity.addComponent()
         let sphereColliderShape = SphereColliderShape()
         sphereColliderShape.radius = radius
+        sphereColliderShape.isTrigger = true
         sphereCollider.addShape(sphereColliderShape)
 
         class MoveScript: Script {

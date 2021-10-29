@@ -131,7 +131,7 @@ class PhysXPhysicsManager: IPhysicsManager {
 
     private func _getTrigger(_ index1: Int, _ index2: Int) -> TriggerEvent {
         let event = _eventPool.count != 0 ? _eventPool.popLast() : TriggerEvent(index1, index2)
-        _eventMap[index1]![index2]! = event!
+        _eventMap[index1]![index2] = event!
         return event!
     }
 
