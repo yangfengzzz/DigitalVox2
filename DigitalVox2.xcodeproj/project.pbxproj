@@ -27,7 +27,7 @@
 		041BAE06272A500F006268D5 /* GLTFAssetLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04198A21271D697500871A26 /* GLTFAssetLoader.swift */; };
 		041BAE07272A500F006268D5 /* Layer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBF326E603CD0078CFAF /* Layer.swift */; };
 		041BAE08272A500F006268D5 /* SceneFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DBA7DB2700B3C900C3B97C /* SceneFeature.swift */; };
-		041BAE09272A500F006268D5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A1E626DF150500F61DE9 /* ContentView.swift */; };
+		041BAE09272A500F006268D5 /* SceneLoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A1E626DF150500F61DE9 /* SceneLoaderView.swift */; };
 		041BAE0A272A500F006268D5 /* EngineFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DBA7D92700B32D00C3B97C /* EngineFeature.swift */; };
 		041BAE0B272A500F006268D5 /* EngineFeatureManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042A6697270142310019C2CE /* EngineFeatureManager.swift */; };
 		041BAE0C272A500F006268D5 /* SceneManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042BB13526EA404200604751 /* SceneManager.swift */; };
@@ -694,7 +694,7 @@
 		04874ED326F771F3005E3318 /* PBRMaterial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PBRMaterial.swift; sourceTree = "<group>"; };
 		0497A1E126DF150500F61DE9 /* vox.render.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vox.render.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0497A1E426DF150500F61DE9 /* voxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = voxApp.swift; path = ../vox.render/voxApp.swift; sourceTree = "<group>"; };
-		0497A1E626DF150500F61DE9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContentView.swift; path = ../vox.render/ContentView.swift; sourceTree = "<group>"; };
+		0497A1E626DF150500F61DE9 /* SceneLoaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneLoaderView.swift; sourceTree = "<group>"; };
 		0497A1E826DF150800F61DE9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0497A1EB26DF150800F61DE9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		0497A1ED26DF150800F61DE9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -899,7 +899,7 @@
 			isa = PBXGroup;
 			children = (
 				0497A1E426DF150500F61DE9 /* voxApp.swift */,
-				0497A1E626DF150500F61DE9 /* ContentView.swift */,
+				04605EF9272BC02500400350 /* views */,
 				0452ECC226DFA4590015BFB1 /* EngineView.swift */,
 				0452ECEC26DFA7870015BFB1 /* Canvas.swift */,
 				0452ECEE26DFA7B90015BFB1 /* InputManager.swift */,
@@ -1446,6 +1446,14 @@
 				042291B5272A23E3003A4C8B /* PhysicsMaterialCombineMode.swift */,
 			);
 			path = enums;
+			sourceTree = "<group>";
+		};
+		04605EF9272BC02500400350 /* views */ = {
+			isa = PBXGroup;
+			children = (
+				0497A1E626DF150500F61DE9 /* SceneLoaderView.swift */,
+			);
+			path = views;
 			sourceTree = "<group>";
 		};
 		047FEBCA26E5A1130078CFAF /* images */ = {
@@ -2022,7 +2030,7 @@
 				041BAE28272A50D9006268D5 /* CameraClearFlags.swift in Sources */,
 				041BAE2E272A50E6006268D5 /* SphericalHarmonics3.swift in Sources */,
 				041BAEB2272A5166006268D5 /* LiteDynamicCollider.swift in Sources */,
-				041BAE09272A500F006268D5 /* ContentView.swift in Sources */,
+				041BAE09272A500F006268D5 /* SceneLoaderView.swift in Sources */,
 				041BAE19272A5046006268D5 /* function-common.metal in Sources */,
 				041BAE6C272A5111006268D5 /* Light.swift in Sources */,
 				041BAEEE272B6F5B006268D5 /* CPxCapsuleGeometry.mm in Sources */,

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct SceneLoaderView: View {
     let canvas: Canvas
     let engine: Engine
     let gltfLoader: GLTFAssetsLoader
@@ -62,6 +62,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        SceneLoaderView()
     }
 }

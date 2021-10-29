@@ -11,7 +11,7 @@ import SwiftUI
 struct DigitalVox2App: App {
     var body: some SwiftUI.Scene {
         WindowGroup {
-            ContentView()
+            SceneLoaderView()
         }
     }
 }
