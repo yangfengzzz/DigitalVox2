@@ -18,7 +18,8 @@ class PhysXPhysics: IPhysics {
                                      _ onTriggerEnter: ((Int, Int) -> Void)?,
                                      _ onTriggerExit: ((Int, Int) -> Void)?,
                                      _ onTriggerStay: ((Int, Int) -> Void)?) -> IPhysicsManager {
-        fatalError()
+        PhysXPhysicsManager(onContactEnter, onContactExit, onContactStay,
+                             onTriggerEnter, onTriggerExit, onTriggerStay)
     }
 
     static func createDynamicCollider(_ position: Vector3, _ rotation: Quaternion) -> IDynamicCollider {
@@ -59,7 +60,7 @@ class PhysXPhysics: IPhysics {
         PhysXCapsuleColliderShape(uniqueID, radius, height, (material as! PhysXPhysicsMaterial))
     }
 
-    private static func _init() {
+    static func initialization() {
         _pxPhysics = CPxPhysics()
     }
 }

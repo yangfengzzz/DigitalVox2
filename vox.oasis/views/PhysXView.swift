@@ -13,6 +13,7 @@ struct PhysXView: View {
 
     init() {
         canvas = Canvas()
+        // PhysXPhysics.initialization()
         engine = Engine(canvas, MetalRenderer(), physics: LitePhysics.self)
         let scene = engine.sceneManager.activeScene
         let rootEntity = scene!.createRootEntity()
@@ -67,7 +68,7 @@ struct PhysXView: View {
 
         class MoveScript: Script {
             var pos: Vector3 = Vector3(-5, 0, 0)
-            var vel: Float = 0.005
+            var vel: Float = 4
             var velSign: Int = -1
 
             override func onUpdate(_ deltaTime: Float) {
@@ -96,7 +97,6 @@ struct PhysXView: View {
             }
 
             override func onTriggerStay(_ other: ColliderShape) {
-                print("lalala")
             }
 
             override func onTriggerEnter(_ other: ColliderShape) {
