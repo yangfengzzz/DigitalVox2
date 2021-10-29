@@ -17,7 +17,7 @@ class PhysXBoxColliderShape: PhysXColliderShape, IBoxColliderShape {
     ///   - uniqueID: UniqueID mark Shape.
     ///   - size: Size of Shape.
     ///   - material: Material of PhysXCollider.
-    init(uniqueID: Int, size: Vector3, material: PhysXPhysicsMaterial) {
+    init(_ uniqueID: Int, _ size: Vector3, _ material: PhysXPhysicsMaterial) {
         _ = _halfSize.setValue(x: size.x * 0.5, y: size.y * 0.5, z: size.z * 0.5)
         super.init()
 

@@ -22,12 +22,12 @@ enum CombineMode: Int {
 /// Physics material describes how to handle colliding objects (friction, bounciness).
 class PhysXPhysicsMaterial: IPhysicsMaterial {
     internal var _pxMaterial: CPxMaterial
-     
-    init(staticFriction: Float,
-            dynamicFriction: Float,
-            bounciness: Float,
-            frictionCombine: CombineMode,
-            bounceCombine: CombineMode) {
+
+    init(_ staticFriction: Float,
+         _ dynamicFriction: Float,
+         _ bounciness: Float,
+         _ frictionCombine: CombineMode,
+         _ bounceCombine: CombineMode) {
         let pxMaterial = PhysXPhysics._pxPhysics.createMaterial(
                 withStaticFriction: staticFriction,
                 dynamicFriction: dynamicFriction,

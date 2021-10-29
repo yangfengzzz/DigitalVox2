@@ -11,7 +11,7 @@ import Foundation
 class PhysXPhysics: IPhysics {
     /// Physx physics object
     internal static var _pxPhysics: CPxPhysics!
-    
+
     static func createPhysicsManager(_ onContactEnter: ((Int, Int) -> Void)?,
                                      _ onContactExit: ((Int, Int) -> Void)?,
                                      _ onContactStay: ((Int, Int) -> Void)?,
@@ -22,11 +22,11 @@ class PhysXPhysics: IPhysics {
     }
 
     static func createDynamicCollider(_ position: Vector3, _ rotation: Quaternion) -> IDynamicCollider {
-        fatalError()
+        PhysXDynamicCollider(position, rotation)
     }
 
     static func createStaticCollider(_ position: Vector3, _ rotation: Quaternion) -> IStaticCollider {
-        fatalError()
+        PhysXStaticCollider(position, rotation)
     }
 
     static func createPhysicsMaterial(_ staticFriction: Float,
@@ -34,29 +34,31 @@ class PhysXPhysics: IPhysics {
                                       _ bounciness: Float,
                                       _ frictionCombine: Int,
                                       _ bounceCombine: Int) -> IPhysicsMaterial {
-        fatalError()
+        PhysXPhysicsMaterial(staticFriction, dynamicFriction, bounciness,
+                CombineMode(rawValue: frictionCombine)!,
+                CombineMode(rawValue: bounceCombine)!)
     }
 
     static func createBoxColliderShape(_ uniqueID: Int, _ size: Vector3,
                                        _ material: IPhysicsMaterial) -> IBoxColliderShape {
-        fatalError()
+        PhysXBoxColliderShape(uniqueID, size, (material as! PhysXPhysicsMaterial))
     }
 
     static func createSphereColliderShape(_ uniqueID: Int, _ radius: Float,
                                           _ material: IPhysicsMaterial) -> ISphereColliderShape {
-        fatalError()
+        PhysXSphereColliderShape(uniqueID, radius, (material as! PhysXPhysicsMaterial))
     }
 
     static func createPlaneColliderShape(_ uniqueID: Int,
                                          _ material: IPhysicsMaterial) -> IPlaneColliderShape {
-        fatalError()
+        PhysXPlaneColliderShape(uniqueID, (material as! PhysXPhysicsMaterial))
     }
 
     static func createCapsuleColliderShape(_ uniqueID: Int, _ radius: Float, _ height: Float,
                                            _ material: IPhysicsMaterial) -> ICapsuleColliderShape {
-        fatalError()
+        PhysXCapsuleColliderShape(uniqueID, radius, height, (material as! PhysXPhysicsMaterial))
     }
-    
+
     private static func _init() {
         _pxPhysics = CPxPhysics()
     }

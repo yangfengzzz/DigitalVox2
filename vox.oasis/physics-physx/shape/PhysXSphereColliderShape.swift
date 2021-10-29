@@ -17,9 +17,9 @@ class PhysXSphereColliderShape: PhysXColliderShape, ISphereColliderShape {
     ///   - uniqueID: UniqueID mark collider
     ///   - radius: Size of SphereCollider
     ///   - material: Material of PhysXCollider
-    init(uniqueID: Int, radius: Float, material: PhysXPhysicsMaterial) {
+    init(_ uniqueID: Int, _ radius: Float, _ material: PhysXPhysicsMaterial) {
         _radius = radius
-        
+
         super.init()
 
         _pxGeometry = CPxSphereGeometry(radius: _radius * _maxScale)

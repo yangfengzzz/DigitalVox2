@@ -19,7 +19,7 @@ class PhysXCapsuleColliderShape: PhysXColliderShape, ICapsuleColliderShape {
     ///   - radius: Radius of CapsuleCollider
     ///   - height: Height of CapsuleCollider
     ///   - material: Material of PhysXCollider
-    init(uniqueID: Int, radius: Float, height: Float, material: PhysXPhysicsMaterial) {
+    init(_ uniqueID: Int, _ radius: Float, _ height: Float, _ material: PhysXPhysicsMaterial) {
         _radius = radius
         _halfHeight = height * 0.5
 

@@ -13,7 +13,7 @@ class PhysXPlaneColliderShape: PhysXColliderShape, IPlaneColliderShape {
     /// - Parameters:
     ///   - uniqueID: UniqueID mark collider
     ///   - material: Material of PhysXCollider
-    init(uniqueID: Int, material: PhysXPhysicsMaterial) {
+    init(_ uniqueID: Int, _ material: PhysXPhysicsMaterial) {
         super.init()
 
         _pxGeometry = CPxPlaneGeometry()
