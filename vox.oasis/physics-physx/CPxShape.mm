@@ -12,38 +12,37 @@
 #include <vector>
 
 @implementation CPxShape {
-    PxShape *_shape;
 }
 
 - (instancetype)initWithShape:(PxShape *)shape {
     self = [super init];
     if (self) {
-        _shape = shape;
+        _c_shape = shape;
     }
     return self;
 }
 
 - (void)setFlags:(uint8_t)inFlags {
-    _shape->setFlags(PxShapeFlags(inFlags));
+    _c_shape->setFlags(PxShapeFlags(inFlags));
 }
 
 - (void)setQueryFilterData:(uint32_t)w0 w1:(uint32_t)w1 w2:(uint32_t)w2 w3:(uint32_t)w3 {
-    _shape->setQueryFilterData(PxFilterData(w0, w1, w2, w3));
+    _c_shape->setQueryFilterData(PxFilterData(w0, w1, w2, w3));
 }
 
 - (void)setGeometry:(CPxGeometry *)geometry {
-    _shape->setGeometry(*geometry.c_geometry);
+    _c_shape->setGeometry(*geometry.c_geometry);
 }
 
 - (void)setLocalPose:(simd_float3)position rotation:(simd_quatf)rotation {
-    _shape->setLocalPose(PxTransform(PxVec3(position.x, position.y, position.z),
+    _c_shape->setLocalPose(PxTransform(PxVec3(position.x, position.y, position.z),
             PxQuat(rotation.vector.x, rotation.vector.y, rotation.vector.z, rotation.vector.w)));
 }
 
 - (void)setMaterial:(CPxMaterial *)material {
     std::vector<PxMaterial *> materials(1, nullptr);
     materials[0] = material.c_material;
-    _shape->setMaterials(materials.data(), materials.size());
+    _c_shape->setMaterials(materials.data(), static_cast<PxU16>(materials.size()));
 }
 
 @end

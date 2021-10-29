@@ -38,9 +38,14 @@
 
 #include "CPxPhysics.h"
 #include "CPxMaterial.h"
+
 #include "CPxBoxGeometry.h"
 #include "CPxSphereGeometry.h"
 #include "CPxCapsuleGeometry.h"
 #include "CPxPlaneGeometry.h"
+
+#include "CPxRigidActor.h"
+#include "CPxRigidStatic.h"
+#include "CPxRigidDynamic.h"
 
 #endif /* Common_h */

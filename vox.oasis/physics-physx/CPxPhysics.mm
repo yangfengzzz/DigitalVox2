@@ -9,6 +9,8 @@
 #import "CPxMaterial+Internal.h"
 #import "CPxGeometry+Internal.h"
 #import "CPxShape+Internal.h"
+#import "CPxRigidStatic+Internal.h"
+#import "CPxRigidDynamic+Internal.h"
 #import "PxPhysicsAPI.h"
 
 using namespace physx;
@@ -47,6 +49,21 @@ using namespace physx;
                            shapeFlags:(uint8_t)shapeFlags {
     return [[CPxShape alloc] initWithShape:_physics->createShape(*geometry.c_geometry, *material.c_material,
             isExclusive, PxShapeFlags(shapeFlags))];
+}
+
+- (CPxRigidStatic *)createRigidStaticWithPosition:(simd_float3)position
+                                         rotation:(simd_quatf)rotation {
+    return [[CPxRigidStatic alloc]
+            initWithStaticActor:_physics->createRigidStatic(PxTransform(PxVec3(position.x, position.y, position.z),
+                    PxQuat(rotation.vector.x, rotation.vector.y,
+                            rotation.vector.z, rotation.vector.w)))];
+}
+
+- (CPxRigidDynamic *)createRigidDynamicWithPosition:(simd_float3)position rotation:(simd_quatf)rotation {
+    return [[CPxRigidDynamic alloc]
+            initWithDynamicActor:_physics->createRigidDynamic(PxTransform(PxVec3(position.x, position.y, position.z),
+                    PxQuat(rotation.vector.x, rotation.vector.y,
+                            rotation.vector.z, rotation.vector.w)))];
 }
 
 

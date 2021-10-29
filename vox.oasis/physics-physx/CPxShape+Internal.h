@@ -15,6 +15,8 @@ using namespace physx;
 
 @interface CPxShape ()
 
+@property(nonatomic, readonly) PxShape *c_shape;
+
 - (instancetype)initWithShape:(PxShape *)shape;
 
 @end

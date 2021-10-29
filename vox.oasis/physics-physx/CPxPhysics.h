@@ -9,9 +9,12 @@
 #define CPxPhysics_h
 
 #import <Foundation/Foundation.h>
+#import <simd/simd.h>
 #import "CPxMaterial.h"
 #import "CPxGeometry.h"
 #import "CPxShape.h"
+#import "CPxRigidStatic.h"
+#import "CPxRigidDynamic.h"
 
 @interface CPxPhysics : NSObject
 - (CPxMaterial *)createMaterialWithStaticFriction:(float)staticFriction
@@ -22,6 +25,11 @@
                              material:(CPxMaterial *)material
                           isExclusive:(bool)isExclusive
                            shapeFlags:(uint8_t)shapeFlags;
+
+- (CPxRigidStatic *)createRigidStaticWithPosition:(simd_float3)position rotation:(simd_quatf)rotation;
+
+- (CPxRigidDynamic *)createRigidDynamicWithPosition:(simd_float3)position rotation:(simd_quatf)rotation;
+
 @end
 
 #endif /* CPxPhysics_h */
