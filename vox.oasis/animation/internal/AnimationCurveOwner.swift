@@ -7,18 +7,20 @@
 
 import Foundation
 
-internal class AnimationCurveOwner<type: Component> {
+internal class AnimationCurveOwner {
     var crossCurveMark: Int = 0
     var crossCurveIndex: Int!
 
     var target: Entity
+    var type: Component.Type
     var property: AnimationProperty
     var component: Component
     var defaultValue: InterpolableValue
     var fixedPoseValue: InterpolableValue
 
-    init(target: Entity, property: AnimationProperty) {
+    init(target: Entity, type: Component.Type, property: AnimationProperty) {
         self.target = target
+        self.type = type
         self.property = property
         switch (property) {
         case AnimationProperty.Position:
