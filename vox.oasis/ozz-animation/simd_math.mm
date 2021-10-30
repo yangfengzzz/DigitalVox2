@@ -418,449 +418,459 @@ inline SimdFloat4 DivX(_SimdFloat4 _a, _SimdFloat4 _b) {
     return hadd4;
 }
 
-+ (SimdFloat4) Dot2With:(_SimdFloat4) _a :(_SimdFloat4) _b {
-  __m128 dot2;
-  OZZ_SSE_DOT2_F(_a, _b, dot2);
-  return dot2;
++ (SimdFloat4)Dot2With:(_SimdFloat4)_a :(_SimdFloat4)_b {
+    __m128 dot2;
+    OZZ_SSE_DOT2_F(_a, _b, dot2);
+    return dot2;
 }
 
-+ (SimdFloat4) Dot3With:(_SimdFloat4) _a :(_SimdFloat4) _b {
-  __m128 dot3;
-  OZZ_SSE_DOT3_F(_a, _b, dot3);
-  return dot3;
++ (SimdFloat4)Dot3With:(_SimdFloat4)_a :(_SimdFloat4)_b {
+    __m128 dot3;
+    OZZ_SSE_DOT3_F(_a, _b, dot3);
+    return dot3;
 }
 
-+ (SimdFloat4) Dot4With:(_SimdFloat4) _a :(_SimdFloat4) _b {
-  __m128 dot4;
-  OZZ_SSE_DOT4_F(_a, _b, dot4);
-  return dot4;
++ (SimdFloat4)Dot4With:(_SimdFloat4)_a :(_SimdFloat4)_b {
+    __m128 dot4;
+    OZZ_SSE_DOT4_F(_a, _b, dot4);
+    return dot4;
 }
 
-+ (SimdFloat4) Cross3With:(_SimdFloat4) _a :(_SimdFloat4) _b {
-  // Implementation with 3 shuffles only is based on:
-  // https://geometrian.com/programming/tutorials/cross-product
-  const __m128 shufa = OZZ_SHUFFLE_PS1(_a, _MM_SHUFFLE(3, 0, 2, 1));
-  const __m128 shufb = OZZ_SHUFFLE_PS1(_b, _MM_SHUFFLE(3, 0, 2, 1));
-  const __m128 shufc = OZZ_MSUB(_a, shufb, _mm_mul_ps(_b, shufa));
-  return OZZ_SHUFFLE_PS1(shufc, _MM_SHUFFLE(3, 0, 2, 1));
++ (SimdFloat4)Cross3With:(_SimdFloat4)_a :(_SimdFloat4)_b {
+    // Implementation with 3 shuffles only is based on:
+    // https://geometrian.com/programming/tutorials/cross-product
+    const __m128 shufa = OZZ_SHUFFLE_PS1(_a, _MM_SHUFFLE(3, 0, 2, 1));
+    const __m128 shufb = OZZ_SHUFFLE_PS1(_b, _MM_SHUFFLE(3, 0, 2, 1));
+    const __m128 shufc = OZZ_MSUB(_a, shufb, _mm_mul_ps(_b, shufa));
+    return OZZ_SHUFFLE_PS1(shufc, _MM_SHUFFLE(3, 0, 2, 1));
 }
 
-+ (SimdFloat4) RcpEstWith:(_SimdFloat4) _v {
++ (SimdFloat4)RcpEstWith:(_SimdFloat4)_v {
     return _mm_rcp_ps(_v);
 }
 
-+ (SimdFloat4) RcpEstNRWith:(_SimdFloat4) _v {
-  const __m128 nr = _mm_rcp_ps(_v);
-  // Do one more Newton-Raphson step to improve precision.
-  return OZZ_NMADD(_mm_mul_ps(nr, nr), _v, _mm_add_ps(nr, nr));
++ (SimdFloat4)RcpEstNRWith:(_SimdFloat4)_v {
+    const __m128 nr = _mm_rcp_ps(_v);
+    // Do one more Newton-Raphson step to improve precision.
+    return OZZ_NMADD(_mm_mul_ps(nr, nr), _v, _mm_add_ps(nr, nr));
 }
 
-+ (SimdFloat4) RcpEstXWith:(_SimdFloat4) _v { return _mm_rcp_ss(_v); }
-
-+ (SimdFloat4) RcpEstXNRWith:(_SimdFloat4) _v {
-  const __m128 nr = _mm_rcp_ss(_v);
-  // Do one more Newton-Raphson step to improve precision.
-  return OZZ_NMADDX(_mm_mul_ss(nr, nr), _v, _mm_add_ss(nr, nr));
++ (SimdFloat4)RcpEstXWith:(_SimdFloat4)_v {
+    return _mm_rcp_ss(_v);
 }
 
-+ (SimdFloat4) SqrtWith:(_SimdFloat4) _v { return _mm_sqrt_ps(_v); }
-
-+ (SimdFloat4) SqrtXWith:(_SimdFloat4) _v { return _mm_sqrt_ss(_v); }
-
-+ (SimdFloat4) RSqrtEstWith:(_SimdFloat4) _v { return _mm_rsqrt_ps(_v); }
-
-+ (SimdFloat4) RSqrtEstNRWith:(_SimdFloat4) _v {
-  const __m128 nr = _mm_rsqrt_ps(_v);
-  // Do one more Newton-Raphson step to improve precision.
-  return _mm_mul_ps(_mm_mul_ps(_mm_set_ps1(.5f), nr),
-                    OZZ_NMADD(_mm_mul_ps(_v, nr), nr, _mm_set_ps1(3.f)));
++ (SimdFloat4)RcpEstXNRWith:(_SimdFloat4)_v {
+    const __m128 nr = _mm_rcp_ss(_v);
+    // Do one more Newton-Raphson step to improve precision.
+    return OZZ_NMADDX(_mm_mul_ss(nr, nr), _v, _mm_add_ss(nr, nr));
 }
 
-+ (SimdFloat4) RSqrtEstXWith:(_SimdFloat4) _v { return _mm_rsqrt_ss(_v); }
-
-+ (SimdFloat4) RSqrtEstXNRWith:(_SimdFloat4) _v {
-  const __m128 nr = _mm_rsqrt_ss(_v);
-  // Do one more Newton-Raphson step to improve precision.
-  return _mm_mul_ss(_mm_mul_ss(_mm_set_ps1(.5f), nr),
-                    OZZ_NMADDX(_mm_mul_ss(_v, nr), nr, _mm_set_ps1(3.f)));
++ (SimdFloat4)SqrtWith:(_SimdFloat4)_v {
+    return _mm_sqrt_ps(_v);
 }
 
-+ (SimdFloat4) AbsWith:(_SimdFloat4) _v {
-  const __m128i zero = _mm_setzero_si128();
-  return _mm_and_ps(
-      _mm_castsi128_ps(_mm_srli_epi32(_mm_cmpeq_epi32(zero, zero), 1)), _v);
++ (SimdFloat4)SqrtXWith:(_SimdFloat4)_v {
+    return _mm_sqrt_ss(_v);
 }
 
-+ (SimdInt4) SignWith:(_SimdFloat4) _v {
-  return _mm_slli_epi32(_mm_srli_epi32(_mm_castps_si128(_v), 31), 31);
++ (SimdFloat4)RSqrtEstWith:(_SimdFloat4)_v {
+    return _mm_rsqrt_ps(_v);
 }
 
-+ (SimdFloat4) Length2With:(_SimdFloat4) _v {
-  __m128 sq_len;
-  OZZ_SSE_DOT2_F(_v, _v, sq_len);
-  return _mm_sqrt_ss(sq_len);
++ (SimdFloat4)RSqrtEstNRWith:(_SimdFloat4)_v {
+    const __m128 nr = _mm_rsqrt_ps(_v);
+    // Do one more Newton-Raphson step to improve precision.
+    return _mm_mul_ps(_mm_mul_ps(_mm_set_ps1(.5f), nr),
+            OZZ_NMADD(_mm_mul_ps(_v, nr), nr, _mm_set_ps1(3.f)));
 }
 
-+ (SimdFloat4) Length3With:(_SimdFloat4) _v {
-  __m128 sq_len;
-  OZZ_SSE_DOT3_F(_v, _v, sq_len);
-  return _mm_sqrt_ss(sq_len);
++ (SimdFloat4)RSqrtEstXWith:(_SimdFloat4)_v {
+    return _mm_rsqrt_ss(_v);
 }
 
-+ (SimdFloat4) Length4With:(_SimdFloat4) _v {
-  __m128 sq_len;
-  OZZ_SSE_DOT4_F(_v, _v, sq_len);
-  return _mm_sqrt_ss(sq_len);
++ (SimdFloat4)RSqrtEstXNRWith:(_SimdFloat4)_v {
+    const __m128 nr = _mm_rsqrt_ss(_v);
+    // Do one more Newton-Raphson step to improve precision.
+    return _mm_mul_ss(_mm_mul_ss(_mm_set_ps1(.5f), nr),
+            OZZ_NMADDX(_mm_mul_ss(_v, nr), nr, _mm_set_ps1(3.f)));
 }
 
-+ (SimdFloat4) Length2SqrWith:(_SimdFloat4) _v {
-  __m128 sq_len;
-  OZZ_SSE_DOT2_F(_v, _v, sq_len);
-  return sq_len;
++ (SimdFloat4)AbsWith:(_SimdFloat4)_v {
+    const __m128i zero = _mm_setzero_si128();
+    return _mm_and_ps(
+            _mm_castsi128_ps(_mm_srli_epi32(_mm_cmpeq_epi32(zero, zero), 1)), _v);
 }
 
-+ (SimdFloat4) Length3SqrWith:(_SimdFloat4) _v {
-  __m128 sq_len;
-  OZZ_SSE_DOT3_F(_v, _v, sq_len);
-  return sq_len;
++ (SimdInt4)SignWith:(_SimdFloat4)_v {
+    return _mm_slli_epi32(_mm_srli_epi32(_mm_castps_si128(_v), 31), 31);
 }
 
-+ (SimdFloat4) Length4SqrWith:(_SimdFloat4) _v {
-  __m128 sq_len;
-  OZZ_SSE_DOT4_F(_v, _v, sq_len);
-  return sq_len;
++ (SimdFloat4)Length2With:(_SimdFloat4)_v {
+    __m128 sq_len;
+    OZZ_SSE_DOT2_F(_v, _v, sq_len);
+    return _mm_sqrt_ss(sq_len);
 }
 
-+ (SimdFloat4) Normalize2With:(_SimdFloat4) _v {
-  __m128 sq_len;
-  OZZ_SSE_DOT2_F(_v, _v, sq_len);
-  assert(_mm_cvtss_f32(sq_len) != 0.f && "_v is not normalizable");
-  const __m128 inv_len = _mm_div_ss([OZZFloat4 one], _mm_sqrt_ss(sq_len));
-  const __m128 inv_lenxxxx = OZZ_SSE_SPLAT_F(inv_len, 0);
-  const __m128 norm = _mm_mul_ps(_v, inv_lenxxxx);
-  return _mm_movelh_ps(norm, _mm_movehl_ps(_v, _v));
++ (SimdFloat4)Length3With:(_SimdFloat4)_v {
+    __m128 sq_len;
+    OZZ_SSE_DOT3_F(_v, _v, sq_len);
+    return _mm_sqrt_ss(sq_len);
 }
 
-+ (SimdFloat4) Normalize3With:(_SimdFloat4) _v {
-  __m128 sq_len;
-  OZZ_SSE_DOT3_F(_v, _v, sq_len);
-  assert(_mm_cvtss_f32(sq_len) != 0.f && "_v is not normalizable");
-  const __m128 inv_len = _mm_div_ss([OZZFloat4 one], _mm_sqrt_ss(sq_len));
-  const __m128 vwxyz = OZZ_SHUFFLE_PS1(_v, _MM_SHUFFLE(0, 1, 2, 3));
-  const __m128 inv_lenxxxx = OZZ_SSE_SPLAT_F(inv_len, 0);
-  const __m128 normwxyz = _mm_move_ss(_mm_mul_ps(vwxyz, inv_lenxxxx), vwxyz);
-  return OZZ_SHUFFLE_PS1(normwxyz, _MM_SHUFFLE(0, 1, 2, 3));
++ (SimdFloat4)Length4With:(_SimdFloat4)_v {
+    __m128 sq_len;
+    OZZ_SSE_DOT4_F(_v, _v, sq_len);
+    return _mm_sqrt_ss(sq_len);
 }
 
-+ (SimdFloat4) Normalize4With:(_SimdFloat4) _v {
-  __m128 sq_len;
-  OZZ_SSE_DOT4_F(_v, _v, sq_len);
-  assert(_mm_cvtss_f32(sq_len) != 0.f && "_v is not normalizable");
-  const __m128 inv_len = _mm_div_ss([OZZFloat4 one], _mm_sqrt_ss(sq_len));
-  const __m128 inv_lenxxxx = OZZ_SSE_SPLAT_F(inv_len, 0);
-  return _mm_mul_ps(_v, inv_lenxxxx);
++ (SimdFloat4)Length2SqrWith:(_SimdFloat4)_v {
+    __m128 sq_len;
+    OZZ_SSE_DOT2_F(_v, _v, sq_len);
+    return sq_len;
 }
 
-+ (SimdFloat4) NormalizeEst2With:(_SimdFloat4) _v {
-  __m128 sq_len;
-  OZZ_SSE_DOT2_F(_v, _v, sq_len);
-  assert(_mm_cvtss_f32(sq_len) != 0.f && "_v is not normalizable");
-  const __m128 inv_len = _mm_rsqrt_ss(sq_len);
-  const __m128 inv_lenxxxx = OZZ_SSE_SPLAT_F(inv_len, 0);
-  const __m128 norm = _mm_mul_ps(_v, inv_lenxxxx);
-  return _mm_movelh_ps(norm, _mm_movehl_ps(_v, _v));
++ (SimdFloat4)Length3SqrWith:(_SimdFloat4)_v {
+    __m128 sq_len;
+    OZZ_SSE_DOT3_F(_v, _v, sq_len);
+    return sq_len;
 }
 
-+ (SimdFloat4) NormalizeEst3With:(_SimdFloat4) _v {
-  __m128 sq_len;
-  OZZ_SSE_DOT3_F(_v, _v, sq_len);
-  assert(_mm_cvtss_f32(sq_len) != 0.f && "_v is not normalizable");
-  const __m128 inv_len = _mm_rsqrt_ss(sq_len);
-  const __m128 vwxyz = OZZ_SHUFFLE_PS1(_v, _MM_SHUFFLE(0, 1, 2, 3));
-  const __m128 inv_lenxxxx = OZZ_SSE_SPLAT_F(inv_len, 0);
-  const __m128 normwxyz = _mm_move_ss(_mm_mul_ps(vwxyz, inv_lenxxxx), vwxyz);
-  return OZZ_SHUFFLE_PS1(normwxyz, _MM_SHUFFLE(0, 1, 2, 3));
++ (SimdFloat4)Length4SqrWith:(_SimdFloat4)_v {
+    __m128 sq_len;
+    OZZ_SSE_DOT4_F(_v, _v, sq_len);
+    return sq_len;
 }
 
-+ (SimdFloat4) NormalizeEst4With:(_SimdFloat4) _v {
-  __m128 sq_len;
-  OZZ_SSE_DOT4_F(_v, _v, sq_len);
-  assert(_mm_cvtss_f32(sq_len) != 0.f && "_v is not normalizable");
-  const __m128 inv_len = _mm_rsqrt_ss(sq_len);
-  const __m128 inv_lenxxxx = OZZ_SSE_SPLAT_F(inv_len, 0);
-  return _mm_mul_ps(_v, inv_lenxxxx);
++ (SimdFloat4)Normalize2With:(_SimdFloat4)_v {
+    __m128 sq_len;
+    OZZ_SSE_DOT2_F(_v, _v, sq_len);
+    assert(_mm_cvtss_f32(sq_len) != 0.f && "_v is not normalizable");
+    const __m128 inv_len = _mm_div_ss([OZZFloat4 one], _mm_sqrt_ss(sq_len));
+    const __m128 inv_lenxxxx = OZZ_SSE_SPLAT_F(inv_len, 0);
+    const __m128 norm = _mm_mul_ps(_v, inv_lenxxxx);
+    return _mm_movelh_ps(norm, _mm_movehl_ps(_v, _v));
 }
 
-+ (SimdInt4) IsNormalized2With:(_SimdFloat4) _v {
-  const __m128 max = _mm_set_ss(1.f + kNormalizationToleranceSq);
-  const __m128 min = _mm_set_ss(1.f - kNormalizationToleranceSq);
-  __m128 dot;
-  OZZ_SSE_DOT2_F(_v, _v, dot);
-  __m128 dotx000 = _mm_move_ss(_mm_setzero_ps(), dot);
-  return _mm_castps_si128(
-      _mm_and_ps(_mm_cmplt_ss(dotx000, max), _mm_cmpgt_ss(dotx000, min)));
++ (SimdFloat4)Normalize3With:(_SimdFloat4)_v {
+    __m128 sq_len;
+    OZZ_SSE_DOT3_F(_v, _v, sq_len);
+    assert(_mm_cvtss_f32(sq_len) != 0.f && "_v is not normalizable");
+    const __m128 inv_len = _mm_div_ss([OZZFloat4 one], _mm_sqrt_ss(sq_len));
+    const __m128 vwxyz = OZZ_SHUFFLE_PS1(_v, _MM_SHUFFLE(0, 1, 2, 3));
+    const __m128 inv_lenxxxx = OZZ_SSE_SPLAT_F(inv_len, 0);
+    const __m128 normwxyz = _mm_move_ss(_mm_mul_ps(vwxyz, inv_lenxxxx), vwxyz);
+    return OZZ_SHUFFLE_PS1(normwxyz, _MM_SHUFFLE(0, 1, 2, 3));
 }
 
-+ (SimdInt4) IsNormalized3With:(_SimdFloat4) _v {
-  const __m128 max = _mm_set_ss(1.f + kNormalizationToleranceSq);
-  const __m128 min = _mm_set_ss(1.f - kNormalizationToleranceSq);
-  __m128 dot;
-  OZZ_SSE_DOT3_F(_v, _v, dot);
-  __m128 dotx000 = _mm_move_ss(_mm_setzero_ps(), dot);
-  return _mm_castps_si128(
-      _mm_and_ps(_mm_cmplt_ss(dotx000, max), _mm_cmpgt_ss(dotx000, min)));
++ (SimdFloat4)Normalize4With:(_SimdFloat4)_v {
+    __m128 sq_len;
+    OZZ_SSE_DOT4_F(_v, _v, sq_len);
+    assert(_mm_cvtss_f32(sq_len) != 0.f && "_v is not normalizable");
+    const __m128 inv_len = _mm_div_ss([OZZFloat4 one], _mm_sqrt_ss(sq_len));
+    const __m128 inv_lenxxxx = OZZ_SSE_SPLAT_F(inv_len, 0);
+    return _mm_mul_ps(_v, inv_lenxxxx);
 }
 
-+ (SimdInt4) IsNormalized4With:(_SimdFloat4) _v {
-  const __m128 max = _mm_set_ss(1.f + kNormalizationToleranceSq);
-  const __m128 min = _mm_set_ss(1.f - kNormalizationToleranceSq);
-  __m128 dot;
-  OZZ_SSE_DOT4_F(_v, _v, dot);
-  __m128 dotx000 = _mm_move_ss(_mm_setzero_ps(), dot);
-  return _mm_castps_si128(
-      _mm_and_ps(_mm_cmplt_ss(dotx000, max), _mm_cmpgt_ss(dotx000, min)));
++ (SimdFloat4)NormalizeEst2With:(_SimdFloat4)_v {
+    __m128 sq_len;
+    OZZ_SSE_DOT2_F(_v, _v, sq_len);
+    assert(_mm_cvtss_f32(sq_len) != 0.f && "_v is not normalizable");
+    const __m128 inv_len = _mm_rsqrt_ss(sq_len);
+    const __m128 inv_lenxxxx = OZZ_SSE_SPLAT_F(inv_len, 0);
+    const __m128 norm = _mm_mul_ps(_v, inv_lenxxxx);
+    return _mm_movelh_ps(norm, _mm_movehl_ps(_v, _v));
 }
 
-+ (SimdInt4) IsNormalizedEst2With:(_SimdFloat4) _v {
-  const __m128 max = _mm_set_ss(1.f + kNormalizationToleranceEstSq);
-  const __m128 min = _mm_set_ss(1.f - kNormalizationToleranceEstSq);
-  __m128 dot;
-  OZZ_SSE_DOT2_F(_v, _v, dot);
-  __m128 dotx000 = _mm_move_ss(_mm_setzero_ps(), dot);
-  return _mm_castps_si128(
-      _mm_and_ps(_mm_cmplt_ss(dotx000, max), _mm_cmpgt_ss(dotx000, min)));
++ (SimdFloat4)NormalizeEst3With:(_SimdFloat4)_v {
+    __m128 sq_len;
+    OZZ_SSE_DOT3_F(_v, _v, sq_len);
+    assert(_mm_cvtss_f32(sq_len) != 0.f && "_v is not normalizable");
+    const __m128 inv_len = _mm_rsqrt_ss(sq_len);
+    const __m128 vwxyz = OZZ_SHUFFLE_PS1(_v, _MM_SHUFFLE(0, 1, 2, 3));
+    const __m128 inv_lenxxxx = OZZ_SSE_SPLAT_F(inv_len, 0);
+    const __m128 normwxyz = _mm_move_ss(_mm_mul_ps(vwxyz, inv_lenxxxx), vwxyz);
+    return OZZ_SHUFFLE_PS1(normwxyz, _MM_SHUFFLE(0, 1, 2, 3));
 }
 
-+ (SimdInt4) IsNormalizedEst3With:(_SimdFloat4) _v {
-  const __m128 max = _mm_set_ss(1.f + kNormalizationToleranceEstSq);
-  const __m128 min = _mm_set_ss(1.f - kNormalizationToleranceEstSq);
-  __m128 dot;
-  OZZ_SSE_DOT3_F(_v, _v, dot);
-  __m128 dotx000 = _mm_move_ss(_mm_setzero_ps(), dot);
-  return _mm_castps_si128(
-      _mm_and_ps(_mm_cmplt_ss(dotx000, max), _mm_cmpgt_ss(dotx000, min)));
++ (SimdFloat4)NormalizeEst4With:(_SimdFloat4)_v {
+    __m128 sq_len;
+    OZZ_SSE_DOT4_F(_v, _v, sq_len);
+    assert(_mm_cvtss_f32(sq_len) != 0.f && "_v is not normalizable");
+    const __m128 inv_len = _mm_rsqrt_ss(sq_len);
+    const __m128 inv_lenxxxx = OZZ_SSE_SPLAT_F(inv_len, 0);
+    return _mm_mul_ps(_v, inv_lenxxxx);
 }
 
-+ (SimdInt4) IsNormalizedEst4With:(_SimdFloat4) _v {
-  const __m128 max = _mm_set_ss(1.f + kNormalizationToleranceEstSq);
-  const __m128 min = _mm_set_ss(1.f - kNormalizationToleranceEstSq);
-  __m128 dot;
-  OZZ_SSE_DOT4_F(_v, _v, dot);
-  __m128 dotx000 = _mm_move_ss(_mm_setzero_ps(), dot);
-  return _mm_castps_si128(
-      _mm_and_ps(_mm_cmplt_ss(dotx000, max), _mm_cmpgt_ss(dotx000, min)));
++ (SimdInt4)IsNormalized2With:(_SimdFloat4)_v {
+    const __m128 max = _mm_set_ss(1.f + kNormalizationToleranceSq);
+    const __m128 min = _mm_set_ss(1.f - kNormalizationToleranceSq);
+    __m128 dot;
+    OZZ_SSE_DOT2_F(_v, _v, dot);
+    __m128 dotx000 = _mm_move_ss(_mm_setzero_ps(), dot);
+    return _mm_castps_si128(
+            _mm_and_ps(_mm_cmplt_ss(dotx000, max), _mm_cmpgt_ss(dotx000, min)));
 }
 
-+ (SimdFloat4) NormalizeSafe2With:(_SimdFloat4) _v :(_SimdFloat4) _safe {
-  // assert(AreAllTrue1(IsNormalized2(_safe)) && "_safe is not normalized");
-  __m128 sq_len;
-  OZZ_SSE_DOT2_F(_v, _v, sq_len);
-  const __m128 inv_len = _mm_div_ss([OZZFloat4 one], _mm_sqrt_ss(sq_len));
-  const __m128 inv_lenxxxx = OZZ_SSE_SPLAT_F(inv_len, 0);
-  const __m128 norm = _mm_mul_ps(_v, inv_lenxxxx);
-  const __m128i cond = _mm_castps_si128(
-      _mm_cmple_ps(OZZ_SSE_SPLAT_F(sq_len, 0), _mm_setzero_ps()));
-  const __m128 cfalse = _mm_movelh_ps(norm, _mm_movehl_ps(_v, _v));
-  return OZZ_SSE_SELECT_F(cond, _safe, cfalse);
++ (SimdInt4)IsNormalized3With:(_SimdFloat4)_v {
+    const __m128 max = _mm_set_ss(1.f + kNormalizationToleranceSq);
+    const __m128 min = _mm_set_ss(1.f - kNormalizationToleranceSq);
+    __m128 dot;
+    OZZ_SSE_DOT3_F(_v, _v, dot);
+    __m128 dotx000 = _mm_move_ss(_mm_setzero_ps(), dot);
+    return _mm_castps_si128(
+            _mm_and_ps(_mm_cmplt_ss(dotx000, max), _mm_cmpgt_ss(dotx000, min)));
 }
 
-+ (SimdFloat4) NormalizeSafe3With:(_SimdFloat4) _v :(_SimdFloat4) _safe {
-  // assert(AreAllTrue1(IsNormalized3(_safe)) && "_safe is not normalized");
-  __m128 sq_len;
-  OZZ_SSE_DOT3_F(_v, _v, sq_len);
-  const __m128 inv_len = _mm_div_ss([OZZFloat4 one], _mm_sqrt_ss(sq_len));
-  const __m128 vwxyz = OZZ_SHUFFLE_PS1(_v, _MM_SHUFFLE(0, 1, 2, 3));
-  const __m128 inv_lenxxxx = OZZ_SSE_SPLAT_F(inv_len, 0);
-  const __m128 normwxyz = _mm_move_ss(_mm_mul_ps(vwxyz, inv_lenxxxx), vwxyz);
-  const __m128i cond = _mm_castps_si128(
-      _mm_cmple_ps(OZZ_SSE_SPLAT_F(sq_len, 0), _mm_setzero_ps()));
-  const __m128 cfalse = OZZ_SHUFFLE_PS1(normwxyz, _MM_SHUFFLE(0, 1, 2, 3));
-  return OZZ_SSE_SELECT_F(cond, _safe, cfalse);
++ (SimdInt4)IsNormalized4With:(_SimdFloat4)_v {
+    const __m128 max = _mm_set_ss(1.f + kNormalizationToleranceSq);
+    const __m128 min = _mm_set_ss(1.f - kNormalizationToleranceSq);
+    __m128 dot;
+    OZZ_SSE_DOT4_F(_v, _v, dot);
+    __m128 dotx000 = _mm_move_ss(_mm_setzero_ps(), dot);
+    return _mm_castps_si128(
+            _mm_and_ps(_mm_cmplt_ss(dotx000, max), _mm_cmpgt_ss(dotx000, min)));
 }
 
-+ (SimdFloat4) NormalizeSafe4With:(_SimdFloat4) _v :(_SimdFloat4) _safe {
-  // assert(AreAllTrue1(IsNormalized4(_safe)) && "_safe is not normalized");
-  __m128 sq_len;
-  OZZ_SSE_DOT4_F(_v, _v, sq_len);
-  const __m128 inv_len = _mm_div_ss([OZZFloat4 one], _mm_sqrt_ss(sq_len));
-  const __m128 inv_lenxxxx = OZZ_SSE_SPLAT_F(inv_len, 0);
-  const __m128i cond = _mm_castps_si128(
-      _mm_cmple_ps(OZZ_SSE_SPLAT_F(sq_len, 0), _mm_setzero_ps()));
-  const __m128 cfalse = _mm_mul_ps(_v, inv_lenxxxx);
-  return OZZ_SSE_SELECT_F(cond, _safe, cfalse);
++ (SimdInt4)IsNormalizedEst2With:(_SimdFloat4)_v {
+    const __m128 max = _mm_set_ss(1.f + kNormalizationToleranceEstSq);
+    const __m128 min = _mm_set_ss(1.f - kNormalizationToleranceEstSq);
+    __m128 dot;
+    OZZ_SSE_DOT2_F(_v, _v, dot);
+    __m128 dotx000 = _mm_move_ss(_mm_setzero_ps(), dot);
+    return _mm_castps_si128(
+            _mm_and_ps(_mm_cmplt_ss(dotx000, max), _mm_cmpgt_ss(dotx000, min)));
 }
 
-+ (SimdFloat4) NormalizeSafeEst2With:(_SimdFloat4) _v :(_SimdFloat4) _safe {
-  // assert(AreAllTrue1(IsNormalizedEst2(_safe)) && "_safe is not normalized");
-  __m128 sq_len;
-  OZZ_SSE_DOT2_F(_v, _v, sq_len);
-  const __m128 inv_len = _mm_rsqrt_ss(sq_len);
-  const __m128 inv_lenxxxx = OZZ_SSE_SPLAT_F(inv_len, 0);
-  const __m128 norm = _mm_mul_ps(_v, inv_lenxxxx);
-  const __m128i cond = _mm_castps_si128(
-      _mm_cmple_ps(OZZ_SSE_SPLAT_F(sq_len, 0), _mm_setzero_ps()));
-  const __m128 cfalse = _mm_movelh_ps(norm, _mm_movehl_ps(_v, _v));
-  return OZZ_SSE_SELECT_F(cond, _safe, cfalse);
++ (SimdInt4)IsNormalizedEst3With:(_SimdFloat4)_v {
+    const __m128 max = _mm_set_ss(1.f + kNormalizationToleranceEstSq);
+    const __m128 min = _mm_set_ss(1.f - kNormalizationToleranceEstSq);
+    __m128 dot;
+    OZZ_SSE_DOT3_F(_v, _v, dot);
+    __m128 dotx000 = _mm_move_ss(_mm_setzero_ps(), dot);
+    return _mm_castps_si128(
+            _mm_and_ps(_mm_cmplt_ss(dotx000, max), _mm_cmpgt_ss(dotx000, min)));
 }
 
-+ (SimdFloat4) NormalizeSafeEst3With:(_SimdFloat4) _v :(_SimdFloat4) _safe {
-  // assert(AreAllTrue1(IsNormalizedEst3(_safe)) && "_safe is not normalized");
-  __m128 sq_len;
-  OZZ_SSE_DOT3_F(_v, _v, sq_len);
-  const __m128 inv_len = _mm_rsqrt_ss(sq_len);
-  const __m128 vwxyz = OZZ_SHUFFLE_PS1(_v, _MM_SHUFFLE(0, 1, 2, 3));
-  const __m128 inv_lenxxxx = OZZ_SSE_SPLAT_F(inv_len, 0);
-  const __m128 normwxyz = _mm_move_ss(_mm_mul_ps(vwxyz, inv_lenxxxx), vwxyz);
-  const __m128i cond = _mm_castps_si128(
-      _mm_cmple_ps(OZZ_SSE_SPLAT_F(sq_len, 0), _mm_setzero_ps()));
-  const __m128 cfalse = OZZ_SHUFFLE_PS1(normwxyz, _MM_SHUFFLE(0, 1, 2, 3));
-  return OZZ_SSE_SELECT_F(cond, _safe, cfalse);
++ (SimdInt4)IsNormalizedEst4With:(_SimdFloat4)_v {
+    const __m128 max = _mm_set_ss(1.f + kNormalizationToleranceEstSq);
+    const __m128 min = _mm_set_ss(1.f - kNormalizationToleranceEstSq);
+    __m128 dot;
+    OZZ_SSE_DOT4_F(_v, _v, dot);
+    __m128 dotx000 = _mm_move_ss(_mm_setzero_ps(), dot);
+    return _mm_castps_si128(
+            _mm_and_ps(_mm_cmplt_ss(dotx000, max), _mm_cmpgt_ss(dotx000, min)));
 }
 
-+ (SimdFloat4) NormalizeSafeEst4With:(_SimdFloat4) _v :(_SimdFloat4) _safe {
-  // assert(AreAllTrue1(IsNormalizedEst4(_safe)) && "_safe is not normalized");
-  __m128 sq_len;
-  OZZ_SSE_DOT4_F(_v, _v, sq_len);
-  const __m128 inv_len = _mm_rsqrt_ss(sq_len);
-  const __m128 inv_lenxxxx = OZZ_SSE_SPLAT_F(inv_len, 0);
-  const __m128i cond = _mm_castps_si128(
-      _mm_cmple_ps(OZZ_SSE_SPLAT_F(sq_len, 0), _mm_setzero_ps()));
-  const __m128 cfalse = _mm_mul_ps(_v, inv_lenxxxx);
-  return OZZ_SSE_SELECT_F(cond, _safe, cfalse);
++ (SimdFloat4)NormalizeSafe2With:(_SimdFloat4)_v :(_SimdFloat4)_safe {
+    // assert(AreAllTrue1(IsNormalized2(_safe)) && "_safe is not normalized");
+    __m128 sq_len;
+    OZZ_SSE_DOT2_F(_v, _v, sq_len);
+    const __m128 inv_len = _mm_div_ss([OZZFloat4 one], _mm_sqrt_ss(sq_len));
+    const __m128 inv_lenxxxx = OZZ_SSE_SPLAT_F(inv_len, 0);
+    const __m128 norm = _mm_mul_ps(_v, inv_lenxxxx);
+    const __m128i cond = _mm_castps_si128(
+            _mm_cmple_ps(OZZ_SSE_SPLAT_F(sq_len, 0), _mm_setzero_ps()));
+    const __m128 cfalse = _mm_movelh_ps(norm, _mm_movehl_ps(_v, _v));
+    return OZZ_SSE_SELECT_F(cond, _safe, cfalse);
 }
 
-+ (SimdFloat4) LerpWith:(_SimdFloat4) _a :(_SimdFloat4) _b :(_SimdFloat4) _alpha {
-  return OZZ_MADD(_alpha, _mm_sub_ps(_b, _a), _a);
++ (SimdFloat4)NormalizeSafe3With:(_SimdFloat4)_v :(_SimdFloat4)_safe {
+    // assert(AreAllTrue1(IsNormalized3(_safe)) && "_safe is not normalized");
+    __m128 sq_len;
+    OZZ_SSE_DOT3_F(_v, _v, sq_len);
+    const __m128 inv_len = _mm_div_ss([OZZFloat4 one], _mm_sqrt_ss(sq_len));
+    const __m128 vwxyz = OZZ_SHUFFLE_PS1(_v, _MM_SHUFFLE(0, 1, 2, 3));
+    const __m128 inv_lenxxxx = OZZ_SSE_SPLAT_F(inv_len, 0);
+    const __m128 normwxyz = _mm_move_ss(_mm_mul_ps(vwxyz, inv_lenxxxx), vwxyz);
+    const __m128i cond = _mm_castps_si128(
+            _mm_cmple_ps(OZZ_SSE_SPLAT_F(sq_len, 0), _mm_setzero_ps()));
+    const __m128 cfalse = OZZ_SHUFFLE_PS1(normwxyz, _MM_SHUFFLE(0, 1, 2, 3));
+    return OZZ_SSE_SELECT_F(cond, _safe, cfalse);
 }
 
-+ (SimdFloat4) MinWith:(_SimdFloat4) _a :(_SimdFloat4) _b {
-  return _mm_min_ps(_a, _b);
++ (SimdFloat4)NormalizeSafe4With:(_SimdFloat4)_v :(_SimdFloat4)_safe {
+    // assert(AreAllTrue1(IsNormalized4(_safe)) && "_safe is not normalized");
+    __m128 sq_len;
+    OZZ_SSE_DOT4_F(_v, _v, sq_len);
+    const __m128 inv_len = _mm_div_ss([OZZFloat4 one], _mm_sqrt_ss(sq_len));
+    const __m128 inv_lenxxxx = OZZ_SSE_SPLAT_F(inv_len, 0);
+    const __m128i cond = _mm_castps_si128(
+            _mm_cmple_ps(OZZ_SSE_SPLAT_F(sq_len, 0), _mm_setzero_ps()));
+    const __m128 cfalse = _mm_mul_ps(_v, inv_lenxxxx);
+    return OZZ_SSE_SELECT_F(cond, _safe, cfalse);
 }
 
-+ (SimdFloat4) MaxWith:(_SimdFloat4) _a :(_SimdFloat4) _b {
-  return _mm_max_ps(_a, _b);
++ (SimdFloat4)NormalizeSafeEst2With:(_SimdFloat4)_v :(_SimdFloat4)_safe {
+    // assert(AreAllTrue1(IsNormalizedEst2(_safe)) && "_safe is not normalized");
+    __m128 sq_len;
+    OZZ_SSE_DOT2_F(_v, _v, sq_len);
+    const __m128 inv_len = _mm_rsqrt_ss(sq_len);
+    const __m128 inv_lenxxxx = OZZ_SSE_SPLAT_F(inv_len, 0);
+    const __m128 norm = _mm_mul_ps(_v, inv_lenxxxx);
+    const __m128i cond = _mm_castps_si128(
+            _mm_cmple_ps(OZZ_SSE_SPLAT_F(sq_len, 0), _mm_setzero_ps()));
+    const __m128 cfalse = _mm_movelh_ps(norm, _mm_movehl_ps(_v, _v));
+    return OZZ_SSE_SELECT_F(cond, _safe, cfalse);
 }
 
-+ (SimdFloat4) Min0With:(_SimdFloat4) _v {
-  return _mm_min_ps(_mm_setzero_ps(), _v);
++ (SimdFloat4)NormalizeSafeEst3With:(_SimdFloat4)_v :(_SimdFloat4)_safe {
+    // assert(AreAllTrue1(IsNormalizedEst3(_safe)) && "_safe is not normalized");
+    __m128 sq_len;
+    OZZ_SSE_DOT3_F(_v, _v, sq_len);
+    const __m128 inv_len = _mm_rsqrt_ss(sq_len);
+    const __m128 vwxyz = OZZ_SHUFFLE_PS1(_v, _MM_SHUFFLE(0, 1, 2, 3));
+    const __m128 inv_lenxxxx = OZZ_SSE_SPLAT_F(inv_len, 0);
+    const __m128 normwxyz = _mm_move_ss(_mm_mul_ps(vwxyz, inv_lenxxxx), vwxyz);
+    const __m128i cond = _mm_castps_si128(
+            _mm_cmple_ps(OZZ_SSE_SPLAT_F(sq_len, 0), _mm_setzero_ps()));
+    const __m128 cfalse = OZZ_SHUFFLE_PS1(normwxyz, _MM_SHUFFLE(0, 1, 2, 3));
+    return OZZ_SSE_SELECT_F(cond, _safe, cfalse);
 }
 
-+ (SimdFloat4) Max0With:(_SimdFloat4) _v {
-  return _mm_max_ps(_mm_setzero_ps(), _v);
++ (SimdFloat4)NormalizeSafeEst4With:(_SimdFloat4)_v :(_SimdFloat4)_safe {
+    // assert(AreAllTrue1(IsNormalizedEst4(_safe)) && "_safe is not normalized");
+    __m128 sq_len;
+    OZZ_SSE_DOT4_F(_v, _v, sq_len);
+    const __m128 inv_len = _mm_rsqrt_ss(sq_len);
+    const __m128 inv_lenxxxx = OZZ_SSE_SPLAT_F(inv_len, 0);
+    const __m128i cond = _mm_castps_si128(
+            _mm_cmple_ps(OZZ_SSE_SPLAT_F(sq_len, 0), _mm_setzero_ps()));
+    const __m128 cfalse = _mm_mul_ps(_v, inv_lenxxxx);
+    return OZZ_SSE_SELECT_F(cond, _safe, cfalse);
 }
 
-+ (SimdFloat4) ClampWith:(_SimdFloat4) _a :(_SimdFloat4) _v :(_SimdFloat4) _b {
-  return _mm_max_ps(_a, _mm_min_ps(_v, _b));
++ (SimdFloat4)LerpWith:(_SimdFloat4)_a :(_SimdFloat4)_b :(_SimdFloat4)_alpha {
+    return OZZ_MADD(_alpha, _mm_sub_ps(_b, _a), _a);
 }
 
-+ (SimdFloat4) SelectWith:(_SimdInt4) _b :(_SimdFloat4) _true :(_SimdFloat4) _false {
-  return OZZ_SSE_SELECT_F(_b, _true, _false);
++ (SimdFloat4)MinWith:(_SimdFloat4)_a :(_SimdFloat4)_b {
+    return _mm_min_ps(_a, _b);
 }
 
-+ (SimdInt4) CmpEqWith:(_SimdFloat4) _a :(_SimdFloat4) _b {
-  return _mm_castps_si128(_mm_cmpeq_ps(_a, _b));
++ (SimdFloat4)MaxWith:(_SimdFloat4)_a :(_SimdFloat4)_b {
+    return _mm_max_ps(_a, _b);
 }
 
-+ (SimdInt4) CmpNeWith:(_SimdFloat4) _a :(_SimdFloat4) _b {
-  return _mm_castps_si128(_mm_cmpneq_ps(_a, _b));
++ (SimdFloat4)Min0With:(_SimdFloat4)_v {
+    return _mm_min_ps(_mm_setzero_ps(), _v);
 }
 
-+ (SimdInt4) CmpLtWith:(_SimdFloat4) _a :(_SimdFloat4) _b {
-  return _mm_castps_si128(_mm_cmplt_ps(_a, _b));
++ (SimdFloat4)Max0With:(_SimdFloat4)_v {
+    return _mm_max_ps(_mm_setzero_ps(), _v);
 }
 
-+ (SimdInt4) CmpLeWith:(_SimdFloat4) _a :(_SimdFloat4) _b {
-  return _mm_castps_si128(_mm_cmple_ps(_a, _b));
++ (SimdFloat4)ClampWith:(_SimdFloat4)_a :(_SimdFloat4)_v :(_SimdFloat4)_b {
+    return _mm_max_ps(_a, _mm_min_ps(_v, _b));
 }
 
-+ (SimdInt4) CmpGtWith:(_SimdFloat4) _a :(_SimdFloat4) _b {
-  return _mm_castps_si128(_mm_cmpgt_ps(_a, _b));
++ (SimdFloat4)SelectWith:(_SimdInt4)_b :(_SimdFloat4)_true :(_SimdFloat4)_false {
+    return OZZ_SSE_SELECT_F(_b, _true, _false);
 }
 
-+ (SimdInt4) CmpGeWith:(_SimdFloat4) _a :(_SimdFloat4) _b {
-  return _mm_castps_si128(_mm_cmpge_ps(_a, _b));
++ (SimdInt4)CmpEqWith:(_SimdFloat4)_a :(_SimdFloat4)_b {
+    return _mm_castps_si128(_mm_cmpeq_ps(_a, _b));
 }
 
-+ (SimdFloat4) AndWith:(_SimdFloat4) _a float4:(_SimdFloat4) _b {
-  return _mm_and_ps(_a, _b);
++ (SimdInt4)CmpNeWith:(_SimdFloat4)_a :(_SimdFloat4)_b {
+    return _mm_castps_si128(_mm_cmpneq_ps(_a, _b));
 }
 
-+ (SimdFloat4) OrWith:(_SimdFloat4) _a float4:(_SimdFloat4) _b {
-  return _mm_or_ps(_a, _b);
++ (SimdInt4)CmpLtWith:(_SimdFloat4)_a :(_SimdFloat4)_b {
+    return _mm_castps_si128(_mm_cmplt_ps(_a, _b));
 }
 
-+ (SimdFloat4) XorWith:(_SimdFloat4) _a float4:(_SimdFloat4) _b {
-  return _mm_xor_ps(_a, _b);
++ (SimdInt4)CmpLeWith:(_SimdFloat4)_a :(_SimdFloat4)_b {
+    return _mm_castps_si128(_mm_cmple_ps(_a, _b));
 }
 
-+ (SimdFloat4) AndWith:(_SimdFloat4) _a int4:(_SimdInt4) _b {
-  return _mm_and_ps(_a, _mm_castsi128_ps(_b));
++ (SimdInt4)CmpGtWith:(_SimdFloat4)_a :(_SimdFloat4)_b {
+    return _mm_castps_si128(_mm_cmpgt_ps(_a, _b));
 }
 
-+ (SimdFloat4) AndNotWith:(_SimdFloat4) _a :(_SimdInt4) _b {
-  return _mm_andnot_ps(_mm_castsi128_ps(_b), _a);
++ (SimdInt4)CmpGeWith:(_SimdFloat4)_a :(_SimdFloat4)_b {
+    return _mm_castps_si128(_mm_cmpge_ps(_a, _b));
 }
 
-+ (SimdFloat4) OrWith:(_SimdFloat4) _a int4:(_SimdInt4) _b {
-  return _mm_or_ps(_a, _mm_castsi128_ps(_b));
++ (SimdFloat4)AndWith:(_SimdFloat4)_a float4:(_SimdFloat4)_b {
+    return _mm_and_ps(_a, _b);
 }
 
-+ (SimdFloat4) XorWith:(_SimdFloat4) _a int4:(_SimdInt4) _b {
-  return _mm_xor_ps(_a, _mm_castsi128_ps(_b));
++ (SimdFloat4)OrWith:(_SimdFloat4)_a float4:(_SimdFloat4)_b {
+    return _mm_or_ps(_a, _b);
 }
 
-+ (SimdFloat4) CosWith:(_SimdFloat4) _v {
-  return _mm_set_ps(std::cos([OZZFloat4 GetWWith:_v]), std::cos([OZZFloat4 GetZWith:_v]),
-                    std::cos([OZZFloat4 GetYWith:_v]), std::cos([OZZFloat4 GetXWith:_v]));
++ (SimdFloat4)XorWith:(_SimdFloat4)_a float4:(_SimdFloat4)_b {
+    return _mm_xor_ps(_a, _b);
 }
 
-+ (SimdFloat4) CosXWith:(_SimdFloat4) _v {
-  return _mm_move_ss(_v, _mm_set_ps1(std::cos([OZZFloat4 GetXWith:_v])));
++ (SimdFloat4)AndWith:(_SimdFloat4)_a int4:(_SimdInt4)_b {
+    return _mm_and_ps(_a, _mm_castsi128_ps(_b));
 }
 
-+ (SimdFloat4) ACosWith:(_SimdFloat4) _v {
-  return _mm_set_ps(std::acos([OZZFloat4 GetWWith:_v]), std::acos([OZZFloat4 GetZWith:_v]),
-                    std::acos([OZZFloat4 GetYWith:_v]), std::acos([OZZFloat4 GetXWith:_v]));
++ (SimdFloat4)AndNotWith:(_SimdFloat4)_a :(_SimdInt4)_b {
+    return _mm_andnot_ps(_mm_castsi128_ps(_b), _a);
 }
 
-+ (SimdFloat4) ACosXWith:(_SimdFloat4) _v {
-  return _mm_move_ss(_v, _mm_set_ps1(std::acos([OZZFloat4 GetXWith:_v])));
++ (SimdFloat4)OrWith:(_SimdFloat4)_a int4:(_SimdInt4)_b {
+    return _mm_or_ps(_a, _mm_castsi128_ps(_b));
 }
 
-+ (SimdFloat4) SinWith:(_SimdFloat4) _v {
-  return _mm_set_ps(std::sin([OZZFloat4 GetWWith:_v]), std::sin([OZZFloat4 GetZWith:_v]), std::sin([OZZFloat4 GetYWith:_v]),
-                    std::sin([OZZFloat4 GetXWith:_v]));
++ (SimdFloat4)XorWith:(_SimdFloat4)_a int4:(_SimdInt4)_b {
+    return _mm_xor_ps(_a, _mm_castsi128_ps(_b));
 }
 
-+ (SimdFloat4) SinXWith:(_SimdFloat4) _v {
-  return _mm_move_ss(_v, _mm_set_ps1(std::sin([OZZFloat4 GetXWith:_v])));
++ (SimdFloat4)CosWith:(_SimdFloat4)_v {
+    return _mm_set_ps(std::cos([OZZFloat4 GetWWith:_v]), std::cos([OZZFloat4 GetZWith:_v]),
+            std::cos([OZZFloat4 GetYWith:_v]), std::cos([OZZFloat4 GetXWith:_v]));
 }
 
-+ (SimdFloat4) ASinWith:(_SimdFloat4) _v {
-  return _mm_set_ps(std::asin([OZZFloat4 GetWWith:_v]), std::asin([OZZFloat4 GetZWith:_v]),
-                    std::asin([OZZFloat4 GetYWith:_v]), std::asin([OZZFloat4 GetXWith:_v]));
++ (SimdFloat4)CosXWith:(_SimdFloat4)_v {
+    return _mm_move_ss(_v, _mm_set_ps1(std::cos([OZZFloat4 GetXWith:_v])));
 }
 
-+ (SimdFloat4) ASinXWith:(_SimdFloat4) _v {
-  return _mm_move_ss(_v, _mm_set_ps1(std::asin([OZZFloat4 GetXWith:_v])));
++ (SimdFloat4)ACosWith:(_SimdFloat4)_v {
+    return _mm_set_ps(std::acos([OZZFloat4 GetWWith:_v]), std::acos([OZZFloat4 GetZWith:_v]),
+            std::acos([OZZFloat4 GetYWith:_v]), std::acos([OZZFloat4 GetXWith:_v]));
 }
 
-+ (SimdFloat4) TanWith:(_SimdFloat4) _v {
-  return _mm_set_ps(std::tan([OZZFloat4 GetWWith:_v]), std::tan([OZZFloat4 GetZWith:_v]),
-                    std::tan([OZZFloat4 GetYWith:_v]), std::tan([OZZFloat4 GetXWith:_v]));
++ (SimdFloat4)ACosXWith:(_SimdFloat4)_v {
+    return _mm_move_ss(_v, _mm_set_ps1(std::acos([OZZFloat4 GetXWith:_v])));
 }
 
-+ (SimdFloat4) TanXWith:(_SimdFloat4) _v {
-  return _mm_move_ss(_v, _mm_set_ps1(std::tan([OZZFloat4 GetXWith:_v])));
++ (SimdFloat4)SinWith:(_SimdFloat4)_v {
+    return _mm_set_ps(std::sin([OZZFloat4 GetWWith:_v]), std::sin([OZZFloat4 GetZWith:_v]), std::sin([OZZFloat4 GetYWith:_v]),
+            std::sin([OZZFloat4 GetXWith:_v]));
 }
 
-+ (SimdFloat4) ATanWith:(_SimdFloat4) _v {
-  return _mm_set_ps(std::atan([OZZFloat4 GetWWith:_v]), std::atan([OZZFloat4 GetZWith:_v]),
-                    std::atan([OZZFloat4 GetYWith:_v]), std::atan([OZZFloat4 GetXWith:_v]));
++ (SimdFloat4)SinXWith:(_SimdFloat4)_v {
+    return _mm_move_ss(_v, _mm_set_ps1(std::sin([OZZFloat4 GetXWith:_v])));
 }
 
-+ (SimdFloat4) ATanXWith:(_SimdFloat4) _v {
-  return _mm_move_ss(_v, _mm_set_ps1(std::atan([OZZFloat4 GetXWith:_v])));
++ (SimdFloat4)ASinWith:(_SimdFloat4)_v {
+    return _mm_set_ps(std::asin([OZZFloat4 GetWWith:_v]), std::asin([OZZFloat4 GetZWith:_v]),
+            std::asin([OZZFloat4 GetYWith:_v]), std::asin([OZZFloat4 GetXWith:_v]));
+}
+
++ (SimdFloat4)ASinXWith:(_SimdFloat4)_v {
+    return _mm_move_ss(_v, _mm_set_ps1(std::asin([OZZFloat4 GetXWith:_v])));
+}
+
++ (SimdFloat4)TanWith:(_SimdFloat4)_v {
+    return _mm_set_ps(std::tan([OZZFloat4 GetWWith:_v]), std::tan([OZZFloat4 GetZWith:_v]),
+            std::tan([OZZFloat4 GetYWith:_v]), std::tan([OZZFloat4 GetXWith:_v]));
+}
+
++ (SimdFloat4)TanXWith:(_SimdFloat4)_v {
+    return _mm_move_ss(_v, _mm_set_ps1(std::tan([OZZFloat4 GetXWith:_v])));
+}
+
++ (SimdFloat4)ATanWith:(_SimdFloat4)_v {
+    return _mm_set_ps(std::atan([OZZFloat4 GetWWith:_v]), std::atan([OZZFloat4 GetZWith:_v]),
+            std::atan([OZZFloat4 GetYWith:_v]), std::atan([OZZFloat4 GetXWith:_v]));
+}
+
++ (SimdFloat4)ATanXWith:(_SimdFloat4)_v {
+    return _mm_move_ss(_v, _mm_set_ps1(std::atan([OZZFloat4 GetXWith:_v])));
 }
 
 

@@ -627,6 +627,69 @@ typedef const __m128i _SimdInt4;
 @interface OZZInt4 : NSObject
 // Returns a SimdInt4 vector with all components set to 0.
 + (SimdInt4)zero;
+
+// Returns a SimdInt4 vector with all components set to 1.
++ (SimdInt4) one;
+
+// Returns a SimdInt4 vector with the x component set to 1 and all the others
+// to 0.
++ (SimdInt4) x_axis;
+
+// Returns a SimdInt4 vector with the y component set to 1 and all the others
+// to 0.
++ (SimdInt4) y_axis;
+
+// Returns a SimdInt4 vector with the z component set to 1 and all the others
+// to 0.
++ (SimdInt4) z_axis;
+
+// Returns a SimdInt4 vector with the w component set to 1 and all the others
+// to 0.
++ (SimdInt4) w_axis;
+
+// Returns a SimdInt4 vector with all components set to true (0xffffffff).
++ (SimdInt4) all_true;
+
+// Returns a SimdInt4 vector with all components set to false (0).
++ (SimdInt4) all_false;
+
+// Returns a SimdInt4 vector with sign bits set to 1.
++ (SimdInt4) mask_sign;
+
+// Returns a SimdInt4 vector with all bits set to 1 except sign.
++ (SimdInt4) mask_not_sign;
+
+// Returns a SimdInt4 vector with sign bits of x, y and z components set to 1.
++ (SimdInt4) mask_sign_xyz;
+
+// Returns a SimdInt4 vector with sign bits of w component set to 1.
++ (SimdInt4) mask_sign_w;
+
+// Returns a SimdInt4 vector with all bits set to 1.
++ (SimdInt4) mask_ffff;
+
+// Returns a SimdInt4 vector with all bits set to 0.
++ (SimdInt4) mask_0000;
+
+// Returns a SimdInt4 vector with all the bits of the x, y, z components set to
+// 1, while z is set to 0.
++ (SimdInt4) mask_fff0;
+
+// Returns a SimdInt4 vector with all the bits of the x component set to 1,
+// while the others are set to 0.
++ (SimdInt4) mask_f000;
+
+// Returns a SimdInt4 vector with all the bits of the y component set to 1,
+// while the others are set to 0.
++ (SimdInt4) mask_0f00;
+
+// Returns a SimdInt4 vector with all the bits of the z component set to 1,
+// while the others are set to 0.
++ (SimdInt4) mask_00f0;
+
+// Returns a SimdInt4 vector with all the bits of the w component set to 1,
+// while the others are set to 0.
++ (SimdInt4) mask_000f;
 @end
 
 #endif /* simd_math_h */
