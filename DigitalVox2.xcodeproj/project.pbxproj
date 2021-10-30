@@ -281,6 +281,9 @@
 		045D2BE2272CB30E0091636B /* AnimationCurveOwner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045D2BE1272CB30E0091636B /* AnimationCurveOwner.swift */; };
 		045D2BE4272CB58B0091636B /* AnimationEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045D2BE3272CB58B0091636B /* AnimationEvent.swift */; };
 		045D2BE6272CB5F30091636B /* AnimationCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045D2BE5272CB5F30091636B /* AnimationCurve.swift */; };
+		045D2BE8272CCDA00091636B /* Motion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045D2BE7272CCDA00091636B /* Motion.swift */; };
+		045D2BEA272CCDB80091636B /* AnimationClip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045D2BE9272CCDB80091636B /* AnimationClip.swift */; };
+		045D2BEC272CCDCA0091636B /* AnimationClipCurveBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045D2BEB272CCDCA0091636B /* AnimationClipCurveBinding.swift */; };
 		04605EFB272BC09800400350 /* PhysXView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04605EFA272BC09800400350 /* PhysXView.swift */; };
 		047FEB7026E1BA4A0078CFAF /* shape_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEB6F26E1BA4A0078CFAF /* shape_data.swift */; };
 		047FEB7226E1BC570078CFAF /* fvshape_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEB7126E1BC570078CFAF /* fvshape_data.swift */; };
@@ -641,6 +644,9 @@
 		045D2BE1272CB30E0091636B /* AnimationCurveOwner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationCurveOwner.swift; sourceTree = "<group>"; };
 		045D2BE3272CB58B0091636B /* AnimationEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationEvent.swift; sourceTree = "<group>"; };
 		045D2BE5272CB5F30091636B /* AnimationCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationCurve.swift; sourceTree = "<group>"; };
+		045D2BE7272CCDA00091636B /* Motion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Motion.swift; sourceTree = "<group>"; };
+		045D2BE9272CCDB80091636B /* AnimationClip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationClip.swift; sourceTree = "<group>"; };
+		045D2BEB272CCDCA0091636B /* AnimationClipCurveBinding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationClipCurveBinding.swift; sourceTree = "<group>"; };
 		04605EFA272BC09800400350 /* PhysXView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXView.swift; sourceTree = "<group>"; };
 		047914CA26F37C0300BE5170 /* ShaderData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderData.swift; sourceTree = "<group>"; };
 		047E7B2B26EE257E006BC3FB /* MeshRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeshRenderer.swift; sourceTree = "<group>"; };
@@ -1487,6 +1493,9 @@
 				045D2BDF272CB1370091636B /* Keyframe.swift */,
 				045D2BE3272CB58B0091636B /* AnimationEvent.swift */,
 				045D2BE5272CB5F30091636B /* AnimationCurve.swift */,
+				045D2BEB272CCDCA0091636B /* AnimationClipCurveBinding.swift */,
+				045D2BE7272CCDA00091636B /* Motion.swift */,
+				045D2BE9272CCDB80091636B /* AnimationClip.swift */,
 			);
 			path = animation;
 			sourceTree = "<group>";
@@ -2098,6 +2107,7 @@
 				041BAE4B272A50FB006268D5 /* RenderFace.swift in Sources */,
 				041BAE9E272A5141006268D5 /* DynamicCollider.swift in Sources */,
 				041BAE0B272A500F006268D5 /* EngineFeatureManager.swift in Sources */,
+				045D2BE8272CCDA00091636B /* Motion.swift in Sources */,
 				041BAE68272A5111006268D5 /* PointLight.swift in Sources */,
 				041BAE28272A50D9006268D5 /* CameraClearFlags.swift in Sources */,
 				041BAE2E272A50E6006268D5 /* SphericalHarmonics3.swift in Sources */,
@@ -2116,6 +2126,7 @@
 				041BAE3D272A50ED006268D5 /* MeshRenderer.swift in Sources */,
 				041BAE97272A5141006268D5 /* PhysicsManager.swift in Sources */,
 				041BAEA5272A514D006268D5 /* IClone.swift in Sources */,
+				045D2BEC272CCDCA0091636B /* AnimationClipCurveBinding.swift in Sources */,
 				041BAE61272A510C006268D5 /* ShaderDataGroup.swift in Sources */,
 				041BAE46272A50F2006268D5 /* MeshBuffer.swift in Sources */,
 				041BAE0E272A500F006268D5 /* Background.swift in Sources */,
@@ -2154,6 +2165,7 @@
 				041BAE0F272A500F006268D5 /* Script.swift in Sources */,
 				041BAE32272A50E6006268D5 /* Quaternion.swift in Sources */,
 				041BAE3F272A50ED006268D5 /* BufferMesh.swift in Sources */,
+				045D2BEA272CCDB80091636B /* AnimationClip.swift in Sources */,
 				041BAE3A272A50E6006268D5 /* CollisionUtil.swift in Sources */,
 				041BAEA0272A514D006268D5 /* IDynamicCollider.swift in Sources */,
 				041BAE10272A500F006268D5 /* ComponentsManager.swift in Sources */,
