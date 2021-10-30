@@ -37,8 +37,8 @@ internal class AnimationCurveOwner<type: Component> {
             self.component = target.transform
             break
         case AnimationProperty.BlendShapeWeights:
-            self.defaultValue = .Float32Array([Float](repeating: 0, count: 4))
-            self.fixedPoseValue = .Float32Array([Float](repeating: 0, count: 4))
+            self.defaultValue = .FloatArray([Float](repeating: 0, count: 4))
+            self.fixedPoseValue = .FloatArray([Float](repeating: 0, count: 4))
             let skinnedMesh: SkinnedMeshRenderer = target.getComponent()
             self.component = skinnedMesh
             break
