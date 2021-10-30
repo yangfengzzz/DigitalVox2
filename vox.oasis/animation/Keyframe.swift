@@ -12,9 +12,9 @@ import Foundation
 protocol Keyframe {
     associatedtype V
     /// The time of the Keyframe.
-    var time: Float {get set}
+    var time: Float { get set }
     /// The value of the Keyframe.
-    var value: V?  {get set}
+    var value: V? { get set }
 }
 
 /// InterpolableKeyframe.
@@ -23,7 +23,7 @@ protocol Keyframe {
 class InterpolableKeyframe<T, V>: Keyframe {
     var time: Float = 0.0
     var value: V?
-    
+
     /// Sets the incoming tangent for this key. The incoming tangent affects the slope of the curve from the previous key to this key.
     var inTangent: T?
     /// Sets the outgoing tangent for this key. The outgoing tangent affects the slope of the curve from this key to the next key.
@@ -44,8 +44,8 @@ enum UnionInterpolableKeyframe {
     case Vector3Keyframe(Vector3Keyframe)
     case Vector4Keyframe(Vector4Keyframe)
     case QuaternionKeyframe(QuaternionKeyframe)
-    
-    func getTime()->Float {
+
+    func getTime() -> Float {
         switch self {
         case .FloatKeyframe(let value):
             return value.time
@@ -61,8 +61,8 @@ enum UnionInterpolableKeyframe {
             return value.time
         }
     }
-    
-    func getValue()->InterpolableValue {
+
+    func getValue() -> InterpolableValue {
         switch self {
         case .FloatKeyframe(let value):
             return .Float(value.value!)
@@ -78,8 +78,8 @@ enum UnionInterpolableKeyframe {
             return .FloatArray(value.value!)
         }
     }
-    
-    func getFloatValue()->Float {
+
+    func getFloatValue() -> Float {
         switch self {
         case .FloatKeyframe(let value):
             return value.value!
@@ -87,8 +87,8 @@ enum UnionInterpolableKeyframe {
             fatalError()
         }
     }
-    
-    func getFloatInTangentValue()->Float {
+
+    func getFloatInTangentValue() -> Float {
         switch self {
         case .FloatKeyframe(let value):
             return value.inTangent!
@@ -96,8 +96,8 @@ enum UnionInterpolableKeyframe {
             fatalError()
         }
     }
-    
-    func getFloatOutTangentValue()->Float {
+
+    func getFloatOutTangentValue() -> Float {
         switch self {
         case .FloatKeyframe(let value):
             return value.outTangent!
@@ -105,8 +105,8 @@ enum UnionInterpolableKeyframe {
             fatalError()
         }
     }
-    
-    func getVector2Value()->Vector2 {
+
+    func getVector2Value() -> Vector2 {
         switch self {
         case .Vector2Keyframe(let value):
             return value.value!
@@ -114,8 +114,8 @@ enum UnionInterpolableKeyframe {
             fatalError()
         }
     }
-    
-    func getVector2InTangentValue()->Vector2 {
+
+    func getVector2InTangentValue() -> Vector2 {
         switch self {
         case .Vector2Keyframe(let value):
             return value.inTangent!
@@ -123,8 +123,8 @@ enum UnionInterpolableKeyframe {
             fatalError()
         }
     }
-    
-    func getVector2OutTangentValue()->Vector2 {
+
+    func getVector2OutTangentValue() -> Vector2 {
         switch self {
         case .Vector2Keyframe(let value):
             return value.outTangent!
@@ -132,8 +132,8 @@ enum UnionInterpolableKeyframe {
             fatalError()
         }
     }
-    
-    func getVector3Value()->Vector3 {
+
+    func getVector3Value() -> Vector3 {
         switch self {
         case .Vector3Keyframe(let value):
             return value.value!
@@ -141,8 +141,8 @@ enum UnionInterpolableKeyframe {
             fatalError()
         }
     }
-    
-    func getVector3InTangentValue()->Vector3 {
+
+    func getVector3InTangentValue() -> Vector3 {
         switch self {
         case .Vector3Keyframe(let value):
             return value.inTangent!
@@ -150,8 +150,8 @@ enum UnionInterpolableKeyframe {
             fatalError()
         }
     }
-    
-    func getVector3OutTangentValue()->Vector3 {
+
+    func getVector3OutTangentValue() -> Vector3 {
         switch self {
         case .Vector3Keyframe(let value):
             return value.outTangent!
@@ -159,8 +159,8 @@ enum UnionInterpolableKeyframe {
             fatalError()
         }
     }
-    
-    func getVector4Value()->Vector4 {
+
+    func getVector4Value() -> Vector4 {
         switch self {
         case .Vector4Keyframe(let value):
             return value.value!
@@ -168,8 +168,8 @@ enum UnionInterpolableKeyframe {
             fatalError()
         }
     }
-    
-    func getVector4InTangentValue()->Vector4 {
+
+    func getVector4InTangentValue() -> Vector4 {
         switch self {
         case .Vector4Keyframe(let value):
             return value.inTangent!
@@ -177,8 +177,8 @@ enum UnionInterpolableKeyframe {
             fatalError()
         }
     }
-    
-    func getVector4OutTangentValue()->Vector4 {
+
+    func getVector4OutTangentValue() -> Vector4 {
         switch self {
         case .Vector4Keyframe(let value):
             return value.outTangent!
@@ -186,8 +186,8 @@ enum UnionInterpolableKeyframe {
             fatalError()
         }
     }
-    
-    func getQuaternionValue()->Quaternion {
+
+    func getQuaternionValue() -> Quaternion {
         switch self {
         case .QuaternionKeyframe(let value):
             return value.value!
@@ -195,8 +195,8 @@ enum UnionInterpolableKeyframe {
             fatalError()
         }
     }
-    
-    func getQuaternionInTangentValue()->Vector4 {
+
+    func getQuaternionInTangentValue() -> Vector4 {
         switch self {
         case .QuaternionKeyframe(let value):
             return value.inTangent!
@@ -204,8 +204,8 @@ enum UnionInterpolableKeyframe {
             fatalError()
         }
     }
-    
-    func getQuaternionOutTangentValue()->Vector4 {
+
+    func getQuaternionOutTangentValue() -> Vector4 {
         switch self {
         case .QuaternionKeyframe(let value):
             return value.outTangent!
@@ -213,8 +213,8 @@ enum UnionInterpolableKeyframe {
             fatalError()
         }
     }
-    
-    func getFloatArrayValue()->[Float] {
+
+    func getFloatArrayValue() -> [Float] {
         switch self {
         case .FloatArrayKeyframe(let value):
             return value.value!
@@ -231,4 +231,58 @@ enum InterpolableValue {
     case Vector4(Vector4)
     case Quaternion(Quaternion)
     case FloatArray([Float])
+
+    func getFloat() -> Float {
+        switch self {
+        case .Float(let value):
+            return value
+        default:
+            fatalError()
+        }
+    }
+
+    func getVector2() -> Vector2 {
+        switch self {
+        case .Vector2(let value):
+            return value
+        default:
+            fatalError()
+        }
+    }
+
+    func getVector3() -> Vector3 {
+        switch self {
+        case .Vector3(let value):
+            return value
+        default:
+            fatalError()
+        }
+    }
+
+    func getVector4() -> Vector4 {
+        switch self {
+        case .Vector4(let value):
+            return value
+        default:
+            fatalError()
+        }
+    }
+
+    func getQuaternion() -> Quaternion {
+        switch self {
+        case .Quaternion(let value):
+            return value
+        default:
+            fatalError()
+        }
+    }
+
+    func getFloatArray() -> [Float] {
+        switch self {
+        case .FloatArray(let value):
+            return value
+        default:
+            fatalError()
+        }
+    }
 }

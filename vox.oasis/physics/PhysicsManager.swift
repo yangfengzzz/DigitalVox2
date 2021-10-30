@@ -24,13 +24,13 @@ class PhysicsManager {
                     let shape2 = self._physicalObjectsMap[obj2]
 
                     var scripts = shape1!.collider!.entity._scripts
-                    for i in 0..<scripts.count {
-                        scripts[i].onTriggerEnter(shape2!)
+                    for i in 0..<scripts.length {
+                        scripts.get(i)!.onTriggerEnter(shape2!)
                     }
 
                     scripts = shape2!.collider!.entity._scripts
-                    for i in 0..<scripts.count {
-                        scripts[i].onTriggerEnter(shape1!)
+                    for i in 0..<scripts.length {
+                        scripts.get(i)!.onTriggerEnter(shape1!)
                     }
                 },
                 { (obj1: Int, obj2: Int) in
@@ -38,13 +38,13 @@ class PhysicsManager {
                     let shape2 = self._physicalObjectsMap[obj2]
 
                     var scripts = shape1!.collider!.entity._scripts
-                    for i in 0..<scripts.count {
-                        scripts[i].onTriggerExit(shape2!)
+                    for i in 0..<scripts.length {
+                        scripts.get(i)!.onTriggerExit(shape2!)
                     }
 
                     scripts = shape2!.collider!.entity._scripts
-                    for i in 0..<scripts.count {
-                        scripts[i].onTriggerExit(shape1!)
+                    for i in 0..<scripts.length {
+                        scripts.get(i)!.onTriggerExit(shape1!)
                     }
                 },
                 { (obj1: Int, obj2: Int) in
@@ -52,13 +52,13 @@ class PhysicsManager {
                     let shape2 = self._physicalObjectsMap[obj2]
 
                     var scripts = shape1!.collider!.entity._scripts
-                    for i in 0..<scripts.count {
-                        scripts[i].onTriggerStay(shape2!)
+                    for i in 0..<scripts.length {
+                        scripts.get(i)!.onTriggerStay(shape2!)
                     }
 
                     scripts = shape2!.collider!.entity._scripts
-                    for i in 0..<scripts.count {
-                        scripts[i].onTriggerStay(shape1!)
+                    for i in 0..<scripts.length {
+                        scripts.get(i)!.onTriggerStay(shape1!)
                     }
                 }
         )

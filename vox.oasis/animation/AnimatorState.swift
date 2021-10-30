@@ -33,13 +33,13 @@ class AnimatorState {
     }
 
     /// The clip that is being played by this animator state.
-    var clip: AnimationClip {
+    var clip: AnimationClip? {
         get {
             _clip
         }
         set {
             _clip = newValue
-            _clipEndTime = min(_clipEndTime, newValue.length)
+            _clipEndTime = min(_clipEndTime, newValue!.length)
         }
     }
 

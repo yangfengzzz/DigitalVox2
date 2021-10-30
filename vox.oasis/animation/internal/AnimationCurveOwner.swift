@@ -18,7 +18,7 @@ internal class AnimationCurveOwner {
     var defaultValue: InterpolableValue
     var fixedPoseValue: InterpolableValue
 
-    init(target: Entity, type: Component.Type, property: AnimationProperty) {
+    init(_ target: Entity, _ type: Component.Type, _ property: AnimationProperty) {
         self.target = target
         self.type = type
         self.property = property

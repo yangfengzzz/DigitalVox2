@@ -18,7 +18,7 @@ final class Entity: EngineObject {
 
     internal var _isActiveInHierarchy: Bool = false
     internal var _components: [Component] = []
-    internal var _scripts: [Script] = []
+    internal var _scripts: DisorderedArray<Script> = DisorderedArray()
     internal var _children: [Entity] = []
     internal var _scene: Scene!
     internal var _isRoot: Bool = false
@@ -346,13 +346,15 @@ extension Entity {
     }
 
     internal func _addScript(_ script: Script) {
-        script._entityCacheIndex = _scripts.count
-        _scripts.append(script)
+        script._entityCacheIndex = _scripts.length
+        _scripts.add(script)
     }
 
     internal func _removeScript(_ script: Script) {
-        let replaced = _scripts.remove(at: script._entityCacheIndex)
-        replaced._entityCacheIndex = script._entityCacheIndex
+        let replaced = _scripts.deleteByIndex(script._entityCacheIndex)
+        if replaced != nil {
+            replaced!._entityCacheIndex = script._entityCacheIndex
+        }
         script._entityCacheIndex = -1
     }
 

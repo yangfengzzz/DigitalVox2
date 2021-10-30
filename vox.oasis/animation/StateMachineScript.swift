@@ -21,7 +21,7 @@ class StateMachineScript {
     ///   - animator: The animator
     ///   - animatorState: The state be evaluated
     ///   - layerIndex: The index of the layer where the state is located
-    func onStateEnter(animator: Animator, animatorState: AnimatorState, layerIndex: Int) {
+    func onStateEnter(_ animator: Animator, _ animatorState: AnimatorState, _ layerIndex: Int) {
     }
 
     /// onStateUpdate is called on each Update frame between onStateEnter and onStateExit callbacks.
@@ -29,7 +29,7 @@ class StateMachineScript {
     ///   - animator: The animator
     ///   - animatorState: The state be evaluated
     ///   - layerIndex: The index of the layer where the state is located
-    func onStateUpdate(animator: Animator, animatorState: AnimatorState, layerIndex: Int) {
+    func onStateUpdate(_ animator: Animator, _ animatorState: AnimatorState, _ layerIndex: Int) {
     }
 
     /// onStateExit is called when a transition ends and the state machine finishes evaluating this state.
@@ -37,7 +37,7 @@ class StateMachineScript {
     ///   - animator: The animator
     ///   - animatorState: The state be evaluated
     ///   - layerIndex: The index of the layer where the state is located
-    func onStateExit(animator: Animator, animatorState: AnimatorState, layerIndex: Int) {
+    func onStateExit(_ animator: Animator, _ animatorState: AnimatorState, _ layerIndex: Int) {
     }
 
     /// Destroy this instance.

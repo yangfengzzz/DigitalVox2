@@ -165,14 +165,15 @@ final class Engine: NSObject {
         let scene = _sceneManager._activeScene
         let componentsManager = _componentsManager
         if (scene != nil) {
+            componentsManager.callScriptOnStart()
             if (physicsManager != nil) {
                 componentsManager.callColliderOnUpdate()
                 physicsManager!._update(deltaTime)
                 componentsManager.callColliderOnLateUpdate()
             }
 
-            componentsManager.callScriptOnStart()
             componentsManager.callScriptOnUpdate(deltaTime)
+            componentsManager.callAnimationUpdate(deltaTime)
             componentsManager.callScriptOnLateUpdate(deltaTime)
 
             _hardwareRenderer.begin()

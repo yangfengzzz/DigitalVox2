@@ -15,7 +15,7 @@ internal class AnimatorStatePlayData {
     var clipTime: Float!
     var currentEventIndex: Int!
 
-    func reset(state: AnimatorState, stateData: AnimatorStateData, offsetFrameTime: Float) {
+    func reset(_ state: AnimatorState, _ stateData: AnimatorStateData, _ offsetFrameTime: Float) {
         self.state = state
         self.frameTime = offsetFrameTime
         self.stateData = stateData

@@ -9,9 +9,9 @@ import Foundation
 
 /// Stores keyframe based animations.
 class AnimationClip: Motion {
-    internal var _curveBindings: [AnimationClipCurveBinding] = [];
-    private var _length: Float = 0;
-    private var _events: [AnimationEvent] = [];
+    internal var _curveBindings: [AnimationClipCurveBinding] = []
+    private var _length: Float = 0
+    private var _events: [AnimationEvent] = []
 
     /// Animation events for this animation clip.
     var events: [AnimationEvent] {
@@ -37,7 +37,7 @@ class AnimationClip: Motion {
     /// Adds an animation event to the clip.
     /// - Parameter event: The animation event
     func addEvent(_ event: AnimationEvent) {
-        _events.append(event);
+        _events.append(event)
         _events.sort { a, b in
             a.time - b.time > 0
         }
@@ -54,35 +54,35 @@ class AnimationClip: Motion {
     ///   - type: The class type of the component that is animated
     ///   - propertyName: The name to the property being animated
     ///   - curve: The animation curve
-    func addCurveBinding<T: Component>(relativePath: String,
-                                       type: T.Type,
-                                       propertyName: String,
-                                       curve: AnimationCurve) {
-        let property: AnimationProperty;
+    func addCurveBinding<T: Component>(_ relativePath: String,
+                                       _ type: T.Type,
+                                       _ propertyName: String,
+                                       _ curve: AnimationCurve) {
+        let property: AnimationProperty
         switch (propertyName) {
         case "position":
-            property = AnimationProperty.Position;
-            break;
+            property = AnimationProperty.Position
+            break
         case "rotation":
-            property = AnimationProperty.Rotation;
-            break;
+            property = AnimationProperty.Rotation
+            break
         case "scale":
-            property = AnimationProperty.Scale;
-            break;
+            property = AnimationProperty.Scale
+            break
         case "blendShapeWeights":
-            property = AnimationProperty.BlendShapeWeights;
-            break;
+            property = AnimationProperty.BlendShapeWeights
+            break
         default:
             fatalError()
         }
-        let curveBinding = AnimationClipCurveBinding();
-        curveBinding.relativePath = relativePath;
-        curveBinding.type = type;
-        curveBinding.property = property;
-        curveBinding.curve = curve;
+        let curveBinding = AnimationClipCurveBinding()
+        curveBinding.relativePath = relativePath
+        curveBinding.type = type
+        curveBinding.property = property
+        curveBinding.curve = curve
         if (curve.length > _length) {
-            _length = curve.length;
+            _length = curve.length
         }
-        _curveBindings.append(curveBinding);
+        _curveBindings.append(curveBinding)
     }
 }

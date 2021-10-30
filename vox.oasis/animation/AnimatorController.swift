@@ -23,13 +23,13 @@ class AnimatorController {
     /// Get the layer by name.
     /// - Parameter name: The layer's name.
     /// - Returns: The Layer
-    func findLayerByName(name: String) -> AnimatorControllerLayer? {
+    func findLayerByName(_ name: String) -> AnimatorControllerLayer? {
         return self._layersMap[name]
     }
 
     /// Add a layer to the controller.
     /// - Parameter layer: The layer to add
-    func addLayer(layer: AnimatorControllerLayer) {
+    func addLayer(_ layer: AnimatorControllerLayer) {
         self._layers.append(layer)
         self._layersMap[layer.name] = layer
         self._distributeUpdateFlag()
@@ -37,7 +37,7 @@ class AnimatorController {
 
     /// Remove a layer from the controller.
     /// - Parameter layerIndex: The index of the AnimatorLayer
-    func removeLayer(layerIndex: Int) {
+    func removeLayer(_ layerIndex: Int) {
         let theLayer = self.layers[layerIndex]
         _layers.remove(at: layerIndex)
         _layersMap.removeValue(forKey: theLayer.name)

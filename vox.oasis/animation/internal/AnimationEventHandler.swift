@@ -9,6 +9,7 @@ import Foundation
 
 internal class AnimationEventHandler {
     var event: AnimationEvent!
+    var handlers: [(AnyObject) -> Void] = []
 
     required init() {
     }
