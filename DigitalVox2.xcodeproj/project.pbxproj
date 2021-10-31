@@ -349,6 +349,8 @@
 		0498DD60272E747B0089B2CE /* rect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0498DD5F272E747B0089B2CE /* rect.swift */; };
 		0498DD62272E756C0089B2CE /* box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0498DD61272E756C0089B2CE /* box.swift */; };
 		0498DD64272E82510089B2CE /* decimate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0498DD63272E82510089B2CE /* decimate.swift */; };
+		0498DD66272E889B0089B2CE /* raw_skeleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0498DD65272E889B0089B2CE /* raw_skeleton.swift */; };
+		0498DD6A272E89760089B2CE /* skeleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0498DD69272E89760089B2CE /* skeleton.swift */; };
 		04AE164E26EED80600201439 /* Vector3.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE164D26EED80600201439 /* Vector3.test.swift */; };
 		04AE165026EEE2C100201439 /* Vector4.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE164F26EEE2C100201439 /* Vector4.test.swift */; };
 		04AE165226EEE85D00201439 /* Matrix.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE165126EEE85D00201439 /* Matrix.test.swift */; };
@@ -796,6 +798,8 @@
 		0498DD5F272E747B0089B2CE /* rect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rect.swift; sourceTree = "<group>"; };
 		0498DD61272E756C0089B2CE /* box.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = box.swift; sourceTree = "<group>"; };
 		0498DD63272E82510089B2CE /* decimate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = decimate.swift; sourceTree = "<group>"; };
+		0498DD65272E889B0089B2CE /* raw_skeleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = raw_skeleton.swift; sourceTree = "<group>"; };
+		0498DD69272E89760089B2CE /* skeleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = skeleton.swift; sourceTree = "<group>"; };
 		04A6BEB227204FE20024DF43 /* blinn-phong.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = "blinn-phong.metal"; sourceTree = "<group>"; };
 		04A6BEB42720DCD80024DF43 /* function-constant.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = "function-constant.metal"; sourceTree = "<group>"; };
 		04A6BEB82723B5D00024DF43 /* background-texture.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = "background-texture.metal"; sourceTree = "<group>"; };
@@ -1614,6 +1618,8 @@
 				0498DD5F272E747B0089B2CE /* rect.swift */,
 				0498DD61272E756C0089B2CE /* box.swift */,
 				0498DD63272E82510089B2CE /* decimate.swift */,
+				0498DD67272E89510089B2CE /* offline */,
+				0498DD68272E89660089B2CE /* runtime */,
 			);
 			path = "ozz-animation";
 			sourceTree = "<group>";
@@ -1742,6 +1748,22 @@
 				0497A20326DF150800F61DE9 /* Info.plist */,
 			);
 			path = vox.renderUITests;
+			sourceTree = "<group>";
+		};
+		0498DD67272E89510089B2CE /* offline */ = {
+			isa = PBXGroup;
+			children = (
+				0498DD65272E889B0089B2CE /* raw_skeleton.swift */,
+			);
+			path = offline;
+			sourceTree = "<group>";
+		};
+		0498DD68272E89660089B2CE /* runtime */ = {
+			isa = PBXGroup;
+			children = (
+				0498DD69272E89760089B2CE /* skeleton.swift */,
+			);
+			path = runtime;
 			sourceTree = "<group>";
 		};
 		04AE07C027029EB000F1D8C5 /* shadow */ = {
@@ -2180,6 +2202,7 @@
 				041BAF0C272B823A006268D5 /* PhysXStaticCollider.swift in Sources */,
 				041BAEC2272A516E006268D5 /* CPxPhysics.mm in Sources */,
 				041BAE2A272A50D9006268D5 /* EngineObject.swift in Sources */,
+				0498DD6A272E89760089B2CE /* skeleton.swift in Sources */,
 				041BAE40272A50ED006268D5 /* SkinnedMeshRenderer.swift in Sources */,
 				041BAE7B272A512B006268D5 /* Sky.swift in Sources */,
 				041BAE5C272A510C006268D5 /* RenderState.swift in Sources */,
@@ -2304,6 +2327,7 @@
 				041BAEE8272A9F81006268D5 /* CPxShape.mm in Sources */,
 				041BAEBE272A5166006268D5 /* LiteCollider.swift in Sources */,
 				045D2C3F272E25800091636B /* simd_math.swift in Sources */,
+				0498DD66272E889B0089B2CE /* raw_skeleton.swift in Sources */,
 				041BAE67272A5111006268D5 /* DirectLight.swift in Sources */,
 				041BAE71272A5117006268D5 /* ShadowMapPass.swift in Sources */,
 				041BAE2B272A50D9006268D5 /* IRefObject.swift in Sources */,
