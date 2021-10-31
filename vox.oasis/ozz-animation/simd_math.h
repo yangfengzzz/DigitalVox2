@@ -212,6 +212,15 @@ typedef const __m128i _SimdInt4;
 
 // Swizzle x, y, z and w components based on compile time arguments _X, _Y, _Z
 // and _W. Arguments can vary from 0 (x), to 3 (w).
++ (SimdFloat4)Swizzle3332With:(_SimdFloat4)_v;
++ (SimdFloat4)Swizzle0122With:(_SimdFloat4)_v;
++ (SimdFloat4)Swizzle0120With:(_SimdFloat4)_v;
++ (SimdFloat4)Swizzle3330With:(_SimdFloat4)_v;
++ (SimdFloat4)Swizzle1201With:(_SimdFloat4)_v;
++ (SimdFloat4)Swizzle2011With:(_SimdFloat4)_v;
++ (SimdFloat4)Swizzle2013With:(_SimdFloat4)_v;
++ (SimdFloat4)Swizzle1203With:(_SimdFloat4)_v;
+
 + (SimdFloat4)Swizzle0123With:(_SimdFloat4)_v;
 
 + (SimdFloat4)Swizzle0101With:(_SimdFloat4)_v;

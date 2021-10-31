@@ -262,6 +262,31 @@ inline SimdFloat4 DivX(_SimdFloat4 _a, _SimdFloat4 _b) {
     return OZZ_SSE_SPLAT_F(_v, 3);
 }
 
++ (SimdFloat4)Swizzle3332With:(_SimdFloat4)_v {
+    return OZZ_SHUFFLE_PS1(_v, _MM_SHUFFLE(2, 3, 3, 3));
+}
++ (SimdFloat4)Swizzle0122With:(_SimdFloat4)_v {
+    return OZZ_SHUFFLE_PS1(_v, _MM_SHUFFLE(2, 2, 1, 0));
+}
++ (SimdFloat4)Swizzle0120With:(_SimdFloat4)_v {
+    return OZZ_SHUFFLE_PS1(_v, _MM_SHUFFLE(0, 2, 1, 0));
+}
++ (SimdFloat4)Swizzle3330With:(_SimdFloat4)_v {
+    return OZZ_SHUFFLE_PS1(_v, _MM_SHUFFLE(0, 3, 3, 3));
+}
++ (SimdFloat4)Swizzle1201With:(_SimdFloat4)_v {
+    return OZZ_SHUFFLE_PS1(_v, _MM_SHUFFLE(1, 2, 0, 1));
+}
++ (SimdFloat4)Swizzle2011With:(_SimdFloat4)_v {
+    return OZZ_SHUFFLE_PS1(_v, _MM_SHUFFLE(1, 1, 0, 2));
+}
++ (SimdFloat4)Swizzle2013With:(_SimdFloat4)_v {
+    return OZZ_SHUFFLE_PS1(_v, _MM_SHUFFLE(3, 1, 0, 2));
+}
++ (SimdFloat4)Swizzle1203With:(_SimdFloat4)_v {
+    return OZZ_SHUFFLE_PS1(_v, _MM_SHUFFLE(3, 0, 2, 1));
+}
+
 + (SimdFloat4)Swizzle0123With:(_SimdFloat4)_v {
     return _v;
 }

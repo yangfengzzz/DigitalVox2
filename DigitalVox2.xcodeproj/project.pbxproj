@@ -300,6 +300,7 @@
 		045D2C08272D0BCC0091636B /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045D2C07272D0BCC0091636B /* Animator.swift */; };
 		045D2C3C272D79650091636B /* simd_math.mm in Sources */ = {isa = PBXBuildFile; fileRef = 045D2C3B272D79650091636B /* simd_math.mm */; };
 		045D2C3F272E25800091636B /* simd_math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045D2C3E272E25800091636B /* simd_math.swift */; };
+		045D2C41272E2A6D0091636B /* simd_quaternion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045D2C40272E2A6D0091636B /* simd_quaternion.swift */; };
 		04605EFB272BC09800400350 /* PhysXView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04605EFA272BC09800400350 /* PhysXView.swift */; };
 		047FEB7026E1BA4A0078CFAF /* shape_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEB6F26E1BA4A0078CFAF /* shape_data.swift */; };
 		047FEB7226E1BC570078CFAF /* fvshape_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEB7126E1BC570078CFAF /* fvshape_data.swift */; };
@@ -681,6 +682,7 @@
 		045D2C3B272D79650091636B /* simd_math.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = simd_math.mm; sourceTree = "<group>"; };
 		045D2C3D272D87830091636B /* math_constant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = math_constant.h; sourceTree = "<group>"; };
 		045D2C3E272E25800091636B /* simd_math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = simd_math.swift; sourceTree = "<group>"; };
+		045D2C40272E2A6D0091636B /* simd_quaternion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = simd_quaternion.swift; sourceTree = "<group>"; };
 		04605EFA272BC09800400350 /* PhysXView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXView.swift; sourceTree = "<group>"; };
 		047914CA26F37C0300BE5170 /* ShaderData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderData.swift; sourceTree = "<group>"; };
 		047E7B2B26EE257E006BC3FB /* MeshRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeshRenderer.swift; sourceTree = "<group>"; };
@@ -1581,6 +1583,7 @@
 				045D2C3A272D78E10091636B /* simd_math.h */,
 				045D2C3B272D79650091636B /* simd_math.mm */,
 				045D2C3E272E25800091636B /* simd_math.swift */,
+				045D2C40272E2A6D0091636B /* simd_quaternion.swift */,
 			);
 			path = "ozz-animation";
 			sourceTree = "<group>";
@@ -2285,6 +2288,7 @@
 				041BAE70272A5117006268D5 /* ShadowPass.swift in Sources */,
 				041BAE0C272A500F006268D5 /* SceneManager.swift in Sources */,
 				041BAE44272A50ED006268D5 /* ModelMesh.swift in Sources */,
+				045D2C41272E2A6D0091636B /* simd_quaternion.swift in Sources */,
 				041BAE99272A5141006268D5 /* StaticCollider.swift in Sources */,
 				041BAEAE272A5153006268D5 /* RenderPipelineState.swift in Sources */,
 				045D2BF6272CD5A70091636B /* AnimatorStateInfo.swift in Sources */,
