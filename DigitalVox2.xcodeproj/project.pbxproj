@@ -301,6 +301,7 @@
 		045D2C3C272D79650091636B /* simd_math.mm in Sources */ = {isa = PBXBuildFile; fileRef = 045D2C3B272D79650091636B /* simd_math.mm */; };
 		045D2C3F272E25800091636B /* simd_math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045D2C3E272E25800091636B /* simd_math.swift */; };
 		045D2C41272E2A6D0091636B /* simd_quaternion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045D2C40272E2A6D0091636B /* simd_quaternion.swift */; };
+		045D2C43272E352F0091636B /* soa_float.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045D2C42272E352F0091636B /* soa_float.swift */; };
 		04605EFB272BC09800400350 /* PhysXView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04605EFA272BC09800400350 /* PhysXView.swift */; };
 		047FEB7026E1BA4A0078CFAF /* shape_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEB6F26E1BA4A0078CFAF /* shape_data.swift */; };
 		047FEB7226E1BC570078CFAF /* fvshape_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEB7126E1BC570078CFAF /* fvshape_data.swift */; };
@@ -683,6 +684,7 @@
 		045D2C3D272D87830091636B /* math_constant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = math_constant.h; sourceTree = "<group>"; };
 		045D2C3E272E25800091636B /* simd_math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = simd_math.swift; sourceTree = "<group>"; };
 		045D2C40272E2A6D0091636B /* simd_quaternion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = simd_quaternion.swift; sourceTree = "<group>"; };
+		045D2C42272E352F0091636B /* soa_float.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = soa_float.swift; sourceTree = "<group>"; };
 		04605EFA272BC09800400350 /* PhysXView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXView.swift; sourceTree = "<group>"; };
 		047914CA26F37C0300BE5170 /* ShaderData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderData.swift; sourceTree = "<group>"; };
 		047E7B2B26EE257E006BC3FB /* MeshRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeshRenderer.swift; sourceTree = "<group>"; };
@@ -1584,6 +1586,7 @@
 				045D2C3B272D79650091636B /* simd_math.mm */,
 				045D2C3E272E25800091636B /* simd_math.swift */,
 				045D2C40272E2A6D0091636B /* simd_quaternion.swift */,
+				045D2C42272E352F0091636B /* soa_float.swift */,
 			);
 			path = "ozz-animation";
 			sourceTree = "<group>";
@@ -2221,6 +2224,7 @@
 				041BAE4C272A50FB006268D5 /* PBRBaseMaterial.swift in Sources */,
 				041BAE5D272A510C006268D5 /* BlendState.swift in Sources */,
 				041BAE48272A50FB006268D5 /* BlendMode.swift in Sources */,
+				045D2C43272E352F0091636B /* soa_float.swift in Sources */,
 				041BAF0E272B82CB006268D5 /* PhysXDynamicCollider.swift in Sources */,
 				041BAE06272A500F006268D5 /* GLTFAssetLoader.swift in Sources */,
 				041BAEDD272A99EE006268D5 /* PhysXColliderShape.swift in Sources */,
