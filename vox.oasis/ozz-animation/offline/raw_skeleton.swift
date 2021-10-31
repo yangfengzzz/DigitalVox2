@@ -37,13 +37,76 @@ struct RawSkeleton {
     // Returns true on success or false on failure if the number of joints exceeds
     // ozz::Skeleton::kMaxJoints.
     func Validate() -> Bool {
-        fatalError()
+        if (num_joints() > Skeleton.Constants.kMaxJoints.rawValue) {
+            return false
+        }
+        return true
     }
 
     // Returns the number of joints of *this animation.
     // This function is not constant time as it iterates the hierarchy of joints
     // and counts them.
     func num_joints() -> Int {
-        fatalError()
+        struct JointCounter: SkeletonVisitor {
+            var num_joints: Int = 0
+
+            mutating func visitor(_ _current: RawSkeleton.Joint, _ _parent: RawSkeleton.Joint?) {
+                num_joints += 1
+            }
+        }
+
+        return IterateJointsDF(self, JointCounter()).num_joints
     }
+}
+
+protocol SkeletonVisitor {
+    mutating func visitor(_ _current: RawSkeleton.Joint, _ _parent: RawSkeleton.Joint?)
+}
+
+// Internal function used to iterate through joint hierarchy depth-first.
+func _IterHierarchyRecurseDF<_Fct: SkeletonVisitor>(_ _children: [RawSkeleton.Joint],
+                                                    _ _parent: RawSkeleton.Joint?,
+                                                    _ _fct: inout _Fct) {
+    for i in 0..<_children.count {
+        let current = _children[i]
+        _fct.visitor(current, _parent)
+        _IterHierarchyRecurseDF(current.children, current, &_fct)
+    }
+}
+
+// Internal function used to iterate through joint hierarchy breadth-first.
+func _IterHierarchyRecurseBF<_Fct: SkeletonVisitor>(_ _children: [RawSkeleton.Joint],
+                                                    _ _parent: RawSkeleton.Joint?,
+                                                    _ _fct: inout _Fct) {
+    for i in 0..<_children.count {
+        let current = _children[i]
+        _fct.visitor(current, _parent)
+    }
+
+    for i in 0..<_children.count {
+        let current = _children[i]
+        _IterHierarchyRecurseBF(current.children, current, &_fct)
+    }
+}
+
+// Applies a specified functor to each joint in a depth-first order.
+// _Fct is of type void(const Joint& _current, const Joint* _parent) where the
+// first argument is the child of the second argument. _parent is null if the
+// _current joint is the root.
+func IterateJointsDF<_Fct: SkeletonVisitor>(_ _skeleton: RawSkeleton,
+                                            _ _fct: _Fct) -> _Fct {
+    var _fct = _fct
+    _IterHierarchyRecurseDF(_skeleton.roots, nil, &_fct)
+    return _fct
+}
+
+// Applies a specified functor to each joint in a breadth-first order.
+// _Fct is of type void(const Joint& _current, const Joint* _parent) where the
+// first argument is the child of the second argument. _parent is null if the
+// _current joint is the root.
+func IterateJointsBF<_Fct: SkeletonVisitor>(_ _skeleton: RawSkeleton,
+                                            _ _fct: _Fct) -> _Fct {
+    var _fct = _fct
+    _IterHierarchyRecurseBF(_skeleton.roots, nil, &_fct)
+    return _fct
 }
