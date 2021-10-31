@@ -875,3 +875,478 @@ inline SimdFloat4 DivX(_SimdFloat4 _a, _SimdFloat4 _b) {
 
 
 @end
+
+@implementation OZZInt4 {
+
+}
+
++ (SimdInt4)zero {
+    return _mm_setzero_si128();
+}
+
++ (SimdInt4)one {
+    const __m128i zero = _mm_setzero_si128();
+    return _mm_sub_epi32(zero, _mm_cmpeq_epi32(zero, zero));
+}
+
++ (SimdInt4)x_axis {
+    const __m128i zero = _mm_setzero_si128();
+    return _mm_srli_si128(_mm_sub_epi32(zero, _mm_cmpeq_epi32(zero, zero)), 12);
+}
+
++ (SimdInt4)y_axis {
+    const __m128i zero = _mm_setzero_si128();
+    return _mm_slli_si128(
+            _mm_srli_si128(_mm_sub_epi32(zero, _mm_cmpeq_epi32(zero, zero)), 12), 4);
+}
+
++ (SimdInt4)z_axis {
+    const __m128i zero = _mm_setzero_si128();
+    return _mm_slli_si128(
+            _mm_srli_si128(_mm_sub_epi32(zero, _mm_cmpeq_epi32(zero, zero)), 12), 8);
+}
+
++ (SimdInt4)w_axis {
+    const __m128i zero = _mm_setzero_si128();
+    return _mm_slli_si128(_mm_sub_epi32(zero, _mm_cmpeq_epi32(zero, zero)), 12);
+}
+
++ (SimdInt4)all_true {
+    const __m128i zero = _mm_setzero_si128();
+    return _mm_cmpeq_epi32(zero, zero);
+}
+
++ (SimdInt4)all_false {
+    return _mm_setzero_si128();
+}
+
++ (SimdInt4)mask_sign {
+    const __m128i zero = _mm_setzero_si128();
+    return _mm_slli_epi32(_mm_cmpeq_epi32(zero, zero), 31);
+}
+
++ (SimdInt4)mask_sign_xyz {
+    const __m128i zero = _mm_setzero_si128();
+    return _mm_srli_si128(_mm_slli_epi32(_mm_cmpeq_epi32(zero, zero), 31), 4);
+}
+
++ (SimdInt4)mask_sign_w {
+    const __m128i zero = _mm_setzero_si128();
+    return _mm_slli_si128(_mm_slli_epi32(_mm_cmpeq_epi32(zero, zero), 31), 12);
+}
+
++ (SimdInt4)mask_not_sign {
+    const __m128i zero = _mm_setzero_si128();
+    return _mm_srli_epi32(_mm_cmpeq_epi32(zero, zero), 1);
+}
+
++ (SimdInt4)mask_ffff {
+    const __m128i zero = _mm_setzero_si128();
+    return _mm_cmpeq_epi32(zero, zero);
+}
+
++ (SimdInt4)mask_0000 {
+    return _mm_setzero_si128();
+}
+
++ (SimdInt4)mask_fff0 {
+    const __m128i zero = _mm_setzero_si128();
+    return _mm_srli_si128(_mm_cmpeq_epi32(zero, zero), 4);
+}
+
++ (SimdInt4)mask_f000 {
+    const __m128i zero = _mm_setzero_si128();
+    return _mm_srli_si128(_mm_cmpeq_epi32(zero, zero), 12);
+}
+
++ (SimdInt4)mask_0f00 {
+    const __m128i zero = _mm_setzero_si128();
+    return _mm_srli_si128(_mm_slli_si128(_mm_cmpeq_epi32(zero, zero), 12), 8);
+}
+
++ (SimdInt4)mask_00f0 {
+    const __m128i zero = _mm_setzero_si128();
+    return _mm_srli_si128(_mm_slli_si128(_mm_cmpeq_epi32(zero, zero), 12), 4);
+}
+
++ (SimdInt4)mask_000f {
+    const __m128i zero = _mm_setzero_si128();
+    return _mm_slli_si128(_mm_cmpeq_epi32(zero, zero), 12);
+}
+
++ (SimdInt4)LoadWithInt:(int)_x :(int)_y :(int)_z :(int)_w {
+    return _mm_set_epi32(_w, _z, _y, _x);
+}
+
++ (SimdInt4)LoadXWithInt:(int)_x {
+    return _mm_set_epi32(0, 0, 0, _x);
+}
+
++ (SimdInt4)Load1WithInt:(int)_x {
+    return _mm_set1_epi32(_x);
+}
+
++ (SimdInt4)LoadWithBool:(bool)_x :(bool)_y :(bool)_z :(bool)_w {
+    return _mm_sub_epi32(_mm_setzero_si128(), _mm_set_epi32(_w, _z, _y, _x));
+}
+
++ (SimdInt4)LoadXWithBool:(bool)_x {
+    return _mm_sub_epi32(_mm_setzero_si128(), _mm_set_epi32(0, 0, 0, _x));
+}
+
++ (SimdInt4)Load1WithBool:(bool)_x {
+    return _mm_sub_epi32(_mm_setzero_si128(), _mm_set1_epi32(_x));
+}
+
++ (SimdInt4)LoadPtrWith:(const int *)_i {
+    assert(!(uintptr_t(_i) & 0xf) && "Invalid alignment");
+    return _mm_load_si128(reinterpret_cast<const __m128i *>(_i));
+}
+
++ (SimdInt4)LoadXPtrWith:(const int *)_i {
+    assert(!(uintptr_t(_i) & 0xf) && "Invalid alignment");
+    return _mm_cvtsi32_si128(*_i);
+}
+
++ (SimdInt4)Load1PtrWith:(const int *)_i {
+    assert(!(uintptr_t(_i) & 0xf) && "Invalid alignment");
+    return _mm_shuffle_epi32(
+            _mm_loadl_epi64(reinterpret_cast<const __m128i *>(_i)),
+            _MM_SHUFFLE(0, 0, 0, 0));
+}
+
++ (SimdInt4)Load2PtrWith:(const int *)_i {
+    assert(!(uintptr_t(_i) & 0xf) && "Invalid alignment");
+    return _mm_loadl_epi64(reinterpret_cast<const __m128i *>(_i));
+}
+
++ (SimdInt4)Load3PtrWith:(const int *)_i {
+    assert(!(uintptr_t(_i) & 0xf) && "Invalid alignment");
+    return _mm_set_epi32(0, _i[2], _i[1], _i[0]);
+}
+
++ (SimdInt4)LoadPtrUWith:(const int *)_i {
+    assert(!(uintptr_t(_i) & 0x3) && "Invalid alignment");
+    return _mm_loadu_si128(reinterpret_cast<const __m128i *>(_i));
+}
+
++ (SimdInt4)LoadXPtrUWith:(const int *)_i {
+    assert(!(uintptr_t(_i) & 0x3) && "Invalid alignment");
+    return _mm_cvtsi32_si128(*_i);
+}
+
++ (SimdInt4)Load1PtrUWith:(const int *)_i {
+    assert(!(uintptr_t(_i) & 0x3) && "Invalid alignment");
+    return _mm_set1_epi32(*_i);
+}
+
++ (SimdInt4)Load2PtrUWith:(const int *)_i {
+    assert(!(uintptr_t(_i) & 0x3) && "Invalid alignment");
+    return _mm_set_epi32(0, 0, _i[1], _i[0]);
+}
+
++ (SimdInt4)Load3PtrUWith:(const int *)_i {
+    assert(!(uintptr_t(_i) & 0x3) && "Invalid alignment");
+    return _mm_set_epi32(0, _i[2], _i[1], _i[0]);
+}
+
++ (SimdInt4)FromFloatRoundWith:(_SimdFloat4)_f {
+    return _mm_cvtps_epi32(_f);
+}
+
++ (SimdInt4)FromFloatTruncWith:(_SimdFloat4)_f {
+    return _mm_cvttps_epi32(_f);
+}
+
++ (int)GetXWith:(_SimdInt4)_v {
+    return _mm_cvtsi128_si32(_v);
+}
+
++ (int)GetYWith:(_SimdInt4)_v {
+    return _mm_cvtsi128_si32(OZZ_SSE_SPLAT_I(_v, 1));
+}
+
++ (int)GetZWith:(_SimdInt4)_v {
+    return _mm_cvtsi128_si32(_mm_unpackhi_epi32(_v, _v));
+}
+
++ (int)GetWWith:(_SimdInt4)_v {
+    return _mm_cvtsi128_si32(OZZ_SSE_SPLAT_I(_v, 3));
+}
+
++ (SimdInt4)SetXWith:(_SimdInt4)_v :(_SimdInt4)_i {
+    return _mm_castps_si128(
+            _mm_move_ss(_mm_castsi128_ps(_v), _mm_castsi128_ps(_i)));
+}
+
++ (SimdInt4)SetYWith:(_SimdInt4)_v :(_SimdInt4)_i {
+    const __m128 xfnn = _mm_castsi128_ps(_mm_unpacklo_epi32(_v, _i));
+    return _mm_castps_si128(
+            _mm_shuffle_ps(xfnn, _mm_castsi128_ps(_v), _MM_SHUFFLE(3, 2, 1, 0)));
+}
+
++ (SimdInt4)SetZWith:(_SimdInt4)_v :(_SimdInt4)_i {
+    const __m128 ffww = _mm_shuffle_ps(_mm_castsi128_ps(_i), _mm_castsi128_ps(_v),
+            _MM_SHUFFLE(3, 3, 0, 0));
+    return _mm_castps_si128(
+            _mm_shuffle_ps(_mm_castsi128_ps(_v), ffww, _MM_SHUFFLE(2, 0, 1, 0)));
+}
+
++ (SimdInt4)SetWWith:(_SimdInt4)_v :(_SimdInt4)_i {
+    const __m128 ffzz = _mm_shuffle_ps(_mm_castsi128_ps(_i), _mm_castsi128_ps(_v),
+            _MM_SHUFFLE(2, 2, 0, 0));
+    return _mm_castps_si128(
+            _mm_shuffle_ps(_mm_castsi128_ps(_v), ffzz, _MM_SHUFFLE(0, 2, 1, 0)));
+}
+
++ (SimdInt4)SetIWith:(_SimdInt4)_v :(_SimdInt4)_i :(int)_ith {
+    assert(_ith >= 0 && _ith <= 3 && "Invalid index, out of range.");
+    union {
+        SimdInt4 ret;
+        int af[4];
+    } u = {_v};
+    u.af[_ith] = [OZZInt4 GetXWith:_i];
+    return u.ret;
+}
+
++ (void)StorePtrWith:(_SimdInt4)_v :(int *)_i {
+    assert(!(uintptr_t(_i) & 0xf) && "Invalid alignment");
+    _mm_store_si128(reinterpret_cast<__m128i *>(_i), _v);
+}
+
++ (void)Store1PtrWith:(_SimdInt4)_v :(int *)_i {
+    assert(!(uintptr_t(_i) & 0xf) && "Invalid alignment");
+    *_i = _mm_cvtsi128_si32(_v);
+}
+
++ (void)Store2PtrWith:(_SimdInt4)_v :(int *)_i {
+    assert(!(uintptr_t(_i) & 0xf) && "Invalid alignment");
+    _i[0] = _mm_cvtsi128_si32(_v);
+    _i[1] = _mm_cvtsi128_si32(OZZ_SSE_SPLAT_I(_v, 1));
+}
+
++ (void)Store3PtrWith:(_SimdInt4)_v :(int *)_i {
+    assert(!(uintptr_t(_i) & 0xf) && "Invalid alignment");
+    _i[0] = _mm_cvtsi128_si32(_v);
+    _i[1] = _mm_cvtsi128_si32(OZZ_SSE_SPLAT_I(_v, 1));
+    _i[2] = _mm_cvtsi128_si32(_mm_unpackhi_epi32(_v, _v));
+}
+
++ (void)StorePtrUWith:(_SimdInt4)_v :(int *)_i {
+    assert(!(uintptr_t(_i) & 0x3) && "Invalid alignment");
+    _mm_storeu_si128(reinterpret_cast<__m128i *>(_i), _v);
+}
+
++ (void)Store1PtrUWith:(_SimdInt4)_v :(int *)_i {
+    assert(!(uintptr_t(_i) & 0x3) && "Invalid alignment");
+    *_i = _mm_cvtsi128_si32(_v);
+}
+
++ (void)Store2PtrUWith:(_SimdInt4)_v :(int *)_i {
+    assert(!(uintptr_t(_i) & 0x3) && "Invalid alignment");
+    _i[0] = _mm_cvtsi128_si32(_v);
+    _i[1] = _mm_cvtsi128_si32(OZZ_SSE_SPLAT_I(_v, 1));
+}
+
++ (void)Store3PtrUWith:(_SimdInt4)_v :(int *)_i {
+    assert(!(uintptr_t(_i) & 0x3) && "Invalid alignment");
+    _i[0] = _mm_cvtsi128_si32(_v);
+    _i[1] = _mm_cvtsi128_si32(OZZ_SSE_SPLAT_I(_v, 1));
+    _i[2] = _mm_cvtsi128_si32(_mm_unpackhi_epi32(_v, _v));
+}
+
++ (SimdInt4)SplatXWith:(_SimdInt4)_a {
+    return OZZ_SSE_SPLAT_I(_a, 0);
+}
+
++ (SimdInt4)SplatYWith:(_SimdInt4)_a {
+    return OZZ_SSE_SPLAT_I(_a, 1);
+}
+
++ (SimdInt4)SplatZWith:(_SimdInt4)_a {
+    return OZZ_SSE_SPLAT_I(_a, 2);
+}
+
++ (SimdInt4)SplatWWith:(_SimdInt4)_a {
+    return OZZ_SSE_SPLAT_I(_a, 3);
+}
+
++ (SimdInt4)Swizzle0123With:(_SimdInt4)_v {
+    return _v;
+}
+
++ (int)MoveMaskWith:(_SimdInt4)_v {
+    return _mm_movemask_ps(_mm_castsi128_ps(_v));
+}
+
++ (bool)AreAllTrueWith:(_SimdInt4)_v {
+    return _mm_movemask_ps(_mm_castsi128_ps(_v)) == 0xf;
+}
+
++ (bool)AreAllTrue3With:(_SimdInt4)_v {
+    return (_mm_movemask_ps(_mm_castsi128_ps(_v)) & 0x7) == 0x7;
+}
+
++ (bool)AreAllTrue2With:(_SimdInt4)_v {
+    return (_mm_movemask_ps(_mm_castsi128_ps(_v)) & 0x3) == 0x3;
+}
+
++ (bool)AreAllTrue1With:(_SimdInt4)_v {
+    return (_mm_movemask_ps(_mm_castsi128_ps(_v)) & 0x1) == 0x1;
+}
+
++ (bool)AreAllFalseWith:(_SimdInt4)_v {
+    return _mm_movemask_ps(_mm_castsi128_ps(_v)) == 0;
+}
+
++ (bool)AreAllFalse3With:(_SimdInt4)_v {
+    return (_mm_movemask_ps(_mm_castsi128_ps(_v)) & 0x7) == 0;
+}
+
++ (bool)AreAllFalse2With:(_SimdInt4)_v {
+    return (_mm_movemask_ps(_mm_castsi128_ps(_v)) & 0x3) == 0;
+}
+
++ (bool)AreAllFalse1With:(_SimdInt4)_v {
+    return (_mm_movemask_ps(_mm_castsi128_ps(_v)) & 0x1) == 0;
+}
+
++ (SimdInt4)HAdd2With:(_SimdInt4)_v {
+    const __m128i hadd = _mm_add_epi32(_v, OZZ_SSE_SPLAT_I(_v, 1));
+    return _mm_castps_si128(
+            _mm_move_ss(_mm_castsi128_ps(_v), _mm_castsi128_ps(hadd)));
+}
+
++ (SimdInt4)HAdd3With:(_SimdInt4)_v {
+    const __m128i hadd = _mm_add_epi32(_mm_add_epi32(_v, OZZ_SSE_SPLAT_I(_v, 1)),
+            _mm_unpackhi_epi32(_v, _v));
+    return _mm_castps_si128(
+            _mm_move_ss(_mm_castsi128_ps(_v), _mm_castsi128_ps(hadd)));
+}
+
++ (SimdInt4)HAdd4With:(_SimdInt4)_v {
+    const __m128 v = _mm_castsi128_ps(_v);
+    const __m128i haddxyzw =
+            _mm_add_epi32(_v, _mm_castps_si128(_mm_movehl_ps(v, v)));
+    return _mm_castps_si128(_mm_move_ss(
+            v,
+            _mm_castsi128_ps(_mm_add_epi32(haddxyzw, OZZ_SSE_SPLAT_I(haddxyzw, 1)))));
+}
+
++ (SimdInt4)AbsWith:(_SimdInt4)_v {
+#ifdef OZZ_SIMD_SSSE3
+    return _mm_abs_epi32(_v);
+#else   // OZZ_SIMD_SSSE3
+    const __m128i zero = _mm_setzero_si128();
+    return OZZ_SSE_SELECT_I(_mm_cmplt_epi32(_v, zero), _mm_sub_epi32(zero, _v),
+            _v);
+#endif  // OZZ_SIMD_SSSE3
+}
+
++ (SimdInt4)SignWith:(_SimdInt4)_v {
+    return _mm_slli_epi32(_mm_srli_epi32(_v, 31), 31);
+}
+
++ (SimdInt4)MinWith:(_SimdInt4)_a :(_SimdInt4)_b {
+#ifdef OZZ_SIMD_SSE4_1
+    return _mm_min_epi32(_a, _b);
+#else  // OZZ_SIMD_SSE4_1
+    return OZZ_SSE_SELECT_I(_mm_cmplt_epi32(_a, _b), _a, _b);
+#endif  // OZZ_SIMD_SSE4_1
+}
+
++ (SimdInt4)MaxWith:(_SimdInt4)_a :(_SimdInt4)_b {
+#ifdef OZZ_SIMD_SSE4_1
+    return _mm_max_epi32(_a, _b);
+#else  // OZZ_SIMD_SSE4_1
+    return OZZ_SSE_SELECT_I(_mm_cmpgt_epi32(_a, _b), _a, _b);
+#endif  // OZZ_SIMD_SSE4_1
+}
+
++ (SimdInt4)Min0With:(_SimdInt4)_v {
+    const __m128i zero = _mm_setzero_si128();
+#ifdef OZZ_SIMD_SSE4_1
+    return _mm_min_epi32(zero, _v);
+#else   // OZZ_SIMD_SSE4_1
+    return OZZ_SSE_SELECT_I(_mm_cmplt_epi32(zero, _v), zero, _v);
+#endif  // OZZ_SIMD_SSE4_1
+}
+
++ (SimdInt4)Max0With:(_SimdInt4)_v {
+    const __m128i zero = _mm_setzero_si128();
+#ifdef OZZ_SIMD_SSE4_1
+    return _mm_max_epi32(zero, _v);
+#else   // OZZ_SIMD_SSE4_1
+    return OZZ_SSE_SELECT_I(_mm_cmpgt_epi32(zero, _v), zero, _v);
+#endif  // OZZ_SIMD_SSE4_1
+}
+
++ (SimdInt4)ClampWith:(_SimdInt4)_a :(_SimdInt4)_v :(_SimdInt4)_b {
+    return _mm_min_epi32(_mm_max_epi32(_a, _v), _b);
+}
+
++ (SimdInt4)SelectWith:(_SimdInt4)_b :(_SimdInt4)_true :(_SimdInt4)_false {
+    return OZZ_SSE_SELECT_I(_b, _true, _false);
+}
+
++ (SimdInt4)AndWith:(_SimdInt4)_a :(_SimdInt4)_b {
+    return _mm_and_si128(_a, _b);
+}
+
++ (SimdInt4)AndNotWith:(_SimdInt4)_a :(_SimdInt4)_b {
+    return _mm_andnot_si128(_b, _a);
+}
+
++ (SimdInt4)OrWith:(_SimdInt4)_a :(_SimdInt4)_b {
+    return _mm_or_si128(_a, _b);
+}
+
++ (SimdInt4)XorWith:(_SimdInt4)_a :(_SimdInt4)_b {
+    return _mm_xor_si128(_a, _b);
+}
+
++ (SimdInt4)NotWith:(_SimdInt4)_v {
+    return _mm_xor_si128(_v, _mm_cmpeq_epi32(_v, _v));
+}
+
++ (SimdInt4)ShiftLWith:(_SimdInt4)_v :(int)_bits {
+    return _mm_slli_epi32(_v, _bits);
+}
+
++ (SimdInt4)ShiftRWith:(_SimdInt4)_v :(int)_bits {
+    return _mm_srai_epi32(_v, _bits);
+}
+
++ (SimdInt4)ShiftRuWith:(_SimdInt4)_v :(int)_bits {
+    return _mm_srli_epi32(_v, _bits);
+}
+
++ (SimdInt4)CmpEqWith:(_SimdInt4)_a :(_SimdInt4)_b {
+    return _mm_cmpeq_epi32(_a, _b);
+}
+
++ (SimdInt4)CmpNeWith:(_SimdInt4)_a :(_SimdInt4)_b {
+    const __m128i eq = _mm_cmpeq_epi32(_a, _b);
+    return _mm_xor_si128(eq, _mm_cmpeq_epi32(_a, _a));
+}
+
++ (SimdInt4)CmpLtWith:(_SimdInt4)_a :(_SimdInt4)_b {
+    return _mm_cmpgt_epi32(_b, _a);
+}
+
++ (SimdInt4)CmpLeWith:(_SimdInt4)_a :(_SimdInt4)_b {
+    const __m128i gt = _mm_cmpgt_epi32(_a, _b);
+    return _mm_xor_si128(gt, _mm_cmpeq_epi32(_a, _a));
+}
+
++ (SimdInt4)CmpGtWith:(_SimdInt4)_a :(_SimdInt4)_b {
+    return _mm_cmpgt_epi32(_a, _b);
+}
+
++ (SimdInt4)CmpGeWith:(_SimdInt4)_a :(_SimdInt4)_b {
+    const __m128i lt = _mm_cmpgt_epi32(_b, _a);
+    return _mm_xor_si128(lt, _mm_cmpeq_epi32(_a, _a));
+}
+
+
+@end

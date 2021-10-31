@@ -624,72 +624,427 @@ typedef const __m128i _SimdInt4;
 
 @end
 
+//MARK: - OZZInt4
 @interface OZZInt4 : NSObject
 // Returns a SimdInt4 vector with all components set to 0.
 + (SimdInt4)zero;
 
 // Returns a SimdInt4 vector with all components set to 1.
-+ (SimdInt4) one;
++ (SimdInt4)one;
 
 // Returns a SimdInt4 vector with the x component set to 1 and all the others
 // to 0.
-+ (SimdInt4) x_axis;
++ (SimdInt4)x_axis;
 
 // Returns a SimdInt4 vector with the y component set to 1 and all the others
 // to 0.
-+ (SimdInt4) y_axis;
++ (SimdInt4)y_axis;
 
 // Returns a SimdInt4 vector with the z component set to 1 and all the others
 // to 0.
-+ (SimdInt4) z_axis;
++ (SimdInt4)z_axis;
 
 // Returns a SimdInt4 vector with the w component set to 1 and all the others
 // to 0.
-+ (SimdInt4) w_axis;
++ (SimdInt4)w_axis;
 
 // Returns a SimdInt4 vector with all components set to true (0xffffffff).
-+ (SimdInt4) all_true;
++ (SimdInt4)all_true;
 
 // Returns a SimdInt4 vector with all components set to false (0).
-+ (SimdInt4) all_false;
++ (SimdInt4)all_false;
 
 // Returns a SimdInt4 vector with sign bits set to 1.
-+ (SimdInt4) mask_sign;
++ (SimdInt4)mask_sign;
 
 // Returns a SimdInt4 vector with all bits set to 1 except sign.
-+ (SimdInt4) mask_not_sign;
++ (SimdInt4)mask_not_sign;
 
 // Returns a SimdInt4 vector with sign bits of x, y and z components set to 1.
-+ (SimdInt4) mask_sign_xyz;
++ (SimdInt4)mask_sign_xyz;
 
 // Returns a SimdInt4 vector with sign bits of w component set to 1.
-+ (SimdInt4) mask_sign_w;
++ (SimdInt4)mask_sign_w;
 
 // Returns a SimdInt4 vector with all bits set to 1.
-+ (SimdInt4) mask_ffff;
++ (SimdInt4)mask_ffff;
 
 // Returns a SimdInt4 vector with all bits set to 0.
-+ (SimdInt4) mask_0000;
++ (SimdInt4)mask_0000;
 
 // Returns a SimdInt4 vector with all the bits of the x, y, z components set to
 // 1, while z is set to 0.
-+ (SimdInt4) mask_fff0;
++ (SimdInt4)mask_fff0;
 
 // Returns a SimdInt4 vector with all the bits of the x component set to 1,
 // while the others are set to 0.
-+ (SimdInt4) mask_f000;
++ (SimdInt4)mask_f000;
 
 // Returns a SimdInt4 vector with all the bits of the y component set to 1,
 // while the others are set to 0.
-+ (SimdInt4) mask_0f00;
++ (SimdInt4)mask_0f00;
 
 // Returns a SimdInt4 vector with all the bits of the z component set to 1,
 // while the others are set to 0.
-+ (SimdInt4) mask_00f0;
++ (SimdInt4)mask_00f0;
 
 // Returns a SimdInt4 vector with all the bits of the w component set to 1,
 // while the others are set to 0.
-+ (SimdInt4) mask_000f;
++ (SimdInt4)mask_000f;
+
+// Loads _x, _y, _z, _w to the returned vector.
+// r.x = _x
+// r.y = _y
+// r.z = _z
+// r.w = _w
++ (SimdInt4)LoadWithInt:(int)_x :(int)_y :(int)_z :(int)_w;
+
+// Loads _x, _y, _z, _w to the returned vector using the following conversion
+// rule.
+// r.x = _x ? 0xffffffff:0
+// r.y = _y ? 0xffffffff:0
+// r.z = _z ? 0xffffffff:0
+// r.w = _w ? 0xffffffff:0
++ (SimdInt4)LoadWithBool:(bool)_x :(bool)_y :(bool)_z :(bool)_w;
+
+// Loads _x to the x component of the returned vector using the following
+// conversion rule, and sets y, z and w to 0.
+// r.x = _x ? 0xffffffff:0
+// r.y = 0
+// r.z = 0
+// r.w = 0
++ (SimdInt4)LoadXWithBool:(bool)_x;
++ (SimdInt4)LoadXWithInt:(int)_x;
+
+// Loads _x to the all the components of the returned vector using the following
+// conversion rule.
+// r.x = _x ? 0xffffffff:0
+// r.y = _x ? 0xffffffff:0
+// r.z = _x ? 0xffffffff:0
+// r.w = _x ? 0xffffffff:0
++ (SimdInt4)Load1WithBool:(bool)_x;
++ (SimdInt4)Load1WithInt:(int)_x;
+
+// Loads the 4 values of _f to the returned vector.
+// _i must be aligned to 16 bytes.
+// r.x = _i[0]
+// r.y = _i[1]
+// r.z = _i[2]
+// r.w = _i[3]
++ (SimdInt4)LoadPtrWith:(const int *)_i;
+
+// Loads _i[0] to the x component of the returned vector, and sets y, z and w
+// to 0.
+// _i must be aligned to 16 bytes.
+// r.x = _i[0]
+// r.y = 0
+// r.z = 0
+// r.w = 0
++ (SimdInt4)LoadXPtrWith:(const int *)_i;
+
+// Loads _i[0] to all the components of the returned vector.
+// _i must be aligned to 16 bytes.
+// r.x = _i[0]
+// r.y = _i[0]
+// r.z = _i[0]
+// r.w = _i[0]
++ (SimdInt4)Load1PtrWith:(const int *)_i;
+
+// Loads the 2 first value of _i to the x and y components of the returned
+// vector. The remaining components are set to 0.
+// _f must be aligned to 4 bytes.
+// r.x = _i[0]
+// r.y = _i[1]
+// r.z = 0
+// r.w = 0
++ (SimdInt4)Load2PtrWith:(const int *)_i;
+
+// Loads the 3 first value of _i to the x, y and z components of the returned
+// vector. The remaining components are set to 0.
+// _f must be aligned to 16 bytes.
+// r.x = _i[0]
+// r.y = _i[1]
+// r.z = _i[2]
+// r.w = 0
++ (SimdInt4)Load3PtrWith:(const int *)_i;
+
+// Loads the 4 values of _f to the returned vector.
+// _i must be aligned to 16 bytes.
+// r.x = _i[0]
+// r.y = _i[1]
+// r.z = _i[2]
+// r.w = _i[3]
++ (SimdInt4)LoadPtrUWith:(const int *)_i;
+
+// Loads _i[0] to the x component of the returned vector, and sets y, z and w
+// to 0.
+// _f must be aligned to 4 bytes.
+// r.x = _i[0]
+// r.y = 0
+// r.z = 0
+// r.w = 0
++ (SimdInt4)LoadXPtrUWith:(const int *)_i;
+
+// Loads the 4 values of _i to the returned vector.
+// _i must be aligned to 4 bytes.
+// r.x = _i[0]
+// r.y = _i[0]
+// r.z = _i[0]
+// r.w = _i[0]
++ (SimdInt4)Load1PtrUWith:(const int *)_i;
+
+// Loads the 2 first value of _i to the x and y components of the returned
+// vector. The remaining components are set to 0.
+// _f must be aligned to 4 bytes.
+// r.x = _i[0]
+// r.y = _i[1]
+// r.z = 0
+// r.w = 0
++ (SimdInt4)Load2PtrUWith:(const int *)_i;
+
+// Loads the 3 first value of _i to the x, y and z components of the returned
+// vector. The remaining components are set to 0.
+// _f must be aligned to 4 bytes.
+// r.x = _i[0]
+// r.y = _i[1]
+// r.z = _i[2]
+// r.w = 0
++ (SimdInt4)Load3PtrUWith:(const int *)_i;
+
+// Convert from float to integer by rounding the nearest value.
++ (SimdInt4)FromFloatRoundWith:(_SimdFloat4)_f;
+
+// Convert from float to integer by truncating.
++ (SimdInt4)FromFloatTruncWith:(_SimdFloat4)_f;
+
+// Returns the x component of _v as an integer.
++ (int)GetXWith:(_SimdInt4)_v;
+
+// Returns the y component of _v as a integer.
++ (int)GetYWith:(_SimdInt4)_v;
+
+// Returns the z component of _v as a integer.
++ (int)GetZWith:(_SimdInt4)_v;
+
+// Returns the w component of _v as a integer.
++ (int)GetWWith:(_SimdInt4)_v;
+
+// Returns _v with the x component set to x component of _i.
++ (SimdInt4)SetXWith:(_SimdInt4)_v :(_SimdInt4)_i;
+
+// Returns _v with the y component set to x component of _i.
++ (SimdInt4)SetYWith:(_SimdInt4)_v :(_SimdInt4)_i;
+
+// Returns _v with the z component set to x component of _i.
++ (SimdInt4)SetZWith:(_SimdInt4)_v :(_SimdInt4)_i;
+
+// Returns _v with the w component set to x component of _i.
++ (SimdInt4)SetWWith:(_SimdInt4)_v :(_SimdInt4)_i;
+
+// Returns _v with the _ith component set to _i.
+// _i must be in range [0,3]
++ (SimdInt4)SetIWith:(_SimdInt4)_v :(_SimdInt4)_i :(int)_ith;
+
+// Stores the 4 components of _v to the four first integers of _i.
+// _i must be aligned to 16 bytes.
+// _i[0] = _v.x
+// _i[1] = _v.y
+// _i[2] = _v.z
+// _i[3] = _v.w
++ (void)StorePtrWith:(_SimdInt4)_v :(int *)_i;
+
+// Stores the x component of _v to the first integers of _i.
+// _i must be aligned to 16 bytes.
+// _i[0] = _v.x
++ (void)Store1PtrWith:(_SimdInt4)_v :(int *)_i;
+
+// Stores x and y components of _v to the two first integers of _i.
+// _i must be aligned to 16 bytes.
+// _i[0] = _v.x
+// _i[1] = _v.y
++ (void)Store2PtrWith:(_SimdInt4)_v :(int *)_i;
+
+// Stores x, y and z components of _v to the three first integers of _i.
+// _i must be aligned to 16 bytes.
+// _i[0] = _v.x
+// _i[1] = _v.y
+// _i[2] = _v.z
++ (void)Store3PtrWith:(_SimdInt4)_v :(int *)_i;
+
+// Stores the 4 components of _v to the four first integers of _i.
+// _i must be aligned to 4 bytes.
+// _i[0] = _v.x
+// _i[1] = _v.y
+// _i[2] = _v.z
+// _i[3] = _v.w
++ (void)StorePtrUWith:(_SimdInt4)_v :(int *)_i;
+
+// Stores the x component of _v to the first float of _i.
+// _i must be aligned to 4 bytes.
+// _i[0] = _v.x
++ (void)Store1PtrUWith:(_SimdInt4)_v :(int *)_i;
+
+// Stores x and y components of _v to the two first integers of _i.
+// _i must be aligned to 4 bytes.
+// _i[0] = _v.x
+// _i[1] = _v.y
++ (void)Store2PtrUWith:(_SimdInt4)_v :(int *)_i;
+
+// Stores x, y and z components of _v to the three first integers of _i.
+// _i must be aligned to 4 bytes.
+// _i[0] = _v.x
+// _i[1] = _v.y
+// _i[2] = _v.z
++ (void)Store3PtrUWith:(_SimdInt4)_v :(int *)_i;
+
+// Replicates x of _a to all the components of the returned vector.
++ (SimdInt4)SplatXWith:(_SimdInt4)_v;
+
+// Replicates y of _a to all the components of the returned vector.
++ (SimdInt4)SplatYWith:(_SimdInt4)_v;
+
+// Replicates z of _a to all the components of the returned vector.
++ (SimdInt4)SplatZWith:(_SimdInt4)_v;
+
+// Replicates w of _a to all the components of the returned vector.
++ (SimdInt4)SplatWWith:(_SimdInt4)_v;
+
+// Swizzle x, y, z and w components based on compile time arguments _X, _Y, _Z
+// and _W. Arguments can vary from 0 (x), to 3 (w).
++ (SimdInt4)Swizzle0123With:(_SimdInt4)_v;
+
+// Creates a 4-bit mask from the most significant bits of each component of _v.
+// i := sign(a3)<<3 | sign(a2)<<2 | sign(a1)<<1 | sign(a0)
++ (int)MoveMaskWith:(_SimdInt4)_v;
+
+// Returns true if all the components of _v are not 0.
++ (bool)AreAllTrueWith:(_SimdInt4)_v;
+
+// Returns true if x, y and z components of _v are not 0.
++ (bool)AreAllTrue3With:(_SimdInt4)_v;
+
+// Returns true if x and y components of _v are not 0.
++ (bool)AreAllTrue2With:(_SimdInt4)_v;
+
+// Returns true if x component of _v is not 0.
++ (bool)AreAllTrue1With:(_SimdInt4)_v;
+
+// Returns true if all the components of _v are 0.
++ (bool)AreAllFalseWith:(_SimdInt4)_v;
+
+// Returns true if x, y and z components of _v are 0.
++ (bool)AreAllFalse3With:(_SimdInt4)_v;
+
+// Returns true if x and y components of _v are 0.
++ (bool)AreAllFalse2With:(_SimdInt4)_v;
+
+// Returns true if x component of _v is 0.
++ (bool)AreAllFalse1With:(_SimdInt4)_v;
+
+// Computes the (horizontal) addition of x and y components of _v. The result is
+// stored in the x component of the returned value. y, z, w of the returned
+// vector are the same as their respective components in _v.
+// r.x = _a.x + _a.y
+// r.y = _a.y
+// r.z = _a.z
+// r.w = _a.w
++ (SimdInt4)HAdd2With:(_SimdInt4)_v;
+
+// Computes the (horizontal) addition of x, y and z components of _v. The result
+// is stored in the x component of the returned value. y, z, w of the returned
+// vector are the same as their respective components in _v.
+// r.x = _a.x + _a.y + _a.z
+// r.y = _a.y
+// r.z = _a.z
+// r.w = _a.w
++ (SimdInt4)HAdd3With:(_SimdInt4)_v;
+
+// Computes the (horizontal) addition of x and y components of _v. The result is
+// stored in the x component of the returned value. y, z, w of the returned
+// vector are the same as their respective components in _v.
+// r.x = _a.x + _a.y + _a.z + _a.w
+// r.y = _a.y
+// r.z = _a.z
+// r.w = _a.w
++ (SimdInt4)HAdd4With:(_SimdInt4)_v;
+
+// Returns the per element absolute value of _v.
++ (SimdInt4)AbsWith:(_SimdInt4)_v;
+
+// Returns the sign bit of _v.
++ (SimdInt4)SignWith:(_SimdInt4)_v;
+
+// Returns the per component minimum of _a and _b.
++ (SimdInt4)MinWith:(_SimdInt4)_a :(_SimdInt4)_b;
+
+// Returns the per component maximum of _a and _b.
++ (SimdInt4)MaxWith:(_SimdInt4)_a :(_SimdInt4)_b;
+
+// Returns the per component minimum of _v and 0.
++ (SimdInt4)Min0With:(_SimdInt4)_v;
+
+// Returns the per component maximum of _v and 0.
++ (SimdInt4)Max0With:(_SimdInt4)_v;
+
+// Clamps each element of _x between _a and _b.
+// Result is unknown if _a is not less or equal to _b.
++ (SimdInt4)ClampWith:(_SimdInt4)_a :(_SimdInt4)_v :(_SimdInt4)_b;
+
+// Returns boolean selection of vectors _true and _false according to consition
+// _b. All bits a each component of _b must have the same value (O or
+// 0xffffffff) to ensure portability.
++ (SimdInt4)SelectWith:(_SimdInt4)_b :(_SimdInt4)_true :(_SimdInt4)_false;
+
+// Returns per element binary and operation of _a and _b.
+// _v[0...127] = _a[0...127] & _b[0...127]
++ (SimdInt4)AndWith:(_SimdInt4)_a :(_SimdInt4)_b;
+
+// Returns per element binary and operation of _a and ~_b.
+// _v[0...127] = _a[0...127] & ~_b[0...127]
++ (SimdInt4)AndNotWith:(_SimdInt4)_a :(_SimdInt4)_b;
+
+// Returns per element binary or operation of _a and _b.
+// _v[0...127] = _a[0...127] | _b[0...127]
++ (SimdInt4)OrWith:(_SimdInt4)_a :(_SimdInt4)_b;
+
+// Returns per element binary logical xor operation of _a and _b.
+// _v[0...127] = _a[0...127] ^ _b[0...127]
++ (SimdInt4)XorWith:(_SimdInt4)_a :(_SimdInt4)_b;
+
+// Returns per element binary complement of _v.
+// _v[0...127] = ~_b[0...127]
++ (SimdInt4)NotWith:(_SimdInt4)_v;
+
+// Shifts the 4 signed or unsigned 32-bit integers in a left by count _bits
+// while shifting in zeros.
++ (SimdInt4)ShiftLWith:(_SimdInt4)_v :(int)_bits;
+
+// Shifts the 4 signed 32-bit integers in a right by count bits while shifting
+// in the sign bit.
++ (SimdInt4)ShiftRWith:(_SimdInt4)_v :(int)_bits;
+
+// Shifts the 4 signed or unsigned 32-bit integers in a right by count bits
+// while shifting in zeros.
++ (SimdInt4)ShiftRuWith:(_SimdInt4)_v :(int)_bits;
+
+// Per element "equal" comparison of _a and _b.
++ (SimdInt4)CmpEqWith:(_SimdInt4)_a :(_SimdInt4)_b;
+
+// Per element "not equal" comparison of _a and _b.
++ (SimdInt4)CmpNeWith:(_SimdInt4)_a :(_SimdInt4)_b;
+
+// Per element "less than" comparison of _a and _b.
++ (SimdInt4)CmpLtWith:(_SimdInt4)_a :(_SimdInt4)_b;
+
+// Per element "less than or equal" comparison of _a and _b.
++ (SimdInt4)CmpLeWith:(_SimdInt4)_a :(_SimdInt4)_b;
+
+// Per element "greater than" comparison of _a and _b.
++ (SimdInt4)CmpGtWith:(_SimdInt4)_a :(_SimdInt4)_b;
+
+// Per element "greater than or equal" comparison of _a and _b.
++ (SimdInt4)CmpGeWith:(_SimdInt4)_a :(_SimdInt4)_b;
+
 @end
 
 #endif /* simd_math_h */
