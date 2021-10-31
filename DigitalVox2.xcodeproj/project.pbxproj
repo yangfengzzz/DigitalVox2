@@ -299,6 +299,7 @@
 		045D2C06272D0A9F0091636B /* AnimatorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045D2C05272D0A9F0091636B /* AnimatorController.swift */; };
 		045D2C08272D0BCC0091636B /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045D2C07272D0BCC0091636B /* Animator.swift */; };
 		045D2C3C272D79650091636B /* simd_math.mm in Sources */ = {isa = PBXBuildFile; fileRef = 045D2C3B272D79650091636B /* simd_math.mm */; };
+		045D2C3F272E25800091636B /* simd_math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045D2C3E272E25800091636B /* simd_math.swift */; };
 		04605EFB272BC09800400350 /* PhysXView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04605EFA272BC09800400350 /* PhysXView.swift */; };
 		047FEB7026E1BA4A0078CFAF /* shape_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEB6F26E1BA4A0078CFAF /* shape_data.swift */; };
 		047FEB7226E1BC570078CFAF /* fvshape_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEB7126E1BC570078CFAF /* fvshape_data.swift */; };
@@ -679,6 +680,7 @@
 		045D2C3A272D78E10091636B /* simd_math.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = simd_math.h; sourceTree = "<group>"; };
 		045D2C3B272D79650091636B /* simd_math.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = simd_math.mm; sourceTree = "<group>"; };
 		045D2C3D272D87830091636B /* math_constant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = math_constant.h; sourceTree = "<group>"; };
+		045D2C3E272E25800091636B /* simd_math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = simd_math.swift; sourceTree = "<group>"; };
 		04605EFA272BC09800400350 /* PhysXView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXView.swift; sourceTree = "<group>"; };
 		047914CA26F37C0300BE5170 /* ShaderData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderData.swift; sourceTree = "<group>"; };
 		047E7B2B26EE257E006BC3FB /* MeshRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeshRenderer.swift; sourceTree = "<group>"; };
@@ -1575,9 +1577,10 @@
 		045D2C39272D78990091636B /* ozz-animation */ = {
 			isa = PBXGroup;
 			children = (
+				045D2C3D272D87830091636B /* math_constant.h */,
 				045D2C3A272D78E10091636B /* simd_math.h */,
 				045D2C3B272D79650091636B /* simd_math.mm */,
-				045D2C3D272D87830091636B /* math_constant.h */,
+				045D2C3E272E25800091636B /* simd_math.swift */,
 			);
 			path = "ozz-animation";
 			sourceTree = "<group>";
@@ -2261,6 +2264,7 @@
 				045D2BD7272CB00E0091636B /* InterpolationType.swift in Sources */,
 				041BAEE8272A9F81006268D5 /* CPxShape.mm in Sources */,
 				041BAEBE272A5166006268D5 /* LiteCollider.swift in Sources */,
+				045D2C3F272E25800091636B /* simd_math.swift in Sources */,
 				041BAE67272A5111006268D5 /* DirectLight.swift in Sources */,
 				041BAE71272A5117006268D5 /* ShadowMapPass.swift in Sources */,
 				041BAE2B272A50D9006268D5 /* IRefObject.swift in Sources */,
