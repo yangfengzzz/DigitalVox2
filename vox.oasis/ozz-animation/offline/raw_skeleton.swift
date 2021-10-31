@@ -19,15 +19,15 @@ import Foundation
 // Skeleton::kMaxJoints.
 struct RawSkeleton {
     // Offline skeleton joint type.
-    struct Joint {
+    class Joint {
         // Children joints.
-        var children: [Joint]
+        var children: [Joint] = []
 
         // The name of the joint.
-        var name: String
+        var name: String = ""
 
         // Joint bind pose transformation in local space.
-        var transform: VecTransform
+        var transform = VecTransform.identity()
     }
 
     // Declares the skeleton's roots. Can be empty if the skeleton has no joint.
@@ -55,7 +55,9 @@ struct RawSkeleton {
             }
         }
 
-        return IterateJointsDF(self, JointCounter()).num_joints
+        var counter = JointCounter()
+        IterateJointsDF(self, &counter)
+        return counter.num_joints
     }
 }
 
@@ -94,10 +96,8 @@ func _IterHierarchyRecurseBF<_Fct: SkeletonVisitor>(_ _children: [RawSkeleton.Jo
 // first argument is the child of the second argument. _parent is null if the
 // _current joint is the root.
 func IterateJointsDF<_Fct: SkeletonVisitor>(_ _skeleton: RawSkeleton,
-                                            _ _fct: _Fct) -> _Fct {
-    var _fct = _fct
+                                            _ _fct: inout _Fct) {
     _IterHierarchyRecurseDF(_skeleton.roots, nil, &_fct)
-    return _fct
 }
 
 // Applies a specified functor to each joint in a breadth-first order.
@@ -105,8 +105,6 @@ func IterateJointsDF<_Fct: SkeletonVisitor>(_ _skeleton: RawSkeleton,
 // first argument is the child of the second argument. _parent is null if the
 // _current joint is the root.
 func IterateJointsBF<_Fct: SkeletonVisitor>(_ _skeleton: RawSkeleton,
-                                            _ _fct: _Fct) -> _Fct {
-    var _fct = _fct
+                                            _ _fct: inout _Fct) {
     _IterHierarchyRecurseBF(_skeleton.roots, nil, &_fct)
-    return _fct
 }

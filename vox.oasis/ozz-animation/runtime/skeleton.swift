@@ -40,13 +40,13 @@ class Skeleton {
     // size is equal to the number of joints of the skeleton.
 
     // Bind pose of every joint in local space.
-    private var joint_bind_poses_: ArraySlice<SoaTransform> = ArraySlice()
+    internal var joint_bind_poses_: ArraySlice<SoaTransform> = ArraySlice()
 
     // Array of joint parent indexes.
-    private var joint_parents_: ArraySlice<Int> = ArraySlice()
+    internal var joint_parents_: ArraySlice<Int> = ArraySlice()
 
     // Stores the name of every joint in an array of c-strings.
-    private var joint_names_: ArraySlice<String> = ArraySlice()
+    internal var joint_names_: ArraySlice<String> = ArraySlice()
 
     // Returns the number of joints of *this skeleton.
     func num_joints() -> Int {
@@ -76,7 +76,7 @@ class Skeleton {
 
     // Internal allocation/deallocation function.
     // Allocate returns the beginning of the contiguous buffer of names.
-    internal func Allocate(_char_count: Int, _num_joints: Int) {
+    internal func Allocate(_ _num_joints: Int) {
         assert(joint_bind_poses_.count == 0 && joint_names_.count == 0 &&
                 joint_parents_.count == 0)
 
