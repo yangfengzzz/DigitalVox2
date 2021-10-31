@@ -714,6 +714,7 @@ typedef const __m128i _SimdInt4;
 // r.z = 0
 // r.w = 0
 + (SimdInt4)LoadXWithBool:(bool)_x;
+
 + (SimdInt4)LoadXWithInt:(int)_x;
 
 // Loads _x to the all the components of the returned vector using the following
@@ -723,6 +724,7 @@ typedef const __m128i _SimdInt4;
 // r.z = _x ? 0xffffffff:0
 // r.w = _x ? 0xffffffff:0
 + (SimdInt4)Load1WithBool:(bool)_x;
+
 + (SimdInt4)Load1WithInt:(int)_x;
 
 // Loads the 4 values of _f to the returned vector.
@@ -1044,6 +1046,154 @@ typedef const __m128i _SimdInt4;
 
 // Per element "greater than or equal" comparison of _a and _b.
 + (SimdInt4)CmpGeWith:(_SimdInt4)_a :(_SimdInt4)_b;
+
+@end
+
+//MARK: - Float4x4
+// Declare the 4x4 matrix type. Uses the column major convention where the
+// matrix-times-vector is written v'=Mv:
+// [ m.cols[0].x m.cols[1].x m.cols[2].x m.cols[3].x ]   {v.x}
+// | m.cols[0].y m.cols[1].y m.cols[2].y m.cols[3].y | * {v.y}
+// | m.cols[0].z m.cols[1].y m.cols[2].y m.cols[3].y |   {v.z}
+// [ m.cols[0].w m.cols[1].w m.cols[2].w m.cols[3].w ]   {v.1}
+struct Float4x4 {
+    // Matrix columns.
+    SimdFloat4 cols[4];
+};
+
+// Declare the 4x4 matrix type. Uses the column major convention where the
+// matrix-times-vector is written v'=Mv:
+// [ m.cols[0].x m.cols[1].x m.cols[2].x m.cols[3].x ]   {v.x}
+// | m.cols[0].y m.cols[1].y m.cols[2].y m.cols[3].y | * {v.y}
+// | m.cols[0].z m.cols[1].y m.cols[2].y m.cols[3].y |   {v.z}
+// [ m.cols[0].w m.cols[1].w m.cols[2].w m.cols[3].w ]   {v.1}
+@interface OZZFloat4x4 : NSObject
+
+// Returns the identity matrix.
++ (struct Float4x4)identity;
+
+// Returns a translation matrix.
+// _v.w is ignored.
++ (struct Float4x4)TranslationWith:(_SimdFloat4)_v;
+
+// Returns a scaling matrix that scales along _v.
+// _v.w is ignored.
++ (struct Float4x4)ScalingWith:(_SimdFloat4)_v;
+
+// Returns the rotation matrix built from Euler angles defined by x, y and z
+// components of _v. Euler angles are ordered Heading, Elevation and Bank, or
+// Yaw, Pitch and Roll. _v.w is ignored.
++ (struct Float4x4)FromEulerWith:(_SimdFloat4)_v;
+
+// Returns the rotation matrix built from axis defined by _axis.xyz and
+// _angle.x
++ (struct Float4x4)FromAxisAngleWith
+        :(_SimdFloat4)_axis
+        :(_SimdFloat4)_angle;
+
+// Returns the rotation matrix built from quaternion defined by x, y, z and w
+// components of _v.
++ (struct Float4x4)FromQuaternionWith:(_SimdFloat4)_v;
+
+// Returns the affine transformation matrix built from split translation,
+// rotation (quaternion) and scale.
++ (struct Float4x4)FromAffineWith
+        :(_SimdFloat4)_translation
+        :(_SimdFloat4)_quaternion
+        :(_SimdFloat4)_scale;
+
+// Returns the transpose of matrix _m.
++ (struct Float4x4)TransposeWith:(const struct Float4x4 *)_m;
+
+// Returns the inverse of matrix _m.
+// If _invertible is not nullptr, its x component will be set to true if matrix is
+// invertible. If _invertible is nullptr, then an assert is triggered in case the
+// matrix isn't invertible.
++ (struct Float4x4)InvertWith:(const struct Float4x4 *)_m :(SimdInt4 *)_invertible;
+
+// Translates matrix _m along the axis defined by _v components.
+// _v.w is ignored.
++ (struct Float4x4)TranslateWith:(const struct Float4x4 *)_m :(_SimdFloat4)_v;
+
+// Scales matrix _m along each axis with x, y, z components of _v.
+// _v.w is ignored.
++ (struct Float4x4)ScaleWith:(const struct Float4x4 *)_m :(_SimdFloat4)_v;
+
+// Multiply each column of matrix _m with vector _v.
++ (struct Float4x4)ColumnMultiplyWith:(const struct Float4x4 *)_m :(_SimdFloat4)_v;
+
+// Tests if each 3 column of upper 3x3 matrix of _m is a normal matrix.
+// Returns the result in the x, y and z component of the returned vector. w is
+// set to 0.
++ (SimdInt4)IsNormalizedWith:(const struct Float4x4 *)_m;
+
+// Tests if each 3 column of upper 3x3 matrix of _m is a normal matrix.
+// Uses the estimated tolerance
+// Returns the result in the x, y and z component of the returned vector. w is
+// set to 0.
++ (SimdInt4)IsNormalizedEstWith:(const struct Float4x4 *)_m;
+
+// Tests if the upper 3x3 matrix of _m is an orthogonal matrix.
+// A matrix that contains a reflexion cannot be considered orthogonal.
+// Returns the result in the x component of the returned vector. y, z and w are
+// set to 0.
++ (SimdInt4)IsOrthogonalWith:(const struct Float4x4 *)_m;
+
+// Returns the quaternion that represent the rotation of matrix _m.
+// _m must be normalized and orthogonal.
+// the return quaternion is normalized.
++ (SimdFloat4)ToQuaternionWith:(const struct Float4x4 *)_m;
+
+// Decompose a general 3D transformation matrix _m into its scalar, rotational
+// and translational components.
+// Returns false if it was not possible to decompose the matrix. This would be
+// because more than 1 of the 3 first column of _m are scaled to 0.
++ (bool)ToAffineWith:(const struct Float4x4 *)_m :(SimdFloat4 *)_translation
+        :(SimdFloat4 *)_quaternion :(SimdFloat4 *)_scale;
+
+// Computes the transformation of a Float4x4 matrix and a point _p.
+// This is equivalent to multiplying a matrix by a SimdFloat4 with a w component
+// of 1.
++ (SimdFloat4)TransformPointWith:(const struct Float4x4 *)_m
+        :(_SimdFloat4)_v;
+
+// Computes the transformation of a Float4x4 matrix and a vector _v.
+// This is equivalent to multiplying a matrix by a SimdFloat4 with a w component
+// of 0.
++ (SimdFloat4)TransformVectorWith:(const struct Float4x4 *)_m
+        :(_SimdFloat4)_v;
+
+// Computes the multiplication of matrix Float4x4 and vector _v.
++ (SimdFloat4)MulWith:(const struct Float4x4 *)_m
+                  vec:(_SimdFloat4)_v;
+
+// Computes the multiplication of two matrices _a and _b.
++ (struct Float4x4)MulWith:(const struct Float4x4 *)_a
+                       mat:(const struct Float4x4 *)_b;
+
+// Computes the per element addition of two matrices _a and _b.
++ (struct Float4x4)AddWith:(const struct Float4x4 *)_a
+        :(const struct Float4x4 *)_b;
+
+// Computes the per element subtraction of two matrices _a and _b.
++ (struct Float4x4)SubWith:(const struct Float4x4 *)_a
+        :(const struct Float4x4 *)_b;
+
+@end
+
+@interface OZZMath : NSObject
+
+// Converts from a float to a half.
++ (uint16_t)FloatToHalfWith:(float)_f;
+
+// Converts from a half to a float.
++ (float)HalfToFloatWith:(uint16_t)_h;
+
+// Converts from a float to a half.
++ (SimdInt4)FloatToHalfWithSIMD:(_SimdFloat4)_f;
+
+// Converts from a half to a float.
++ (SimdFloat4)HalfToFloatWithSIMD:(_SimdInt4)_h;
 
 @end
 
