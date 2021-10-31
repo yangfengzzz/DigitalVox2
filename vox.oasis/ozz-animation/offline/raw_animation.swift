@@ -7,6 +7,14 @@
 
 import Foundation
 
+protocol KeyType {
+    associatedtype T
+    var time: Float { get set }
+    var value: T { get set }
+
+    static func identity() -> T
+}
+
 // Offline animation type.
 // This animation type is not intended to be used in run time. It is used to
 // define the offline animation object that can be converted to the runtime
@@ -26,7 +34,7 @@ import Foundation
 // AnimationBuilder.
 struct RawAnimation {
     // Defines a raw translation key frame.
-    struct TranslationKey {
+    struct TranslationKey: KeyType {
         // Key frame time.
         var time: Float
 
@@ -40,7 +48,7 @@ struct RawAnimation {
     }
 
     // Defines a raw rotation key frame.
-    struct RotationKey {
+    struct RotationKey: KeyType {
         // Key frame time.
         var time: Float
 
@@ -54,7 +62,7 @@ struct RawAnimation {
     }
 
     // Defines a raw scaling key frame.
-    struct ScaleKey {
+    struct ScaleKey: KeyType {
         // Key frame time.
         var time: Float
 
@@ -77,8 +85,10 @@ struct RawAnimation {
         // Validates track. See RawAnimation::Validate for more details.
         // Use an infinite value for _duration if unknown. This will validate
         // keyframe orders, but not maximum duration.
-        func Validate(_duration: Float) -> Bool {
-            fatalError()
+        func Validate(_ _duration: Float) -> Bool {
+            return ValidateTrack(translations, _duration) &&
+                    ValidateTrack(rotations, _duration) &&
+                    ValidateTrack(scales, _duration)
         }
     }
 
@@ -104,11 +114,40 @@ struct RawAnimation {
     //  2. Keyframes' time are sorted in a strict ascending order.
     //  3. Keyframes' time are all within [0,animation duration] range.
     func Validate() -> Bool {
-        fatalError()
+        if (duration <= 0.0) {  // Tests duration is valid.
+            return false
+        }
+        if (tracks.count > Skeleton.Constants.kMaxJoints.rawValue) {  // Tests number of tracks.
+            return false
+        }
+        // Ensures that all key frames' time are valid, ie: in a strict ascending
+        // order and within range [0:duration].
+        var valid = true
+        var i = 0
+        while valid && i < tracks.count {
+            valid = tracks[i].Validate(duration)
+            i += 1
+        }
+        return valid  // *this is valid.
     }
+}
 
-    // Get the estimated animation's size in bytes.
-    func size() -> Int {
-        fatalError()
+
+// Implements key frames' time range and ordering checks.
+// See AnimationBuilder::Create for more details.
+func ValidateTrack<_Key: KeyType>(_ _track: [_Key], _ _duration: Float) -> Bool {
+    var previous_time: Float = -1.0
+    for k in 0..<_track.count {
+        let frame_time = _track[k].time
+        // Tests frame's time is in range [0:duration].
+        if (frame_time < 0.0 || frame_time > _duration) {
+            return false
+        }
+        // Tests that frames are sorted.
+        if (frame_time <= previous_time) {
+            return false
+        }
+        previous_time = frame_time
     }
+    return true  // Validated.
 }
