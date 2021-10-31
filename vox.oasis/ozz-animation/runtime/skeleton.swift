@@ -13,7 +13,7 @@ import Foundation
 // Joint names, bind-poses and hierarchy information are all stored in separate
 // arrays of data (as opposed to joint structures for the RawSkeleton), in order
 // to closely match with the way runtime algorithms use them. Joint hierarchy is
-// packed as an array of parent jont indices (16 bits), stored in depth-first
+// packed as an array of parent joint indices (16 bits), stored in depth-first
 // order. This is enough to traverse the whole joint hierarchy. See
 // IterateJointsDF() from skeleton_utils.h that implements a depth-first
 // traversal utility.
@@ -35,16 +35,67 @@ class Skeleton {
         // fact).
         case kNoParent = -1
     }
-    
-    // Buffers below store joint informations in joing depth first order. Their
+
+    // Buffers below store joint information in joining depth first order. Their
     // size is equal to the number of joints of the skeleton.
 
     // Bind pose of every joint in local space.
-    private var joint_bind_poses_:[SoaTransform] = []
+    private var joint_bind_poses_: ArraySlice<SoaTransform> = ArraySlice()
 
     // Array of joint parent indexes.
-    private var joint_parents_:[Int] = []
-    
+    private var joint_parents_: ArraySlice<Int> = ArraySlice()
+
     // Stores the name of every joint in an array of c-strings.
-    private var joint_names_:[String] = []
+    private var joint_names_: ArraySlice<String> = ArraySlice()
+
+    // Returns the number of joints of *this skeleton.
+    func num_joints() -> Int {
+        joint_parents_.count
+    }
+
+    // Returns the number of soa elements matching the number of joints of *this
+    // skeleton. This value is useful to allocate SoA runtime data structures.
+    func num_soa_joints() -> Int {
+        (num_joints() + 3) / 4
+    }
+
+    // Returns joint's bind poses. Bind poses are stored in soa format.
+    func joint_bind_poses() -> ArraySlice<SoaTransform> {
+        joint_bind_poses_
+    }
+
+    // Returns joint's parent indices range.
+    func joint_parents() -> ArraySlice<Int> {
+        joint_parents_
+    }
+
+    // Returns joint's name collection.
+    func joint_names() -> ArraySlice<String> {
+        joint_names_[...]
+    }
+
+    // Internal allocation/deallocation function.
+    // Allocate returns the beginning of the contiguous buffer of names.
+    internal func Allocate(_char_count: Int, _num_joints: Int) {
+        assert(joint_bind_poses_.count == 0 && joint_names_.count == 0 &&
+                joint_parents_.count == 0)
+
+        // Early out if no joint.
+        if (_num_joints == 0) {
+            return
+        }
+
+        // Bind poses have SoA format
+        let num_soa_joints = (_num_joints + 3) / 4
+
+        // Serves larger alignment values first.
+        // Bind pose first, biggest alignment.
+        joint_bind_poses_ = [SoaTransform](repeating: SoaTransform.identity(), count: num_soa_joints)[...]
+
+        // Then names array, second biggest alignment.
+        joint_names_ = [String](repeating: "", count: _num_joints)[...]
+
+        // Parents, third biggest alignment.
+        joint_parents_ = [Int](repeating: 0, count: _num_joints)[...]
+    }
 }
