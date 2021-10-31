@@ -343,6 +343,7 @@
 		0498DD54272E4B1B0089B2CE /* soa_float4x4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0498DD53272E4B1B0089B2CE /* soa_float4x4.swift */; };
 		0498DD56272E4BE50089B2CE /* soa_quaternion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0498DD55272E4BE50089B2CE /* soa_quaternion.swift */; };
 		0498DD58272E4C810089B2CE /* soa_transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0498DD57272E4C810089B2CE /* soa_transform.swift */; };
+		0498DD5A272E5C1E0089B2CE /* vec_float.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0498DD59272E5C1E0089B2CE /* vec_float.swift */; };
 		04AE164E26EED80600201439 /* Vector3.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE164D26EED80600201439 /* Vector3.test.swift */; };
 		04AE165026EEE2C100201439 /* Vector4.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE164F26EEE2C100201439 /* Vector4.test.swift */; };
 		04AE165226EEE85D00201439 /* Matrix.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE165126EEE85D00201439 /* Matrix.test.swift */; };
@@ -784,6 +785,7 @@
 		0498DD53272E4B1B0089B2CE /* soa_float4x4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = soa_float4x4.swift; sourceTree = "<group>"; };
 		0498DD55272E4BE50089B2CE /* soa_quaternion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = soa_quaternion.swift; sourceTree = "<group>"; };
 		0498DD57272E4C810089B2CE /* soa_transform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = soa_transform.swift; sourceTree = "<group>"; };
+		0498DD59272E5C1E0089B2CE /* vec_float.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = vec_float.swift; sourceTree = "<group>"; };
 		04A6BEB227204FE20024DF43 /* blinn-phong.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = "blinn-phong.metal"; sourceTree = "<group>"; };
 		04A6BEB42720DCD80024DF43 /* function-constant.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = "function-constant.metal"; sourceTree = "<group>"; };
 		04A6BEB82723B5D00024DF43 /* background-texture.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = "background-texture.metal"; sourceTree = "<group>"; };
@@ -1596,6 +1598,7 @@
 				0498DD55272E4BE50089B2CE /* soa_quaternion.swift */,
 				0498DD57272E4C810089B2CE /* soa_transform.swift */,
 				0498DD53272E4B1B0089B2CE /* soa_float4x4.swift */,
+				0498DD59272E5C1E0089B2CE /* vec_float.swift */,
 			);
 			path = "ozz-animation";
 			sourceTree = "<group>";
@@ -2174,6 +2177,7 @@
 				041BAEA3272A514D006268D5 /* IPhysics.swift in Sources */,
 				041BAE7F272A513B006268D5 /* OrbitControl.swift in Sources */,
 				041BAE12272A500F006268D5 /* Engine.swift in Sources */,
+				0498DD5A272E5C1E0089B2CE /* vec_float.swift in Sources */,
 				045D2BFC272CD6880091636B /* AnimatorStateTransition.swift in Sources */,
 				041BAEA2272A514D006268D5 /* IPlaneColliderShape.swift in Sources */,
 				041BAE04272A500F006268D5 /* DisorderedArray.swift in Sources */,
