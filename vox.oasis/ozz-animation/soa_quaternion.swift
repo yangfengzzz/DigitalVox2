@@ -24,8 +24,8 @@ struct SoaQuaternion {
     }
 
     // Loads a quaternion from 4 SimdFloat4 values.
-    static func Load(_x: _SimdFloat4, _y: _SimdFloat4,
-                     _z: _SimdFloat4, _w: SimdFloat4) -> SoaQuaternion {
+    static func Load(_ _x: _SimdFloat4, _ _y: _SimdFloat4,
+                     _ _z: _SimdFloat4, _ _w: SimdFloat4) -> SoaQuaternion {
         return SoaQuaternion(_x, _y, _z, _w)
     }
 
@@ -38,7 +38,7 @@ struct SoaQuaternion {
 
 // Returns the conjugate of _q. This is the same as the inverse if _q is
 // normalized. Otherwise the magnitude of the inverse is 1.f/|_q|.
-func Conjugate(_q: SoaQuaternion) -> SoaQuaternion {
+func Conjugate(_ _q: SoaQuaternion) -> SoaQuaternion {
     SoaQuaternion(-_q.x, -_q.y, -_q.z, _q.w)
 }
 
@@ -48,12 +48,12 @@ prefix func -(_q: SoaQuaternion) -> SoaQuaternion {
 }
 
 // Returns the 4D dot product of quaternion _a and _b.
-func Dot(_a: SoaQuaternion, _b: SoaQuaternion) -> SimdFloat4 {
+func Dot(_ _a: SoaQuaternion, _ _b: SoaQuaternion) -> SimdFloat4 {
     return _a.x * _b.x + _a.y * _b.y + _a.z * _b.z + _a.w * _b.w
 }
 
 // Returns the normalized SoaQuaternion _q.
-func Normalize(_q: SoaQuaternion) -> SoaQuaternion {
+func Normalize(_ _q: SoaQuaternion) -> SoaQuaternion {
     let len2 = _q.x * _q.x + _q.y * _q.y + _q.z * _q.z + _q.w * _q.w
     let inv_len = OZZFloat4.one() / OZZFloat4.sqrt(with: len2)
     return SoaQuaternion(_q.x * inv_len, _q.y * inv_len, _q.z * inv_len,
@@ -61,7 +61,7 @@ func Normalize(_q: SoaQuaternion) -> SoaQuaternion {
 }
 
 // Returns the estimated normalized SoaQuaternion _q.
-func NormalizeEst(_q: SoaQuaternion) -> SoaQuaternion {
+func NormalizeEst(_ _q: SoaQuaternion) -> SoaQuaternion {
     let len2 = _q.x * _q.x + _q.y * _q.y + _q.z * _q.z + _q.w * _q.w
     // Uses RSqrtEstNR (with one more Newton-Raphson step) as quaternions loose
     // much precision due to normalization.
@@ -71,14 +71,14 @@ func NormalizeEst(_q: SoaQuaternion) -> SoaQuaternion {
 }
 
 // Test if each quaternion of _q is normalized.
-func IsNormalized(_q: SoaQuaternion) -> SimdInt4 {
+func IsNormalized(_ _q: SoaQuaternion) -> SimdInt4 {
     let len2 = _q.x * _q.x + _q.y * _q.y + _q.z * _q.z + _q.w * _q.w
     return OZZFloat4.cmpLt(with: OZZFloat4.abs(with: len2 - OZZFloat4.one()),
             OZZFloat4.load1(with: kNormalizationToleranceSq))
 }
 
 // Test if each quaternion of _q is normalized. using estimated tolerance.
-func IsNormalizedEst(_q: SoaQuaternion) -> SimdInt4 {
+func IsNormalizedEst(_ _q: SoaQuaternion) -> SimdInt4 {
     let len2 = _q.x * _q.x + _q.y * _q.y + _q.z * _q.z + _q.w * _q.w
     return OZZFloat4.cmpLt(with: OZZFloat4.abs(with: len2 - OZZFloat4.one()),
             OZZFloat4.load1(with: kNormalizationToleranceEstSq))
@@ -86,8 +86,8 @@ func IsNormalizedEst(_q: SoaQuaternion) -> SimdInt4 {
 
 // Returns the linear interpolation of SoaQuaternion _a and _b with coefficient
 // _f.
-func Lerp(_a: SoaQuaternion, _b: SoaQuaternion,
-          _f: _SimdFloat4) -> SoaQuaternion {
+func Lerp(_ _a: SoaQuaternion, _ _b: SoaQuaternion,
+          _ _f: _SimdFloat4) -> SoaQuaternion {
     SoaQuaternion((_b.x - _a.x) * _f + _a.x, (_b.y - _a.y) * _f + _a.y,
             (_b.z - _a.z) * _f + _a.z,
             (_b.w - _a.w) * _f + _a.w)
@@ -95,8 +95,8 @@ func Lerp(_a: SoaQuaternion, _b: SoaQuaternion,
 
 // Returns the linear interpolation of SoaQuaternion _a and _b with coefficient
 // _f.
-func NLerp(_a: SoaQuaternion, _b: SoaQuaternion,
-           _f: _SimdFloat4) -> SoaQuaternion {
+func NLerp(_ _a: SoaQuaternion, _ _b: SoaQuaternion,
+           _ _f: _SimdFloat4) -> SoaQuaternion {
     let lerp = SoaFloat4((_b.x - _a.x) * _f + _a.x, (_b.y - _a.y) * _f + _a.y,
             (_b.z - _a.z) * _f + _a.z, (_b.w - _a.w) * _f + _a.w)
     let len2 =
@@ -108,8 +108,8 @@ func NLerp(_a: SoaQuaternion, _b: SoaQuaternion,
 
 // Returns the estimated linear interpolation of SoaQuaternion _a and _b with
 // coefficient _f.
-func NLerpEst(_a: SoaQuaternion,
-              _b: SoaQuaternion, _f: _SimdFloat4) -> SoaQuaternion {
+func NLerpEst(_ _a: SoaQuaternion,
+              _ _b: SoaQuaternion, _ _f: _SimdFloat4) -> SoaQuaternion {
     let lerp = SoaFloat4((_b.x - _a.x) * _f + _a.x, (_b.y - _a.y) * _f + _a.y,
             (_b.z - _a.z) * _f + _a.z, (_b.w - _a.w) * _f + _a.w)
     let len2 =
