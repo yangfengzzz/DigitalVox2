@@ -34,7 +34,7 @@ class SkeletonBuilder {
 
         // Allocates all skeleton members.
         skeleton.Allocate(num_joints)
-        
+
         // Copy names. All names are allocated in a single buffer. Only the first name
         // is set, all other names array entries must be initialized.
         for i in 0..<num_joints {

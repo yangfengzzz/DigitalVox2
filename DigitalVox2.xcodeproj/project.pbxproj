@@ -804,6 +804,7 @@
 		0498DD69272E89760089B2CE /* skeleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = skeleton.swift; sourceTree = "<group>"; };
 		0498DD6B272E99850089B2CE /* skeleton_utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = skeleton_utils.swift; sourceTree = "<group>"; };
 		0498DD6D272E9EBE0089B2CE /* skeleton_builder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = skeleton_builder.swift; sourceTree = "<group>"; };
+		0498DD6F272EBD510089B2CE /* animation_keyframe.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = animation_keyframe.h; sourceTree = "<group>"; };
 		04A6BEB227204FE20024DF43 /* blinn-phong.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = "blinn-phong.metal"; sourceTree = "<group>"; };
 		04A6BEB42720DCD80024DF43 /* function-constant.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = "function-constant.metal"; sourceTree = "<group>"; };
 		04A6BEB82723B5D00024DF43 /* background-texture.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = "background-texture.metal"; sourceTree = "<group>"; };
@@ -1768,6 +1769,7 @@
 			children = (
 				0498DD69272E89760089B2CE /* skeleton.swift */,
 				0498DD6B272E99850089B2CE /* skeleton_utils.swift */,
+				0498DD6F272EBD510089B2CE /* animation_keyframe.h */,
 			);
 			path = runtime;
 			sourceTree = "<group>";
