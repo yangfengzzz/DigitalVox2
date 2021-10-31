@@ -340,6 +340,9 @@
 		0497A1E926DF150800F61DE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0497A1E826DF150800F61DE9 /* Assets.xcassets */; };
 		0497A1EC26DF150800F61DE9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0497A1EB26DF150800F61DE9 /* Preview Assets.xcassets */; };
 		0497A20226DF150800F61DE9 /* DigitalVox2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A20126DF150800F61DE9 /* DigitalVox2UITests.swift */; };
+		0498DD54272E4B1B0089B2CE /* soa_float4x4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0498DD53272E4B1B0089B2CE /* soa_float4x4.swift */; };
+		0498DD56272E4BE50089B2CE /* soa_quaternion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0498DD55272E4BE50089B2CE /* soa_quaternion.swift */; };
+		0498DD58272E4C810089B2CE /* soa_transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0498DD57272E4C810089B2CE /* soa_transform.swift */; };
 		04AE164E26EED80600201439 /* Vector3.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE164D26EED80600201439 /* Vector3.test.swift */; };
 		04AE165026EEE2C100201439 /* Vector4.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE164F26EEE2C100201439 /* Vector4.test.swift */; };
 		04AE165226EEE85D00201439 /* Matrix.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE165126EEE85D00201439 /* Matrix.test.swift */; };
@@ -778,6 +781,9 @@
 		0497A20126DF150800F61DE9 /* DigitalVox2UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitalVox2UITests.swift; sourceTree = "<group>"; };
 		0497A20326DF150800F61DE9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0497A20F26DF151700F61DE9 /* DigitalVox2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DigitalVox2.entitlements; sourceTree = "<group>"; };
+		0498DD53272E4B1B0089B2CE /* soa_float4x4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = soa_float4x4.swift; sourceTree = "<group>"; };
+		0498DD55272E4BE50089B2CE /* soa_quaternion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = soa_quaternion.swift; sourceTree = "<group>"; };
+		0498DD57272E4C810089B2CE /* soa_transform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = soa_transform.swift; sourceTree = "<group>"; };
 		04A6BEB227204FE20024DF43 /* blinn-phong.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = "blinn-phong.metal"; sourceTree = "<group>"; };
 		04A6BEB42720DCD80024DF43 /* function-constant.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = "function-constant.metal"; sourceTree = "<group>"; };
 		04A6BEB82723B5D00024DF43 /* background-texture.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = "background-texture.metal"; sourceTree = "<group>"; };
@@ -1587,6 +1593,9 @@
 				045D2C3E272E25800091636B /* simd_math.swift */,
 				045D2C40272E2A6D0091636B /* simd_quaternion.swift */,
 				045D2C42272E352F0091636B /* soa_float.swift */,
+				0498DD55272E4BE50089B2CE /* soa_quaternion.swift */,
+				0498DD57272E4C810089B2CE /* soa_transform.swift */,
+				0498DD53272E4B1B0089B2CE /* soa_float4x4.swift */,
 			);
 			path = "ozz-animation";
 			sourceTree = "<group>";
@@ -2261,6 +2270,7 @@
 				041BAEBD272A5166006268D5 /* LiteBoxColliderShape.swift in Sources */,
 				041BAE72272A5117006268D5 /* ShadowFeature.swift in Sources */,
 				045D2C00272CFC9F0091636B /* AnimatorState.swift in Sources */,
+				0498DD54272E4B1B0089B2CE /* soa_float4x4.swift in Sources */,
 				041BAE57272A5100006268D5 /* RenderContext.swift in Sources */,
 				041BAEBA272A5166006268D5 /* LiteStaticCollider.swift in Sources */,
 				041BAE0A272A500F006268D5 /* EngineFeature.swift in Sources */,
@@ -2292,6 +2302,7 @@
 				041BAE70272A5117006268D5 /* ShadowPass.swift in Sources */,
 				041BAE0C272A500F006268D5 /* SceneManager.swift in Sources */,
 				041BAE44272A50ED006268D5 /* ModelMesh.swift in Sources */,
+				0498DD58272E4C810089B2CE /* soa_transform.swift in Sources */,
 				045D2C41272E2A6D0091636B /* simd_quaternion.swift in Sources */,
 				041BAE99272A5141006268D5 /* StaticCollider.swift in Sources */,
 				041BAEAE272A5153006268D5 /* RenderPipelineState.swift in Sources */,
@@ -2348,6 +2359,7 @@
 				041BAE80272A513B006268D5 /* PhysicsMaterialCombineMode.swift in Sources */,
 				041BAEB8272A5166006268D5 /* LiteUpdateFlag.swift in Sources */,
 				041BAE30272A50E6006268D5 /* Matrix.swift in Sources */,
+				0498DD56272E4BE50089B2CE /* soa_quaternion.swift in Sources */,
 				041BAE27272A50D9006268D5 /* BackgroundMode.swift in Sources */,
 				041BAEB3272A5166006268D5 /* LiteSphereColliderShape.swift in Sources */,
 				041BAEC4272A516E006268D5 /* ShaderSimple.metal in Sources */,
