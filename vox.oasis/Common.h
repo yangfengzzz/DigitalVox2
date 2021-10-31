@@ -49,6 +49,7 @@
 #include "CPxRigidDynamic.h"
 #include "CPxScene.h"
 
+#include "math_constant.h"
 #include "simd_math.h"
 
 #endif /* Common_h */

@@ -16,7 +16,7 @@ struct SoaFloat2 {
         self.y = y
     }
 
-    static func Load(_x: _SimdFloat4, _y: _SimdFloat4) -> SoaFloat2 {
+    static func Load(_ _x: _SimdFloat4, _ _y: _SimdFloat4) -> SoaFloat2 {
         return SoaFloat2(_x, _y)
     }
 
@@ -48,12 +48,12 @@ struct SoaFloat3 {
         self.z = z
     }
 
-    static func Load(_x: _SimdFloat4, _y: _SimdFloat4,
-                     _z: _SimdFloat4) -> SoaFloat3 {
+    static func Load(_ _x: _SimdFloat4, _ _y: _SimdFloat4,
+                     _ _z: _SimdFloat4) -> SoaFloat3 {
         return SoaFloat3(_x, _y, _z)
     }
 
-    static func Load(_v: SoaFloat2, _z: _SimdFloat4) -> SoaFloat3 {
+    static func Load(_ _v: SoaFloat2, _ _z: _SimdFloat4) -> SoaFloat3 {
         return SoaFloat3(_v.x, _v.y, _z)
     }
 
@@ -96,17 +96,17 @@ struct SoaFloat4 {
         self.w = w
     }
 
-    static func Load(_x: _SimdFloat4, _y: _SimdFloat4,
-                     _z: _SimdFloat4, _w: SimdFloat4) -> SoaFloat4 {
+    static func Load(_ _x: _SimdFloat4, _ _y: _SimdFloat4,
+                     _ _z: _SimdFloat4, _ _w: SimdFloat4) -> SoaFloat4 {
         return SoaFloat4(_x, _y, _z, _w)
     }
 
-    static func Load(_v: SoaFloat3, _w: _SimdFloat4) -> SoaFloat4 {
+    static func Load(_ _v: SoaFloat3, _ _w: _SimdFloat4) -> SoaFloat4 {
         return SoaFloat4(_v.x, _v.y, _v.z, _w)
     }
 
-    static func Load(_v: SoaFloat2, _z: _SimdFloat4,
-                     _w: _SimdFloat4) -> SoaFloat4 {
+    static func Load(_ _v: SoaFloat2, _ _z: _SimdFloat4,
+                     _ _w: _SimdFloat4) -> SoaFloat4 {
         return SoaFloat4(_v.x, _v.y, _z, _w)
     }
 
@@ -209,18 +209,18 @@ func *(_a: SoaFloat2, _f: _SimdFloat4) -> SoaFloat2 {
 
 // Multiplies _a and _b, then adds _addend.
 // v = (_a * _b) + _addend
-func MAdd(_a: SoaFloat2, _b: SoaFloat2, _addend: SoaFloat2) -> SoaFloat2 {
+func MAdd(_ _a: SoaFloat2, _ _b: SoaFloat2, _ _addend: SoaFloat2) -> SoaFloat2 {
     SoaFloat2(OZZFloat4.mAdd(with: _a.x, _b.x, _addend.x),
             OZZFloat4.mAdd(with: _a.y, _b.y, _addend.y))
 }
 
-func MAdd(_a: SoaFloat3, _b: SoaFloat3, _addend: SoaFloat3) -> SoaFloat3 {
+func MAdd(_ _a: SoaFloat3, _ _b: SoaFloat3, _ _addend: SoaFloat3) -> SoaFloat3 {
     SoaFloat3(OZZFloat4.mAdd(with: _a.x, _b.x, _addend.x),
             OZZFloat4.mAdd(with: _a.y, _b.y, _addend.y),
             OZZFloat4.mAdd(with: _a.z, _b.z, _addend.z))
 }
 
-func MAdd(_a: SoaFloat4, _b: SoaFloat4, _addend: SoaFloat4) -> SoaFloat4 {
+func MAdd(_ _a: SoaFloat4, _ _b: SoaFloat4, _ _addend: SoaFloat4) -> SoaFloat4 {
     SoaFloat4(OZZFloat4.mAdd(with: _a.x, _b.x, _addend.x),
             OZZFloat4.mAdd(with: _a.y, _b.y, _addend.y),
             OZZFloat4.mAdd(with: _a.z, _b.z, _addend.z),
@@ -388,61 +388,227 @@ func !=(_a: SoaFloat2, _b: SoaFloat2) -> SimdInt4 {
 }
 
 // Returns the (horizontal) addition of each element of _v.
-func HAdd(_v: SoaFloat4) -> SimdFloat4 {
+func HAdd(_ _v: SoaFloat4) -> SimdFloat4 {
     return _v.x + _v.y + _v.z + _v.w
 }
 
-func HAdd(_v: SoaFloat3) -> SimdFloat4 {
+func HAdd(_ _v: SoaFloat3) -> SimdFloat4 {
     return _v.x + _v.y + _v.z
 }
 
-func HAdd(_v: SoaFloat2) -> SimdFloat4 {
+func HAdd(_ _v: SoaFloat2) -> SimdFloat4 {
     return _v.x + _v.y
 }
 
 // Returns the dot product of _a and _b.
-func Dot(_a: SoaFloat4, _b: SoaFloat4) -> SimdFloat4 {
+func Dot(_ _a: SoaFloat4, _ _b: SoaFloat4) -> SimdFloat4 {
     return _a.x * _b.x + _a.y * _b.y + _a.z * _b.z + _a.w * _b.w
 }
 
-func Dot(_a: SoaFloat3, _b: SoaFloat3) -> SimdFloat4 {
+func Dot(_ _a: SoaFloat3, _ _b: SoaFloat3) -> SimdFloat4 {
     return _a.x * _b.x + _a.y * _b.y + _a.z * _b.z
 }
 
-func Dot(_a: SoaFloat2, _b: SoaFloat2) -> SimdFloat4 {
+func Dot(_ _a: SoaFloat2, _ _b: SoaFloat2) -> SimdFloat4 {
     return _a.x * _b.x + _a.y * _b.y
 }
 
 // Returns the cross product of _a and _b.
-func Cross(_a: SoaFloat3, _b: SoaFloat3) -> SoaFloat3 {
+func Cross(_ _a: SoaFloat3, _ _b: SoaFloat3) -> SoaFloat3 {
     SoaFloat3(_a.y * _b.z - _b.y * _a.z, _a.z * _b.x - _b.z * _a.x, _a.x * _b.y - _b.x * _a.y)
 }
 
 // Returns the length |_v| of _v.
-func Length(_v: SoaFloat4) -> SimdFloat4 {
+func Length(_ _v: SoaFloat4) -> SimdFloat4 {
     let len2 = _v.x * _v.x + _v.y * _v.y + _v.z * _v.z + _v.w * _v.w
     return OZZFloat4.sqrt(with: len2)
 }
 
-func Length(_v: SoaFloat3) -> SimdFloat4 {
+func Length(_ _v: SoaFloat3) -> SimdFloat4 {
     let len2 = _v.x * _v.x + _v.y * _v.y + _v.z * _v.z
     return OZZFloat4.sqrt(with: len2)
 }
 
-func Length(_v: SoaFloat2) -> SimdFloat4 {
+func Length(_ _v: SoaFloat2) -> SimdFloat4 {
     let len2 = _v.x * _v.x + _v.y * _v.y
     return OZZFloat4.sqrt(with: len2)
 }
 
 // Returns the square length |_v|^2 of _v.
-func LengthSqr(_v: SoaFloat4) -> SimdFloat4 {
+func LengthSqr(_ _v: SoaFloat4) -> SimdFloat4 {
     return _v.x * _v.x + _v.y * _v.y + _v.z * _v.z + _v.w * _v.w
 }
 
-func LengthSqr(_v: SoaFloat3) -> SimdFloat4 {
+func LengthSqr(_ _v: SoaFloat3) -> SimdFloat4 {
     return _v.x * _v.x + _v.y * _v.y + _v.z * _v.z
 }
 
-func LengthSqr(_v: SoaFloat2) -> SimdFloat4 {
+func LengthSqr(_ _v: SoaFloat2) -> SimdFloat4 {
     return _v.x * _v.x + _v.y * _v.y
+}
+
+// Returns the normalized vector _v.
+func Normalize(_ _v: SoaFloat4) -> SoaFloat4 {
+    let len2 = _v.x * _v.x + _v.y * _v.y + _v.z * _v.z + _v.w * _v.w
+    guard OZZInt4.areAllTrue(with: OZZFloat4.cmpNe(with: len2, OZZFloat4.zero())) else {
+        fatalError("_v is not normalizable")
+    }
+
+    let inv_len = OZZFloat4.one() / OZZFloat4.sqrt(with: len2)
+    return SoaFloat4(_v.x * inv_len, _v.y * inv_len, _v.z * inv_len, _v.w * inv_len)
+}
+
+func Normalize(_ _v: SoaFloat3) -> SoaFloat3 {
+    let len2 = _v.x * _v.x + _v.y * _v.y + _v.z * _v.z
+    guard OZZInt4.areAllTrue(with: OZZFloat4.cmpNe(with: len2, OZZFloat4.zero())) else {
+        fatalError("_v is not normalizable")
+    }
+
+    let inv_len = OZZFloat4.one() / OZZFloat4.sqrt(with: len2)
+    return SoaFloat3(_v.x * inv_len, _v.y * inv_len, _v.z * inv_len)
+}
+
+func Normalize(_ _v: SoaFloat2) -> SoaFloat2 {
+    let len2 = _v.x * _v.x + _v.y * _v.y
+    guard OZZInt4.areAllTrue(with: OZZFloat4.cmpNe(with: len2, OZZFloat4.zero())) else {
+        fatalError("_v is not normalizable")
+    }
+    let inv_len = OZZFloat4.one() / OZZFloat4.sqrt(with: len2)
+    return SoaFloat2(_v.x * inv_len, _v.y * inv_len)
+}
+
+// Test if each vector _v is normalized.
+func IsNormalized(_ _v: SoaFloat4) -> SimdInt4 {
+    let len2 = _v.x * _v.x + _v.y * _v.y + _v.z * _v.z + _v.w * _v.w
+    return OZZFloat4.cmpLt(with: OZZFloat4.abs(with: len2 - OZZFloat4.one()),
+            OZZFloat4.load1(with: kNormalizationToleranceSq))
+}
+
+func IsNormalized(_ _v: SoaFloat3) -> SimdInt4 {
+    let len2 = _v.x * _v.x + _v.y * _v.y + _v.z * _v.z
+    return OZZFloat4.cmpLt(with: OZZFloat4.abs(with: len2 - OZZFloat4.one()),
+            OZZFloat4.load1(with: kNormalizationToleranceSq))
+}
+
+func IsNormalized(_ _v: SoaFloat2) -> SimdInt4 {
+    let len2 = _v.x * _v.x + _v.y * _v.y
+    return OZZFloat4.cmpLt(with: OZZFloat4.abs(with: len2 - OZZFloat4.one()),
+            OZZFloat4.load1(with: kNormalizationToleranceSq))
+}
+
+// Test if each vector _v is normalized using estimated tolerance.
+func IsNormalizedEst(_ _v: SoaFloat4) -> SimdInt4 {
+    let len2 = _v.x * _v.x + _v.y * _v.y + _v.z * _v.z + _v.w * _v.w
+    return OZZFloat4.cmpLt(with: OZZFloat4.abs(with: len2 - OZZFloat4.one()),
+            OZZFloat4.load1(with: kNormalizationToleranceEstSq))
+}
+
+func IsNormalizedEst(_ _v: SoaFloat3) -> SimdInt4 {
+    let len2 = _v.x * _v.x + _v.y * _v.y + _v.z * _v.z
+    return OZZFloat4.cmpLt(with: OZZFloat4.abs(with: len2 - OZZFloat4.one()),
+            OZZFloat4.load1(with: kNormalizationToleranceEstSq))
+}
+
+func IsNormalizedEst(_ _v: SoaFloat2) -> SimdInt4 {
+    let len2 = _v.x * _v.x + _v.y * _v.y
+    return OZZFloat4.cmpLt(with: OZZFloat4.abs(with: len2 - OZZFloat4.one()),
+            OZZFloat4.load1(with: kNormalizationToleranceEstSq))
+}
+
+// Returns the normalized vector _v if the norm of _v is not 0.
+// Otherwise returns _safer.
+func NormalizeSafe(_ _v: SoaFloat4, _ _safer: SoaFloat4) -> SoaFloat4 {
+    guard OZZInt4.areAllTrue(with: IsNormalizedEst(_safer)) else {
+        fatalError("_safer is not normalized")
+    }
+
+    let len2 = _v.x * _v.x + _v.y * _v.y + _v.z * _v.z + _v.w * _v.w
+    let b = OZZFloat4.cmpNe(with: len2, OZZFloat4.zero())
+    let inv_len = OZZFloat4.one() / OZZFloat4.sqrt(with: len2)
+    return SoaFloat4(
+            OZZFloat4.select(with: b, _v.x * inv_len, _safer.x), OZZFloat4.select(with: b, _v.y * inv_len, _safer.y),
+            OZZFloat4.select(with: b, _v.z * inv_len, _safer.z), OZZFloat4.select(with: b, _v.w * inv_len, _safer.w))
+}
+
+func NormalizeSafe(_ _v: SoaFloat3, _ _safer: SoaFloat3) -> SoaFloat3 {
+    guard OZZInt4.areAllTrue(with: IsNormalizedEst(_safer)) else {
+        fatalError("_safer is not normalized")
+    }
+
+    let len2 = _v.x * _v.x + _v.y * _v.y + _v.z * _v.z
+    let b = OZZFloat4.cmpNe(with: len2, OZZFloat4.zero())
+    let inv_len = OZZFloat4.one() / OZZFloat4.sqrt(with: len2)
+    return SoaFloat3(OZZFloat4.select(with: b, _v.x * inv_len, _safer.x),
+            OZZFloat4.select(with: b, _v.y * inv_len, _safer.y),
+            OZZFloat4.select(with: b, _v.z * inv_len, _safer.z))
+}
+
+func NormalizeSafe(_ _v: SoaFloat2, _ _safer: SoaFloat2) -> SoaFloat2 {
+    guard OZZInt4.areAllTrue(with: IsNormalizedEst(_safer)) else {
+        fatalError("_safer is not normalized")
+    }
+
+    let len2 = _v.x * _v.x + _v.y * _v.y
+    let b = OZZFloat4.cmpNe(with: len2, OZZFloat4.zero())
+    let inv_len = OZZFloat4.one() / OZZFloat4.sqrt(with: len2)
+    return SoaFloat2(OZZFloat4.select(with: b, _v.x * inv_len, _safer.x),
+            OZZFloat4.select(with: b, _v.y * inv_len, _safer.y))
+}
+
+// Returns the linear interpolation of _a and _b with coefficient _f.
+// _f is not limited to range [0,1].
+func Lerp(_ _a: SoaFloat4, _ _b: SoaFloat4, _ _f: _SimdFloat4) -> SoaFloat4 {
+    SoaFloat4((_b.x - _a.x) * _f + _a.x, (_b.y - _a.y) * _f + _a.y,
+            (_b.z - _a.z) * _f + _a.z, (_b.w - _a.w) * _f + _a.w)
+}
+
+func Lerp(_ _a: SoaFloat3, _ _b: SoaFloat3, _ _f: _SimdFloat4) -> SoaFloat3 {
+    SoaFloat3((_b.x - _a.x) * _f + _a.x, (_b.y - _a.y) * _f + _a.y,
+            (_b.z - _a.z) * _f + _a.z)
+}
+
+func Lerp(_ _a: SoaFloat2, _ _b: SoaFloat2, _ _f: _SimdFloat4) -> SoaFloat2 {
+    SoaFloat2((_b.x - _a.x) * _f + _a.x, (_b.y - _a.y) * _f + _a.y)
+}
+
+// Returns the minimum of each element of _a and _b.
+func Min(_ _a: SoaFloat4, _ _b: SoaFloat4) -> SoaFloat4 {
+    SoaFloat4(OZZFloat4.min(with: _a.x, _b.x), OZZFloat4.min(with: _a.y, _b.y),
+            OZZFloat4.min(with: _a.z, _b.z), OZZFloat4.min(with: _a.w, _b.w))
+}
+
+func Min(_ _a: SoaFloat3, _ _b: SoaFloat3) -> SoaFloat3 {
+    SoaFloat3(OZZFloat4.min(with: _a.x, _b.x), OZZFloat4.min(with: _a.y, _b.y), OZZFloat4.min(with: _a.z, _b.z))
+}
+
+func Min(_ _a: SoaFloat2, _ _b: SoaFloat2) -> SoaFloat2 {
+    SoaFloat2(OZZFloat4.min(with: _a.x, _b.x), OZZFloat4.min(with: _a.y, _b.y))
+}
+
+// Returns the maximum of each element of _a and _b.
+func Max(_ _a: SoaFloat4, _ _b: SoaFloat4) -> SoaFloat4 {
+    SoaFloat4(OZZFloat4.max(with: _a.x, _b.x), OZZFloat4.max(with: _a.y, _b.y),
+            OZZFloat4.max(with: _a.z, _b.z), OZZFloat4.max(with: _a.w, _b.w))
+}
+
+func Max(_ _a: SoaFloat3, _ _b: SoaFloat3) -> SoaFloat3 {
+    SoaFloat3(OZZFloat4.max(with: _a.x, _b.x), OZZFloat4.max(with: _a.y, _b.y), OZZFloat4.max(with: _a.z, _b.z))
+}
+
+func Max(_ _a: SoaFloat2, _ _b: SoaFloat2) -> SoaFloat2 {
+    SoaFloat2(OZZFloat4.max(with: _a.x, _b.x), OZZFloat4.max(with: _a.y, _b.y))
+}
+
+// Clamps each element of _x between _a and _b.
+// _a must be less or equal to b
+func Clamp(_ _a: SoaFloat4, _ _v: SoaFloat4, _ _b: SoaFloat4) -> SoaFloat4 {
+    return Max(_a, Min(_v, _b))
+}
+
+func Clamp(_ _a: SoaFloat3, _ _v: SoaFloat3, _ _b: SoaFloat3) -> SoaFloat3 {
+    return Max(_a, Min(_v, _b))
+}
+
+func Clamp(_ _a: SoaFloat2, _ _v: SoaFloat2, _ _b: SoaFloat2) -> SoaFloat2 {
+    return Max(_a, Min(_v, _b))
 }
