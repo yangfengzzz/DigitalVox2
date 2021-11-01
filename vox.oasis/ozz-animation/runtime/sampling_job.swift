@@ -126,13 +126,13 @@ protocol InterpSoaType {
 }
 
 internal struct InterpSoaFloat3: InterpSoaType {
-    var ratio: (SimdFloat4, SimdFloat4)
-    var value: (SoaFloat3, SoaFloat3)
+    var ratio: (SimdFloat4, SimdFloat4) = (OZZFloat4.zero(), OZZFloat4.zero())
+    var value: (SoaFloat3, SoaFloat3) = (SoaFloat3.zero(), SoaFloat3.zero())
 }
 
 internal struct InterpSoaQuaternion: InterpSoaType {
-    var ratio: (SimdFloat4, SimdFloat4)
-    var value: (SoaQuaternion, SoaQuaternion)
+    var ratio: (SimdFloat4, SimdFloat4) = (OZZFloat4.zero(), OZZFloat4.zero())
+    var value: (SoaQuaternion, SoaQuaternion) = (SoaQuaternion.identity(), SoaQuaternion.identity())
 }
 
 // Declares the cache object used by the workload to take advantage of the
@@ -141,7 +141,7 @@ internal class SamplingCache {
     // Constructs an empty cache. The cache needs to be resized with the
     // appropriate number of tracks before it can be used with a SamplingJob.
     init() {
-        fatalError()
+        Invalidate()
     }
 
     // Constructs a cache that can be used to sample any animation with at most
@@ -149,13 +149,38 @@ internal class SamplingCache {
     // soa size, which means max_tracks() can return a different (but bigger)
     // value than _max_tracks.
     init(_ _max_tracks: Int) {
-        fatalError()
+        Resize(_max_tracks)
     }
 
     // Resize the number of joints that the cache can support.
     // This also implicitly invalidate the cache.
     func Resize(_ _max_tracks: Int) {
-        fatalError()
+        // Reset existing data.
+        Invalidate()
+
+        // Updates maximum supported soa tracks.
+        max_soa_tracks_ = (_max_tracks + 3) / 4
+
+        // Allocate all cache data at once in a single allocation.
+        // Alignment is guaranteed because memory is dispatch from the highest
+        // alignment requirement (Soa data: SimdFloat4) to the lowest (outdated
+        // flag: unsigned char).
+
+        // Computes allocation size.
+        let max_tracks = max_soa_tracks_ * 4
+        let num_outdated = (max_soa_tracks_ + 7) / 8
+
+        soa_translations_ = [InterpSoaFloat3](repeating: InterpSoaFloat3(), count: max_soa_tracks_)[...]
+        soa_rotations_ = [InterpSoaQuaternion](repeating: InterpSoaQuaternion(), count: max_soa_tracks_)[...]
+        soa_scales_ = [InterpSoaFloat3](repeating: InterpSoaFloat3(), count: max_soa_tracks_)[...]
+
+        translation_keys_ = [Int](repeating: 0, count: max_tracks * 2)[...]
+        rotation_keys_ = [Int](repeating: 0, count: max_tracks * 2)[...]
+        scale_keys_ = [Int](repeating: 0, count: max_tracks * 2)[...]
+
+        outdated_translations_ = [UInt8](repeating: 0, count: num_outdated)[...]
+        outdated_rotations_ = [UInt8](repeating: 0, count: num_outdated)[...]
+        outdated_scales_ = [UInt8](repeating: 0, count: num_outdated)[...]
     }
 
     // Invalidate the cache.
@@ -167,16 +192,20 @@ internal class SamplingCache {
     // Therefore it is recommended to manually invalidate a cache when it is
     // known that this cache will not be used for with an animation again.
     func Invalidate() {
-        fatalError()
+        animation_ = nil
+        ratio_ = 0.0
+        translation_cursor_ = 0
+        rotation_cursor_ = 0
+        scale_cursor_ = 0
     }
 
     // The maximum number of tracks that the cache can handle.
     func max_tracks() -> Int {
-        return max_soa_tracks_ * 4
+        max_soa_tracks_ * 4
     }
 
     func max_soa_tracks() -> Int {
-        return max_soa_tracks_
+        max_soa_tracks_
     }
 
     // Steps the cache in order to use it for a potentially new animation and
@@ -184,38 +213,45 @@ internal class SamplingCache {
     // or if the _ratio shows that the animation is played backward, then the
     // cache is invalidated and reseted for the new _animation and _ratio.
     internal func Step(_ _animation: Animation, _ _ratio: Float) {
-        fatalError()
+        // The cache is invalidated if animation has changed or if it is being rewind.
+        if (animation_ !== _animation || _ratio < ratio_) {
+            animation_ = _animation
+            translation_cursor_ = 0
+            rotation_cursor_ = 0
+            scale_cursor_ = 0
+        }
+        ratio_ = _ratio
     }
 
     // The animation this cache refers to. nullptr means that the cache is invalid.
-    internal var animation_: Animation
+    internal var animation_: Animation?
 
     // The current time ratio in the animation.
-    internal var ratio_: Float
+    internal var ratio_: Float = 0.0
 
     // The number of soa tracks that can store this cache.
-    internal var max_soa_tracks_: Int
+    internal var max_soa_tracks_: Int = 0
 
     // Soa hot data to interpolate.
-    internal var soa_translations_: ArraySlice<InterpSoaFloat3>
-    internal var soa_rotations_: ArraySlice<InterpSoaQuaternion>
-    internal var soa_scales_: ArraySlice<InterpSoaFloat3>
+    internal var soa_translations_: ArraySlice<InterpSoaFloat3> = ArraySlice()
+    internal var soa_rotations_: ArraySlice<InterpSoaQuaternion> = ArraySlice()
+    internal var soa_scales_: ArraySlice<InterpSoaFloat3> = ArraySlice()
 
     // Points to the keys in the animation that are valid for the current time
     // ratio.
-    var translation_keys_: ArraySlice<Int>
-    var rotation_keys_: ArraySlice<Int>
-    var scale_keys_: ArraySlice<Int>
+    var translation_keys_: ArraySlice<Int> = ArraySlice()
+    var rotation_keys_: ArraySlice<Int> = ArraySlice()
+    var scale_keys_: ArraySlice<Int> = ArraySlice()
 
     // Current cursors in the animation. 0 means that the cache is invalid.
-    var translation_cursor_: Int
-    var rotation_cursor_: Int
-    var scale_cursor_: Int
+    var translation_cursor_: Int = 0
+    var rotation_cursor_: Int = 0
+    var scale_cursor_: Int = 0
 
     // Outdated soa entries. One bit per soa entry (32 joints per byte).
-    var outdated_translations_: ArraySlice<UInt8>
-    var outdated_rotations_: ArraySlice<UInt8>
-    var outdated_scales_: ArraySlice<UInt8>
+    var outdated_translations_: ArraySlice<UInt8> = ArraySlice()
+    var outdated_rotations_: ArraySlice<UInt8> = ArraySlice()
+    var outdated_scales_: ArraySlice<UInt8> = ArraySlice()
 }
 
 // Loops through the sorted key frames and update cache structure.
