@@ -91,7 +91,7 @@ struct BlendingJob {
     // less than the threshold value, in order to fall back on valid transforms.
     var bind_pose: ArraySlice<SoaTransform>
 
-    // Job output.
+    //MARK: -  Job output.
     // The range of output transforms to be filled with blended layer
     // transforms during job execution.
     // Must be at least as big as the bind pose buffer, but only the number of

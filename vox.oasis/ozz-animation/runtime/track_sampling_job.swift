@@ -32,7 +32,7 @@ struct TrackSamplingJob<ValueType: TrackPolicy> {
     // Track to sample.
     var track: Track<ValueType>
 
-    // Job output.
+    //MARK: -  Job output.
     var result: ValueType
 }
 

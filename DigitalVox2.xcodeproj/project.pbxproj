@@ -371,6 +371,9 @@
 		04AFFD3E272F9B37005C2835 /* track_optimizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFFD3D272F9B37005C2835 /* track_optimizer.swift */; };
 		04AFFD40272F9C37005C2835 /* track_triggering_job.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFFD3F272F9C37005C2835 /* track_triggering_job.swift */; };
 		04AFFD42272F9CB1005C2835 /* blending_job.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFFD41272F9CB1005C2835 /* blending_job.swift */; };
+		04AFFD44272FA800005C2835 /* local_to_model_job.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFFD43272FA800005C2835 /* local_to_model_job.swift */; };
+		04AFFD46272FA877005C2835 /* ik_aim_job.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFFD45272FA877005C2835 /* ik_aim_job.swift */; };
+		04AFFD48272FA959005C2835 /* ik_two_bone_job.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFFD47272FA959005C2835 /* ik_two_bone_job.swift */; };
 		04EA0D6A26E0F9AD00CA7833 /* math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6926E0F9AD00CA7833 /* math.swift */; };
 		04EA0D6C26E1204200CA7833 /* bbox2f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6B26E1204200CA7833 /* bbox2f.swift */; };
 		04EA0D6E26E1204F00CA7833 /* bbox3f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6D26E1204F00CA7833 /* bbox3f.swift */; };
@@ -857,6 +860,9 @@
 		04AFFD3D272F9B37005C2835 /* track_optimizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = track_optimizer.swift; sourceTree = "<group>"; };
 		04AFFD3F272F9C37005C2835 /* track_triggering_job.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = track_triggering_job.swift; sourceTree = "<group>"; };
 		04AFFD41272F9CB1005C2835 /* blending_job.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = blending_job.swift; sourceTree = "<group>"; };
+		04AFFD43272FA800005C2835 /* local_to_model_job.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = local_to_model_job.swift; sourceTree = "<group>"; };
+		04AFFD45272FA877005C2835 /* ik_aim_job.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ik_aim_job.swift; sourceTree = "<group>"; };
+		04AFFD47272FA959005C2835 /* ik_two_bone_job.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ik_two_bone_job.swift; sourceTree = "<group>"; };
 		04DB2A4126DF1E0500C15850 /* IClone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IClone.swift; sourceTree = "<group>"; };
 		04DBA7D92700B32D00C3B97C /* EngineFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineFeature.swift; sourceTree = "<group>"; };
 		04DBA7DB2700B3C900C3B97C /* SceneFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneFeature.swift; sourceTree = "<group>"; };
@@ -1815,6 +1821,9 @@
 				04AFFD3B272F9799005C2835 /* track_sampling_job.swift */,
 				04AFFD3F272F9C37005C2835 /* track_triggering_job.swift */,
 				04AFFD41272F9CB1005C2835 /* blending_job.swift */,
+				04AFFD43272FA800005C2835 /* local_to_model_job.swift */,
+				04AFFD45272FA877005C2835 /* ik_aim_job.swift */,
+				04AFFD47272FA959005C2835 /* ik_two_bone_job.swift */,
 			);
 			path = runtime;
 			sourceTree = "<group>";
@@ -2355,6 +2364,7 @@
 				041BAE3F272A50ED006268D5 /* BufferMesh.swift in Sources */,
 				045D2C06272D0A9F0091636B /* AnimatorController.swift in Sources */,
 				045D2BEA272CCDB80091636B /* AnimationClip.swift in Sources */,
+				04AFFD46272FA877005C2835 /* ik_aim_job.swift in Sources */,
 				041BAE3A272A50E6006268D5 /* CollisionUtil.swift in Sources */,
 				041BAEA0272A514D006268D5 /* IDynamicCollider.swift in Sources */,
 				0498DD73272EC6F60089B2CE /* raw_animation_utils.swift in Sources */,
@@ -2363,6 +2373,7 @@
 				041BAE9C272A5141006268D5 /* PhysicsMaterial.swift in Sources */,
 				041BAE02272A500F006268D5 /* Renderer.swift in Sources */,
 				041BAEAA272A514D006268D5 /* IStaticCollider.swift in Sources */,
+				04AFFD48272FA959005C2835 /* ik_two_bone_job.swift in Sources */,
 				041BAE1C272A5046006268D5 /* background-texture.metal in Sources */,
 				041BAED5272A8B21006268D5 /* CPxMaterial.mm in Sources */,
 				041BAE96272A5141006268D5 /* HitResult.swift in Sources */,
@@ -2387,6 +2398,7 @@
 				041BAE65272A510C006268D5 /* ShaderUniform.swift in Sources */,
 				041BAE81272A513B006268D5 /* Spherical.swift in Sources */,
 				045D2BD7272CB00E0091636B /* InterpolationType.swift in Sources */,
+				04AFFD44272FA800005C2835 /* local_to_model_job.swift in Sources */,
 				041BAEE8272A9F81006268D5 /* CPxShape.mm in Sources */,
 				041BAEBE272A5166006268D5 /* LiteCollider.swift in Sources */,
 				045D2C3F272E25800091636B /* simd_math.swift in Sources */,
