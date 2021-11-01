@@ -101,8 +101,8 @@ class PhysXPhysicsManager: IPhysicsManager {
 
     func raycast(_ ray: Ray, _ distance: Float,
                  _ outHitResult: ((Int, Float, Vector3, Vector3) -> Void)?) -> Bool {
-        var index: Int32 = 0
-        var distance: Float = 0
+        var outIndex: Int32 = 0
+        var outDistance: Float = 0
 
         let result = _pxScene.raycastSingle(
                 with: ray.origin.elements,
@@ -110,12 +110,12 @@ class PhysXPhysicsManager: IPhysicsManager {
                 distance: distance,
                 outPosition: &PhysXPhysicsManager._tempPosition.elements,
                 outNormal: &PhysXPhysicsManager._tempNormal.elements,
-                outDistance: &distance,
-                outIndex: &index
+                outDistance: &outDistance,
+                outIndex: &outIndex
         )
 
         if (result && outHitResult != nil) {
-            outHitResult!(Int(index), distance, PhysXPhysicsManager._tempPosition, PhysXPhysicsManager._tempNormal)
+            outHitResult!(Int(outIndex), outDistance, PhysXPhysicsManager._tempPosition, PhysXPhysicsManager._tempNormal)
         }
 
         return result

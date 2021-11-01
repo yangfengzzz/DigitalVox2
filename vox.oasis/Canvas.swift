@@ -12,6 +12,12 @@ class Canvas: MTKView {
     // for mouse movement
     var trackingArea: NSTrackingArea?
 
+    typealias EventHandler = (NSEvent) -> Void
+    var mouseDownEvents: [EventHandler] = []
+    var mouseUpEvents: [EventHandler] = []
+    var rightMouseDownEvents: [EventHandler] = []
+    var rightMouseUpEvents: [EventHandler] = []
+
     init() {
         super.init(frame: .zero, device: nil)
     }
@@ -49,7 +55,7 @@ extension Canvas {
 
     override func keyDown(with event: NSEvent) {
         guard let key = KeyboardControl(rawValue: event.keyCode) else {
-          return
+            return
         }
         let state: InputState = event.isARepeat ? .continued : .began
         inputManager?.processEvent(key: key, state: state)
@@ -57,12 +63,19 @@ extension Canvas {
 
     override func keyUp(with event: NSEvent) {
         guard let key = KeyboardControl(rawValue: event.keyCode) else {
-          return
+            return
         }
         inputManager?.processEvent(key: key, state: .ended)
     }
 
+    func registerMouseDown(_ handler: @escaping EventHandler) {
+        mouseDownEvents.append(handler)
+    }
+
     override func mouseDown(with event: NSEvent) {
+        mouseDownEvents.forEach { handler in
+            handler(event)
+        }
         inputManager?.processEvent(state: .began, event: event)
     }
 

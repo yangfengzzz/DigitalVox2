@@ -132,6 +132,29 @@ struct PhysXRaycastView: View {
                         Quaternion(0, 0, 0.3, 0.7))
             }
         }
+
+        canvas.registerMouseDown { [self](event) in
+            let ray = Ray()
+            let camera: Camera = cameraEntity.getComponent()
+            _ = camera.screenPointToRay(Vector2(Float(event.locationInWindow.x), Float(event.locationInWindow.y)), ray)
+
+            let hit = HitResult()
+            let result = engine.physicsManager!.raycast(ray, Float.greatestFiniteMagnitude, Layer.Layer0, hit)
+            if (result) {
+                let mtl = BlinnPhongMaterial(engine)
+                let color = mtl.baseColor
+                color.r = Float.random(in: 0..<1)
+                color.g = Float.random(in: 0..<1)
+                color.b = Float.random(in: 0..<1)
+                color.a = 1.0
+
+                var meshes: [MeshRenderer] = []
+                _ = hit.entity!.getComponentsIncludeChildren(&meshes)
+                meshes.forEach { mesh in
+                    mesh.setMaterial(mtl)
+                }
+            }
+        }
     }
 
     var body: some View {
