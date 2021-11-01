@@ -113,6 +113,7 @@ struct PhysXRaycastView: View {
         let cameraEntity = rootEntity.createChild("camera")
         let _: Camera = cameraEntity.addComponent()
         cameraEntity.transform.setPosition(x: 10, y: 10, z: 10)
+        cameraEntity.transform.lookAt(worldPosition: Vector3(), worldUp: nil)
         let _: OrbitControl = cameraEntity.addComponent()
 
         // init point light
@@ -136,7 +137,11 @@ struct PhysXRaycastView: View {
         canvas.registerMouseDown { [self](event) in
             let ray = Ray()
             let camera: Camera = cameraEntity.getComponent()
-            _ = camera.screenPointToRay(Vector2(Float(event.locationInWindow.x), Float(event.locationInWindow.y)), ray)
+                        
+            var mousePoint = event.locationInWindow
+            mousePoint = canvas.convert(mousePoint, to: nil)
+            mousePoint = NSMakePoint(mousePoint.x, canvas.bounds.size.height - mousePoint.y)
+            _ = camera.screenPointToRay(Vector2(Float(mousePoint.x), Float(mousePoint.y)), ray)
 
             let hit = HitResult()
             let result = engine.physicsManager!.raycast(ray, Float.greatestFiniteMagnitude, Layer.Layer0, hit)

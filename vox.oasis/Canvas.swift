@@ -33,7 +33,7 @@ extension Canvas {
             return
         }
         window.acceptsMouseMovedEvents = true
-        CGDisplayHideCursor(CGMainDisplayID())
+//        CGDisplayHideCursor(CGMainDisplayID())
 
         if let trackingArea = trackingArea {
             removeTrackingArea(trackingArea)
