@@ -81,7 +81,7 @@ class Animation {
     }
 
     // Internal destruction function.
-    internal func Allocate(_translation_count: Int, _rotation_count: Int, _scale_count: Int) {
+    internal func Allocate(_ _translation_count: Int, _ _rotation_count: Int, _ _scale_count: Int) {
         assert(name_ == "" && translations_.count == 0 &&
                 rotations_.count == 0 && scales_.count == 0)
 

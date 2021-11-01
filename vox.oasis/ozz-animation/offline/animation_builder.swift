@@ -16,12 +16,85 @@ class AnimationBuilder {
     // See RawAnimation::Validate() for more details about failure reasons.
     // The animation is returned as an unique_ptr as ownership is given back to
     // the caller.
-    func eval(_raw_animation: RawAnimation) -> Animation {
-        fatalError()
+    func eval(_raw_animation _input: RawAnimation) -> Animation? {
+        // Tests _raw_animation validity.
+        if (!_input.Validate()) {
+            return nil
+        }
+
+        // Everything is fine, allocates and fills the animation.
+        // Nothing can fail now.
+        let animation = Animation()
+
+        // Sets duration.
+        let duration = _input.duration
+        let inv_duration = 1.0 / _input.duration
+        animation.duration_ = duration
+        // A _duration == 0 would create some division by 0 during sampling.
+        // Also we need at least to keys with different times, which cannot be done
+        // if duration is 0.
+        assert(duration > 0.0)  // This case is handled by Validate().
+
+        // Sets tracks count. Can be safely casted to uint16_t as number of tracks as
+        // already been validated.
+        let num_tracks = _input.num_tracks()
+        animation.num_tracks_ = num_tracks
+        let num_soa_tracks = MemoryLayout<UInt16>.alignment(ofValue: UInt16(num_tracks))
+
+        // Declares and preallocates tracks to sort.
+        var translations = 0
+        var rotations = 0
+        var scales = 0
+        for i in 0..<num_tracks {
+            let raw_track = _input.tracks[i]
+            translations += raw_track.translations.count + 2  // +2 because worst case
+            rotations += raw_track.rotations.count + 2        // needs to add the
+            scales += raw_track.scales.count + 2              // first and last keys.
+        }
+        var sorting_translations: [SortingTranslationKey] = []
+        sorting_translations.reserveCapacity(translations)
+        var sorting_rotations: [SortingRotationKey] = []
+        sorting_rotations.reserveCapacity(rotations)
+        var sorting_scales: [SortingScaleKey] = []
+        sorting_scales.reserveCapacity(scales)
+
+        // Filters RawAnimation keys and copies them to the output sorting structure.
+        var i: UInt16 = 0
+        while i < num_tracks {
+            let raw_track = _input.tracks[Int(i)]
+            CopyRaw(raw_track.translations, i, duration, &sorting_translations)
+            CopyRaw(raw_track.rotations, i, duration, &sorting_rotations)
+            CopyRaw(raw_track.scales, i, duration, &sorting_scales)
+            i += 1
+        }
+
+        while i < num_soa_tracks {
+            PushBackIdentityKey(i, 0.0, &sorting_translations)
+            PushBackIdentityKey(i, duration, &sorting_translations)
+
+            PushBackIdentityKey(i, 0.0, &sorting_rotations)
+            PushBackIdentityKey(i, duration, &sorting_rotations)
+
+            PushBackIdentityKey(i, 0.0, &sorting_scales)
+            PushBackIdentityKey(i, duration, &sorting_scales)
+        }
+
+        // Allocate animation members.
+        animation.Allocate(sorting_translations.count, sorting_rotations.count, sorting_scales.count)
+
+        // Copy sorted keys to final animation.
+        CopyToAnimation(&sorting_translations, &animation.translations_, inv_duration)
+        CopyToAnimation(&sorting_rotations, &animation.rotations_, inv_duration)
+        CopyToAnimation(&sorting_scales, &animation.scales_, inv_duration)
+
+        // Copy animation's name.
+        animation.name_ = _input.name
+
+        return animation  // Success.
     }
 }
 
-protocol SortingType {
+fileprivate protocol SortingType {
     associatedtype Key: KeyType
     var track: UInt16 { get set }
     var prev_key_time: Float { get set }
@@ -30,7 +103,7 @@ protocol SortingType {
     init(_ track: UInt16, _ prev_key_time: Float, _ key: Key)
 }
 
-struct SortingTranslationKey: SortingType {
+fileprivate struct SortingTranslationKey: SortingType {
     var track: UInt16
     var prev_key_time: Float
     var key: RawAnimation.TranslationKey
@@ -42,7 +115,7 @@ struct SortingTranslationKey: SortingType {
     }
 }
 
-struct SortingRotationKey: SortingType {
+fileprivate struct SortingRotationKey: SortingType {
     var track: UInt16
     var prev_key_time: Float
     var key: RawAnimation.RotationKey
@@ -54,7 +127,7 @@ struct SortingRotationKey: SortingType {
     }
 }
 
-struct SortingScaleKey: SortingType {
+fileprivate struct SortingScaleKey: SortingType {
     var track: UInt16
     var prev_key_time: Float
     var key: RawAnimation.ScaleKey
@@ -67,12 +140,12 @@ struct SortingScaleKey: SortingType {
 }
 
 // Keyframe sorting. Stores first by time and then track number.
-func SortingKeyLess<_Key: SortingType>(_ _left: _Key, _ _right: _Key) -> Bool {
+fileprivate func SortingKeyLess<_Key: SortingType>(_ _left: _Key, _ _right: _Key) -> Bool {
     let time_diff = _left.prev_key_time - _right.prev_key_time
     return time_diff < 0.0 || (time_diff == 0.0 && _left.track < _right.track)
 }
 
-func PushBackIdentityKey<_DestTrack: SortingType>(_ _track: UInt16, _ _time: Float, _ _dest: inout [_DestTrack]) {
+fileprivate func PushBackIdentityKey<_DestTrack: SortingType>(_ _track: UInt16, _ _time: Float, _ _dest: inout [_DestTrack]) {
     var prev_time: Float = -1.0
     if (!_dest.isEmpty && _dest.last!.track == _track) {
         prev_time = _dest.last!.key.time
@@ -83,8 +156,8 @@ func PushBackIdentityKey<_DestTrack: SortingType>(_ _track: UInt16, _ _time: Flo
 
 // Copies a track from a RawAnimation to an Animation.
 // Also fixes up the front (t = 0) and back keys (t = duration).
-func CopyRaw<_DestTrack: SortingType>(_ _src: [_DestTrack.Key], _ _track: UInt16,
-                                      _ _duration: Float, _ _dest: inout [_DestTrack]) {
+fileprivate func CopyRaw<_DestTrack: SortingType>(_ _src: [_DestTrack.Key], _ _track: UInt16,
+                                                  _ _duration: Float, _ _dest: inout [_DestTrack]) {
     if (_src.count == 0) {  // Adds 2 new keys.
         PushBackIdentityKey(_track, 0.0, &_dest)
         PushBackIdentityKey(_track, _duration, &_dest)
@@ -117,8 +190,8 @@ func CopyRaw<_DestTrack: SortingType>(_ _src: [_DestTrack.Key], _ _track: UInt16
     assert(_dest.first!.key.time == 0.0 && _dest.last!.key.time - _duration == 0.0)
 }
 
-func CopyToAnimation<_SortingKey: SortingType>(_ _src: inout [_SortingKey], _ _dest: inout ArraySlice<Float3Key>,
-                                               _ _inv_duration: Float) where _SortingKey.Key.T == VecFloat3 {
+fileprivate func CopyToAnimation<_SortingKey: SortingType>(_ _src: inout [_SortingKey], _ _dest: inout ArraySlice<Float3Key>,
+                                                           _ _inv_duration: Float) where _SortingKey.Key.T == VecFloat3 {
     let src_count = _src.count
     if (src_count == 0) {
         return
@@ -143,7 +216,7 @@ func CopyToAnimation<_SortingKey: SortingType>(_ _src: inout [_SortingKey], _ _d
 // property (x^2+y^2+z^2+w^2 = 1). Because the 3 components are the 3 smallest,
 // their value cannot be greater than sqrt(2)/2. Thus quantization quality is
 // improved by pre-multiplying each componenent by sqrt(2).
-func CompressQuat(_ _src: VecQuaternion, _ _dest: inout QuaternionKey) {
+fileprivate func CompressQuat(_ _src: VecQuaternion, _ _dest: inout QuaternionKey) {
     // Finds the largest quaternion component.
     let quat = [_src.x, _src.y, _src.z, _src.w]
     let largestEle = quat.max { _left, _right in
@@ -177,7 +250,8 @@ func CompressQuat(_ _src: VecQuaternion, _ _dest: inout QuaternionKey) {
 // Specialize for rotations in order to normalize quaternions.
 // Consecutive opposite quaternions are also fixed up in order to avoid checking
 // for the smallest path during the NLerp runtime algorithm.
-func CopyToAnimation(_ _src: inout [SortingRotationKey], _ _dest: inout ArraySlice<QuaternionKey>, _ _inv_duration: Float) {
+fileprivate func CopyToAnimation(_ _src: inout [SortingRotationKey],
+                                 _ _dest: inout ArraySlice<QuaternionKey>, _ _inv_duration: Float) {
     let src_count = _src.count
     if (src_count == 0) {
         return
