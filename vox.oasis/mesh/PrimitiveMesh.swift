@@ -60,7 +60,7 @@ class PrimitiveMesh {
         var offset = 0
         for i in 0..<rectangleCount {
             let x = i % segments
-            let y = Int(Float(i) * countReciprocal) | 0
+            let y = Int(Float(i) * segmentsReciprocal) | 0
 
             let a = y * count + x
             let b = a + 1
@@ -284,14 +284,14 @@ class PrimitiveMesh {
 
         for i in 0..<vertexCount {
             let x = i % horizontalCount
-            let y = Int(Float(i) * horizontalCountReciprocal) | 0
+            let z = Int(Float(i) * horizontalCountReciprocal) | 0
 
             // Position
-            positions[i] = Vector3(Float(x) * gridWidth - halfWidth, Float(y) * gridHeight - halfHeight, 0)
+            positions[i] = Vector3(Float(x) * gridWidth - halfWidth, 0, Float(z) * gridHeight - halfHeight)
             // Normal
-            normals[i] = Vector3(0, 0, 1)
+            normals[i] = Vector3(0, 1, 0)
             // Texcoord
-            uvs[i] = Vector2(Float(x) * horizontalSegmentsReciprocal, 1 - Float(y) * verticalSegmentsReciprocal)
+            uvs[i] = Vector2(Float(x) * horizontalSegmentsReciprocal, Float(z) * verticalSegmentsReciprocal)
         }
 
         var offset = 0
@@ -304,23 +304,23 @@ class PrimitiveMesh {
             let c = a + horizontalCount
             let d = c + 1
 
-            indices[offset] = UInt32(b)
+            indices[offset] = UInt32(a)
             offset += 1
             indices[offset] = UInt32(c)
             offset += 1
-            indices[offset] = UInt32(a)
-            offset += 1
             indices[offset] = UInt32(b)
+            offset += 1
+            indices[offset] = UInt32(c)
             offset += 1
             indices[offset] = UInt32(d)
             offset += 1
-            indices[offset] = UInt32(c)
+            indices[offset] = UInt32(b)
             offset += 1
         }
 
         let bounds = mesh.bounds
-        _ = bounds.min.setValue(x: -halfWidth, y: -halfHeight, z: 0)
-        _ = bounds.max.setValue(x: halfWidth, y: halfHeight, z: 0)
+        _ = bounds.min.setValue(x: -halfWidth, y: 0, z: -halfHeight)
+        _ = bounds.max.setValue(x: halfWidth, y: 0, z: halfHeight)
 
         PrimitiveMesh._initialize(engine, mesh, positions, normals, uvs, indices, noLongerAccessible)
         return mesh
@@ -371,7 +371,9 @@ class PrimitiveMesh {
         // Create torso
         let thetaStart = Float.pi
         let thetaRange = Float.pi * 2
-        let slope = (radiusBottom - radiusTop) / height
+        let radiusDiff = radiusBottom - radiusTop
+        let slope = radiusDiff / height
+        let radiusSlope = radiusDiff / Float(heightSegments)
 
         for i in 0..<torsoVertexCount {
             let x = i % radialCount
@@ -381,7 +383,7 @@ class PrimitiveMesh {
             let theta = thetaStart + u * thetaRange
             let sinTheta = sin(theta)
             let cosTheta = cos(theta)
-            let radius = radiusBottom - Float(y) * (radiusBottom - radiusTop)
+            let radius = radiusBottom - Float(y) * radiusSlope
 
             let posX = radius * sinTheta
             let posY = Float(y) * unitHeight - halfHeight
@@ -719,6 +721,191 @@ class PrimitiveMesh {
 
         PrimitiveMesh._initialize(engine, mesh, positions, normals, uvs, indices, noLongerAccessible)
         return mesh
+    }
+
+    /// Create a capsule mesh.
+    /// - Parameters:
+    ///   - engine: Engine
+    ///   - radius: The radius of the two hemispherical ends
+    ///   - height: The height of the cylindrical part, measured between the centers of the hemispherical ends
+    ///   - radialSegments: Hemispherical end radial segments
+    ///   - heightSegments: Cylindrical part height segments
+    ///   - noLongerAccessible: No longer access the vertices of the mesh after creation
+    /// - Returns: Capsule model mesh
+    static func createCapsule(_ engine: Engine,
+                              _ radius: Float = 0.5,
+                              _ height: Float = 2,
+                              _ radialSegments: Int = 6,
+                              _ heightSegments: Int = 1,
+                              _ noLongerAccessible: Bool = true) -> ModelMesh {
+        let mesh = ModelMesh(engine)
+
+        let radialSegments = max(2, radialSegments)
+
+        let radialCount = radialSegments + 1
+        let verticalCount = heightSegments + 1
+        let halfHeight = height * 0.5
+        let unitHeight = height / Float(heightSegments)
+        let torsoVertexCount = radialCount * verticalCount
+        let torsoRectangleCount = radialSegments * heightSegments
+
+        let capVertexCount = radialCount * radialCount
+        let capRectangleCount = radialSegments * radialSegments
+
+        let totalVertexCount = torsoVertexCount + 2 * capVertexCount
+        var indices = PrimitiveMesh._generateIndices(
+                engine,
+                totalVertexCount,
+                (torsoRectangleCount + 2 * capRectangleCount) * 6
+        )
+
+        let radialCountReciprocal = 1.0 / Float(radialCount)
+        let radialSegmentsReciprocal = 1.0 / Float(radialSegments)
+        let heightSegmentsReciprocal = 1.0 / Float(heightSegments)
+
+        let halfPI = Float.pi / 2
+        let doublePI = Float.pi * 2
+
+        var positions = [Vector3](repeating: Vector3(), count: totalVertexCount)
+        var normals = [Vector3](repeating: Vector3(), count: totalVertexCount)
+        var uvs = [Vector2](repeating: Vector2(), count: totalVertexCount)
+
+        var indicesOffset = 0
+
+        // create torso
+        for i in 0..<torsoVertexCount {
+            let x = i % radialCount
+            let y = Int(Float(i) * radialCountReciprocal) | 0
+            let u = Float(x) * radialSegmentsReciprocal
+            let v = Float(y) * heightSegmentsReciprocal
+            let theta = -halfPI + u * doublePI
+            let sinTheta = sin(theta)
+            let cosTheta = cos(theta)
+
+            positions[i] = Vector3(radius * sinTheta, Float(y) * unitHeight - halfHeight, radius * cosTheta)
+            normals[i] = Vector3(sinTheta, 0, cosTheta)
+            uvs[i] = Vector2(u, 1 - v)
+        }
+
+        for i in 0..<torsoRectangleCount {
+            let x = i % radialSegments
+            let y = Int(Float(i) * radialSegmentsReciprocal) | 0
+
+            let a = y * radialCount + x
+            let b = a + 1
+            let c = a + radialCount
+            let d = c + 1
+
+            indices[indicesOffset] = UInt32(b)
+            indicesOffset += 1
+            indices[indicesOffset] = UInt32(c)
+            indicesOffset += 1
+            indices[indicesOffset] = UInt32(a)
+            indicesOffset += 1
+            indices[indicesOffset] = UInt32(b)
+            indicesOffset += 1
+            indices[indicesOffset] = UInt32(d)
+            indicesOffset += 1
+            indices[indicesOffset] = UInt32(c)
+            indicesOffset += 1
+        }
+
+        PrimitiveMesh._createCapsuleCap(
+                radius,
+                height,
+                radialSegments,
+                doublePI,
+                torsoVertexCount,
+                1,
+                &positions,
+                &normals,
+                &uvs,
+                &indices,
+                &indicesOffset
+        )
+
+        indicesOffset += 6 * capRectangleCount
+        PrimitiveMesh._createCapsuleCap(
+                radius,
+                height,
+                radialSegments,
+                -doublePI,
+                torsoVertexCount + capVertexCount,
+                -1,
+                &positions,
+                &normals,
+                &uvs,
+                &indices,
+                &indicesOffset
+        )
+
+        let bounds = mesh.bounds
+        _ = bounds.min.setValue(x: -radius, y: -radius - halfHeight, z: -radius)
+        _ = bounds.max.setValue(x: radius, y: radius + halfHeight, z: radius)
+
+        PrimitiveMesh._initialize(engine, mesh, positions, normals, uvs, indices, noLongerAccessible)
+        return mesh
+    }
+
+    private static func _createCapsuleCap(_ radius: Float,
+                                          _ height: Float,
+                                          _ radialSegments: Int,
+                                          _ capAlphaRange: Float,
+                                          _ offset: Int,
+                                          _ posIndex: Int,
+                                          _ positions: inout [Vector3],
+                                          _ normals: inout [Vector3],
+                                          _ uvs: inout [Vector2],
+                                          _ indices: inout [UInt32],
+                                          _ indicesOffset: inout Int) {
+        let radialCount = radialSegments + 1
+        let halfHeight = height * 0.5
+        let capVertexCount = radialCount * radialCount
+        let capRectangleCount = radialSegments * radialSegments
+        let radialCountReciprocal = 1.0 / Float(radialCount)
+        let radialSegmentsReciprocal = 1.0 / Float(radialSegments)
+
+        for i in 0..<capVertexCount {
+            let x = i % radialCount
+            let y = Int(Float(i) * radialCountReciprocal) | 0
+            let u = Float(x) * radialSegmentsReciprocal
+            let v = Float(y) * radialSegmentsReciprocal
+            let alphaDelta = u * capAlphaRange
+            let thetaDelta = (v * Float.pi) / 2
+            let sinTheta = sin(thetaDelta)
+
+            let posX = -radius * cos(alphaDelta) * sinTheta
+            let posY = (radius * cos(thetaDelta) + halfHeight) * Float(posIndex)
+            let posZ = radius * sin(alphaDelta) * sinTheta
+
+            let index = i + offset
+            positions[index] = Vector3(posX, posY, posZ)
+            normals[index] = Vector3(posX, posY, posZ)
+            uvs[index] = Vector2(u, v)
+        }
+
+        for i in 0..<capRectangleCount {
+            let x = i % radialSegments
+            let y = Int(Float(i) * radialSegmentsReciprocal) | 0
+
+            let a = y * radialCount + x + offset
+            let b = a + 1
+            let c = a + radialCount
+            let d = c + 1
+
+            indices[indicesOffset] = UInt32(b)
+            indicesOffset += 1
+            indices[indicesOffset] = UInt32(a)
+            indicesOffset += 1
+            indices[indicesOffset] = UInt32(d)
+            indicesOffset += 1
+            indices[indicesOffset] = UInt32(a)
+            indicesOffset += 1
+            indices[indicesOffset] = UInt32(c)
+            indicesOffset += 1
+            indices[indicesOffset] = UInt32(d)
+            indicesOffset += 1
+        }
     }
 }
 

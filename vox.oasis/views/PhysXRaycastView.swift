@@ -10,13 +10,61 @@ import SwiftUI
 struct PhysXRaycastView: View {
     let canvas: Canvas
     let engine: Engine
+    let rootEntity: Entity
+
+    func addPlane(_ size: Vector3, _ position: Vector3, _ rotation: Quaternion) -> Entity {
+        let mtl = BlinnPhongMaterial(engine)
+        _ = mtl.baseColor.setValue(r: 0.03179807202597362, g: 0.3939682161541871, b: 0.41177952549087604, a: 1.0)
+        let planeEntity = rootEntity.createChild()
+        planeEntity.layer = Layer.Layer1
+
+        let renderer: MeshRenderer = planeEntity.addComponent()
+        renderer.mesh = PrimitiveMesh.createCuboid(engine, size.x, size.y, size.z)
+        renderer.setMaterial(mtl)
+        planeEntity.transform.position = position
+        planeEntity.transform.rotationQuaternion = rotation
+
+        let physicsPlane = PlaneColliderShape()
+        let planeCollider: StaticCollider = planeEntity.addComponent()
+        planeCollider.addShape(physicsPlane)
+
+        return planeEntity
+    }
+
+    func addBox(_ size: Vector3, _ position: Vector3, _ rotation: Quaternion) -> Entity {
+        let mtl = BlinnPhongMaterial(engine)
+        let color = mtl.baseColor
+        color.r = Float.random(in: 0..<1)
+        color.g = Float.random(in: 0..<1)
+        color.b = Float.random(in: 0..<1)
+        color.a = 1.0
+        let boxEntity = rootEntity.createChild()
+        let renderer: MeshRenderer = boxEntity.addComponent()
+
+        renderer.mesh = PrimitiveMesh.createCuboid(engine, size.x, size.y, size.z)
+        renderer.setMaterial(mtl)
+        boxEntity.transform.position = position
+        boxEntity.transform.rotationQuaternion = rotation
+
+        let physicsBox = BoxColliderShape()
+        physicsBox.size = size
+        physicsBox.material.staticFriction = 1
+        physicsBox.material.dynamicFriction = 2
+        physicsBox.material.bounciness = 0.1
+        physicsBox.isTrigger = false
+
+        let boxCollider: StaticCollider = boxEntity.addComponent()
+        boxCollider.addShape(physicsBox)
+
+        return boxEntity
+    }
 
     init() {
         canvas = Canvas()
         PhysXPhysics.initialization()
         engine = Engine(canvas, MetalRenderer(), physics: PhysXPhysics.self)
         let scene = engine.sceneManager.activeScene
-        let rootEntity = scene!.createRootEntity()
+        rootEntity = scene!.createRootEntity()
 
         _ = scene!.ambientLight.diffuseSolidColor.setValue(x: 1, y: 1, z: 1)
 
@@ -31,6 +79,7 @@ struct PhysXRaycastView: View {
         light.transform.setPosition(x: 0, y: 3, z: 0)
         let pointLight: PointLight = light.addComponent()
         pointLight.intensity = 0.3
+
 
         // create box test entity
         let cubeSize: Float = 2.0
