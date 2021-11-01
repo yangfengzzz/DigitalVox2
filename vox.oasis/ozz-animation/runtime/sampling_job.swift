@@ -71,12 +71,18 @@ struct SamplingJob {
     var output: ArraySlice<SoaTransform>
 }
 
-internal struct InterpSoaFloat3 {
+protocol InterpSoaType {
+    associatedtype T
+    var ratio: (SimdFloat4, SimdFloat4) { get set }
+    var value: (T, T) { get set }
+}
+
+internal struct InterpSoaFloat3: InterpSoaType {
     var ratio: (SimdFloat4, SimdFloat4)
     var value: (SoaFloat3, SoaFloat3)
 }
 
-internal struct InterpSoaQuaternion {
+internal struct InterpSoaQuaternion: InterpSoaType {
     var ratio: (SimdFloat4, SimdFloat4)
     var value: (SoaQuaternion, SoaQuaternion)
 }
@@ -334,5 +340,44 @@ func Interpolates(_anim_ratio: Float, _num_soa_tracks: Int,
         _output[i].translation = Lerp(_translations[i].value.0, _translations[i].value.1, interp_t_ratio)
         _output[i].rotation = NLerpEst(_rotations[i].value.0, _rotations[i].value.1, interp_r_ratio)
         _output[i].scale = Lerp(_scales[i].value.0, _scales[i].value.1, interp_s_ratio)
+    }
+}
+
+func UpdateInterpKeyframes<_Key: KeyframeType, _InterpKey: InterpSoaType>(_num_soa_tracks: Int,
+                                                                          _keys: ArraySlice<_Key>,
+                                                                          _interp: ArraySlice<Int>, _outdated: inout [UInt8],
+                                                                          _interp_keys: inout [_InterpKey],
+                                                                          _decompress: (_Key, _Key, _Key, _Key,
+                                                                                        inout _InterpKey.T) -> Void) {
+    let num_outdated_flags = (_num_soa_tracks + 7) / 8
+    for j in 0..<num_outdated_flags {
+        var outdated = _outdated[j]
+        _outdated[j] = 0  // Reset outdated entries as all will be processed.
+        var i = j * 8
+        while outdated != 0 {
+            if ((outdated & 1) == 0) {
+                continue
+            }
+            let base = i * 4 * 2  // * soa size * 2 keys
+
+            // Decompress left side keyframes and store them in soa structures.
+            let k00 = _keys[_interp[base + 0]]
+            let k10 = _keys[_interp[base + 2]]
+            let k20 = _keys[_interp[base + 4]]
+            let k30 = _keys[_interp[base + 6]]
+            _interp_keys[i].ratio.0 = OZZFloat4.load(with: k00.ratio, k10.ratio, k20.ratio, k30.ratio)
+            _decompress(k00, k10, k20, k30, &_interp_keys[i].value.0)
+
+            // Decompress right side keyframes and store them in soa structures.
+            let k01 = _keys[_interp[base + 1]]
+            let k11 = _keys[_interp[base + 3]]
+            let k21 = _keys[_interp[base + 5]]
+            let k31 = _keys[_interp[base + 7]]
+            _interp_keys[i].ratio.1 = OZZFloat4.load(with: k01.ratio, k11.ratio, k21.ratio, k31.ratio)
+            _decompress(k01, k11, k21, k31, &_interp_keys[i].value.1)
+
+            i += 1
+            outdated >>= 1
+        }
     }
 }
