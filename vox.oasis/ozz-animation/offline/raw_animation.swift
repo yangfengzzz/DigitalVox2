@@ -12,6 +12,8 @@ protocol KeyType {
     var time: Float { get set }
     var value: T { get set }
 
+    init(_ time: Float, _ value: T)
+
     static func identity() -> T
 }
 
@@ -41,9 +43,14 @@ struct RawAnimation {
         // Key frame value.
         var value: VecFloat3
 
+        init(_ time: Float, _ value: VecFloat3) {
+            self.time = time
+            self.value = value
+        }
+
         // Provides identity transformation for a translation key.
         static func identity() -> VecFloat3 {
-            return VecFloat3.zero()
+            VecFloat3.zero()
         }
     }
 
@@ -55,9 +62,14 @@ struct RawAnimation {
         // Key frame value.
         var value: VecQuaternion
 
+        init(_ time: Float, _ value: VecQuaternion) {
+            self.time = time
+            self.value = value
+        }
+
         // Provides identity transformation for a rotation key.
         static func identity() -> VecQuaternion {
-            return VecQuaternion.identity()
+            VecQuaternion.identity()
         }
     }
 
@@ -69,9 +81,14 @@ struct RawAnimation {
         // Key frame value.
         var value: VecFloat3
 
+        init(_ time: Float, _ value: VecFloat3) {
+            self.time = time
+            self.value = value
+        }
+
         // Provides identity transformation for a scale key.
         static func identity() -> VecFloat3 {
-            return VecFloat3.one()
+            VecFloat3.one()
         }
     }
 
@@ -86,7 +103,7 @@ struct RawAnimation {
         // Use an infinite value for _duration if unknown. This will validate
         // keyframe orders, but not maximum duration.
         func Validate(_ _duration: Float) -> Bool {
-            return ValidateTrack(translations, _duration) &&
+            ValidateTrack(translations, _duration) &&
                     ValidateTrack(rotations, _duration) &&
                     ValidateTrack(scales, _duration)
         }
@@ -105,7 +122,7 @@ struct RawAnimation {
 
     // Returns the number of tracks of this animation.
     func num_tracks() -> Int {
-        return tracks.count
+        tracks.count
     }
 
     // Tests for *this validity.
