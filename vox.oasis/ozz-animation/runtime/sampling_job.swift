@@ -17,16 +17,28 @@ import Foundation
 // the cache. The job does not owned the buffers (in/output) and will thus not
 // delete them during job's destruction.
 struct SamplingJob {
-    // Default constructor, initializes default values.
-    init() {
-        fatalError()
-    }
-
     // Validates job parameters. Returns true for a valid job, or false otherwise:
     // -if any input pointer is nullptr
     // -if output range is invalid.
     func Validate() -> Bool {
-        fatalError()
+        // Don't need any early out, as jobs are valid in most of the performance
+        // critical cases.
+        // Tests are written in multiple lines in order to avoid branches.
+        var valid = true
+
+        // Test for nullptr pointers.
+        if (animation == nil || cache == nil) {
+            return false
+        }
+        valid = valid && !output.isEmpty
+
+        let num_soa_tracks = animation!.num_soa_tracks()
+        valid = valid && output.count >= num_soa_tracks
+
+        // Tests cache size.
+        valid = valid && cache!.max_soa_tracks() >= num_soa_tracks
+
+        return valid
     }
 
     // Runs job's sampling task.
@@ -42,13 +54,13 @@ struct SamplingJob {
     // current time in the animation , divided by animation duration.
     // This ratio is clamped before job execution in order to resolves any
     // approximation issue on range bounds.
-    var ratio: Float
+    var ratio: Float = 0.0
 
     // The animation to sample.
-    var animation: Animation
+    var animation: Animation?
 
     // A cache object that must be big enough to sample *this animation.
-    var cache: SamplingCache
+    var cache: SamplingCache?
 
     // Job output.
     // The output range to be filled with sampled joints during job execution.
