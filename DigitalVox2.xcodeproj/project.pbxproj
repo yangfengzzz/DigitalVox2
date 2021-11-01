@@ -366,6 +366,8 @@
 		04AFFD34272F839E005C2835 /* animation_optimizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFFD33272F839E005C2835 /* animation_optimizer.swift */; };
 		04AFFD36272F847B005C2835 /* raw_track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFFD35272F847B005C2835 /* raw_track.swift */; };
 		04AFFD38272F880C005C2835 /* track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFFD37272F880C005C2835 /* track.swift */; };
+		04AFFD3A272F96EF005C2835 /* track_builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFFD39272F96EF005C2835 /* track_builder.swift */; };
+		04AFFD3C272F9799005C2835 /* track_sampling_job.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFFD3B272F9799005C2835 /* track_sampling_job.swift */; };
 		04EA0D6A26E0F9AD00CA7833 /* math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6926E0F9AD00CA7833 /* math.swift */; };
 		04EA0D6C26E1204200CA7833 /* bbox2f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6B26E1204200CA7833 /* bbox2f.swift */; };
 		04EA0D6E26E1204F00CA7833 /* bbox3f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6D26E1204F00CA7833 /* bbox3f.swift */; };
@@ -847,6 +849,8 @@
 		04AFFD33272F839E005C2835 /* animation_optimizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = animation_optimizer.swift; sourceTree = "<group>"; };
 		04AFFD35272F847B005C2835 /* raw_track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = raw_track.swift; sourceTree = "<group>"; };
 		04AFFD37272F880C005C2835 /* track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = track.swift; sourceTree = "<group>"; };
+		04AFFD39272F96EF005C2835 /* track_builder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = track_builder.swift; sourceTree = "<group>"; };
+		04AFFD3B272F9799005C2835 /* track_sampling_job.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = track_sampling_job.swift; sourceTree = "<group>"; };
 		04DB2A4126DF1E0500C15850 /* IClone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IClone.swift; sourceTree = "<group>"; };
 		04DBA7D92700B32D00C3B97C /* EngineFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineFeature.swift; sourceTree = "<group>"; };
 		04DBA7DB2700B3C900C3B97C /* SceneFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneFeature.swift; sourceTree = "<group>"; };
@@ -1786,6 +1790,7 @@
 				04AFFD31272F8306005C2835 /* additive_animation_builder.swift */,
 				04AFFD33272F839E005C2835 /* animation_optimizer.swift */,
 				04AFFD35272F847B005C2835 /* raw_track.swift */,
+				04AFFD39272F96EF005C2835 /* track_builder.swift */,
 			);
 			path = offline;
 			sourceTree = "<group>";
@@ -1800,6 +1805,7 @@
 				04AFFD2B272F6FBD005C2835 /* animation_utils.swift */,
 				04AFFD2F272F801F005C2835 /* sampling_job.swift */,
 				04AFFD37272F880C005C2835 /* track.swift */,
+				04AFFD3B272F9799005C2835 /* track_sampling_job.swift */,
 			);
 			path = runtime;
 			sourceTree = "<group>";
@@ -2360,6 +2366,7 @@
 				041BAEBD272A5166006268D5 /* LiteBoxColliderShape.swift in Sources */,
 				041BAE72272A5117006268D5 /* ShadowFeature.swift in Sources */,
 				045D2C00272CFC9F0091636B /* AnimatorState.swift in Sources */,
+				04AFFD3A272F96EF005C2835 /* track_builder.swift in Sources */,
 				0498DD54272E4B1B0089B2CE /* soa_float4x4.swift in Sources */,
 				041BAE57272A5100006268D5 /* RenderContext.swift in Sources */,
 				041BAEBA272A5166006268D5 /* LiteStaticCollider.swift in Sources */,
@@ -2448,6 +2455,7 @@
 				041BAE73272A5117006268D5 /* LightShadow.swift in Sources */,
 				041BAE15272A500F006268D5 /* UpdateFlagManager.swift in Sources */,
 				041BAE9F272A5141006268D5 /* BoxColliderShape.swift in Sources */,
+				04AFFD3C272F9799005C2835 /* track_sampling_job.swift in Sources */,
 				041BAE4F272A50FB006268D5 /* Material.swift in Sources */,
 				045D2C02272CFF120091636B /* AnimatorStateMachine.swift in Sources */,
 				041BAE9B272A5141006268D5 /* ColliderShape.swift in Sources */,
