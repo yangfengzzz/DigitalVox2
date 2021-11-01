@@ -17,6 +17,6 @@ class PhysXStaticCollider: PhysXCollider, IStaticCollider {
     init(_ position: Vector3, _ rotation: Quaternion) {
         super.init()
         _pxActor = PhysXPhysics._pxPhysics.createRigidStatic(withPosition: position.elements,
-                rotation: rotation.elements)
+                rotation: rotation.normalize().elements)
     }
 }

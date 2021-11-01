@@ -33,11 +33,7 @@ struct PhysXRaycastView: View {
 
     func addBox(_ size: Vector3, _ position: Vector3, _ rotation: Quaternion) -> Entity {
         let mtl = BlinnPhongMaterial(engine)
-        let color = mtl.baseColor
-        color.r = Float.random(in: 0..<1)
-        color.g = Float.random(in: 0..<1)
-        color.b = Float.random(in: 0..<1)
-        color.a = 1.0
+        _ = mtl.baseColor.setValue(r: Float.random(in: 0..<1), g: Float.random(in: 0..<1), b: Float.random(in: 0..<1), a: 1.0)
         let boxEntity = rootEntity.createChild()
         let renderer: MeshRenderer = boxEntity.addComponent()
 
@@ -57,6 +53,51 @@ struct PhysXRaycastView: View {
         boxCollider.addShape(physicsBox)
 
         return boxEntity
+    }
+
+    func addSphere(radius: Float, position: Vector3, rotation: Quaternion) -> Entity {
+        let mtl = BlinnPhongMaterial(engine)
+        _ = mtl.baseColor.setValue(r: Float.random(in: 0..<1), g: Float.random(in: 0..<1), b: Float.random(in: 0..<1), a: 1.0)
+        let sphereEntity = rootEntity.createChild()
+        let renderer: MeshRenderer = sphereEntity.addComponent()
+
+        renderer.mesh = PrimitiveMesh.createSphere(engine, radius)
+        renderer.setMaterial(mtl)
+        sphereEntity.transform.position = position
+        sphereEntity.transform.rotationQuaternion = rotation
+
+        let physicsSphere = SphereColliderShape()
+        physicsSphere.radius = radius
+        physicsSphere.material.staticFriction = 0.1
+        physicsSphere.material.dynamicFriction = 0.2
+        physicsSphere.material.bounciness = 1
+        physicsSphere.material.bounceCombine = PhysicsMaterialCombineMode.Minimum
+
+        let sphereCollider: StaticCollider = sphereEntity.addComponent()
+        sphereCollider.addShape(physicsSphere)
+
+        return sphereEntity
+    }
+
+    func addCapsule(radius: Float, height: Float, position: Vector3, rotation: Quaternion) -> Entity {
+        let mtl = BlinnPhongMaterial(engine)
+        _ = mtl.baseColor.setValue(r: Float.random(in: 0..<1), g: Float.random(in: 0..<1), b: Float.random(in: 0..<1), a: 1.0)
+        let capsuleEntity = rootEntity.createChild()
+        let renderer: MeshRenderer = capsuleEntity.addComponent()
+
+        renderer.mesh = PrimitiveMesh.createCapsule(engine, radius, height)
+        renderer.setMaterial(mtl)
+        capsuleEntity.transform.position = position
+        capsuleEntity.transform.rotationQuaternion = rotation
+
+        let physicsCapsule = CapsuleColliderShape()
+        physicsCapsule.radius = radius
+        physicsCapsule.height = height
+
+        let capsuleCollider: StaticCollider = capsuleEntity.addComponent()
+        capsuleCollider.addShape(physicsCapsule)
+
+        return capsuleEntity
     }
 
     init() {
@@ -81,85 +122,16 @@ struct PhysXRaycastView: View {
         pointLight.intensity = 0.3
 
 
-        // create box test entity
-        let cubeSize: Float = 2.0
-        let boxEntity = rootEntity.createChild("BoxEntity")
-
-        let boxMtl = BlinnPhongMaterial(engine)
-        let boxRenderer: MeshRenderer = boxEntity.addComponent()
-        _ = boxMtl.baseColor.setValue(r: 0.8, g: 0.3, b: 0.3, a: 1.0)
-        boxRenderer.mesh = PrimitiveMesh.createCuboid(engine, cubeSize, cubeSize, cubeSize)
-        boxRenderer.setMaterial(boxMtl)
-
-        let boxCollider: StaticCollider = boxEntity.addComponent()
-        let boxColliderShape = BoxColliderShape()
-        boxColliderShape.setSize(cubeSize, cubeSize, cubeSize)
-        boxCollider.addShape(boxColliderShape)
-
-        // create sphere test entity
-        let radius: Float = 1.25
-        let sphereEntity = rootEntity.createChild("SphereEntity")
-        sphereEntity.transform.setPosition(x: -5, y: 0, z: 0)
-
-        let sphereMtl = BlinnPhongMaterial(engine)
-        let sphereRenderer: MeshRenderer = sphereEntity.addComponent()
-        _ = sphereMtl.baseColor.setValue(
-                r: Float.random(in: 0..<1),
-                g: Float.random(in: 0..<1),
-                b: Float.random(in: 0..<1), a: 1.0)
-        sphereRenderer.mesh = PrimitiveMesh.createSphere(engine, radius)
-        sphereRenderer.setMaterial(sphereMtl)
-
-        let sphereCollider: DynamicCollider = sphereEntity.addComponent()
-        let sphereColliderShape = SphereColliderShape()
-        sphereColliderShape.radius = radius
-        sphereColliderShape.isTrigger = true
-        sphereCollider.addShape(sphereColliderShape)
-
-        class MoveScript: Script {
-            var pos: Vector3 = Vector3(-5, 0, 0)
-            var vel: Float = 4
-            var velSign: Int = -1
-
-            override func onUpdate(_ deltaTime: Float) {
-                super.onUpdate(deltaTime)
-                if (pos.x >= 5) {
-                    velSign = -1
-                }
-                if (pos.x <= -5) {
-                    velSign = 1
-                }
-                pos.x += deltaTime * vel * Float(velSign)
-
-                entity.transform.position = pos
+        _ = addPlane(Vector3(30, 0.1, 30), Vector3(), Quaternion())
+        for i in 0..<5 {
+            let i = Float(i)
+            for j in 0..<5 {
+                let j = Float(j)
+                _ = addBox(Vector3(1, 1, 1),
+                        Vector3(-2.5 + i + 0.1 * i, floor(Float.random(in: 0..<1) * 6) + 1, -2.5 + j + 0.1 * j),
+                        Quaternion(0, 0, 0.3, 0.7))
             }
         }
-
-        // Collision Detection
-        class CollisionScript: Script {
-            var sphereRenderer: MeshRenderer?
-
-            override func onTriggerExit(_ other: ColliderShape) {
-                _ = (sphereRenderer!.getMaterial() as! BlinnPhongMaterial).baseColor.setValue(
-                        r: Float.random(in: 0..<1),
-                        g: Float.random(in: 0..<1),
-                        b: Float.random(in: 0..<1), a: 1.0)
-            }
-
-            override func onTriggerStay(_ other: ColliderShape) {
-            }
-
-            override func onTriggerEnter(_ other: ColliderShape) {
-                _ = (sphereRenderer!.getMaterial() as! BlinnPhongMaterial).baseColor.setValue(
-                        r: Float.random(in: 0..<1),
-                        g: Float.random(in: 0..<1),
-                        b: Float.random(in: 0..<1), a: 1.0)
-            }
-        }
-
-        let collisionScript: CollisionScript = sphereEntity.addComponent()
-        collisionScript.sphereRenderer = sphereRenderer
-        let _: MoveScript = sphereEntity.addComponent()
     }
 
     var body: some View {

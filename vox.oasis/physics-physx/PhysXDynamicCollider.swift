@@ -58,7 +58,7 @@ class PhysXDynamicCollider: PhysXCollider, IDynamicCollider {
     init(_ position: Vector3, _ rotation: Quaternion) {
         super.init();
         _pxActor = PhysXPhysics._pxPhysics.createRigidDynamic(withPosition: position.elements,
-                                                              rotation: rotation.elements);
+                                                              rotation: rotation.normalize().elements);
     }
     
     func addForce(_ force: Vector3) {

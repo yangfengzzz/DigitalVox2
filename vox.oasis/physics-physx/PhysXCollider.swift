@@ -24,6 +24,6 @@ class PhysXCollider: ICollider {
     }
 
     func getWorldTransform(_ outPosition: Vector3, _ outRotation: Quaternion) {
-        _pxActor.getGlobalPose(&outPosition.elements, rotation: &outRotation.elements);
+        _pxActor.getGlobalPose(&outPosition.elements, rotation: &outRotation.normalize().elements);
     }
 }
