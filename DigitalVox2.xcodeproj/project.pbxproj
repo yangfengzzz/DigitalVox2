@@ -364,6 +364,7 @@
 		04AFFD30272F801F005C2835 /* sampling_job.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFFD2F272F801F005C2835 /* sampling_job.swift */; };
 		04AFFD32272F8306005C2835 /* additive_animation_builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFFD31272F8306005C2835 /* additive_animation_builder.swift */; };
 		04AFFD34272F839E005C2835 /* animation_optimizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFFD33272F839E005C2835 /* animation_optimizer.swift */; };
+		04AFFD36272F847B005C2835 /* raw_track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFFD35272F847B005C2835 /* raw_track.swift */; };
 		04EA0D6A26E0F9AD00CA7833 /* math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6926E0F9AD00CA7833 /* math.swift */; };
 		04EA0D6C26E1204200CA7833 /* bbox2f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6B26E1204200CA7833 /* bbox2f.swift */; };
 		04EA0D6E26E1204F00CA7833 /* bbox3f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6D26E1204F00CA7833 /* bbox3f.swift */; };
@@ -843,6 +844,7 @@
 		04AFFD2F272F801F005C2835 /* sampling_job.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sampling_job.swift; sourceTree = "<group>"; };
 		04AFFD31272F8306005C2835 /* additive_animation_builder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = additive_animation_builder.swift; sourceTree = "<group>"; };
 		04AFFD33272F839E005C2835 /* animation_optimizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = animation_optimizer.swift; sourceTree = "<group>"; };
+		04AFFD35272F847B005C2835 /* raw_track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = raw_track.swift; sourceTree = "<group>"; };
 		04DB2A4126DF1E0500C15850 /* IClone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IClone.swift; sourceTree = "<group>"; };
 		04DBA7D92700B32D00C3B97C /* EngineFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineFeature.swift; sourceTree = "<group>"; };
 		04DBA7DB2700B3C900C3B97C /* SceneFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneFeature.swift; sourceTree = "<group>"; };
@@ -1781,6 +1783,7 @@
 				04AFFD2D272F71A9005C2835 /* animation_builder.swift */,
 				04AFFD31272F8306005C2835 /* additive_animation_builder.swift */,
 				04AFFD33272F839E005C2835 /* animation_optimizer.swift */,
+				04AFFD35272F847B005C2835 /* raw_track.swift */,
 			);
 			path = offline;
 			sourceTree = "<group>";
@@ -2327,6 +2330,7 @@
 				041BAE0F272A500F006268D5 /* Script.swift in Sources */,
 				041BAE32272A50E6006268D5 /* Quaternion.swift in Sources */,
 				045D2BF8272CD5BF0091636B /* AnimatorStatePlayData.swift in Sources */,
+				04AFFD36272F847B005C2835 /* raw_track.swift in Sources */,
 				041BAE3F272A50ED006268D5 /* BufferMesh.swift in Sources */,
 				045D2C06272D0A9F0091636B /* AnimatorController.swift in Sources */,
 				045D2BEA272CCDB80091636B /* AnimationClip.swift in Sources */,
