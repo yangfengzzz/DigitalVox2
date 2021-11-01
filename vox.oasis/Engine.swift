@@ -224,7 +224,7 @@ final class Engine: NSObject {
 
 extension Engine: MTKViewDelegate {
     func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
-        _sceneManager._activeScene?._activeCameras.first?.aspectRatio = Float(view.bounds.width) / Float(view.bounds.height)
+        _sceneManager._activeScene?._activeCameras.first?.aspectRatio = Float(size.width) / Float(size.height)
     }
 
     func draw(in view: MTKView) {

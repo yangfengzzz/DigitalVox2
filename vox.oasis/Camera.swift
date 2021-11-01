@@ -117,7 +117,7 @@ class Camera: Component {
     var aspectRatio: Float {
         get {
             let canvas = _entity.engine.canvas
-            return _customAspectRatio ?? (Float(canvas.bounds.width) * _viewport.z) / (Float(canvas.bounds.height) * _viewport.w)
+            return _customAspectRatio ?? (Float(canvas.bounds.size.width) * _viewport.z) / (Float(canvas.bounds.size.height) * _viewport.w)
         }
         set {
             _customAspectRatio = newValue
@@ -181,14 +181,14 @@ class Camera: Component {
             let canvas = _entity.engine.canvas
             if (
                        (!_isProjectionDirty || _isProjMatSetting) &&
-                               _lastAspectSize.x == Float(canvas.bounds.width) &&
-                               _lastAspectSize.y == Float(canvas.bounds.height)
+                       _lastAspectSize.x == Float(canvas.bounds.size.width) &&
+                               _lastAspectSize.y == Float(canvas.bounds.size.height)
                ) {
                 return _projectionMatrix
             }
             _isProjectionDirty = false
-            _lastAspectSize.x = Float(canvas.bounds.width)
-            _lastAspectSize.y = Float(canvas.bounds.height)
+            _lastAspectSize.x = Float(canvas.bounds.size.width)
+            _lastAspectSize.y = Float(canvas.bounds.size.height)
             let aspectRatio = aspectRatio
             if (!_isOrthographic) {
                 Matrix.perspective(
@@ -338,16 +338,16 @@ extension Camera {
     func screenToViewportPoint(_ point: Vector2, _ out: Vector2) -> Vector2 {
         let canvas = engine.canvas
         let viewport = viewport
-        out.x = (point.x / Float(canvas.bounds.width) - viewport.x) / viewport.z
-        out.y = (point.y / Float(canvas.bounds.height) - viewport.y) / viewport.w
+        out.x = (point.x / Float(canvas.bounds.size.width) - viewport.x) / viewport.z
+        out.y = (point.y / Float(canvas.bounds.size.height) - viewport.y) / viewport.w
         return out
     }
 
     func screenToViewportPoint(_ point: Vector3, _ out: Vector3) -> Vector3 {
         let canvas = engine.canvas
         let viewport = viewport
-        out.x = (point.x / Float(canvas.bounds.width) - viewport.x) / viewport.z
-        out.y = (point.y / Float(canvas.bounds.height) - viewport.y) / viewport.w
+        out.x = (point.x / Float(canvas.bounds.size.width) - viewport.x) / viewport.z
+        out.y = (point.y / Float(canvas.bounds.size.height) - viewport.y) / viewport.w
         return out
     }
 
@@ -359,24 +359,24 @@ extension Camera {
     func viewportToScreenPoint(_ point: Vector2, _ out: Vector2) -> Vector2 {
         let canvas = engine.canvas
         let viewport = viewport
-        out.x = (viewport.x + point.x * viewport.z) * Float(canvas.bounds.width)
-        out.y = (viewport.y + point.y * viewport.w) * Float(canvas.bounds.height)
+        out.x = (viewport.x + point.x * viewport.z) * Float(canvas.bounds.size.width)
+        out.y = (viewport.y + point.y * viewport.w) * Float(canvas.bounds.size.height)
         return out
     }
 
     func viewportToScreenPoint(_ point: Vector3, _ out: Vector3) -> Vector3 {
         let canvas = engine.canvas
         let viewport = viewport
-        out.x = (viewport.x + point.x * viewport.z) * Float(canvas.bounds.width)
-        out.y = (viewport.y + point.y * viewport.w) * Float(canvas.bounds.height)
+        out.x = (viewport.x + point.x * viewport.z) * Float(canvas.bounds.size.width)
+        out.y = (viewport.y + point.y * viewport.w) * Float(canvas.bounds.size.height)
         return out
     }
 
     func viewportToScreenPoint(_ point: Vector4, _ out: Vector4) -> Vector4 {
         let canvas = engine.canvas
         let viewport = viewport
-        out.x = (viewport.x + point.x * viewport.z) * Float(canvas.bounds.width)
-        out.y = (viewport.y + point.y * viewport.w) * Float(canvas.bounds.height)
+        out.x = (viewport.x + point.x * viewport.z) * Float(canvas.bounds.size.width)
+        out.y = (viewport.y + point.y * viewport.w) * Float(canvas.bounds.size.height)
         return out
     }
 

@@ -55,7 +55,7 @@ struct PhysXRaycastView: View {
         return boxEntity
     }
 
-    func addSphere(radius: Float, position: Vector3, rotation: Quaternion) -> Entity {
+    func addSphere(_ radius: Float, _ position: Vector3, _ rotation: Quaternion) -> Entity {
         let mtl = BlinnPhongMaterial(engine)
         _ = mtl.baseColor.setValue(r: Float.random(in: 0..<1), g: Float.random(in: 0..<1), b: Float.random(in: 0..<1), a: 1.0)
         let sphereEntity = rootEntity.createChild()
@@ -79,7 +79,7 @@ struct PhysXRaycastView: View {
         return sphereEntity
     }
 
-    func addCapsule(radius: Float, height: Float, position: Vector3, rotation: Quaternion) -> Entity {
+    func addCapsule(_ radius: Float, _ height: Float, _ position: Vector3, _ rotation: Quaternion) -> Entity {
         let mtl = BlinnPhongMaterial(engine)
         _ = mtl.baseColor.setValue(r: Float.random(in: 0..<1), g: Float.random(in: 0..<1), b: Float.random(in: 0..<1), a: 1.0)
         let capsuleEntity = rootEntity.createChild()

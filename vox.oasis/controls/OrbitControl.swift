@@ -256,8 +256,8 @@ class OrbitControl: Script {
 
         targetDistance *= (fov / 2) * (Float.pi / 180)
 
-        let clientWidth = Float(engine.canvas.bounds.width)
-        let clientHeight = Float(engine.canvas.bounds.height)
+        let clientWidth = Float(engine.canvas.bounds.size.width)
+        let clientHeight = Float(engine.canvas.bounds.size.height)
 
         panLeft(-2 * deltaX * (targetDistance / clientWidth), camera.transform.worldMatrix)
         panUp(2 * deltaY * (targetDistance / clientHeight), camera.transform.worldMatrix)
@@ -292,8 +292,8 @@ extension OrbitControl {
 
     /// Rotation parameter update when the mouse moves.
     func handleMouseMoveRotate(_ event: NSEvent) {
-        rotateLeft(2 * Float.pi * (Float(event.deltaX) / Float(event.window!.contentView!.bounds.width)) * rotateSpeed)
-        rotateUp(2 * Float.pi * (Float(event.deltaY) / Float(event.window!.contentView!.bounds.height)) * rotateSpeed)
+        rotateLeft(2 * Float.pi * (Float(event.deltaX) / Float(event.window!.contentView!.bounds.size.width)) * rotateSpeed)
+        rotateUp(2 * Float.pi * (Float(event.deltaY) / Float(event.window!.contentView!.bounds.size.height)) * rotateSpeed)
     }
 
     /// Zoom parameters update when the mouse moves.
