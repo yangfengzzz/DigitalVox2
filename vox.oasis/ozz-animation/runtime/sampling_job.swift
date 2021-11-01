@@ -163,3 +163,176 @@ internal class SamplingCache {
     var outdated_rotations_: ArraySlice<UInt8>
     var outdated_scales_: ArraySlice<UInt8>
 }
+
+// Loops through the sorted key frames and update cache structure.
+func UpdateCacheCursor<_Key: KeyframeType>(_ratio: Float, _num_soa_tracks: Int,
+                                           _keys: ArraySlice<_Key>, _cursor: inout Int,
+                                           _cache: inout [Int], _outdated: inout [uint8]) {
+    assert(_num_soa_tracks >= 1)
+    let num_tracks = _num_soa_tracks * 4
+    assert(num_tracks * 2 <= _keys.count)
+
+    var cursor = 0
+    if (_cursor == 0) {
+        // Initializes interpolated entries with the first 2 sets of key frames.
+        // The sorting algorithm ensures that the first 2 key frames of a track
+        // are consecutive.
+        for i in 0..<_num_soa_tracks {
+            let in_index0 = i * 4                   // * soa size
+            let in_index1 = in_index0 + num_tracks  // 2nd row.
+            let out_index = i * 4 * 2
+            _cache[out_index + 0] = in_index0 + 0
+            _cache[out_index + 1] = in_index1 + 0
+            _cache[out_index + 2] = in_index0 + 1
+            _cache[out_index + 3] = in_index1 + 1
+            _cache[out_index + 4] = in_index0 + 2
+            _cache[out_index + 5] = in_index1 + 2
+            _cache[out_index + 6] = in_index0 + 3
+            _cache[out_index + 7] = in_index1 + 3
+        }
+        cursor = num_tracks * 2  // New cursor position.
+
+        // All entries are outdated. It cares to only flag valid soa entries as
+        // this is the exit condition of other algorithms.
+        let num_outdated_flags = (_num_soa_tracks + 7) / 8
+        for i in 0..<num_outdated_flags - 1 {
+            _outdated[i] = 0xff
+        }
+        _outdated[num_outdated_flags - 1] =
+                0xff >> (num_outdated_flags * 8 - _num_soa_tracks)
+    } else {
+        cursor = _cursor  // Might be == end()
+        assert(cursor >= num_tracks * 2 && cursor <= _keys.count)
+    }
+
+    // Search for the keys that matches _ratio.
+    // Iterates while the cache is not updated with left and right keys required
+    // for interpolation at time ratio _ratio, for all tracks. Thanks to the
+    // keyframe sorting, the loop can end as soon as it finds a key greater that
+    // _ratio. It will mean that all the keys lower than _ratio have been
+    // processed, meaning all cache entries are up to date.
+    while (cursor < _keys.count &&
+            _keys[_cache[Int(_keys[cursor].track) * 2 + 1]].ratio <= _ratio) {
+        // Flag this soa entry as outdated.
+        _outdated[Int(_keys[cursor].track) / 32] |= (1 << ((_keys[cursor].track & 0x1f) / 4))
+        // Updates cache.
+        let base = Int(_keys[cursor].track * 2)
+        _cache[base] = _cache[base + 1]
+        _cache[base + 1] = cursor
+        // Process next key.
+        cursor += 1
+    }
+    assert(cursor <= _keys.count)
+
+    // Updates cursor output.
+    _cursor = cursor
+}
+
+func DecompressFloat3(_k0: Float3Key, _k1: Float3Key,
+                      _k2: Float3Key, _k3: Float3Key,
+                      _soa_float3: inout SoaFloat3) {
+    _soa_float3.x = OZZMath.halfToFloat(withSIMD: OZZInt4.load(with: Int32(_k0.value.0), Int32(_k1.value.0),
+            Int32(_k2.value.0), Int32(_k3.value.0)))
+    _soa_float3.y = OZZMath.halfToFloat(withSIMD: OZZInt4.load(with: Int32(_k0.value.1), Int32(_k1.value.1),
+            Int32(_k2.value.1), Int32(_k3.value.1)))
+    _soa_float3.z = OZZMath.halfToFloat(withSIMD: OZZInt4.load(with: Int32(_k0.value.2), Int32(_k1.value.2),
+            Int32(_k2.value.2), Int32(_k3.value.2)))
+}
+
+// Defines a mapping table that defines components assignation in the output
+// quaternion.
+let kCpntMapping: [[Int]] = [[0, 0, 1, 2], [0, 0, 1, 2], [0, 1, 0, 2], [0, 1, 2, 0]]
+
+func DecompressQuaternion(_k0: QuaternionKey, _k1: QuaternionKey,
+                          _k2: QuaternionKey, _k3: QuaternionKey,
+                          _quaternion: inout SoaQuaternion) {
+    // Selects proper mapping for each key.
+    let m0 = kCpntMapping[Int(_k0.largest)]
+    let m1 = kCpntMapping[Int(_k1.largest)]
+    let m2 = kCpntMapping[Int(_k2.largest)]
+    let m3 = kCpntMapping[Int(_k3.largest)]
+
+    // Prepares an array of input values, according to the mapping required to
+    // restore quaternion largest component.
+    func getTuple(_ key: QuaternionKey, _ index: Int) -> Int32 {
+        switch index {
+        case 0:
+            return Int32(key.value.0)
+        case 1:
+            return Int32(key.value.1)
+        case 2:
+            return Int32(key.value.2)
+        default:
+            fatalError()
+        }
+    }
+
+    var cmp_keys: [[Int32]] = [
+        [getTuple(_k0, m0[0]), getTuple(_k1, m1[0]), getTuple(_k2, m2[0]), getTuple(_k3, m3[0])],
+        [getTuple(_k0, m0[1]), getTuple(_k1, m1[1]), getTuple(_k2, m2[1]), getTuple(_k3, m3[1])],
+        [getTuple(_k0, m0[2]), getTuple(_k1, m1[2]), getTuple(_k2, m2[2]), getTuple(_k3, m3[2])],
+        [getTuple(_k0, m0[3]), getTuple(_k1, m1[3]), getTuple(_k2, m2[3]), getTuple(_k3, m3[3])],
+    ]
+
+    // Resets largest component to 0. Overwritting here avoids 16 branchings
+    // above.
+    cmp_keys[Int(_k0.largest)][0] = 0
+    cmp_keys[Int(_k1.largest)][1] = 0
+    cmp_keys[Int(_k2.largest)][2] = 0
+    cmp_keys[Int(_k3.largest)][3] = 0
+
+    // Rebuilds quaternion from quantized values.
+    let kInt2Float = OZZFloat4.load1(with: 1.0 / (32767.0 * kSqrt2))
+    var cpnt: [SimdFloat4] = [
+        kInt2Float * OZZFloat4.fromInt(with: OZZInt4.loadPtr(with: cmp_keys[0])),
+        kInt2Float * OZZFloat4.fromInt(with: OZZInt4.loadPtr(with: cmp_keys[1])),
+        kInt2Float * OZZFloat4.fromInt(with: OZZInt4.loadPtr(with: cmp_keys[2])),
+        kInt2Float * OZZFloat4.fromInt(with: OZZInt4.loadPtr(with: cmp_keys[3])),
+    ]
+
+    // Get back length of 4th component. Favors performance over accuracy by using
+    // x * RSqrtEst(x) instead of Sqrt(x).
+    // ww0 cannot be 0 because we 're recomputing the largest component.
+    let dot = cpnt[0] * cpnt[0] + cpnt[1] * cpnt[1] + cpnt[2] * cpnt[2] + cpnt[3] * cpnt[3]
+    let ww0 = OZZFloat4.max(with: OZZFloat4.load1(with: 1e-16), OZZFloat4.one() - dot)
+    let w0 = ww0 * OZZFloat4.rSqrtEst(with: ww0)
+    // Re-applies 4th component' s sign.
+    let sign = OZZInt4.shiftL(with: OZZInt4.load(with: Int32(_k0.sign), Int32(_k1.sign), Int32(_k2.sign), Int32(_k3.sign)), 31)
+    let restored = OZZFloat4.or(with: w0, int4: sign)
+
+    // Re-injects the largest component inside the SoA structure.
+    cpnt[Int(_k0.largest)] = OZZFloat4.or(with: cpnt[Int(_k0.largest)], float4: OZZFloat4.and(with: restored, int4: OZZInt4.mask_f000()))
+    cpnt[Int(_k1.largest)] = OZZFloat4.or(with: cpnt[Int(_k1.largest)], float4: OZZFloat4.and(with: restored, int4: OZZInt4.mask_0f00()))
+    cpnt[Int(_k2.largest)] = OZZFloat4.or(with: cpnt[Int(_k2.largest)], float4: OZZFloat4.and(with: restored, int4: OZZInt4.mask_00f0()))
+    cpnt[Int(_k3.largest)] = OZZFloat4.or(with: cpnt[Int(_k3.largest)], float4: OZZFloat4.and(with: restored, int4: OZZInt4.mask_000f()))
+
+    // Stores result.
+    _quaternion.x = cpnt[0]
+    _quaternion.y = cpnt[1]
+    _quaternion.z = cpnt[2]
+    _quaternion.w = cpnt[3]
+}
+
+func Interpolates(_anim_ratio: Float, _num_soa_tracks: Int,
+                  _translations: ArraySlice<InterpSoaFloat3>,
+                  _rotations: ArraySlice<InterpSoaQuaternion>,
+                  _scales: ArraySlice<InterpSoaFloat3>,
+                  _output: inout [SoaTransform]) {
+    let anim_ratio = OZZFloat4.load1(with: _anim_ratio)
+    for i in 0..<_num_soa_tracks {
+        // Prepares interpolation coefficients.
+        let interp_t_ratio = (anim_ratio - _translations[i].ratio.0) *
+                OZZFloat4.rcpEst(with: _translations[i].ratio.1 - _translations[i].ratio.0)
+        let interp_r_ratio = (anim_ratio - _rotations[i].ratio.0) *
+                OZZFloat4.rcpEst(with: _rotations[i].ratio.1 - _rotations[i].ratio.0)
+        let interp_s_ratio = (anim_ratio - _scales[i].ratio.0) *
+                OZZFloat4.rcpEst(with: _scales[i].ratio.1 - _scales[i].ratio.0)
+
+        // Processes interpolations.
+        // The lerp of the rotation uses the shortest path, because opposed
+        // quaternions were negated during animation build stage (AnimationBuilder).
+        _output[i].translation = Lerp(_translations[i].value.0, _translations[i].value.1, interp_t_ratio)
+        _output[i].rotation = NLerpEst(_rotations[i].value.0, _rotations[i].value.1, interp_r_ratio)
+        _output[i].scale = Lerp(_scales[i].value.0, _scales[i].value.1, interp_s_ratio)
+    }
+}
