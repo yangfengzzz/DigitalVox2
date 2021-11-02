@@ -16,7 +16,7 @@ import Foundation
 // mode are all store as separate buffers in order to access the cache
 // coherently. Ratios are usually accessed/read alone from the jobs that all
 // start by looking up the keyframes to interpolate indeed.
-class Track<ValueType> {
+class Track<ValueType: TrackPolicy> {
     // Keyframe accessors.
     func ratios() -> ArraySlice<Float> {
         ratios_
@@ -37,7 +37,12 @@ class Track<ValueType> {
 
     // Internal destruction function.
     internal func Allocate(_keys_count: Int) {
-        fatalError()
+        assert(ratios_.count == 0 && values_.count == 0)
+
+        // Fix up pointers. Serves larger alignment values first.
+        values_ = [ValueType](repeating: ValueType.identity() as! ValueType, count: _keys_count)[...]
+        ratios_ = [Float](repeating: 0, count: _keys_count)[...]
+        steps_ = [UInt8](repeating: 0, count: (_keys_count + 7) / 8)[...]
     }
 
     // Keyframe ratios (0 is the beginning of the track, 1 is the end).
