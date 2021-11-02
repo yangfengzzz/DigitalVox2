@@ -307,13 +307,13 @@ inline SimdFloat4 DivX(_SimdFloat4 _a, _SimdFloat4 _b) {
     return _mm_unpackhi_ps(_v, _v);
 }
 
-+ (void)Transpose4x1With:(const SimdFloat4 *)_in :(SimdFloat4 *)_out {
++ (void)Transpose4x1With:(const SimdFloat4 [4])_in :(SimdFloat4 [1])_out {
     const __m128 xz = _mm_unpacklo_ps(_in[0], _in[2]);
     const __m128 yw = _mm_unpacklo_ps(_in[1], _in[3]);
     _out[0] = _mm_unpacklo_ps(xz, yw);
 }
 
-+ (void)Transpose1x4With:(const SimdFloat4 *)_in :(SimdFloat4 *)_out {
++ (void)Transpose1x4With:(const SimdFloat4 [1])_in :(SimdFloat4 [3])_out {
     const __m128 zwzw = _mm_movehl_ps(_in[0], _in[0]);
     const __m128 yyyy = OZZ_SSE_SPLAT_F(_in[0], 1);
     const __m128 wwww = OZZ_SSE_SPLAT_F(_in[0], 3);
@@ -324,14 +324,14 @@ inline SimdFloat4 DivX(_SimdFloat4 _a, _SimdFloat4 _b) {
     _out[3] = _mm_move_ss(zero, wwww);
 }
 
-+ (void)Transpose4x2With:(const SimdFloat4 *)_in :(SimdFloat4 *)_out {
++ (void)Transpose4x2With:(const SimdFloat4 [4])_in :(SimdFloat4 [2])_out {
     const __m128 tmp0 = _mm_unpacklo_ps(_in[0], _in[2]);
     const __m128 tmp1 = _mm_unpacklo_ps(_in[1], _in[3]);
     _out[0] = _mm_unpacklo_ps(tmp0, tmp1);
     _out[1] = _mm_unpackhi_ps(tmp0, tmp1);
 }
 
-+ (void)Transpose2x4With:(const SimdFloat4 *)_in :(SimdFloat4 *)_out {
++ (void)Transpose2x4With:(const SimdFloat4 [2])_in :(SimdFloat4 [4])_out {
     const __m128 tmp0 = _mm_unpacklo_ps(_in[0], _in[1]);
     const __m128 tmp1 = _mm_unpackhi_ps(_in[0], _in[1]);
     const __m128 zero = _mm_setzero_ps();
@@ -341,7 +341,7 @@ inline SimdFloat4 DivX(_SimdFloat4 _a, _SimdFloat4 _b) {
     _out[3] = _mm_movehl_ps(zero, tmp1);
 }
 
-+ (void)Transpose4x3With:(const SimdFloat4 *)_in :(SimdFloat4 *)_out {
++ (void)Transpose4x3With:(const SimdFloat4 [4])_in :(SimdFloat4 [3])_out {
     const __m128 tmp0 = _mm_unpacklo_ps(_in[0], _in[2]);
     const __m128 tmp1 = _mm_unpacklo_ps(_in[1], _in[3]);
     const __m128 tmp2 = _mm_unpackhi_ps(_in[0], _in[2]);
@@ -351,7 +351,7 @@ inline SimdFloat4 DivX(_SimdFloat4 _a, _SimdFloat4 _b) {
     _out[2] = _mm_unpacklo_ps(tmp2, tmp3);
 }
 
-+ (void)Transpose3x4With:(const SimdFloat4 *)_in :(SimdFloat4 *)_out {
++ (void)Transpose3x4With:(const SimdFloat4 [3])_in :(SimdFloat4 [4])_out {
     const __m128 zero = _mm_setzero_ps();
     const __m128 temp0 = _mm_unpacklo_ps(_in[0], _in[1]);
     const __m128 temp1 = _mm_unpacklo_ps(_in[2], zero);
@@ -363,7 +363,7 @@ inline SimdFloat4 DivX(_SimdFloat4 _a, _SimdFloat4 _b) {
     _out[3] = _mm_movehl_ps(temp3, temp2);
 }
 
-+ (void)Transpose4x4With:(const SimdFloat4 *)_in :(SimdFloat4 *)_out {
++ (void)Transpose4x4With:(const SimdFloat4 [4])_in :(SimdFloat4 [4])_out {
     const __m128 tmp0 = _mm_unpacklo_ps(_in[0], _in[2]);
     const __m128 tmp1 = _mm_unpacklo_ps(_in[1], _in[3]);
     const __m128 tmp2 = _mm_unpackhi_ps(_in[0], _in[2]);
@@ -374,7 +374,7 @@ inline SimdFloat4 DivX(_SimdFloat4 _a, _SimdFloat4 _b) {
     _out[3] = _mm_unpackhi_ps(tmp2, tmp3);
 }
 
-+ (void)Transpose16x16With:(const SimdFloat4 *)_in :(SimdFloat4 *)_out {
++ (void)Transpose16x16With:(const SimdFloat4 [16])_in :(SimdFloat4[16])_out {
     const __m128 tmp0 = _mm_unpacklo_ps(_in[0], _in[2]);
     const __m128 tmp1 = _mm_unpacklo_ps(_in[1], _in[3]);
     _out[0] = _mm_unpacklo_ps(tmp0, tmp1);

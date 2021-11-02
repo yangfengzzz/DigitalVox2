@@ -233,33 +233,33 @@ typedef const __m128i _SimdInt4;
 
 // Transposes the x components of the 4 SimdFloat4 of _in into the 1
 // SimdFloat4 of _out.
-+ (void)Transpose4x1With:(const SimdFloat4 *)_in :(SimdFloat4 *)_out;
++ (void)Transpose4x1With:(const SimdFloat4 [4])_in :(SimdFloat4 [1])_out;
 
 // Transposes x, y, z and w components of _in to the x components of _out.
 // Remaining y, z and w are set to 0.
-+ (void)Transpose1x4With:(const SimdFloat4 *)_in :(SimdFloat4 *)_out;
++ (void)Transpose1x4With:(const SimdFloat4 [1])_in :(SimdFloat4 [4])_out;
 
 // Transposes the 1 SimdFloat4 of _in into the x components of the 4
 // SimdFloat4 of _out. Remaining y, z and w are set to 0.
-+ (void)Transpose2x4With:(const SimdFloat4 *)_in :(SimdFloat4 *)_out;
++ (void)Transpose2x4With:(const SimdFloat4 [2])_in :(SimdFloat4 [4])_out;
 
 // Transposes the x and y components of the 4 SimdFloat4 of _in into the 2
 // SimdFloat4 of _out.
-+ (void)Transpose4x2With:(const SimdFloat4 *)_in :(SimdFloat4 *)_out;
++ (void)Transpose4x2With:(const SimdFloat4 [4])_in :(SimdFloat4 [2])_out;
 
 // Transposes the x, y and z components of the 4 SimdFloat4 of _in into the 3
 // SimdFloat4 of _out.
-+ (void)Transpose4x3With:(const SimdFloat4 *)_in :(SimdFloat4 *)_out;
++ (void)Transpose4x3With:(const SimdFloat4 [4])_in :(SimdFloat4 [3])_out;
 
 // Transposes the 3 SimdFloat4 of _in into the x, y and z components of the 4
 // SimdFloat4 of _out. Remaining w are set to 0.
-+ (void)Transpose3x4With:(const SimdFloat4 *)_in :(SimdFloat4 *)_out;
++ (void)Transpose3x4With:(const SimdFloat4 [3])_in :(SimdFloat4 [4])_out;
 
 // Transposes the 4 SimdFloat4 of _in into the 4 SimdFloat4 of _out.
-+ (void)Transpose4x4With:(const SimdFloat4 *)_in :(SimdFloat4 *)_out;
++ (void)Transpose4x4With:(const SimdFloat4 [4])_in :(SimdFloat4 [4])_out;
 
 // Transposes the 16 SimdFloat4 of _in into the 16 SimdFloat4 of _out.
-+ (void)Transpose16x16With:(const SimdFloat4 *)_in :(SimdFloat4 *)_out;
++ (void)Transpose16x16With:(const SimdFloat4 [16])_in :(SimdFloat4 [16])_out;
 
 // Multiplies _a and _b, then adds _c.
 // v = (_a * _b) + _c

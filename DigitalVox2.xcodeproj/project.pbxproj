@@ -371,7 +371,6 @@
 		04AFFD3E272F9B37005C2835 /* track_optimizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFFD3D272F9B37005C2835 /* track_optimizer.swift */; };
 		04AFFD40272F9C37005C2835 /* track_triggering_job.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFFD3F272F9C37005C2835 /* track_triggering_job.swift */; };
 		04AFFD42272F9CB1005C2835 /* blending_job.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFFD41272F9CB1005C2835 /* blending_job.swift */; };
-		04AFFD44272FA800005C2835 /* local_to_model_job.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFFD43272FA800005C2835 /* local_to_model_job.swift */; };
 		04AFFD46272FA877005C2835 /* ik_aim_job.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFFD45272FA877005C2835 /* ik_aim_job.swift */; };
 		04AFFD48272FA959005C2835 /* ik_two_bone_job.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFFD47272FA959005C2835 /* ik_two_bone_job.swift */; };
 		04AFFD4A272FAA5D005C2835 /* PhysXRaycastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFFD49272FAA5D005C2835 /* PhysXRaycastView.swift */; };
@@ -2401,7 +2400,6 @@
 				041BAE65272A510C006268D5 /* ShaderUniform.swift in Sources */,
 				041BAE81272A513B006268D5 /* Spherical.swift in Sources */,
 				045D2BD7272CB00E0091636B /* InterpolationType.swift in Sources */,
-				04AFFD44272FA800005C2835 /* local_to_model_job.swift in Sources */,
 				041BAEE8272A9F81006268D5 /* CPxShape.mm in Sources */,
 				041BAEBE272A5166006268D5 /* LiteCollider.swift in Sources */,
 				045D2C3F272E25800091636B /* simd_math.swift in Sources */,
