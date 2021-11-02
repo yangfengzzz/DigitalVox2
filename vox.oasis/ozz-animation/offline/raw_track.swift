@@ -13,6 +13,13 @@ protocol TrackPolicy {
     static func Lerp(_ _a: _ValueType, _ _b: _ValueType, _ _alpha: Float) -> _ValueType
     static func Distance(_ _a: _ValueType, _ _b: _ValueType) -> Float
     static func identity() -> _ValueType
+
+    static func Fixup(_ _keyframes: inout [RawTrackKeyframe<Self>])
+}
+
+extension TrackPolicy {
+    static func Fixup(_ _keyframes: inout [RawTrackKeyframe<Self>]) {
+    }
 }
 
 // Interpolation mode.
@@ -171,5 +178,29 @@ extension VecQuaternion: TrackPolicy {
         // Return value is 1 - half cosine, so the closer the quaternions, the closer
         // to 0.
         return 1.0 - min(1.0, abs(cos_half_angle))
+    }
+
+    static func Fixup(_ _keyframes: inout [RawTrackKeyframe<Self>]) {
+        assert(_keyframes.count >= 2)
+
+        let identity = VecQuaternion.identity()
+        for i in 0..<_keyframes.count {
+            // Normalizes input quaternion.
+            _keyframes[i].value = NormalizeSafe(_keyframes[i].value, identity)
+
+            // Ensures quaternions are all on the same hemisphere.
+            if (i == 0) {
+                if (_keyframes[i].value.w < 0.0) {
+                    _keyframes[i].value = -_keyframes[i].value  // Q an -Q are the same rotation.
+                }
+            } else {
+                let prev_key = _keyframes[i - 1].value
+                let dot = _keyframes[i].value.x * prev_key.x + _keyframes[i].value.y * prev_key.y +
+                        _keyframes[i].value.z * prev_key.z + _keyframes[i].value.w * prev_key.w
+                if (dot < 0.0) {
+                    _keyframes[i].value = -_keyframes[i].value  // Q an -Q are the same rotation.
+                }
+            }
+        }
     }
 }

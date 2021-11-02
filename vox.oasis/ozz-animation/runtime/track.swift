@@ -36,7 +36,7 @@ class Track<ValueType: TrackPolicy> {
     }
 
     // Internal destruction function.
-    internal func Allocate(_keys_count: Int) {
+    internal func Allocate(_ _keys_count: Int) {
         assert(ratios_.count == 0 && values_.count == 0)
 
         // Fix up pointers. Serves larger alignment values first.
