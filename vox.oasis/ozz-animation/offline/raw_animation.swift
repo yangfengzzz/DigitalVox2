@@ -95,9 +95,9 @@ struct RawAnimation {
     // Defines a track of key frames for a bone, including translation, rotation
     // and scale.
     struct JointTrack {
-        var translations: [TranslationKey]
-        var rotations: [RotationKey]
-        var scales: [ScaleKey]
+        var translations: [TranslationKey] = []
+        var rotations: [RotationKey] = []
+        var scales: [ScaleKey] = []
 
         // Validates track. See RawAnimation::Validate for more details.
         // Use an infinite value for _duration if unknown. This will validate
@@ -111,14 +111,14 @@ struct RawAnimation {
 
     // Stores per joint JointTrack, ie: per joint animation key-frames.
     // tracks_.size() gives the number of animated joints.
-    var tracks: [JointTrack]
+    var tracks: [JointTrack] = []
 
     // The duration of the animation. All the keys of a valid RawAnimation are in
     // the range [0,duration].
     var duration: Float = 1.0
 
     // Name of the animation.
-    var name: String
+    var name: String = ""
 
     // Returns the number of tracks of this animation.
     func num_tracks() -> Int {
