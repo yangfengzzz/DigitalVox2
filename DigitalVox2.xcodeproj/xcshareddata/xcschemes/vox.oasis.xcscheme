@@ -27,6 +27,26 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "041BADEC272A4FA6006268D5"
+               BuildableName = "vox.oasisUITests.xctest"
+               BlueprintName = "vox.oasisUITests"
+               ReferencedContainer = "container:DigitalVox2.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "041BADE2272A4FA6006268D5"
+               BuildableName = "vox.oasisTests.xctest"
+               BlueprintName = "vox.oasisTests"
+               ReferencedContainer = "container:DigitalVox2.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
@@ -56,6 +76,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "041BADD2272A4FA4006268D5"
+            BuildableName = "vox.oasis.app"
+            BlueprintName = "vox.oasis"
+            ReferencedContainer = "container:DigitalVox2.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

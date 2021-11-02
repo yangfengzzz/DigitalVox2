@@ -340,6 +340,58 @@
 		04AE165026EEE2C100201439 /* Vector4.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE164F26EEE2C100201439 /* Vector4.test.swift */; };
 		04AE165226EEE85D00201439 /* Matrix.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE165126EEE85D00201439 /* Matrix.test.swift */; };
 		04AFFD4A272FAA5D005C2835 /* PhysXRaycastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFFD49272FAA5D005C2835 /* PhysXRaycastView.swift */; };
+		04CB884C2730EC0800B0E398 /* external.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 04CB884B2730EC0800B0E398 /* external.hpp */; };
+		04CB884E2730EC0800B0E398 /* externalPriv.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 04CB884D2730EC0800B0E398 /* externalPriv.hpp */; };
+		04CB88502730EC0800B0E398 /* external.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04CB884F2730EC0800B0E398 /* external.cpp */; };
+		04CB88702730EC6F00B0E398 /* decimate.h in Headers */ = {isa = PBXBuildFile; fileRef = 04CB88582730EC6D00B0E398 /* decimate.h */; };
+		04CB88712730EC6F00B0E398 /* raw_animation_archive.cc in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88592730EC6D00B0E398 /* raw_animation_archive.cc */; };
+		04CB88722730EC6F00B0E398 /* track_optimizer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 04CB885B2730EC6D00B0E398 /* track_optimizer.cc */; };
+		04CB88732730EC6F00B0E398 /* raw_animation.cc in Sources */ = {isa = PBXBuildFile; fileRef = 04CB885C2730EC6D00B0E398 /* raw_animation.cc */; };
+		04CB88742730EC6F00B0E398 /* raw_animation_utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 04CB885D2730EC6D00B0E398 /* raw_animation_utils.h */; };
+		04CB88752730EC6F00B0E398 /* raw_skeleton.h in Headers */ = {isa = PBXBuildFile; fileRef = 04CB885E2730EC6E00B0E398 /* raw_skeleton.h */; };
+		04CB88762730EC6F00B0E398 /* additive_animation_builder.h in Headers */ = {isa = PBXBuildFile; fileRef = 04CB885F2730EC6E00B0E398 /* additive_animation_builder.h */; };
+		04CB88772730EC6F00B0E398 /* raw_skeleton.cc in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88602730EC6E00B0E398 /* raw_skeleton.cc */; };
+		04CB88782730EC6F00B0E398 /* skeleton_builder.h in Headers */ = {isa = PBXBuildFile; fileRef = 04CB88612730EC6E00B0E398 /* skeleton_builder.h */; };
+		04CB88792730EC6F00B0E398 /* animation_builder.h in Headers */ = {isa = PBXBuildFile; fileRef = 04CB88622730EC6E00B0E398 /* animation_builder.h */; };
+		04CB887A2730EC6F00B0E398 /* track_optimizer.h in Headers */ = {isa = PBXBuildFile; fileRef = 04CB88632730EC6E00B0E398 /* track_optimizer.h */; };
+		04CB887B2730EC6F00B0E398 /* raw_animation.h in Headers */ = {isa = PBXBuildFile; fileRef = 04CB88642730EC6E00B0E398 /* raw_animation.h */; };
+		04CB887C2730EC6F00B0E398 /* skeleton_builder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88652730EC6E00B0E398 /* skeleton_builder.cc */; };
+		04CB887D2730EC6F00B0E398 /* track_builder.h in Headers */ = {isa = PBXBuildFile; fileRef = 04CB88662730EC6E00B0E398 /* track_builder.h */; };
+		04CB887E2730EC6F00B0E398 /* track_builder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88672730EC6E00B0E398 /* track_builder.cc */; };
+		04CB887F2730EC6F00B0E398 /* animation_builder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88682730EC6E00B0E398 /* animation_builder.cc */; };
+		04CB88802730EC6F00B0E398 /* animation_optimizer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88692730EC6E00B0E398 /* animation_optimizer.cc */; };
+		04CB88812730EC6F00B0E398 /* raw_track.cc in Sources */ = {isa = PBXBuildFile; fileRef = 04CB886A2730EC6E00B0E398 /* raw_track.cc */; };
+		04CB88822730EC6F00B0E398 /* raw_track.h in Headers */ = {isa = PBXBuildFile; fileRef = 04CB886B2730EC6E00B0E398 /* raw_track.h */; };
+		04CB88832730EC6F00B0E398 /* additive_animation_builder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 04CB886C2730EC6E00B0E398 /* additive_animation_builder.cc */; };
+		04CB88842730EC6F00B0E398 /* raw_animation_utils.cc in Sources */ = {isa = PBXBuildFile; fileRef = 04CB886D2730EC6E00B0E398 /* raw_animation_utils.cc */; };
+		04CB88852730EC6F00B0E398 /* animation_optimizer.h in Headers */ = {isa = PBXBuildFile; fileRef = 04CB886E2730EC6E00B0E398 /* animation_optimizer.h */; };
+		04CB88862730EC6F00B0E398 /* raw_skeleton_archive.cc in Sources */ = {isa = PBXBuildFile; fileRef = 04CB886F2730EC6F00B0E398 /* raw_skeleton_archive.cc */; };
+		04CB88A12730ECC900B0E398 /* track_triggering_job_trait.h in Headers */ = {isa = PBXBuildFile; fileRef = 04CB88872730ECC700B0E398 /* track_triggering_job_trait.h */; };
+		04CB88A22730ECC900B0E398 /* sampling_job.h in Headers */ = {isa = PBXBuildFile; fileRef = 04CB88882730ECC800B0E398 /* sampling_job.h */; };
+		04CB88A32730ECC900B0E398 /* animation.h in Headers */ = {isa = PBXBuildFile; fileRef = 04CB88892730ECC800B0E398 /* animation.h */; };
+		04CB88A42730ECC900B0E398 /* ik_aim_job.h in Headers */ = {isa = PBXBuildFile; fileRef = 04CB888A2730ECC800B0E398 /* ik_aim_job.h */; };
+		04CB88A52730ECC900B0E398 /* track.cc in Sources */ = {isa = PBXBuildFile; fileRef = 04CB888B2730ECC800B0E398 /* track.cc */; };
+		04CB88A62730ECC900B0E398 /* animation.cc in Sources */ = {isa = PBXBuildFile; fileRef = 04CB888C2730ECC800B0E398 /* animation.cc */; };
+		04CB88A72730ECC900B0E398 /* animation_utils.cc in Sources */ = {isa = PBXBuildFile; fileRef = 04CB888D2730ECC800B0E398 /* animation_utils.cc */; };
+		04CB88A82730ECC900B0E398 /* skeleton_utils.cc in Sources */ = {isa = PBXBuildFile; fileRef = 04CB888E2730ECC800B0E398 /* skeleton_utils.cc */; };
+		04CB88A92730ECC900B0E398 /* sampling_job.cc in Sources */ = {isa = PBXBuildFile; fileRef = 04CB888F2730ECC800B0E398 /* sampling_job.cc */; };
+		04CB88AA2730ECC900B0E398 /* local_to_model_job.h in Headers */ = {isa = PBXBuildFile; fileRef = 04CB88902730ECC800B0E398 /* local_to_model_job.h */; };
+		04CB88AB2730ECC900B0E398 /* animation_utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 04CB88912730ECC800B0E398 /* animation_utils.h */; };
+		04CB88AC2730ECC900B0E398 /* ik_two_bone_job.h in Headers */ = {isa = PBXBuildFile; fileRef = 04CB88922730ECC800B0E398 /* ik_two_bone_job.h */; };
+		04CB88AD2730ECC900B0E398 /* track_triggering_job.cc in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88932730ECC800B0E398 /* track_triggering_job.cc */; };
+		04CB88AE2730ECC900B0E398 /* ik_two_bone_job.cc in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88942730ECC800B0E398 /* ik_two_bone_job.cc */; };
+		04CB88AF2730ECC900B0E398 /* track_sampling_job.cc in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88952730ECC800B0E398 /* track_sampling_job.cc */; };
+		04CB88B02730ECC900B0E398 /* animation_keyframe.h in Headers */ = {isa = PBXBuildFile; fileRef = 04CB88962730ECC800B0E398 /* animation_keyframe.h */; };
+		04CB88B12730ECC900B0E398 /* track_triggering_job.h in Headers */ = {isa = PBXBuildFile; fileRef = 04CB88972730ECC800B0E398 /* track_triggering_job.h */; };
+		04CB88B22730ECC900B0E398 /* skeleton.h in Headers */ = {isa = PBXBuildFile; fileRef = 04CB88982730ECC900B0E398 /* skeleton.h */; };
+		04CB88B32730ECC900B0E398 /* ik_aim_job.cc in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88992730ECC900B0E398 /* ik_aim_job.cc */; };
+		04CB88B42730ECC900B0E398 /* skeleton_utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 04CB889A2730ECC900B0E398 /* skeleton_utils.h */; };
+		04CB88B52730ECC900B0E398 /* skeleton.cc in Sources */ = {isa = PBXBuildFile; fileRef = 04CB889B2730ECC900B0E398 /* skeleton.cc */; };
+		04CB88B62730ECC900B0E398 /* blending_job.h in Headers */ = {isa = PBXBuildFile; fileRef = 04CB889C2730ECC900B0E398 /* blending_job.h */; };
+		04CB88B72730ECC900B0E398 /* track.h in Headers */ = {isa = PBXBuildFile; fileRef = 04CB889D2730ECC900B0E398 /* track.h */; };
+		04CB88B82730ECC900B0E398 /* track_sampling_job.h in Headers */ = {isa = PBXBuildFile; fileRef = 04CB889E2730ECC900B0E398 /* track_sampling_job.h */; };
+		04CB88B92730ECC900B0E398 /* blending_job.cc in Sources */ = {isa = PBXBuildFile; fileRef = 04CB889F2730ECC900B0E398 /* blending_job.cc */; };
+		04CB88BA2730ECC900B0E398 /* local_to_model_job.cc in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88A02730ECC900B0E398 /* local_to_model_job.cc */; };
 		04EA0D6A26E0F9AD00CA7833 /* math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6926E0F9AD00CA7833 /* math.swift */; };
 		04EA0D6C26E1204200CA7833 /* bbox2f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6B26E1204200CA7833 /* bbox2f.swift */; };
 		04EA0D6E26E1204F00CA7833 /* bbox3f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6D26E1204F00CA7833 /* bbox3f.swift */; };
@@ -792,6 +844,60 @@
 		04AE2422272913ED00D62587 /* BRDF.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = BRDF.metal; sourceTree = "<group>"; };
 		04AE2424272916DC00D62587 /* irradiance.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = irradiance.png; sourceTree = "<group>"; };
 		04AFFD49272FAA5D005C2835 /* PhysXRaycastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXRaycastView.swift; sourceTree = "<group>"; };
+		04CB88492730EC0700B0E398 /* libexternal.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libexternal.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		04CB884B2730EC0800B0E398 /* external.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = external.hpp; sourceTree = "<group>"; };
+		04CB884D2730EC0800B0E398 /* externalPriv.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = externalPriv.hpp; sourceTree = "<group>"; };
+		04CB884F2730EC0800B0E398 /* external.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = external.cpp; sourceTree = "<group>"; };
+		04CB88582730EC6D00B0E398 /* decimate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = decimate.h; path = ozz/animation/offline/decimate.h; sourceTree = "<group>"; };
+		04CB88592730EC6D00B0E398 /* raw_animation_archive.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = raw_animation_archive.cc; path = ozz/animation/offline/raw_animation_archive.cc; sourceTree = "<group>"; };
+		04CB885A2730EC6D00B0E398 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = CMakeLists.txt; path = ozz/animation/offline/CMakeLists.txt; sourceTree = "<group>"; };
+		04CB885B2730EC6D00B0E398 /* track_optimizer.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = track_optimizer.cc; path = ozz/animation/offline/track_optimizer.cc; sourceTree = "<group>"; };
+		04CB885C2730EC6D00B0E398 /* raw_animation.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = raw_animation.cc; path = ozz/animation/offline/raw_animation.cc; sourceTree = "<group>"; };
+		04CB885D2730EC6D00B0E398 /* raw_animation_utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = raw_animation_utils.h; path = ozz/animation/offline/raw_animation_utils.h; sourceTree = "<group>"; };
+		04CB885E2730EC6E00B0E398 /* raw_skeleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = raw_skeleton.h; path = ozz/animation/offline/raw_skeleton.h; sourceTree = "<group>"; };
+		04CB885F2730EC6E00B0E398 /* additive_animation_builder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = additive_animation_builder.h; path = ozz/animation/offline/additive_animation_builder.h; sourceTree = "<group>"; };
+		04CB88602730EC6E00B0E398 /* raw_skeleton.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = raw_skeleton.cc; path = ozz/animation/offline/raw_skeleton.cc; sourceTree = "<group>"; };
+		04CB88612730EC6E00B0E398 /* skeleton_builder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = skeleton_builder.h; path = ozz/animation/offline/skeleton_builder.h; sourceTree = "<group>"; };
+		04CB88622730EC6E00B0E398 /* animation_builder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = animation_builder.h; path = ozz/animation/offline/animation_builder.h; sourceTree = "<group>"; };
+		04CB88632730EC6E00B0E398 /* track_optimizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = track_optimizer.h; path = ozz/animation/offline/track_optimizer.h; sourceTree = "<group>"; };
+		04CB88642730EC6E00B0E398 /* raw_animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = raw_animation.h; path = ozz/animation/offline/raw_animation.h; sourceTree = "<group>"; };
+		04CB88652730EC6E00B0E398 /* skeleton_builder.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = skeleton_builder.cc; path = ozz/animation/offline/skeleton_builder.cc; sourceTree = "<group>"; };
+		04CB88662730EC6E00B0E398 /* track_builder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = track_builder.h; path = ozz/animation/offline/track_builder.h; sourceTree = "<group>"; };
+		04CB88672730EC6E00B0E398 /* track_builder.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = track_builder.cc; path = ozz/animation/offline/track_builder.cc; sourceTree = "<group>"; };
+		04CB88682730EC6E00B0E398 /* animation_builder.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = animation_builder.cc; path = ozz/animation/offline/animation_builder.cc; sourceTree = "<group>"; };
+		04CB88692730EC6E00B0E398 /* animation_optimizer.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = animation_optimizer.cc; path = ozz/animation/offline/animation_optimizer.cc; sourceTree = "<group>"; };
+		04CB886A2730EC6E00B0E398 /* raw_track.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = raw_track.cc; path = ozz/animation/offline/raw_track.cc; sourceTree = "<group>"; };
+		04CB886B2730EC6E00B0E398 /* raw_track.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = raw_track.h; path = ozz/animation/offline/raw_track.h; sourceTree = "<group>"; };
+		04CB886C2730EC6E00B0E398 /* additive_animation_builder.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = additive_animation_builder.cc; path = ozz/animation/offline/additive_animation_builder.cc; sourceTree = "<group>"; };
+		04CB886D2730EC6E00B0E398 /* raw_animation_utils.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = raw_animation_utils.cc; path = ozz/animation/offline/raw_animation_utils.cc; sourceTree = "<group>"; };
+		04CB886E2730EC6E00B0E398 /* animation_optimizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = animation_optimizer.h; path = ozz/animation/offline/animation_optimizer.h; sourceTree = "<group>"; };
+		04CB886F2730EC6F00B0E398 /* raw_skeleton_archive.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = raw_skeleton_archive.cc; path = ozz/animation/offline/raw_skeleton_archive.cc; sourceTree = "<group>"; };
+		04CB88872730ECC700B0E398 /* track_triggering_job_trait.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = track_triggering_job_trait.h; path = ozz/animation/runtime/track_triggering_job_trait.h; sourceTree = "<group>"; };
+		04CB88882730ECC800B0E398 /* sampling_job.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sampling_job.h; path = ozz/animation/runtime/sampling_job.h; sourceTree = "<group>"; };
+		04CB88892730ECC800B0E398 /* animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = animation.h; path = ozz/animation/runtime/animation.h; sourceTree = "<group>"; };
+		04CB888A2730ECC800B0E398 /* ik_aim_job.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ik_aim_job.h; path = ozz/animation/runtime/ik_aim_job.h; sourceTree = "<group>"; };
+		04CB888B2730ECC800B0E398 /* track.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = track.cc; path = ozz/animation/runtime/track.cc; sourceTree = "<group>"; };
+		04CB888C2730ECC800B0E398 /* animation.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = animation.cc; path = ozz/animation/runtime/animation.cc; sourceTree = "<group>"; };
+		04CB888D2730ECC800B0E398 /* animation_utils.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = animation_utils.cc; path = ozz/animation/runtime/animation_utils.cc; sourceTree = "<group>"; };
+		04CB888E2730ECC800B0E398 /* skeleton_utils.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = skeleton_utils.cc; path = ozz/animation/runtime/skeleton_utils.cc; sourceTree = "<group>"; };
+		04CB888F2730ECC800B0E398 /* sampling_job.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sampling_job.cc; path = ozz/animation/runtime/sampling_job.cc; sourceTree = "<group>"; };
+		04CB88902730ECC800B0E398 /* local_to_model_job.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = local_to_model_job.h; path = ozz/animation/runtime/local_to_model_job.h; sourceTree = "<group>"; };
+		04CB88912730ECC800B0E398 /* animation_utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = animation_utils.h; path = ozz/animation/runtime/animation_utils.h; sourceTree = "<group>"; };
+		04CB88922730ECC800B0E398 /* ik_two_bone_job.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ik_two_bone_job.h; path = ozz/animation/runtime/ik_two_bone_job.h; sourceTree = "<group>"; };
+		04CB88932730ECC800B0E398 /* track_triggering_job.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = track_triggering_job.cc; path = ozz/animation/runtime/track_triggering_job.cc; sourceTree = "<group>"; };
+		04CB88942730ECC800B0E398 /* ik_two_bone_job.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ik_two_bone_job.cc; path = ozz/animation/runtime/ik_two_bone_job.cc; sourceTree = "<group>"; };
+		04CB88952730ECC800B0E398 /* track_sampling_job.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = track_sampling_job.cc; path = ozz/animation/runtime/track_sampling_job.cc; sourceTree = "<group>"; };
+		04CB88962730ECC800B0E398 /* animation_keyframe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = animation_keyframe.h; path = ozz/animation/runtime/animation_keyframe.h; sourceTree = "<group>"; };
+		04CB88972730ECC800B0E398 /* track_triggering_job.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = track_triggering_job.h; path = ozz/animation/runtime/track_triggering_job.h; sourceTree = "<group>"; };
+		04CB88982730ECC900B0E398 /* skeleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = skeleton.h; path = ozz/animation/runtime/skeleton.h; sourceTree = "<group>"; };
+		04CB88992730ECC900B0E398 /* ik_aim_job.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ik_aim_job.cc; path = ozz/animation/runtime/ik_aim_job.cc; sourceTree = "<group>"; };
+		04CB889A2730ECC900B0E398 /* skeleton_utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = skeleton_utils.h; path = ozz/animation/runtime/skeleton_utils.h; sourceTree = "<group>"; };
+		04CB889B2730ECC900B0E398 /* skeleton.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = skeleton.cc; path = ozz/animation/runtime/skeleton.cc; sourceTree = "<group>"; };
+		04CB889C2730ECC900B0E398 /* blending_job.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = blending_job.h; path = ozz/animation/runtime/blending_job.h; sourceTree = "<group>"; };
+		04CB889D2730ECC900B0E398 /* track.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = track.h; path = ozz/animation/runtime/track.h; sourceTree = "<group>"; };
+		04CB889E2730ECC900B0E398 /* track_sampling_job.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = track_sampling_job.h; path = ozz/animation/runtime/track_sampling_job.h; sourceTree = "<group>"; };
+		04CB889F2730ECC900B0E398 /* blending_job.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = blending_job.cc; path = ozz/animation/runtime/blending_job.cc; sourceTree = "<group>"; };
+		04CB88A02730ECC900B0E398 /* local_to_model_job.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = local_to_model_job.cc; path = ozz/animation/runtime/local_to_model_job.cc; sourceTree = "<group>"; };
 		04DB2A4126DF1E0500C15850 /* IClone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IClone.swift; sourceTree = "<group>"; };
 		04DBA7D92700B32D00C3B97C /* EngineFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineFeature.swift; sourceTree = "<group>"; };
 		04DBA7DB2700B3C900C3B97C /* SceneFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneFeature.swift; sourceTree = "<group>"; };
@@ -880,6 +986,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		0497A1FA26DF150800F61DE9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		04CB88472730EC0700B0E398 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1624,6 +1737,7 @@
 				0497A1E326DF150500F61DE9 /* vox.render */,
 				0497A1F526DF150800F61DE9 /* vox.renderTests */,
 				0497A20026DF150800F61DE9 /* vox.renderUITests */,
+				04CB884A2730EC0800B0E398 /* external */,
 				0497A1E226DF150500F61DE9 /* Products */,
 				041BAE23272A5091006268D5 /* Frameworks */,
 			);
@@ -1641,6 +1755,7 @@
 				041BADD3272A4FA4006268D5 /* vox.oasis.app */,
 				041BADE3272A4FA6006268D5 /* vox.oasisTests.xctest */,
 				041BADED272A4FA6006268D5 /* vox.oasisUITests.xctest */,
+				04CB88492730EC0700B0E398 /* libexternal.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1718,6 +1833,98 @@
 			path = textures;
 			sourceTree = "<group>";
 		};
+		04CB884A2730EC0800B0E398 /* external */ = {
+			isa = PBXGroup;
+			children = (
+				04CB88542730EC3800B0E398 /* ozz */,
+				04CB884B2730EC0800B0E398 /* external.hpp */,
+				04CB884D2730EC0800B0E398 /* externalPriv.hpp */,
+				04CB884F2730EC0800B0E398 /* external.cpp */,
+			);
+			path = external;
+			sourceTree = "<group>";
+		};
+		04CB88542730EC3800B0E398 /* ozz */ = {
+			isa = PBXGroup;
+			children = (
+				04CB88552730EC4D00B0E398 /* animation */,
+			);
+			name = ozz;
+			sourceTree = "<group>";
+		};
+		04CB88552730EC4D00B0E398 /* animation */ = {
+			isa = PBXGroup;
+			children = (
+				04CB88572730EC5700B0E398 /* offline */,
+				04CB88562730EC5200B0E398 /* runtime */,
+			);
+			name = animation;
+			sourceTree = "<group>";
+		};
+		04CB88562730EC5200B0E398 /* runtime */ = {
+			isa = PBXGroup;
+			children = (
+				04CB88962730ECC800B0E398 /* animation_keyframe.h */,
+				04CB888D2730ECC800B0E398 /* animation_utils.cc */,
+				04CB88912730ECC800B0E398 /* animation_utils.h */,
+				04CB888C2730ECC800B0E398 /* animation.cc */,
+				04CB88892730ECC800B0E398 /* animation.h */,
+				04CB889F2730ECC900B0E398 /* blending_job.cc */,
+				04CB889C2730ECC900B0E398 /* blending_job.h */,
+				04CB88992730ECC900B0E398 /* ik_aim_job.cc */,
+				04CB888A2730ECC800B0E398 /* ik_aim_job.h */,
+				04CB88942730ECC800B0E398 /* ik_two_bone_job.cc */,
+				04CB88922730ECC800B0E398 /* ik_two_bone_job.h */,
+				04CB88A02730ECC900B0E398 /* local_to_model_job.cc */,
+				04CB88902730ECC800B0E398 /* local_to_model_job.h */,
+				04CB888F2730ECC800B0E398 /* sampling_job.cc */,
+				04CB88882730ECC800B0E398 /* sampling_job.h */,
+				04CB888E2730ECC800B0E398 /* skeleton_utils.cc */,
+				04CB889A2730ECC900B0E398 /* skeleton_utils.h */,
+				04CB889B2730ECC900B0E398 /* skeleton.cc */,
+				04CB88982730ECC900B0E398 /* skeleton.h */,
+				04CB88952730ECC800B0E398 /* track_sampling_job.cc */,
+				04CB889E2730ECC900B0E398 /* track_sampling_job.h */,
+				04CB88872730ECC700B0E398 /* track_triggering_job_trait.h */,
+				04CB88932730ECC800B0E398 /* track_triggering_job.cc */,
+				04CB88972730ECC800B0E398 /* track_triggering_job.h */,
+				04CB888B2730ECC800B0E398 /* track.cc */,
+				04CB889D2730ECC900B0E398 /* track.h */,
+			);
+			name = runtime;
+			sourceTree = "<group>";
+		};
+		04CB88572730EC5700B0E398 /* offline */ = {
+			isa = PBXGroup;
+			children = (
+				04CB886C2730EC6E00B0E398 /* additive_animation_builder.cc */,
+				04CB885F2730EC6E00B0E398 /* additive_animation_builder.h */,
+				04CB88682730EC6E00B0E398 /* animation_builder.cc */,
+				04CB88622730EC6E00B0E398 /* animation_builder.h */,
+				04CB88692730EC6E00B0E398 /* animation_optimizer.cc */,
+				04CB886E2730EC6E00B0E398 /* animation_optimizer.h */,
+				04CB885A2730EC6D00B0E398 /* CMakeLists.txt */,
+				04CB88582730EC6D00B0E398 /* decimate.h */,
+				04CB88592730EC6D00B0E398 /* raw_animation_archive.cc */,
+				04CB886D2730EC6E00B0E398 /* raw_animation_utils.cc */,
+				04CB885D2730EC6D00B0E398 /* raw_animation_utils.h */,
+				04CB885C2730EC6D00B0E398 /* raw_animation.cc */,
+				04CB88642730EC6E00B0E398 /* raw_animation.h */,
+				04CB886F2730EC6F00B0E398 /* raw_skeleton_archive.cc */,
+				04CB88602730EC6E00B0E398 /* raw_skeleton.cc */,
+				04CB885E2730EC6E00B0E398 /* raw_skeleton.h */,
+				04CB886A2730EC6E00B0E398 /* raw_track.cc */,
+				04CB886B2730EC6E00B0E398 /* raw_track.h */,
+				04CB88652730EC6E00B0E398 /* skeleton_builder.cc */,
+				04CB88612730EC6E00B0E398 /* skeleton_builder.h */,
+				04CB88672730EC6E00B0E398 /* track_builder.cc */,
+				04CB88662730EC6E00B0E398 /* track_builder.h */,
+				04CB885B2730EC6D00B0E398 /* track_optimizer.cc */,
+				04CB88632730EC6E00B0E398 /* track_optimizer.h */,
+			);
+			name = offline;
+			sourceTree = "<group>";
+		};
 		04DB2A4026DF1DF100C15850 /* design */ = {
 			isa = PBXGroup;
 			children = (
@@ -1783,6 +1990,43 @@
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		04CB88452730EC0700B0E398 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				04CB88742730EC6F00B0E398 /* raw_animation_utils.h in Headers */,
+				04CB88A32730ECC900B0E398 /* animation.h in Headers */,
+				04CB884E2730EC0800B0E398 /* externalPriv.hpp in Headers */,
+				04CB887B2730EC6F00B0E398 /* raw_animation.h in Headers */,
+				04CB88822730EC6F00B0E398 /* raw_track.h in Headers */,
+				04CB88B82730ECC900B0E398 /* track_sampling_job.h in Headers */,
+				04CB88B02730ECC900B0E398 /* animation_keyframe.h in Headers */,
+				04CB887D2730EC6F00B0E398 /* track_builder.h in Headers */,
+				04CB88A22730ECC900B0E398 /* sampling_job.h in Headers */,
+				04CB88A12730ECC900B0E398 /* track_triggering_job_trait.h in Headers */,
+				04CB88782730EC6F00B0E398 /* skeleton_builder.h in Headers */,
+				04CB88AA2730ECC900B0E398 /* local_to_model_job.h in Headers */,
+				04CB88752730EC6F00B0E398 /* raw_skeleton.h in Headers */,
+				04CB887A2730EC6F00B0E398 /* track_optimizer.h in Headers */,
+				04CB88852730EC6F00B0E398 /* animation_optimizer.h in Headers */,
+				04CB88762730EC6F00B0E398 /* additive_animation_builder.h in Headers */,
+				04CB88B22730ECC900B0E398 /* skeleton.h in Headers */,
+				04CB88B62730ECC900B0E398 /* blending_job.h in Headers */,
+				04CB88AB2730ECC900B0E398 /* animation_utils.h in Headers */,
+				04CB88702730EC6F00B0E398 /* decimate.h in Headers */,
+				04CB884C2730EC0800B0E398 /* external.hpp in Headers */,
+				04CB88B72730ECC900B0E398 /* track.h in Headers */,
+				04CB88B42730ECC900B0E398 /* skeleton_utils.h in Headers */,
+				04CB88AC2730ECC900B0E398 /* ik_two_bone_job.h in Headers */,
+				04CB88A42730ECC900B0E398 /* ik_aim_job.h in Headers */,
+				04CB88B12730ECC900B0E398 /* track_triggering_job.h in Headers */,
+				04CB88792730EC6F00B0E398 /* animation_builder.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		041BADD2272A4FA4006268D5 /* vox.oasis */ = {
@@ -1950,6 +2194,23 @@
 			productReference = 0497A1FD26DF150800F61DE9 /* vox.renderUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		04CB88482730EC0700B0E398 /* external */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 04CB88512730EC0800B0E398 /* Build configuration list for PBXNativeTarget "external" */;
+			buildPhases = (
+				04CB88452730EC0700B0E398 /* Headers */,
+				04CB88462730EC0700B0E398 /* Sources */,
+				04CB88472730EC0700B0E398 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = external;
+			productName = external;
+			productReference = 04CB88492730EC0700B0E398 /* libexternal.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1992,6 +2253,9 @@
 						CreatedOnToolsVersion = 12.5.1;
 						TestTargetID = 0497A1E026DF150500F61DE9;
 					};
+					04CB88482730EC0700B0E398 = {
+						CreatedOnToolsVersion = 13.1;
+					};
 				};
 			};
 			buildConfigurationList = 0497A1DC26DF150500F61DE9 /* Build configuration list for PBXProject "DigitalVox2" */;
@@ -2019,6 +2283,7 @@
 				041BADD2272A4FA4006268D5 /* vox.oasis */,
 				041BADE2272A4FA6006268D5 /* vox.oasisTests */,
 				041BADEC272A4FA6006268D5 /* vox.oasisUITests */,
+				04CB88482730EC0700B0E398 /* external */,
 			);
 		};
 /* End PBXProject section */
@@ -2488,6 +2753,38 @@
 			buildActionMask = 2147483647;
 			files = (
 				0497A20226DF150800F61DE9 /* DigitalVox2UITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		04CB88462730EC0700B0E398 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				04CB88B92730ECC900B0E398 /* blending_job.cc in Sources */,
+				04CB88772730EC6F00B0E398 /* raw_skeleton.cc in Sources */,
+				04CB88AD2730ECC900B0E398 /* track_triggering_job.cc in Sources */,
+				04CB88712730EC6F00B0E398 /* raw_animation_archive.cc in Sources */,
+				04CB88732730EC6F00B0E398 /* raw_animation.cc in Sources */,
+				04CB88842730EC6F00B0E398 /* raw_animation_utils.cc in Sources */,
+				04CB88A92730ECC900B0E398 /* sampling_job.cc in Sources */,
+				04CB88BA2730ECC900B0E398 /* local_to_model_job.cc in Sources */,
+				04CB887E2730EC6F00B0E398 /* track_builder.cc in Sources */,
+				04CB88802730EC6F00B0E398 /* animation_optimizer.cc in Sources */,
+				04CB88AF2730ECC900B0E398 /* track_sampling_job.cc in Sources */,
+				04CB88B52730ECC900B0E398 /* skeleton.cc in Sources */,
+				04CB88AE2730ECC900B0E398 /* ik_two_bone_job.cc in Sources */,
+				04CB88A72730ECC900B0E398 /* animation_utils.cc in Sources */,
+				04CB88722730EC6F00B0E398 /* track_optimizer.cc in Sources */,
+				04CB88812730EC6F00B0E398 /* raw_track.cc in Sources */,
+				04CB887C2730EC6F00B0E398 /* skeleton_builder.cc in Sources */,
+				04CB88832730EC6F00B0E398 /* additive_animation_builder.cc in Sources */,
+				04CB88B32730ECC900B0E398 /* ik_aim_job.cc in Sources */,
+				04CB887F2730EC6F00B0E398 /* animation_builder.cc in Sources */,
+				04CB88A82730ECC900B0E398 /* skeleton_utils.cc in Sources */,
+				04CB88A52730ECC900B0E398 /* track.cc in Sources */,
+				04CB88A62730ECC900B0E398 /* animation.cc in Sources */,
+				04CB88862730EC6F00B0E398 /* raw_skeleton_archive.cc in Sources */,
+				04CB88502730EC0800B0E398 /* external.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3233,6 +3530,46 @@
 			};
 			name = Release;
 		};
+		04CB88522730EC0800B0E398 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4SL5L673UU;
+				EXECUTABLE_PREFIX = lib;
+				GCC_ENABLE_CPP_EXCEPTIONS = YES;
+				GCC_ENABLE_CPP_RTTI = YES;
+				HEADER_SEARCH_PATHS = (
+					/Users/yangfeng/Desktop/DigitalVox2/external,
+					/Users/yangfeng/Desktop/DigitalVox2/external/ozz,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		04CB88532730EC0800B0E398 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4SL5L673UU;
+				EXECUTABLE_PREFIX = lib;
+				GCC_ENABLE_CPP_EXCEPTIONS = YES;
+				GCC_ENABLE_CPP_RTTI = YES;
+				HEADER_SEARCH_PATHS = (
+					/Users/yangfeng/Desktop/DigitalVox2/external,
+					/Users/yangfeng/Desktop/DigitalVox2/external/ozz,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -3322,6 +3659,15 @@
 			buildConfigurations = (
 				0497A20D26DF150800F61DE9 /* Debug */,
 				0497A20E26DF150800F61DE9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		04CB88512730EC0800B0E398 /* Build configuration list for PBXNativeTarget "external" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				04CB88522730EC0800B0E398 /* Debug */,
+				04CB88532730EC0800B0E398 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
