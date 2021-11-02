@@ -62,7 +62,20 @@ internal struct RawTrack<ValueType: TrackPolicy> {
     //  1. Keyframes' ratios are sorted in a strict ascending order.
     //  2. Keyframes' ratios are all within [0,1] range.
     func Validate() -> Bool {
-        fatalError()
+        var previous_ratio: Float = -1.0
+        for k in 0..<keyframes.count {
+            let frame_ratio = keyframes[k].ratio
+            // Tests frame's ratio is in range [0:1].
+            if (frame_ratio < 0.0 || frame_ratio > 1.0) {
+                return false
+            }
+            // Tests that frames are sorted.
+            if (frame_ratio <= previous_ratio) {
+                return false
+            }
+            previous_ratio = frame_ratio
+        }
+        return true  // Validated.
     }
 
     // Sequence of keyframes, expected to be sorted.
