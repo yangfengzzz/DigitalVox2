@@ -19,12 +19,12 @@ class PBRSpecularMaterial: PBRBaseMaterial {
     /// Specular color.
     var specularColor: Color {
         get {
-            shaderData.getColor(PBRSpecularMaterial._specularColorProp)!
+            shaderData.getBytes(PBRSpecularMaterial._specularColorProp) as! Color
         }
         set {
-            let specularColor = shaderData.getColor(PBRSpecularMaterial._specularColorProp)
+            let specularColor = shaderData.getBytes(PBRSpecularMaterial._specularColorProp) as! Color
             if (newValue !== specularColor) {
-                newValue.cloneTo(target: specularColor!)
+                newValue.cloneTo(target: specularColor)
             }
         }
     }
@@ -32,10 +32,10 @@ class PBRSpecularMaterial: PBRBaseMaterial {
     /// Glossiness.
     var glossiness: Float {
         get {
-            shaderData.getFloat(PBRSpecularMaterial._glossinessProp)!
+            shaderData.getBytes(PBRSpecularMaterial._glossinessProp) as! Float
         }
         set {
-            shaderData.setFloat(PBRSpecularMaterial._glossinessProp, newValue)
+            shaderData.setBytes(PBRSpecularMaterial._glossinessProp, newValue)
         }
     }
 
@@ -74,7 +74,7 @@ class PBRSpecularMaterial: PBRBaseMaterial {
     override init(_ engine: Engine) {
         super.init(engine)
 
-        shaderData.setColor(PBRSpecularMaterial._specularColorProp, Color(1, 1, 1, 1))
-        shaderData.setFloat(PBRSpecularMaterial._glossinessProp, 1.0)
+        shaderData.setBytes(PBRSpecularMaterial._specularColorProp, Color(1, 1, 1, 1))
+        shaderData.setBytes(PBRSpecularMaterial._glossinessProp, Float(1.0))
     }
 }

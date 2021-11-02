@@ -20,13 +20,13 @@ class LightShadow {
     internal static func _updateShaderData(_ shaderData: ShaderData) {
         let data = LightShadow._combinedData
 
-        shaderData.setMatrixArray(LightShadow._viewMatFromLightProperty, data.viewMatrix)
-        shaderData.setMatrixArray(LightShadow._projMatFromLightProperty, data.projectionMatrix)
-        shaderData.setFloatArray(LightShadow._shadowBiasProperty, data.bias)
-        shaderData.setFloatArray(LightShadow._shadowIntensityProperty, data.intensity)
-        shaderData.setFloatArray(LightShadow._shadowRadiusProperty, data.radius)
-        shaderData.setVector2Array(LightShadow._shadowMapSizeProperty, data.mapSize)
-        shaderData.setTextureArray(LightShadow._shadowMapsProperty, data.map)
+        shaderData.setBytes(LightShadow._viewMatFromLightProperty, data.viewMatrix)
+        shaderData.setBytes(LightShadow._projMatFromLightProperty, data.projectionMatrix)
+        shaderData.setBytes(LightShadow._shadowBiasProperty, data.bias)
+        shaderData.setBytes(LightShadow._shadowIntensityProperty, data.intensity)
+        shaderData.setBytes(LightShadow._shadowRadiusProperty, data.radius)
+        shaderData.setBytes(LightShadow._shadowMapSizeProperty, data.mapSize)
+        shaderData.setBytes(LightShadow._shadowMapsProperty, data.map)
     }
 
     /// Clear all shadow maps.

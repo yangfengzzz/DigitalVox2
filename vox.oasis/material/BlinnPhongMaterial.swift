@@ -24,10 +24,10 @@ class BlinnPhongMaterial: BaseMaterial {
     /// Base color.
     var baseColor: Color {
         get {
-            shaderData.getColor(BlinnPhongMaterial._diffuseColorProp)!
+            shaderData.getBytes(BlinnPhongMaterial._diffuseColorProp) as! Color
         }
         set {
-            let baseColor = shaderData.getColor(BlinnPhongMaterial._diffuseColorProp)!
+            let baseColor = shaderData.getBytes(BlinnPhongMaterial._diffuseColorProp) as! Color
             if (newValue !== baseColor) {
                 newValue.cloneTo(target: baseColor)
             }
@@ -52,10 +52,10 @@ class BlinnPhongMaterial: BaseMaterial {
     /// Specular color.
     var specularColor: Color {
         get {
-            shaderData.getColor(BlinnPhongMaterial._specularColorProp)!
+            shaderData.getBytes(BlinnPhongMaterial._specularColorProp) as! Color
         }
         set {
-            let specularColor = shaderData.getColor(BlinnPhongMaterial._specularColorProp)!
+            let specularColor = shaderData.getBytes(BlinnPhongMaterial._specularColorProp) as! Color
             if (newValue !== specularColor) {
                 newValue.cloneTo(target: specularColor)
             }
@@ -80,12 +80,12 @@ class BlinnPhongMaterial: BaseMaterial {
     /// Emissive color.
     var emissiveColor: Color {
         get {
-            shaderData.getColor(BlinnPhongMaterial._emissiveColorProp)!
+            shaderData.getBytes(BlinnPhongMaterial._emissiveColorProp) as! Color
         }
         set {
-            let emissiveColor = shaderData.getColor(BlinnPhongMaterial._emissiveColorProp)
+            let emissiveColor = shaderData.getBytes(BlinnPhongMaterial._emissiveColorProp) as! Color
             if (newValue !== emissiveColor) {
-                newValue.cloneTo(target: emissiveColor!)
+                newValue.cloneTo(target: emissiveColor)
             }
         }
     }
@@ -123,32 +123,32 @@ class BlinnPhongMaterial: BaseMaterial {
     /// Normal texture intensity.
     var normalIntensity: Float {
         get {
-            shaderData.getFloat(BlinnPhongMaterial._normalIntensityProp)!
+            shaderData.getBytes(BlinnPhongMaterial._normalIntensityProp) as! Float
         }
         set {
-            shaderData.setFloat(BlinnPhongMaterial._normalIntensityProp, newValue)
+            shaderData.setBytes(BlinnPhongMaterial._normalIntensityProp, newValue)
         }
     }
 
     /// Set the specular reflection coefficient, the larger the value, the more convergent the specular reflection effect.
     var shininess: Float {
         get {
-            shaderData.getFloat(BlinnPhongMaterial._shininessProp)!
+            shaderData.getBytes(BlinnPhongMaterial._shininessProp) as! Float
         }
         set {
-            shaderData.setFloat(BlinnPhongMaterial._shininessProp, newValue)
+            shaderData.setBytes(BlinnPhongMaterial._shininessProp, newValue)
         }
     }
 
     /// Tiling and offset of main textures.
     var tilingOffset: Vector4 {
         get {
-            shaderData.getVector4(BlinnPhongMaterial._tilingOffsetProp)!
+            shaderData.getBytes(BlinnPhongMaterial._tilingOffsetProp) as! Vector4
         }
         set {
-            let tilingOffset = shaderData.getVector4(BlinnPhongMaterial._tilingOffsetProp)
+            let tilingOffset = shaderData.getBytes(BlinnPhongMaterial._tilingOffsetProp) as! Vector4
             if (newValue !== tilingOffset) {
-                newValue.cloneTo(target: tilingOffset!)
+                newValue.cloneTo(target: tilingOffset)
             }
         }
     }
@@ -160,11 +160,11 @@ class BlinnPhongMaterial: BaseMaterial {
         shaderData.enableMacro(NEED_WORLDPOS)
         shaderData.enableMacro(NEED_TILINGOFFSET)
 
-        shaderData.setColor(BlinnPhongMaterial._diffuseColorProp, Color(1, 1, 1, 1))
-        shaderData.setColor(BlinnPhongMaterial._specularColorProp, Color(1, 1, 1, 1))
-        shaderData.setColor(BlinnPhongMaterial._emissiveColorProp, Color(0, 0, 0, 1))
-        shaderData.setVector4(BlinnPhongMaterial._tilingOffsetProp, Vector4(1, 1, 0, 0))
-        shaderData.setFloat(BlinnPhongMaterial._shininessProp, 16)
-        shaderData.setFloat(BlinnPhongMaterial._normalIntensityProp, 1)
+        shaderData.setBytes(BlinnPhongMaterial._diffuseColorProp, Color(1, 1, 1, 1))
+        shaderData.setBytes(BlinnPhongMaterial._specularColorProp, Color(1, 1, 1, 1))
+        shaderData.setBytes(BlinnPhongMaterial._emissiveColorProp, Color(0, 0, 0, 1))
+        shaderData.setBytes(BlinnPhongMaterial._tilingOffsetProp, Vector4(1, 1, 0, 0))
+        shaderData.setBytes(BlinnPhongMaterial._shininessProp, Float(16))
+        shaderData.setBytes(BlinnPhongMaterial._normalIntensityProp, Float(1))
     }
 }

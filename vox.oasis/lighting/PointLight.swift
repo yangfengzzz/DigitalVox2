@@ -47,9 +47,9 @@ class PointLight: Light {
     internal static func _updateShaderData(_ shaderData: ShaderData) {
         let data = PointLight._combinedData
 
-        shaderData.setVector3Array(PointLight._colorProperty, data.color)
-        shaderData.setVector3Array(PointLight._positionProperty, data.position)
-        shaderData.setFloatArray(PointLight._distanceProperty, data.distance)
+        shaderData.setBytes(PointLight._colorProperty, data.color)
+        shaderData.setBytes(PointLight._positionProperty, data.position)
+        shaderData.setBytes(PointLight._distanceProperty, data.distance)
     }
 
     internal func _appendData(_ lightIndex: Int) {

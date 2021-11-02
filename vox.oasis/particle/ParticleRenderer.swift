@@ -332,7 +332,7 @@ class ParticleRenderer: MeshRenderer {
             _updateBuffer()
 
             _isInit = true
-            shaderData.setFloat("u_time", 0)
+            shaderData.setBytes("u_time", Float(0))
         }
     }
 
@@ -343,7 +343,7 @@ class ParticleRenderer: MeshRenderer {
         }
         set {
             _time = 0
-            shaderData.setInt("u_once", newValue ? 1 : 0)
+            shaderData.setBytes("u_once", newValue ? Int(1) : Int(0))
             _isOnce = newValue
         }
     }
@@ -504,7 +504,7 @@ class ParticleRenderer: MeshRenderer {
         }
 
         _time += deltaTime / 1000
-        shaderData.setFloat("u_time", _time)
+        shaderData.setBytes("u_time", _time)
     }
 
     internal override func _onEnable() {

@@ -271,12 +271,12 @@ extension Renderer {
         Matrix.invert(a: worldMatrix, out: normalMatrix)
         _ = normalMatrix.transpose()
 
-        shaderData.setMatrix(Renderer._localMatrixProperty, entity.transform.localMatrix)
-        shaderData.setMatrix(Renderer._worldMatrixProperty, worldMatrix)
-        shaderData.setMatrix(Renderer._mvMatrixProperty, mvMatrix)
-        shaderData.setMatrix(Renderer._mvpMatrixProperty, mvpMatrix)
-        shaderData.setMatrix(Renderer._mvInvMatrixProperty, mvInvMatrix)
-        shaderData.setMatrix(Renderer._normalMatrixProperty, normalMatrix)
+        shaderData.setBytes(Renderer._localMatrixProperty, entity.transform.localMatrix)
+        shaderData.setBytes(Renderer._worldMatrixProperty, worldMatrix)
+        shaderData.setBytes(Renderer._mvMatrixProperty, mvMatrix)
+        shaderData.setBytes(Renderer._mvpMatrixProperty, mvpMatrix)
+        shaderData.setBytes(Renderer._mvInvMatrixProperty, mvInvMatrix)
+        shaderData.setBytes(Renderer._normalMatrixProperty, normalMatrix)
     }
 
     private func _createInstanceMaterial(_ material: Material, _ index: Int) -> Material {

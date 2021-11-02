@@ -7,6 +7,22 @@
 
 import Metal
 
+extension EnvMapLight:ShaderBytesType {
+    func loadVetexBytes(_ rhi: MetalRenderer, _ shaderUniform: ShaderUniform) {
+        var value = self
+        rhi.renderEncoder.setVertexBytes(&value,
+                                           length: MemoryLayout<EnvMapLight>.stride,
+                                           index: shaderUniform.location)
+    }
+    
+    func loadFragmentBytes(_ rhi: MetalRenderer, _ shaderUniform: ShaderUniform) {
+        var value = self
+        rhi.renderEncoder.setFragmentBytes(&value,
+                                           length: MemoryLayout<EnvMapLight>.stride,
+                                           index: shaderUniform.location)
+    }
+}
+
 /// Ambient light.
 class AmbientLight {
     private static var _diffuseSHProperty: ShaderProperty = Shader.getPropertyByName("u_env_sh")
@@ -44,7 +60,7 @@ class AmbientLight {
         set {
             if (newValue.elements != _envMapLight.diffuse) {
                 _envMapLight.diffuse = newValue.elements
-                _scene.shaderData.setAny(AmbientLight._envMapProperty, _envMapLight)
+                _scene.shaderData.setBytes(AmbientLight._envMapProperty, _envMapLight)
             }
         }
     }
@@ -60,7 +76,7 @@ class AmbientLight {
             let shaderData = _scene.shaderData
 
             if newValue != nil {
-                shaderData.setVector3Array(AmbientLight._diffuseSHProperty, _preComputeSH(newValue!, &_shArray))
+                shaderData.setBytes(AmbientLight._diffuseSHProperty, _preComputeSH(newValue!, &_shArray))
             }
         }
     }
@@ -72,7 +88,7 @@ class AmbientLight {
         }
         set {
             _envMapLight.diffuseIntensity = newValue
-            _scene.shaderData.setAny(AmbientLight._envMapProperty, _envMapLight)
+            _scene.shaderData.setBytes(AmbientLight._envMapProperty, _envMapLight)
         }
     }
 
@@ -91,7 +107,7 @@ class AmbientLight {
                 shaderData.enableMacro(HAS_SPECULAR_ENV)
 
                 _envMapLight.mipMapLevel = Int32(_specularReflection!.mipmapLevelCount)
-                _scene.shaderData.setAny(AmbientLight._envMapProperty, _envMapLight)
+                _scene.shaderData.setBytes(AmbientLight._envMapProperty, _envMapLight)
             } else {
                 shaderData.disableMacro(HAS_SPECULAR_ENV)
             }
@@ -105,7 +121,7 @@ class AmbientLight {
         }
         set {
             _envMapLight.specularIntensity = newValue
-            _scene.shaderData.setAny(AmbientLight._envMapProperty, _envMapLight)
+            _scene.shaderData.setBytes(AmbientLight._envMapProperty, _envMapLight)
         }
     }
 
@@ -116,7 +132,7 @@ class AmbientLight {
         _envMapLight.diffuse = [1, 1, 1]
         _envMapLight.diffuseIntensity = 1.0
         _envMapLight.specularIntensity = 1.0
-        shaderData.setAny(AmbientLight._envMapProperty, _envMapLight)
+        shaderData.setBytes(AmbientLight._envMapProperty, _envMapLight)
     }
 
     private func _preComputeSH(_ sh: SphericalHarmonics3, _ out: inout [SIMD3<Float>]) -> [SIMD3<Float>] {

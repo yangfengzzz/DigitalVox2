@@ -18,20 +18,20 @@ class PBRMaterial: PBRBaseMaterial {
     /// Metallic.
     var metallic: Float {
         get {
-            shaderData.getFloat(PBRMaterial._metallicProp)!
+            shaderData.getBytes(PBRMaterial._metallicProp) as! Float
         }
         set {
-            shaderData.setFloat(PBRMaterial._metallicProp, newValue)
+            shaderData.setBytes(PBRMaterial._metallicProp, newValue)
         }
     }
 
     /// Roughness.
     var roughness: Float {
         get {
-            shaderData.getFloat(PBRMaterial._roughnessProp)!
+            shaderData.getBytes(PBRMaterial._roughnessProp) as! Float
         }
         set {
-            shaderData.setFloat(PBRMaterial._roughnessProp, newValue)
+            shaderData.setBytes(PBRMaterial._roughnessProp, newValue)
         }
     }
 
@@ -70,7 +70,7 @@ class PBRMaterial: PBRBaseMaterial {
     override init(_ engine: Engine) {
         super.init(engine)
         shaderData.enableMacro(IS_METALLIC_WORKFLOW)
-        shaderData.setFloat(PBRMaterial._metallicProp, 1.0)
-        shaderData.setFloat(PBRMaterial._roughnessProp, 1.0)
+        shaderData.setBytes(PBRMaterial._metallicProp, Float(1.0))
+        shaderData.setBytes(PBRMaterial._roughnessProp, Float(1.0))
     }
 }

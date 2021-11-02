@@ -458,12 +458,12 @@ extension Camera {
     }
 
     private func _updateShaderData(_ context: RenderContext) {
-        shaderData.setMatrix(Camera._viewMatrixProperty, viewMatrix)
-        shaderData.setMatrix(Camera._projectionMatrixProperty, projectionMatrix)
-        shaderData.setMatrix(Camera._vpMatrixProperty, context._viewProjectMatrix)
-        shaderData.setMatrix(Camera._inverseViewMatrixProperty, _transform.worldMatrix)
-        shaderData.setMatrix(Camera._inverseProjectionMatrixProperty, inverseProjectionMatrix)
-        shaderData.setVector3(Camera._cameraPositionProperty, _transform.worldPosition)
+        shaderData.setBytes(Camera._viewMatrixProperty, viewMatrix)
+        shaderData.setBytes(Camera._projectionMatrixProperty, projectionMatrix)
+        shaderData.setBytes(Camera._vpMatrixProperty, context._viewProjectMatrix)
+        shaderData.setBytes(Camera._inverseViewMatrixProperty, _transform.worldMatrix)
+        shaderData.setBytes(Camera._inverseProjectionMatrixProperty, inverseProjectionMatrix)
+        shaderData.setBytes(Camera._cameraPositionProperty, _transform.worldPosition)
     }
 
     /// The inverse matrix of view projection matrix.

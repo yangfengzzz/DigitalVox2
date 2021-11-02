@@ -52,8 +52,8 @@ class DirectLight: Light {
     internal static func _updateShaderData(_ shaderData: ShaderData) {
         let data = DirectLight._combinedData
 
-        shaderData.setVector3Array(DirectLight._colorProperty, data.color)
-        shaderData.setVector3Array(DirectLight._directionProperty, data.direction)
+        shaderData.setBytes(DirectLight._colorProperty, data.color)
+        shaderData.setBytes(DirectLight._directionProperty, data.direction)
     }
 
     internal func _appendData(_ lightIndex: Int) {

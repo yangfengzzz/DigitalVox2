@@ -33,7 +33,7 @@ class ShadowMapPass: RenderPass {
                             _ alphaTestQueue: RenderQueue, _ transparentQueue: RenderQueue) {
         // The viewProjection matrix from the light.
         let shaderData = replaceMaterial!.shaderData
-        shaderData.setMatrix(ShadowMapPass._viewMatFromLightProperty, light.viewMatrix)
-        shaderData.setMatrix(ShadowMapPass._projMatFromLightProperty, light.shadow!.projectionMatrix)
+        shaderData.setBytes(ShadowMapPass._viewMatFromLightProperty, light.viewMatrix)
+        shaderData.setBytes(ShadowMapPass._projMatFromLightProperty, light.shadow!.projectionMatrix)
     }
 }

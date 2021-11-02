@@ -37,7 +37,7 @@ class BaseMaterial: Material {
             } else {
                 targetBlendState.enabled = false
                 depthState.writeEnabled = true
-                renderQueueType = (shaderData.getFloat(BaseMaterial._alphaCutoffProp) != nil)
+                renderQueueType = (shaderData.getBytes(BaseMaterial._alphaCutoffProp) != nil)
                         ? RenderQueueType.AlphaTest
                         : RenderQueueType.Opaque
             }
@@ -50,10 +50,10 @@ class BaseMaterial: Material {
     /// `0` means no fragment will be discarded.
     var alphaCutoff: Float {
         get {
-            shaderData.getFloat(BaseMaterial._alphaCutoffProp)!
+            shaderData.getBytes(BaseMaterial._alphaCutoffProp) as! Float
         }
         set {
-            shaderData.setFloat(BaseMaterial._alphaCutoffProp, newValue)
+            shaderData.setBytes(BaseMaterial._alphaCutoffProp, newValue)
 
             if (newValue > 0) {
                 shaderData.enableMacro(NEED_ALPHA_CUTOFF)
@@ -133,6 +133,6 @@ class BaseMaterial: Material {
     override init(_ engine: Engine, _ shader: Shader) {
         super.init(engine, shader)
         blendMode = BlendMode.Normal
-        shaderData.setFloat(BaseMaterial._alphaCutoffProp, 0)
+        shaderData.setBytes(BaseMaterial._alphaCutoffProp, Float(0.0))
     }
 }

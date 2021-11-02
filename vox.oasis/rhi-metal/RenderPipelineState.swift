@@ -73,23 +73,8 @@ extension RenderPipelineState {
                 shaderUniform.location = location
 
                 switch type {
-                case .float:
-                    shaderUniform.applyFunc = shaderUniform.uploadVertex1f
-                    shaderUniform.cacheValue = .Float(0)
-                case .float2:
-                    shaderUniform.applyFunc = shaderUniform.uploadVertex2f
-                    shaderUniform.cacheValue = .Vector2(Vector2(0, 0))
-                case .float3:
-                    shaderUniform.applyFunc = shaderUniform.uploadVertex3f
-                    shaderUniform.cacheValue = .Vector3(Vector3(0, 0, 0))
-                case .float4:
-                    shaderUniform.applyFunc = shaderUniform.uploadVertex4f
-                    shaderUniform.cacheValue = .Vector4(Vector4(0, 0, 0, 0))
-                case .bool, .int:
-                    shaderUniform.applyFunc = shaderUniform.uploadVertex1i
-                    shaderUniform.cacheValue = .Int(0)
-                case .float4x4:
-                    shaderUniform.applyFunc = shaderUniform.uploadVertexMat4
+                case .float, .float2, .float3, .float4, .int, .float4x4:
+                    shaderUniform.applyFunc = shaderUniform.uploadVertexBytes
                 default:
                     fatalError("unkonwn type \(type.rawValue)")
                 }
@@ -115,25 +100,8 @@ extension RenderPipelineState {
                 if type == .buffer {
                     shaderUniform.bufferDataSize = aug.bufferDataSize
                     switch aug.bufferDataType {
-                    case .float:
-                        shaderUniform.applyFunc = shaderUniform.uploadFrag1f
-                        shaderUniform.cacheValue = .Float(0)
-                    case .float2:
-                        shaderUniform.applyFunc = shaderUniform.uploadFrag2f
-                        shaderUniform.cacheValue = .Vector2(Vector2(0, 0))
-                    case .float3:
-                        shaderUniform.applyFunc = shaderUniform.uploadFrag3f
-                        shaderUniform.cacheValue = .Vector3(Vector3(0, 0, 0))
-                    case .float4:
-                        shaderUniform.applyFunc = shaderUniform.uploadFrag4f
-                        shaderUniform.cacheValue = .Vector4(Vector4(0, 0, 0, 0))
-                    case .bool, .int:
-                        shaderUniform.applyFunc = shaderUniform.uploadFrag1i
-                        shaderUniform.cacheValue = .Int(0)
-                    case .float4x4:
-                        shaderUniform.applyFunc = shaderUniform.uploadFragMat4
-                    case .struct:
-                        shaderUniform.applyFunc = shaderUniform.uploadFragAny
+                    case .float, .float2, .float3, .float4, .int, .float4x4, .struct:
+                        shaderUniform.applyFunc = shaderUniform.uploadFragmentBytes
                     default:
                         print(aug)
                     }

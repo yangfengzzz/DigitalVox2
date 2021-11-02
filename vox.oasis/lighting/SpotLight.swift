@@ -74,12 +74,12 @@ class SpotLight: Light {
     internal static func _updateShaderData(_ shaderData: ShaderData) {
         let data = SpotLight._combinedData
 
-        shaderData.setVector3Array(SpotLight._colorProperty, data.color)
-        shaderData.setVector3Array(SpotLight._positionProperty, data.position)
-        shaderData.setVector3Array(SpotLight._directionProperty, data.direction)
-        shaderData.setFloatArray(SpotLight._distanceProperty, data.distance)
-        shaderData.setFloatArray(SpotLight._angleCosProperty, data.angleCos)
-        shaderData.setFloatArray(SpotLight._penumbraCosProperty, data.penumbraCos)
+        shaderData.setBytes(SpotLight._colorProperty, data.color)
+        shaderData.setBytes(SpotLight._positionProperty, data.position)
+        shaderData.setBytes(SpotLight._directionProperty, data.direction)
+        shaderData.setBytes(SpotLight._distanceProperty, data.distance)
+        shaderData.setBytes(SpotLight._angleCosProperty, data.angleCos)
+        shaderData.setBytes(SpotLight._penumbraCosProperty, data.penumbraCos)
     }
 
     internal func _appendData(_ lightIndex: Int) {

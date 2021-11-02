@@ -58,12 +58,12 @@ class SkinnedMeshRenderer: MeshRenderer {
         super._updateShaderData(context)
 
         if (!_useJointTexture && !matrixPalette.isEmpty) {
-            shaderData.setFloatArray(SkinnedMeshRenderer._jointMatrixProperty, matrixPalette)
+            shaderData.setBytes(SkinnedMeshRenderer._jointMatrixProperty, matrixPalette)
         }
 
         let mesh = mesh as! ModelMesh
         if (mesh._hasBlendShape) {
-            shaderData.setFloatArray(SkinnedMeshRenderer._blendShapeWeightsProperty, _blendShapeWeights)
+            shaderData.setBytes(SkinnedMeshRenderer._blendShapeWeightsProperty, _blendShapeWeights)
             shaderData.enableMacro(HAS_BLENDSHAPE)
 
             if (mesh._useBlendShapeNormal) {
@@ -102,7 +102,7 @@ class SkinnedMeshRenderer: MeshRenderer {
         let jointCount = self.jointNodes.count
         if (jointCount != 0) {
             shaderData.enableMacro(HAS_SKIN)
-            shaderData.setInt(SkinnedMeshRenderer._jointCountProperty, jointCount)
+            shaderData.setBytes(SkinnedMeshRenderer._jointCountProperty, jointCount)
             if (joints.count > maxJoints) {
                 _useJointTexture = true
             } else {

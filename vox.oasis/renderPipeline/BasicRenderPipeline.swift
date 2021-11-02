@@ -137,7 +137,7 @@ extension BasicRenderPipeline {
         viewMatrix.cloneTo(target: _matrix)
         _matrix.elements.columns.3 = [0, 0, 0, 1]
         Matrix.multiply(left: projectionMatrix, right: _matrix, out: _matrix)
-        shaderData.setMatrix("u_mvpNoscale", _matrix)
+        shaderData.setBytes("u_mvpNoscale", _matrix)
 
         let program = material.shader._getShaderProgram(engine, compileMacros)
         if (!program.isValid) {

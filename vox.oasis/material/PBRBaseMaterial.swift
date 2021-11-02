@@ -25,12 +25,12 @@ class PBRBaseMaterial: BaseMaterial {
     /// Base color.
     var baseColor: Color {
         get {
-            shaderData.getColor(PBRBaseMaterial._baseColorProp)!
+            shaderData.getBytes(PBRBaseMaterial._baseColorProp) as! Color
         }
         set {
-            let baseColor = shaderData.getColor(PBRBaseMaterial._baseColorProp)
+            let baseColor = shaderData.getBytes(PBRBaseMaterial._baseColorProp) as! Color
             if (newValue !== baseColor) {
-                newValue.cloneTo(target: baseColor!)
+                newValue.cloneTo(target: baseColor)
             }
         }
     }
@@ -68,23 +68,23 @@ class PBRBaseMaterial: BaseMaterial {
     /// Normal texture intensity.
     var normalTextureIntensity: Float {
         get {
-            shaderData.getFloat(PBRBaseMaterial._normalTextureIntensityProp)!
+            shaderData.getBytes(PBRBaseMaterial._normalTextureIntensityProp) as! Float
         }
         set {
-            shaderData.setFloat(PBRBaseMaterial._normalTextureIntensityProp, newValue)
-            shaderData.setFloat("u_normalIntensity", newValue)
+            shaderData.setBytes(PBRBaseMaterial._normalTextureIntensityProp, newValue)
+            shaderData.setBytes("u_normalIntensity", newValue)
         }
     }
 
     /// Emissive color.
     var emissiveColor: Color {
         get {
-            shaderData.getColor(PBRBaseMaterial._emissiveColorProp)!
+            shaderData.getBytes(PBRBaseMaterial._emissiveColorProp) as! Color
         }
         set {
-            let emissiveColor = shaderData.getColor(PBRBaseMaterial._emissiveColorProp)
+            let emissiveColor = shaderData.getBytes(PBRBaseMaterial._emissiveColorProp) as! Color
             if (newValue !== emissiveColor) {
-                newValue.cloneTo(target: emissiveColor!)
+                newValue.cloneTo(target: emissiveColor)
             }
         }
     }
@@ -122,22 +122,22 @@ class PBRBaseMaterial: BaseMaterial {
     /// Occlusion texture intensity.
     var occlusionTextureIntensity: Float {
         get {
-            shaderData.getFloat(PBRBaseMaterial._occlusionTextureIntensityProp)!
+            shaderData.getBytes(PBRBaseMaterial._occlusionTextureIntensityProp) as! Float
         }
         set {
-            shaderData.setFloat(PBRBaseMaterial._occlusionTextureIntensityProp, newValue)
+            shaderData.setBytes(PBRBaseMaterial._occlusionTextureIntensityProp, newValue)
         }
     }
 
     /// Tiling and offset of main textures.
     var tilingOffset: Vector4 {
         get {
-            shaderData.getVector4(PBRBaseMaterial._tilingOffsetProp)!
+            shaderData.getBytes(PBRBaseMaterial._tilingOffsetProp) as! Vector4
         }
         set {
-            let tilingOffset = shaderData.getVector4(PBRBaseMaterial._tilingOffsetProp)
+            let tilingOffset = shaderData.getBytes(PBRBaseMaterial._tilingOffsetProp) as! Vector4
             if (newValue !== tilingOffset) {
-                newValue.cloneTo(target: tilingOffset!)
+                newValue.cloneTo(target: tilingOffset)
             }
         }
     }
@@ -151,11 +151,11 @@ class PBRBaseMaterial: BaseMaterial {
         shaderData.enableMacro(NEED_WORLDPOS)
         shaderData.enableMacro(NEED_TILINGOFFSET)
 
-        shaderData.setColor(PBRBaseMaterial._baseColorProp, Color(1, 1, 1, 1))
-        shaderData.setColor(PBRBaseMaterial._emissiveColorProp, Color(0, 0, 0, 1))
-        shaderData.setVector4(PBRBaseMaterial._tilingOffsetProp, Vector4(1, 1, 0, 0))
+        shaderData.setBytes(PBRBaseMaterial._baseColorProp, Color(1, 1, 1, 1))
+        shaderData.setBytes(PBRBaseMaterial._emissiveColorProp, Color(0, 0, 0, 1))
+        shaderData.setBytes(PBRBaseMaterial._tilingOffsetProp, Vector4(1, 1, 0, 0))
 
-        shaderData.setFloat(PBRBaseMaterial._normalTextureIntensityProp, 1)
-        shaderData.setFloat(PBRBaseMaterial._occlusionTextureIntensityProp, 1)
+        shaderData.setBytes(PBRBaseMaterial._normalTextureIntensityProp, Float(1))
+        shaderData.setBytes(PBRBaseMaterial._occlusionTextureIntensityProp, Float(1))
     }
 }

@@ -16,12 +16,12 @@ class UnlitMaterial: BaseMaterial {
     /// Base color.
     var baseColor: Color {
         get {
-            shaderData.getColor(UnlitMaterial._baseColorProp)!
+            shaderData.getBytes(UnlitMaterial._baseColorProp) as! Color
         }
         set {
-            let baseColor = shaderData.getColor(UnlitMaterial._baseColorProp)
+            let baseColor = shaderData.getBytes(UnlitMaterial._baseColorProp) as! Color
             if (newValue !== baseColor) {
-                newValue.cloneTo(target: baseColor!)
+                newValue.cloneTo(target: baseColor)
             }
         }
     }
@@ -44,12 +44,12 @@ class UnlitMaterial: BaseMaterial {
     /// Tiling and offset of main textures.
     var tilingOffset: Vector4 {
         get {
-            shaderData.getVector4(UnlitMaterial._tilingOffsetProp)!
+            shaderData.getBytes(UnlitMaterial._tilingOffsetProp) as! Vector4
         }
         set {
-            let tilingOffset = shaderData.getVector4(UnlitMaterial._tilingOffsetProp)
+            let tilingOffset = shaderData.getBytes(UnlitMaterial._tilingOffsetProp) as! Vector4
             if (newValue !== tilingOffset) {
-                newValue.cloneTo(target: tilingOffset!)
+                newValue.cloneTo(target: tilingOffset)
             }
         }
     }
@@ -62,7 +62,7 @@ class UnlitMaterial: BaseMaterial {
         shaderData.enableMacro(OMIT_NORMAL)
         shaderData.enableMacro(NEED_TILINGOFFSET)
 
-        shaderData.setColor(UnlitMaterial._baseColorProp, Color(1, 1, 1, 1))
-        shaderData.setVector4(UnlitMaterial._tilingOffsetProp, Vector4(1, 1, 0, 0))
+        shaderData.setBytes(UnlitMaterial._baseColorProp, Color(1, 1, 1, 1))
+        shaderData.setBytes(UnlitMaterial._tilingOffsetProp, Vector4(1, 1, 0, 0))
     }
 }
