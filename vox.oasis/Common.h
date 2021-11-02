@@ -49,4 +49,6 @@
 #include "CPxRigidDynamic.h"
 #include "CPxScene.h"
 
+#include "CIKAimJob.h"
+
 #endif /* Common_h */

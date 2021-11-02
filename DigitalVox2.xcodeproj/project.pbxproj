@@ -392,6 +392,8 @@
 		04CB88B82730ECC900B0E398 /* track_sampling_job.h in Headers */ = {isa = PBXBuildFile; fileRef = 04CB889E2730ECC900B0E398 /* track_sampling_job.h */; };
 		04CB88B92730ECC900B0E398 /* blending_job.cc in Sources */ = {isa = PBXBuildFile; fileRef = 04CB889F2730ECC900B0E398 /* blending_job.cc */; };
 		04CB88BA2730ECC900B0E398 /* local_to_model_job.cc in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88A02730ECC900B0E398 /* local_to_model_job.cc */; };
+		04CB88BF2730ED6000B0E398 /* CIKAimJob.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88BE2730ED6000B0E398 /* CIKAimJob.mm */; };
+		04CB88C02730EE6F00B0E398 /* libexternal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04CB88492730EC0700B0E398 /* libexternal.a */; };
 		04EA0D6A26E0F9AD00CA7833 /* math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6926E0F9AD00CA7833 /* math.swift */; };
 		04EA0D6C26E1204200CA7833 /* bbox2f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6B26E1204200CA7833 /* bbox2f.swift */; };
 		04EA0D6E26E1204F00CA7833 /* bbox3f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6D26E1204F00CA7833 /* bbox3f.swift */; };
@@ -443,6 +445,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 0497A1E026DF150500F61DE9;
 			remoteInfo = DigitalVox2;
+		};
+		04CB88C12730EE7300B0E398 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0497A1D926DF150500F61DE9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 04CB88482730EC0700B0E398;
+			remoteInfo = external;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -898,6 +907,8 @@
 		04CB889E2730ECC900B0E398 /* track_sampling_job.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = track_sampling_job.h; path = ozz/animation/runtime/track_sampling_job.h; sourceTree = "<group>"; };
 		04CB889F2730ECC900B0E398 /* blending_job.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = blending_job.cc; path = ozz/animation/runtime/blending_job.cc; sourceTree = "<group>"; };
 		04CB88A02730ECC900B0E398 /* local_to_model_job.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = local_to_model_job.cc; path = ozz/animation/runtime/local_to_model_job.cc; sourceTree = "<group>"; };
+		04CB88BD2730ED5900B0E398 /* CIKAimJob.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CIKAimJob.h; sourceTree = "<group>"; };
+		04CB88BE2730ED6000B0E398 /* CIKAimJob.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CIKAimJob.mm; sourceTree = "<group>"; };
 		04DB2A4126DF1E0500C15850 /* IClone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IClone.swift; sourceTree = "<group>"; };
 		04DBA7D92700B32D00C3B97C /* EngineFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineFeature.swift; sourceTree = "<group>"; };
 		04DBA7DB2700B3C900C3B97C /* SceneFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneFeature.swift; sourceTree = "<group>"; };
@@ -931,6 +942,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04CB88C02730EE6F00B0E398 /* libexternal.a in Frameworks */,
 				041BAE25272A5091006268D5 /* Logging in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1139,6 +1151,7 @@
 				04A6BEC4272453320024DF43 /* shadow-map.metal */,
 				045B064227294442003E4B68 /* physics-lite */,
 				041D1C52272A3FC600322BDF /* physics-physx */,
+				04CB88BB2730ED3200B0E398 /* animation-ozz */,
 				0413289E26E0CBE7000A4F4E /* ShaderSimple.metal */,
 				04AE2422272913ED00D62587 /* BRDF.metal */,
 				041BADDB272A4FA5006268D5 /* Preview Content */,
@@ -1925,6 +1938,15 @@
 			name = offline;
 			sourceTree = "<group>";
 		};
+		04CB88BB2730ED3200B0E398 /* animation-ozz */ = {
+			isa = PBXGroup;
+			children = (
+				04CB88BD2730ED5900B0E398 /* CIKAimJob.h */,
+				04CB88BE2730ED6000B0E398 /* CIKAimJob.mm */,
+			);
+			path = "animation-ozz";
+			sourceTree = "<group>";
+		};
 		04DB2A4026DF1DF100C15850 /* design */ = {
 			isa = PBXGroup;
 			children = (
@@ -2040,6 +2062,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				04CB88C22730EE7300B0E398 /* PBXTargetDependency */,
 			);
 			name = vox.oasis;
 			packageProductDependencies = (
@@ -2529,6 +2552,7 @@
 				045D2BCB272CAF0C0091636B /* AnimationProperty.swift in Sources */,
 				041BAE42272A50ED006268D5 /* Skin.swift in Sources */,
 				041BAE60272A510C006268D5 /* ShaderProgram.swift in Sources */,
+				04CB88BF2730ED6000B0E398 /* CIKAimJob.mm in Sources */,
 				041BAE14272A500F006268D5 /* USDZAssetsLoader.swift in Sources */,
 				041BAE70272A5117006268D5 /* ShadowPass.swift in Sources */,
 				041BAE0C272A500F006268D5 /* SceneManager.swift in Sources */,
@@ -2821,6 +2845,11 @@
 			target = 0497A1E026DF150500F61DE9 /* vox.render */;
 			targetProxy = 0497A1FE26DF150800F61DE9 /* PBXContainerItemProxy */;
 		};
+		04CB88C22730EE7300B0E398 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 04CB88482730EC0700B0E398 /* external */;
+			targetProxy = 04CB88C12730EE7300B0E398 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -2851,6 +2880,7 @@
 					"$(inherited)",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = /Users/yangfeng/Desktop/DigitalVox2/external;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2921,6 +2951,7 @@
 					"$(inherited)",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = /Users/yangfeng/Desktop/DigitalVox2/external;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
