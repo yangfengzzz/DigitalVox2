@@ -9,7 +9,7 @@ import Foundation
 
 // TrackSamplingJob internal implementation. See *TrackSamplingJob for more
 // details.
-struct TrackSamplingJob<ValueType: TrackPolicy> {
+struct TrackSamplingJob<ValueType: TrackPolicy> where ValueType._ValueType == ValueType {
     // Validates all parameters.
     func Validate() -> Bool {
         var success = true
@@ -49,7 +49,7 @@ struct TrackSamplingJob<ValueType: TrackPolicy> {
 
         let id0step = (track!.steps()[id0 / 8] & (1 << (id0 & 7))) != 0
         if (id0step || id1 == nil) {
-            result = values.last! as! ValueType._ValueType
+            result = values.last!
         } else {
             // Lerp relevant keys.
             let tk0 = ratios[id0]
@@ -58,7 +58,7 @@ struct TrackSamplingJob<ValueType: TrackPolicy> {
             let alpha = (clamped_ratio - tk0) / (tk1 - tk0)
             let vk0 = values[id0]
             let vk1 = values[id1!]
-            result = ValueType.Lerp(vk0 as! ValueType._ValueType, vk1 as! ValueType._ValueType, alpha)
+            result = ValueType.Lerp(vk0, vk1, alpha)
         }
         return true
     }

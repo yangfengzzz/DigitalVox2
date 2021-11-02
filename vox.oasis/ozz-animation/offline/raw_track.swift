@@ -86,10 +86,10 @@ internal struct RawTrack<ValueType: TrackPolicy> {
     }
 
     // Sequence of keyframes, expected to be sorted.
-    var keyframes: [RawTrackKeyframe<ValueType>]
+    var keyframes: [RawTrackKeyframe<ValueType>] = []
 
     // Name of the track.
-    var name: String
+    var name: String = ""
 }
 
 // Offline user-channel animation track type instantiation.

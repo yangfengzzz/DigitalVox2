@@ -37,7 +37,9 @@ class TrackBuilder {
         Build(_input)
     }
 
-    func Build<ValueType: TrackPolicy>(_ _input: RawTrack<ValueType>) -> Track<ValueType> {
+    func Build<ValueType: TrackPolicy>(_ _input: RawTrack<ValueType>)
+    -> Track<ValueType> where ValueType._ValueType == ValueType {
+        
         // Tests _raw_animation validity.
         if (!_input.Validate()) {
             return Track()
@@ -85,20 +87,22 @@ class TrackBuilder {
 }
 
 func PatchBeginEndKeys<ValueType: TrackPolicy>(_ _input: RawTrack<ValueType>,
-                                               _ keyframes: inout [RawTrackKeyframe<ValueType>]) {
+                                               _ keyframes: inout [RawTrackKeyframe<ValueType>])
+where ValueType._ValueType == ValueType {
+
     if _input.keyframes.isEmpty {
         let default_value = ValueType.identity()
 
         let begin = RawTrackKeyframe<ValueType>(
                 interpolation: RawTrackInterpolation.Value.kLinear,
                 ratio: 0.0,
-                value: default_value as! ValueType
+                value: default_value
         )
         keyframes.append(begin)
         let end = RawTrackKeyframe<ValueType>(
                 interpolation: RawTrackInterpolation.Value.kLinear,
                 ratio: 1.0,
-                value: default_value as! ValueType
+                value: default_value
         )
         keyframes.append(end)
     } else if _input.keyframes.count == 1 {
