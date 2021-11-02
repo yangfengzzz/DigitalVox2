@@ -48,40 +48,33 @@ func IsLeaf(_skeleton: Skeleton, _joint: Int) -> Bool {
     return next == num_joints || parents[next] != _joint
 }
 
-protocol JointVisitor {
-    func visitor(_ _current: Int, _ _parent: Int)
-}
-
 // Applies a specified functor to each joint in a depth-first order.
 // _Fct is of type void(int _current, int _parent) where the first argument is
 // the child of the second argument. _parent is kNoParent if the
 // _current joint is a root. _from indicates the joint from which the joint
 // hierarchy traversal begins. Use Skeleton::kNoParent to traverse the
 // whole hierarchy, in case there are multiple roots.
-func IterateJointsDF<_Fct: JointVisitor>(_skeleton: Skeleton, _fct: _Fct,
-                                         _from: Int = Skeleton.Constants.kNoParent.rawValue) -> _Fct {
+func IterateJointsDF(_ _skeleton: Skeleton, _ _fct: (Int, Int)->Void,
+                     _ _from: Int = Skeleton.Constants.kNoParent.rawValue) {
     let parents = _skeleton.joint_parents()
     let num_joints = _skeleton.num_joints()
 
     var i = _from < 0 ? 0 : _from
     var process = i < num_joints
     while process {
-        _fct.visitor(i, parents[i])
+        _fct(i, parents[i])
         i += 1
         process = i < num_joints && parents[i] >= _from
     }
-
-    return _fct
 }
 
 // Applies a specified functor to each joint in a reverse (from leaves to root)
 // depth-first order. _Fct is of type void(int _current, int _parent) where the
 // first argument is the child of the second argument. _parent is kNoParent if
 // the _current joint is a root.
-func IterateJointsDFReverse<_Fct: JointVisitor>(_skeleton: Skeleton, _fct: _Fct) -> _Fct {
+func IterateJointsDFReverse(_ _skeleton: Skeleton, _ _fct: (Int, Int)->Void) {
     let parents = _skeleton.joint_parents()
     for i in 0..<_skeleton.num_joints() {
-        _fct.visitor(i, parents[i])
+        _fct(i, parents[i])
     }
-    return _fct
 }

@@ -8,12 +8,12 @@
 import Foundation
 
 // Translation interpolation method.
-func LerpTranslation(_a: VecFloat3, _b: VecFloat3, _alpha: Float) -> VecFloat3 {
+func LerpTranslation(_ _a: VecFloat3, _ _b: VecFloat3, _ _alpha: Float) -> VecFloat3 {
     Lerp(_a, _b, _alpha)
 }
 
 // Rotation interpolation method.
-func LerpRotation(_a: VecQuaternion, _b: VecQuaternion, _alpha: Float) -> VecQuaternion {
+func LerpRotation(_ _a: VecQuaternion, _ _b: VecQuaternion, _ _alpha: Float) -> VecQuaternion {
     // Finds the shortest path. This is done by the AnimationBuilder for runtime
     // animations.
     let dot = _a.x * _b.x + _a.y * _b.y + _a.z * _b.z + _a.w * _b.w
@@ -21,7 +21,7 @@ func LerpRotation(_a: VecQuaternion, _b: VecQuaternion, _alpha: Float) -> VecQua
 }
 
 // Scale interpolation method.
-func LerpScale(_a: VecFloat3, _b: VecFloat3, _alpha: Float) -> VecFloat3 {
+func LerpScale(_ _a: VecFloat3, _ _b: VecFloat3, _ _alpha: Float) -> VecFloat3 {
     Lerp(_a, _b, _alpha)
 }
 

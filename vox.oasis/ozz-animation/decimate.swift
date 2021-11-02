@@ -7,15 +7,16 @@
 
 import Foundation
 
-protocol AdapterType {
+protocol DecimateType {
     associatedtype Key
-    func Decimable(_ key: Key) -> Bool
+
+    func Decimable(_ _: Key) -> Bool
     func Lerp(_ _left: Key, _ _right: Key, _ _ref: Key) -> Key
     func Distance(_ _a: Key, _ _b: Key) -> Float
 }
 
-func Decimate<Key, _Adapter: AdapterType>(_src: [Key], _adapter: _Adapter, _tolerance: Float,
-                                          _dest: inout [Key]) where _Adapter.Key == Key {
+func Decimate<Key, _Adapter: DecimateType>(_ _src: [Key], _ _adapter: _Adapter, _ _tolerance: Float,
+                                           _ _dest: inout [Key]) where _Adapter.Key == Key {
     // Early out if not enough data.
     if (_src.count < 2) {
         _dest = _src
