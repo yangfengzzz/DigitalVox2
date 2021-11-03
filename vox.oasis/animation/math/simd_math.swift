@@ -8,268 +8,268 @@
 import Foundation
 
 extension simd_float4 {
-    // Returns a simd_float4 vector with all components set to 0.
+    /// Returns a simd_float4 vector with all components set to 0.
     static func zero() -> simd_float4 {
         OZZFloat4.zero()
     }
 
-    // Returns a simd_float4 vector with all components set to 1.
+    /// Returns a simd_float4 vector with all components set to 1.
     static func one() -> simd_float4 {
         OZZFloat4.one()
     }
 
-    // Returns a simd_float4 vector with the x component set to 1 and all the others to 0.
+    /// Returns a simd_float4 vector with the x component set to 1 and all the others to 0.
     static func x_axis() -> simd_float4 {
         OZZFloat4.x_axis()
     }
 
-    // Returns a simd_float4 vector with the y component set to 1 and all the others to 0.
+    /// Returns a simd_float4 vector with the y component set to 1 and all the others to 0.
     static func y_axis() -> simd_float4 {
         OZZFloat4.y_axis()
     }
 
-    // Returns a simd_float4 vector with the z component set to 1 and all the others to 0.
+    /// Returns a simd_float4 vector with the z component set to 1 and all the others to 0.
     static func z_axis() -> simd_float4 {
         OZZFloat4.z_axis()
     }
 
-    // Returns a simd_float4 vector with the w component set to 1 and all the others to 0.
+    /// Returns a simd_float4 vector with the w component set to 1 and all the others to 0.
     static func w_axis() -> simd_float4 {
         OZZFloat4.w_axis()
     }
 
-    // Loads _x, _y, _z, _w to the returned vector.
-    // r.x = _x
-    // r.y = _y
-    // r.z = _z
-    // r.w = _w
+    /// Loads _x, _y, _z, _w to the returned vector.
+    /// r.x = _x
+    /// r.y = _y
+    /// r.z = _z
+    /// r.w = _w
     static func load(_ _x: Float, _ _y: Float, _ _z: Float, _ _w: Float) -> simd_float4 {
         OZZFloat4.load(with: _x, _y, _z, _w)
     }
 
-    // Loads _x to the x component of the returned vector, and sets y, z and w to 0.
-    // r.x = _x
-    // r.y = 0
-    // r.z = 0
-    // r.w = 0
+    /// Loads _x to the x component of the returned vector, and sets y, z and w to 0.
+    /// r.x = _x
+    /// r.y = 0
+    /// r.z = 0
+    /// r.w = 0
     static func loadX(_ _x: Float) -> simd_float4 {
         OZZFloat4.loadX(with: _x)
     }
 
-    // Loads _x to the all the components of the returned vector.
-    // r.x = _x
-    // r.y = _x
-    // r.z = _x
-    // r.w = _x
+    /// Loads _x to the all the components of the returned vector.
+    /// r.x = _x
+    /// r.y = _x
+    /// r.z = _x
+    /// r.w = _x
     static func load1(_ _x: Float) -> simd_float4 {
         OZZFloat4.load1(with: _x)
     }
 
-    // Loads the 4 values of _f to the returned vector.
-    // _f must be aligned to 16 bytes.
-    // r.x = _f[0]
-    // r.y = _f[1]
-    // r.z = _f[2]
-    // r.w = _f[3]
+    /// Loads the 4 values of _f to the returned vector.
+    /// _f must be aligned to 16 bytes.
+    /// r.x = _f[0]
+    /// r.y = _f[1]
+    /// r.z = _f[2]
+    /// r.w = _f[3]
     static func loadPtr(_ _f: inout [Float]) -> simd_float4 {
         OZZFloat4.loadPtr(with: &_f)
     }
 
-    // Loads the 4 values of _f to the returned vector.
-    // _f must be aligned to 4 bytes.
-    // r.x = _f[0]
-    // r.y = _f[1]
-    // r.z = _f[2]
-    // r.w = _f[3]
+    /// Loads the 4 values of _f to the returned vector.
+    /// _f must be aligned to 4 bytes.
+    /// r.x = _f[0]
+    /// r.y = _f[1]
+    /// r.z = _f[2]
+    /// r.w = _f[3]
     static func loadPtrU(_ _f: inout [Float]) -> simd_float4 {
         OZZFloat4.loadPtrU(with: &_f)
     }
 
-    // Loads _f[0] to the x component of the returned vector, and sets y, z and w
-    // to 0.
-    // _f must be aligned to 4 bytes.
-    // r.x = _f[0]
-    // r.y = 0
-    // r.z = 0
-    // r.w = 0
+    /// Loads _f[0] to the x component of the returned vector, and sets y, z and w
+    /// to 0.
+    /// _f must be aligned to 4 bytes.
+    /// r.x = _f[0]
+    /// r.y = 0
+    /// r.z = 0
+    /// r.w = 0
     static func loadXPtrU(_ _f: inout [Float]) -> simd_float4 {
         OZZFloat4.loadXPtrU(with: &_f)
     }
 
-    // Loads _f[0] to all the components of the returned vector.
-    // _f must be aligned to 4 bytes.
-    // r.x = _f[0]
-    // r.y = _f[0]
-    // r.z = _f[0]
-    // r.w = _f[0]
+    /// Loads _f[0] to all the components of the returned vector.
+    /// _f must be aligned to 4 bytes.
+    /// r.x = _f[0]
+    /// r.y = _f[0]
+    /// r.z = _f[0]
+    /// r.w = _f[0]
     static func load1PtrU(_ _f: inout [Float]) -> simd_float4 {
         OZZFloat4.load1PtrU(with: &_f)
     }
 
-    // Loads the 2 first value of _f to the x and y components of the returned
-    // vector. The remaining components are set to 0.
-    // _f must be aligned to 4 bytes.
-    // r.x = _f[0]
-    // r.y = _f[1]
-    // r.z = 0
-    // r.w = 0
+    /// Loads the 2 first value of _f to the x and y components of the returned
+    /// vector. The remaining components are set to 0.
+    /// _f must be aligned to 4 bytes.
+    /// r.x = _f[0]
+    /// r.y = _f[1]
+    /// r.z = 0
+    /// r.w = 0
     static func load2PtrU(_ _f: inout [Float]) -> simd_float4 {
         OZZFloat4.load2PtrU(with: &_f)
     }
 
-    // Loads the 3 first value of _f to the x, y and z components of the returned
-    // vector. The remaining components are set to 0.
-    // _f must be aligned to 4 bytes.
-    // r.x = _f[0]
-    // r.y = _f[1]
-    // r.z = _f[2]
-    // r.w = 0
+    /// Loads the 3 first value of _f to the x, y and z components of the returned
+    /// vector. The remaining components are set to 0.
+    /// _f must be aligned to 4 bytes.
+    /// r.x = _f[0]
+    /// r.y = _f[1]
+    /// r.z = _f[2]
+    /// r.w = 0
     static func load3PtrU(_ _f: inout [Float]) -> simd_float4 {
         OZZFloat4.load3PtrU(with: &_f)
     }
 
-    // Convert from integer to float.
+    /// Convert from integer to float.
     static func fromInt(_ _i: _SimdInt4) -> simd_float4 {
         OZZFloat4.fromInt(with: _i)
     }
 }
 
-// Returns the x component of _v as a float.
+/// Returns the x component of _v as a float.
 func getX(_ _v: simd_float4) -> Float {
     OZZFloat4.getXWith(_v)
 }
 
-// Returns the y component of _v as a float.
+/// Returns the y component of _v as a float.
 func getY(_ _v: simd_float4) -> Float {
     OZZFloat4.getYWith(_v)
 }
 
-// Returns the z component of _v as a float.
+/// Returns the z component of _v as a float.
 func getZ(_ _v: simd_float4) -> Float {
     OZZFloat4.getZWith(_v)
 }
 
-// Returns the w component of _v as a float.
+/// Returns the w component of _v as a float.
 func getW(_ _v: simd_float4) -> Float {
     OZZFloat4.getWWith(_v)
 }
 
-// Returns _v with the x component set to x component of _f.
+/// Returns _v with the x component set to x component of _f.
 func setX(_ _v: simd_float4, _ _f: simd_float4) -> simd_float4 {
     OZZFloat4.setXWith(_v, _f)
 }
 
-// Returns _v with the y component set to  x component of _f.
+/// Returns _v with the y component set to  x component of _f.
 func setY(_ _v: simd_float4, _ _f: simd_float4) -> simd_float4 {
     OZZFloat4.setYWith(_v, _f)
 }
 
-// Returns _v with the z component set to  x component of _f.
+/// Returns _v with the z component set to  x component of _f.
 func setZ(_ _v: simd_float4, _ _f: simd_float4) -> simd_float4 {
     OZZFloat4.setZWith(_v, _f)
 }
 
-// Returns _v with the w component set to  x component of _f.
+/// Returns _v with the w component set to  x component of _f.
 func setW(_ _v: simd_float4, _ _f: simd_float4) -> simd_float4 {
     OZZFloat4.setWWith(_v, _f)
 }
 
-// Returns _v with the _i th component set to _f.
-// _i must be in range [0,3]
+/// Returns _v with the _i th component set to _f.
+/// _i must be in range [0,3]
 func setI(_ _v: simd_float4, _ _f: simd_float4, _ _i: Int) -> simd_float4 {
     OZZFloat4.setIWith(_v, _f, Int32(_i))
 }
 
-// Stores the 4 components of _v to the four first floats of _f.
-// _f must be aligned to 16 bytes.
-// _f[0] = _v.x
-// _f[1] = _v.y
-// _f[2] = _v.z
-// _f[3] = _v.w
+/// Stores the 4 components of _v to the four first floats of _f.
+/// _f must be aligned to 16 bytes.
+/// _f[0] = _v.x
+/// _f[1] = _v.y
+/// _f[2] = _v.z
+/// _f[3] = _v.w
 func storePtr(_ _v: simd_float4, _ _f: inout [Float]) {
     OZZFloat4.storePtr(with: _v, &_f)
 }
 
-// Stores the x component of _v to the first float of _f.
-// _f must be aligned to 16 bytes.
-// _f[0] = _v.x
+/// Stores the x component of _v to the first float of _f.
+/// _f must be aligned to 16 bytes.
+/// _f[0] = _v.x
 func store1Ptr(_ _v: simd_float4, _ _f: inout [Float]) {
     OZZFloat4.store1Ptr(with: _v, &_f)
 }
 
-// Stores x and y components of _v to the two first floats of _f.
-// _f must be aligned to 16 bytes.
-// _f[0] = _v.x
-// _f[1] = _v.y
+/// Stores x and y components of _v to the two first floats of _f.
+/// _f must be aligned to 16 bytes.
+/// _f[0] = _v.x
+/// _f[1] = _v.y
 func store2Ptr(_ _v: simd_float4, _ _f: inout [Float]) {
     OZZFloat4.store2Ptr(with: _v, &_f)
 }
 
-// Stores x, y and z components of _v to the three first floats of _f.
-// _f must be aligned to 16 bytes.
-// _f[0] = _v.x
-// _f[1] = _v.y
-// _f[2] = _v.z
+/// Stores x, y and z components of _v to the three first floats of _f.
+/// _f must be aligned to 16 bytes.
+/// _f[0] = _v.x
+/// _f[1] = _v.y
+/// _f[2] = _v.z
 func store3Ptr(_ _v: simd_float4, _ _f: inout [Float]) {
     OZZFloat4.store3Ptr(with: _v, &_f)
 }
 
-// Stores the 4 components of _v to the four first floats of _f.
-// _f must be aligned to 4 bytes.
-// _f[0] = _v.x
-// _f[1] = _v.y
-// _f[2] = _v.z
-// _f[3] = _v.w
+/// Stores the 4 components of _v to the four first floats of _f.
+/// _f must be aligned to 4 bytes.
+/// _f[0] = _v.x
+/// _f[1] = _v.y
+/// _f[2] = _v.z
+/// _f[3] = _v.w
 func storePtrU(_ _v: simd_float4, _ _f: inout [Float]) {
     OZZFloat4.storePtrU(with: _v, &_f)
 }
 
-// Stores the x component of _v to the first float of _f.
-// _f must be aligned to 4 bytes.
-// _f[0] = _v.x
+/// Stores the x component of _v to the first float of _f.
+/// _f must be aligned to 4 bytes.
+/// _f[0] = _v.x
 func store1PtrU(_ _v: simd_float4, _ _f: inout [Float]) {
     OZZFloat4.store1PtrU(with: _v, &_f)
 }
 
-// Stores x and y components of _v to the two first floats of _f.
-// _f must be aligned to 4 bytes.
-// _f[0] = _v.x
-// _f[1] = _v.y
+/// Stores x and y components of _v to the two first floats of _f.
+/// _f must be aligned to 4 bytes.
+/// _f[0] = _v.x
+/// _f[1] = _v.y
 func store2PtrU(_ _v: simd_float4, _ _f: inout [Float]) {
     OZZFloat4.store2PtrU(with: _v, &_f)
 }
 
-// Stores x, y and z components of _v to the three first floats of _f.
-// _f must be aligned to 4 bytes.
-// _f[0] = _v.x
-// _f[1] = _v.y
-// _f[2] = _v.z
+/// Stores x, y and z components of _v to the three first floats of _f.
+/// _f must be aligned to 4 bytes.
+/// _f[0] = _v.x
+/// _f[1] = _v.y
+/// _f[2] = _v.z
 func store3PtrU(_ _v: simd_float4, _ _f: inout [Float]) {
     OZZFloat4.store3PtrU(with: _v, &_f)
 }
 
-// Replicates x of _a to all the components of the returned vector.
+/// Replicates x of _a to all the components of the returned vector.
 func splatX(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.splatX(with: _v)
 }
 
-// Replicates y of _a to all the components of the returned vector.
+/// Replicates y of _a to all the components of the returned vector.
 func splatY(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.splatY(with: _v)
 }
 
-// Replicates z of _a to all the components of the returned vector.
+/// Replicates z of _a to all the components of the returned vector.
 func splatZ(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.splatZ(with: _v)
 }
 
-// Replicates w of _a to all the components of the returned vector.
+/// Replicates w of _a to all the components of the returned vector.
 func splatW(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.splatW(with: _v)
 }
 
-// Swizzle x, y, z and w components based on compile time arguments _X, _Y, _Z
-// and _W. Arguments can vary from 0 (x), to 3 (w).
+/// Swizzle x, y, z and w components based on compile time arguments _X, _Y, _Z
+/// and _W. Arguments can vary from 0 (x), to 3 (w).
 
 func swizzle3332(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.swizzle3332(with: _v)
@@ -323,536 +323,536 @@ func swizzle2233(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.swizzle2233(with: _v)
 }
 
-// Multiplies _a and _b, then adds _c.
-// v = (_a * _b) + _c
+/// Multiplies _a and _b, then adds _c.
+/// v = (_a * _b) + _c
 func mAdd(_ _a: simd_float4, _ _b: simd_float4, _ _c: simd_float4) -> simd_float4 {
     OZZFloat4.mAdd(with: _a, _b, _c)
 }
 
-// Multiplies _a and _b, then subs _c.
-// v = (_a * _b) + _c
+/// Multiplies _a and _b, then subs _c.
+/// v = (_a * _b) + _c
 func mSub(_ _a: simd_float4, _ _b: simd_float4, _ _c: simd_float4) -> simd_float4 {
     OZZFloat4.mSub(with: _a, _b, _c)
 }
 
-// Multiplies _a and _b, negate it, then adds _c.
-// v = -(_a * _b) + _c
+/// Multiplies _a and _b, negate it, then adds _c.
+/// v = -(_a * _b) + _c
 func nMAdd(_ _a: simd_float4, _ _b: simd_float4, _ _c: simd_float4) -> simd_float4 {
     OZZFloat4.nmAdd(with: _a, _b, _c)
 }
 
-// Multiplies _a and _b, negate it, then subs _c.
-// v = -(_a * _b) + _c
+/// Multiplies _a and _b, negate it, then subs _c.
+/// v = -(_a * _b) + _c
 func nMSub(_ _a: simd_float4, _ _b: simd_float4, _ _c: simd_float4) -> simd_float4 {
     OZZFloat4.nmSub(with: _a, _b, _c)
 }
 
-// Divides the x component of _a by the _x component of _b and stores it in the
-// x component of the returned vector. y, z, w of the returned vector are the
-// same as _a respective components.
-// r.x = _a.x / _b.x
-// r.y = _a.y
-// r.z = _a.z
-// r.w = _a.w
+/// Divides the x component of _a by the _x component of _b and stores it in the
+/// x component of the returned vector. y, z, w of the returned vector are the
+/// same as _a respective components.
+/// r.x = _a.x / _b.x
+/// r.y = _a.y
+/// r.z = _a.z
+/// r.w = _a.w
 func divX(_ _a: simd_float4, _ _b: simd_float4) -> simd_float4 {
     OZZFloat4.divX(with: _a, _b)
 }
 
-// Computes the (horizontal) addition of x and y components of _v. The result is
-// stored in the x component of the returned value. y, z, w of the returned
-// vector are the same as their respective components in _v.
-// r.x = _a.x + _a.y
-// r.y = _a.y
-// r.z = _a.z
-// r.w = _a.w
+/// Computes the (horizontal) addition of x and y components of _v. The result is
+/// stored in the x component of the returned value. y, z, w of the returned
+/// vector are the same as their respective components in _v.
+/// r.x = _a.x + _a.y
+/// r.y = _a.y
+/// r.z = _a.z
+/// r.w = _a.w
 func hAdd2(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.hAdd2(with: _v)
 }
 
-// Computes the (horizontal) addition of x, y and z components of _v. The result
-// is stored in the x component of the returned value. y, z, w of the returned
-// vector are the same as their respective components in _v.
-// r.x = _a.x + _a.y + _a.z
-// r.y = _a.y
-// r.z = _a.z
-// r.w = _a.w
+/// Computes the (horizontal) addition of x, y and z components of _v. The result
+/// is stored in the x component of the returned value. y, z, w of the returned
+/// vector are the same as their respective components in _v.
+/// r.x = _a.x + _a.y + _a.z
+/// r.y = _a.y
+/// r.z = _a.z
+/// r.w = _a.w
 func hAdd3(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.hAdd3(with: _v)
 }
 
-// Computes the (horizontal) addition of x and y components of _v. The result is
-// stored in the x component of the returned value. y, z, w of the returned
-// vector are the same as their respective components in _v.
-// r.x = _a.x + _a.y + _a.z + _a.w
-// r.y = _a.y
-// r.z = _a.z
-// r.w = _a.w
+/// Computes the (horizontal) addition of x and y components of _v. The result is
+/// stored in the x component of the returned value. y, z, w of the returned
+/// vector are the same as their respective components in _v.
+/// r.x = _a.x + _a.y + _a.z + _a.w
+/// r.y = _a.y
+/// r.z = _a.z
+/// r.w = _a.w
 func hAdd4(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.hAdd4(with: _v)
 }
 
-// Computes the dot product of x and y components of _v. The result is
-// stored in the x component of the returned value. y, z, w of the returned
-// vector are undefined.
-// r.x = _a.x * _a.x + _a.y * _a.y
-// r.y = ?
-// r.z = ?
-// r.w = ?
+/// Computes the dot product of x and y components of _v. The result is
+/// stored in the x component of the returned value. y, z, w of the returned
+/// vector are undefined.
+/// r.x = _a.x * _a.x + _a.y * _a.y
+/// r.y = ?
+/// r.z = ?
+/// r.w = ?
 func dot2(_ _a: simd_float4, _ _b: simd_float4) -> simd_float4 {
     OZZFloat4.dot2(with: _a, _b)
 }
 
-// Computes the dot product of x, y and z components of _v. The result is
-// stored in the x component of the returned value. y, z, w of the returned
-// vector are undefined.
-// r.x = _a.x * _a.x + _a.y * _a.y + _a.z * _a.z
-// r.y = ?
-// r.z = ?
-// r.w = ?
+/// Computes the dot product of x, y and z components of _v. The result is
+/// stored in the x component of the returned value. y, z, w of the returned
+/// vector are undefined.
+/// r.x = _a.x * _a.x + _a.y * _a.y + _a.z * _a.z
+/// r.y = ?
+/// r.z = ?
+/// r.w = ?
 func dot3(_ _a: simd_float4, _ _b: simd_float4) -> simd_float4 {
     OZZFloat4.dot3(with: _a, _b)
 }
 
-// Computes the dot product of x, y, z and w components of _v. The result is
-// stored in the x component of the returned value. y, z, w of the returned
-// vector are undefined.
-// r.x = _a.x * _a.x + _a.y * _a.y + _a.z * _a.z + _a.w * _a.w
-// r.y = ?
-// r.z = ?
-// r.w = ?
+/// Computes the dot product of x, y, z and w components of _v. The result is
+/// stored in the x component of the returned value. y, z, w of the returned
+/// vector are undefined.
+/// r.x = _a.x * _a.x + _a.y * _a.y + _a.z * _a.z + _a.w * _a.w
+/// r.y = ?
+/// r.z = ?
+/// r.w = ?
 func dot4(_ _a: simd_float4, _ _b: simd_float4) -> simd_float4 {
     OZZFloat4.dot4(with: _a, _b)
 }
 
-// Computes the cross product of x, y and z components of _v. The result is
-// stored in the x, y and z components of the returned value. w of the returned
-// vector is undefined.
-// r.x = _a.y * _b.z - _a.z * _b.y
-// r.y = _a.z * _b.x - _a.x * _b.z
-// r.z = _a.x * _b.y - _a.y * _b.x
-// r.w = ?
+/// Computes the cross product of x, y and z components of _v. The result is
+/// stored in the x, y and z components of the returned value. w of the returned
+/// vector is undefined.
+/// r.x = _a.y * _b.z - _a.z * _b.y
+/// r.y = _a.z * _b.x - _a.x * _b.z
+/// r.z = _a.x * _b.y - _a.y * _b.x
+/// r.w = ?
 func cross3(_ _a: simd_float4, _ _b: simd_float4) -> simd_float4 {
     OZZFloat4.cross3(with: _a, _b)
 }
 
-// Returns the per component estimated reciprocal of _v.
+/// Returns the per component estimated reciprocal of _v.
 func rcpEst(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.rcpEst(with: _v)
 }
 
-// Returns the per component estimated reciprocal of _v, where approximation is
-// improved with one more new Newton-Raphson step.
+/// Returns the per component estimated reciprocal of _v, where approximation is
+/// improved with one more new Newton-Raphson step.
 func rcpEstNR(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.rcpEstNR(with: _v)
 }
 
-// Returns the estimated reciprocal of the x component of _v and stores it in
-// the x component of the returned vector. y, z, w of the returned vector are
-// the same as their respective components in _v.
+/// Returns the estimated reciprocal of the x component of _v and stores it in
+/// the x component of the returned vector. y, z, w of the returned vector are
+/// the same as their respective components in _v.
 func rcpEstX(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.rcpEstX(with: _v)
 }
 
-// Returns the estimated reciprocal of the x component of _v, where
-// approximation is improved with one more new Newton-Raphson step. y, z, w of
-// the returned vector are undefined.
+/// Returns the estimated reciprocal of the x component of _v, where
+/// approximation is improved with one more new Newton-Raphson step. y, z, w of
+/// the returned vector are undefined.
 func rcpEstXNR(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.rcpEstXNR(with: _v)
 }
 
-// Returns the per component square root of _v.
+/// Returns the per component square root of _v.
 func sqrt(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.sqrt(with: _v)
 }
 
-// Returns the square root of the x component of _v and stores it in the x
-// component of the returned vector. y, z, w of the returned vector are the
-// same as their respective components in _v.
+/// Returns the square root of the x component of _v and stores it in the x
+/// component of the returned vector. y, z, w of the returned vector are the
+/// same as their respective components in _v.
 func sqrtX(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.sqrtX(with: _v)
 }
 
-// Returns the per component estimated reciprocal square root of _v.
+/// Returns the per component estimated reciprocal square root of _v.
 func rSqrtEst(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.rSqrtEst(with: _v)
 }
 
-// Returns the per component estimated reciprocal square root of _v, where
-// approximation is improved with one more new Newton-Raphson step.
+/// Returns the per component estimated reciprocal square root of _v, where
+/// approximation is improved with one more new Newton-Raphson step.
 func rSqrtEstNR(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.rSqrtEstNR(with: _v)
 }
 
-// Returns the estimated reciprocal square root of the x component of _v and
-// stores it in the x component of the returned vector. y, z, w of the returned
-// vector are the same as their respective components in _v.
+/// Returns the estimated reciprocal square root of the x component of _v and
+/// stores it in the x component of the returned vector. y, z, w of the returned
+/// vector are the same as their respective components in _v.
 func rSqrtEstX(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.rSqrtEstX(with: _v)
 }
 
-// Returns the estimated reciprocal square root of the x component of _v, where
-// approximation is improved with one more new Newton-Raphson step. y, z, w of
-// the returned vector are undefined.
+/// Returns the estimated reciprocal square root of the x component of _v, where
+/// approximation is improved with one more new Newton-Raphson step. y, z, w of
+/// the returned vector are undefined.
 func rSqrtEstXNR(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.rSqrtEstXNR(with: _v)
 }
 
-// Returns the per element absolute value of _v.
+/// Returns the per element absolute value of _v.
 func abs(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.abs(with: _v)
 }
 
-// Returns the sign bit of _v.
+/// Returns the sign bit of _v.
 func sign(_ _v: simd_float4) -> SimdInt4 {
     OZZFloat4.sign(with: _v)
 }
 
-// Returns the per component minimum of _a and _b.
+/// Returns the per component minimum of _a and _b.
 func min(_ _a: simd_float4, _ _b: simd_float4) -> simd_float4 {
     OZZFloat4.min(with: _a, _b)
 }
 
-// Returns the per component maximum of _a and _b.
+/// Returns the per component maximum of _a and _b.
 func max(_ _a: simd_float4, _ _b: simd_float4) -> simd_float4 {
     OZZFloat4.max(with: _a, _b)
 }
 
-// Returns the per component minimum of _v and 0.
+/// Returns the per component minimum of _v and 0.
 func min0(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.min0(with: _v)
 }
 
-// Returns the per component maximum of _v and 0.
+/// Returns the per component maximum of _v and 0.
 func max0(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.max0(with: _v)
 }
 
-// Clamps each element of _x between _a and _b.
-// Result is unknown if _a is not less or equal to _b.
+/// Clamps each element of _x between _a and _b.
+/// Result is unknown if _a is not less or equal to _b.
 func clamp(_ _a: simd_float4, _ _v: simd_float4, _ _b: simd_float4) -> simd_float4 {
     OZZFloat4.clamp(with: _a, _v, _b)
 }
 
-// Computes the length of the components x and y of _v, and stores it in the x
-// component of the returned vector. y, z, w of the returned vector are
-// undefined.
+/// Computes the length of the components x and y of _v, and stores it in the x
+/// component of the returned vector. y, z, w of the returned vector are
+/// undefined.
 func length2(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.length2(with: _v)
 }
 
-// Computes the length of the components x, y and z of _v, and stores it in the
-// x component of the returned vector. undefined.
+/// Computes the length of the components x, y and z of _v, and stores it in the
+/// x component of the returned vector. undefined.
 func length3(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.length3(with: _v)
 }
 
-// Computes the length of _v, and stores it in the x component of the returned
-// vector. y, z, w of the returned vector are undefined.
+/// Computes the length of _v, and stores it in the x component of the returned
+/// vector. y, z, w of the returned vector are undefined.
 func length4(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.length4(with: _v)
 }
 
-// Computes the square length of the components x and y of _v, and stores it
-// in the x component of the returned vector. y, z, w of the returned vector are
-// undefined.
+/// Computes the square length of the components x and y of _v, and stores it
+/// in the x component of the returned vector. y, z, w of the returned vector are
+/// undefined.
 func length2Sqr(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.length2Sqr(with: _v)
 }
 
-// Computes the square length of the components x, y and z of _v, and stores it
-// in the x component of the returned vector. y, z, w of the returned vector are
-// undefined.
+/// Computes the square length of the components x, y and z of _v, and stores it
+/// in the x component of the returned vector. y, z, w of the returned vector are
+/// undefined.
 func length3Sqr(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.length3Sqr(with: _v)
 }
 
-// Computes the square length of the components x, y, z and w of _v, and stores
-// it in the x component of the returned vector. y, z, w of the returned vector
-// undefined.
+/// Computes the square length of the components x, y, z and w of _v, and stores
+/// it in the x component of the returned vector. y, z, w of the returned vector
+/// undefined.
 func length4Sqr(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.length4Sqr(with: _v)
 }
 
-// Returns the normalized vector of the components x and y of _v, and stores
-// it in the x and y components of the returned vector. z and w of the returned
-// vector are the same as their respective components in _v.
+/// Returns the normalized vector of the components x and y of _v, and stores
+/// it in the x and y components of the returned vector. z and w of the returned
+/// vector are the same as their respective components in _v.
 func normalize2(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.normalize2(with: _v)
 }
 
-// Returns the normalized vector of the components x, y and z of _v, and stores
-// it in the x, y and z components of the returned vector. w of the returned
-// vector is the same as its respective component in _v.
+/// Returns the normalized vector of the components x, y and z of _v, and stores
+/// it in the x, y and z components of the returned vector. w of the returned
+/// vector is the same as its respective component in _v.
 func normalize3(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.normalize3(with: _v)
 }
 
-// Returns the normalized vector _v.
+/// Returns the normalized vector _v.
 func normalize4(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.normalize4(with: _v)
 }
 
-// Returns the estimated normalized vector of the components x and y of _v, and
-// stores it in the x and y components of the returned vector. z and w of the
-// returned vector are the same as their respective components in _v.
+/// Returns the estimated normalized vector of the components x and y of _v, and
+/// stores it in the x and y components of the returned vector. z and w of the
+/// returned vector are the same as their respective components in _v.
 func normalizeEst2(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.normalizeEst2(with: _v)
 }
 
-// Returns the estimated normalized vector of the components x, y and z of _v,
-// and stores it in the x, y and z components of the returned vector. w of the
-// returned vector is the same as its respective component in _v.
+/// Returns the estimated normalized vector of the components x, y and z of _v,
+/// and stores it in the x, y and z components of the returned vector. w of the
+/// returned vector is the same as its respective component in _v.
 func normalizeEst3(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.normalizeEst3(with: _v)
 }
 
-// Returns the estimated normalized vector _v.
+/// Returns the estimated normalized vector _v.
 func normalizeEst4(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.normalizeEst4(with: _v)
 }
 
-// Tests if the components x and y of _v forms a normalized vector.
-// Returns the result in the x component of the returned vector. y, z and w are
-// set to 0.
+/// Tests if the components x and y of _v forms a normalized vector.
+/// Returns the result in the x component of the returned vector. y, z and w are
+/// set to 0.
 func isNormalized2(_ _v: simd_float4) -> SimdInt4 {
     OZZFloat4.isNormalized2(with: _v)
 }
 
-// Tests if the components x, y and z of _v forms a normalized vector.
-// Returns the result in the x component of the returned vector. y, z and w are
-// set to 0.
+/// Tests if the components x, y and z of _v forms a normalized vector.
+/// Returns the result in the x component of the returned vector. y, z and w are
+/// set to 0.
 func isNormalized3(_ _v: simd_float4) -> SimdInt4 {
     OZZFloat4.isNormalized3(with: _v)
 }
 
-// Tests if the _v is a normalized vector.
-// Returns the result in the x component of the returned vector. y, z and w are
-// set to 0.
+/// Tests if the _v is a normalized vector.
+/// Returns the result in the x component of the returned vector. y, z and w are
+/// set to 0.
 func isNormalized4(_ _v: simd_float4) -> SimdInt4 {
     OZZFloat4.isNormalized4(with: _v)
 }
 
-// Tests if the components x and y of _v forms a normalized vector.
-// Uses the estimated normalization coefficient, that matches estimated math
-// functions (RecpEst, MormalizeEst...).
-// Returns the result in the x component of the returned vector. y, z and w are
-// set to 0.
+/// Tests if the components x and y of _v forms a normalized vector.
+/// Uses the estimated normalization coefficient, that matches estimated math
+/// functions (RecpEst, MormalizeEst...).
+/// Returns the result in the x component of the returned vector. y, z and w are
+/// set to 0.
 func isNormalizedEst2(_ _v: simd_float4) -> SimdInt4 {
     OZZFloat4.isNormalizedEst2(with: _v)
 }
 
-// Tests if the components x, y and z of _v forms a normalized vector.
-// Uses the estimated normalization coefficient, that matches estimated math
-// functions (RecpEst, MormalizeEst...).
-// Returns the result in the x component of the returned vector. y, z and w are
-// set to 0.
+/// Tests if the components x, y and z of _v forms a normalized vector.
+/// Uses the estimated normalization coefficient, that matches estimated math
+/// functions (RecpEst, MormalizeEst...).
+/// Returns the result in the x component of the returned vector. y, z and w are
+/// set to 0.
 func isNormalizedEst3(_ _v: simd_float4) -> SimdInt4 {
     OZZFloat4.isNormalizedEst3(with: _v)
 }
 
-// Tests if the _v is a normalized vector.
-// Uses the estimated normalization coefficient, that matches estimated math
-// functions (RecpEst, MormalizeEst...).
-// Returns the result in the x component of the returned vector. y, z and w are
-// set to 0.
+/// Tests if the _v is a normalized vector.
+/// Uses the estimated normalization coefficient, that matches estimated math
+/// functions (RecpEst, MormalizeEst...).
+/// Returns the result in the x component of the returned vector. y, z and w are
+/// set to 0.
 func isNormalizedEst4(_ _v: simd_float4) -> SimdInt4 {
     OZZFloat4.isNormalizedEst4(with: _v)
 }
 
-// Returns the normalized vector of the components x and y of _v if it is
-// normalizable, otherwise returns _safe. z and w of the returned vector are
-// the same as their respective components in _v.
+/// Returns the normalized vector of the components x and y of _v if it is
+/// normalizable, otherwise returns _safe. z and w of the returned vector are
+/// the same as their respective components in _v.
 func normalizeSafe2(_ _v: simd_float4, _ _safe: simd_float4) -> simd_float4 {
     OZZFloat4.normalizeSafe2(with: _v, _safe)
 }
 
-// Returns the normalized vector of the components x, y, z and w of _v if it is
-// normalizable, otherwise returns _safe. w of the returned vector is the same
-// as its respective components in _v.
+/// Returns the normalized vector of the components x, y, z and w of _v if it is
+/// normalizable, otherwise returns _safe. w of the returned vector is the same
+/// as its respective components in _v.
 func normalizeSafe3(_ _v: simd_float4, _ _safe: simd_float4) -> simd_float4 {
     OZZFloat4.normalizeSafe3(with: _v, _safe)
 }
 
-// Returns the normalized vector _v if it is normalizable, otherwise returns
-// _safe.
+/// Returns the normalized vector _v if it is normalizable, otherwise returns
+/// _safe.
 func normalizeSafe4(_ _v: simd_float4, _ _safe: simd_float4) -> simd_float4 {
     OZZFloat4.normalizeSafe4(with: _v, _safe)
 }
 
-// Returns the estimated normalized vector of the components x and y of _v if it
-// is normalizable, otherwise returns _safe. z and w of the returned vector are
-// the same as their respective components in _v.
+/// Returns the estimated normalized vector of the components x and y of _v if it
+/// is normalizable, otherwise returns _safe. z and w of the returned vector are
+/// the same as their respective components in _v.
 func normalizeSafeEst2(_ _v: simd_float4, _ _safe: simd_float4) -> simd_float4 {
     OZZFloat4.normalizeSafeEst2(with: _v, _safe)
 }
 
-// Returns the estimated normalized vector of the components x, y, z and w of _v
-// if it is normalizable, otherwise returns _safe. w of the returned vector is
-// the same as its respective components in _v.
+/// Returns the estimated normalized vector of the components x, y, z and w of _v
+/// if it is normalizable, otherwise returns _safe. w of the returned vector is
+/// the same as its respective components in _v.
 func normalizeSafeEst3(_ _v: simd_float4, _ _safe: simd_float4) -> simd_float4 {
     OZZFloat4.normalizeSafeEst3(with: _v, _safe)
 }
 
-// Returns the estimated normalized vector _v if it is normalizable, otherwise
-// returns _safe.
+/// Returns the estimated normalized vector _v if it is normalizable, otherwise
+/// returns _safe.
 func normalizeSafeEst4(_ _v: simd_float4, _ _safe: simd_float4) -> simd_float4 {
     OZZFloat4.normalizeSafeEst4(with: _v, _safe)
 }
 
-// Computes the per element linear interpolation of _a and _b, where _alpha is
-// not bound to range [0,1].
+/// Computes the per element linear interpolation of _a and _b, where _alpha is
+/// not bound to range [0,1].
 func lerp(_ _a: simd_float4, _ _b: simd_float4, _ _alpha: simd_float4) -> simd_float4 {
     OZZFloat4.lerp(with: _a, _b, _alpha)
 }
 
-// Computes the per element cosine of _v.
+/// Computes the per element cosine of _v.
 func cos(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.cos(with: _v)
 }
 
-// Computes the cosine of the x component of _v and stores it in the x
-// component of the returned vector. y, z and w of the returned vector are the
-// same as their respective components in _v.
+/// Computes the cosine of the x component of _v and stores it in the x
+/// component of the returned vector. y, z and w of the returned vector are the
+/// same as their respective components in _v.
 func cosX(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.cosX(with: _v)
 }
 
-// Computes the per element arccosine of _v.
+/// Computes the per element arccosine of _v.
 func aCos(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.aCos(with: _v)
 }
 
-// Computes the arccosine of the x component of _v and stores it in the x
-// component of the returned vector. y, z and w of the returned vector are the
-// same as their respective components in _v.
+/// Computes the arccosine of the x component of _v and stores it in the x
+/// component of the returned vector. y, z and w of the returned vector are the
+/// same as their respective components in _v.
 func aCosX(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.aCosX(with: _v)
 }
 
-// Computes the per element sines of _v.
+/// Computes the per element sines of _v.
 func sin(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.sin(with: _v)
 }
 
-// Computes the sines of the x component of _v and stores it in the x
-// component of the returned vector. y, z and w of the returned vector are the
-// same as their respective components in _v.
+/// Computes the sines of the x component of _v and stores it in the x
+/// component of the returned vector. y, z and w of the returned vector are the
+/// same as their respective components in _v.
 func sinX(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.sinX(with: _v)
 }
 
-// Computes the per element arcsine of _v.
+/// Computes the per element arcsine of _v.
 func aSin(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.aSin(with: _v)
 }
 
-// Computes the arcsine of the x component of _v and stores it in the x
-// component of the returned vector. y, z and w of the returned vector are the
-// same as their respective components in _v.
+/// Computes the arcsine of the x component of _v and stores it in the x
+/// component of the returned vector. y, z and w of the returned vector are the
+/// same as their respective components in _v.
 func aSinX(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.aSinX(with: _v)
 }
 
-// Computes the per element tangent of _v.
+/// Computes the per element tangent of _v.
 func tan(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.tan(with: _v)
 }
 
-// Computes the tangent of the x component of _v and stores it in the x
-// component of the returned vector. y, z and w of the returned vector are the
-// same as their respective components in _v.
+/// Computes the tangent of the x component of _v and stores it in the x
+/// component of the returned vector. y, z and w of the returned vector are the
+/// same as their respective components in _v.
 func tanX(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.tanX(with: _v)
 }
 
-// Computes the per element arctangent of _v.
+/// Computes the per element arctangent of _v.
 func aTan(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.aTan(with: _v)
 }
 
-// Computes the arctangent of the x component of _v and stores it in the x
-// component of the returned vector. y, z and w of the returned vector are the
-// same as their respective components in _v.
+/// Computes the arctangent of the x component of _v and stores it in the x
+/// component of the returned vector. y, z and w of the returned vector are the
+/// same as their respective components in _v.
 func aTanX(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.aTanX(with: _v)
 }
 
-// Returns boolean selection of vectors _true and _false according to condition
-// _b. All bits a each component of _b must have the same value (O or
-// 0xffffffff) to ensure portability.
+/// Returns boolean selection of vectors _true and _false according to condition
+/// _b. All bits a each component of _b must have the same value (O or
+/// 0xffffffff) to ensure portability.
 func select(_ _b: _SimdInt4, _ _true: simd_float4,
             _ _false: simd_float4) -> simd_float4 {
     OZZFloat4.select(with: _b, _true, _false)
 }
 
-// Per element "equal" comparison of _a and _b.
+/// Per element "equal" comparison of _a and _b.
 func cmpEq(_ _a: simd_float4, _ _b: simd_float4) -> SimdInt4 {
     OZZFloat4.cmpEq(with: _a, _b)
 }
 
-// Per element "not equal" comparison of _a and _b.
+/// Per element "not equal" comparison of _a and _b.
 func cmpNe(_ _a: simd_float4, _ _b: simd_float4) -> SimdInt4 {
     OZZFloat4.cmpNe(with: _a, _b)
 }
 
-// Per element "less than" comparison of _a and _b.
+/// Per element "less than" comparison of _a and _b.
 func cmpLt(_ _a: simd_float4, _ _b: simd_float4) -> SimdInt4 {
     OZZFloat4.cmpLt(with: _a, _b)
 }
 
-// Per element "less than or equal" comparison of _a and _b.
+/// Per element "less than or equal" comparison of _a and _b.
 func cmpLe(_ _a: simd_float4, _ _b: simd_float4) -> SimdInt4 {
     OZZFloat4.cmpLe(with: _a, _b)
 }
 
-// Per element "greater than" comparison of _a and _b.
+/// Per element "greater than" comparison of _a and _b.
 func cmpGt(_ _a: simd_float4, _ _b: simd_float4) -> SimdInt4 {
     OZZFloat4.cmpGt(with: _a, _b)
 }
 
-// Per element "greater than or equal" comparison of _a and _b.
+/// Per element "greater than or equal" comparison of _a and _b.
 func cmpGe(_ _a: simd_float4, _ _b: simd_float4) -> SimdInt4 {
     OZZFloat4.cmpGe(with: _a, _b)
 }
 
-// Returns per element binary and operation of _a and _b.
-// _v[0...127] = _a[0...127] & _b[0...127]
+/// Returns per element binary and operation of _a and _b.
+/// _v[0...127] = _a[0...127] & _b[0...127]
 func and(_ _a: simd_float4, _ _b: simd_float4) -> simd_float4 {
     OZZFloat4.and(with: _a, float4: _b)
 }
 
-// Returns per element binary or operation of _a and _b.
-// _v[0...127] = _a[0...127] | _b[0...127]
+/// Returns per element binary or operation of _a and _b.
+/// _v[0...127] = _a[0...127] | _b[0...127]
 func or(_ _a: simd_float4, _ _b: simd_float4) -> simd_float4 {
     OZZFloat4.or(with: _a, float4: _b)
 }
 
-// Returns per element binary logical xor operation of _a and _b.
-// _v[0...127] = _a[0...127] ^ _b[0...127]
+/// Returns per element binary logical xor operation of _a and _b.
+/// _v[0...127] = _a[0...127] ^ _b[0...127]
 func xor(_ _a: simd_float4, _ _b: simd_float4) -> simd_float4 {
     OZZFloat4.xor(with: _a, float4: _b)
 }
 
-// Returns per element binary and operation of _a and _b.
-// _v[0...127] = _a[0...127] & _b[0...127]
+/// Returns per element binary and operation of _a and _b.
+/// _v[0...127] = _a[0...127] & _b[0...127]
 func and(_ _a: simd_float4, _ _b: _SimdInt4) -> simd_float4 {
     OZZFloat4.and(with: _a, int4: _b)
 }
 
-// Returns per element binary and operation of _a and ~_b.
-// _v[0...127] = _a[0...127] & ~_b[0...127]
+/// Returns per element binary and operation of _a and ~_b.
+/// _v[0...127] = _a[0...127] & ~_b[0...127]
 func andNot(_ _a: simd_float4, _ _b: _SimdInt4) -> simd_float4 {
     OZZFloat4.andNot(with: _a, _b)
 }
 
-// Returns per element binary or operation of _a and _b.
-// _v[0...127] = _a[0...127] | _b[0...127]
+/// Returns per element binary or operation of _a and _b.
+/// _v[0...127] = _a[0...127] | _b[0...127]
 func or(_ _a: simd_float4, _ _b: _SimdInt4) -> simd_float4 {
     OZZFloat4.or(with: _a, int4: _b)
 }
 
-// Returns per element binary logical xor operation of _a and _b.
-// _v[0...127] = _a[0...127] ^ _b[0...127]
+/// Returns per element binary logical xor operation of _a and _b.
+/// _v[0...127] = _a[0...127] ^ _b[0...127]
 func xor(_ _a: simd_float4, _ _b: _SimdInt4) -> simd_float4 {
     OZZFloat4.xor(with: _a, int4: _b)
 }
@@ -1074,624 +1074,624 @@ func transformVector(_ _m: simd_float4x4, _ _v: simd_float4) -> simd_float4 {
 
 //MARK: - SimdInt4
 extension SimdInt4 {
-    // Returns a SimdInt4 vector with all components set to 0.
+    /// Returns a SimdInt4 vector with all components set to 0.
     static func zero() -> SimdInt4 {
         OZZInt4.zero()
     }
 
-    // Returns a SimdInt4 vector with all components set to 1.
+    /// Returns a SimdInt4 vector with all components set to 1.
     static func one() -> SimdInt4 {
         OZZInt4.one()
     }
 
-    // Returns a SimdInt4 vector with the x component set to 1 and all the others
-    // to 0.
+    /// Returns a SimdInt4 vector with the x component set to 1 and all the others
+    /// to 0.
     static func x_axis() -> SimdInt4 {
         OZZInt4.x_axis()
     }
 
-    // Returns a SimdInt4 vector with the y component set to 1 and all the others
-    // to 0.
+    /// Returns a SimdInt4 vector with the y component set to 1 and all the others
+    /// to 0.
     static func y_axis() -> SimdInt4 {
         OZZInt4.y_axis()
     }
 
-    // Returns a SimdInt4 vector with the z component set to 1 and all the others
-    // to 0.
+    /// Returns a SimdInt4 vector with the z component set to 1 and all the others
+    /// to 0.
     static func z_axis() -> SimdInt4 {
         OZZInt4.z_axis()
     }
 
-    // Returns a SimdInt4 vector with the w component set to 1 and all the others
-    // to 0.
+    /// Returns a SimdInt4 vector with the w component set to 1 and all the others
+    /// to 0.
     static func w_axis() -> SimdInt4 {
         OZZInt4.w_axis()
     }
 
-    // Returns a SimdInt4 vector with all components set to true (0xffffffff).
+    /// Returns a SimdInt4 vector with all components set to true (0xffffffff).
     static func all_true() -> SimdInt4 {
         OZZInt4.all_true()
     }
 
-    // Returns a SimdInt4 vector with all components set to false (0).
+    /// Returns a SimdInt4 vector with all components set to false (0).
     static func all_false() -> SimdInt4 {
         OZZInt4.all_false()
     }
 
-    // Returns a SimdInt4 vector with sign bits set to 1.
+    /// Returns a SimdInt4 vector with sign bits set to 1.
     static func mask_sign() -> SimdInt4 {
         OZZInt4.mask_sign()
     }
 
-    // Returns a SimdInt4 vector with all bits set to 1 except sign.
+    /// Returns a SimdInt4 vector with all bits set to 1 except sign.
     static func mask_not_sign() -> SimdInt4 {
         OZZInt4.mask_not_sign()
     }
 
-    // Returns a SimdInt4 vector with sign bits of x, y and z components set to 1.
+    /// Returns a SimdInt4 vector with sign bits of x, y and z components set to 1.
     static func mask_sign_xyz() -> SimdInt4 {
         OZZInt4.mask_sign_xyz()
     }
 
-    // Returns a SimdInt4 vector with sign bits of w component set to 1.
+    /// Returns a SimdInt4 vector with sign bits of w component set to 1.
     static func mask_sign_w() -> SimdInt4 {
         OZZInt4.mask_sign_w()
     }
 
-    // Returns a SimdInt4 vector with all bits set to 1.
+    /// Returns a SimdInt4 vector with all bits set to 1.
     static func mask_ffff() -> SimdInt4 {
         OZZInt4.mask_ffff()
     }
 
-    // Returns a SimdInt4 vector with all bits set to 0.
+    /// Returns a SimdInt4 vector with all bits set to 0.
     static func mask_0000() -> SimdInt4 {
         OZZInt4.mask_0000()
     }
 
-    // Returns a SimdInt4 vector with all the bits of the x, y, z components set to
-    // 1, while z is set to 0.
+    /// Returns a SimdInt4 vector with all the bits of the x, y, z components set to
+    /// 1, while z is set to 0.
     static func mask_fff0() -> SimdInt4 {
         OZZInt4.mask_fff0()
     }
 
-    // Returns a SimdInt4 vector with all the bits of the x component set to 1,
-    // while the others are set to 0.
+    /// Returns a SimdInt4 vector with all the bits of the x component set to 1,
+    /// while the others are set to 0.
     static func mask_f000() -> SimdInt4 {
         OZZInt4.mask_f000()
     }
 
-    // Returns a SimdInt4 vector with all the bits of the y component set to 1,
-    // while the others are set to 0.
+    /// Returns a SimdInt4 vector with all the bits of the y component set to 1,
+    /// while the others are set to 0.
     static func mask_0f00() -> SimdInt4 {
         OZZInt4.mask_0f00()
     }
 
-    // Returns a SimdInt4 vector with all the bits of the z component set to 1,
-    // while the others are set to 0.
+    /// Returns a SimdInt4 vector with all the bits of the z component set to 1,
+    /// while the others are set to 0.
     static func mask_00f0() -> SimdInt4 {
         OZZInt4.mask_00f0()
     }
 
-    // Returns a SimdInt4 vector with all the bits of the w component set to 1,
-    // while the others are set to 0.
+    /// Returns a SimdInt4 vector with all the bits of the w component set to 1,
+    /// while the others are set to 0.
     static func mask_000f() -> SimdInt4 {
         OZZInt4.mask_000f()
     }
 
-    // Loads _x, _y, _z, _w to the returned vector.
-    // r.x = _x
-    // r.y = _y
-    // r.z = _z
-    // r.w = _w
+    /// Loads _x, _y, _z, _w to the returned vector.
+    /// r.x = _x
+    /// r.y = _y
+    /// r.z = _z
+    /// r.w = _w
     static func load(_  _x: Int32, _   _y: Int32, _  _z: Int32, _  _w: Int32) -> SimdInt4 {
         OZZInt4.load(with: _x, _y, _z, _w)
     }
 
-    // Loads _x, _y, _z, _w to the returned vector using the following conversion
-    // rule.
-    // r.x = _x ? 0xffffffff:0
-    // r.y = _y ? 0xffffffff:0
-    // r.z = _z ? 0xffffffff:0
-    // r.w = _w ? 0xffffffff:0
+    /// Loads _x, _y, _z, _w to the returned vector using the following conversion
+    /// rule.
+    /// r.x = _x ? 0xffffffff:0
+    /// r.y = _y ? 0xffffffff:0
+    /// r.z = _z ? 0xffffffff:0
+    /// r.w = _w ? 0xffffffff:0
     static func load(_  _x: Bool, _  _y: Bool, _  _z: Bool, _  _w: Bool) -> SimdInt4 {
         OZZInt4.load(with: _x, _y, _z, _w)
     }
 
-    // Loads _x to the x component of the returned vector using the following
-    // conversion rule, and sets y, z and w to 0.
-    // r.x = _x ? 0xffffffff:0
-    // r.y = 0
-    // r.z = 0
-    // r.w = 0
+    /// Loads _x to the x component of the returned vector using the following
+    /// conversion rule, and sets y, z and w to 0.
+    /// r.x = _x ? 0xffffffff:0
+    /// r.y = 0
+    /// r.z = 0
+    /// r.w = 0
     static func loadX(_ _x: Bool) -> SimdInt4 {
         OZZInt4.loadX(with: _x)
     }
 
-    // Loads _x to the all the components of the returned vector using the following
-    // conversion rule.
-    // r.x = _x ? 0xffffffff:0
-    // r.y = _x ? 0xffffffff:0
-    // r.z = _x ? 0xffffffff:0
-    // r.w = _x ? 0xffffffff:0
+    /// Loads _x to the all the components of the returned vector using the following
+    /// conversion rule.
+    /// r.x = _x ? 0xffffffff:0
+    /// r.y = _x ? 0xffffffff:0
+    /// r.z = _x ? 0xffffffff:0
+    /// r.w = _x ? 0xffffffff:0
     static func load1(_ _x: Bool) -> SimdInt4 {
         OZZInt4.load1(with: _x)
     }
 
-    // Loads the 4 values of _f to the returned vector.
-    // _i must be aligned to 16 bytes.
-    // r.x = _i[0]
-    // r.y = _i[1]
-    // r.z = _i[2]
-    // r.w = _i[3]
+    /// Loads the 4 values of _f to the returned vector.
+    /// _i must be aligned to 16 bytes.
+    /// r.x = _i[0]
+    /// r.y = _i[1]
+    /// r.z = _i[2]
+    /// r.w = _i[3]
     static func loadPtr(_ _i: inout [Int32]) -> SimdInt4 {
         OZZInt4.loadPtr(with: &_i)
     }
 
-    // Loads _i[0] to the x component of the returned vector, and sets y, z and w
-    // to 0.
-    // _i must be aligned to 16 bytes.
-    // r.x = _i[0]
-    // r.y = 0
-    // r.z = 0
-    // r.w = 0
+    /// Loads _i[0] to the x component of the returned vector, and sets y, z and w
+    /// to 0.
+    /// _i must be aligned to 16 bytes.
+    /// r.x = _i[0]
+    /// r.y = 0
+    /// r.z = 0
+    /// r.w = 0
     static func loadXPtr(_ _i: inout [Int32]) -> SimdInt4 {
         OZZInt4.loadXPtr(with: &_i)
     }
 
-    // Loads _i[0] to all the components of the returned vector.
-    // _i must be aligned to 16 bytes.
-    // r.x = _i[0]
-    // r.y = _i[0]
-    // r.z = _i[0]
-    // r.w = _i[0]
+    /// Loads _i[0] to all the components of the returned vector.
+    /// _i must be aligned to 16 bytes.
+    /// r.x = _i[0]
+    /// r.y = _i[0]
+    /// r.z = _i[0]
+    /// r.w = _i[0]
     static func load1Ptr(_ _i: inout [Int32]) -> SimdInt4 {
         OZZInt4.load1Ptr(with: &_i)
     }
 
-    // Loads the 2 first value of _i to the x and y components of the returned
-    // vector. The remaining components are set to 0.
-    // _f must be aligned to 4 bytes.
-    // r.x = _i[0]
-    // r.y = _i[1]
-    // r.z = 0
-    // r.w = 0
+    /// Loads the 2 first value of _i to the x and y components of the returned
+    /// vector. The remaining components are set to 0.
+    /// _f must be aligned to 4 bytes.
+    /// r.x = _i[0]
+    /// r.y = _i[1]
+    /// r.z = 0
+    /// r.w = 0
     static func load2Ptr(_ _i: inout [Int32]) -> SimdInt4 {
         OZZInt4.load2Ptr(with: &_i)
     }
 
-    // Loads the 3 first value of _i to the x, y and z components of the returned
-    // vector. The remaining components are set to 0.
-    // _f must be aligned to 16 bytes.
-    // r.x = _i[0]
-    // r.y = _i[1]
-    // r.z = _i[2]
-    // r.w = 0
+    /// Loads the 3 first value of _i to the x, y and z components of the returned
+    /// vector. The remaining components are set to 0.
+    /// _f must be aligned to 16 bytes.
+    /// r.x = _i[0]
+    /// r.y = _i[1]
+    /// r.z = _i[2]
+    /// r.w = 0
     static func load3Ptr(_ _i: inout [Int32]) -> SimdInt4 {
         OZZInt4.load3Ptr(with: &_i)
     }
 
-    // Loads the 4 values of _f to the returned vector.
-    // _i must be aligned to 16 bytes.
-    // r.x = _i[0]
-    // r.y = _i[1]
-    // r.z = _i[2]
-    // r.w = _i[3]
+    /// Loads the 4 values of _f to the returned vector.
+    /// _i must be aligned to 16 bytes.
+    /// r.x = _i[0]
+    /// r.y = _i[1]
+    /// r.z = _i[2]
+    /// r.w = _i[3]
     static func loadPtrU(_ _i: inout [Int32]) -> SimdInt4 {
         OZZInt4.loadPtrU(with: &_i)
     }
 
-    // Loads _i[0] to the x component of the returned vector, and sets y, z and w
-    // to 0.
-    // _f must be aligned to 4 bytes.
-    // r.x = _i[0]
-    // r.y = 0
-    // r.z = 0
-    // r.w = 0
+    /// Loads _i[0] to the x component of the returned vector, and sets y, z and w
+    /// to 0.
+    /// _f must be aligned to 4 bytes.
+    /// r.x = _i[0]
+    /// r.y = 0
+    /// r.z = 0
+    /// r.w = 0
     static func loadXPtrU(_ _i: inout [Int32]) -> SimdInt4 {
         OZZInt4.loadXPtrU(with: &_i)
     }
 
-    // Loads the 4 values of _i to the returned vector.
-    // _i must be aligned to 4 bytes.
-    // r.x = _i[0]
-    // r.y = _i[0]
-    // r.z = _i[0]
-    // r.w = _i[0]
+    /// Loads the 4 values of _i to the returned vector.
+    /// _i must be aligned to 4 bytes.
+    /// r.x = _i[0]
+    /// r.y = _i[0]
+    /// r.z = _i[0]
+    /// r.w = _i[0]
     static func load1PtrU(_ _i: inout [Int32]) -> SimdInt4 {
         OZZInt4.load1PtrU(with: &_i)
     }
 
-    // Loads the 2 first value of _i to the x and y components of the returned
-    // vector. The remaining components are set to 0.
-    // _f must be aligned to 4 bytes.
-    // r.x = _i[0]
-    // r.y = _i[1]
-    // r.z = 0
-    // r.w = 0
+    /// Loads the 2 first value of _i to the x and y components of the returned
+    /// vector. The remaining components are set to 0.
+    /// _f must be aligned to 4 bytes.
+    /// r.x = _i[0]
+    /// r.y = _i[1]
+    /// r.z = 0
+    /// r.w = 0
     static func load2PtrU(_ _i: inout [Int32]) -> SimdInt4 {
         OZZInt4.load2PtrU(with: &_i)
     }
 
-    // Loads the 3 first value of _i to the x, y and z components of the returned
-    // vector. The remaining components are set to 0.
-    // _f must be aligned to 4 bytes.
-    // r.x = _i[0]
-    // r.y = _i[1]
-    // r.z = _i[2]
-    // r.w = 0
+    /// Loads the 3 first value of _i to the x, y and z components of the returned
+    /// vector. The remaining components are set to 0.
+    /// _f must be aligned to 4 bytes.
+    /// r.x = _i[0]
+    /// r.y = _i[1]
+    /// r.z = _i[2]
+    /// r.w = 0
     static func load3PtrU(_ _i: inout [Int32]) -> SimdInt4 {
         OZZInt4.load3PtrU(with: &_i)
     }
 
-    // Convert from float to integer by rounding the nearest value.
+    /// Convert from float to integer by rounding the nearest value.
     static func fromFloatRound(_ _f: simd_float4) -> SimdInt4 {
         OZZInt4.fromFloatRound(with: _f)
     }
 
-    // Convert from float to integer by truncating.
+    /// Convert from float to integer by truncating.
     static func fromFloatTrunc(_ _f: simd_float4) -> SimdInt4 {
         OZZInt4.fromFloatTrunc(with: _f)
     }
 }
 
-// Returns the x component of _v as an integer.
+/// Returns the x component of _v as an integer.
 func getX(_ _v: _SimdInt4) -> Int32 {
     OZZInt4.getXWith(_v)
 }
 
-// Returns the y component of _v as a integer.
+/// Returns the y component of _v as a integer.
 func getY(_  _v: _SimdInt4) -> Int32 {
     OZZInt4.getYWith(_v)
 }
 
-// Returns the z component of _v as a integer.
+/// Returns the z component of _v as a integer.
 func getZ(_  _v: _SimdInt4) -> Int32 {
     OZZInt4.getZWith(_v)
 }
 
-// Returns the w component of _v as a integer.
+/// Returns the w component of _v as a integer.
 func getW(_  _v: _SimdInt4) -> Int32 {
     OZZInt4.getWWith(_v)
 }
 
-// Returns _v with the x component set to x component of _i.
+/// Returns _v with the x component set to x component of _i.
 func setX(_  _v: _SimdInt4, _ _i: _SimdInt4) -> SimdInt4 {
     OZZInt4.setXWith(_v, _i)
 }
 
-// Returns _v with the y component set to x component of _i.
+/// Returns _v with the y component set to x component of _i.
 func setY(_  _v: _SimdInt4, _ _i: _SimdInt4) -> SimdInt4 {
     OZZInt4.setYWith(_v, _i)
 }
 
-// Returns _v with the z component set to x component of _i.
+/// Returns _v with the z component set to x component of _i.
 func setZ(_  _v: _SimdInt4, _ _i: _SimdInt4) -> SimdInt4 {
     OZZInt4.setZWith(_v, _i)
 }
 
-// Returns _v with the w component set to x component of _i.
+/// Returns _v with the w component set to x component of _i.
 func setW(_  _v: _SimdInt4, _ _i: _SimdInt4) -> SimdInt4 {
     OZZInt4.setWWith(_v, _i)
 }
 
-// Returns _v with the _ith component set to _i.
-// _i must be in range [0,3]
+/// Returns _v with the _ith component set to _i.
+/// _i must be in range [0,3]
 func setI(_  _v: _SimdInt4, _ _i: _SimdInt4, _ _ith: Int32) -> SimdInt4 {
     OZZInt4.setIWith(_v, _i, _ith)
 }
 
-// Stores the 4 components of _v to the four first integers of _i.
-// _i must be aligned to 16 bytes.
-// _i[0] = _v.x
-// _i[1] = _v.y
-// _i[2] = _v.z
-// _i[3] = _v.w
+/// Stores the 4 components of _v to the four first integers of _i.
+/// _i must be aligned to 16 bytes.
+/// _i[0] = _v.x
+/// _i[1] = _v.y
+/// _i[2] = _v.z
+/// _i[3] = _v.w
 func storePtr(_  _v: _SimdInt4, _ _i: inout [Int32]) {
     OZZInt4.storePtr(with: _v, &_i)
 }
 
-// Stores the x component of _v to the first integers of _i.
-// _i must be aligned to 16 bytes.
-// _i[0] = _v.x
+/// Stores the x component of _v to the first integers of _i.
+/// _i must be aligned to 16 bytes.
+/// _i[0] = _v.x
 func store1Ptr(_  _v: _SimdInt4, _ _i: inout [Int32]) {
     OZZInt4.store1Ptr(with: _v, &_i)
 }
 
-// Stores x and y components of _v to the two first integers of _i.
-// _i must be aligned to 16 bytes.
-// _i[0] = _v.x
-// _i[1] = _v.y
+/// Stores x and y components of _v to the two first integers of _i.
+/// _i must be aligned to 16 bytes.
+/// _i[0] = _v.x
+/// _i[1] = _v.y
 func store2Ptr(_  _v: _SimdInt4, _ _i: inout [Int32]) {
     OZZInt4.store2Ptr(with: _v, &_i)
 }
 
-// Stores x, y and z components of _v to the three first integers of _i.
-// _i must be aligned to 16 bytes.
-// _i[0] = _v.x
-// _i[1] = _v.y
-// _i[2] = _v.z
+/// Stores x, y and z components of _v to the three first integers of _i.
+/// _i must be aligned to 16 bytes.
+/// _i[0] = _v.x
+/// _i[1] = _v.y
+/// _i[2] = _v.z
 func store3Ptr(_  _v: _SimdInt4, _ _i: inout [Int32]) {
     OZZInt4.store3Ptr(with: _v, &_i)
 }
 
-// Stores the 4 components of _v to the four first integers of _i.
-// _i must be aligned to 4 bytes.
-// _i[0] = _v.x
-// _i[1] = _v.y
-// _i[2] = _v.z
-// _i[3] = _v.w
+/// Stores the 4 components of _v to the four first integers of _i.
+/// _i must be aligned to 4 bytes.
+/// _i[0] = _v.x
+/// _i[1] = _v.y
+/// _i[2] = _v.z
+/// _i[3] = _v.w
 func storePtrU(_  _v: _SimdInt4, _ _i: inout [Int32]) {
     OZZInt4.storePtrU(with: _v, &_i)
 }
 
-// Stores the x component of _v to the first float of _i.
-// _i must be aligned to 4 bytes.
-// _i[0] = _v.x
+/// Stores the x component of _v to the first float of _i.
+/// _i must be aligned to 4 bytes.
+/// _i[0] = _v.x
 func store1PtrU(_  _v: _SimdInt4, _ _i: inout [Int32]) {
     OZZInt4.store1Ptr(with: _v, &_i)
 }
 
-// Stores x and y components of _v to the two first integers of _i.
-// _i must be aligned to 4 bytes.
-// _i[0] = _v.x
-// _i[1] = _v.y
+/// Stores x and y components of _v to the two first integers of _i.
+/// _i must be aligned to 4 bytes.
+/// _i[0] = _v.x
+/// _i[1] = _v.y
 func store2PtrU(_  _v: _SimdInt4, _ _i: inout [Int32]) {
     OZZInt4.store2PtrU(with: _v, &_i)
 }
 
-// Stores x, y and z components of _v to the three first integers of _i.
-// _i must be aligned to 4 bytes.
-// _i[0] = _v.x
-// _i[1] = _v.y
-// _i[2] = _v.z
+/// Stores x, y and z components of _v to the three first integers of _i.
+/// _i must be aligned to 4 bytes.
+/// _i[0] = _v.x
+/// _i[1] = _v.y
+/// _i[2] = _v.z
 func store3PtrU(_  _v: _SimdInt4, _ _i: inout [Int32]) {
     OZZInt4.store3PtrU(with: _v, &_i)
 }
 
-// Replicates x of _a to all the components of the returned vector.
+/// Replicates x of _a to all the components of the returned vector.
 func splatX(_  _v: _SimdInt4) -> SimdInt4 {
     OZZInt4.splatX(with: _v)
 }
 
-// Replicates y of _a to all the components of the returned vector.
+/// Replicates y of _a to all the components of the returned vector.
 func splatY(_  _v: _SimdInt4) -> SimdInt4 {
     OZZInt4.splatY(with: _v)
 }
 
-// Replicates z of _a to all the components of the returned vector.
+/// Replicates z of _a to all the components of the returned vector.
 func splatZ(_  _v: _SimdInt4) -> SimdInt4 {
     OZZInt4.splatZ(with: _v)
 }
 
-// Replicates w of _a to all the components of the returned vector.
+/// Replicates w of _a to all the components of the returned vector.
 func splatW(_  _v: _SimdInt4) -> SimdInt4 {
     OZZInt4.splatW(with: _v)
 }
 
-// Swizzle x, y, z and w components based on compile time arguments _X, _Y, _Z
-// and _W. Arguments can vary from 0 (x), to 3 (w).
+/// Swizzle x, y, z and w components based on compile time arguments _X, _Y, _Z
+/// and _W. Arguments can vary from 0 (x), to 3 (w).
 func swizzle0123(_ _v: _SimdInt4) -> SimdInt4 {
     OZZInt4.swizzle0123(with: _v)
 }
 
-// Creates a 4-bit mask from the most significant bits of each component of _v.
-// i := sign(a3)<<3 | sign(a2)<<2 | sign(a1)<<1 | sign(a0)
+/// Creates a 4-bit mask from the most significant bits of each component of _v.
+/// i := sign(a3)<<3 | sign(a2)<<2 | sign(a1)<<1 | sign(a0)
 func moveMask(_ _v: _SimdInt4) -> Int32 {
     OZZInt4.moveMask(with: _v)
 }
 
-// Returns true if all the components of _v are not 0.
+/// Returns true if all the components of _v are not 0.
 func areAllTrue(_ _v: _SimdInt4) -> Bool {
     OZZInt4.areAllTrue(with: _v)
 }
 
-// Returns true if x, y and z components of _v are not 0.
+/// Returns true if x, y and z components of _v are not 0.
 func areAllTrue3(_ _v: _SimdInt4) -> Bool {
     OZZInt4.areAllTrue3(with: _v)
 }
 
-// Returns true if x and y components of _v are not 0.
+/// Returns true if x and y components of _v are not 0.
 func areAllTrue2(_ _v: _SimdInt4) -> Bool {
     OZZInt4.areAllTrue2(with: _v)
 }
 
-// Returns true if x component of _v is not 0.
+/// Returns true if x component of _v is not 0.
 func areAllTrue1(_ _v: _SimdInt4) -> Bool {
     OZZInt4.areAllTrue1(with: _v)
 }
 
-// Returns true if all the components of _v are 0.
+/// Returns true if all the components of _v are 0.
 func areAllFalse(_ _v: _SimdInt4) -> Bool {
     OZZInt4.areAllFalse(with: _v)
 }
 
-// Returns true if x, y and z components of _v are 0.
+/// Returns true if x, y and z components of _v are 0.
 func areAllFalse3(_ _v: _SimdInt4) -> Bool {
     OZZInt4.areAllFalse3(with: _v)
 }
 
-// Returns true if x and y components of _v are 0.
+/// Returns true if x and y components of _v are 0.
 func areAllFalse2(_ _v: _SimdInt4) -> Bool {
     OZZInt4.areAllFalse2(with: _v)
 }
 
-// Returns true if x component of _v is 0.
+/// Returns true if x component of _v is 0.
 func areAllFalse1(_ _v: _SimdInt4) -> Bool {
     OZZInt4.areAllFalse1(with: _v)
 }
 
-// Computes the (horizontal) addition of x and y components of _v. The result is
-// stored in the x component of the returned value. y, z, w of the returned
-// vector are the same as their respective components in _v.
-// r.x = _a.x + _a.y
-// r.y = _a.y
-// r.z = _a.z
-// r.w = _a.w
+/// Computes the (horizontal) addition of x and y components of _v. The result is
+/// stored in the x component of the returned value. y, z, w of the returned
+/// vector are the same as their respective components in _v.
+/// r.x = _a.x + _a.y
+/// r.y = _a.y
+/// r.z = _a.z
+/// r.w = _a.w
 func hAdd2(_ _v: _SimdInt4) -> SimdInt4 {
     OZZInt4.hAdd2(with: _v)
 }
 
-// Computes the (horizontal) addition of x, y and z components of _v. The result
-// is stored in the x component of the returned value. y, z, w of the returned
-// vector are the same as their respective components in _v.
-// r.x = _a.x + _a.y + _a.z
-// r.y = _a.y
-// r.z = _a.z
-// r.w = _a.w
+/// Computes the (horizontal) addition of x, y and z components of _v. The result
+/// is stored in the x component of the returned value. y, z, w of the returned
+/// vector are the same as their respective components in _v.
+/// r.x = _a.x + _a.y + _a.z
+/// r.y = _a.y
+/// r.z = _a.z
+/// r.w = _a.w
 func hAdd3(_ _v: _SimdInt4) -> SimdInt4 {
     OZZInt4.hAdd3(with: _v)
 }
 
-// Computes the (horizontal) addition of x and y components of _v. The result is
-// stored in the x component of the returned value. y, z, w of the returned
-// vector are the same as their respective components in _v.
-// r.x = _a.x + _a.y + _a.z + _a.w
-// r.y = _a.y
-// r.z = _a.z
-// r.w = _a.w
+/// Computes the (horizontal) addition of x and y components of _v. The result is
+/// stored in the x component of the returned value. y, z, w of the returned
+/// vector are the same as their respective components in _v.
+/// r.x = _a.x + _a.y + _a.z + _a.w
+/// r.y = _a.y
+/// r.z = _a.z
+/// r.w = _a.w
 func hAdd4(_ _v: _SimdInt4) -> SimdInt4 {
     OZZInt4.hAdd4(with: _v)
 }
 
-// Returns the per element absolute value of _v.
+/// Returns the per element absolute value of _v.
 func abs(_ _v: _SimdInt4) -> SimdInt4 {
     OZZInt4.abs(with: _v)
 }
 
-// Returns the sign bit of _v.
+/// Returns the sign bit of _v.
 func sign(_ _v: _SimdInt4) -> SimdInt4 {
     OZZInt4.sign(with: _v)
 }
 
-// Returns the per component minimum of _a and _b.
+/// Returns the per component minimum of _a and _b.
 func min(_ _a: _SimdInt4, _ _b: _SimdInt4) -> SimdInt4 {
     OZZInt4.min(with: _a, _b)
 }
 
-// Returns the per component maximum of _a and _b.
+/// Returns the per component maximum of _a and _b.
 func max(_ _a: _SimdInt4, _ _b: _SimdInt4) -> SimdInt4 {
     OZZInt4.max(with: _a, _b)
 }
 
-// Returns the per component minimum of _v and 0.
+/// Returns the per component minimum of _v and 0.
 func min0(_ _v: _SimdInt4) -> SimdInt4 {
     OZZInt4.min0(with: _v)
 }
 
-// Returns the per component maximum of _v and 0.
+/// Returns the per component maximum of _v and 0.
 func max0(_ _v: _SimdInt4) -> SimdInt4 {
     OZZInt4.max0(with: _v)
 }
 
-// Clamps each element of _x between _a and _b.
-// Result is unknown if _a is not less or equal to _b.
+/// Clamps each element of _x between _a and _b.
+/// Result is unknown if _a is not less or equal to _b.
 func clamp(_ _a: _SimdInt4, _ _v: _SimdInt4, _ _b: _SimdInt4) -> SimdInt4 {
     OZZInt4.clamp(with: _a, _v, _b)
 }
 
-// Returns boolean selection of vectors _true and _false according to consition
-// _b. All bits a each component of _b must have the same value (O or
-// 0xffffffff) to ensure portability.
+/// Returns boolean selection of vectors _true and _false according to consition
+/// _b. All bits a each component of _b must have the same value (O or
+/// 0xffffffff) to ensure portability.
 func select(_ _b: _SimdInt4, _true: _SimdInt4, _false: _SimdInt4) -> SimdInt4 {
     OZZInt4.select(with: _b, _true, _false)
 }
 
-// Returns per element binary and operation of _a and _b.
-// _v[0...127] = _a[0...127] & _b[0...127]
+/// Returns per element binary and operation of _a and _b.
+/// _v[0...127] = _a[0...127] & _b[0...127]
 func and(_ _a: _SimdInt4, _ _b: _SimdInt4) -> SimdInt4 {
     OZZInt4.and(with: _a, _b)
 }
 
-// Returns per element binary and operation of _a and ~_b.
-// _v[0...127] = _a[0...127] & ~_b[0...127]
+/// Returns per element binary and operation of _a and ~_b.
+/// _v[0...127] = _a[0...127] & ~_b[0...127]
 func andNot(_ _a: _SimdInt4, _ _b: _SimdInt4) -> SimdInt4 {
     OZZInt4.andNot(with: _a, _b)
 }
 
-// Returns per element binary or operation of _a and _b.
-// _v[0...127] = _a[0...127] | _b[0...127]
+/// Returns per element binary or operation of _a and _b.
+/// _v[0...127] = _a[0...127] | _b[0...127]
 func or(_ _a: _SimdInt4, _ _b: _SimdInt4) -> SimdInt4 {
     OZZInt4.or(with: _a, _b)
 }
 
-// Returns per element binary logical xor operation of _a and _b.
-// _v[0...127] = _a[0...127] ^ _b[0...127]
+/// Returns per element binary logical xor operation of _a and _b.
+/// _v[0...127] = _a[0...127] ^ _b[0...127]
 func xor(_ _a: _SimdInt4, _ _b: _SimdInt4) -> SimdInt4 {
     OZZInt4.xor(with: _a, _b)
 }
 
-// Returns per element binary complement of _v.
-// _v[0...127] = ~_b[0...127]
+/// Returns per element binary complement of _v.
+/// _v[0...127] = ~_b[0...127]
 func not(_ _v: _SimdInt4) -> SimdInt4 {
     OZZInt4.not(with: _v)
 }
 
-// Shifts the 4 signed or unsigned 32-bit integers in a left by count _bits
-// while shifting in zeros.
+/// Shifts the 4 signed or unsigned 32-bit integers in a left by count _bits
+/// while shifting in zeros.
 func shiftL(_ _v: _SimdInt4, _ _bits: Int32) -> SimdInt4 {
     OZZInt4.shiftL(with: _v, _bits)
 }
 
-// Shifts the 4 signed 32-bit integers in a right by count bits while shifting
-// in the sign bit.
+/// Shifts the 4 signed 32-bit integers in a right by count bits while shifting
+/// in the sign bit.
 func shiftR(_ _v: _SimdInt4, _ _bits: Int32) -> SimdInt4 {
     OZZInt4.shiftR(with: _v, _bits)
 }
 
-// Shifts the 4 signed or unsigned 32-bit integers in a right by count bits
-// while shifting in zeros.
+/// Shifts the 4 signed or unsigned 32-bit integers in a right by count bits
+/// while shifting in zeros.
 func shiftRu(_ _v: _SimdInt4, _ _bits: Int32) -> SimdInt4 {
     OZZInt4.shiftRu(with: _v, _bits)
 }
 
-// Per element "equal" comparison of _a and _b.
+/// Per element "equal" comparison of _a and _b.
 func cmpEq(_ _a: _SimdInt4, _ _b: _SimdInt4) -> SimdInt4 {
     OZZInt4.cmpEq(with: _a, _b)
 }
 
-// Per element "not equal" comparison of _a and _b.
+/// Per element "not equal" comparison of _a and _b.
 func cmpNe(_ _a: _SimdInt4, _ _b: _SimdInt4) -> SimdInt4 {
     OZZInt4.cmpNe(with: _a, _b)
 }
 
-// Per element "less than" comparison of _a and _b.
+/// Per element "less than" comparison of _a and _b.
 func cmpLt(_ _a: _SimdInt4, _ _b: _SimdInt4) -> SimdInt4 {
     OZZInt4.cmpLt(with: _a, _b)
 }
 
-// Per element "less than or equal" comparison of _a and _b.
+/// Per element "less than or equal" comparison of _a and _b.
 func cmpLe(_ _a: _SimdInt4, _ _b: _SimdInt4) -> SimdInt4 {
     OZZInt4.cmpLe(with: _a, _b)
 }
 
-// Per element "greater than" comparison of _a and _b.
+/// Per element "greater than" comparison of _a and _b.
 func cmpGt(_ _a: _SimdInt4, _ _b: _SimdInt4) -> SimdInt4 {
     OZZInt4.cmpGt(with: _a, _b)
 }
 
-// Per element "greater than or equal" comparison of _a and _b.
+/// Per element "greater than or equal" comparison of _a and _b.
 func cmpGe(_ _a: _SimdInt4, _ _b: _SimdInt4) -> SimdInt4 {
     OZZInt4.cmpGe(with: _a, _b)
 }
 
 //MARK: - Math
 enum math {
-    // Converts from a float to a half.
+    /// Converts from a float to a half.
     static func floatToHalf(_ _f: Float) -> UInt16 {
         OZZMath.floatToHalf(with: _f)
     }
 
-    // Converts from a half to a float.
+    /// Converts from a half to a float.
     static func halfToFloat(_ _h: UInt16) -> Float {
         OZZMath.halfToFloat(with: _h)
     }
 
-    // Converts from a float to a half.
+    /// Converts from a float to a half.
     static func floatToHalf(_ _f: simd_float4) -> SimdInt4 {
         OZZMath.floatToHalf(withSIMD: _f)
     }
 
-    // Converts from a half to a float.
+    /// Converts from a half to a float.
     static func halfToFloat(_ _h: _SimdInt4) -> simd_float4 {
         OZZMath.halfToFloat(withSIMD: _h)
     }
