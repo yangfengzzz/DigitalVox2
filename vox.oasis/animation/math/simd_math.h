@@ -1205,4 +1205,9 @@ typedef const __m128i _SimdInt4;
 
 @end
 
+// Declare the Quaternion type.
+struct SimdQuaternion {
+  SimdFloat4 xyzw;
+};
+
 #endif /* simd_math_h */
