@@ -21,7 +21,7 @@
 
 
 //MARK: - Damping
-- (void)setAngularDampingWith:(float)angDamp {
+- (void)setAngularDamping:(float)angDamp {
     static_cast<PxRigidDynamic *>(super.c_actor)->setAngularDamping(angDamp);
 }
 
@@ -29,7 +29,7 @@
     return static_cast<PxRigidDynamic *>(super.c_actor)->getAngularDamping();
 }
 
-- (void)setLinearDampingWith:(float)linDamp {
+- (void)setLinearDamping:(float)linDamp {
     static_cast<PxRigidDynamic *>(super.c_actor)->setLinearDamping(linDamp);
 }
 
@@ -38,7 +38,7 @@
 }
 
 //MARK: - Velocity
-- (void)setAngularVelocityWith:(simd_float3)angVel {
+- (void)setAngularVelocity:(simd_float3)angVel {
     static_cast<PxRigidDynamic *>(super.c_actor)->setAngularVelocity(PxVec3(angVel.x, angVel.y, angVel.z));
 }
 
@@ -47,7 +47,7 @@
     return simd_make_float3(vel.x, vel.y, vel.z);
 }
 
-- (void)setLinearVelocityWith:(simd_float3)linVel {
+- (void)setLinearVelocity:(simd_float3)linVel {
     static_cast<PxRigidDynamic *>(super.c_actor)->setLinearVelocity(PxVec3(linVel.x, linVel.y, linVel.z));
 }
 
@@ -56,7 +56,7 @@
     return simd_make_float3(vel.x, vel.y, vel.z);
 }
 
-- (void)setMaxAngularVelocityWith:(float)maxAngVel {
+- (void)setMaxAngularVelocity:(float)maxAngVel {
     static_cast<PxRigidDynamic *>(super.c_actor)->setMaxAngularVelocity(maxAngVel);
 }
 
@@ -64,7 +64,7 @@
     return static_cast<PxRigidDynamic *>(super.c_actor)->getMaxAngularVelocity();
 }
 
-- (void)setMaxLinearVelocityWith:(float)maxLinVel {
+- (void)setMaxLinearVelocity:(float)maxLinVel {
     static_cast<PxRigidDynamic *>(super.c_actor)->setMaxLinearVelocity(maxLinVel);
 }
 
@@ -73,7 +73,7 @@
 }
 
 //MARK: - Mass Manipulation
-- (void)setMassWith:(float)mass {
+- (void)setMass:(float)mass {
     static_cast<PxRigidDynamic *>(super.c_actor)->setMass(mass);
 }
 
@@ -81,7 +81,7 @@
     return static_cast<PxRigidDynamic *>(super.c_actor)->getMass();
 }
 
-- (void)setCMassLocalPoseWith:(simd_float3)position rotation:(simd_quatf)rotation {
+- (void)setCMassLocalPose:(simd_float3)position rotation:(simd_quatf)rotation {
     static_cast<PxRigidDynamic *>(super.c_actor)->setCMassLocalPose(
             PxTransform(PxVec3(position.x, position.y, position.z),
                     PxQuat(rotation.vector.x, rotation.vector.y, rotation.vector.z, rotation.vector.w)));
@@ -93,21 +93,33 @@
     *rotation = simd_quaternion(pose.q.x, pose.q.y, pose.q.z, pose.q.w);
 }
 
-- (void)setMassAndUpdateInertiaWith:(float)mass {
+- (void)setMassSpaceInertiaTensor:(simd_float3)m {
+    static_cast<PxRigidDynamic *>(super.c_actor)->setMassSpaceInertiaTensor(PxVec3(m.x, m.y, m.z));
+}
+
+- (void)setMassAndUpdateInertia:(float)mass {
     PxRigidBodyExt::setMassAndUpdateInertia(*static_cast<PxRigidDynamic *>(super.c_actor), mass, nullptr, false);
 }
 
 //MARK: - Forces
-- (void)addForceWith:(simd_float3)force {
+- (void)addForce:(simd_float3)force {
     static_cast<PxRigidDynamic *>(super.c_actor)->addForce(PxVec3(force.x, force.y, force.z));
 }
 
-- (void)addTorqueWith:(simd_float3)torque {
+- (void)addTorque:(simd_float3)torque {
     static_cast<PxRigidDynamic *>(super.c_actor)->addTorque(PxVec3(torque.x, torque.y, torque.z));
 }
 
-- (void)setRigidBodyFlagWith:(enum CPxRigidBodyFlag)flag value:(bool)value {
+- (void)setRigidBodyFlag:(enum CPxRigidBodyFlag)flag value:(bool)value {
     static_cast<PxRigidDynamic *>(super.c_actor)->setRigidBodyFlag(PxRigidBodyFlag::Enum(flag), value);
+}
+
+- (void)setMaxDepenetrationVelocity:(float)biasClamp {
+    static_cast<PxRigidDynamic *>(super.c_actor)->setMaxDepenetrationVelocity(biasClamp);
+}
+
+- (float)getMaxDepenetrationVelocity {
+    return static_cast<PxRigidDynamic *>(super.c_actor)->getMaxDepenetrationVelocity();
 }
 
 //MARK: - Extension
@@ -146,7 +158,7 @@
     return static_cast<PxRigidDynamic *>(super.c_actor)->isSleeping();
 }
 
-- (void)setSleepThresholdWith:(float)threshold {
+- (void)setSleepThreshold:(float)threshold {
     static_cast<PxRigidDynamic *>(super.c_actor)->setSleepThreshold(threshold);
 }
 
@@ -154,11 +166,11 @@
     return static_cast<PxRigidDynamic *>(super.c_actor)->getSleepThreshold();
 }
 
-- (void)setRigidDynamicLockFlagWith:(enum CPxRigidDynamicLockFlag)flag value:(bool)value {
+- (void)setRigidDynamicLockFlag:(enum CPxRigidDynamicLockFlag)flag value:(bool)value {
     static_cast<PxRigidDynamic *>(super.c_actor)->setRigidDynamicLockFlag(PxRigidDynamicLockFlag::Enum(flag), value);
 }
 
-- (void)setWakeCounterWith:(float)wakeCounterValue {
+- (void)setWakeCounter:(float)wakeCounterValue {
     static_cast<PxRigidDynamic *>(super.c_actor)->setWakeCounter(wakeCounterValue);
 }
 
@@ -174,7 +186,7 @@
     static_cast<PxRigidDynamic *>(super.c_actor)->putToSleep();
 }
 
-- (void)setSolverIterationCountsWith:(unsigned int)minPositionIters minVelocityIters:(unsigned int)minVelocityIters {
+- (void)setSolverIterationCounts:(unsigned int)minPositionIters minVelocityIters:(unsigned int)minVelocityIters {
     static_cast<PxRigidDynamic *>(super.c_actor)->setSolverIterationCounts(minPositionIters, minVelocityIters);
 }
 
@@ -183,7 +195,7 @@
 }
 
 //MARK: - Kinematic Actors
-- (void)setKinematicTargetWith:(simd_float3)position rotation:(simd_quatf)rotation {
+- (void)setKinematicTarget:(simd_float3)position rotation:(simd_quatf)rotation {
     static_cast<PxRigidDynamic *>(super.c_actor)->setKinematicTarget(
             PxTransform(PxVec3(position.x, position.y, position.z),
                     PxQuat(rotation.vector.x, rotation.vector.y, rotation.vector.z, rotation.vector.w)));
