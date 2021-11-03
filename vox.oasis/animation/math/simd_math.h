@@ -410,6 +410,9 @@ typedef const __m128i _SimdInt4;
 // Returns the per component maximum of _a and _b.
 + (SimdFloat4)MaxWith:(_SimdFloat4)_a :(_SimdFloat4)_b;
 
+// Returns the per component minimum of _v and 0.
++ (SimdFloat4)Min0With:(_SimdFloat4)_v;
+
 // Returns the per component maximum of _v and 0.
 + (SimdFloat4)Max0With:(_SimdFloat4)_v;
 
