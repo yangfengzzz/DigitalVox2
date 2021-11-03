@@ -7,6 +7,133 @@
 
 import Foundation
 
+extension simd_float4 {
+    // Returns a simd_float4 vector with all components set to 0.
+    static func zero() -> simd_float4 {
+        OZZFloat4.zero()
+    }
+
+    // Returns a simd_float4 vector with all components set to 1.
+    static func one() -> simd_float4 {
+        OZZFloat4.one()
+    }
+
+    // Returns a simd_float4 vector with the x component set to 1 and all the others to 0.
+    static func x_axis() -> simd_float4 {
+        OZZFloat4.x_axis()
+    }
+
+    // Returns a simd_float4 vector with the y component set to 1 and all the others to 0.
+    static func y_axis() -> simd_float4 {
+        OZZFloat4.y_axis()
+    }
+
+    // Returns a simd_float4 vector with the z component set to 1 and all the others to 0.
+    static func z_axis() -> simd_float4 {
+        OZZFloat4.z_axis()
+    }
+
+    // Returns a simd_float4 vector with the w component set to 1 and all the others to 0.
+    static func w_axis() -> simd_float4 {
+        OZZFloat4.w_axis()
+    }
+
+    // Loads _x, _y, _z, _w to the returned vector.
+    // r.x = _x
+    // r.y = _y
+    // r.z = _z
+    // r.w = _w
+    static func load(_ _x: Float, _ _y: Float, _ _z: Float, _ _w: Float) -> simd_float4 {
+        OZZFloat4.load(with: _x, _y, _z, _w)
+    }
+
+    // Loads _x to the x component of the returned vector, and sets y, z and w to 0.
+    // r.x = _x
+    // r.y = 0
+    // r.z = 0
+    // r.w = 0
+    static func loadX(_ _x: Float) -> simd_float4 {
+        OZZFloat4.loadX(with: _x)
+    }
+
+    // Loads _x to the all the components of the returned vector.
+    // r.x = _x
+    // r.y = _x
+    // r.z = _x
+    // r.w = _x
+    static func load1(_ _x: Float) -> simd_float4 {
+        OZZFloat4.load1(with: _x)
+    }
+
+    // Loads the 4 values of _f to the returned vector.
+    // _f must be aligned to 16 bytes.
+    // r.x = _f[0]
+    // r.y = _f[1]
+    // r.z = _f[2]
+    // r.w = _f[3]
+    static func loadPtr(_ _f: inout [Float]) -> simd_float4 {
+        OZZFloat4.loadPtr(with: &_f)
+    }
+
+    // Loads the 4 values of _f to the returned vector.
+    // _f must be aligned to 4 bytes.
+    // r.x = _f[0]
+    // r.y = _f[1]
+    // r.z = _f[2]
+    // r.w = _f[3]
+    static func loadPtrU(_ _f: inout [Float]) -> simd_float4 {
+        OZZFloat4.loadPtrU(with: &_f)
+    }
+
+    // Loads _f[0] to the x component of the returned vector, and sets y, z and w
+    // to 0.
+    // _f must be aligned to 4 bytes.
+    // r.x = _f[0]
+    // r.y = 0
+    // r.z = 0
+    // r.w = 0
+    static func loadXPtrU(_ _f: inout [Float]) -> simd_float4 {
+        OZZFloat4.loadXPtrU(with: &_f)
+    }
+
+    // Loads _f[0] to all the components of the returned vector.
+    // _f must be aligned to 4 bytes.
+    // r.x = _f[0]
+    // r.y = _f[0]
+    // r.z = _f[0]
+    // r.w = _f[0]
+    static func load1PtrU(_ _f: inout [Float]) -> simd_float4 {
+        OZZFloat4.load1PtrU(with: &_f)
+    }
+
+    // Loads the 2 first value of _f to the x and y components of the returned
+    // vector. The remaining components are set to 0.
+    // _f must be aligned to 4 bytes.
+    // r.x = _f[0]
+    // r.y = _f[1]
+    // r.z = 0
+    // r.w = 0
+    static func load2PtrU(_ _f: inout [Float]) -> simd_float4 {
+        OZZFloat4.load2PtrU(with: &_f)
+    }
+
+    // Loads the 3 first value of _f to the x, y and z components of the returned
+    // vector. The remaining components are set to 0.
+    // _f must be aligned to 4 bytes.
+    // r.x = _f[0]
+    // r.y = _f[1]
+    // r.z = _f[2]
+    // r.w = 0
+    static func load3PtrU(_ _f: inout [Float]) -> simd_float4 {
+        OZZFloat4.load3PtrU(with: &_f)
+    }
+
+    // Convert from integer to float.
+    static func fromInt(_ _i: _SimdInt4) -> simd_float4 {
+        OZZFloat4.fromInt(with: _i)
+    }
+}
+
 extension simd_float4x4 {
     // MARK:- Translate
     init(translation: SIMD3<Float>) {
@@ -97,41 +224,41 @@ extension simd_float4x4 {
 
     /// Returns a translation matrix.
     /// _v.w is ignored.
-    static func translation(_v: SIMD4<Float>) -> simd_float4x4 {
+    static func translation(_ _v: SIMD4<Float>) -> simd_float4x4 {
         OZZFloat4x4.translation(with: _v)
     }
 
     /// Returns a scaling matrix that scales along _v.
     /// _v.w is ignored.
-    static func scaling(_v: SIMD4<Float>) -> simd_float4x4 {
+    static func scaling(_ _v: SIMD4<Float>) -> simd_float4x4 {
         OZZFloat4x4.scaling(with: _v)
     }
 
     /// Returns the rotation matrix built from Euler angles defined by x, y and z
     /// components of _v. Euler angles are ordered Heading, Elevation and Bank, or
     /// Yaw, Pitch and Roll. _v.w is ignored.
-    static func fromEuler(_v: SIMD4<Float>) -> simd_float4x4 {
+    static func fromEuler(_ _v: SIMD4<Float>) -> simd_float4x4 {
         OZZFloat4x4.fromEuler(with: _v)
     }
 
     /// Returns the rotation matrix built from axis defined by _axis.xyz and
     /// _angle.x
-    static func fromAxisAngle(_axis: SIMD4<Float>,
-                              _angle: SIMD4<Float>) -> simd_float4x4 {
+    static func fromAxisAngle(_ _axis: SIMD4<Float>,
+                              _ _angle: SIMD4<Float>) -> simd_float4x4 {
         OZZFloat4x4.fromAxisAngle(with: _axis, _angle)
     }
 
     /// Returns the rotation matrix built from quaternion defined by x, y, z and w
     /// components of _v.
-    static func fromQuaternion(_v: SIMD4<Float>) -> simd_float4x4 {
+    static func fromQuaternion(_ _v: SIMD4<Float>) -> simd_float4x4 {
         OZZFloat4x4.fromQuaternion(with: _v)
     }
 
     /// Returns the affine transformation matrix built from split translation,
     /// rotation (quaternion) and scale.
-    static func fromAffine(_translation: SIMD4<Float>,
-                           _quaternion: SIMD4<Float>,
-                           _scale: SIMD4<Float>) -> simd_float4x4 {
+    static func fromAffine(_ _translation: SIMD4<Float>,
+                           _ _quaternion: SIMD4<Float>,
+                           _ _scale: SIMD4<Float>) -> simd_float4x4 {
         OZZFloat4x4.fromAffine(with: _translation, _quaternion, _scale)
     }
 }
@@ -145,24 +272,24 @@ func transpose(_ _m: simd_float4x4) -> simd_float4x4 {
 /// If _invertible is not nullptr, its x component will be set to true if matrix is
 /// invertible. If _invertible is nullptr, then an assert is triggered in case the
 /// matrix isn't invertible.
-func invert(_ _m: simd_float4x4, _invertible: inout SimdInt4) -> simd_float4x4 {
+func invert(_ _m: simd_float4x4, _ _invertible: inout SimdInt4) -> simd_float4x4 {
     OZZFloat4x4.invert(with: _m, &_invertible)
 }
 
 /// Translates matrix _m along the axis defined by _v components.
 /// _v.w is ignored.
-func translate(_ _m: simd_float4x4, _v: _SimdFloat4) -> simd_float4x4 {
+func translate(_ _m: simd_float4x4, _ _v: simd_float4) -> simd_float4x4 {
     OZZFloat4x4.translate(with: _m, _v)
 }
 
 /// Scales matrix _m along each axis with x, y, z components of _v.
 /// _v.w is ignored.
-func scale(_ _m: simd_float4x4, _v: _SimdFloat4) -> simd_float4x4 {
+func scale(_ _m: simd_float4x4, _ _v: simd_float4) -> simd_float4x4 {
     OZZFloat4x4.scale(with: _m, _v)
 }
 
 /// Multiply each column of matrix _m with vector _v.
-func columnMultiply(_ _m: simd_float4x4, _v: _SimdFloat4) -> simd_float4x4 {
+func columnMultiply(_ _m: simd_float4x4, _ _v: simd_float4) -> simd_float4x4 {
     OZZFloat4x4.columnMultiply(with: _m, _v)
 }
 
@@ -192,7 +319,7 @@ func isOrthogonal(_ _m: simd_float4x4) -> SimdInt4 {
 /// Returns the quaternion that represent the rotation of matrix _m.
 /// _m must be normalized and orthogonal.
 /// the return quaternion is normalized.
-func toQuaternion(_ _m: simd_float4x4) -> SimdFloat4 {
+func toQuaternion(_ _m: simd_float4x4) -> simd_float4 {
     OZZFloat4x4.toQuaternion(with: _m)
 }
 
@@ -200,23 +327,44 @@ func toQuaternion(_ _m: simd_float4x4) -> SimdFloat4 {
 /// and translational components.
 /// Returns false if it was not possible to decompose the matrix. This would be
 /// because more than 1 of the 3 first column of _m are scaled to 0.
-func toAffine(_ _m: simd_float4x4, _translation: inout SimdFloat4,
-              _quaternion: inout SimdFloat4, _scale: inout SimdFloat4) -> Bool {
+func toAffine(_ _m: simd_float4x4, _ _translation: inout simd_float4,
+              _ _quaternion: inout simd_float4, _ _scale: inout simd_float4) -> Bool {
     OZZFloat4x4.toAffine(with: _m, &_translation, &_quaternion, &_scale)
 }
 
 /// Computes the transformation of a Float4x4 matrix and a point _p.
-/// This is equivalent to multiplying a matrix by a SimdFloat4 with a w component
+/// This is equivalent to multiplying a matrix by a simd_float4 with a w component
 /// of 1.
-func transformPoint(_ _m: simd_float4x4, _v: _SimdFloat4) -> SimdFloat4 {
+func transformPoint(_ _m: simd_float4x4, _ _v: simd_float4) -> simd_float4 {
     OZZFloat4x4.transformPoint(with: _m, _v)
 }
 
 
 /// Computes the transformation of a Float4x4 matrix and a vector _v.
-/// This is equivalent to multiplying a matrix by a SimdFloat4 with a w component
+/// This is equivalent to multiplying a matrix by a simd_float4 with a w component
 /// of 0.
-func transformVector(_ _m: simd_float4x4, _v: _SimdFloat4) -> SimdFloat4 {
+func transformVector(_ _m: simd_float4x4, _ _v: simd_float4) -> simd_float4 {
     OZZFloat4x4.transformVector(with: _m, _v)
 }
 
+enum math {
+    // Converts from a float to a half.
+    static func floatToHalf(_ _f: Float) -> UInt16 {
+        OZZMath.floatToHalf(with: _f)
+    }
+
+    // Converts from a half to a float.
+    static func halfToFloat(_ _h: UInt16) -> Float {
+        OZZMath.halfToFloat(with: _h)
+    }
+
+    // Converts from a float to a half.
+    static func floatToHalf(_ _f: simd_float4) -> SimdInt4 {
+        OZZMath.floatToHalf(withSIMD: _f)
+    }
+
+    // Converts from a half to a float.
+    static func halfToFloat(_ _h: _SimdInt4) -> simd_float4 {
+        OZZMath.halfToFloat(withSIMD: _h)
+    }
+}
