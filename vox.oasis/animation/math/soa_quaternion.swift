@@ -80,7 +80,7 @@ func lerp(_ _a: SoaQuaternion, _ _b: SoaQuaternion,
 
 // Returns the linear interpolation of SoaQuaternion _a and _b with coefficient
 // _f.
-func nLerp(_ _a: SoaQuaternion, _ _b: SoaQuaternion,
+func nlerp(_ _a: SoaQuaternion, _ _b: SoaQuaternion,
            _ _f: _SimdFloat4) -> SoaQuaternion {
     let lerp = SoaFloat4(x: (_b.x - _a.x) * _f + _a.x, y: (_b.y - _a.y) * _f + _a.y,
             z: (_b.z - _a.z) * _f + _a.z, w: (_b.w - _a.w) * _f + _a.w)
@@ -93,7 +93,7 @@ func nLerp(_ _a: SoaQuaternion, _ _b: SoaQuaternion,
 
 // Returns the estimated linear interpolation of SoaQuaternion _a and _b with
 // coefficient _f.
-func nLerpEst(_ _a: SoaQuaternion,
+func nlerpEst(_ _a: SoaQuaternion,
               _ _b: SoaQuaternion, _ _f: _SimdFloat4) -> SoaQuaternion {
     let lerp = SoaFloat4(x: (_b.x - _a.x) * _f + _a.x, y: (_b.y - _a.y) * _f + _a.y,
             z: (_b.z - _a.z) * _f + _a.z, w: (_b.w - _a.w) * _f + _a.w)

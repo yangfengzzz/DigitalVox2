@@ -33,8 +33,8 @@ struct VecQuaternion {
     // representation.
     // Assumes the axis part (x, y, z) of _axis_angle is normalized.
     // _angle.x is the angle in radian.
-    static func FromAxisAngle(_ _axis: VecFloat3, _  _angle: Float) -> VecQuaternion {
-        guard IsNormalized(_axis) else {
+    static func fromAxisAngle(_ _axis: VecFloat3, _  _angle: Float) -> VecQuaternion {
+        guard isNormalized(_axis) else {
             fatalError("axis is not normalized.")
         }
         let half_angle = _angle * 0.5
@@ -47,8 +47,8 @@ struct VecQuaternion {
     // representation.
     // Assumes the axis part (x, y, z) of _axis_angle is normalized.
     // _angle.x is the angle cosine in radian, it must be within [-1,1] range.
-    static func FromAxisCosAngle(_ _axis: VecFloat3, _  _cos: Float) -> VecQuaternion {
-        guard IsNormalized(_axis) else {
+    static func fromAxisCosAngle(_ _axis: VecFloat3, _  _cos: Float) -> VecQuaternion {
+        guard isNormalized(_axis) else {
             fatalError("axis is not normalized.")
         }
         guard _cos >= -1.0 && _cos <= 1.0 else {
@@ -63,7 +63,7 @@ struct VecQuaternion {
     // Returns a normalized quaternion initialized from an Euler representation.
     // Euler angles are ordered Heading, Elevation and Bank, or Yaw, Pitch and
     // Roll.
-    static func FromEuler(_  _yaw: Float, _   _pitch: Float, _  _roll: Float) -> VecQuaternion {
+    static func fromEuler(_  _yaw: Float, _   _pitch: Float, _  _roll: Float) -> VecQuaternion {
         let half_yaw = _yaw * 0.5
         let c1 = cos(half_yaw)
         let s1 = sin(half_yaw)
@@ -82,13 +82,13 @@ struct VecQuaternion {
     // Returns the quaternion that will rotate vector _from into vector _to,
     // around their plan perpendicular axis.The input vectors don't need to be
     // normalized, they can be null as well.
-    static func FromVectors(_ _from: VecFloat3, _ _to: VecFloat3) -> VecQuaternion {
+    static func fromVectors(_ _from: VecFloat3, _ _to: VecFloat3) -> VecQuaternion {
         // http://lolengine.net/blog/2014/02/24/quaternion-from-two-vectors-final
-        let norm_from_norm_to = sqrt(LengthSqr(_from) * LengthSqr(_to))
+        let norm_from_norm_to = sqrt(lengthSqr(_from) * lengthSqr(_to))
         if (norm_from_norm_to < 1.0e-5) {
             return VecQuaternion.identity()
         }
-        let real_part = norm_from_norm_to + Dot(_from, _to)
+        let real_part = norm_from_norm_to + dot(_from, _to)
         var quat = VecQuaternion()
         if (real_part < 1.0e-6 * norm_from_norm_to) {
             // If _from and _to are exactly opposite, rotate 180 degrees around an
@@ -98,21 +98,21 @@ struct VecQuaternion {
                     ? VecQuaternion(-_from.y, _from.x, 0.0, 0.0)
                     : VecQuaternion(0.0, -_from.z, _from.y, 0.0)
         } else {
-            let cross = Cross(_from, _to)
+            let cross = cross(_from, _to)
             quat = VecQuaternion(cross.x, cross.y, cross.z, real_part)
         }
-        return Normalize(quat)
+        return normalize(quat)
     }
 
     // Returns the quaternion that will rotate vector _from into vector _to,
     // around their plan perpendicular axis. The input vectors must be normalized.
-    static func FromUnitVectors(_ _from: VecFloat3, _ _to: VecFloat3) -> VecQuaternion {
-        guard IsNormalized(_from) && IsNormalized(_to) else {
+    static func fromUnitVectors(_ _from: VecFloat3, _ _to: VecFloat3) -> VecQuaternion {
+        guard isNormalized(_from) && isNormalized(_to) else {
             fatalError("Input vectors must be normalized.")
         }
 
         // http://lolengine.net/blog/2014/02/24/quaternion-from-two-vectors-final
-        let real_part = 1.0 + Dot(_from, _to)
+        let real_part = 1.0 + dot(_from, _to)
         if (real_part < 1.0e-6) {
             // If _from and _to are exactly opposite, rotate 180 degrees around an
             // arbitrary orthogonal axis.
@@ -121,8 +121,8 @@ struct VecQuaternion {
                     ? VecQuaternion(-_from.y, _from.x, 0.0, 0.0)
                     : VecQuaternion(0.0, -_from.z, _from.y, 0.0)
         } else {
-            let cross = Cross(_from, _to)
-            return Normalize(VecQuaternion(cross.x, cross.y, cross.z, real_part))
+            let cross = cross(_from, _to)
+            return normalize(VecQuaternion(cross.x, cross.y, cross.z, real_part))
         }
     }
 
@@ -144,7 +144,7 @@ func !=(_a: VecQuaternion, _b: VecQuaternion) -> Bool {
 
 // Returns the conjugate of _q. This is the same as the inverse if _q is
 // normalized. Otherwise the magnitude of the inverse is 1.0/|_q|.
-func Conjugate(_ _q: VecQuaternion) -> VecQuaternion {
+func conjugate(_ _q: VecQuaternion) -> VecQuaternion {
     VecQuaternion(-_q.x, -_q.y, -_q.z, _q.w)
 }
 
@@ -173,7 +173,7 @@ prefix func -(_q: VecQuaternion) -> VecQuaternion {
 }
 
 // Returns true if the angle between _a and _b is less than _tolerance.
-func Compare(_ _a: VecQuaternion, _ _b: VecQuaternion,
+func compare(_ _a: VecQuaternion, _ _b: VecQuaternion,
              _ _cos_half_tolerance: Float) -> Bool {
     // Computes w component of a-1 * b.
     let cos_half_angle = _a.x * _b.x + _a.y * _b.y + _a.z * _b.z + _a.w * _b.w
@@ -181,13 +181,13 @@ func Compare(_ _a: VecQuaternion, _ _b: VecQuaternion,
 }
 
 // Returns true if _q is a normalized quaternion.
-func IsNormalized(_ _q: VecQuaternion) -> Bool {
+func isNormalized(_ _q: VecQuaternion) -> Bool {
     let sq_len = _q.x * _q.x + _q.y * _q.y + _q.z * _q.z + _q.w * _q.w
     return abs(sq_len - 1.0) < kNormalizationToleranceSq
 }
 
 // Returns the normalized quaternion _q.
-func Normalize(_ _q: VecQuaternion) -> VecQuaternion {
+func normalize(_ _q: VecQuaternion) -> VecQuaternion {
     let sq_len = _q.x * _q.x + _q.y * _q.y + _q.z * _q.z + _q.w * _q.w
     guard sq_len != 0.0 else {
         fatalError("_q is not normalizable")
@@ -198,9 +198,9 @@ func Normalize(_ _q: VecQuaternion) -> VecQuaternion {
 
 // Returns the normalized quaternion _q if the norm of _q is not 0.
 // Otherwise returns _safer.
-func NormalizeSafe(_ _q: VecQuaternion,
+func normalizeSafe(_ _q: VecQuaternion,
                    _ _safer: VecQuaternion) -> VecQuaternion {
-    guard IsNormalized(_safer) else {
+    guard isNormalized(_safer) else {
         fatalError("_safer is not normalized")
     }
     let sq_len = _q.x * _q.x + _q.y * _q.y + _q.z * _q.z + _q.w * _q.w
@@ -213,8 +213,8 @@ func NormalizeSafe(_ _q: VecQuaternion,
 
 // Returns to an axis angle representation of quaternion _q.
 // Assumes quaternion _q is normalized.
-func ToAxisAngle(_ _q: VecQuaternion) -> VecFloat4 {
-    assert(IsNormalized(_q))
+func toAxisAngle(_ _q: VecQuaternion) -> VecFloat4 {
+    assert(isNormalized(_q))
     let clamped_w = simd_clamp(-1.0, _q.w, 1.0)
     let angle = 2.0 * acos(clamped_w)
     let s = sqrt(1.0 - clamped_w * clamped_w)
@@ -232,7 +232,7 @@ func ToAxisAngle(_ _q: VecQuaternion) -> VecFloat4 {
 
 // Returns to an Euler representation of quaternion _q.
 // Quaternion _q does not require to be normalized.
-func ToEuler(_ _q: VecQuaternion) -> VecFloat3 {
+func toEuler(_ _q: VecQuaternion) -> VecFloat3 {
     let sqw = _q.w * _q.w
     let sqx = _q.x * _q.x
     let sqy = _q.y * _q.y
@@ -260,20 +260,20 @@ func ToEuler(_ _q: VecQuaternion) -> VecFloat3 {
 }
 
 // Returns the dot product of _a and _b.
-func Dot(_ _a: VecQuaternion, _ _b: VecQuaternion) -> Float {
-    return _a.x * _b.x + _a.y * _b.y + _a.z * _b.z + _a.w * _b.w
+func dot(_ _a: VecQuaternion, _ _b: VecQuaternion) -> Float {
+    _a.x * _b.x + _a.y * _b.y + _a.z * _b.z + _a.w * _b.w
 }
 
 // Returns the linear interpolation of quaternion _a and _b with coefficient
 // _f.
-func Lerp(_ _a: VecQuaternion, _ _b: VecQuaternion, _f: Float) -> VecQuaternion {
-    return VecQuaternion((_b.x - _a.x) * _f + _a.x, (_b.y - _a.y) * _f + _a.y,
+func lerp(_ _a: VecQuaternion, _ _b: VecQuaternion, _f: Float) -> VecQuaternion {
+    VecQuaternion((_b.x - _a.x) * _f + _a.x, (_b.y - _a.y) * _f + _a.y,
             (_b.z - _a.z) * _f + _a.z, (_b.w - _a.w) * _f + _a.w)
 }
 
 // Returns the linear interpolation of quaternion _a and _b with coefficient
 // _f. _a and _n must be from the same hemisphere (aka dot(_a, _b) >= 0).
-func NLerp(_ _a: VecQuaternion, _ _b: VecQuaternion,
+func nlerp(_ _a: VecQuaternion, _ _b: VecQuaternion,
            _ _f: Float) -> VecQuaternion {
     let lerp = VecFloat4((_b.x - _a.x) * _f + _a.x, (_b.y - _a.y) * _f + _a.y,
             (_b.z - _a.z) * _f + _a.z, (_b.w - _a.w) * _f + _a.w)
@@ -285,10 +285,10 @@ func NLerp(_ _a: VecQuaternion, _ _b: VecQuaternion,
 
 // Returns the spherical interpolation of quaternion _a and _b with
 // coefficient _f.
-func SLerp(_ _a: VecQuaternion, _ _b: VecQuaternion,
+func slerp(_ _a: VecQuaternion, _ _b: VecQuaternion,
            _ _f: Float) -> VecQuaternion {
-    assert(IsNormalized(_a))
-    assert(IsNormalized(_b))
+    assert(isNormalized(_a))
+    assert(isNormalized(_b))
     // Calculate angle between them.
     let cos_half_theta = _a.x * _b.x + _a.y * _b.y + _a.z * _b.z + _a.w * _b.w
 
@@ -320,7 +320,7 @@ func SLerp(_ _a: VecQuaternion, _ _b: VecQuaternion,
 // Computes the transformation of a Quaternion and a vector _v.
 // This is equivalent to carrying out the quaternion multiplications:
 // _q.conjugate() * (*this) * _q
-func TransformVector(_ _q: VecQuaternion, _ _v: VecFloat3) -> VecFloat3 {
+func transformVector(_ _q: VecQuaternion, _ _v: VecFloat3) -> VecFloat3 {
     // http://www.neil.dantam.name/note/dantam-quaternion.pdf
     // _v + 2.0 * cross(_q.xyz, cross(_q.xyz, _v) + _q.w * _v)
     let a = VecFloat3(_q.y * _v.z - _q.z * _v.y + _v.x * _q.w,

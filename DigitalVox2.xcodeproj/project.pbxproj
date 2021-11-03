@@ -320,6 +320,8 @@
 		04CB88F42732953E00B0E398 /* soa_transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88DA27326C9900B0E398 /* soa_transform.swift */; };
 		04CB88F52732AE0000B0E398 /* simd_quaternion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88D527326C9900B0E398 /* simd_quaternion.swift */; };
 		04CB88F62732AF5A00B0E398 /* vec_float.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88D827326C9900B0E398 /* vec_float.swift */; };
+		04CB88F72732B11F00B0E398 /* vec_quaternion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88D627326C9900B0E398 /* vec_quaternion.swift */; };
+		04CB88F82732B1E600B0E398 /* vec_transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88E027326C9900B0E398 /* vec_transform.swift */; };
 		04EA0D6A26E0F9AD00CA7833 /* math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6926E0F9AD00CA7833 /* math.swift */; };
 		04EA0D6C26E1204200CA7833 /* bbox2f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6B26E1204200CA7833 /* bbox2f.swift */; };
 		04EA0D6E26E1204F00CA7833 /* bbox3f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6D26E1204F00CA7833 /* bbox3f.swift */; };
@@ -2101,6 +2103,7 @@
 				041BAE11272A500F006268D5 /* InputManager.swift in Sources */,
 				041BAF14272B8A5B006268D5 /* PhysXPhysicsManager.swift in Sources */,
 				041BAE4B272A50FB006268D5 /* RenderFace.swift in Sources */,
+				04CB88F72732B11F00B0E398 /* vec_quaternion.swift in Sources */,
 				041BAE9E272A5141006268D5 /* DynamicCollider.swift in Sources */,
 				041BAE0B272A500F006268D5 /* EngineFeatureManager.swift in Sources */,
 				041BAE68272A5111006268D5 /* PointLight.swift in Sources */,
@@ -2246,6 +2249,7 @@
 				041BAE73272A5117006268D5 /* LightShadow.swift in Sources */,
 				041BAE15272A500F006268D5 /* UpdateFlagManager.swift in Sources */,
 				041BAE9F272A5141006268D5 /* BoxColliderShape.swift in Sources */,
+				04CB88F82732B1E600B0E398 /* vec_transform.swift in Sources */,
 				041BAE4F272A50FB006268D5 /* Material.swift in Sources */,
 				041BAE9B272A5141006268D5 /* ColliderShape.swift in Sources */,
 				041BAE52272A5100006268D5 /* RenderQueue.swift in Sources */,
