@@ -770,6 +770,7 @@
 		04CB88EF27328C3F00B0E398 /* soa_float.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = soa_float.h; sourceTree = "<group>"; };
 		04CB88FE2732B56300B0E398 /* raw_skeleton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = raw_skeleton.swift; sourceTree = "<group>"; };
 		04CB89002732B59C00B0E398 /* soa_skeleton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = soa_skeleton.swift; sourceTree = "<group>"; };
+		04CB89022732BFBF00B0E398 /* skeleton_builder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = skeleton_builder.swift; sourceTree = "<group>"; };
 		04DB2A4126DF1E0500C15850 /* IClone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IClone.swift; sourceTree = "<group>"; };
 		04DBA7D92700B32D00C3B97C /* EngineFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineFeature.swift; sourceTree = "<group>"; };
 		04DBA7DB2700B3C900C3B97C /* SceneFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneFeature.swift; sourceTree = "<group>"; };
@@ -1680,6 +1681,7 @@
 		04CB88FC2732B49B00B0E398 /* offline */ = {
 			isa = PBXGroup;
 			children = (
+				04CB89022732BFBF00B0E398 /* skeleton_builder.swift */,
 				04CB88FE2732B56300B0E398 /* raw_skeleton.swift */,
 			);
 			path = offline;
