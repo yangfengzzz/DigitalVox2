@@ -173,6 +173,7 @@ final class Engine: NSObject {
             }
 
             componentsManager.callScriptOnUpdate(deltaTime)
+            componentsManager.callAnimationUpdate(deltaTime)
             componentsManager.callScriptOnLateUpdate(deltaTime)
 
             _hardwareRenderer.begin()

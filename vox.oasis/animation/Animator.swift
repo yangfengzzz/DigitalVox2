@@ -12,6 +12,8 @@ class Animator: Component {
     var currentAnimation: AnimationClip?
     var animationPaused = true
     var currentTime: Float = 0
+    
+    internal var _onUpdateIndex: Int = -1
 
     static func load(animation: MDLPackedJointAnimation) -> AnimationClip {
         let name = URL(string: animation.name)?.lastPathComponent ?? "Untitled"
@@ -95,5 +97,13 @@ class Animator: Component {
     func stopAnimation() {
         animationPaused = true
         currentAnimation = nil
+    }
+    
+    internal override func _onEnable() {
+        engine._componentsManager.addOnUpdateAnimations(self)
+    }
+
+    internal override func _onDisable() {
+        engine._componentsManager.removeOnUpdateAnimations(self)
     }
 }
