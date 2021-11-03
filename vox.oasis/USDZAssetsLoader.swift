@@ -51,9 +51,14 @@ class USDZAssetsLoader {
                 mesh.setVertexBufferBinding(vertexBuffer.buffer, 0, index)
             }
 
-            let childEntity:Entity = entity.createChild(nil)
-            let renderer: MeshRenderer = childEntity.addComponent()
+            // load skeleton
+            let skeleton = Skeleton(_engine, animationBindComponent:
+            (mdlMesh.componentConforming(to: MDLComponent.self) as? MDLAnimationBindComponent))
+
+            let childEntity: Entity = entity.createChild(nil)
+            let renderer: SkinnedMeshRenderer = childEntity.addComponent()
             renderer.mesh = mesh
+            renderer.skeleton = skeleton
 
             var subCount = 0
             zip(mdlMesh.submeshes!, mtkMesh.submeshes).forEach { (mdlSubmesh, mtkSubmesh: MTKSubmesh) in
@@ -105,8 +110,8 @@ class USDZAssetsLoader {
             pbr.baseColor = color.setValue(r: baseColor.float3Value.x, g: baseColor.float3Value.y, b: baseColor.float3Value.z, a: 1.0)
         }
         if let roughness = material?.property(with: .roughness),
-          roughness.type == .float3 {
-          pbr.roughness = roughness.floatValue
+           roughness.type == .float3 {
+            pbr.roughness = roughness.floatValue
         }
     }
 }
@@ -250,32 +255,72 @@ extension MDLVertexDescriptor {
     static var defaultVertexDescriptor: MDLVertexDescriptor = {
         let vertexDescriptor = MDLVertexDescriptor()
         var offset = 0
-
-        // position attribute
+        //MARK:- position attribute
         vertexDescriptor.attributes[Int(Position.rawValue)]
                 = MDLVertexAttribute(name: MDLVertexAttributePosition,
                 format: .float3,
                 offset: 0,
                 bufferIndex: Int(BufferIndexVertices.rawValue))
-        offset += MemoryLayout<Float>.stride * 3
+        offset += MemoryLayout<SIMD3<Float>>.stride
 
-        // normal attribute
+        //MARK:- normal attribute
         vertexDescriptor.attributes[Int(Normal.rawValue)] =
                 MDLVertexAttribute(name: MDLVertexAttributeNormal,
                         format: .float3,
                         offset: offset,
                         bufferIndex: Int(BufferIndexVertices.rawValue))
-        offset += MemoryLayout<Float>.stride * 3
+        offset += MemoryLayout<SIMD3<Float>>.stride
 
-        // uv attribute
+        //MARK:- add the uv attribute here
         vertexDescriptor.attributes[Int(UV_0.rawValue)] =
                 MDLVertexAttribute(name: MDLVertexAttributeTextureCoordinate,
                         format: .float2,
                         offset: offset,
                         bufferIndex: Int(BufferIndexVertices.rawValue))
-        offset += MemoryLayout<Float>.stride * 2
+        offset += MemoryLayout<SIMD2<Float>>.stride
+
+        vertexDescriptor.attributes[Int(Tangent.rawValue)] =
+                MDLVertexAttribute(name: MDLVertexAttributeTangent,
+                        format: .float3,
+                        offset: 0,
+                        bufferIndex: 1)
+
+        vertexDescriptor.attributes[Int(Bitangent.rawValue)] =
+                MDLVertexAttribute(name: MDLVertexAttributeBitangent,
+                        format: .float3,
+                        offset: 0,
+                        bufferIndex: 2)
+
+        //MARK:- color attribute
+        vertexDescriptor.attributes[Int(Color_0.rawValue)] =
+                MDLVertexAttribute(name: MDLVertexAttributeColor,
+                        format: .float3,
+                        offset: offset,
+                        bufferIndex: Int(BufferIndexVertices.rawValue))
+
+        offset += MemoryLayout<SIMD3<Float>>.stride
+
+        //MARK:- joints attribute
+        vertexDescriptor.attributes[Int(Joints_0.rawValue)] =
+                MDLVertexAttribute(name: MDLVertexAttributeJointIndices,
+                        format: .uShort4,
+                        offset: offset,
+                        bufferIndex: Int(BufferIndexVertices.rawValue))
+        offset += MemoryLayout<ushort>.stride * 4
+
+        vertexDescriptor.attributes[Int(Weights_0.rawValue)] =
+                MDLVertexAttribute(name: MDLVertexAttributeJointWeights,
+                        format: .float4,
+                        offset: offset,
+                        bufferIndex: Int(BufferIndexVertices.rawValue))
+        offset += MemoryLayout<SIMD4<Float>>.stride
 
         vertexDescriptor.layouts[0] = MDLVertexBufferLayout(stride: offset)
+        vertexDescriptor.layouts[1] =
+                MDLVertexBufferLayout(stride: MemoryLayout<SIMD3<Float>>.stride)
+        vertexDescriptor.layouts[2] =
+                MDLVertexBufferLayout(stride: MemoryLayout<SIMD3<Float>>.stride)
         return vertexDescriptor
+
     }()
 }

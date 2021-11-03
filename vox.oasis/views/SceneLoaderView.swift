@@ -46,10 +46,10 @@ struct SceneLoaderView: View {
         cameraEntity.transform.lookAt(worldPosition: Vector3(0, 0, 0), worldUp: nil)
         let _: OrbitControl = cameraEntity.addComponent()
 
-        usdzLoader.load(with: "Mando_Helmet.usdz") { entities in
-            entities[0].transform.setPosition(x: 0, y: -2, z: 0)
-            entities[0].transform.setScale(x: 0.1, y: 0.1, z: 0.1)
-            entities[0].transform.setRotation(x: 0, y: 90, z: 0)
+        usdzLoader.load(with: "skeleton.usda") { entities in
+//            entities[0].transform.setPosition(x: 0, y: -2, z: 0)
+//            entities[0].transform.setScale(x: 0.1, y: 0.1, z: 0.1)
+//            entities[0].transform.setRotation(x: 0, y: 90, z: 0)
             let _: Rotation = entities[0].addComponent()
             rootEntity.addChild(entities[0])
         }

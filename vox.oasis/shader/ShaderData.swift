@@ -20,7 +20,7 @@ extension Int: ShaderBytesType {
                 length: MemoryLayout<Int>.stride,
                 index: shaderUniform.location)
     }
-    
+
     func loadFragmentBytes(_ rhi: MetalRenderer, _ shaderUniform: ShaderUniform) {
         var value = self
         rhi.renderEncoder.setFragmentBytes(&value,
@@ -36,7 +36,7 @@ extension Float: ShaderBytesType {
                 length: MemoryLayout<Float>.stride,
                 index: shaderUniform.location)
     }
-    
+
     func loadFragmentBytes(_ rhi: MetalRenderer, _ shaderUniform: ShaderUniform) {
         var value = self
         rhi.renderEncoder.setFragmentBytes(&value,
@@ -47,13 +47,13 @@ extension Float: ShaderBytesType {
 
 extension Vector2: ShaderBytesType {
     func loadVetexBytes(_ rhi: MetalRenderer, _ shaderUniform: ShaderUniform) {
-        rhi.renderEncoder.setVertexBytes(&self.elements,
+        rhi.renderEncoder.setVertexBytes(&elements,
                 length: MemoryLayout<SIMD2<Float>>.stride,
                 index: shaderUniform.location)
     }
-    
+
     func loadFragmentBytes(_ rhi: MetalRenderer, _ shaderUniform: ShaderUniform) {
-        rhi.renderEncoder.setFragmentBytes(&self.elements,
+        rhi.renderEncoder.setFragmentBytes(&elements,
                 length: MemoryLayout<SIMD2<Float>>.stride,
                 index: shaderUniform.location)
     }
@@ -61,13 +61,13 @@ extension Vector2: ShaderBytesType {
 
 extension Vector3: ShaderBytesType {
     func loadVetexBytes(_ rhi: MetalRenderer, _ shaderUniform: ShaderUniform) {
-        rhi.renderEncoder.setVertexBytes(&self.elements,
+        rhi.renderEncoder.setVertexBytes(&elements,
                 length: MemoryLayout<SIMD3<Float>>.stride,
                 index: shaderUniform.location)
     }
-    
+
     func loadFragmentBytes(_ rhi: MetalRenderer, _ shaderUniform: ShaderUniform) {
-        rhi.renderEncoder.setFragmentBytes(&self.elements,
+        rhi.renderEncoder.setFragmentBytes(&elements,
                 length: MemoryLayout<SIMD3<Float>>.stride,
                 index: shaderUniform.location)
     }
@@ -75,13 +75,13 @@ extension Vector3: ShaderBytesType {
 
 extension Vector4: ShaderBytesType {
     func loadVetexBytes(_ rhi: MetalRenderer, _ shaderUniform: ShaderUniform) {
-        rhi.renderEncoder.setVertexBytes(&self.elements,
+        rhi.renderEncoder.setVertexBytes(&elements,
                 length: MemoryLayout<SIMD4<Float>>.stride,
                 index: shaderUniform.location)
     }
-    
+
     func loadFragmentBytes(_ rhi: MetalRenderer, _ shaderUniform: ShaderUniform) {
-        rhi.renderEncoder.setFragmentBytes(&self.elements,
+        rhi.renderEncoder.setFragmentBytes(&elements,
                 length: MemoryLayout<SIMD4<Float>>.stride,
                 index: shaderUniform.location)
     }
@@ -89,13 +89,13 @@ extension Vector4: ShaderBytesType {
 
 extension Color: ShaderBytesType {
     func loadVetexBytes(_ rhi: MetalRenderer, _ shaderUniform: ShaderUniform) {
-        rhi.renderEncoder.setVertexBytes(&self.elements,
+        rhi.renderEncoder.setVertexBytes(&elements,
                 length: MemoryLayout<SIMD4<Float>>.stride,
                 index: shaderUniform.location)
     }
-    
+
     func loadFragmentBytes(_ rhi: MetalRenderer, _ shaderUniform: ShaderUniform) {
-        rhi.renderEncoder.setFragmentBytes(&self.elements,
+        rhi.renderEncoder.setFragmentBytes(&elements,
                 length: MemoryLayout<SIMD4<Float>>.stride,
                 index: shaderUniform.location)
     }
@@ -103,13 +103,13 @@ extension Color: ShaderBytesType {
 
 extension Matrix: ShaderBytesType {
     func loadVetexBytes(_ rhi: MetalRenderer, _ shaderUniform: ShaderUniform) {
-        rhi.renderEncoder.setVertexBytes(&self.elements,
+        rhi.renderEncoder.setVertexBytes(&elements,
                 length: MemoryLayout<matrix_float4x4>.stride,
                 index: shaderUniform.location)
     }
-    
+
     func loadFragmentBytes(_ rhi: MetalRenderer, _ shaderUniform: ShaderUniform) {
-        rhi.renderEncoder.setFragmentBytes(&self.elements,
+        rhi.renderEncoder.setFragmentBytes(&elements,
                 length: MemoryLayout<matrix_float4x4>.stride,
                 index: shaderUniform.location)
     }
@@ -143,7 +143,7 @@ extension Array: ShaderBytesType {
                     index: shaderUniform.location)
         }
     }
-    
+
     func loadFragmentBytes(_ rhi: MetalRenderer, _ shaderUniform: ShaderUniform) {
         if Element.self == Int.self {
             rhi.renderEncoder.setFragmentBytes(self,
@@ -274,6 +274,51 @@ extension ShaderData {
     ///   - value: Float
     func setBytes(_ property: ShaderProperty, _ value: ShaderBytesType) {
         _setData(property, .Bytes(value))
+    }
+
+    //MARK: - Buffer
+    /// Get float by shader property name.
+    /// - Parameter propertyName: Shader property name
+    /// - Returns: Float
+    func geBuffer(_ propertyName: String) -> MTLBuffer? {
+        let p = _getData(propertyName)
+        switch p {
+        case .Buffer(let value):
+            return value
+        default:
+            return nil
+        }
+    }
+
+    /// Get float by shader property.
+    /// - Parameter property: Shader property
+    /// - Returns: Float
+    func geBuffer(_ property: ShaderProperty) -> MTLBuffer? {
+        let p = _getData(property)
+        switch p {
+        case .Buffer(let value):
+            return value
+        default:
+            return nil
+        }
+    }
+
+    /// Set float by shader property name.
+    /// - Remark: Corresponding float shader property type.
+    /// - Parameters:
+    ///   - propertyName: Shader property name
+    ///   - value: Float
+    func setBuffer(_ propertyName: String, _ value: MTLBuffer) {
+        _setData(propertyName, .Buffer(value))
+    }
+
+    /// Set float by shader property.
+    /// - Remark: Corresponding float shader property type.
+    /// - Parameters:
+    ///   - property: Shader property
+    ///   - value: Float
+    func setBuffer(_ property: ShaderProperty, _ value: MTLBuffer) {
+        _setData(property, .Buffer(value))
     }
 
     //MARK: - Texture

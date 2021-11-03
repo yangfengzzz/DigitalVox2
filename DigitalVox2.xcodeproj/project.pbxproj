@@ -76,12 +76,9 @@
 		041BAE3B272A50E6006268D5 /* PlaneIntersectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413287426E072A9000A4F4E /* PlaneIntersectionType.swift */; };
 		041BAE3C272A50E6006268D5 /* BoundingSphere.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413286C26E06648000A4F4E /* BoundingSphere.swift */; };
 		041BAE3D272A50ED006268D5 /* MeshRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047E7B2B26EE257E006BC3FB /* MeshRenderer.swift */; };
-		041BAE3E272A50ED006268D5 /* BlendShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04832F022701F266001AD421 /* BlendShape.swift */; };
 		041BAE3F272A50ED006268D5 /* BufferMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041B585626F5863700B32BD0 /* BufferMesh.swift */; };
 		041BAE40272A50ED006268D5 /* SkinnedMeshRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04832F062701F4B3001AD421 /* SkinnedMeshRenderer.swift */; };
 		041BAE41272A50ED006268D5 /* PrimitiveMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413288526E09F1F000A4F4E /* PrimitiveMesh.swift */; };
-		041BAE42272A50ED006268D5 /* Skin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04832F042701F436001AD421 /* Skin.swift */; };
-		041BAE43272A50ED006268D5 /* BlendShapeFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5B2562701F14100C36450 /* BlendShapeFrame.swift */; };
 		041BAE44272A50ED006268D5 /* ModelMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413288726E09FA5000A4F4E /* ModelMesh.swift */; };
 		041BAE45272A50F2006268D5 /* SubMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413289326E0A48F000A4F4E /* SubMesh.swift */; };
 		041BAE46272A50F2006268D5 /* MeshBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0458275C26F71D000056D134 /* MeshBuffer.swift */; };
@@ -394,6 +391,9 @@
 		04CB88BA2730ECC900B0E398 /* local_to_model_job.cc in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88A02730ECC900B0E398 /* local_to_model_job.cc */; };
 		04CB88BF2730ED6000B0E398 /* CIKAimJob.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88BE2730ED6000B0E398 /* CIKAimJob.mm */; };
 		04CB88C02730EE6F00B0E398 /* libexternal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04CB88492730EC0700B0E398 /* libexternal.a */; };
+		04CB88C427320E6700B0E398 /* Skeleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88C327320E6700B0E398 /* Skeleton.swift */; };
+		04CB88C7273211DE00B0E398 /* skeleton.usda in Resources */ = {isa = PBXBuildFile; fileRef = 04CB88C5273211DE00B0E398 /* skeleton.usda */; };
+		04CB88C8273211DE00B0E398 /* skeletonWave.usda in Resources */ = {isa = PBXBuildFile; fileRef = 04CB88C6273211DE00B0E398 /* skeletonWave.usda */; };
 		04EA0D6A26E0F9AD00CA7833 /* math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6926E0F9AD00CA7833 /* math.swift */; };
 		04EA0D6C26E1204200CA7833 /* bbox2f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6B26E1204200CA7833 /* bbox2f.swift */; };
 		04EA0D6E26E1204F00CA7833 /* bbox3f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6D26E1204F00CA7833 /* bbox3f.swift */; };
@@ -812,8 +812,6 @@
 		047FEBFF26E6DF870078CFAF /* material_data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = material_data.swift; sourceTree = "<group>"; };
 		047FEC0126E6E0320078CFAF /* environment_data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = environment_data.swift; sourceTree = "<group>"; };
 		047FEC0326E6E0580078CFAF /* subdiv_data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = subdiv_data.swift; sourceTree = "<group>"; };
-		04832F022701F266001AD421 /* BlendShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendShape.swift; sourceTree = "<group>"; };
-		04832F042701F436001AD421 /* Skin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Skin.swift; sourceTree = "<group>"; };
 		04832F062701F4B3001AD421 /* SkinnedMeshRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkinnedMeshRenderer.swift; sourceTree = "<group>"; };
 		04832F092701FD3C001AD421 /* Sky.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sky.swift; sourceTree = "<group>"; };
 		04832F0B2701FD82001AD421 /* SkyBoxMaterial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkyBoxMaterial.swift; sourceTree = "<group>"; };
@@ -909,6 +907,9 @@
 		04CB88A02730ECC900B0E398 /* local_to_model_job.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = local_to_model_job.cc; path = ozz/animation/runtime/local_to_model_job.cc; sourceTree = "<group>"; };
 		04CB88BD2730ED5900B0E398 /* CIKAimJob.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CIKAimJob.h; sourceTree = "<group>"; };
 		04CB88BE2730ED6000B0E398 /* CIKAimJob.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CIKAimJob.mm; sourceTree = "<group>"; };
+		04CB88C327320E6700B0E398 /* Skeleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Skeleton.swift; sourceTree = "<group>"; };
+		04CB88C5273211DE00B0E398 /* skeleton.usda */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = skeleton.usda; sourceTree = "<group>"; };
+		04CB88C6273211DE00B0E398 /* skeletonWave.usda */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = skeletonWave.usda; sourceTree = "<group>"; };
 		04DB2A4126DF1E0500C15850 /* IClone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IClone.swift; sourceTree = "<group>"; };
 		04DBA7D92700B32D00C3B97C /* EngineFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineFeature.swift; sourceTree = "<group>"; };
 		04DBA7DB2700B3C900C3B97C /* SceneFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneFeature.swift; sourceTree = "<group>"; };
@@ -928,7 +929,6 @@
 		04EFDE7D26DF49FD005FBB6F /* Matrix3x3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matrix3x3.swift; sourceTree = "<group>"; };
 		04EFDE7F26DF4C85005FBB6F /* Quaternion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quaternion.swift; sourceTree = "<group>"; };
 		04EFDE8126DF4DC3005FBB6F /* Vector4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector4.swift; sourceTree = "<group>"; };
-		04F5B2562701F14100C36450 /* BlendShapeFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendShapeFrame.swift; sourceTree = "<group>"; };
 		04F6AA5C2701486200A0D6F6 /* HitResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitResult.swift; sourceTree = "<group>"; };
 		04F6AA6F2701579D00A0D6F6 /* PhysicsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsManager.swift; sourceTree = "<group>"; };
 		04F6AA732701608500A0D6F6 /* LightFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightFeature.swift; sourceTree = "<group>"; };
@@ -1030,10 +1030,8 @@
 				0413288726E09FA5000A4F4E /* ModelMesh.swift */,
 				041B585626F5863700B32BD0 /* BufferMesh.swift */,
 				047E7B2B26EE257E006BC3FB /* MeshRenderer.swift */,
-				04F5B2562701F14100C36450 /* BlendShapeFrame.swift */,
-				04832F022701F266001AD421 /* BlendShape.swift */,
-				04832F042701F436001AD421 /* Skin.swift */,
 				04832F062701F4B3001AD421 /* SkinnedMeshRenderer.swift */,
+				04CB88C327320E6700B0E398 /* Skeleton.swift */,
 			);
 			path = mesh;
 			sourceTree = "<group>";
@@ -1502,6 +1500,8 @@
 		0452ECDF26DFA66E0015BFB1 /* models */ = {
 			isa = PBXGroup;
 			children = (
+				04CB88C5273211DE00B0E398 /* skeleton.usda */,
+				04CB88C6273211DE00B0E398 /* skeletonWave.usda */,
 				04AE2412272812F200D62587 /* Mando_Helmet.usdz */,
 				04198A1F271D401700871A26 /* DamagedHelmet.glb */,
 				0452ECE326DFA6A10015BFB1 /* cottage1.mtl */,
@@ -2319,6 +2319,7 @@
 				041BAE78272A512B006268D5 /* README.md in Resources */,
 				041BAED0272A6E0A006268D5 /* Mando_Helmet.usdz in Resources */,
 				041BAECC272A6E0A006268D5 /* cottage1.obj in Resources */,
+				04CB88C8273211DE00B0E398 /* skeletonWave.usda in Resources */,
 				041BADDD272A4FA5006268D5 /* Preview Assets.xcassets in Resources */,
 				041BADDA272A4FA5006268D5 /* Assets.xcassets in Resources */,
 				041BAECD272A6E0A006268D5 /* cottage2.obj in Resources */,
@@ -2327,6 +2328,7 @@
 				041BAECF272A6E0A006268D5 /* cottage1.mtl in Resources */,
 				041BAEC7272A6E00006268D5 /* irradiance.png in Resources */,
 				041BAECE272A6E0A006268D5 /* cube.mtl in Resources */,
+				04CB88C7273211DE00B0E398 /* skeleton.usda in Resources */,
 				041BAECB272A6E0A006268D5 /* DamagedHelmet.glb in Resources */,
 				041BAECA272A6E0A006268D5 /* cube.obj in Resources */,
 			);
@@ -2430,6 +2432,7 @@
 				045D2BD3272CAF780091636B /* AnimatorStatePlayState.swift in Sources */,
 				041BAE35272A50E6006268D5 /* Color.swift in Sources */,
 				041BAEA3272A514D006268D5 /* IPhysics.swift in Sources */,
+				04CB88C427320E6700B0E398 /* Skeleton.swift in Sources */,
 				041BAE7F272A513B006268D5 /* OrbitControl.swift in Sources */,
 				041BAE12272A500F006268D5 /* Engine.swift in Sources */,
 				045D2BFC272CD6880091636B /* AnimatorStateTransition.swift in Sources */,
@@ -2510,14 +2513,12 @@
 				041BAE3A272A50E6006268D5 /* CollisionUtil.swift in Sources */,
 				041BAEA0272A514D006268D5 /* IDynamicCollider.swift in Sources */,
 				041BAE10272A500F006268D5 /* ComponentsManager.swift in Sources */,
-				041BAE3E272A50ED006268D5 /* BlendShape.swift in Sources */,
 				041BAE9C272A5141006268D5 /* PhysicsMaterial.swift in Sources */,
 				041BAE02272A500F006268D5 /* Renderer.swift in Sources */,
 				041BAEAA272A514D006268D5 /* IStaticCollider.swift in Sources */,
 				041BAE1C272A5046006268D5 /* background-texture.metal in Sources */,
 				041BAED5272A8B21006268D5 /* CPxMaterial.mm in Sources */,
 				041BAE96272A5141006268D5 /* HitResult.swift in Sources */,
-				041BAE43272A50ED006268D5 /* BlendShapeFrame.swift in Sources */,
 				041BAEE5272A9DF4006268D5 /* CPxGeometry.mm in Sources */,
 				041BAE3B272A50E6006268D5 /* PlaneIntersectionType.swift in Sources */,
 				041BAE76272A512B006268D5 /* GLTFModelIO.m in Sources */,
@@ -2550,7 +2551,6 @@
 				041BAE33272A50E6006268D5 /* Ray.swift in Sources */,
 				041BAE00272A500F006268D5 /* Scene.swift in Sources */,
 				045D2BCB272CAF0C0091636B /* AnimationProperty.swift in Sources */,
-				041BAE42272A50ED006268D5 /* Skin.swift in Sources */,
 				041BAE60272A510C006268D5 /* ShaderProgram.swift in Sources */,
 				04CB88BF2730ED6000B0E398 /* CIKAimJob.mm in Sources */,
 				041BAE14272A500F006268D5 /* USDZAssetsLoader.swift in Sources */,

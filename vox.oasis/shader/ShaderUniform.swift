@@ -28,6 +28,8 @@ extension ShaderUniform {
         switch value {
         case .Bytes(let value):
             value.loadVetexBytes(_rhi, shaderUniform)
+        case .Buffer(let value):
+            _rhi.renderEncoder.setVertexBuffer(value, offset: 0, index: shaderUniform.location)
         default:
             return
         }
@@ -37,6 +39,8 @@ extension ShaderUniform {
         switch value {
         case .Bytes(let value):
             value.loadFragmentBytes(_rhi, shaderUniform)
+        case .Buffer(let value):
+            _rhi.renderEncoder.setFragmentBuffer(value, offset: 0, index: shaderUniform.location)
         default:
             return
         }

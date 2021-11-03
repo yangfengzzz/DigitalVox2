@@ -653,7 +653,7 @@ class Animator: Component {
         } else if (owner.type == SkinnedMeshRenderer.self) {
             switch (owner.property) {
             case AnimationProperty.BlendShapeWeights:
-                (owner.component as! SkinnedMeshRenderer).blendShapeWeights = value.getFloatArray()
+                // (owner.component as! SkinnedMeshRenderer).blendShapeWeights = value.getFloatArray()
                 break
             default:
                 fatalError()
