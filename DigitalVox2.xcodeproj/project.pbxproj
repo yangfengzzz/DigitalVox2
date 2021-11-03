@@ -365,7 +365,7 @@
 		04CB88C8273211DE00B0E398 /* skeletonWave.usda in Resources */ = {isa = PBXBuildFile; fileRef = 04CB88C6273211DE00B0E398 /* skeletonWave.usda */; };
 		04CB88CA27321C0000B0E398 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88C927321C0000B0E398 /* Animation.swift */; };
 		04CB88CC27321C1800B0E398 /* AnimationClip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88CB27321C1800B0E398 /* AnimationClip.swift */; };
-		04CB88CE27321C2000B0E398 /* AnimationComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88CD27321C2000B0E398 /* AnimationComponent.swift */; };
+		04CB88CE27321C2000B0E398 /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88CD27321C2000B0E398 /* Animator.swift */; };
 		04CB88D027321C8B00B0E398 /* MathExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88CF27321C8B00B0E398 /* MathExtension.swift */; };
 		04EA0D6A26E0F9AD00CA7833 /* math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6926E0F9AD00CA7833 /* math.swift */; };
 		04EA0D6C26E1204200CA7833 /* bbox2f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6B26E1204200CA7833 /* bbox2f.swift */; };
@@ -854,7 +854,7 @@
 		04CB88C6273211DE00B0E398 /* skeletonWave.usda */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = skeletonWave.usda; sourceTree = "<group>"; };
 		04CB88C927321C0000B0E398 /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
 		04CB88CB27321C1800B0E398 /* AnimationClip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationClip.swift; sourceTree = "<group>"; };
-		04CB88CD27321C2000B0E398 /* AnimationComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationComponent.swift; sourceTree = "<group>"; };
+		04CB88CD27321C2000B0E398 /* Animator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animator.swift; sourceTree = "<group>"; };
 		04CB88CF27321C8B00B0E398 /* MathExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathExtension.swift; sourceTree = "<group>"; };
 		04DB2A4126DF1E0500C15850 /* IClone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IClone.swift; sourceTree = "<group>"; };
 		04DBA7D92700B32D00C3B97C /* EngineFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineFeature.swift; sourceTree = "<group>"; };
@@ -1590,9 +1590,9 @@
 		045D2BC6272CAEB40091636B /* animation */ = {
 			isa = PBXGroup;
 			children = (
-				04CB88C927321C0000B0E398 /* Animation.swift */,
+				04CB88CD27321C2000B0E398 /* Animator.swift */,
 				04CB88CB27321C1800B0E398 /* AnimationClip.swift */,
-				04CB88CD27321C2000B0E398 /* AnimationComponent.swift */,
+				04CB88C927321C0000B0E398 /* Animation.swift */,
 				04CB88CF27321C8B00B0E398 /* MathExtension.swift */,
 			);
 			path = animation;
@@ -2336,7 +2336,7 @@
 				041BAEA3272A514D006268D5 /* IPhysics.swift in Sources */,
 				04CB88C427320E6700B0E398 /* Skeleton.swift in Sources */,
 				041BAE7F272A513B006268D5 /* OrbitControl.swift in Sources */,
-				04CB88CE27321C2000B0E398 /* AnimationComponent.swift in Sources */,
+				04CB88CE27321C2000B0E398 /* Animator.swift in Sources */,
 				041BAE12272A500F006268D5 /* Engine.swift in Sources */,
 				041BAEA2272A514D006268D5 /* IPlaneColliderShape.swift in Sources */,
 				041BAE04272A500F006268D5 /* DisorderedArray.swift in Sources */,

@@ -17,7 +17,7 @@ struct KeyQuaternion {
     var value = simd_quatf()
 }
 
-struct OldAnimation {
+struct Animation {
     var translations: [Keyframe] = []
     var rotations: [KeyQuaternion] = []
     var scales: [Keyframe] = []

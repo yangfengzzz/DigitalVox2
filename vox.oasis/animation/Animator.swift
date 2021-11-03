@@ -7,24 +7,18 @@
 
 import MetalKit
 
-struct AnimationComponent {
-    let animations: [String: AnimationClip]
-
-    init(asset: MDLAsset) {
-        let animations: [MDLPackedJointAnimation] = asset.animations.objects.compactMap {
-            $0 as? MDLPackedJointAnimation
-        }
-        self.animations = Dictionary(uniqueKeysWithValues: animations.map {
-            ($0.name, AnimationComponent.load(animation: $0))
-        })
-    }
+class Animator: Component {
+    var animations: [String: AnimationClip] = [:]
+    var currentAnimation: AnimationClip?
+    var animationPaused = true
+    var currentTime: Float = 0
 
     static func load(animation: MDLPackedJointAnimation) -> AnimationClip {
         let name = URL(string: animation.name)?.lastPathComponent ?? "Untitled"
         let animationClip = AnimationClip(name: name)
         var duration: Float = 0
         for (jointIndex, jointPath) in animation.jointPaths.enumerated() {
-            var jointAnimation = OldAnimation()
+            var jointAnimation = Animation()
 
             let rotationTimes = animation.rotations.times
             if let lastTime = rotationTimes.last,
@@ -74,5 +68,32 @@ struct AnimationComponent {
             animationClip.jointAnimation[jointPath] = jointAnimation
         }
         return animationClip
+    }
+
+    func update(_ deltaTime: Float) {
+        if animationPaused == false {
+            currentTime += deltaTime
+        }
+    }
+
+    func runAnimation(name: String) {
+        currentAnimation = animations[name]
+        if currentAnimation != nil {
+            animationPaused = false
+            currentTime = 0
+        }
+    }
+
+    func pauseAnimation() {
+        animationPaused = true
+    }
+
+    func resumeAnimation() {
+        animationPaused = false
+    }
+
+    func stopAnimation() {
+        animationPaused = true
+        currentAnimation = nil
     }
 }

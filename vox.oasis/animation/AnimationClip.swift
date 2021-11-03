@@ -9,7 +9,7 @@ import MetalKit
 
 class AnimationClip {
     let name: String
-    var jointAnimation: [String: OldAnimation?] = [:]
+    var jointAnimation: [String: Animation?] = [:]
     var duration: Float = 0
     var speed: Float = 1
 

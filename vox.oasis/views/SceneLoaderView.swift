@@ -47,6 +47,9 @@ struct SceneLoaderView: View {
         let _: OrbitControl = cameraEntity.addComponent()
 
         usdzLoader.load(with: "skeleton.usda") { entities in
+            let animator: Animator =  entities[0].getComponent()
+            animator.runAnimation(name: "wave")
+            
 //            entities[0].transform.setPosition(x: 0, y: -2, z: 0)
 //            entities[0].transform.setScale(x: 0.1, y: 0.1, z: 0.1)
 //            entities[0].transform.setRotation(x: 0, y: 90, z: 0)

@@ -39,26 +39,29 @@ struct Skeleton {
         jointMatrixPaletteBuffer = engine._hardwareRenderer.device.makeBuffer(length: bufferSize, options: [])
     }
 
-    func updatePose() {
-        guard
-                let paletteBuffer = jointMatrixPaletteBuffer else {
+    func updatePose(animationClip: AnimationClip,
+                    at time: Float) {
+        guard let paletteBuffer = jointMatrixPaletteBuffer else {
             return
         }
         var palettePointer =
                 paletteBuffer.contents().bindMemory(to: float4x4.self,
                         capacity: jointPaths.count)
-        palettePointer.initialize(repeating: simd_float4x4(1),
+        palettePointer.initialize(repeating: .identity(),
                 count: jointPaths.count)
-        var poses = [float4x4](repeatElement(simd_float4x4(1),
+        var poses = [float4x4](repeatElement(.identity(),
                 count: jointPaths.count))
         for (jointIndex, jointPath) in jointPaths.enumerated() {
-            let pose = restTransforms[jointIndex]
+            let pose =
+                    animationClip.getPose(at: time * animationClip.speed,
+                            jointPath: jointPath)
+                            ?? restTransforms[jointIndex]
 
             let parentPose: float4x4
             if let parentIndex = parentIndices[jointIndex] {
                 parentPose = poses[parentIndex]
             } else {
-                parentPose = simd_float4x4(1)
+                parentPose = .identity()
             }
             poses[jointIndex] = parentPose * pose
             palettePointer.pointee =

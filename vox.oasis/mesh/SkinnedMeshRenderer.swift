@@ -28,6 +28,11 @@ class SkinnedMeshRenderer: MeshRenderer {
 
     override func update(_ deltaTime: Float) {
         super.update(deltaTime)
-        _skeleton?.updatePose()
+        if _skeleton != nil {
+            let animator: Animator = entity.getComponent()
+            animator.update(deltaTime)
+            skeleton!.updatePose(animationClip: animator.currentAnimation!,
+                    at: animator.currentTime)
+        }
     }
 }
