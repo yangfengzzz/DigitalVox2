@@ -312,20 +312,8 @@
 		04CB88CA27321C0000B0E398 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88C927321C0000B0E398 /* Animation.swift */; };
 		04CB88CC27321C1800B0E398 /* AnimationClip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88CB27321C1800B0E398 /* AnimationClip.swift */; };
 		04CB88CE27321C2000B0E398 /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88CD27321C2000B0E398 /* Animator.swift */; };
-		04CB88D027321C8B00B0E398 /* MathExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88CF27321C8B00B0E398 /* MathExtension.swift */; };
-		04CB88E127326C9900B0E398 /* box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88D227326C9800B0E398 /* box.swift */; };
-		04CB88E227326C9900B0E398 /* decimate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88D327326C9900B0E398 /* decimate.swift */; };
-		04CB88E327326C9900B0E398 /* soa_float4x4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88D427326C9900B0E398 /* soa_float4x4.swift */; };
-		04CB88E427326C9900B0E398 /* simd_quaternion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88D527326C9900B0E398 /* simd_quaternion.swift */; };
-		04CB88E527326C9900B0E398 /* vec_quaternion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88D627326C9900B0E398 /* vec_quaternion.swift */; };
-		04CB88E627326C9900B0E398 /* simd_math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88D727326C9900B0E398 /* simd_math.swift */; };
-		04CB88E727326C9900B0E398 /* vec_float.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88D827326C9900B0E398 /* vec_float.swift */; };
-		04CB88E827326C9900B0E398 /* soa_float.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88D927326C9900B0E398 /* soa_float.swift */; };
-		04CB88E927326C9900B0E398 /* soa_transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88DA27326C9900B0E398 /* soa_transform.swift */; };
-		04CB88EA27326C9900B0E398 /* rect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88DB27326C9900B0E398 /* rect.swift */; };
-		04CB88EB27326C9900B0E398 /* soa_quaternion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88DC27326C9900B0E398 /* soa_quaternion.swift */; };
 		04CB88EC27326C9900B0E398 /* simd_math.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88DE27326C9900B0E398 /* simd_math.mm */; };
-		04CB88ED27326C9900B0E398 /* vec_transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88E027326C9900B0E398 /* vec_transform.swift */; };
+		04CB88EE27326EE400B0E398 /* simd_math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88D727326C9900B0E398 /* simd_math.swift */; };
 		04EA0D6A26E0F9AD00CA7833 /* math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6926E0F9AD00CA7833 /* math.swift */; };
 		04EA0D6C26E1204200CA7833 /* bbox2f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6B26E1204200CA7833 /* bbox2f.swift */; };
 		04EA0D6E26E1204F00CA7833 /* bbox3f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6D26E1204F00CA7833 /* bbox3f.swift */; };
@@ -751,7 +739,6 @@
 		04CB88C927321C0000B0E398 /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
 		04CB88CB27321C1800B0E398 /* AnimationClip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationClip.swift; sourceTree = "<group>"; };
 		04CB88CD27321C2000B0E398 /* Animator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animator.swift; sourceTree = "<group>"; };
-		04CB88CF27321C8B00B0E398 /* MathExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathExtension.swift; sourceTree = "<group>"; };
 		04CB88D227326C9800B0E398 /* box.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = box.swift; sourceTree = "<group>"; };
 		04CB88D327326C9900B0E398 /* decimate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = decimate.swift; sourceTree = "<group>"; };
 		04CB88D427326C9900B0E398 /* soa_float4x4.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = soa_float4x4.swift; sourceTree = "<group>"; };
@@ -1496,7 +1483,6 @@
 				04CB88CD27321C2000B0E398 /* Animator.swift */,
 				04CB88CB27321C1800B0E398 /* AnimationClip.swift */,
 				04CB88C927321C0000B0E398 /* Animation.swift */,
-				04CB88CF27321C8B00B0E398 /* MathExtension.swift */,
 			);
 			path = animation;
 			sourceTree = "<group>";
@@ -1653,13 +1639,13 @@
 		04CB88D127326C6000B0E398 /* math */ = {
 			isa = PBXGroup;
 			children = (
-				04CB88D227326C9800B0E398 /* box.swift */,
-				04CB88D327326C9900B0E398 /* decimate.swift */,
 				04CB88DD27326C9900B0E398 /* math_constant.h */,
-				04CB88DB27326C9900B0E398 /* rect.swift */,
 				04CB88DF27326C9900B0E398 /* simd_math.h */,
 				04CB88DE27326C9900B0E398 /* simd_math.mm */,
 				04CB88D727326C9900B0E398 /* simd_math.swift */,
+				04CB88D227326C9800B0E398 /* box.swift */,
+				04CB88D327326C9900B0E398 /* decimate.swift */,
+				04CB88DB27326C9900B0E398 /* rect.swift */,
 				04CB88D527326C9900B0E398 /* simd_quaternion.swift */,
 				04CB88D927326C9900B0E398 /* soa_float.swift */,
 				04CB88D427326C9900B0E398 /* soa_float4x4.swift */,
@@ -2079,11 +2065,9 @@
 			files = (
 				041BAEAD272A5153006268D5 /* MetalRenderer.swift in Sources */,
 				041BAE62272A510C006268D5 /* RenderTargetBlendState.swift in Sources */,
-				04CB88E127326C9900B0E398 /* box.swift in Sources */,
 				041BAEAB272A514D006268D5 /* IColliderShape.swift in Sources */,
 				041BAE2F272A50E6006268D5 /* ContainmentType.swift in Sources */,
 				041BAEF0272B6F74006268D5 /* CPxPlaneGeometry.mm in Sources */,
-				04CB88E727326C9900B0E398 /* vec_float.swift in Sources */,
 				041BAF01272B76F7006268D5 /* CPxRigidActor.mm in Sources */,
 				041BAE13272A500F006268D5 /* UpdateFlag.swift in Sources */,
 				041BAE1B272A5046006268D5 /* particle.metal in Sources */,
@@ -2099,7 +2083,6 @@
 				041BAE6F272A5117006268D5 /* ShadowMapMaterial.swift in Sources */,
 				041BAE35272A50E6006268D5 /* Color.swift in Sources */,
 				041BAEA3272A514D006268D5 /* IPhysics.swift in Sources */,
-				04CB88EB27326C9900B0E398 /* soa_quaternion.swift in Sources */,
 				04CB88C427320E6700B0E398 /* Skeleton.swift in Sources */,
 				041BAE7F272A513B006268D5 /* OrbitControl.swift in Sources */,
 				04CB88CE27321C2000B0E398 /* Animator.swift in Sources */,
@@ -2109,8 +2092,6 @@
 				041BAE11272A500F006268D5 /* InputManager.swift in Sources */,
 				041BAF14272B8A5B006268D5 /* PhysXPhysicsManager.swift in Sources */,
 				041BAE4B272A50FB006268D5 /* RenderFace.swift in Sources */,
-				04CB88EA27326C9900B0E398 /* rect.swift in Sources */,
-				04CB88ED27326C9900B0E398 /* vec_transform.swift in Sources */,
 				041BAE9E272A5141006268D5 /* DynamicCollider.swift in Sources */,
 				041BAE0B272A500F006268D5 /* EngineFeatureManager.swift in Sources */,
 				041BAE68272A5111006268D5 /* PointLight.swift in Sources */,
@@ -2120,17 +2101,15 @@
 				041BAE09272A500F006268D5 /* SceneLoaderView.swift in Sources */,
 				041BAE19272A5046006268D5 /* function-common.metal in Sources */,
 				041BAE6C272A5111006268D5 /* Light.swift in Sources */,
-				04CB88E927326C9900B0E398 /* soa_transform.swift in Sources */,
 				041BAEEE272B6F5B006268D5 /* CPxCapsuleGeometry.mm in Sources */,
-				04CB88E327326C9900B0E398 /* soa_float4x4.swift in Sources */,
 				041BAEB7272A5166006268D5 /* LitePhysics.swift in Sources */,
 				041BAE95272A5141006268D5 /* Collider.swift in Sources */,
 				041BAE29272A50D9006268D5 /* TextureCubeFace.swift in Sources */,
 				041BAE4D272A50FB006268D5 /* BlinnPhongMaterial.swift in Sources */,
 				041BAE5E272A510C006268D5 /* RasterState.swift in Sources */,
+				04CB88EE27326EE400B0E398 /* simd_math.swift in Sources */,
 				041BADFF272A500F006268D5 /* voxApp.swift in Sources */,
 				041BAEAF272A5153006268D5 /* ComputePipelineState.swift in Sources */,
-				04CB88E627326C9900B0E398 /* simd_math.swift in Sources */,
 				041BAE3D272A50ED006268D5 /* MeshRenderer.swift in Sources */,
 				041BAE97272A5141006268D5 /* PhysicsManager.swift in Sources */,
 				041BAEA5272A514D006268D5 /* IClone.swift in Sources */,
@@ -2171,7 +2150,6 @@
 				041BAE0F272A500F006268D5 /* Script.swift in Sources */,
 				041BAE32272A50E6006268D5 /* Quaternion.swift in Sources */,
 				041BAE3F272A50ED006268D5 /* BufferMesh.swift in Sources */,
-				04CB88E827326C9900B0E398 /* soa_float.swift in Sources */,
 				041BAE3A272A50E6006268D5 /* CollisionUtil.swift in Sources */,
 				041BAEA0272A514D006268D5 /* IDynamicCollider.swift in Sources */,
 				041BAE10272A500F006268D5 /* ComponentsManager.swift in Sources */,
@@ -2188,10 +2166,8 @@
 				041BAE38272A50E6006268D5 /* Vector4.swift in Sources */,
 				041BAEBD272A5166006268D5 /* LiteBoxColliderShape.swift in Sources */,
 				041BAE72272A5117006268D5 /* ShadowFeature.swift in Sources */,
-				04CB88E427326C9900B0E398 /* simd_quaternion.swift in Sources */,
 				041BAE57272A5100006268D5 /* RenderContext.swift in Sources */,
 				041BAEBA272A5166006268D5 /* LiteStaticCollider.swift in Sources */,
-				04CB88E227326C9900B0E398 /* decimate.swift in Sources */,
 				041BAE0A272A500F006268D5 /* EngineFeature.swift in Sources */,
 				041BAE7A272A512B006268D5 /* GLTFAsset.m in Sources */,
 				041BAE47272A50F2006268D5 /* Mesh.swift in Sources */,
@@ -2212,7 +2188,6 @@
 				041BAE60272A510C006268D5 /* ShaderProgram.swift in Sources */,
 				041BAE14272A500F006268D5 /* USDZAssetsLoader.swift in Sources */,
 				041BAE70272A5117006268D5 /* ShadowPass.swift in Sources */,
-				04CB88E527326C9900B0E398 /* vec_quaternion.swift in Sources */,
 				041BAE0C272A500F006268D5 /* SceneManager.swift in Sources */,
 				04CB88EC27326C9900B0E398 /* simd_math.mm in Sources */,
 				041BAE44272A50ED006268D5 /* ModelMesh.swift in Sources */,
@@ -2256,7 +2231,6 @@
 				041BAE3C272A50E6006268D5 /* BoundingSphere.swift in Sources */,
 				041BAE73272A5117006268D5 /* LightShadow.swift in Sources */,
 				041BAE15272A500F006268D5 /* UpdateFlagManager.swift in Sources */,
-				04CB88D027321C8B00B0E398 /* MathExtension.swift in Sources */,
 				041BAE9F272A5141006268D5 /* BoxColliderShape.swift in Sources */,
 				041BAE4F272A50FB006268D5 /* Material.swift in Sources */,
 				041BAE9B272A5141006268D5 /* ColliderShape.swift in Sources */,

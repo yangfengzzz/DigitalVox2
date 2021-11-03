@@ -1380,38 +1380,38 @@ inline SimdFloat4 DivX(_SimdFloat4 _a, _SimdFloat4 _b) {
 //MARK: - OZZFloat4x4
 @implementation OZZFloat4x4
 
-+ (struct Float4x4)identity {
++ (simd_float4x4)identity {
     const __m128i zero = _mm_setzero_si128();
     const __m128i ffff = _mm_cmpeq_epi32(zero, zero);
     const __m128i one = _mm_srli_epi32(_mm_slli_epi32(ffff, 25), 2);
     const __m128i x = _mm_srli_si128(one, 12);
-    const Float4x4 ret = {{_mm_castsi128_ps(x),
+    simd_float4x4 ret = {{_mm_castsi128_ps(x),
             _mm_castsi128_ps(_mm_slli_si128(x, 4)),
             _mm_castsi128_ps(_mm_slli_si128(x, 8)),
             _mm_castsi128_ps(_mm_slli_si128(one, 12))}};
     return ret;
 }
 
-+ (struct Float4x4)TransposeWith:(const struct Float4x4 *)_m {
-    const __m128 tmp0 = _mm_unpacklo_ps(_m->cols[0], _m->cols[2]);
-    const __m128 tmp1 = _mm_unpacklo_ps(_m->cols[1], _m->cols[3]);
-    const __m128 tmp2 = _mm_unpackhi_ps(_m->cols[0], _m->cols[2]);
-    const __m128 tmp3 = _mm_unpackhi_ps(_m->cols[1], _m->cols[3]);
-    const Float4x4 ret = {
++ (simd_float4x4)TransposeWith:(const simd_float4x4 *)_m {
+    const __m128 tmp0 = _mm_unpacklo_ps(_m->columns[0], _m->columns[2]);
+    const __m128 tmp1 = _mm_unpacklo_ps(_m->columns[1], _m->columns[3]);
+    const __m128 tmp2 = _mm_unpackhi_ps(_m->columns[0], _m->columns[2]);
+    const __m128 tmp3 = _mm_unpackhi_ps(_m->columns[1], _m->columns[3]);
+    simd_float4x4 ret = {
             {_mm_unpacklo_ps(tmp0, tmp1), _mm_unpackhi_ps(tmp0, tmp1),
                     _mm_unpacklo_ps(tmp2, tmp3), _mm_unpackhi_ps(tmp2, tmp3)}};
     return ret;
 }
 
-+ (struct Float4x4)InvertWith:(const struct Float4x4 *)_m :(SimdInt4 *)_invertible {
++ (simd_float4x4)InvertWith:(const simd_float4x4 *)_m :(SimdInt4 *)_invertible {
     const __m128 _t0 =
-            _mm_shuffle_ps(_m->cols[0], _m->cols[1], _MM_SHUFFLE(1, 0, 1, 0));
+            _mm_shuffle_ps(_m->columns[0], _m->columns[1], _MM_SHUFFLE(1, 0, 1, 0));
     const __m128 _t1 =
-            _mm_shuffle_ps(_m->cols[2], _m->cols[3], _MM_SHUFFLE(1, 0, 1, 0));
+            _mm_shuffle_ps(_m->columns[2], _m->columns[3], _MM_SHUFFLE(1, 0, 1, 0));
     const __m128 _t2 =
-            _mm_shuffle_ps(_m->cols[0], _m->cols[1], _MM_SHUFFLE(3, 2, 3, 2));
+            _mm_shuffle_ps(_m->columns[0], _m->columns[1], _MM_SHUFFLE(3, 2, 3, 2));
     const __m128 _t3 =
-            _mm_shuffle_ps(_m->cols[2], _m->cols[3], _MM_SHUFFLE(3, 2, 3, 2));
+            _mm_shuffle_ps(_m->columns[2], _m->columns[3], _MM_SHUFFLE(3, 2, 3, 2));
     const __m128 c0 = _mm_shuffle_ps(_t0, _t1, _MM_SHUFFLE(2, 0, 2, 0));
     const __m128 c1 = _mm_shuffle_ps(_t1, _t0, _MM_SHUFFLE(3, 1, 3, 1));
     const __m128 c2 = _mm_shuffle_ps(_t2, _t3, _MM_SHUFFLE(2, 0, 2, 0));
@@ -1485,30 +1485,30 @@ inline SimdFloat4 DivX(_SimdFloat4 _a, _SimdFloat4 _b) {
     det = OZZ_SHUFFLE_PS1(det, 0x00);
 
     // Copy the final columns
-    const Float4x4 ret = {{_mm_mul_ps(det, minor0), _mm_mul_ps(det, minor1),
+    simd_float4x4 ret = {{_mm_mul_ps(det, minor0), _mm_mul_ps(det, minor1),
             _mm_mul_ps(det, minor2), _mm_mul_ps(det, minor3)}};
     return ret;
 }
 
-+ (struct Float4x4)TranslationWith:(_SimdFloat4)_v {
++ (simd_float4x4)TranslationWith:(_SimdFloat4)_v {
     const __m128i zero = _mm_setzero_si128();
     const __m128i ffff = _mm_cmpeq_epi32(zero, zero);
     const __m128i mask000f = _mm_slli_si128(ffff, 12);
     const __m128i one = _mm_srli_epi32(_mm_slli_epi32(ffff, 25), 2);
     const __m128i x = _mm_srli_si128(one, 12);
-    const Float4x4 ret = {
+    simd_float4x4 ret = {
             {_mm_castsi128_ps(x), _mm_castsi128_ps(_mm_slli_si128(x, 4)),
                     _mm_castsi128_ps(_mm_slli_si128(x, 8)),
                     OZZ_SSE_SELECT_F(mask000f, _mm_castsi128_ps(one), _v)}};
     return ret;
 }
 
-+ (struct Float4x4)ScalingWith:(_SimdFloat4)_v {
++ (simd_float4x4)ScalingWith:(_SimdFloat4)_v {
     const __m128i zero = _mm_setzero_si128();
     const __m128i ffff = _mm_cmpeq_epi32(zero, zero);
     const __m128i if000 = _mm_srli_si128(ffff, 12);
     const __m128i ione = _mm_srli_epi32(_mm_slli_epi32(ffff, 25), 2);
-    const Float4x4 ret = {
+    simd_float4x4 ret = {
             {
                     _mm_and_ps(_v, _mm_castsi128_ps(if000)),
                     _mm_and_ps(_v, _mm_castsi128_ps(_mm_slli_si128(if000, 4))),
@@ -1519,38 +1519,38 @@ inline SimdFloat4 DivX(_SimdFloat4 _a, _SimdFloat4 _b) {
     return ret;
 }
 
-+ (struct Float4x4)TranslateWith:(const struct Float4x4 *)_m :(_SimdFloat4)_v {
-    const __m128 a01 = OZZ_MADD(_m->cols[0], OZZ_SSE_SPLAT_F(_v, 0),
-            _mm_mul_ps(_m->cols[1], OZZ_SSE_SPLAT_F(_v, 1)));
-    const __m128 m3 = OZZ_MADD(_m->cols[2], OZZ_SSE_SPLAT_F(_v, 2), _m->cols[3]);
-    const Float4x4 ret = {
-            {_m->cols[0], _m->cols[1], _m->cols[2], _mm_add_ps(a01, m3)}};
++ (simd_float4x4)TranslateWith:(const simd_float4x4 *)_m :(_SimdFloat4)_v {
+    const __m128 a01 = OZZ_MADD(_m->columns[0], OZZ_SSE_SPLAT_F(_v, 0),
+            _mm_mul_ps(_m->columns[1], OZZ_SSE_SPLAT_F(_v, 1)));
+    const __m128 m3 = OZZ_MADD(_m->columns[2], OZZ_SSE_SPLAT_F(_v, 2), _m->columns[3]);
+    simd_float4x4 ret = {
+            {_m->columns[0], _m->columns[1], _m->columns[2], _mm_add_ps(a01, m3)}};
     return ret;
 }
 
-+ (struct Float4x4)ScaleWith:(const struct Float4x4 *)_m :(_SimdFloat4)_v {
-    const Float4x4 ret = {{_mm_mul_ps(_m->cols[0], OZZ_SSE_SPLAT_F(_v, 0)),
-            _mm_mul_ps(_m->cols[1], OZZ_SSE_SPLAT_F(_v, 1)),
-            _mm_mul_ps(_m->cols[2], OZZ_SSE_SPLAT_F(_v, 2)),
-            _m->cols[3]}};
++ (simd_float4x4)ScaleWith:(const simd_float4x4 *)_m :(_SimdFloat4)_v {
+    simd_float4x4 ret = {{_mm_mul_ps(_m->columns[0], OZZ_SSE_SPLAT_F(_v, 0)),
+            _mm_mul_ps(_m->columns[1], OZZ_SSE_SPLAT_F(_v, 1)),
+            _mm_mul_ps(_m->columns[2], OZZ_SSE_SPLAT_F(_v, 2)),
+            _m->columns[3]}};
     return ret;
 }
 
-+ (struct Float4x4)ColumnMultiplyWith:(const struct Float4x4 *)_m :(_SimdFloat4)_v {
-    const Float4x4 ret = {{_mm_mul_ps(_m->cols[0], _v), _mm_mul_ps(_m->cols[1], _v),
-            _mm_mul_ps(_m->cols[2], _v),
-            _mm_mul_ps(_m->cols[3], _v)}};
++ (simd_float4x4)ColumnMultiplyWith:(const simd_float4x4 *)_m :(_SimdFloat4)_v {
+    simd_float4x4 ret = {{_mm_mul_ps(_m->columns[0], _v), _mm_mul_ps(_m->columns[1], _v),
+            _mm_mul_ps(_m->columns[2], _v),
+            _mm_mul_ps(_m->columns[3], _v)}};
     return ret;
 }
 
-+ (SimdInt4)IsNormalizedWith:(const struct Float4x4 *)_m {
++ (SimdInt4)IsNormalizedWith:(const simd_float4x4 *)_m {
     const __m128 max = _mm_set_ps1(1.f + kNormalizationToleranceSq);
     const __m128 min = _mm_set_ps1(1.f - kNormalizationToleranceSq);
 
-    const __m128 tmp0 = _mm_unpacklo_ps(_m->cols[0], _m->cols[2]);
-    const __m128 tmp1 = _mm_unpacklo_ps(_m->cols[1], _m->cols[3]);
-    const __m128 tmp2 = _mm_unpackhi_ps(_m->cols[0], _m->cols[2]);
-    const __m128 tmp3 = _mm_unpackhi_ps(_m->cols[1], _m->cols[3]);
+    const __m128 tmp0 = _mm_unpacklo_ps(_m->columns[0], _m->columns[2]);
+    const __m128 tmp1 = _mm_unpacklo_ps(_m->columns[1], _m->columns[3]);
+    const __m128 tmp2 = _mm_unpackhi_ps(_m->columns[0], _m->columns[2]);
+    const __m128 tmp3 = _mm_unpackhi_ps(_m->columns[1], _m->columns[3]);
     const __m128 row0 = _mm_unpacklo_ps(tmp0, tmp1);
     const __m128 row1 = _mm_unpackhi_ps(tmp0, tmp1);
     const __m128 row2 = _mm_unpacklo_ps(tmp2, tmp3);
@@ -1563,14 +1563,14 @@ inline SimdFloat4 DivX(_SimdFloat4 _a, _SimdFloat4 _b) {
             _mm_and_ps(normalized, _mm_castsi128_ps([OZZInt4 mask_fff0])));
 }
 
-+ (SimdInt4)IsNormalizedEstWith:(const struct Float4x4 *)_m {
++ (SimdInt4)IsNormalizedEstWith:(const simd_float4x4 *)_m {
     const __m128 max = _mm_set_ps1(1.f + kNormalizationToleranceEstSq);
     const __m128 min = _mm_set_ps1(1.f - kNormalizationToleranceEstSq);
 
-    const __m128 tmp0 = _mm_unpacklo_ps(_m->cols[0], _m->cols[2]);
-    const __m128 tmp1 = _mm_unpacklo_ps(_m->cols[1], _m->cols[3]);
-    const __m128 tmp2 = _mm_unpackhi_ps(_m->cols[0], _m->cols[2]);
-    const __m128 tmp3 = _mm_unpackhi_ps(_m->cols[1], _m->cols[3]);
+    const __m128 tmp0 = _mm_unpacklo_ps(_m->columns[0], _m->columns[2]);
+    const __m128 tmp1 = _mm_unpacklo_ps(_m->columns[1], _m->columns[3]);
+    const __m128 tmp2 = _mm_unpackhi_ps(_m->columns[0], _m->columns[2]);
+    const __m128 tmp3 = _mm_unpackhi_ps(_m->columns[1], _m->columns[3]);
     const __m128 row0 = _mm_unpacklo_ps(tmp0, tmp1);
     const __m128 row1 = _mm_unpackhi_ps(tmp0, tmp1);
     const __m128 row2 = _mm_unpacklo_ps(tmp2, tmp3);
@@ -1585,15 +1585,15 @@ inline SimdFloat4 DivX(_SimdFloat4 _a, _SimdFloat4 _b) {
             _mm_and_ps(normalized, _mm_castsi128_ps([OZZInt4 mask_fff0])));
 }
 
-+ (SimdInt4)IsOrthogonalWith:(const struct Float4x4 *)_m {
++ (SimdInt4)IsOrthogonalWith:(const simd_float4x4 *)_m {
     const __m128 max = _mm_set_ss(1.f + kNormalizationToleranceSq);
     const __m128 min = _mm_set_ss(1.f - kNormalizationToleranceSq);
     const __m128 zero = _mm_setzero_ps();
 
     // Use simd_float4::zero() if one of the normalization fails. _m will then be
     // considered not orthogonal.
-    const SimdFloat4 cross = [OZZFloat4 NormalizeSafe3With:[OZZFloat4 Cross3With:_m->cols[0] :_m->cols[1]] :zero];
-    const SimdFloat4 at = [OZZFloat4 NormalizeSafe3With:_m->cols[2] :zero];
+    const SimdFloat4 cross = [OZZFloat4 NormalizeSafe3With:[OZZFloat4 Cross3With:_m->columns[0] :_m->columns[1]] :zero];
+    const SimdFloat4 at = [OZZFloat4 NormalizeSafe3With:_m->columns[2] :zero];
 
     SimdFloat4 dot;
     OZZ_SSE_DOT3_F(cross, at, dot);
@@ -1602,7 +1602,7 @@ inline SimdFloat4 DivX(_SimdFloat4 _a, _SimdFloat4 _b) {
             _mm_and_ps(_mm_cmplt_ss(dotx000, max), _mm_cmpgt_ss(dotx000, min)));
 }
 
-+ (SimdFloat4)ToQuaternionWith:(const struct Float4x4 *)_m {
++ (SimdFloat4)ToQuaternionWith:(const simd_float4x4 *)_m {
     assert([OZZInt4 AreAllTrue3With:[OZZFloat4x4 IsNormalizedEstWith:_m]]);
     assert([OZZInt4 AreAllTrue1With:[OZZFloat4x4 IsOrthogonalWith:_m]]);
 
@@ -1617,10 +1617,10 @@ inline SimdFloat4 DivX(_SimdFloat4 _a, _SimdFloat4 _b) {
     const __m128i mask_0f00 = _mm_slli_si128(mask_f000, 4);
     const __m128i mask_00f0 = _mm_slli_si128(mask_f000, 8);
 
-    const __m128 xx_yy = OZZ_SSE_SELECT_F(mask_0f00, _m->cols[1], _m->cols[0]);
+    const __m128 xx_yy = OZZ_SSE_SELECT_F(mask_0f00, _m->columns[1], _m->columns[0]);
     const __m128 xx_yy_0010 = OZZ_SHUFFLE_PS1(xx_yy, _MM_SHUFFLE(0, 0, 1, 0));
     const __m128 xx_yy_zz_xx =
-            OZZ_SSE_SELECT_F(mask_00f0, _m->cols[2], xx_yy_0010);
+            OZZ_SSE_SELECT_F(mask_00f0, _m->columns[2], xx_yy_0010);
     const __m128 yy_zz_xx_yy =
             OZZ_SHUFFLE_PS1(xx_yy_zz_xx, _MM_SHUFFLE(1, 0, 2, 1));
     const __m128 zz_xx_yy_zz =
@@ -1634,14 +1634,14 @@ inline SimdFloat4 DivX(_SimdFloat4 _a, _SimdFloat4 _b) {
             _mm_add_ps(OZZ_SSE_SELECT_F(mask_000f, diag_sum, diag_diff), one);
     const __m128 invSqrt = one / _mm_sqrt_ps(radicand);
 
-    __m128 zy_xz_yx = OZZ_SSE_SELECT_F(mask_00f0, _m->cols[1], _m->cols[0]);
+    __m128 zy_xz_yx = OZZ_SSE_SELECT_F(mask_00f0, _m->columns[1], _m->columns[0]);
     zy_xz_yx = OZZ_SHUFFLE_PS1(zy_xz_yx, _MM_SHUFFLE(0, 1, 2, 2));
     zy_xz_yx =
-            OZZ_SSE_SELECT_F(mask_0f00, OZZ_SSE_SPLAT_F(_m->cols[2], 0), zy_xz_yx);
-    __m128 yz_zx_xy = OZZ_SSE_SELECT_F(mask_f000, _m->cols[1], _m->cols[0]);
+            OZZ_SSE_SELECT_F(mask_0f00, OZZ_SSE_SPLAT_F(_m->columns[2], 0), zy_xz_yx);
+    __m128 yz_zx_xy = OZZ_SSE_SELECT_F(mask_f000, _m->columns[1], _m->columns[0]);
     yz_zx_xy = OZZ_SHUFFLE_PS1(yz_zx_xy, _MM_SHUFFLE(0, 0, 2, 0));
     yz_zx_xy =
-            OZZ_SSE_SELECT_F(mask_f000, OZZ_SSE_SPLAT_F(_m->cols[2], 1), yz_zx_xy);
+            OZZ_SSE_SELECT_F(mask_f000, OZZ_SSE_SPLAT_F(_m->columns[2], 1), yz_zx_xy);
     const __m128 sum = _mm_add_ps(zy_xz_yx, yz_zx_xy);
     const __m128 diff = _mm_sub_ps(zy_xz_yx, yz_zx_xy);
     const __m128 scale = _mm_mul_ps(invSqrt, half);
@@ -1661,9 +1661,9 @@ inline SimdFloat4 DivX(_SimdFloat4 _a, _SimdFloat4 _b) {
     __m128 res3 = _mm_mul_ps(OZZ_SSE_SELECT_F(mask_000f, radicand, diff),
             OZZ_SSE_SPLAT_F(scale, 3));
 
-    const __m128 xx = OZZ_SSE_SPLAT_F(_m->cols[0], 0);
-    const __m128 yy = OZZ_SSE_SPLAT_F(_m->cols[1], 1);
-    const __m128 zz = OZZ_SSE_SPLAT_F(_m->cols[2], 2);
+    const __m128 xx = OZZ_SSE_SPLAT_F(_m->columns[0], 0);
+    const __m128 yy = OZZ_SSE_SPLAT_F(_m->columns[1], 1);
+    const __m128 zz = OZZ_SSE_SPLAT_F(_m->columns[2], 2);
     const __m128i cond0 = _mm_castps_si128(_mm_cmpgt_ps(yy, xx));
     const __m128i cond1 =
             _mm_castps_si128(_mm_and_ps(_mm_cmpgt_ps(zz, xx), _mm_cmpgt_ps(zz, yy)));
@@ -1677,7 +1677,7 @@ inline SimdFloat4 DivX(_SimdFloat4 _a, _SimdFloat4 _b) {
     return res;
 }
 
-+ (bool)ToAffineWith:(const struct Float4x4 *)_m :(SimdFloat4 *)_translation
++ (bool)ToAffineWith:(const simd_float4x4 *)_m :(SimdFloat4 *)_translation
         :(SimdFloat4 *)_quaternion :(SimdFloat4 *)_scale {
     const __m128 zero = _mm_setzero_ps();
     const __m128 one = [OZZFloat4 one];
@@ -1686,13 +1686,13 @@ inline SimdFloat4 DivX(_SimdFloat4 _a, _SimdFloat4 _b) {
     const __m128 min = _mm_set_ps1(-kOrthogonalisationToleranceSq);
 
     // Extracts translation.
-    *_translation = OZZ_SSE_SELECT_F(fff0, _m->cols[3], one);
+    *_translation = OZZ_SSE_SELECT_F(fff0, _m->columns[3], one);
 
     // Extracts scale.
-    const __m128 m_tmp0 = _mm_unpacklo_ps(_m->cols[0], _m->cols[2]);
-    const __m128 m_tmp1 = _mm_unpacklo_ps(_m->cols[1], _m->cols[3]);
-    const __m128 m_tmp2 = _mm_unpackhi_ps(_m->cols[0], _m->cols[2]);
-    const __m128 m_tmp3 = _mm_unpackhi_ps(_m->cols[1], _m->cols[3]);
+    const __m128 m_tmp0 = _mm_unpacklo_ps(_m->columns[0], _m->columns[2]);
+    const __m128 m_tmp1 = _mm_unpacklo_ps(_m->columns[1], _m->columns[3]);
+    const __m128 m_tmp2 = _mm_unpackhi_ps(_m->columns[0], _m->columns[2]);
+    const __m128 m_tmp3 = _mm_unpackhi_ps(_m->columns[1], _m->columns[3]);
     const __m128 m_row0 = _mm_unpacklo_ps(m_tmp0, m_tmp1);
     const __m128 m_row1 = _mm_unpackhi_ps(m_tmp0, m_tmp1);
     const __m128 m_row2 = _mm_unpacklo_ps(m_tmp2, m_tmp3);
@@ -1705,41 +1705,41 @@ inline SimdFloat4 DivX(_SimdFloat4 _a, _SimdFloat4 _b) {
             _mm_and_ps(_mm_cmplt_ps(dot, max), _mm_cmpgt_ps(dot, min));
 
     // Builds an orthonormal matrix in order to support quaternion extraction.
-    Float4x4 orthonormal;
+    simd_float4x4 orthonormal;
     int mask = _mm_movemask_ps(zero_axis);
     if (mask & 1) {
         if (mask & 6) {
             return false;
         }
-        orthonormal.cols[1] = _mm_div_ps(_m->cols[1], OZZ_SSE_SPLAT_F(abs_scale, 1));
-        orthonormal.cols[0] = [OZZFloat4 Normalize3With:[OZZFloat4 Cross3With:orthonormal.cols[1] :_m->cols[2]]];
-        orthonormal.cols[2] = [OZZFloat4 Normalize3With:[OZZFloat4 Cross3With:orthonormal.cols[0] :orthonormal.cols[1]]];
+        orthonormal.columns[1] = _mm_div_ps(_m->columns[1], OZZ_SSE_SPLAT_F(abs_scale, 1));
+        orthonormal.columns[0] = [OZZFloat4 Normalize3With:[OZZFloat4 Cross3With:orthonormal.columns[1] :_m->columns[2]]];
+        orthonormal.columns[2] = [OZZFloat4 Normalize3With:[OZZFloat4 Cross3With:orthonormal.columns[0] :orthonormal.columns[1]]];
     } else if (mask & 4) {
         if (mask & 3) {
             return false;
         }
-        orthonormal.cols[0] = _mm_div_ps(_m->cols[0], OZZ_SSE_SPLAT_F(abs_scale, 0));
-        orthonormal.cols[2] = [OZZFloat4 Normalize3With:[OZZFloat4 Cross3With:orthonormal.cols[0] :_m->cols[1]]];
-        orthonormal.cols[1] = [OZZFloat4 Normalize3With:[OZZFloat4 Cross3With:orthonormal.cols[2] :orthonormal.cols[0]]];
+        orthonormal.columns[0] = _mm_div_ps(_m->columns[0], OZZ_SSE_SPLAT_F(abs_scale, 0));
+        orthonormal.columns[2] = [OZZFloat4 Normalize3With:[OZZFloat4 Cross3With:orthonormal.columns[0] :_m->columns[1]]];
+        orthonormal.columns[1] = [OZZFloat4 Normalize3With:[OZZFloat4 Cross3With:orthonormal.columns[2] :orthonormal.columns[0]]];
     } else {  // Favor z axis in the default case
         if (mask & 5) {
             return false;
         }
-        orthonormal.cols[2] = _mm_div_ps(_m->cols[2], OZZ_SSE_SPLAT_F(abs_scale, 2));
-        orthonormal.cols[1] = [OZZFloat4 Normalize3With:[OZZFloat4 Cross3With:orthonormal.cols[2] :_m->cols[0]]];
-        orthonormal.cols[0] = [OZZFloat4 Normalize3With:[OZZFloat4 Cross3With:orthonormal.cols[1] :orthonormal.cols[2]]];
+        orthonormal.columns[2] = _mm_div_ps(_m->columns[2], OZZ_SSE_SPLAT_F(abs_scale, 2));
+        orthonormal.columns[1] = [OZZFloat4 Normalize3With:[OZZFloat4 Cross3With:orthonormal.columns[2] :_m->columns[0]]];
+        orthonormal.columns[0] = [OZZFloat4 Normalize3With:[OZZFloat4 Cross3With:orthonormal.columns[1] :orthonormal.columns[2]]];
     }
-    orthonormal.cols[3] = [OZZFloat4 w_axis];
+    orthonormal.columns[3] = [OZZFloat4 w_axis];
 
     // Get back scale signs in case of reflexions
     const __m128 o_tmp0 =
-            _mm_unpacklo_ps(orthonormal.cols[0], orthonormal.cols[2]);
+            _mm_unpacklo_ps(orthonormal.columns[0], orthonormal.columns[2]);
     const __m128 o_tmp1 =
-            _mm_unpacklo_ps(orthonormal.cols[1], orthonormal.cols[3]);
+            _mm_unpacklo_ps(orthonormal.columns[1], orthonormal.columns[3]);
     const __m128 o_tmp2 =
-            _mm_unpackhi_ps(orthonormal.cols[0], orthonormal.cols[2]);
+            _mm_unpackhi_ps(orthonormal.columns[0], orthonormal.columns[2]);
     const __m128 o_tmp3 =
-            _mm_unpackhi_ps(orthonormal.cols[1], orthonormal.cols[3]);
+            _mm_unpackhi_ps(orthonormal.columns[1], orthonormal.columns[3]);
     const __m128 o_row0 = _mm_unpacklo_ps(o_tmp0, o_tmp1);
     const __m128 o_row1 = _mm_unpackhi_ps(o_tmp0, o_tmp1);
     const __m128 o_row2 = _mm_unpacklo_ps(o_tmp2, o_tmp3);
@@ -1757,7 +1757,7 @@ inline SimdFloat4 DivX(_SimdFloat4 _a, _SimdFloat4 _b) {
     return true;
 }
 
-+ (Float4x4)FromEulerWith:(_SimdFloat4)_v {
++ (simd_float4x4)FromEulerWith:(_SimdFloat4)_v {
     const __m128 cos = [OZZFloat4 CosWith:_v];
     const __m128 sin = [OZZFloat4 SinWith:_v];
 
@@ -1771,7 +1771,7 @@ inline SimdFloat4 DivX(_SimdFloat4 _a, _SimdFloat4 _b) {
     const float sycz = sy * cz;
     const float sysz = sy * sz;
 
-    const Float4x4 ret = {{[OZZFloat4 LoadWith:cx * cy :sx * sz - cx * sycz
+    simd_float4x4 ret = {{[OZZFloat4 LoadWith:cx * cy :sx * sz - cx * sycz
             :cx * sysz + sx * cz :0.f],
             [OZZFloat4 LoadWith:sy :cy * cz :-cy * sz :0.f],
             [OZZFloat4 LoadWith:-sx * cy :sx * sycz + cx * sz
@@ -1780,7 +1780,7 @@ inline SimdFloat4 DivX(_SimdFloat4 _a, _SimdFloat4 _b) {
     return ret;
 }
 
-+ (Float4x4)FromAxisAngleWith:(_SimdFloat4)_axis :(_SimdFloat4)_angle {
++ (simd_float4x4)FromAxisAngleWith:(_SimdFloat4)_axis :(_SimdFloat4)_angle {
     assert([OZZInt4 AreAllTrue1With:[OZZFloat4 IsNormalizedEst3With:_axis]]);
 
     const __m128i zero = _mm_setzero_si128();
@@ -1810,14 +1810,14 @@ inline SimdFloat4 DivX(_SimdFloat4 _a, _SimdFloat4 _b) {
 
     const __m128 t0 = _mm_shuffle_ps(r0fff0, v1, _MM_SHUFFLE(1, 0, 3, 0));
     const __m128 t1 = _mm_shuffle_ps(r0fff0, v1, _MM_SHUFFLE(3, 2, 3, 1));
-    const Float4x4 ret = {{OZZ_SHUFFLE_PS1(t0, _MM_SHUFFLE(1, 3, 2, 0)),
+    simd_float4x4 ret = {{OZZ_SHUFFLE_PS1(t0, _MM_SHUFFLE(1, 3, 2, 0)),
             OZZ_SHUFFLE_PS1(t1, _MM_SHUFFLE(1, 3, 0, 2)),
             _mm_shuffle_ps(v2, r0fff0, _MM_SHUFFLE(3, 2, 1, 0)),
             w_axis}};
     return ret;
 }
 
-+ (Float4x4)FromQuaternionWith:(_SimdFloat4)_quaternion {
++ (simd_float4x4)FromQuaternionWith:(_SimdFloat4)_quaternion {
     assert([OZZInt4 AreAllTrue1With:[OZZFloat4 IsNormalizedEst4With:_quaternion]]);
 
     const __m128i zero = _mm_setzero_si128();
@@ -1852,14 +1852,14 @@ inline SimdFloat4 DivX(_SimdFloat4 _a, _SimdFloat4 _b) {
 
     const __m128 q0 = _mm_shuffle_ps(r0, v2, _MM_SHUFFLE(1, 0, 3, 0));
     const __m128 q1 = _mm_shuffle_ps(r0, v2, _MM_SHUFFLE(3, 2, 3, 1));
-    const Float4x4 ret = {{OZZ_SHUFFLE_PS1(q0, _MM_SHUFFLE(1, 3, 2, 0)),
+    simd_float4x4 ret = {{OZZ_SHUFFLE_PS1(q0, _MM_SHUFFLE(1, 3, 2, 0)),
             OZZ_SHUFFLE_PS1(q1, _MM_SHUFFLE(1, 3, 0, 2)),
             _mm_shuffle_ps(v3, r0, _MM_SHUFFLE(3, 2, 1, 0)),
             w_axis}};
     return ret;
 }
 
-+ (Float4x4)FromAffineWith:(_SimdFloat4)_translation
++ (simd_float4x4)FromAffineWith:(_SimdFloat4)_translation
         :(_SimdFloat4)_quaternion
         :(_SimdFloat4)_scale {
     assert([OZZInt4 AreAllTrue1With:[OZZFloat4 IsNormalizedEst4With:_quaternion]]);
@@ -1896,7 +1896,7 @@ inline SimdFloat4 DivX(_SimdFloat4 _a, _SimdFloat4 _b) {
     const __m128 q0 = _mm_shuffle_ps(r0, v2, _MM_SHUFFLE(1, 0, 3, 0));
     const __m128 q1 = _mm_shuffle_ps(r0, v2, _MM_SHUFFLE(3, 2, 3, 1));
 
-    const Float4x4 ret = {
+    simd_float4x4 ret = {
             {_mm_mul_ps(OZZ_SHUFFLE_PS1(q0, _MM_SHUFFLE(1, 3, 2, 0)),
                     OZZ_SSE_SPLAT_F(_scale, 0)),
                     _mm_mul_ps(OZZ_SHUFFLE_PS1(q1, _MM_SHUFFLE(1, 3, 0, 2)),
@@ -1907,86 +1907,86 @@ inline SimdFloat4 DivX(_SimdFloat4 _a, _SimdFloat4 _b) {
     return ret;
 }
 
-+ (SimdFloat4)TransformPointWith:(const struct Float4x4 *)_m
++ (SimdFloat4)TransformPointWith:(const simd_float4x4 *)_m
         :(_SimdFloat4)_v {
-    const __m128 xxxx = _mm_mul_ps(OZZ_SSE_SPLAT_F(_v, 0), _m->cols[0]);
-    const __m128 a23 = OZZ_MADD(OZZ_SSE_SPLAT_F(_v, 2), _m->cols[2], _m->cols[3]);
-    const __m128 a01 = OZZ_MADD(OZZ_SSE_SPLAT_F(_v, 1), _m->cols[1], xxxx);
+    const __m128 xxxx = _mm_mul_ps(OZZ_SSE_SPLAT_F(_v, 0), _m->columns[0]);
+    const __m128 a23 = OZZ_MADD(OZZ_SSE_SPLAT_F(_v, 2), _m->columns[2], _m->columns[3]);
+    const __m128 a01 = OZZ_MADD(OZZ_SSE_SPLAT_F(_v, 1), _m->columns[1], xxxx);
     return _mm_add_ps(a01, a23);
 }
 
-+ (SimdFloat4)TransformVectorWith:(const struct Float4x4 *)_m
++ (SimdFloat4)TransformVectorWith:(const simd_float4x4 *)_m
         :(_SimdFloat4)_v {
-    const __m128 xxxx = _mm_mul_ps(_m->cols[0], OZZ_SSE_SPLAT_F(_v, 0));
-    const __m128 zzzz = _mm_mul_ps(_m->cols[1], OZZ_SSE_SPLAT_F(_v, 1));
-    const __m128 a21 = OZZ_MADD(_m->cols[2], OZZ_SSE_SPLAT_F(_v, 2), xxxx);
+    const __m128 xxxx = _mm_mul_ps(_m->columns[0], OZZ_SSE_SPLAT_F(_v, 0));
+    const __m128 zzzz = _mm_mul_ps(_m->columns[1], OZZ_SSE_SPLAT_F(_v, 1));
+    const __m128 a21 = OZZ_MADD(_m->columns[2], OZZ_SSE_SPLAT_F(_v, 2), xxxx);
     return _mm_add_ps(zzzz, a21);
 }
 
-+ (SimdFloat4)MulWith:(const struct Float4x4 *)_m
++ (SimdFloat4)MulWith:(const simd_float4x4 *)_m
                   vec:(_SimdFloat4)_v {
-    const __m128 xxxx = _mm_mul_ps(OZZ_SSE_SPLAT_F(_v, 0), _m->cols[0]);
-    const __m128 zzzz = _mm_mul_ps(OZZ_SSE_SPLAT_F(_v, 2), _m->cols[2]);
-    const __m128 a01 = OZZ_MADD(OZZ_SSE_SPLAT_F(_v, 1), _m->cols[1], xxxx);
-    const __m128 a23 = OZZ_MADD(OZZ_SSE_SPLAT_F(_v, 3), _m->cols[3], zzzz);
+    const __m128 xxxx = _mm_mul_ps(OZZ_SSE_SPLAT_F(_v, 0), _m->columns[0]);
+    const __m128 zzzz = _mm_mul_ps(OZZ_SSE_SPLAT_F(_v, 2), _m->columns[2]);
+    const __m128 a01 = OZZ_MADD(OZZ_SSE_SPLAT_F(_v, 1), _m->columns[1], xxxx);
+    const __m128 a23 = OZZ_MADD(OZZ_SSE_SPLAT_F(_v, 3), _m->columns[3], zzzz);
     return _mm_add_ps(a01, a23);
 }
 
-+ (struct Float4x4)MulWith:(const struct Float4x4 *)_a
-                       mat:(const struct Float4x4 *)_b {
-    Float4x4 ret;
++ (simd_float4x4)MulWith:(const simd_float4x4 *)_a
+                       mat:(const simd_float4x4 *)_b {
+    simd_float4x4 ret;
     {
-        const __m128 xxxx = _mm_mul_ps(OZZ_SSE_SPLAT_F(_b->cols[0], 0), _a->cols[0]);
-        const __m128 zzzz = _mm_mul_ps(OZZ_SSE_SPLAT_F(_b->cols[0], 2), _a->cols[2]);
+        const __m128 xxxx = _mm_mul_ps(OZZ_SSE_SPLAT_F(_b->columns[0], 0), _a->columns[0]);
+        const __m128 zzzz = _mm_mul_ps(OZZ_SSE_SPLAT_F(_b->columns[0], 2), _a->columns[2]);
         const __m128 a01 =
-                OZZ_MADD(OZZ_SSE_SPLAT_F(_b->cols[0], 1), _a->cols[1], xxxx);
+                OZZ_MADD(OZZ_SSE_SPLAT_F(_b->columns[0], 1), _a->columns[1], xxxx);
         const __m128 a23 =
-                OZZ_MADD(OZZ_SSE_SPLAT_F(_b->cols[0], 3), _a->cols[3], zzzz);
-        ret.cols[0] = _mm_add_ps(a01, a23);
+                OZZ_MADD(OZZ_SSE_SPLAT_F(_b->columns[0], 3), _a->columns[3], zzzz);
+        ret.columns[0] = _mm_add_ps(a01, a23);
     }
     {
-        const __m128 xxxx = _mm_mul_ps(OZZ_SSE_SPLAT_F(_b->cols[1], 0), _a->cols[0]);
-        const __m128 zzzz = _mm_mul_ps(OZZ_SSE_SPLAT_F(_b->cols[1], 2), _a->cols[2]);
+        const __m128 xxxx = _mm_mul_ps(OZZ_SSE_SPLAT_F(_b->columns[1], 0), _a->columns[0]);
+        const __m128 zzzz = _mm_mul_ps(OZZ_SSE_SPLAT_F(_b->columns[1], 2), _a->columns[2]);
         const __m128 a01 =
-                OZZ_MADD(OZZ_SSE_SPLAT_F(_b->cols[1], 1), _a->cols[1], xxxx);
+                OZZ_MADD(OZZ_SSE_SPLAT_F(_b->columns[1], 1), _a->columns[1], xxxx);
         const __m128 a23 =
-                OZZ_MADD(OZZ_SSE_SPLAT_F(_b->cols[1], 3), _a->cols[3], zzzz);
-        ret.cols[1] = _mm_add_ps(a01, a23);
+                OZZ_MADD(OZZ_SSE_SPLAT_F(_b->columns[1], 3), _a->columns[3], zzzz);
+        ret.columns[1] = _mm_add_ps(a01, a23);
     }
     {
-        const __m128 xxxx = _mm_mul_ps(OZZ_SSE_SPLAT_F(_b->cols[2], 0), _a->cols[0]);
-        const __m128 zzzz = _mm_mul_ps(OZZ_SSE_SPLAT_F(_b->cols[2], 2), _a->cols[2]);
+        const __m128 xxxx = _mm_mul_ps(OZZ_SSE_SPLAT_F(_b->columns[2], 0), _a->columns[0]);
+        const __m128 zzzz = _mm_mul_ps(OZZ_SSE_SPLAT_F(_b->columns[2], 2), _a->columns[2]);
         const __m128 a01 =
-                OZZ_MADD(OZZ_SSE_SPLAT_F(_b->cols[2], 1), _a->cols[1], xxxx);
+                OZZ_MADD(OZZ_SSE_SPLAT_F(_b->columns[2], 1), _a->columns[1], xxxx);
         const __m128 a23 =
-                OZZ_MADD(OZZ_SSE_SPLAT_F(_b->cols[2], 3), _a->cols[3], zzzz);
-        ret.cols[2] = _mm_add_ps(a01, a23);
+                OZZ_MADD(OZZ_SSE_SPLAT_F(_b->columns[2], 3), _a->columns[3], zzzz);
+        ret.columns[2] = _mm_add_ps(a01, a23);
     }
     {
-        const __m128 xxxx = _mm_mul_ps(OZZ_SSE_SPLAT_F(_b->cols[3], 0), _a->cols[0]);
-        const __m128 zzzz = _mm_mul_ps(OZZ_SSE_SPLAT_F(_b->cols[3], 2), _a->cols[2]);
+        const __m128 xxxx = _mm_mul_ps(OZZ_SSE_SPLAT_F(_b->columns[3], 0), _a->columns[0]);
+        const __m128 zzzz = _mm_mul_ps(OZZ_SSE_SPLAT_F(_b->columns[3], 2), _a->columns[2]);
         const __m128 a01 =
-                OZZ_MADD(OZZ_SSE_SPLAT_F(_b->cols[3], 1), _a->cols[1], xxxx);
+                OZZ_MADD(OZZ_SSE_SPLAT_F(_b->columns[3], 1), _a->columns[1], xxxx);
         const __m128 a23 =
-                OZZ_MADD(OZZ_SSE_SPLAT_F(_b->cols[3], 3), _a->cols[3], zzzz);
-        ret.cols[3] = _mm_add_ps(a01, a23);
+                OZZ_MADD(OZZ_SSE_SPLAT_F(_b->columns[3], 3), _a->columns[3], zzzz);
+        ret.columns[3] = _mm_add_ps(a01, a23);
     }
     return ret;
 }
 
-+ (struct Float4x4)AddWith:(const struct Float4x4 *)_a
-        :(const struct Float4x4 *)_b {
-    const Float4x4 ret = {
-            {_mm_add_ps(_a->cols[0], _b->cols[0]), _mm_add_ps(_a->cols[1], _b->cols[1]),
-                    _mm_add_ps(_a->cols[2], _b->cols[2]), _mm_add_ps(_a->cols[3], _b->cols[3])}};
++ (simd_float4x4)AddWith:(const simd_float4x4 *)_a
+        :(const simd_float4x4 *)_b {
+    simd_float4x4 ret = {
+            {_mm_add_ps(_a->columns[0], _b->columns[0]), _mm_add_ps(_a->columns[1], _b->columns[1]),
+                    _mm_add_ps(_a->columns[2], _b->columns[2]), _mm_add_ps(_a->columns[3], _b->columns[3])}};
     return ret;
 }
 
-+ (struct Float4x4)SubWith:(const struct Float4x4 *)_a
-        :(const struct Float4x4 *)_b {
-    const Float4x4 ret = {
-            {_mm_sub_ps(_a->cols[0], _b->cols[0]), _mm_sub_ps(_a->cols[1], _b->cols[1]),
-                    _mm_sub_ps(_a->cols[2], _b->cols[2]), _mm_sub_ps(_a->cols[3], _b->cols[3])}};
++ (simd_float4x4)SubWith:(const simd_float4x4 *)_a
+        :(const simd_float4x4 *)_b {
+    simd_float4x4 ret = {
+            {_mm_sub_ps(_a->columns[0], _b->columns[0]), _mm_sub_ps(_a->columns[1], _b->columns[1]),
+                    _mm_sub_ps(_a->columns[2], _b->columns[2]), _mm_sub_ps(_a->columns[3], _b->columns[3])}};
     return ret;
 }
 
