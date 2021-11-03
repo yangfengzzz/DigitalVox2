@@ -18,9 +18,6 @@ class ComponentsManager {
     private var _onLateUpdateScripts: DisorderedArray<Script> = DisorderedArray()
     private var _destroyComponents: [Script] = []
 
-    // Animation
-    private var _onUpdateAnimations: DisorderedArray<Animator> = DisorderedArray()
-
     // Render
     private var _renderers: DisorderedArray<Renderer> = DisorderedArray()
     private var _onUpdateRenderers: DisorderedArray<Renderer> = DisorderedArray()
@@ -98,19 +95,6 @@ extension ComponentsManager {
         script._onLateUpdateIndex = -1
     }
 
-    func addOnUpdateAnimations(_ animation: Animator) {
-        animation._onUpdateIndex = _onUpdateAnimations.length
-        _onUpdateAnimations.add(animation)
-    }
-
-    func removeOnUpdateAnimations(_ animation: Animator) {
-        let replaced = _onUpdateAnimations.deleteByIndex(animation._onUpdateIndex)
-        if replaced != nil {
-            replaced!._onUpdateIndex = animation._onUpdateIndex
-        }
-        animation._onUpdateIndex = -1
-    }
-
     func addOnUpdateRenderers(_ renderer: Renderer) {
         renderer._onUpdateIndex = _onUpdateRenderers.length
         _onUpdateRenderers.add(renderer)
@@ -161,13 +145,6 @@ extension ComponentsManager {
             if (element._started) {
                 element.onLateUpdate(deltaTime)
             }
-        }
-    }
-
-    func callAnimationUpdate(_ deltaTime: Float) {
-        let elements = _onUpdateAnimations._elements
-        for i in 0..<_onUpdateAnimations.length {
-            elements[i]!.update(deltaTime)
         }
     }
 
