@@ -134,6 +134,142 @@ extension simd_float4 {
     }
 }
 
+// Returns the x component of _v as a float.
+func getX(_ _v: simd_float4) -> Float {
+    OZZFloat4.getXWith(_v)
+}
+
+// Returns the y component of _v as a float.
+func getY(_ _v: simd_float4) -> Float {
+    OZZFloat4.getYWith(_v)
+}
+
+// Returns the z component of _v as a float.
+func getZ(_ _v: simd_float4) -> Float {
+    OZZFloat4.getZWith(_v)
+}
+
+// Returns the w component of _v as a float.
+func getW(_ _v: simd_float4) -> Float {
+    OZZFloat4.getWWith(_v)
+}
+
+// Returns _v with the x component set to x component of _f.
+func setX(_ _v: simd_float4, _ _f: simd_float4) -> simd_float4 {
+    OZZFloat4.setXWith(_v, _f)
+}
+
+// Returns _v with the y component set to  x component of _f.
+func setY(_ _v: simd_float4, _ _f: simd_float4) -> simd_float4 {
+    OZZFloat4.setYWith(_v, _f)
+}
+
+// Returns _v with the z component set to  x component of _f.
+func setZ(_ _v: simd_float4, _ _f: simd_float4) -> simd_float4 {
+    OZZFloat4.setZWith(_v, _f)
+}
+
+// Returns _v with the w component set to  x component of _f.
+func setW(_ _v: simd_float4, _ _f: simd_float4) -> simd_float4 {
+    OZZFloat4.setWWith(_v, _f)
+}
+
+// Returns _v with the _i th component set to _f.
+// _i must be in range [0,3]
+func setI(_ _v: simd_float4, _ _f: simd_float4, _ _i: Int) -> simd_float4 {
+    OZZFloat4.setIWith(_v, _f, Int32(_i))
+}
+
+// Stores the 4 components of _v to the four first floats of _f.
+// _f must be aligned to 16 bytes.
+// _f[0] = _v.x
+// _f[1] = _v.y
+// _f[2] = _v.z
+// _f[3] = _v.w
+func storePtr(_ _v: simd_float4, _ _f: inout [Float]) {
+    OZZFloat4.storePtr(with: _v, &_f)
+}
+
+// Stores the x component of _v to the first float of _f.
+// _f must be aligned to 16 bytes.
+// _f[0] = _v.x
+func store1Ptr(_ _v: simd_float4, _ _f: inout [Float]) {
+    OZZFloat4.store1Ptr(with: _v, &_f)
+}
+
+// Stores x and y components of _v to the two first floats of _f.
+// _f must be aligned to 16 bytes.
+// _f[0] = _v.x
+// _f[1] = _v.y
+func store2Ptr(_ _v: simd_float4, _ _f: inout [Float]) {
+    OZZFloat4.store2Ptr(with: _v, &_f)
+}
+
+// Stores x, y and z components of _v to the three first floats of _f.
+// _f must be aligned to 16 bytes.
+// _f[0] = _v.x
+// _f[1] = _v.y
+// _f[2] = _v.z
+func store3Ptr(_ _v: simd_float4, _ _f: inout [Float]) {
+    OZZFloat4.store3Ptr(with: _v, &_f)
+}
+
+// Stores the 4 components of _v to the four first floats of _f.
+// _f must be aligned to 4 bytes.
+// _f[0] = _v.x
+// _f[1] = _v.y
+// _f[2] = _v.z
+// _f[3] = _v.w
+func storePtrU(_ _v: simd_float4, _ _f: inout [Float]) {
+    OZZFloat4.storePtrU(with: _v, &_f)
+}
+
+// Stores the x component of _v to the first float of _f.
+// _f must be aligned to 4 bytes.
+// _f[0] = _v.x
+func store1PtrU(_ _v: simd_float4, _ _f: inout [Float]) {
+    OZZFloat4.store1PtrU(with: _v, &_f)
+}
+
+// Stores x and y components of _v to the two first floats of _f.
+// _f must be aligned to 4 bytes.
+// _f[0] = _v.x
+// _f[1] = _v.y
+func store2PtrU(_ _v: simd_float4, _ _f: inout [Float]) {
+    OZZFloat4.store2PtrU(with: _v, &_f)
+}
+
+// Stores x, y and z components of _v to the three first floats of _f.
+// _f must be aligned to 4 bytes.
+// _f[0] = _v.x
+// _f[1] = _v.y
+// _f[2] = _v.z
+func store3PtrU(_ _v: simd_float4, _ _f: inout [Float]) {
+    OZZFloat4.store3PtrU(with: _v, &_f)
+}
+
+// Replicates x of _a to all the components of the returned vector.
+func splatX(_ _v: simd_float4) -> simd_float4 {
+    OZZFloat4.splatX(with: _v)
+}
+
+// Replicates y of _a to all the components of the returned vector.
+func splatY(_ _v: simd_float4) -> simd_float4 {
+    OZZFloat4.splatY(with: _v)
+}
+
+// Replicates z of _a to all the components of the returned vector.
+func splatZ(_ _v: simd_float4) -> simd_float4 {
+    OZZFloat4.splatZ(with: _v)
+}
+
+// Replicates w of _a to all the components of the returned vector.
+func splatW(_ _v: simd_float4) -> simd_float4 {
+    OZZFloat4.splatW(with: _v)
+}
+
+
+//MARK: - simd_float4x4
 extension simd_float4x4 {
     // MARK:- Translate
     init(translation: SIMD3<Float>) {
@@ -347,6 +483,7 @@ func transformVector(_ _m: simd_float4x4, _ _v: simd_float4) -> simd_float4 {
     OZZFloat4x4.transformVector(with: _m, _v)
 }
 
+//MARK: - Math
 enum math {
     // Converts from a float to a half.
     static func floatToHalf(_ _f: Float) -> UInt16 {
