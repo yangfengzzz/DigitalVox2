@@ -13,14 +13,7 @@ import Foundation
 // | m._m.cols.0.y m._m.cols.1.y m._m.cols.2.y m._m.cols.3.y | * {v.y}
 // | m._m.cols.0.z m._m.cols.1.y m._m.cols.2.y m._m.cols.3.y |   {v.z}
 // [ m._m.cols.0.w m._m.cols.1.w m._m.cols.2.w m._m.cols.3.w ]   {v.1}
-struct SoaFloat4x4 {
-    // Soa matrix columns.
-    var cols: (SoaFloat4, SoaFloat4, SoaFloat4, SoaFloat4)
-
-    init(_ cols: (SoaFloat4, SoaFloat4, SoaFloat4, SoaFloat4)) {
-        self.cols = cols
-    }
-
+extension SoaFloat4x4 {
     // Returns the identity matrix.
     static func identity() -> SoaFloat4x4 {
         let zero = OZZFloat4.zero()

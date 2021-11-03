@@ -15,11 +15,26 @@ struct SoaFloat2 {
 };
 
 struct SoaFloat3 {
-  SimdFloat4 x, y, z;
+    SimdFloat4 x, y, z;
 };
 
 struct SoaFloat4 {
-  SimdFloat4 x, y, z, w;
+    SimdFloat4 x, y, z, w;
+};
+
+// Declare the 4x4 soa matrix type. Uses the column major convention where the
+// matrix-times-vector is written v'=Mv:
+// [ m.cols[0].x m.cols[1].x m.cols[2].x m.cols[3].x ]   {v.x}
+// | m.cols[0].y m.cols[1].y m.cols[2].y m.cols[3].y | * {v.y}
+// | m.cols[0].z m.cols[1].y m.cols[2].y m.cols[3].y |   {v.z}
+// [ m.cols[0].w m.cols[1].w m.cols[2].w m.cols[3].w ]   {v.1}
+struct SoaFloat4x4 {
+    // Soa matrix columns.
+    struct SoaFloat4 cols[4];
+};
+
+struct SoaQuaternion {
+    SimdFloat4 x, y, z, w;
 };
 
 #endif /* soa_float_h */
