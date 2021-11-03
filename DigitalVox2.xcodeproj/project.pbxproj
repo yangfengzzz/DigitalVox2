@@ -322,6 +322,9 @@
 		04CB88F62732AF5A00B0E398 /* vec_float.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88D827326C9900B0E398 /* vec_float.swift */; };
 		04CB88F72732B11F00B0E398 /* vec_quaternion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88D627326C9900B0E398 /* vec_quaternion.swift */; };
 		04CB88F82732B1E600B0E398 /* vec_transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88E027326C9900B0E398 /* vec_transform.swift */; };
+		04CB88F92732B23300B0E398 /* box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88D227326C9800B0E398 /* box.swift */; };
+		04CB88FA2732B24600B0E398 /* rect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88DB27326C9900B0E398 /* rect.swift */; };
+		04CB88FB2732B41E00B0E398 /* decimate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88D327326C9900B0E398 /* decimate.swift */; };
 		04EA0D6A26E0F9AD00CA7833 /* math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6926E0F9AD00CA7833 /* math.swift */; };
 		04EA0D6C26E1204200CA7833 /* bbox2f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6B26E1204200CA7833 /* bbox2f.swift */; };
 		04EA0D6E26E1204F00CA7833 /* bbox3f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6D26E1204F00CA7833 /* bbox3f.swift */; };
@@ -2082,6 +2085,7 @@
 				04CB88F62732AF5A00B0E398 /* vec_float.swift in Sources */,
 				041BAE13272A500F006268D5 /* UpdateFlag.swift in Sources */,
 				041BAE1B272A5046006268D5 /* particle.metal in Sources */,
+				04CB88FB2732B41E00B0E398 /* decimate.swift in Sources */,
 				041BAF0C272B823A006268D5 /* PhysXStaticCollider.swift in Sources */,
 				041BAEC2272A516E006268D5 /* CPxPhysics.mm in Sources */,
 				04CB88CA27321C0000B0E398 /* Animation.swift in Sources */,
@@ -2186,6 +2190,7 @@
 				041BAE47272A50F2006268D5 /* Mesh.swift in Sources */,
 				041BAE65272A510C006268D5 /* ShaderUniform.swift in Sources */,
 				041BAE81272A513B006268D5 /* Spherical.swift in Sources */,
+				04CB88F92732B23300B0E398 /* box.swift in Sources */,
 				041BAEE8272A9F81006268D5 /* CPxShape.mm in Sources */,
 				041BAEBE272A5166006268D5 /* LiteCollider.swift in Sources */,
 				041BAE67272A5111006268D5 /* DirectLight.swift in Sources */,
@@ -2227,6 +2232,7 @@
 				041BAE1F272A5046006268D5 /* unlit.metal in Sources */,
 				041BAE5B272A510C006268D5 /* Shader.swift in Sources */,
 				041BAEFB272B74A3006268D5 /* PhysXPlaneColliderShape.swift in Sources */,
+				04CB88FA2732B24600B0E398 /* rect.swift in Sources */,
 				041BAE7D272A512B006268D5 /* GLTFAssetReader.m in Sources */,
 				041BAE54272A5100006268D5 /* RenderPass.swift in Sources */,
 				041BAE64272A510C006268D5 /* ShaderMacroCollection.swift in Sources */,

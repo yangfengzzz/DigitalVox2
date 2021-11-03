@@ -36,8 +36,8 @@ struct Box {
         var local_max = VecFloat3(-Float.greatestFiniteMagnitude)
 
         for i in 0..<_points.count {
-            local_min = Min(local_min, _points[i])
-            local_max = Max(local_max, _points[i])
+            local_min = vox_oasis.min(local_min, _points[i])
+            local_max = vox_oasis.max(local_max, _points[i])
         }
 
         min = local_min
@@ -61,25 +61,25 @@ struct Box {
 
 // Merges two boxes _a and _b.
 // Both _a and _b can be invalid.
-func Merge(_ _a: Box, _ _b: Box) -> Box {
+func merge(_ _a: Box, _ _b: Box) -> Box {
     if (!_a.is_valid()) {
         return _b
     } else if (!_b.is_valid()) {
         return _a
     }
-    return Box(Min(_a.min, _b.min), Max(_a.max, _b.max))
+    return Box(min(_a.min, _b.min), max(_a.max, _b.max))
 }
 
 // Compute box transformation by a matrix.
-func TransformBox(_  _matrix: Float4x4, _  _box: Box) -> Box {
-    var _matrix = _matrix
-    var _box = _box
-    let min = OZZFloat4.load3PtrU(with: &_box.min.x)
-    let max = OZZFloat4.load3PtrU(with: &_box.max.x)
+func transformBox(_  _matrix: simd_float4x4, _  _box: Box) -> Box {
+    var box_min = [_box.min.x, _box.min.y, _box.min.z, 0.0]
+    var box_max = [_box.max.x, _box.max.y, _box.max.z, 0.0]
+    let min = simd_float4.load3PtrU(&box_min)
+    let max = simd_float4.load3PtrU(&box_max)
 
     // Transforms min and max.
-    let ta = OZZFloat4x4.transformPoint(with: &_matrix, min)
-    let tb = OZZFloat4x4.transformPoint(with: &_matrix, max)
+    let ta = transformPoint(_matrix, min)
+    let tb = transformPoint(_matrix, max)
 
     // Finds new min and max and store them in box.
     var tbox = Box()

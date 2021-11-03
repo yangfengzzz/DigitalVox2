@@ -15,7 +15,7 @@ protocol DecimateType {
     func Distance(_ _a: Key, _ _b: Key) -> Float
 }
 
-func Decimate<Key, _Adapter: DecimateType>(_ _src: [Key], _ _adapter: _Adapter, _ _tolerance: Float,
+func decimate<Key, _Adapter: DecimateType>(_ _src: [Key], _ _adapter: _Adapter, _ _tolerance: Float,
                                            _ _dest: inout [Key]) where _Adapter.Key == Key {
     // Early out if not enough data.
     if (_src.count < 2) {
