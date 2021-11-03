@@ -33,8 +33,17 @@ struct SoaFloat4x4 {
     struct SoaFloat4 cols[4];
 };
 
+// Declare the Quaternion type.
 struct SoaQuaternion {
     SimdFloat4 x, y, z, w;
+};
+
+// Stores an affine transformation with separate translation, rotation and scale
+// attributes.
+struct SoaTransform {
+    struct SoaFloat3 translation;
+    struct SoaQuaternion rotation;
+    struct SoaFloat3 scale;
 };
 
 #endif /* soa_float_h */

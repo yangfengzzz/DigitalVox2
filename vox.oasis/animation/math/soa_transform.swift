@@ -9,22 +9,10 @@ import Foundation
 
 // Stores an affine transformation with separate translation, rotation and scale
 // attributes.
-struct SoaTransform {
-    var translation: SoaFloat3
-    var rotation: SoaQuaternion
-    var scale: SoaFloat3
-
-    init(_ translation: SoaFloat3,
-         _ rotation: SoaQuaternion,
-         _ scale: SoaFloat3) {
-        self.translation = translation
-        self.rotation = rotation
-        self.scale = scale
-    }
-
+extension SoaTransform {
     static func identity() -> SoaTransform {
-        SoaTransform(SoaFloat3.zero(),
-                SoaQuaternion.identity(),
-                SoaFloat3.one())
+        SoaTransform(translation: SoaFloat3.zero(),
+                rotation: SoaQuaternion.identity(),
+                scale: SoaFloat3.one())
     }
 }

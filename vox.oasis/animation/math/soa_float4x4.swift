@@ -16,36 +16,36 @@ import Foundation
 extension SoaFloat4x4 {
     // Returns the identity matrix.
     static func identity() -> SoaFloat4x4 {
-        let zero = OZZFloat4.zero()
-        let one = OZZFloat4.one()
-        return SoaFloat4x4((
-                SoaFloat4(one, zero, zero, zero),
-                SoaFloat4(zero, one, zero, zero),
-                SoaFloat4(zero, zero, one, zero),
-                SoaFloat4(zero, zero, zero, one)
+        let zero = simd_float4.zero()
+        let one = simd_float4.one()
+        return SoaFloat4x4(cols: (
+                SoaFloat4(x: one, y: zero, z: zero, w: zero),
+                SoaFloat4(x: zero, y: one, z: zero, w: zero),
+                SoaFloat4(x: zero, y: zero, z: one, w: zero),
+                SoaFloat4(x: zero, y: zero, z: zero, w: one)
         ))
     }
 
     // Returns a scaling matrix that scales along _v.
     // _v.w is ignored.
-    static func Scaling(_ _v: SoaFloat4) -> SoaFloat4x4 {
-        let zero = OZZFloat4.zero()
-        let one = OZZFloat4.one()
-        return SoaFloat4x4((
-                SoaFloat4(_v.x, zero, zero, zero),
-                SoaFloat4(zero, _v.y, zero, zero),
-                SoaFloat4(zero, zero, _v.z, zero),
-                SoaFloat4(zero, zero, zero, one)
+    static func scaling(_ _v: SoaFloat4) -> SoaFloat4x4 {
+        let zero = simd_float4.zero()
+        let one = simd_float4.one()
+        return SoaFloat4x4(cols: (
+                SoaFloat4(x: _v.x, y: zero, z: zero, w: zero),
+                SoaFloat4(x: zero, y: _v.y, z: zero, w: zero),
+                SoaFloat4(x: zero, y: zero, z: _v.z, w: zero),
+                SoaFloat4(x: zero, y: zero, z: zero, w: one)
         ))
     }
 
     // Returns the rotation matrix built from quaternion defined by x, y, z and w
     // components of _v.
-    static func FromQuaternion(_ _q: SoaQuaternion) -> SoaFloat4x4 {
-        assert(OZZInt4.areAllTrue(with: IsNormalizedEst(_q)))
+    static func fromQuaternion(_ _q: SoaQuaternion) -> SoaFloat4x4 {
+        assert(areAllTrue(isNormalizedEst(_q)))
 
-        let zero = OZZFloat4.zero()
-        let one = OZZFloat4.one()
+        let zero = simd_float4.zero()
+        let one = simd_float4.one()
         let two = one + one
 
         let xx = _q.x * _q.x
@@ -58,23 +58,23 @@ extension SoaFloat4x4 {
         let zz = _q.z * _q.z
         let zw = _q.z * _q.w
 
-        return SoaFloat4x4((
-                SoaFloat4(one - two * (yy + zz), two * (xy + zw), two * (xz - yw), zero),
-                SoaFloat4(two * (xy - zw), one - two * (xx + zz), two * (yz + xw), zero),
-                SoaFloat4(two * (xz + yw), two * (yz - xw), one - two * (xx + yy), zero),
-                SoaFloat4(zero, zero, zero, one)
+        return SoaFloat4x4(cols: (
+                SoaFloat4(x: one - two * (yy + zz), y: two * (xy + zw), z: two * (xz - yw), w: zero),
+                SoaFloat4(x: two * (xy - zw), y: one - two * (xx + zz), z: two * (yz + xw), w: zero),
+                SoaFloat4(x: two * (xz + yw), y: two * (yz - xw), z: one - two * (xx + yy), w: zero),
+                SoaFloat4(x: zero, y: zero, z: zero, w: one)
         ))
     }
 
     // Returns the affine transformation matrix built from split translation,
     // rotation (quaternion) and scale.
-    static func FromAffine(_ _translation: SoaFloat3,
+    static func fromAffine(_ _translation: SoaFloat3,
                            _ _quaternion: SoaQuaternion,
                            _ _scale: SoaFloat3) -> SoaFloat4x4 {
-        assert(OZZInt4.areAllTrue(with: IsNormalizedEst(_quaternion)))
+        assert(areAllTrue(isNormalizedEst(_quaternion)))
 
-        let zero = OZZFloat4.zero()
-        let one = OZZFloat4.one()
+        let zero = simd_float4.zero()
+        let one = simd_float4.one()
         let two = one + one
 
         let xx = _quaternion.x * _quaternion.x
@@ -87,22 +87,22 @@ extension SoaFloat4x4 {
         let zz = _quaternion.z * _quaternion.z
         let zw = _quaternion.z * _quaternion.w
 
-        return SoaFloat4x4((
-                SoaFloat4(_scale.x * (one - two * (yy + zz)), _scale.x * two * (xy + zw), _scale.x * two * (xz - yw), zero),
-                SoaFloat4(_scale.y * two * (xy - zw), _scale.y * (one - two * (xx + zz)), _scale.y * two * (yz + xw), zero),
-                SoaFloat4(_scale.z * two * (xz + yw), _scale.z * two * (yz - xw), _scale.z * (one - two * (xx + yy)), zero),
-                SoaFloat4(_translation.x, _translation.y, _translation.z, one)
+        return SoaFloat4x4(cols: (
+                SoaFloat4(x: _scale.x * (one - two * (yy + zz)), y: _scale.x * two * (xy + zw), z: _scale.x * two * (xz - yw), w: zero),
+                SoaFloat4(x: _scale.y * two * (xy - zw), y: _scale.y * (one - two * (xx + zz)), z: _scale.y * two * (yz + xw), w: zero),
+                SoaFloat4(x: _scale.z * two * (xz + yw), y: _scale.z * two * (yz - xw), z: _scale.z * (one - two * (xx + yy)), w: zero),
+                SoaFloat4(x: _translation.x, y: _translation.y, z: _translation.z, w: one)
         ))
     }
 }
 
 // Returns the transpose of matrix _m.
-func Transpose(_ _m: SoaFloat4x4) -> SoaFloat4x4 {
-    SoaFloat4x4((
-            SoaFloat4(_m.cols.0.x, _m.cols.1.x, _m.cols.2.x, _m.cols.3.x),
-            SoaFloat4(_m.cols.0.y, _m.cols.1.y, _m.cols.2.y, _m.cols.3.y),
-            SoaFloat4(_m.cols.0.z, _m.cols.1.z, _m.cols.2.z, _m.cols.3.z),
-            SoaFloat4(_m.cols.0.w, _m.cols.1.w, _m.cols.2.w, _m.cols.3.w)
+func transpose(_ _m: SoaFloat4x4) -> SoaFloat4x4 {
+    SoaFloat4x4(cols: (
+            SoaFloat4(x: _m.cols.0.x, y: _m.cols.1.x, z: _m.cols.2.x, w: _m.cols.3.x),
+            SoaFloat4(x: _m.cols.0.y, y: _m.cols.1.y, z: _m.cols.2.y, w: _m.cols.3.y),
+            SoaFloat4(x: _m.cols.0.z, y: _m.cols.1.z, z: _m.cols.2.z, w: _m.cols.3.z),
+            SoaFloat4(x: _m.cols.0.w, y: _m.cols.1.w, z: _m.cols.2.w, w: _m.cols.3.w)
     ))
 }
 
@@ -110,7 +110,7 @@ func Transpose(_ _m: SoaFloat4x4) -> SoaFloat4x4 {
 // If _invertible is not nullptr, each component will be set to true if its
 // respective matrix is invertible. If _invertible is nullptr, then an assert is
 // triggered in case any of the 4 matrices isn't invertible.
-func Invert(_ _m: SoaFloat4x4, _ _invertible: inout SimdInt4) -> SoaFloat4x4 {
+func invert(_ _m: SoaFloat4x4, _ _invertible: inout SimdInt4) -> SoaFloat4x4 {
     let a00: SimdFloat4 = _m.cols.2.z * _m.cols.3.w - _m.cols.3.z * _m.cols.2.w
     let a01: SimdFloat4 = _m.cols.2.y * _m.cols.3.w - _m.cols.3.y * _m.cols.2.w
     let a02: SimdFloat4 = _m.cols.2.y * _m.cols.3.z - _m.cols.3.y * _m.cols.2.z
@@ -185,72 +185,72 @@ func Invert(_ _m: SoaFloat4x4, _ _invertible: inout SimdInt4) -> SoaFloat4x4 {
 
     var det: SimdFloat4 = _m.cols.0.x * b0x + _m.cols.0.y * b1x
     det += _m.cols.0.z * b2x + _m.cols.0.w * b3x
-    let invertible = OZZFloat4.cmpNe(with: det, OZZFloat4.zero())
-    guard OZZInt4.areAllTrue(with: invertible) else {
+    let invertible = cmpNe(det, simd_float4.zero())
+    guard areAllTrue(invertible) else {
         fatalError("Matrix is not invertible")
     }
     _invertible = invertible
-    let inv_det: SimdFloat4 = OZZFloat4.select(with: invertible, OZZFloat4.rcpEstNR(with: det), OZZFloat4.zero())
+    let inv_det: SimdFloat4 = select(invertible, rcpEstNR(det), simd_float4.zero())
 
-    return SoaFloat4x4((
-            SoaFloat4(b0x * inv_det, b0y * inv_det, b0z * inv_det, b0w * inv_det),
-            SoaFloat4(b1x * inv_det, b1y * inv_det, b1z * inv_det, b1w * inv_det),
-            SoaFloat4(b2x * inv_det, b2y * inv_det, b2z * inv_det, b2w * inv_det),
-            SoaFloat4(b3x * inv_det, b3y * inv_det, b3z * inv_det, b3w * inv_det)
+    return SoaFloat4x4(cols: (
+            SoaFloat4(x: b0x * inv_det, y: b0y * inv_det, z: b0z * inv_det, w: b0w * inv_det),
+            SoaFloat4(x: b1x * inv_det, y: b1y * inv_det, z: b1z * inv_det, w: b1w * inv_det),
+            SoaFloat4(x: b2x * inv_det, y: b2y * inv_det, z: b2z * inv_det, w: b2w * inv_det),
+            SoaFloat4(x: b3x * inv_det, y: b3y * inv_det, z: b3z * inv_det, w: b3w * inv_det)
     ))
 }
 
 // Scales matrix _m along the axis defined by _v components.
 // _v.w is ignored.
-func Scale(_ _m: SoaFloat4x4, _ _v: SoaFloat4) -> SoaFloat4x4 {
-    SoaFloat4x4((
-            SoaFloat4(_m.cols.0.x * _v.x, _m.cols.0.y * _v.x,
-                    _m.cols.0.z * _v.x, _m.cols.0.w * _v.x),
-            SoaFloat4(_m.cols.1.x * _v.y, _m.cols.1.y * _v.y,
-                    _m.cols.1.z * _v.y, _m.cols.1.w * _v.y),
-            SoaFloat4(_m.cols.2.x * _v.z, _m.cols.2.y * _v.z,
-                    _m.cols.2.z * _v.z, _m.cols.2.w * _v.z),
+func scale(_ _m: SoaFloat4x4, _ _v: SoaFloat4) -> SoaFloat4x4 {
+    SoaFloat4x4(cols: (
+            SoaFloat4(x: _m.cols.0.x * _v.x, y: _m.cols.0.y * _v.x,
+                    z: _m.cols.0.z * _v.x, w: _m.cols.0.w * _v.x),
+            SoaFloat4(x: _m.cols.1.x * _v.y, y: _m.cols.1.y * _v.y,
+                    z: _m.cols.1.z * _v.y, w: _m.cols.1.w * _v.y),
+            SoaFloat4(x: _m.cols.2.x * _v.z, y: _m.cols.2.y * _v.z,
+                    z: _m.cols.2.z * _v.z, w: _m.cols.2.w * _v.z),
             _m.cols.3))
 }
 
 // Computes the multiplication of matrix Float4x4 and vector  _v.
 func *(_m: SoaFloat4x4, _v: SoaFloat4) -> SoaFloat4 {
     SoaFloat4(
-            _m.cols.0.x * _v.x + _m.cols.1.x * _v.y + _m.cols.2.x * _v.z + _m.cols.3.x * _v.w,
-            _m.cols.0.y * _v.x + _m.cols.1.y * _v.y + _m.cols.2.y * _v.z + _m.cols.3.y * _v.w,
-            _m.cols.0.z * _v.x + _m.cols.1.z * _v.y + _m.cols.2.z * _v.z + _m.cols.3.z * _v.w,
-            _m.cols.0.w * _v.x + _m.cols.1.w * _v.y + _m.cols.2.w * _v.z + _m.cols.3.w * _v.w)
+            x: _m.cols.0.x * _v.x + _m.cols.1.x * _v.y + _m.cols.2.x * _v.z + _m.cols.3.x * _v.w,
+            y: _m.cols.0.y * _v.x + _m.cols.1.y * _v.y + _m.cols.2.y * _v.z + _m.cols.3.y * _v.w,
+            z: _m.cols.0.z * _v.x + _m.cols.1.z * _v.y + _m.cols.2.z * _v.z + _m.cols.3.z * _v.w,
+            w: _m.cols.0.w * _v.x + _m.cols.1.w * _v.y + _m.cols.2.w * _v.z + _m.cols.3.w * _v.w)
 }
 
 // Computes the multiplication of two matrices _a and _b.
 func *(_a: SoaFloat4x4, _b: SoaFloat4x4) -> SoaFloat4x4 {
-    SoaFloat4x4((_a * _b.cols.0, _a * _b.cols.1, _a * _b.cols.2, _a * _b.cols.3))
+    SoaFloat4x4(cols: (_a * _b.cols.0, _a * _b.cols.1, _a * _b.cols.2, _a * _b.cols.3))
 }
 
 // Computes the per element addition of two matrices _a and _b.
 func +(_a: SoaFloat4x4, _b: SoaFloat4x4) -> SoaFloat4x4 {
-    SoaFloat4x4((
-            SoaFloat4(_a.cols.0.x + _b.cols.0.x, _a.cols.0.y + _b.cols.0.y,
-                    _a.cols.0.z + _b.cols.0.z, _a.cols.0.w + _b.cols.0.w),
-            SoaFloat4(_a.cols.1.x + _b.cols.1.x, _a.cols.1.y + _b.cols.1.y,
-                    _a.cols.1.z + _b.cols.1.z, _a.cols.1.w + _b.cols.1.w),
-            SoaFloat4(_a.cols.2.x + _b.cols.2.x, _a.cols.2.y + _b.cols.2.y,
-                    _a.cols.2.z + _b.cols.2.z, _a.cols.2.w + _b.cols.2.w),
-            SoaFloat4(_a.cols.3.x + _b.cols.3.x, _a.cols.3.y + _b.cols.3.y,
-                    _a.cols.3.z + _b.cols.3.z, _a.cols.3.w + _b.cols.3.w)
+    SoaFloat4x4(cols: (
+            SoaFloat4(x: _a.cols.0.x + _b.cols.0.x, y: _a.cols.0.y + _b.cols.0.y,
+                    z: _a.cols.0.z + _b.cols.0.z, w: _a.cols.0.w + _b.cols.0.w),
+            SoaFloat4(x: _a.cols.1.x + _b.cols.1.x, y: _a.cols.1.y + _b.cols.1.y,
+                    z: _a.cols.1.z + _b.cols.1.z, w: _a.cols.1.w + _b.cols.1.w),
+            SoaFloat4(x: _a.cols.2.x + _b.cols.2.x, y: _a.cols.2.y + _b.cols.2.y,
+                    z: _a.cols.2.z + _b.cols.2.z, w: _a.cols.2.w + _b.cols.2.w),
+            SoaFloat4(x: _a.cols.3.x + _b.cols.3.x, y: _a.cols.3.y + _b.cols.3.y,
+                    z: _a.cols.3.z + _b.cols.3.z, w: _a.cols.3.w + _b.cols.3.w)
     ))
 }
 
 // Computes the per element subtraction of two matrices _a and _b.
 func -(_a: SoaFloat4x4, _b: SoaFloat4x4) -> SoaFloat4x4 {
-    SoaFloat4x4((
-            SoaFloat4(_a.cols.0.x - _b.cols.0.x, _a.cols.0.y - _b.cols.0.y,
-                    _a.cols.0.z - _b.cols.0.z, _a.cols.0.w - _b.cols.0.w),
-            SoaFloat4(_a.cols.1.x - _b.cols.1.x, _a.cols.1.y - _b.cols.1.y,
-                    _a.cols.1.z - _b.cols.1.z, _a.cols.1.w - _b.cols.1.w),
-            SoaFloat4(_a.cols.2.x - _b.cols.2.x, _a.cols.2.y - _b.cols.2.y,
-                    _a.cols.2.z - _b.cols.2.z, _a.cols.2.w - _b.cols.2.w),
-            SoaFloat4(_a.cols.3.x - _b.cols.3.x, _a.cols.3.y - _b.cols.3.y,
-                    _a.cols.3.z - _b.cols.3.z, _a.cols.3.w - _b.cols.3.w)
+    SoaFloat4x4(cols: (
+            SoaFloat4(x: _a.cols.0.x - _b.cols.0.x, y: _a.cols.0.y - _b.cols.0.y,
+                    z: _a.cols.0.z - _b.cols.0.z, w: _a.cols.0.w - _b.cols.0.w),
+            SoaFloat4(x: _a.cols.1.x - _b.cols.1.x, y: _a.cols.1.y - _b.cols.1.y,
+                    z: _a.cols.1.z - _b.cols.1.z, w: _a.cols.1.w - _b.cols.1.w),
+            SoaFloat4(x: _a.cols.2.x - _b.cols.2.x, y: _a.cols.2.y - _b.cols.2.y,
+                    z: _a.cols.2.z - _b.cols.2.z, w: _a.cols.2.w - _b.cols.2.w),
+            SoaFloat4(x: _a.cols.3.x - _b.cols.3.x, y: _a.cols.3.y - _b.cols.3.y,
+                    z: _a.cols.3.z - _b.cols.3.z, w: _a.cols.3.w - _b.cols.3.w)
     ))
 }

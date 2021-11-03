@@ -316,6 +316,8 @@
 		04CB88EE27326EE400B0E398 /* simd_math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88D727326C9900B0E398 /* simd_math.swift */; };
 		04CB88F027328CC300B0E398 /* soa_float.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88D927326C9900B0E398 /* soa_float.swift */; };
 		04CB88F22732924A00B0E398 /* soa_quaternion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88DC27326C9900B0E398 /* soa_quaternion.swift */; };
+		04CB88F32732937100B0E398 /* soa_float4x4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88D427326C9900B0E398 /* soa_float4x4.swift */; };
+		04CB88F42732953E00B0E398 /* soa_transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88DA27326C9900B0E398 /* soa_transform.swift */; };
 		04EA0D6A26E0F9AD00CA7833 /* math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6926E0F9AD00CA7833 /* math.swift */; };
 		04EA0D6C26E1204200CA7833 /* bbox2f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6B26E1204200CA7833 /* bbox2f.swift */; };
 		04EA0D6E26E1204F00CA7833 /* bbox3f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6D26E1204F00CA7833 /* bbox3f.swift */; };
@@ -2186,6 +2188,7 @@
 				041BAEA1272A514D006268D5 /* ICapsuleColliderShape.swift in Sources */,
 				041BAE17272A500F006268D5 /* Entity.swift in Sources */,
 				041BAEA8272A514D006268D5 /* IPhysicsManager.swift in Sources */,
+				04CB88F32732937100B0E398 /* soa_float4x4.swift in Sources */,
 				041BAEC3272A516E006268D5 /* PhysXPhysics.swift in Sources */,
 				041BAE33272A50E6006268D5 /* Ray.swift in Sources */,
 				041BAE00272A500F006268D5 /* Scene.swift in Sources */,
@@ -2196,6 +2199,7 @@
 				04CB88EC27326C9900B0E398 /* simd_math.mm in Sources */,
 				041BAE44272A50ED006268D5 /* ModelMesh.swift in Sources */,
 				041BAE99272A5141006268D5 /* StaticCollider.swift in Sources */,
+				04CB88F42732953E00B0E398 /* soa_transform.swift in Sources */,
 				041BAEAE272A5153006268D5 /* RenderPipelineState.swift in Sources */,
 				041BAE08272A500F006268D5 /* SceneFeature.swift in Sources */,
 				041BAE98272A5141006268D5 /* CapsuleColliderShape.swift in Sources */,
