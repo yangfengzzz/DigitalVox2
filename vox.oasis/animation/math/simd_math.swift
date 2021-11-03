@@ -1183,8 +1183,8 @@ extension SimdInt4 {
     // r.y = _y
     // r.z = _z
     // r.w = _w
-    static func load(_  _x: Int, _   _y: Int, _  _z: Int, _  _w: Int) -> SimdInt4 {
-        OZZInt4.load(with: Int32(_x), Int32(_y), Int32(_z), Int32(_w))
+    static func load(_  _x: Int32, _   _y: Int32, _  _z: Int32, _  _w: Int32) -> SimdInt4 {
+        OZZInt4.load(with: _x, _y, _z, _w)
     }
 
     // Loads _x, _y, _z, _w to the returned vector using the following conversion
@@ -1332,6 +1332,346 @@ extension SimdInt4 {
     static func fromFloatTrunc(_ _f: simd_float4) -> SimdInt4 {
         OZZInt4.fromFloatTrunc(with: _f)
     }
+}
+
+// Returns the x component of _v as an integer.
+func getX(_ _v: _SimdInt4) -> Int32 {
+    OZZInt4.getXWith(_v)
+}
+
+// Returns the y component of _v as a integer.
+func getY(_  _v: _SimdInt4) -> Int32 {
+    OZZInt4.getYWith(_v)
+}
+
+// Returns the z component of _v as a integer.
+func getZ(_  _v: _SimdInt4) -> Int32 {
+    OZZInt4.getZWith(_v)
+}
+
+// Returns the w component of _v as a integer.
+func getW(_  _v: _SimdInt4) -> Int32 {
+    OZZInt4.getWWith(_v)
+}
+
+// Returns _v with the x component set to x component of _i.
+func setX(_  _v: _SimdInt4, _ _i: _SimdInt4) -> SimdInt4 {
+    OZZInt4.setXWith(_v, _i)
+}
+
+// Returns _v with the y component set to x component of _i.
+func setY(_  _v: _SimdInt4, _ _i: _SimdInt4) -> SimdInt4 {
+    OZZInt4.setYWith(_v, _i)
+}
+
+// Returns _v with the z component set to x component of _i.
+func setZ(_  _v: _SimdInt4, _ _i: _SimdInt4) -> SimdInt4 {
+    OZZInt4.setZWith(_v, _i)
+}
+
+// Returns _v with the w component set to x component of _i.
+func setW(_  _v: _SimdInt4, _ _i: _SimdInt4) -> SimdInt4 {
+    OZZInt4.setWWith(_v, _i)
+}
+
+// Returns _v with the _ith component set to _i.
+// _i must be in range [0,3]
+func setI(_  _v: _SimdInt4, _ _i: _SimdInt4, _ _ith: Int32) -> SimdInt4 {
+    OZZInt4.setIWith(_v, _i, _ith)
+}
+
+// Stores the 4 components of _v to the four first integers of _i.
+// _i must be aligned to 16 bytes.
+// _i[0] = _v.x
+// _i[1] = _v.y
+// _i[2] = _v.z
+// _i[3] = _v.w
+func storePtr(_  _v: _SimdInt4, _ _i: inout [Int32]) {
+    OZZInt4.storePtr(with: _v, &_i)
+}
+
+// Stores the x component of _v to the first integers of _i.
+// _i must be aligned to 16 bytes.
+// _i[0] = _v.x
+func store1Ptr(_  _v: _SimdInt4, _ _i: inout [Int32]) {
+    OZZInt4.store1Ptr(with: _v, &_i)
+}
+
+// Stores x and y components of _v to the two first integers of _i.
+// _i must be aligned to 16 bytes.
+// _i[0] = _v.x
+// _i[1] = _v.y
+func store2Ptr(_  _v: _SimdInt4, _ _i: inout [Int32]) {
+    OZZInt4.store2Ptr(with: _v, &_i)
+}
+
+// Stores x, y and z components of _v to the three first integers of _i.
+// _i must be aligned to 16 bytes.
+// _i[0] = _v.x
+// _i[1] = _v.y
+// _i[2] = _v.z
+func store3Ptr(_  _v: _SimdInt4, _ _i: inout [Int32]) {
+    OZZInt4.store3Ptr(with: _v, &_i)
+}
+
+// Stores the 4 components of _v to the four first integers of _i.
+// _i must be aligned to 4 bytes.
+// _i[0] = _v.x
+// _i[1] = _v.y
+// _i[2] = _v.z
+// _i[3] = _v.w
+func storePtrU(_  _v: _SimdInt4, _ _i: inout [Int32]) {
+    OZZInt4.storePtrU(with: _v, &_i)
+}
+
+// Stores the x component of _v to the first float of _i.
+// _i must be aligned to 4 bytes.
+// _i[0] = _v.x
+func store1PtrU(_  _v: _SimdInt4, _ _i: inout [Int32]) {
+    OZZInt4.store1Ptr(with: _v, &_i)
+}
+
+// Stores x and y components of _v to the two first integers of _i.
+// _i must be aligned to 4 bytes.
+// _i[0] = _v.x
+// _i[1] = _v.y
+func store2PtrU(_  _v: _SimdInt4, _ _i: inout [Int32]) {
+    OZZInt4.store2PtrU(with: _v, &_i)
+}
+
+// Stores x, y and z components of _v to the three first integers of _i.
+// _i must be aligned to 4 bytes.
+// _i[0] = _v.x
+// _i[1] = _v.y
+// _i[2] = _v.z
+func store3PtrU(_  _v: _SimdInt4, _ _i: inout [Int32]) {
+    OZZInt4.store3PtrU(with: _v, &_i)
+}
+
+// Replicates x of _a to all the components of the returned vector.
+func splatX(_  _v: _SimdInt4) -> SimdInt4 {
+    OZZInt4.splatX(with: _v)
+}
+
+// Replicates y of _a to all the components of the returned vector.
+func splatY(_  _v: _SimdInt4) -> SimdInt4 {
+    OZZInt4.splatY(with: _v)
+}
+
+// Replicates z of _a to all the components of the returned vector.
+func splatZ(_  _v: _SimdInt4) -> SimdInt4 {
+    OZZInt4.splatZ(with: _v)
+}
+
+// Replicates w of _a to all the components of the returned vector.
+func splatW(_  _v: _SimdInt4) -> SimdInt4 {
+    OZZInt4.splatW(with: _v)
+}
+
+// Swizzle x, y, z and w components based on compile time arguments _X, _Y, _Z
+// and _W. Arguments can vary from 0 (x), to 3 (w).
+func swizzle0123(_ _v: _SimdInt4) -> SimdInt4 {
+    OZZInt4.swizzle0123(with: _v)
+}
+
+// Creates a 4-bit mask from the most significant bits of each component of _v.
+// i := sign(a3)<<3 | sign(a2)<<2 | sign(a1)<<1 | sign(a0)
+func moveMask(_ _v: _SimdInt4) -> Int32 {
+    OZZInt4.moveMask(with: _v)
+}
+
+// Returns true if all the components of _v are not 0.
+func areAllTrue(_ _v: _SimdInt4) -> Bool {
+    OZZInt4.areAllTrue(with: _v)
+}
+
+// Returns true if x, y and z components of _v are not 0.
+func areAllTrue3(_ _v: _SimdInt4) -> Bool {
+    OZZInt4.areAllTrue3(with: _v)
+}
+
+// Returns true if x and y components of _v are not 0.
+func areAllTrue2(_ _v: _SimdInt4) -> Bool {
+    OZZInt4.areAllTrue2(with: _v)
+}
+
+// Returns true if x component of _v is not 0.
+func areAllTrue1(_ _v: _SimdInt4) -> Bool {
+    OZZInt4.areAllTrue1(with: _v)
+}
+
+// Returns true if all the components of _v are 0.
+func areAllFalse(_ _v: _SimdInt4) -> Bool {
+    OZZInt4.areAllFalse(with: _v)
+}
+
+// Returns true if x, y and z components of _v are 0.
+func areAllFalse3(_ _v: _SimdInt4) -> Bool {
+    OZZInt4.areAllFalse3(with: _v)
+}
+
+// Returns true if x and y components of _v are 0.
+func areAllFalse2(_ _v: _SimdInt4) -> Bool {
+    OZZInt4.areAllFalse2(with: _v)
+}
+
+// Returns true if x component of _v is 0.
+func areAllFalse1(_ _v: _SimdInt4) -> Bool {
+    OZZInt4.areAllFalse1(with: _v)
+}
+
+// Computes the (horizontal) addition of x and y components of _v. The result is
+// stored in the x component of the returned value. y, z, w of the returned
+// vector are the same as their respective components in _v.
+// r.x = _a.x + _a.y
+// r.y = _a.y
+// r.z = _a.z
+// r.w = _a.w
+func hAdd2(_ _v: _SimdInt4) -> SimdInt4 {
+    OZZInt4.hAdd2(with: _v)
+}
+
+// Computes the (horizontal) addition of x, y and z components of _v. The result
+// is stored in the x component of the returned value. y, z, w of the returned
+// vector are the same as their respective components in _v.
+// r.x = _a.x + _a.y + _a.z
+// r.y = _a.y
+// r.z = _a.z
+// r.w = _a.w
+func hAdd3(_ _v: _SimdInt4) -> SimdInt4 {
+    OZZInt4.hAdd3(with: _v)
+}
+
+// Computes the (horizontal) addition of x and y components of _v. The result is
+// stored in the x component of the returned value. y, z, w of the returned
+// vector are the same as their respective components in _v.
+// r.x = _a.x + _a.y + _a.z + _a.w
+// r.y = _a.y
+// r.z = _a.z
+// r.w = _a.w
+func hAdd4(_ _v: _SimdInt4) -> SimdInt4 {
+    OZZInt4.hAdd4(with: _v)
+}
+
+// Returns the per element absolute value of _v.
+func abs(_ _v: _SimdInt4) -> SimdInt4 {
+    OZZInt4.abs(with: _v)
+}
+
+// Returns the sign bit of _v.
+func sign(_ _v: _SimdInt4) -> SimdInt4 {
+    OZZInt4.sign(with: _v)
+}
+
+// Returns the per component minimum of _a and _b.
+func min(_ _a: _SimdInt4, _ _b: _SimdInt4) -> SimdInt4 {
+    OZZInt4.min(with: _a, _b)
+}
+
+// Returns the per component maximum of _a and _b.
+func max(_ _a: _SimdInt4, _ _b: _SimdInt4) -> SimdInt4 {
+    OZZInt4.max(with: _a, _b)
+}
+
+// Returns the per component minimum of _v and 0.
+func min0(_ _v: _SimdInt4) -> SimdInt4 {
+    OZZInt4.min0(with: _v)
+}
+
+// Returns the per component maximum of _v and 0.
+func max0(_ _v: _SimdInt4) -> SimdInt4 {
+    OZZInt4.max0(with: _v)
+}
+
+// Clamps each element of _x between _a and _b.
+// Result is unknown if _a is not less or equal to _b.
+func clamp(_ _a: _SimdInt4, _ _v: _SimdInt4, _ _b: _SimdInt4) -> SimdInt4 {
+    OZZInt4.clamp(with: _a, _v, _b)
+}
+
+// Returns boolean selection of vectors _true and _false according to consition
+// _b. All bits a each component of _b must have the same value (O or
+// 0xffffffff) to ensure portability.
+func select(_ _b: _SimdInt4, _true: _SimdInt4, _false: _SimdInt4) -> SimdInt4 {
+    OZZInt4.select(with: _b, _true, _false)
+}
+
+// Returns per element binary and operation of _a and _b.
+// _v[0...127] = _a[0...127] & _b[0...127]
+func and(_ _a: _SimdInt4, _ _b: _SimdInt4) -> SimdInt4 {
+    OZZInt4.and(with: _a, _b)
+}
+
+// Returns per element binary and operation of _a and ~_b.
+// _v[0...127] = _a[0...127] & ~_b[0...127]
+func andNot(_ _a: _SimdInt4, _ _b: _SimdInt4) -> SimdInt4 {
+    OZZInt4.andNot(with: _a, _b)
+}
+
+// Returns per element binary or operation of _a and _b.
+// _v[0...127] = _a[0...127] | _b[0...127]
+func or(_ _a: _SimdInt4, _ _b: _SimdInt4) -> SimdInt4 {
+    OZZInt4.or(with: _a, _b)
+}
+
+// Returns per element binary logical xor operation of _a and _b.
+// _v[0...127] = _a[0...127] ^ _b[0...127]
+func xor(_ _a: _SimdInt4, _ _b: _SimdInt4) -> SimdInt4 {
+    OZZInt4.xor(with: _a, _b)
+}
+
+// Returns per element binary complement of _v.
+// _v[0...127] = ~_b[0...127]
+func not(_ _v: _SimdInt4) -> SimdInt4 {
+    OZZInt4.not(with: _v)
+}
+
+// Shifts the 4 signed or unsigned 32-bit integers in a left by count _bits
+// while shifting in zeros.
+func shiftL(_ _v: _SimdInt4, _ _bits: Int32) -> SimdInt4 {
+    OZZInt4.shiftL(with: _v, _bits)
+}
+
+// Shifts the 4 signed 32-bit integers in a right by count bits while shifting
+// in the sign bit.
+func shiftR(_ _v: _SimdInt4, _ _bits: Int32) -> SimdInt4 {
+    OZZInt4.shiftR(with: _v, _bits)
+}
+
+// Shifts the 4 signed or unsigned 32-bit integers in a right by count bits
+// while shifting in zeros.
+func shiftRu(_ _v: _SimdInt4, _ _bits: Int32) -> SimdInt4 {
+    OZZInt4.shiftRu(with: _v, _bits)
+}
+
+// Per element "equal" comparison of _a and _b.
+func cmpEq(_ _a: _SimdInt4, _ _b: _SimdInt4) -> SimdInt4 {
+    OZZInt4.cmpEq(with: _a, _b)
+}
+
+// Per element "not equal" comparison of _a and _b.
+func cmpNe(_ _a: _SimdInt4, _ _b: _SimdInt4) -> SimdInt4 {
+    OZZInt4.cmpNe(with: _a, _b)
+}
+
+// Per element "less than" comparison of _a and _b.
+func cmpLt(_ _a: _SimdInt4, _ _b: _SimdInt4) -> SimdInt4 {
+    OZZInt4.cmpLt(with: _a, _b)
+}
+
+// Per element "less than or equal" comparison of _a and _b.
+func cmpLe(_ _a: _SimdInt4, _ _b: _SimdInt4) -> SimdInt4 {
+    OZZInt4.cmpLe(with: _a, _b)
+}
+
+// Per element "greater than" comparison of _a and _b.
+func cmpGt(_ _a: _SimdInt4, _ _b: _SimdInt4) -> SimdInt4 {
+    OZZInt4.cmpGt(with: _a, _b)
+}
+
+// Per element "greater than or equal" comparison of _a and _b.
+func cmpGe(_ _a: _SimdInt4, _ _b: _SimdInt4) -> SimdInt4 {
+    OZZInt4.cmpGe(with: _a, _b)
 }
 
 //MARK: - Math
