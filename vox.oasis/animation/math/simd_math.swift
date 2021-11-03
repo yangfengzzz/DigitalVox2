@@ -990,7 +990,7 @@ extension simd_float4x4 {
 
 /// Returns the transpose of matrix _m.
 func transpose(_ _m: simd_float4x4) -> simd_float4x4 {
-    OZZFloat4x4.transpose(with: _m);
+    OZZFloat4x4.transpose(with: _m)
 }
 
 /// Returns the inverse of matrix _m.
@@ -1070,6 +1070,268 @@ func transformPoint(_ _m: simd_float4x4, _ _v: simd_float4) -> simd_float4 {
 /// of 0.
 func transformVector(_ _m: simd_float4x4, _ _v: simd_float4) -> simd_float4 {
     OZZFloat4x4.transformVector(with: _m, _v)
+}
+
+//MARK: - SimdInt4
+extension SimdInt4 {
+    // Returns a SimdInt4 vector with all components set to 0.
+    static func zero() -> SimdInt4 {
+        OZZInt4.zero()
+    }
+
+    // Returns a SimdInt4 vector with all components set to 1.
+    static func one() -> SimdInt4 {
+        OZZInt4.one()
+    }
+
+    // Returns a SimdInt4 vector with the x component set to 1 and all the others
+    // to 0.
+    static func x_axis() -> SimdInt4 {
+        OZZInt4.x_axis()
+    }
+
+    // Returns a SimdInt4 vector with the y component set to 1 and all the others
+    // to 0.
+    static func y_axis() -> SimdInt4 {
+        OZZInt4.y_axis()
+    }
+
+    // Returns a SimdInt4 vector with the z component set to 1 and all the others
+    // to 0.
+    static func z_axis() -> SimdInt4 {
+        OZZInt4.z_axis()
+    }
+
+    // Returns a SimdInt4 vector with the w component set to 1 and all the others
+    // to 0.
+    static func w_axis() -> SimdInt4 {
+        OZZInt4.w_axis()
+    }
+
+    // Returns a SimdInt4 vector with all components set to true (0xffffffff).
+    static func all_true() -> SimdInt4 {
+        OZZInt4.all_true()
+    }
+
+    // Returns a SimdInt4 vector with all components set to false (0).
+    static func all_false() -> SimdInt4 {
+        OZZInt4.all_false()
+    }
+
+    // Returns a SimdInt4 vector with sign bits set to 1.
+    static func mask_sign() -> SimdInt4 {
+        OZZInt4.mask_sign()
+    }
+
+    // Returns a SimdInt4 vector with all bits set to 1 except sign.
+    static func mask_not_sign() -> SimdInt4 {
+        OZZInt4.mask_not_sign()
+    }
+
+    // Returns a SimdInt4 vector with sign bits of x, y and z components set to 1.
+    static func mask_sign_xyz() -> SimdInt4 {
+        OZZInt4.mask_sign_xyz()
+    }
+
+    // Returns a SimdInt4 vector with sign bits of w component set to 1.
+    static func mask_sign_w() -> SimdInt4 {
+        OZZInt4.mask_sign_w()
+    }
+
+    // Returns a SimdInt4 vector with all bits set to 1.
+    static func mask_ffff() -> SimdInt4 {
+        OZZInt4.mask_ffff()
+    }
+
+    // Returns a SimdInt4 vector with all bits set to 0.
+    static func mask_0000() -> SimdInt4 {
+        OZZInt4.mask_0000()
+    }
+
+    // Returns a SimdInt4 vector with all the bits of the x, y, z components set to
+    // 1, while z is set to 0.
+    static func mask_fff0() -> SimdInt4 {
+        OZZInt4.mask_fff0()
+    }
+
+    // Returns a SimdInt4 vector with all the bits of the x component set to 1,
+    // while the others are set to 0.
+    static func mask_f000() -> SimdInt4 {
+        OZZInt4.mask_f000()
+    }
+
+    // Returns a SimdInt4 vector with all the bits of the y component set to 1,
+    // while the others are set to 0.
+    static func mask_0f00() -> SimdInt4 {
+        OZZInt4.mask_0f00()
+    }
+
+    // Returns a SimdInt4 vector with all the bits of the z component set to 1,
+    // while the others are set to 0.
+    static func mask_00f0() -> SimdInt4 {
+        OZZInt4.mask_00f0()
+    }
+
+    // Returns a SimdInt4 vector with all the bits of the w component set to 1,
+    // while the others are set to 0.
+    static func mask_000f() -> SimdInt4 {
+        OZZInt4.mask_000f()
+    }
+
+    // Loads _x, _y, _z, _w to the returned vector.
+    // r.x = _x
+    // r.y = _y
+    // r.z = _z
+    // r.w = _w
+    static func load(_  _x: Int, _   _y: Int, _  _z: Int, _  _w: Int) -> SimdInt4 {
+        OZZInt4.load(with: Int32(_x), Int32(_y), Int32(_z), Int32(_w))
+    }
+
+    // Loads _x, _y, _z, _w to the returned vector using the following conversion
+    // rule.
+    // r.x = _x ? 0xffffffff:0
+    // r.y = _y ? 0xffffffff:0
+    // r.z = _z ? 0xffffffff:0
+    // r.w = _w ? 0xffffffff:0
+    static func load(_  _x: Bool, _  _y: Bool, _  _z: Bool, _  _w: Bool) -> SimdInt4 {
+        OZZInt4.load(with: _x, _y, _z, _w)
+    }
+
+    // Loads _x to the x component of the returned vector using the following
+    // conversion rule, and sets y, z and w to 0.
+    // r.x = _x ? 0xffffffff:0
+    // r.y = 0
+    // r.z = 0
+    // r.w = 0
+    static func loadX(_ _x: Bool) -> SimdInt4 {
+        OZZInt4.loadX(with: _x)
+    }
+
+    // Loads _x to the all the components of the returned vector using the following
+    // conversion rule.
+    // r.x = _x ? 0xffffffff:0
+    // r.y = _x ? 0xffffffff:0
+    // r.z = _x ? 0xffffffff:0
+    // r.w = _x ? 0xffffffff:0
+    static func load1(_ _x: Bool) -> SimdInt4 {
+        OZZInt4.load1(with: _x)
+    }
+
+    // Loads the 4 values of _f to the returned vector.
+    // _i must be aligned to 16 bytes.
+    // r.x = _i[0]
+    // r.y = _i[1]
+    // r.z = _i[2]
+    // r.w = _i[3]
+    static func loadPtr(_ _i: inout [Int32]) -> SimdInt4 {
+        OZZInt4.loadPtr(with: &_i)
+    }
+
+    // Loads _i[0] to the x component of the returned vector, and sets y, z and w
+    // to 0.
+    // _i must be aligned to 16 bytes.
+    // r.x = _i[0]
+    // r.y = 0
+    // r.z = 0
+    // r.w = 0
+    static func loadXPtr(_ _i: inout [Int32]) -> SimdInt4 {
+        OZZInt4.loadXPtr(with: &_i)
+    }
+
+    // Loads _i[0] to all the components of the returned vector.
+    // _i must be aligned to 16 bytes.
+    // r.x = _i[0]
+    // r.y = _i[0]
+    // r.z = _i[0]
+    // r.w = _i[0]
+    static func load1Ptr(_ _i: inout [Int32]) -> SimdInt4 {
+        OZZInt4.load1Ptr(with: &_i)
+    }
+
+    // Loads the 2 first value of _i to the x and y components of the returned
+    // vector. The remaining components are set to 0.
+    // _f must be aligned to 4 bytes.
+    // r.x = _i[0]
+    // r.y = _i[1]
+    // r.z = 0
+    // r.w = 0
+    static func load2Ptr(_ _i: inout [Int32]) -> SimdInt4 {
+        OZZInt4.load2Ptr(with: &_i)
+    }
+
+    // Loads the 3 first value of _i to the x, y and z components of the returned
+    // vector. The remaining components are set to 0.
+    // _f must be aligned to 16 bytes.
+    // r.x = _i[0]
+    // r.y = _i[1]
+    // r.z = _i[2]
+    // r.w = 0
+    static func load3Ptr(_ _i: inout [Int32]) -> SimdInt4 {
+        OZZInt4.load3Ptr(with: &_i)
+    }
+
+    // Loads the 4 values of _f to the returned vector.
+    // _i must be aligned to 16 bytes.
+    // r.x = _i[0]
+    // r.y = _i[1]
+    // r.z = _i[2]
+    // r.w = _i[3]
+    static func loadPtrU(_ _i: inout [Int32]) -> SimdInt4 {
+        OZZInt4.loadPtrU(with: &_i)
+    }
+
+    // Loads _i[0] to the x component of the returned vector, and sets y, z and w
+    // to 0.
+    // _f must be aligned to 4 bytes.
+    // r.x = _i[0]
+    // r.y = 0
+    // r.z = 0
+    // r.w = 0
+    static func loadXPtrU(_ _i: inout [Int32]) -> SimdInt4 {
+        OZZInt4.loadXPtrU(with: &_i)
+    }
+
+    // Loads the 4 values of _i to the returned vector.
+    // _i must be aligned to 4 bytes.
+    // r.x = _i[0]
+    // r.y = _i[0]
+    // r.z = _i[0]
+    // r.w = _i[0]
+    static func load1PtrU(_ _i: inout [Int32]) -> SimdInt4 {
+        OZZInt4.load1PtrU(with: &_i)
+    }
+
+    // Loads the 2 first value of _i to the x and y components of the returned
+    // vector. The remaining components are set to 0.
+    // _f must be aligned to 4 bytes.
+    // r.x = _i[0]
+    // r.y = _i[1]
+    // r.z = 0
+    // r.w = 0
+    static func load2PtrU(_ _i: inout [Int32]) -> SimdInt4 {
+        OZZInt4.load2PtrU(with: &_i)
+    }
+
+    // Loads the 3 first value of _i to the x, y and z components of the returned
+    // vector. The remaining components are set to 0.
+    // _f must be aligned to 4 bytes.
+    // r.x = _i[0]
+    // r.y = _i[1]
+    // r.z = _i[2]
+    // r.w = 0
+    static func load3PtrU(_ _i: inout [Int32]) -> SimdInt4 {
+        OZZInt4.load3PtrU(with: &_i)
+    }
+
+    // Convert from float to integer by rounding the nearest value.
+    static func fromFloatRound(_ _f: simd_float4) -> SimdInt4 {
+        OZZInt4.fromFloatRound(with: _f)
+    }
+
+    // Convert from float to integer by truncating.
+    static func fromFloatTrunc(_ _f: simd_float4) -> SimdInt4 {
+        OZZInt4.fromFloatTrunc(with: _f)
+    }
 }
 
 //MARK: - Math
