@@ -314,6 +314,7 @@
 		04CB88CE27321C2000B0E398 /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88CD27321C2000B0E398 /* Animator.swift */; };
 		04CB88EC27326C9900B0E398 /* simd_math.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88DE27326C9900B0E398 /* simd_math.mm */; };
 		04CB88EE27326EE400B0E398 /* simd_math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88D727326C9900B0E398 /* simd_math.swift */; };
+		04CB88F027328CC300B0E398 /* soa_float.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88D927326C9900B0E398 /* soa_float.swift */; };
 		04EA0D6A26E0F9AD00CA7833 /* math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6926E0F9AD00CA7833 /* math.swift */; };
 		04EA0D6C26E1204200CA7833 /* bbox2f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6B26E1204200CA7833 /* bbox2f.swift */; };
 		04EA0D6E26E1204F00CA7833 /* bbox3f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6D26E1204F00CA7833 /* bbox3f.swift */; };
@@ -754,6 +755,7 @@
 		04CB88DE27326C9900B0E398 /* simd_math.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = simd_math.mm; sourceTree = "<group>"; };
 		04CB88DF27326C9900B0E398 /* simd_math.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simd_math.h; sourceTree = "<group>"; };
 		04CB88E027326C9900B0E398 /* vec_transform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = vec_transform.swift; sourceTree = "<group>"; };
+		04CB88EF27328C3F00B0E398 /* soa_float.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = soa_float.h; sourceTree = "<group>"; };
 		04DB2A4126DF1E0500C15850 /* IClone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IClone.swift; sourceTree = "<group>"; };
 		04DBA7D92700B32D00C3B97C /* EngineFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineFeature.swift; sourceTree = "<group>"; };
 		04DBA7DB2700B3C900C3B97C /* SceneFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneFeature.swift; sourceTree = "<group>"; };
@@ -1643,14 +1645,15 @@
 				04CB88DF27326C9900B0E398 /* simd_math.h */,
 				04CB88DE27326C9900B0E398 /* simd_math.mm */,
 				04CB88D727326C9900B0E398 /* simd_math.swift */,
-				04CB88D227326C9800B0E398 /* box.swift */,
-				04CB88D327326C9900B0E398 /* decimate.swift */,
-				04CB88DB27326C9900B0E398 /* rect.swift */,
-				04CB88D527326C9900B0E398 /* simd_quaternion.swift */,
+				04CB88EF27328C3F00B0E398 /* soa_float.h */,
 				04CB88D927326C9900B0E398 /* soa_float.swift */,
 				04CB88D427326C9900B0E398 /* soa_float4x4.swift */,
 				04CB88DC27326C9900B0E398 /* soa_quaternion.swift */,
 				04CB88DA27326C9900B0E398 /* soa_transform.swift */,
+				04CB88D227326C9800B0E398 /* box.swift */,
+				04CB88D327326C9900B0E398 /* decimate.swift */,
+				04CB88DB27326C9900B0E398 /* rect.swift */,
+				04CB88D527326C9900B0E398 /* simd_quaternion.swift */,
 				04CB88D827326C9900B0E398 /* vec_float.swift */,
 				04CB88D627326C9900B0E398 /* vec_quaternion.swift */,
 				04CB88E027326C9900B0E398 /* vec_transform.swift */,
@@ -2229,6 +2232,7 @@
 				041BAE03272A500F006268D5 /* Transform.swift in Sources */,
 				041BAE2C272A50E6006268D5 /* BoundingFrustum.swift in Sources */,
 				041BAE3C272A50E6006268D5 /* BoundingSphere.swift in Sources */,
+				04CB88F027328CC300B0E398 /* soa_float.swift in Sources */,
 				041BAE73272A5117006268D5 /* LightShadow.swift in Sources */,
 				041BAE15272A500F006268D5 /* UpdateFlagManager.swift in Sources */,
 				041BAE9F272A5141006268D5 /* BoxColliderShape.swift in Sources */,
