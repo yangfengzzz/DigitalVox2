@@ -319,6 +319,7 @@
 		04CB88F32732937100B0E398 /* soa_float4x4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88D427326C9900B0E398 /* soa_float4x4.swift */; };
 		04CB88F42732953E00B0E398 /* soa_transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88DA27326C9900B0E398 /* soa_transform.swift */; };
 		04CB88F52732AE0000B0E398 /* simd_quaternion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88D527326C9900B0E398 /* simd_quaternion.swift */; };
+		04CB88F62732AF5A00B0E398 /* vec_float.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88D827326C9900B0E398 /* vec_float.swift */; };
 		04EA0D6A26E0F9AD00CA7833 /* math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6926E0F9AD00CA7833 /* math.swift */; };
 		04EA0D6C26E1204200CA7833 /* bbox2f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6B26E1204200CA7833 /* bbox2f.swift */; };
 		04EA0D6E26E1204F00CA7833 /* bbox3f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6D26E1204F00CA7833 /* bbox3f.swift */; };
@@ -1659,8 +1660,8 @@
 				04CB88D627326C9900B0E398 /* vec_quaternion.swift */,
 				04CB88E027326C9900B0E398 /* vec_transform.swift */,
 				04CB88D227326C9800B0E398 /* box.swift */,
-				04CB88D327326C9900B0E398 /* decimate.swift */,
 				04CB88DB27326C9900B0E398 /* rect.swift */,
+				04CB88D327326C9900B0E398 /* decimate.swift */,
 			);
 			path = math;
 			sourceTree = "<group>";
@@ -2076,6 +2077,7 @@
 				041BAE2F272A50E6006268D5 /* ContainmentType.swift in Sources */,
 				041BAEF0272B6F74006268D5 /* CPxPlaneGeometry.mm in Sources */,
 				041BAF01272B76F7006268D5 /* CPxRigidActor.mm in Sources */,
+				04CB88F62732AF5A00B0E398 /* vec_float.swift in Sources */,
 				041BAE13272A500F006268D5 /* UpdateFlag.swift in Sources */,
 				041BAE1B272A5046006268D5 /* particle.metal in Sources */,
 				041BAF0C272B823A006268D5 /* PhysXStaticCollider.swift in Sources */,
