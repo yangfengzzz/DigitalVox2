@@ -266,7 +266,7 @@ func dot(_ _a: VecQuaternion, _ _b: VecQuaternion) -> Float {
 
 // Returns the linear interpolation of quaternion _a and _b with coefficient
 // _f.
-func lerp(_ _a: VecQuaternion, _ _b: VecQuaternion, _f: Float) -> VecQuaternion {
+func lerp(_ _a: VecQuaternion, _ _b: VecQuaternion, _ _f: Float) -> VecQuaternion {
     VecQuaternion((_b.x - _a.x) * _f + _a.x, (_b.y - _a.y) * _f + _a.y,
             (_b.z - _a.z) * _f + _a.z, (_b.w - _a.w) * _f + _a.w)
 }

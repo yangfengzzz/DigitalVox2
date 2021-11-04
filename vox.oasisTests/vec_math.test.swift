@@ -17,7 +17,7 @@ class VecMathTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    //MARK: - Vec Float
+    //MARK: - Vec Float(Done)
     func testVectorLoad4() throws {
         EXPECT_FLOAT4_EQ(VecFloat4(46.0), 46.0, 46.0, 46.0, 46.0)
         EXPECT_FLOAT4_EQ(VecFloat4(-1.0, 0.0, 1.0, 2.0), -1.0, 0.0, 1.0, 2.0)
@@ -351,7 +351,7 @@ class VecMathTests: XCTestCase {
         XCTAssertFalse(compare(c, d, 0.05))
     }
 
-    //MARK: - Vec Quaternion
+    //MARK: - Vec Quaternion(Done)
     func testQuaternionConstant() {
         EXPECT_QUATERNION_EQ(VecQuaternion.identity(), 0.0, 0.0, 0.0, 1.0)
     }
@@ -454,5 +454,168 @@ class VecMathTests: XCTestCase {
 
         // Non-unit opposed vectors
         EXPECT_QUATERNION_EQ(VecQuaternion.fromVectors(VecFloat3(2.0, 2.0, 2.0), -VecFloat3(2.0, 2.0, 2.0)), 0.0, -0.707106769, 0.707106769, 0)
+    }
+
+    func testQuaternionFromUnitVectors() {
+        // pi/2 around y
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromUnitVectors(VecFloat3.z_axis(), VecFloat3.x_axis()), 0.0, 0.707106769, 0.0, 0.707106769)
+
+        // Minus pi/2 around y
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromUnitVectors(VecFloat3.x_axis(), VecFloat3.z_axis()), 0.0, -0.707106769, 0.0, 0.707106769)
+
+        // pi/2 around x
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromUnitVectors(VecFloat3.y_axis(), VecFloat3.z_axis()), 0.707106769, 0.0, 0.0, 0.707106769)
+
+        // pi/2 around z
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromUnitVectors(VecFloat3.x_axis(), VecFloat3.y_axis()), 0.0, 0.0, 0.707106769, 0.707106769)
+
+        // pi/2 around z also
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromUnitVectors(VecFloat3(0.707106769, 0.707106769, 0.0), VecFloat3(-0.707106769, 0.707106769, 0.0)), 0.0, 0.0, 0.707106769, 0.707106769)
+
+        // Aligned vectors
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromUnitVectors(VecFloat3.x_axis(), VecFloat3.x_axis()), 0.0, 0.0, 0.0, 1.0)
+
+        // Opposed vectors
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromUnitVectors(VecFloat3.x_axis(), -VecFloat3.x_axis()), 0.0, 1.0, 0.0, 0)
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromUnitVectors(-VecFloat3.x_axis(), VecFloat3.x_axis()), 0.0, -1.0, 0.0, 0)
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromUnitVectors(VecFloat3.y_axis(), -VecFloat3.y_axis()), 0.0, 0.0, 1.0, 0)
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromUnitVectors(-VecFloat3.y_axis(), VecFloat3.y_axis()), 0.0, 0.0, -1.0, 0)
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromUnitVectors(VecFloat3.z_axis(), -VecFloat3.z_axis()), 0.0, -1.0, 0.0, 0)
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromUnitVectors(-VecFloat3.z_axis(), VecFloat3.z_axis()), 0.0, 1.0, 0.0, 0)
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromUnitVectors(VecFloat3(0.707106769, 0.707106769, 0.0), -VecFloat3(0.707106769, 0.707106769, 0.0)), -0.707106769, 0.707106769, 0.0, 0)
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromUnitVectors(VecFloat3(0.0, 0.707106769, 0.707106769), -VecFloat3(0.0, 0.707106769, 0.707106769)), 0.0, -0.707106769, 0.707106769, 0)
+    }
+
+    func testQuaternionCompare() {
+        XCTAssertTrue(VecQuaternion.identity() == VecQuaternion(0.0, 0.0, 0.0, 1.0))
+        XCTAssertTrue(VecQuaternion.identity() != VecQuaternion(1.0, 0.0, 0.0, 0.0))
+        XCTAssertTrue(compare(VecQuaternion.identity(), VecQuaternion.identity(), cos(0.5 * 0.0)))
+        XCTAssertTrue(compare(VecQuaternion.identity(), VecQuaternion.fromEuler(0.0, 0.0, kPi / 100.0), cos(0.5 * kPi / 50.0)))
+        XCTAssertTrue(compare(VecQuaternion.identity(), -VecQuaternion.fromEuler(0.0, 0.0, kPi / 100.0), cos(0.5 * kPi / 50.0)))
+        XCTAssertFalse(compare(VecQuaternion.identity(), VecQuaternion.fromEuler(0.0, 0.0, kPi / 100.0), cos(0.5 * kPi / 200.0)))
+    }
+
+    func testQuaternionArithmetic() {
+        let a = VecQuaternion(0.70710677, 0.0, 0.0, 0.70710677)
+        let b = VecQuaternion(0.0, 0.70710677, 0.0, 0.70710677)
+        let c = VecQuaternion(0.0, 0.70710677, 0.0, -0.70710677)
+        let denorm = VecQuaternion(1.414212, 0.0, 0.0, 1.414212)
+
+        XCTAssertTrue(isNormalized(a))
+        XCTAssertTrue(isNormalized(b))
+        XCTAssertTrue(isNormalized(c))
+        XCTAssertFalse(isNormalized(denorm))
+
+        let conjugate = conjugate(a)
+        EXPECT_QUATERNION_EQ(conjugate, -a.x, -a.y, -a.z, a.w)
+        XCTAssertTrue(isNormalized(conjugate))
+
+        let negate = -a
+        EXPECT_QUATERNION_EQ(negate, -a.x, -a.y, -a.z, -a.w)
+        XCTAssertTrue(isNormalized(negate))
+
+        let add = a + b
+        EXPECT_QUATERNION_EQ(add, 0.70710677, 0.70710677, 0.0, 1.41421354)
+
+        let mul0 = a * conjugate
+        EXPECT_QUATERNION_EQ(mul0, 0.0, 0.0, 0.0, 1.0)
+        XCTAssertTrue(isNormalized(mul0))
+
+        let muls = a * 2.0
+        EXPECT_QUATERNION_EQ(muls, 1.41421354, 0.0, 0.0, 1.41421354)
+
+        let mul1 = conjugate * a
+        EXPECT_QUATERNION_EQ(mul1, 0.0, 0.0, 0.0, 1.0)
+        XCTAssertTrue(isNormalized(mul1))
+
+        let q1234 = VecQuaternion(1.0, 2.0, 3.0, 4.0)
+        let q5678 = VecQuaternion(5.0, 6.0, 7.0, 8.0)
+        let mul12345678 = q1234 * q5678
+        EXPECT_QUATERNION_EQ(mul12345678, 24.0, 48.0, 48.0, -6.0)
+
+        let normalize = normalize(denorm)
+        XCTAssertTrue(isNormalized(normalize))
+        EXPECT_QUATERNION_EQ(normalize, 0.7071068, 0.0, 0.0, 0.7071068)
+
+        let normalize_safe = normalizeSafe(denorm, VecQuaternion.identity())
+        XCTAssertTrue(isNormalized(normalize_safe))
+        EXPECT_QUATERNION_EQ(normalize_safe, 0.7071068, 0.0, 0.0, 0.7071068)
+
+        let normalize_safer = normalizeSafe(VecQuaternion(0.0, 0.0, 0.0, 0.0), VecQuaternion.identity())
+        XCTAssertTrue(isNormalized(normalize_safer))
+        EXPECT_QUATERNION_EQ(normalize_safer, 0.0, 0.0, 0.0, 1.0)
+
+        let lerp_0 = lerp(a, b, 0.0)
+        EXPECT_QUATERNION_EQ(lerp_0, a.x, a.y, a.z, a.w)
+
+        let lerp_1 = lerp(a, b, 1.0)
+        EXPECT_QUATERNION_EQ(lerp_1, b.x, b.y, b.z, b.w)
+
+        let lerp_0_2 = lerp(a, b, 0.2)
+        EXPECT_QUATERNION_EQ(lerp_0_2, 0.5656853, 0.1414213, 0.0, 0.7071068)
+
+        let nlerp_0 = nlerp(a, b, 0.0)
+        XCTAssertTrue(isNormalized(nlerp_0))
+        EXPECT_QUATERNION_EQ(nlerp_0, a.x, a.y, a.z, a.w)
+
+        let nlerp_1 = nlerp(a, b, 1.0)
+        XCTAssertTrue(isNormalized(nlerp_1))
+        EXPECT_QUATERNION_EQ(nlerp_1, b.x, b.y, b.z, b.w)
+
+        let nlerp_0_2 = nlerp(a, b, 0.2)
+        XCTAssertTrue(isNormalized(nlerp_0_2))
+        EXPECT_QUATERNION_EQ(nlerp_0_2, 0.6172133, 0.1543033, 0.0, 0.7715167)
+
+        let slerp_0 = slerp(a, b, 0.0)
+        XCTAssertTrue(isNormalized(slerp_0))
+        EXPECT_QUATERNION_EQ(slerp_0, a.x, a.y, a.z, a.w)
+
+        let slerp_c_0 = slerp(a, c, 0.0)
+        XCTAssertTrue(isNormalized(slerp_c_0))
+        EXPECT_QUATERNION_EQ(slerp_c_0, a.x, a.y, a.z, a.w)
+
+        let slerp_c_1 = slerp(a, c, 1.0)
+        XCTAssertTrue(isNormalized(slerp_c_1))
+        EXPECT_QUATERNION_EQ(slerp_c_1, c.x, c.y, c.z, c.w)
+
+        let slerp_c_0_6 = slerp(a, c, 0.6)
+        XCTAssertTrue(isNormalized(slerp_c_0_6))
+        EXPECT_QUATERNION_EQ(slerp_c_0_6, 0.6067752, 0.7765344, 0.0, -0.1697592)
+
+        let slerp_1 = slerp(a, b, 1.0)
+        XCTAssertTrue(isNormalized(slerp_1))
+        EXPECT_QUATERNION_EQ(slerp_1, b.x, b.y, b.z, b.w)
+
+        let slerp_0_2 = slerp(a, b, 0.2)
+        XCTAssertTrue(isNormalized(slerp_0_2))
+        EXPECT_QUATERNION_EQ(slerp_0_2, 0.6067752, 0.1697592, 0.0, 0.7765344)
+
+        let slerp_0_7 = slerp(a, b, 0.7)
+        XCTAssertTrue(isNormalized(slerp_0_7))
+        EXPECT_QUATERNION_EQ(slerp_0_7, 0.2523113, 0.5463429, 0.0, 0.798654)
+
+        let dot = dot(a, b)
+        XCTAssertEqual(dot, 0.5, accuracy: 1.0e-5)
+    }
+
+    func testQuaternionTransformVector() {
+        // 0 length
+        EXPECT_FLOAT3_EQ(transformVector(VecQuaternion.fromAxisAngle(VecFloat3.y_axis(), 0.0), VecFloat3.zero()), 0, 0, 0)
+
+        // Unit length
+        EXPECT_FLOAT3_EQ(transformVector(VecQuaternion.fromAxisAngle(VecFloat3.y_axis(), 0.0), VecFloat3.z_axis()), 0, 0, 1)
+        EXPECT_FLOAT3_EQ(transformVector(VecQuaternion.fromAxisAngle(VecFloat3.y_axis(), kPi_2), VecFloat3.y_axis()), 0, 1, 0)
+        EXPECT_FLOAT3_EQ(transformVector(VecQuaternion.fromAxisAngle(VecFloat3.y_axis(), kPi_2), VecFloat3.x_axis()), 0, 0, -1)
+        EXPECT_FLOAT3_EQ(transformVector(VecQuaternion.fromAxisAngle(VecFloat3.y_axis(), kPi_2), VecFloat3.z_axis()), 1, 0, 0)
+
+        // Non unit
+        EXPECT_FLOAT3_EQ(transformVector(VecQuaternion.fromAxisAngle(VecFloat3.z_axis(), kPi_2), VecFloat3.x_axis() * 2), 0, 2, 0)
+    }
+
+    //MARK: - Vec Transform(Done)
+    func testTransformConstant() {
+        EXPECT_FLOAT3_EQ(VecTransform.identity().translation, 0.0, 0.0, 0.0)
+        EXPECT_QUATERNION_EQ(VecTransform.identity().rotation, 0.0, 0.0, 0.0, 1.0)
+        EXPECT_FLOAT3_EQ(VecTransform.identity().scale, 1.0, 1.0, 1.0)
     }
 }
