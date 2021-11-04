@@ -79,7 +79,7 @@ struct VecFloat3 {
     }
 
     // Returns a vector initialized with _v.x, _v.y and _z values.
-    init(_ _v: VecFloat3, _  _z: Float) {
+    init(_ _v: VecFloat2, _  _z: Float) {
         x = _v.x
         y = _v.y
         z = _z
