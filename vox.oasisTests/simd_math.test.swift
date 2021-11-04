@@ -1231,5 +1231,393 @@ class SimdMathTests: XCTestCase {
     }
 
     //MARK: - simd_float4x4
+    func testFloat4x4Constant() {
+        let identity = simd_float4x4.identity()
+        EXPECT_FLOAT4x4_EQ(identity, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0,
+                1.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+    }
 
+    func testFloat4x4Arithmetic() {
+        let m0 = simd_float4x4(columns: (simd_float4.load(0.0, 1.0, 2.0, 3.0),
+                simd_float4.load(4.0, 5.0, 6.0, 7.0),
+                simd_float4.load(8.0, 9.0, 10.0, 11.0),
+                simd_float4.load(12.0, 13.0, 14.0, 15.0)))
+        let m1 = simd_float4x4(columns: (simd_float4.load(-0.0, -1.0, -2.0, -3.0),
+                simd_float4.load(-4.0, -5.0, -6.0, -7.0),
+                simd_float4.load(-8.0, -9.0, -10.0, -11.0),
+                simd_float4.load(-12.0, -13.0, -14.0, -15.0)))
+        let m2 = simd_float4x4(columns: (simd_float4.load(0.0, -1.0, 2.0, 3.0),
+                simd_float4.load(-4.0, 5.0, 6.0, -7.0),
+                simd_float4.load(8.0, -9.0, -10.0, 11.0),
+                simd_float4.load(-12.0, 13.0, -14.0, 15.0)))
+        let v = simd_float4.load(-0.0, -1.0, -2.0, -3.0)
+
+        let mul_vector = m0 * v
+        EXPECT_SIMDFLOAT_EQ(mul_vector, -56.0, -62.0, -68.0, -74.0)
+
+        let transform_point = transformPoint(m0, v)
+        EXPECT_SIMDFLOAT_EQ(transform_point, -8.0, -10.0, -12.0, -14.0)
+
+        let transform_vector = transformVector(m0, v)
+        EXPECT_SIMDFLOAT_EQ(transform_vector, -20.0, -23.0, -26.0, -29.0)
+
+        let mul_mat = m0 * m1
+        EXPECT_FLOAT4x4_EQ(mul_mat, -56.0, -62.0, -68.0, -74.0, -152.0, -174.0,
+                -196.0, -218.0, -248.0, -286.0, -324.0, -362.0, -344.0,
+                -398.0, -452.0, -506.0)
+
+        let add_mat = m0 + m1
+        EXPECT_FLOAT4x4_EQ(add_mat, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+
+        let sub_mat = m0 - m1
+        EXPECT_FLOAT4x4_EQ(sub_mat, 0.0, 2.0, 4.0, 6.0, 8.0, 10.0, 12.0, 14.0, 16.0,
+                18.0, 20.0, 22.0, 24.0, 26.0, 28.0, 30.0)
+
+        let transpose = transpose(m0)
+        EXPECT_FLOAT4x4_EQ(transpose, 0.0, 4.0, 8.0, 12.0, 1.0, 5.0, 9.0, 13.0, 2.0,
+                6.0, 10.0, 14.0, 3.0, 7.0, 11.0, 15.0)
+
+        // Invertible
+        var dump = SimdInt4()
+        let invert_ident = vox_oasis.invert(simd_float4x4.identity(), &dump)
+        EXPECT_FLOAT4x4_EQ(invert_ident, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
+                0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+
+        let invert = vox_oasis.invert(m2, &dump)
+        EXPECT_FLOAT4x4_EQ(invert, 0.216667, 2.75, 1.6, 0.066666, 0.2, 2.5, 1.4,
+                0.1, 0.25, 0.5, 0.25, 0.0, 0.233333, 0.5, 0.3, 0.03333)
+
+        let invert_mul = m2 * invert
+        EXPECT_FLOAT4x4_EQ(invert_mul, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
+                0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+
+        var invertible = SimdInt4()
+        EXPECT_FLOAT4x4_EQ(vox_oasis.invert(m2, &invertible), 0.216667, 2.75, 1.6, 0.066666,
+                0.2, 2.5, 1.4, 0.1, 0.25, 0.5, 0.25, 0.0, 0.233333, 0.5,
+                0.3, 0.03333)
+        XCTAssertTrue(areAllTrue1(invertible))
+
+        // Non invertible
+
+        var not_invertible = SimdInt4()
+        EXPECT_FLOAT4x4_EQ(vox_oasis.invert(m0, &not_invertible), 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+        XCTAssertFalse(areAllTrue1(not_invertible))
+    }
+
+    func testFloat4x4Normal() {
+        let not_orthogonal = simd_float4x4(columns: (simd_float4.load(1.0, 0.0, 0.0, 0.0),
+                simd_float4.load(1.0, 0.0, 0.0, 0.0),
+                simd_float4.load(0.0, 0.0, 1.0, 0.0),
+                simd_float4.load(0.0, 0.0, 0.0, 1.0)))
+        XCTAssertTrue(areAllTrue3(isNormalized(not_orthogonal)))
+        XCTAssertTrue(areAllTrue3(isNormalized(simd_float4x4.scaling(simd_float4.load(1.0, -1.0, 1.0, 0.0)))))
+        XCTAssertFalse(areAllTrue3(isNormalized(simd_float4x4.scaling(simd_float4.load(1.0, 46.0, 1.0, 0.0)))))
+        XCTAssertTrue(areAllTrue3(isNormalized(simd_float4x4.identity())))
+        XCTAssertTrue(areAllTrue3(isNormalized(simd_float4x4.fromAxisAngle(simd_float4.x_axis(), simd_float4.loadX(1.24)))))
+        XCTAssertTrue(areAllTrue3(isNormalized(simd_float4x4.translation(
+                simd_float4.load(46.0, 0.0, 0.0, 1.0)))))
+    }
+
+    func testFloat4x4Orthogonal() {
+        let zero = simd_float4x4(columns: (simd_float4.load(0.0, 0.0, 0.0, 0.0),
+                simd_float4.load(0.0, 1.0, 0.0, 0.0),
+                simd_float4.load(0.0, 0.0, 1.0, 0.0),
+                simd_float4.load(0.0, 0.0, 0.0, 1.0)))
+        let not_orthogonal = simd_float4x4(columns: (
+                simd_float4.load(1.0, 0.0, 0.0, 0.0),
+                simd_float4.load(1.0, 0.0, 0.0, 0.0),
+                simd_float4.load(0.0, 0.0, 1.0, 0.0),
+                simd_float4.load(0.0, 0.0, 0.0, 1.0)))
+
+        XCTAssertFalse(areAllTrue1(isOrthogonal(not_orthogonal)))
+        XCTAssertFalse(areAllTrue1(isOrthogonal(zero)))
+
+        let reflexion1x = simd_float4x4.scaling(simd_float4.load(-1.0, 1.0, 1.0, 0.0))
+        XCTAssertFalse(areAllTrue1(isOrthogonal(reflexion1x)))
+        let reflexion1y = simd_float4x4.scaling(simd_float4.load(1.0, -1.0, 1.0, 0.0))
+        XCTAssertFalse(areAllTrue1(isOrthogonal(reflexion1y)))
+        let reflexion1z = simd_float4x4.scaling(simd_float4.load(1.0, 1.0, -1.0, 0.0))
+        XCTAssertFalse(areAllTrue1(isOrthogonal(reflexion1z)))
+        let reflexion2x = simd_float4x4.scaling(simd_float4.load(1.0, -1.0, -1.0, 0.0))
+        XCTAssertTrue(areAllTrue1(isOrthogonal(reflexion2x)))
+        let reflexion2y = simd_float4x4.scaling(simd_float4.load(-1.0, 1.0, -1.0, 0.0))
+        XCTAssertTrue(areAllTrue1(isOrthogonal(reflexion2y)))
+        let reflexion2z = simd_float4x4.scaling(simd_float4.load(-1.0, -1.0, 1.0, 0.0))
+        XCTAssertTrue(areAllTrue1(isOrthogonal(reflexion2z)))
+        let reflexion3 = simd_float4x4.scaling(simd_float4.load(-1.0, -1.0, -1.0, 0.0))
+        XCTAssertFalse(areAllTrue1(isOrthogonal(reflexion3)))
+
+        XCTAssertTrue(areAllTrue1(isOrthogonal(simd_float4x4.identity())))
+        XCTAssertTrue(areAllTrue1(isOrthogonal(simd_float4x4.translation(simd_float4.load(46.0, 0.0, 0.0, 1.0)))))
+        XCTAssertTrue(areAllTrue1(isOrthogonal(simd_float4x4.fromAxisAngle(simd_float4.x_axis(), simd_float4.loadX(1.24)))))
+    }
+
+    func testFloat4x4Translate() {
+        let v = simd_float4.load(-1.0, 1.0, 2.0, 3.0)
+        let m0 = simd_float4x4(columns: (simd_float4.load(0.0, 1.0, 2.0, 3.0),
+                simd_float4.load(4.0, 5.0, 6.0, 7.0),
+                simd_float4.load(8.0, 9.0, 10.0, 11.0),
+                simd_float4.load(12.0, 13.0, 14.0, 15.0)))
+
+        let translation = simd_float4x4.translation(v)
+        EXPECT_FLOAT4x4_EQ(translation, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
+                0.0, 1.0, 0.0, -1.0, 1.0, 2.0, 1.0)
+
+        let translate_mul = m0 * translation
+        EXPECT_FLOAT4x4_EQ(translate_mul, 0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0,
+                9.0, 10.0, 11.0, 32.0, 35.0, 38.0, 41.0)
+
+        let translate = translate(m0, v)
+        EXPECT_FLOAT4x4_EQ(translate, 0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0,
+                9.0, 10.0, 11.0, 32.0, 35.0, 38.0, 41.0)
+    }
+
+    func testFloat4x4Scale() {
+        let v = simd_float4.load(-1.0, 1.0, 2.0, 3.0)
+        let m0 = simd_float4x4(columns: (simd_float4.load(0.0, 1.0, 2.0, 3.0),
+                simd_float4.load(4.0, 5.0, 6.0, 7.0),
+                simd_float4.load(8.0, 9.0, 10.0, 11.0),
+                simd_float4.load(12.0, 13.0, 14.0, 15.0)))
+
+        let scaling = simd_float4x4.scaling(v)
+        EXPECT_FLOAT4x4_EQ(scaling, -1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0,
+                2.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+
+        let scale_mul = m0 * scaling
+        EXPECT_FLOAT4x4_EQ(scale_mul, 0.0, -1.0, -2.0, -3.0, 4.0, 5.0, 6.0, 7.0, 16.0,
+                18.0, 20.0, 22.0, 12.0, 13.0, 14.0, 15.0)
+
+        let scale = scale(m0, v)
+        EXPECT_FLOAT4x4_EQ(scale, 0.0, -1.0, -2.0, -3.0, 4.0, 5.0, 6.0, 7.0, 16.0,
+                18.0, 20.0, 22.0, 12.0, 13.0, 14.0, 15.0)
+    }
+
+    func testFloat4x4ColumnMultiply() {
+        let v = simd_float4.load(-1.0, -2.0, -3.0, -4.0)
+        let m0 = matrix_float4x4(columns: (simd_float4.load(0.0, 1.0, 2.0, 3.0),
+                simd_float4.load(4.0, 5.0, 6.0, 7.0),
+                simd_float4.load(8.0, 9.0, 10.0, 11.0),
+                simd_float4.load(12.0, 13.0, 14.0, 15.0)))
+
+        let column_multiply = columnMultiply(m0, v)
+        EXPECT_FLOAT4x4_EQ(column_multiply, 0.0, -2.0, -6.0, -12.0, -4.0, -10.0,
+                -18.0, -28.0, -8.0, -18.0, -30.0, -44.0, -12.0, -26.0,
+                -42.0, -60.0)
+    }
+
+    func testFloat4x4Rotate() {
+        let euler_identity = matrix_float4x4.fromEuler(simd_float4.load(0.0, 0.0, 0.0, 0.0))
+        EXPECT_FLOAT4x4_EQ(euler_identity, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0,
+                0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+
+        let euler = matrix_float4x4.fromEuler(simd_float4.load(kPi_2, 0.0, 0.0, 0.0))
+        EXPECT_FLOAT4x4_EQ(euler, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, -1.0, 0.0,
+                0.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+        XCTAssertTrue(areAllTrue3(isNormalized(euler)))
+        XCTAssertTrue(areAllTrue1(isOrthogonal(euler)))
+
+        let quaternion_identity = matrix_float4x4.fromQuaternion(simd_float4.load(0.0, 0.0, 0.0, 1.0))
+        EXPECT_FLOAT4x4_EQ(quaternion_identity, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0,
+                0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+        XCTAssertTrue(areAllTrue3(isNormalized(quaternion_identity)))
+        XCTAssertTrue(areAllTrue1(isOrthogonal(quaternion_identity)))
+
+        let quaternion = matrix_float4x4.fromQuaternion(simd_float4.load(0.0, 0.70710677, 0.0, 0.70710677))
+        EXPECT_FLOAT4x4_EQ(quaternion, 0.0, 0.0, -1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0,
+                0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+
+        let axis_angle_identity = matrix_float4x4.fromAxisAngle(simd_float4.y_axis(), simd_float4.zero())
+        EXPECT_FLOAT4x4_EQ(axis_angle_identity, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0,
+                0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+
+        let axis_angle = matrix_float4x4.fromAxisAngle(simd_float4.y_axis(), simd_float4.loadX(kPi_2))
+        EXPECT_FLOAT4x4_EQ(axis_angle, 0.0, 0.0, -1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0,
+                0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+        XCTAssertTrue(areAllTrue3(isNormalized(axis_angle)))
+        XCTAssertTrue(areAllTrue1(isOrthogonal(axis_angle)))
+    }
+
+    func testFloat4x4Affine() {
+        let identity =
+                matrix_float4x4.fromAffine(simd_float4.load(0.0, 0.0, 0.0, 0.0),
+                        simd_float4.load(0.0, 0.0, 0.0, 1.0),
+                        simd_float4.load(1.0, 1.0, 1.0, 1.0))
+        EXPECT_FLOAT4x4_EQ(identity, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0,
+                1.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+
+        let affine = matrix_float4x4.fromAffine(
+                simd_float4.load(-12.0, 46.0, 12.0, 9.0),
+                simd_float4.load(0.0, 0.70710677, 0.0, 0.70710677),
+                simd_float4.load(2.0, 46.0, 3.0, 1.0))
+        EXPECT_FLOAT4x4_EQ(affine, 0.0, 0.0, -2.0, 0.0, 0.0, 46.0, 0.0, 0.0, 3.0, 0.0,
+                0.0, 0.0, -12.0, 46.0, 12.0, 1.0)
+        XCTAssertFalse(areAllTrue3(isNormalized(affine)))
+        XCTAssertTrue(areAllTrue1(isOrthogonal(affine)))
+
+        let affine_reflexion = matrix_float4x4.fromAffine(
+                simd_float4.load(-12.0, 46.0, 12.0, 9.0),
+                simd_float4.load(0.0, 0.70710677, 0.0, 0.70710677),
+                simd_float4.load(2.0, -1.0, 3.0, 1.0))
+        EXPECT_FLOAT4x4_EQ(affine_reflexion, 0.0, 0.0, -2.0, 0.0, 0.0, -1.0, 0.0, 0.0,
+                3.0, 0.0, 0.0, 0.0, -12.0, 46.0, 12.0, 1.0)
+        XCTAssertFalse(areAllTrue3(isNormalized(affine_reflexion)))
+        XCTAssertFalse(areAllTrue1(isOrthogonal(affine_reflexion)))
+    }
+
+    func testFloat4x4ToQuaternion() {
+        EXPECT_SIMDFLOAT_EQ(toQuaternion(matrix_float4x4.identity()), 0.0, 0.0, 0.0, 1.0)
+        EXPECT_SIMDFLOAT_EQ(toQuaternion(matrix_float4x4.fromQuaternion(
+                simd_float4.load(0.0, 0.0, 1.0, 0.0))),
+                0.0, 0.0, 1.0, 0.0)
+        EXPECT_SIMDFLOAT_EQ(toQuaternion(matrix_float4x4.fromQuaternion(
+                simd_float4.load(0.0, 1.0, 0.0, 0.0))),
+                0.0, 1.0, 0.0, 0.0)
+        EXPECT_SIMDFLOAT_EQ(toQuaternion(matrix_float4x4.fromQuaternion(
+                simd_float4.load(1.0, 0.0, 0.0, 0.0))),
+                1.0, 0.0, 0.0, 0.0)
+        EXPECT_SIMDFLOAT_EQ(toQuaternion(matrix_float4x4.fromQuaternion(
+                simd_float4.load(0.70710677, 0.0, 0.0, 0.70710677))),
+                0.70710677, 0.0, 0.0, 0.70710677)
+        EXPECT_SIMDFLOAT_EQ(toQuaternion(matrix_float4x4.fromQuaternion(
+                simd_float4.load(0.4365425, 0.017589169, -0.30435428, 0.84645736))),
+                0.4365425, 0.017589169, -0.30435428, 0.84645736)
+        EXPECT_SIMDFLOAT_EQ(toQuaternion(matrix_float4x4.fromQuaternion(
+                simd_float4.load(0.56098551, -0.092295974, 0.43045932, 0.70105737))),
+                0.56098551, -0.092295974, 0.43045932, 0.70105737)
+        EXPECT_SIMDFLOAT_EQ(toQuaternion(matrix_float4x4.fromQuaternion(
+                simd_float4.load(-0.6172133, -0.1543033, 0.0, 0.7715167))),
+                -0.6172133, -0.1543033, 0.0, 0.7715167)
+    }
+
+    func testFloat4x4ToAffine() {
+        var translate = simd_float4.zero()
+        var rotate = simd_float4.zero()
+        var scale = simd_float4.zero()
+
+        XCTAssertFalse(toAffine(
+                matrix_float4x4.scaling(simd_float4.load(0.0, 0.0, 1.0, 0.0)),
+                &translate, &rotate, &scale))
+        XCTAssertFalse(toAffine(
+                matrix_float4x4.scaling(simd_float4.load(1.0, 0.0, 0.0, 0.0)),
+                &translate, &rotate, &scale))
+        XCTAssertFalse(toAffine(
+                matrix_float4x4.scaling(simd_float4.load(0.0, 1.0, 0.0, 0.0)),
+                &translate, &rotate, &scale))
+
+        XCTAssertTrue(toAffine(matrix_float4x4.identity(), &translate, &rotate, &scale))
+        EXPECT_SIMDFLOAT_EQ(translate, 0.0, 0.0, 0.0, 1.0)
+        EXPECT_SIMDFLOAT_EQ(rotate, 0.0, 0.0, 0.0, 1.0)
+        EXPECT_SIMDFLOAT_EQ(scale, 1.0, 1.0, 1.0, 1.0)
+
+        XCTAssertTrue(toAffine(
+                matrix_float4x4.scaling(simd_float4.load(0.0, 1.0, 1.0, 0.0)),
+                &translate, &rotate, &scale))
+        EXPECT_SIMDFLOAT_EQ(translate, 0.0, 0.0, 0.0, 1.0)
+        EXPECT_SIMDFLOAT_EQ(rotate, 0.0, 0.0, 0.0, 1.0)
+        EXPECT_SIMDFLOAT_EQ(scale, 0.0, 1.0, 1.0, 1.0)
+
+        XCTAssertTrue(toAffine(
+                matrix_float4x4.scaling(simd_float4.load(1.0, 0.0, 1.0, 0.0)),
+                &translate, &rotate, &scale))
+        EXPECT_SIMDFLOAT_EQ(translate, 0.0, 0.0, 0.0, 1.0)
+        EXPECT_SIMDFLOAT_EQ(rotate, 0.0, 0.0, 0.0, 1.0)
+        EXPECT_SIMDFLOAT_EQ(scale, 1.0, 0.0, 1.0, 1.0)
+
+        XCTAssertTrue(toAffine(
+                matrix_float4x4.scaling(simd_float4.load(1.0, 1.0, 0.0, 0.0)),
+                &translate, &rotate, &scale))
+        EXPECT_SIMDFLOAT_EQ(translate, 0.0, 0.0, 0.0, 1.0)
+        EXPECT_SIMDFLOAT_EQ(rotate, 0.0, 0.0, 0.0, 1.0)
+        EXPECT_SIMDFLOAT_EQ(scale, 1.0, 1.0, 0.0, 1.0)
+
+        XCTAssertTrue(toAffine(
+                matrix_float4x4.translation(
+                        simd_float4.load(46.0, 69.0, 58.0, 1.0)) *
+                        matrix_float4x4.scaling(simd_float4.load(2.0, 3.0, 4.0, 0.0)),
+                &translate, &rotate, &scale))
+        EXPECT_SIMDFLOAT_EQ(translate, 46.0, 69.0, 58.0, 1.0)
+        EXPECT_SIMDFLOAT_EQ(rotate, 0.0, 0.0, 0.0, 1.0)
+        EXPECT_SIMDFLOAT_EQ(scale, 2.0, 3.0, 4.0, 1.0)
+
+        XCTAssertTrue(toAffine(
+                matrix_float4x4.translation(
+                        simd_float4.load(46.0, -69.0, -58.0, 1.0)) *
+                        matrix_float4x4.scaling(simd_float4.load(-2.0, 3.0, 4.0, 0.0)),
+                &translate, &rotate, &scale))
+        EXPECT_SIMDFLOAT_EQ(translate, 46.0, -69.0, -58.0, 1.0)
+        EXPECT_SIMDFLOAT_EQ(rotate, 0.0, 0.0, 1.0, 0.0)
+        EXPECT_SIMDFLOAT_EQ(scale, 2.0, -3.0, 4.0, 1.0)
+
+        XCTAssertTrue(toAffine(
+                matrix_float4x4.scaling(simd_float4.load(2.0, -3.0, 4.0, 0.0)),
+                &translate, &rotate, &scale))
+        EXPECT_SIMDFLOAT_EQ(translate, 0.0, 0.0, 0.0, 1.0)
+        EXPECT_SIMDFLOAT_EQ(rotate, 0.0, 0.0, 0.0, 1.0)
+        EXPECT_SIMDFLOAT_EQ(scale, 2.0, -3.0, 4.0, 1.0)
+
+        XCTAssertTrue(toAffine(
+                matrix_float4x4.scaling(simd_float4.load(2.0, 3.0, -4.0, 0.0)),
+                &translate, &rotate, &scale))
+        EXPECT_SIMDFLOAT_EQ(translate, 0.0, 0.0, 0.0, 1.0)
+        EXPECT_SIMDFLOAT_EQ(rotate, 1.0, 0.0, 0.0, 0.0)
+        EXPECT_SIMDFLOAT_EQ(scale, 2.0, -3.0, 4.0, 1.0)
+
+        // This one is not a reflexion.
+        XCTAssertTrue(toAffine(
+                matrix_float4x4.scaling(simd_float4.load(-2.0, -3.0, 4.0, 0.0)),
+                &translate, &rotate, &scale))
+        EXPECT_SIMDFLOAT_EQ(translate, 0.0, 0.0, 0.0, 1.0)
+        EXPECT_SIMDFLOAT_EQ(rotate, 0.0, 0.0, 1.0, 0.0)
+        EXPECT_SIMDFLOAT_EQ(scale, 2.0, 3.0, 4.0, 1.0)
+
+        // This one is not a reflexion.
+        XCTAssertTrue(toAffine(
+                matrix_float4x4.scaling(simd_float4.load(2.0, -3.0, -4.0, 0.0)),
+                &translate, &rotate, &scale))
+        EXPECT_SIMDFLOAT_EQ(translate, 0.0, 0.0, 0.0, 1.0)
+        EXPECT_SIMDFLOAT_EQ(rotate, 1.0, 0.0, 0.0, 0.0)
+        EXPECT_SIMDFLOAT_EQ(scale, 2.0, 3.0, 4.0, 1.0)
+
+        XCTAssertTrue(toAffine(
+                matrix_float4x4.translation(
+                        simd_float4.load(46.0, -69.0, -58.0, 1.0)) *
+                        matrix_float4x4.fromQuaternion(simd_float4.load(-0.6172133, -0.1543033, 0.0, 0.7715167)) *
+                        matrix_float4x4.scaling(simd_float4.load(2.0, 3.0, 4.0, 0.0)),
+                &translate, &rotate, &scale))
+        EXPECT_SIMDFLOAT_EQ(translate, 46.0, -69.0, -58.0, 1.0)
+        EXPECT_SIMDFLOAT_EQ(rotate, -0.6172133, -0.1543033, 0.0, 0.7715167)
+        EXPECT_SIMDFLOAT_EQ(scale, 2.0, 3.0, 4.0, 1.0)
+
+        XCTAssertTrue(toAffine(
+                matrix_float4x4.translation(
+                        simd_float4.load(46.0, -69.0, -58.0, 1.0)) *
+                        matrix_float4x4.fromQuaternion(simd_float4.load(0.70710677, 0.0, 0.0, 0.70710677)) *
+                        matrix_float4x4.scaling(simd_float4.load(2.0, -3.0, 4.0, 0.0)),
+                &translate, &rotate, &scale))
+        EXPECT_SIMDFLOAT_EQ(translate, 46.0, -69.0, -58.0, 1.0)
+        EXPECT_SIMDFLOAT_EQ(rotate, 0.70710677, 0.0, 0.0, 0.70710677)
+        EXPECT_SIMDFLOAT_EQ(scale, 2.0, -3.0, 4.0, 1.0)
+
+        let trace = simd_float4x4(columns: (
+                simd_float4.load(-0.916972, 0.0, -0.398952, 0.0),
+                simd_float4.load(0.0, -1, 0.0, 0.0),
+                simd_float4.load(-0.398952, 0, 0.916972, 0.0),
+                simd_float4.load(0.0, 0.0, 0.0, 1.0)))
+        XCTAssertTrue(toAffine(trace, &translate, &rotate, &scale))
+        EXPECT_SIMDFLOAT_EQ(translate, 0.0, 0.0, 0.0, 1.0)
+        EXPECT_SIMDFLOAT_EQ(rotate, -0.20375007, 0.0, 0.97902298, 0.0)
+        EXPECT_SIMDFLOAT_EQ(scale, 1.0, 1.0, 1.0, 1.0)
+
+        let small = simd_float4x4(columns: (
+                simd_float4.load(0.000907520065, 0.0, 0.0, 0.0),
+                simd_float4.load(0.0, 0.000959928846, 0.0, 0.0),
+                simd_float4.load(0.0, 0.0, 0.0159599986, 0.0),
+                simd_float4.load(0.00649994006, 0.00719946623, -0.000424541620, 0.999999940)))
+        XCTAssertTrue(toAffine(small, &translate, &rotate, &scale))
+        EXPECT_SIMDFLOAT_EQ(translate, 0.00649994006, 0.00719946623, -0.000424541620, 1.0)
+        EXPECT_SIMDFLOAT_EQ(rotate, 0.0, 0.0, 0.0, 1.0)
+        EXPECT_SIMDFLOAT_EQ(scale, 0.000907520065, 0.000959928846, 0.0159599986, 1.0)
+    }
 }
