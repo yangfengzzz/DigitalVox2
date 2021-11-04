@@ -452,6 +452,129 @@ class SimdMathTests: XCTestCase {
 
         let xormf = xor(a, mfloat)
         EXPECT_SIMDFLOAT_EQ(xormf, 1.0, 1.0, -2.0, 0.0)
+    }
 
+    func testHalf() {
+        // 0
+        XCTAssertEqual(math.floatToHalf(0.0), 0)
+        XCTAssertEqual(math.halfToFloat(0), 0.0)
+        XCTAssertEqual(math.floatToHalf(-0.0), 0x8000)
+        XCTAssertEqual(math.halfToFloat(0x8000), -0.0)
+        XCTAssertEqual(math.floatToHalf(0), 0)
+        XCTAssertEqual(math.floatToHalf(0), 0)
+        XCTAssertEqual(math.floatToHalf(0), 0)
+
+        // 1
+        XCTAssertEqual(math.floatToHalf(1.0), 0x3c00)
+        XCTAssertEqual(math.halfToFloat(0x3c00), 1.0)
+        XCTAssertEqual(math.floatToHalf(-1.0), 0xbc00)
+        XCTAssertEqual(math.halfToFloat(0xbc00), -1.0)
+
+        // Bounds
+        XCTAssertEqual(math.floatToHalf(65504.0), 0x7bff)
+        XCTAssertEqual(math.floatToHalf(-65504.0), 0xfbff)
+
+        // Min, Max, Infinity
+        XCTAssertEqual(math.floatToHalf(10e-16), 0)
+        XCTAssertEqual(math.floatToHalf(10e+16), 0x7c00)
+        XCTAssertEqual(math.halfToFloat(0x7c00), Float.infinity)
+        XCTAssertEqual(math.floatToHalf(Float.greatestFiniteMagnitude), 0x7c00)
+        XCTAssertEqual(math.floatToHalf(Float.infinity), 0x7c00)
+        XCTAssertEqual(math.floatToHalf(-10e+16), 0xfc00)
+        XCTAssertEqual(math.floatToHalf(-Float.infinity), 0xfc00)
+        XCTAssertEqual(math.floatToHalf(-Float.greatestFiniteMagnitude), 0xfc00)
+        XCTAssertEqual(math.halfToFloat(0xfc00), -Float.infinity)
+
+        // Nan
+        XCTAssertEqual(math.floatToHalf(Float.nan), 0x7e00)
+        XCTAssertEqual(math.floatToHalf(Float.signalingNaN), 0x7e00)
+        // According to the IEEE standard, NaN values have the odd property that
+        // comparisons involving them are always false
+        XCTAssertFalse(math.halfToFloat(0x7e00) == math.halfToFloat(0x7e00))
+
+        // Random tries in range [10e-4,10e4].
+        var pow: Float = -4.0
+        while pow <= 4.0 {
+            let max: Float = powf(10.0, pow)
+            // Expect a 1/1000 precision over floats.
+            let precision = max / 1000.0
+
+            let n = 1000
+            for i in 0..<n {
+                let frand = max * (2.0 * Float(i) / Float(n) - 1.0)
+
+                let h = math.floatToHalf(frand)
+                let f = math.halfToFloat(h)
+                XCTAssertEqual(frand, f, accuracy: precision)
+            }
+
+            pow += 1.0
+        }
+    }
+
+    func testSimdHalf() {
+        // 0
+        EXPECT_SIMDINT_EQ(math.floatToHalf(simd_float4.load(0.0, -0.0, 0, 0)),
+                0, 0x00008000, 0, 0)
+        EXPECT_SIMDFLOAT_EQ(
+                math.halfToFloat(SimdInt4.load(0, 0x00008000, 0, 0)),
+                0.0, -0.0, 0.0, 0.0)
+
+        // 1
+        EXPECT_SIMDINT_EQ(math.floatToHalf(
+                simd_float4.load(1.0, -1.0, 0.0, -0.0)),
+                0x00003c00, 0x0000bc00, 0, 0x00008000)
+        EXPECT_SIMDFLOAT_EQ(math.halfToFloat(SimdInt4.load(
+                0x3c00, 0xbc00, 0, 0x00008000)),
+                1.0, -1.0, 0.0, -0.0)
+
+        // Bounds
+        EXPECT_SIMDINT_EQ(math.floatToHalf(simd_float4.load(
+                65504.0, -65504.0, 65604.0, -65604.0)),
+                0x00007bff, 0x0000fbff, 0x00007c00, 0x0000fc00)
+
+        // Min, Max, Infinity
+        EXPECT_SIMDINT_EQ(math.floatToHalf(simd_float4.load(
+                10e-16, 10e+16, Float.greatestFiniteMagnitude, Float.infinity)),
+                0, 0x00007c00, 0x00007c00, 0x00007c00)
+        EXPECT_SIMDINT_EQ(math.floatToHalf(simd_float4.load(
+                -10e-16, -10e+16, -Float.greatestFiniteMagnitude,
+                -Float.greatestFiniteMagnitude)),
+                0x00008000, 0x0000fc00, 0x0000fc00, 0x0000fc00)
+
+        // Nan
+        EXPECT_SIMDINT_EQ(math.floatToHalf(simd_float4.load(Float.nan, Float.signalingNaN, 0, 0)),
+                0x00007e00, 0x00007e00, 0, 0)
+
+        // Inf and NAN
+        let infnan = math.halfToFloat(SimdInt4.load(0x00007c00, 0x0000fc00, 0x00007e00, 0))
+        XCTAssertEqual(getX(infnan), Float.infinity)
+        XCTAssertEqual(getY(infnan), -Float.infinity)
+        XCTAssertFalse(getZ(infnan) == getZ(infnan))
+
+        // Random tries in range [10e-4,10e4].
+        var pow: Float = -4.0
+        while pow <= 4.0 {
+            let max = powf(10.0, pow)
+            // Expect a 1/1000 precision over floats.
+            let precision = max / 1000.0
+
+            let n = 1000
+            for i in 0..<n {
+                let frand = simd_float4.load(
+                        max * (0.5 * Float(i) / Float(n) - 0.025), max * (1.0 * Float(i) / Float(n) - 0.5),
+                        max * (1.5 * Float(i) / Float(n) - 0.75), max * (2.0 * Float(i) / Float(n) - 1.0))
+
+                let h = math.floatToHalf(frand)
+                let f = math.halfToFloat(h)
+
+                XCTAssertEqual(getX(frand), getX(f), accuracy: precision)
+                XCTAssertEqual(getY(frand), getY(f), accuracy: precision)
+                XCTAssertEqual(getZ(frand), getZ(f), accuracy: precision)
+                XCTAssertEqual(getW(frand), getW(f), accuracy: precision)
+            }
+
+            pow += 1.0
+        }
     }
 }
