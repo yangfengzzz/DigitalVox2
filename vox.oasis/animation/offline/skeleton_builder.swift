@@ -98,7 +98,7 @@ struct JointLister: SkeletonVisitor {
         var parent = SoaSkeleton.Constants.kNoParent.rawValue
         if (_parent != nil) {
             // Start searching from the last joint.
-            for j in stride(from: linear_joints.count - 1, to: 0, by: -1) {
+            for j in stride(from: linear_joints.count - 1, to: -1, by: -1) {
                 if (linear_joints[j].joint === _parent) {
                     parent = j
                     break

@@ -153,7 +153,7 @@ func build_bvh(_ bvh: inout shape_bvh, _ bboxes: [bbox3f]) {
 
 // Update bvh
 func update_bvh(_ bvh: inout shape_bvh, _ bboxes: [bbox3f]) {
-    for nodeid in stride(from: bvh.nodes.count - 1, to: 0, by: -1) {
+    for nodeid in stride(from: bvh.nodes.count - 1, to: -1, by: -1) {
         var node = bvh.nodes[nodeid]
         node.bbox = invalidb3f
         if (node.internal_) {

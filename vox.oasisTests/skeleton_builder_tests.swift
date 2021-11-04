@@ -131,10 +131,110 @@ class SkeletonBuilderTests: XCTestCase {
 
         XCTAssertTrue(raw_skeleton.validate())
         XCTAssertEqual(raw_skeleton.num_joints(), 6)
-        
+
         var dfTester = RawSkeletonIterateDFTester()
         iterateJointsDF(raw_skeleton, &dfTester)
         var bfTester = RawSkeletonIterateBFTester()
         iterateJointsBF(raw_skeleton, &bfTester)
+    }
+
+    func testBuild() {
+        // Instantiates a builder objects with default parameters.
+        let builder = SkeletonBuilder()
+
+        // 1 joint: the root.
+        do {
+            var raw_skeleton = RawSkeleton()
+            raw_skeleton.roots = [RawSkeleton.Joint()]
+            let root = raw_skeleton.roots[0]
+            root.name = "root"
+
+            XCTAssertTrue(raw_skeleton.validate())
+            XCTAssertEqual(raw_skeleton.num_joints(), 1)
+
+            let skeleton = builder.eval(raw_skeleton)
+            XCTAssertTrue(skeleton != nil)
+            XCTAssertEqual(skeleton!.num_joints(), 1)
+            XCTAssertEqual(skeleton!.joint_parents()[0], SoaSkeleton.Constants.kNoParent.rawValue)
+        }
+
+        /*
+         2 joints
+
+           *
+           |
+          j0
+           |
+          j1
+        */
+        do {
+            var raw_skeleton = RawSkeleton()
+            raw_skeleton.roots = [RawSkeleton.Joint()]
+            let root = raw_skeleton.roots[0]
+            root.name = "j0"
+
+            root.children = [RawSkeleton.Joint()]
+            root.children[0].name = "j1"
+
+            XCTAssertTrue(raw_skeleton.validate())
+            XCTAssertEqual(raw_skeleton.num_joints(), 2)
+
+            let skeleton = builder.eval(raw_skeleton)
+            XCTAssertTrue(skeleton != nil)
+            XCTAssertEqual(skeleton!.num_joints(), 2)
+            for i in 0..<skeleton!.num_joints() {
+                let parent_index = skeleton!.joint_parents()[i]
+                if (skeleton!.joint_names()[i] == "j0") {
+                    XCTAssertEqual(parent_index, SoaSkeleton.Constants.kNoParent.rawValue)
+                } else if skeleton!.joint_names()[i] == "j1" {
+                    XCTAssertTrue(skeleton!.joint_names()[parent_index] == "j0")
+                } else {
+                    XCTAssertTrue(false)
+                }
+            }
+        }
+
+        /*
+         3 joints
+
+           *
+           |
+          j0
+          / \
+         j1 j2
+        */
+        do {
+            var raw_skeleton = RawSkeleton()
+            raw_skeleton.roots = [RawSkeleton.Joint()]
+            let root = raw_skeleton.roots[0]
+            root.name = "j0"
+
+            root.children = [RawSkeleton.Joint(), RawSkeleton.Joint()]
+            root.children[0].name = "j1"
+            root.children[1].name = "j2"
+
+            XCTAssertTrue(raw_skeleton.validate())
+            XCTAssertEqual(raw_skeleton.num_joints(), 3)
+
+            let skeleton = builder.eval(raw_skeleton)
+            XCTAssertTrue(skeleton != nil)
+            guard let skeleton = skeleton else {
+                return
+            }
+
+            XCTAssertEqual(skeleton.num_joints(), 3)
+            for i in 0..<skeleton.num_joints() {
+                let parent_index = skeleton.joint_parents()[i]
+                if (skeleton.joint_names()[i] == "j0") {
+                    XCTAssertEqual(parent_index, SoaSkeleton.Constants.kNoParent.rawValue)
+                } else if (skeleton.joint_names()[i] == "j1") {
+                    XCTAssertEqual(skeleton.joint_names()[parent_index], "j0")
+                } else if (skeleton.joint_names()[i] == "j2") {
+                    XCTAssertEqual(skeleton.joint_names()[parent_index], "j0")
+                } else {
+                    XCTAssertTrue(false)
+                }
+            }
+        }
     }
 }

@@ -42,7 +42,7 @@ func rand3f() -> vec3f {
 @inlinable
 func shuffle<T>(_ vals: inout [T]) {
     // https://en.wikipedia.org/wiki/Fisher–Yates_shuffle
-    for i in stride(from: vals.count - 1, to: 0, by: -1) {
+    for i in stride(from: vals.count - 1, to: -1, by: -1) {
         let j = rand1i(i + 1)
         vals.swapAt(j, i)
     }
