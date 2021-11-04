@@ -17,6 +17,7 @@ class VecMathTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
+    //MARK: - Vec Float
     func testVectorLoad4() throws {
         EXPECT_FLOAT4_EQ(VecFloat4(46.0), 46.0, 46.0, 46.0, 46.0)
         EXPECT_FLOAT4_EQ(VecFloat4(-1.0, 0.0, 1.0, 2.0), -1.0, 0.0, 1.0, 2.0)
@@ -258,4 +259,98 @@ class VecMathTests: XCTestCase {
         let lerp_2 = lerp(a, b, 2.0)
         EXPECT_FLOAT2_EQ(lerp_2, 2.0 * b.x - a.x, 2.0 * b.y - a.y)
     }
+
+    func testVectorComparison4() {
+        let a = VecFloat4(0.5, 1.0, 2.0, 3.0)
+        let b = VecFloat4(4.0, 5.0, -6.0, 7.0)
+        let c = VecFloat4(4.0, 5.0, 6.0, 7.0)
+        let d = VecFloat4(4.0, 5.0, 6.0, 7.1)
+
+        let min = min(a, b)
+        EXPECT_FLOAT4_EQ(min, 0.5, 1.0, -6.0, 3.0)
+
+        let max = max(a, b)
+        EXPECT_FLOAT4_EQ(max, 4.0, 5.0, 2.0, 7.0)
+
+        EXPECT_FLOAT4_EQ(clamp(a, VecFloat4(-12.0, 2.0, 9.0, 3.0), c), 0.5, 2.0, 6.0,
+                3.0)
+
+        XCTAssertTrue(a < c)
+        XCTAssertTrue(a <= c)
+        XCTAssertTrue(c <= c)
+
+        XCTAssertTrue(c > a)
+        XCTAssertTrue(c >= a)
+        XCTAssertTrue(a >= a)
+
+        XCTAssertTrue(a == a)
+        XCTAssertTrue(a != b)
+
+        XCTAssertTrue(compare(a, a, 0.0))
+        XCTAssertTrue(compare(c, d, 0.2))
+        XCTAssertFalse(compare(c, d, 0.05))
+    }
+
+    func testVectorComparison3() {
+        let a = VecFloat3(0.5, -1.0, 2.0)
+        let b = VecFloat3(4.0, 5.0, -6.0)
+        let c = VecFloat3(4.0, 5.0, 6.0)
+        let d = VecFloat3(4.0, 5.0, 6.1)
+
+        let min = min(a, b)
+        EXPECT_FLOAT3_EQ(min, 0.5, -1.0, -6.0)
+
+        let max = max(a, b)
+        EXPECT_FLOAT3_EQ(max, 4.0, 5.0, 2.0)
+
+        EXPECT_FLOAT3_EQ(clamp(a, VecFloat3(-12.0, 2.0, 9.0), c), 0.5, 2.0, 6.0)
+
+        XCTAssertTrue(a < c)
+        XCTAssertTrue(a <= c)
+        XCTAssertTrue(c <= c)
+
+        XCTAssertTrue(c > a)
+        XCTAssertTrue(c >= a)
+        XCTAssertTrue(a >= a)
+
+        XCTAssertTrue(a == a)
+        XCTAssertTrue(a != b)
+
+        XCTAssertTrue(compare(a, a, 1e-3))
+        XCTAssertTrue(compare(c, d, 0.2))
+        XCTAssertFalse(compare(c, d, 0.05))
+    }
+
+    func testVectorComparison2() {
+        let a = VecFloat2(0.5, 1.0)
+        let b = VecFloat2(4.0, -5.0)
+        let c = VecFloat2(4.0, 5.0)
+        let d = VecFloat2(4.0, 5.1)
+
+        let min = min(a, b)
+        EXPECT_FLOAT2_EQ(min, 0.5, -5.0)
+
+        let max = max(a, b)
+        EXPECT_FLOAT2_EQ(max, 4.0, 1.0)
+
+        EXPECT_FLOAT2_EQ(clamp(a, VecFloat2(-12.0, 2.0), c), 0.5, 2.0)
+
+        XCTAssertTrue(a < c)
+        XCTAssertTrue(a <= c)
+        XCTAssertTrue(c <= c)
+
+        XCTAssertTrue(c > a)
+        XCTAssertTrue(c >= a)
+        XCTAssertTrue(a >= a)
+
+        XCTAssertTrue(a == a)
+        XCTAssertTrue(a != b)
+
+        XCTAssertTrue(compare(a, a, 1e-3))
+        XCTAssertTrue(compare(c, d, 0.2))
+        XCTAssertFalse(compare(c, d, 0.05))
+    }
+    
+    //MARK: - Vec Quaternion
+    
 }
