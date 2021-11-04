@@ -17,6 +17,7 @@ class SimdMathTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
+    //MARK: - Float Math
     func testLoadFloat() {
         let fX = simd_float4.loadX(15.0)
         EXPECT_SIMDFLOAT_EQ(fX, 15.0, 0.0, 0.0, 0.0)
@@ -871,7 +872,7 @@ class SimdMathTests: XCTestCase {
     func testTransposeFloat() {
     }
 
-    //MARK: - SimdQuaternion
+    //MARK: - SimdQuaternion(Done)
     func testQuaternionConstant() {
         EXPECT_SIMDQUATERNION_EQ(SimdQuaternion.identity(), 0.0, 0.0, 0.0, 1.0)
     }
@@ -1127,11 +1128,9 @@ class SimdMathTests: XCTestCase {
     func testQuaternionAxisAngle() {
         // Identity
         EXPECT_SIMDQUATERNION_EQ(
-                SimdQuaternion.fromAxisAngle(simd_float4.x_axis(),
-                        simd_float4.zero()),
+                SimdQuaternion.fromAxisAngle(simd_float4.x_axis(), simd_float4.zero()),
                 0.0, 0.0, 0.0, 1.0)
-        EXPECT_SIMDFLOAT_EQ(toAxisAngle(SimdQuaternion.identity()), 1.0, 0.0, 0.0,
-                0.0)
+        EXPECT_SIMDFLOAT_EQ(toAxisAngle(SimdQuaternion.identity()), 1.0, 0.0, 0.0, 0.0)
 
         // Other axis angles
         let pi_2 = simd_float4.loadX(kPi_2)
@@ -1148,8 +1147,7 @@ class SimdMathTests: XCTestCase {
         let any_axis = simd_float4.load(0.819865, 0.033034, -0.571604, 99.0)
         let any_angle = simd_float4.load(1.123, 99.0, 26.0, 93.0)
         let qany = SimdQuaternion.fromAxisAngle(any_axis, any_angle)
-        EXPECT_SIMDQUATERNION_EQ(qany, 0.4365425, 0.017589169, -0.30435428,
-                0.84645736)
+        EXPECT_SIMDQUATERNION_EQ(qany, 0.4365425, 0.017589169, -0.30435428, 0.84645736)
         EXPECT_SIMDFLOAT_EQ(toAxisAngle(qany), 0.819865, 0.033034, -0.571604, 1.123)
     }
 
@@ -1165,21 +1163,18 @@ class SimdMathTests: XCTestCase {
         EXPECT_SIMDQUATERNION_EQ(
                 SimdQuaternion.fromAxisCosAngle(
                         simd_float4.y_axis(),
-                        simd_float4.load(cos(kPi_2), 99.0, 93.0,
-                                5.0)),
+                        simd_float4.load(cos(kPi_2), 99.0, 93.0, 5.0)),
                 0.0, 0.70710677, 0.0, 0.70710677)
         EXPECT_SIMDQUATERNION_EQ(
                 SimdQuaternion.fromAxisCosAngle(
                         -simd_float4.y_axis(),
-                        simd_float4.load(cos(kPi_2), 99.0, 93.0,
-                                5.0)),
+                        simd_float4.load(cos(kPi_2), 99.0, 93.0, 5.0)),
                 0.0, -0.70710677, 0.0, 0.70710677)
 
         EXPECT_SIMDQUATERNION_EQ(
                 SimdQuaternion.fromAxisCosAngle(
                         simd_float4.y_axis(),
-                        simd_float4.load(cos(3.0 * kPi_4), 99.0,
-                                93.0, 5.0)),
+                        simd_float4.load(cos(3.0 * kPi_4), 99.0, 93.0, 5.0)),
                 0.0, 0.923879504, 0.0, 0.382683426)
 
         EXPECT_SIMDQUATERNION_EQ(
@@ -1205,32 +1200,23 @@ class SimdMathTests: XCTestCase {
                 0, 0, 1)
 
         let pi_2 = simd_float4.loadX(kPi_2)
-        EXPECT_SIMDFLOAT3_EQ(
-                transformVector(
+        EXPECT_SIMDFLOAT3_EQ(transformVector(
                         SimdQuaternion.fromAxisAngle(simd_float4.y_axis(), pi_2),
-                        simd_float4.y_axis()),
-                0, 1, 0)
-        EXPECT_SIMDFLOAT3_EQ(
-                transformVector(
+                        simd_float4.y_axis()), 0, 1, 0)
+        EXPECT_SIMDFLOAT3_EQ(transformVector(
                         SimdQuaternion.fromAxisAngle(simd_float4.y_axis(), pi_2),
-                        simd_float4.x_axis()),
-                0, 0, -1)
-        EXPECT_SIMDFLOAT3_EQ(
-                transformVector(
+                        simd_float4.x_axis()), 0, 0, -1)
+        EXPECT_SIMDFLOAT3_EQ(transformVector(
                         SimdQuaternion.fromAxisAngle(simd_float4.y_axis(), pi_2),
-                        simd_float4.z_axis()),
-                1, 0, 0)
+                        simd_float4.z_axis()), 1, 0, 0)
 
         // Non unit
-        EXPECT_SIMDFLOAT3_EQ(
-                transformVector(
+        EXPECT_SIMDFLOAT3_EQ(transformVector(
                         SimdQuaternion.fromAxisAngle(simd_float4.z_axis(), pi_2),
-                        simd_float4.x_axis() *
-                                simd_float4.load1(2.0)),
-                0, 2, 0)
+                        simd_float4.x_axis() * simd_float4.load1(2.0)), 0, 2, 0)
     }
 
-    //MARK: - simd_float4x4
+    //MARK: - simd_float4x4(Done)
     func testFloat4x4Constant() {
         let identity = simd_float4x4.identity()
         EXPECT_FLOAT4x4_EQ(identity, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0,
