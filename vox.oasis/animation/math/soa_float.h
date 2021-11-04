@@ -8,18 +8,18 @@
 #ifndef soa_float_h
 #define soa_float_h
 
-#include "simd_math.h"
+#import <simd/simd.h>
 
 struct SoaFloat2 {
-    SimdFloat4 x, y;
+    simd_float4 x, y;
 };
 
 struct SoaFloat3 {
-    SimdFloat4 x, y, z;
+    simd_float4 x, y, z;
 };
 
 struct SoaFloat4 {
-    SimdFloat4 x, y, z, w;
+    simd_float4 x, y, z, w;
 };
 
 // Declare the 4x4 soa matrix type. Uses the column major convention where the
@@ -35,7 +35,7 @@ struct SoaFloat4x4 {
 
 // Declare the Quaternion type.
 struct SoaQuaternion {
-    SimdFloat4 x, y, z, w;
+    simd_float4 x, y, z, w;
 };
 
 // Stores an affine transformation with separate translation, rotation and scale

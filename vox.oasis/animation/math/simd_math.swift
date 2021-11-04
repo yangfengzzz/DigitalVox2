@@ -323,6 +323,65 @@ func swizzle2233(_ _v: simd_float4) -> simd_float4 {
     OZZFloat4.swizzle2233(with: _v)
 }
 
+/// Transposes the x components of the 4 SimdFloat4 of _in into the 1
+/// SimdFloat4 of _out.
+func transpose4x1(_ _in: [simd_float4], _ _out: inout [simd_float4]) {
+    var _in = _in
+    OZZFloat4.transpose4x1(with: &_in, &_out)
+}
+
+/// Transposes x, y, z and w components of _in to the x components of _out.
+/// Remaining y, z and w are set to 0.
+func transpose1x4(_ _in: [simd_float4], _ _out: inout [simd_float4]) {
+    var _in = _in
+    OZZFloat4.transpose1x4(with: &_in, &_out)
+}
+
+/// Transposes the 1 SimdFloat4 of _in into the x components of the 4
+/// SimdFloat4 of _out. Remaining y, z and w are set to 0.
+func transpose2x4(_ _in: [simd_float4], _ _out: inout [simd_float4]) {
+    var _in = _in
+    OZZFloat4.transpose2x4(with: &_in, &_out)
+}
+
+/// Transposes the x and y components of the 4 SimdFloat4 of _in into the 2
+/// SimdFloat4 of _out.
+func transpose4x2(_ _in: [simd_float4], _ _out: inout [simd_float4]) {
+    var _in = _in
+    OZZFloat4.transpose4x2(with: &_in, &_out)
+}
+
+/// Transposes the x, y and z components of the 4 SimdFloat4 of _in into the 3
+/// SimdFloat4 of _out.
+func transpose4x3(_ _in: [simd_float4], _ _out: inout SoaFloat3) {
+    var _in = _in
+    OZZFloat4.transpose4x3(with: &_in, &_out)
+}
+
+// Transposes the 3 SimdFloat4 of _in into the x, y and z components of the 4
+// SimdFloat4 of _out. Remaining w are set to 0.
+func transpose3x4(_ _in: SoaFloat3, _ _out: inout [simd_float4]) {
+    var _in = _in
+    OZZFloat4.transpose3x4(with: &_in, &_out)
+}
+
+// Transposes the 4 SimdFloat4 of _in into the 4 SimdFloat4 of _out.
+func transpose4x4(_ _in: [simd_float4], _ _out: inout SoaQuaternion) {
+    var _in = _in
+    OZZFloat4.transpose4x4(with: &_in, toQuat: &_out)
+}
+
+func transpose4x4(_ _in: SoaQuaternion, _ _out: inout [simd_float4]) {
+    var _in = _in
+    OZZFloat4.transpose4x4(fromQuat: &_in, &_out)
+}
+
+// Transposes the 16 SimdFloat4 of _in into the 16 SimdFloat4 of _out.
+func transpose16x16(_ _in: SoaFloat4x4, _ _out: inout [simd_float4x4]) {
+    var _in = _in
+    OZZFloat4.transpose16x16(with: &_in, &_out)
+}
+
 /// Multiplies _a and _b, then adds _c.
 /// v = (_a * _b) + _c
 func mAdd(_ _a: simd_float4, _ _b: simd_float4, _ _c: simd_float4) -> simd_float4 {

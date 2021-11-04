@@ -348,72 +348,83 @@ inline SimdFloat4 DivX(_SimdFloat4 _a, _SimdFloat4 _b) {
     _out[3] = _mm_movehl_ps(zero, tmp1);
 }
 
-+ (void)Transpose4x3With:(const SimdFloat4[4])_in :(SimdFloat4[3])_out {
++ (void)Transpose4x3With:(const SimdFloat4[4])_in :(SoaFloat3[1])_out {
     const __m128 tmp0 = _mm_unpacklo_ps(_in[0], _in[2]);
     const __m128 tmp1 = _mm_unpacklo_ps(_in[1], _in[3]);
     const __m128 tmp2 = _mm_unpackhi_ps(_in[0], _in[2]);
     const __m128 tmp3 = _mm_unpackhi_ps(_in[1], _in[3]);
-    _out[0] = _mm_unpacklo_ps(tmp0, tmp1);
-    _out[1] = _mm_unpackhi_ps(tmp0, tmp1);
-    _out[2] = _mm_unpacklo_ps(tmp2, tmp3);
+    _out[0].x = _mm_unpacklo_ps(tmp0, tmp1);
+    _out[0].y = _mm_unpackhi_ps(tmp0, tmp1);
+    _out[0].z = _mm_unpacklo_ps(tmp2, tmp3);
 }
 
-+ (void)Transpose3x4With:(const SimdFloat4[3])_in :(SimdFloat4[4])_out {
++ (void)Transpose3x4With:(const SoaFloat3[1])_in :(SimdFloat4[4])_out {
     const __m128 zero = _mm_setzero_ps();
-    const __m128 temp0 = _mm_unpacklo_ps(_in[0], _in[1]);
-    const __m128 temp1 = _mm_unpacklo_ps(_in[2], zero);
-    const __m128 temp2 = _mm_unpackhi_ps(_in[0], _in[1]);
-    const __m128 temp3 = _mm_unpackhi_ps(_in[2], zero);
+    const __m128 temp0 = _mm_unpacklo_ps(_in[0].x, _in[0].y);
+    const __m128 temp1 = _mm_unpacklo_ps(_in[0].z, zero);
+    const __m128 temp2 = _mm_unpackhi_ps(_in[0].x, _in[0].y);
+    const __m128 temp3 = _mm_unpackhi_ps(_in[0].z, zero);
     _out[0] = _mm_movelh_ps(temp0, temp1);
     _out[1] = _mm_movehl_ps(temp1, temp0);
     _out[2] = _mm_movelh_ps(temp2, temp3);
     _out[3] = _mm_movehl_ps(temp3, temp2);
 }
 
-+ (void)Transpose4x4With:(const SimdFloat4[4])_in :(SimdFloat4[4])_out {
++ (void)Transpose4x4With:(const SimdFloat4[4])_in toQuat:(SoaQuaternion[1])_out {
     const __m128 tmp0 = _mm_unpacklo_ps(_in[0], _in[2]);
     const __m128 tmp1 = _mm_unpacklo_ps(_in[1], _in[3]);
     const __m128 tmp2 = _mm_unpackhi_ps(_in[0], _in[2]);
     const __m128 tmp3 = _mm_unpackhi_ps(_in[1], _in[3]);
+    _out[0].x = _mm_unpacklo_ps(tmp0, tmp1);
+    _out[0].y = _mm_unpackhi_ps(tmp0, tmp1);
+    _out[0].z = _mm_unpacklo_ps(tmp2, tmp3);
+    _out[0].w = _mm_unpackhi_ps(tmp2, tmp3);
+}
+
++ (void)Transpose4x4FromQuat:(const SoaQuaternion[1])_in :(SimdFloat4[4])_out {
+    const __m128 tmp0 = _mm_unpacklo_ps(_in[0].x, _in[0].z);
+    const __m128 tmp1 = _mm_unpacklo_ps(_in[0].y, _in[0].w);
+    const __m128 tmp2 = _mm_unpackhi_ps(_in[0].x, _in[0].z);
+    const __m128 tmp3 = _mm_unpackhi_ps(_in[0].y, _in[0].w);
     _out[0] = _mm_unpacklo_ps(tmp0, tmp1);
     _out[1] = _mm_unpackhi_ps(tmp0, tmp1);
     _out[2] = _mm_unpacklo_ps(tmp2, tmp3);
     _out[3] = _mm_unpackhi_ps(tmp2, tmp3);
 }
 
-+ (void)Transpose16x16With:(const SimdFloat4[16])_in :(SimdFloat4[16])_out {
-    const __m128 tmp0 = _mm_unpacklo_ps(_in[0], _in[2]);
-    const __m128 tmp1 = _mm_unpacklo_ps(_in[1], _in[3]);
-    _out[0] = _mm_unpacklo_ps(tmp0, tmp1);
-    _out[4] = _mm_unpackhi_ps(tmp0, tmp1);
-    const __m128 tmp2 = _mm_unpackhi_ps(_in[0], _in[2]);
-    const __m128 tmp3 = _mm_unpackhi_ps(_in[1], _in[3]);
-    _out[8] = _mm_unpacklo_ps(tmp2, tmp3);
-    _out[12] = _mm_unpackhi_ps(tmp2, tmp3);
-    const __m128 tmp4 = _mm_unpacklo_ps(_in[4], _in[6]);
-    const __m128 tmp5 = _mm_unpacklo_ps(_in[5], _in[7]);
-    _out[1] = _mm_unpacklo_ps(tmp4, tmp5);
-    _out[5] = _mm_unpackhi_ps(tmp4, tmp5);
-    const __m128 tmp6 = _mm_unpackhi_ps(_in[4], _in[6]);
-    const __m128 tmp7 = _mm_unpackhi_ps(_in[5], _in[7]);
-    _out[9] = _mm_unpacklo_ps(tmp6, tmp7);
-    _out[13] = _mm_unpackhi_ps(tmp6, tmp7);
-    const __m128 tmp8 = _mm_unpacklo_ps(_in[8], _in[10]);
-    const __m128 tmp9 = _mm_unpacklo_ps(_in[9], _in[11]);
-    _out[2] = _mm_unpacklo_ps(tmp8, tmp9);
-    _out[6] = _mm_unpackhi_ps(tmp8, tmp9);
-    const __m128 tmp10 = _mm_unpackhi_ps(_in[8], _in[10]);
-    const __m128 tmp11 = _mm_unpackhi_ps(_in[9], _in[11]);
-    _out[10] = _mm_unpacklo_ps(tmp10, tmp11);
-    _out[14] = _mm_unpackhi_ps(tmp10, tmp11);
-    const __m128 tmp12 = _mm_unpacklo_ps(_in[12], _in[14]);
-    const __m128 tmp13 = _mm_unpacklo_ps(_in[13], _in[15]);
-    _out[3] = _mm_unpacklo_ps(tmp12, tmp13);
-    _out[7] = _mm_unpackhi_ps(tmp12, tmp13);
-    const __m128 tmp14 = _mm_unpackhi_ps(_in[12], _in[14]);
-    const __m128 tmp15 = _mm_unpackhi_ps(_in[13], _in[15]);
-    _out[11] = _mm_unpacklo_ps(tmp14, tmp15);
-    _out[15] = _mm_unpackhi_ps(tmp14, tmp15);
++ (void)Transpose16x16With:(const SoaFloat4x4[1])_in :(simd_float4x4[4])_out {
+    const __m128 tmp0 = _mm_unpacklo_ps(_in[0].cols[0].x, _in[0].cols[0].z);
+    const __m128 tmp1 = _mm_unpacklo_ps(_in[0].cols[0].y, _in[0].cols[0].w);
+    _out[0].columns[0] = _mm_unpacklo_ps(tmp0, tmp1);
+    _out[1].columns[0] = _mm_unpackhi_ps(tmp0, tmp1);
+    const __m128 tmp2 = _mm_unpackhi_ps(_in[0].cols[0].x, _in[0].cols[0].z);
+    const __m128 tmp3 = _mm_unpackhi_ps(_in[0].cols[0].y, _in[0].cols[0].w);
+    _out[2].columns[0] = _mm_unpacklo_ps(tmp2, tmp3);
+    _out[3].columns[0] = _mm_unpackhi_ps(tmp2, tmp3);
+    const __m128 tmp4 = _mm_unpacklo_ps(_in[0].cols[1].x, _in[0].cols[1].z);
+    const __m128 tmp5 = _mm_unpacklo_ps(_in[0].cols[1].y, _in[0].cols[1].w);
+    _out[0].columns[1] = _mm_unpacklo_ps(tmp4, tmp5);
+    _out[1].columns[1] = _mm_unpackhi_ps(tmp4, tmp5);
+    const __m128 tmp6 = _mm_unpackhi_ps(_in[0].cols[1].x, _in[0].cols[1].z);
+    const __m128 tmp7 = _mm_unpackhi_ps(_in[0].cols[1].y, _in[0].cols[1].w);
+    _out[2].columns[1] = _mm_unpacklo_ps(tmp6, tmp7);
+    _out[3].columns[1] = _mm_unpackhi_ps(tmp6, tmp7);
+    const __m128 tmp8 = _mm_unpacklo_ps(_in[0].cols[2].x, _in[0].cols[2].z);
+    const __m128 tmp9 = _mm_unpacklo_ps(_in[0].cols[2].y, _in[0].cols[2].w);
+    _out[0].columns[2] = _mm_unpacklo_ps(tmp8, tmp9);
+    _out[1].columns[2] = _mm_unpackhi_ps(tmp8, tmp9);
+    const __m128 tmp10 = _mm_unpackhi_ps(_in[0].cols[2].x, _in[0].cols[2].z);
+    const __m128 tmp11 = _mm_unpackhi_ps(_in[0].cols[2].y, _in[0].cols[2].w);
+    _out[2].columns[2] = _mm_unpacklo_ps(tmp10, tmp11);
+    _out[3].columns[2] = _mm_unpackhi_ps(tmp10, tmp11);
+    const __m128 tmp12 = _mm_unpacklo_ps(_in[0].cols[3].x, _in[0].cols[3].z);
+    const __m128 tmp13 = _mm_unpacklo_ps(_in[0].cols[3].y, _in[0].cols[3].w);
+    _out[0].columns[3] = _mm_unpacklo_ps(tmp12, tmp13);
+    _out[1].columns[3] = _mm_unpackhi_ps(tmp12, tmp13);
+    const __m128 tmp14 = _mm_unpackhi_ps(_in[0].cols[3].x, _in[0].cols[3].z);
+    const __m128 tmp15 = _mm_unpackhi_ps(_in[0].cols[3].y, _in[0].cols[3].w);
+    _out[2].columns[3] = _mm_unpacklo_ps(tmp14, tmp15);
+    _out[3].columns[3] = _mm_unpackhi_ps(tmp14, tmp15);
 }
 
 + (SimdFloat4)MAddWith:(_SimdFloat4)_a :(_SimdFloat4)_b :(_SimdFloat4)_c {

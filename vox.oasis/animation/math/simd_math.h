@@ -10,6 +10,7 @@
 
 #import <Foundation/Foundation.h>
 #import <simd/simd.h>
+#import "soa_float.h"
 
 // Vector of four floating point values.
 typedef __m128 SimdFloat4;
@@ -256,17 +257,19 @@ typedef const __m128i _SimdInt4;
 
 // Transposes the x, y and z components of the 4 SimdFloat4 of _in into the 3
 // SimdFloat4 of _out.
-+ (void)Transpose4x3With:(const SimdFloat4[4])_in :(SimdFloat4[3])_out;
++ (void)Transpose4x3With:(const SimdFloat4[4])_in :(struct SoaFloat3[1])_out;
 
 // Transposes the 3 SimdFloat4 of _in into the x, y and z components of the 4
 // SimdFloat4 of _out. Remaining w are set to 0.
-+ (void)Transpose3x4With:(const SimdFloat4[3])_in :(SimdFloat4[4])_out;
++ (void)Transpose3x4With:(const struct SoaFloat3[1])_in :(SimdFloat4[4])_out;
 
 // Transposes the 4 SimdFloat4 of _in into the 4 SimdFloat4 of _out.
-+ (void)Transpose4x4With:(const SimdFloat4[4])_in :(SimdFloat4[4])_out;
++ (void)Transpose4x4With:(const SimdFloat4[4])_in toQuat:(struct SoaQuaternion[1])_out;
+
++ (void)Transpose4x4FromQuat:(const struct SoaQuaternion[1])_in :(SimdFloat4[4])_out;
 
 // Transposes the 16 SimdFloat4 of _in into the 16 SimdFloat4 of _out.
-+ (void)Transpose16x16With:(const SimdFloat4[16])_in :(SimdFloat4[16])_out;
++ (void)Transpose16x16With:(const struct SoaFloat4x4[1])_in :(simd_float4x4[4])_out;
 
 // Multiplies _a and _b, then adds _c.
 // v = (_a * _b) + _c

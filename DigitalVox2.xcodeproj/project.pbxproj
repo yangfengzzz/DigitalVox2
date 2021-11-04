@@ -236,6 +236,7 @@
 		042F0DAE2733D2BC00FF4A26 /* vec_math.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042F0DAD2733D2BC00FF4A26 /* vec_math.test.swift */; };
 		042F0DB02733DFD800FF4A26 /* rect.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042F0DAF2733DFD800FF4A26 /* rect.test.swift */; };
 		042F0DB22733E07A00FF4A26 /* box.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042F0DB12733E07A00FF4A26 /* box.test.swift */; };
+		042F0DB42734065900FF4A26 /* skeleton_builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB89022732BFBF00B0E398 /* skeleton_builder.swift */; };
 		0452EC9926DFA0CD0015BFB1 /* voxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9826DFA0CD0015BFB1 /* voxApp.swift */; };
 		0452EC9B26DFA0CD0015BFB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */; };
 		0452EC9D26DFA0CD0015BFB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0452EC9C26DFA0CD0015BFB1 /* Assets.xcassets */; };
@@ -2142,6 +2143,7 @@
 				041BAE12272A500F006268D5 /* Engine.swift in Sources */,
 				041BAEA2272A514D006268D5 /* IPlaneColliderShape.swift in Sources */,
 				041BAE04272A500F006268D5 /* DisorderedArray.swift in Sources */,
+				042F0DB42734065900FF4A26 /* skeleton_builder.swift in Sources */,
 				041BAE11272A500F006268D5 /* InputManager.swift in Sources */,
 				041BAF14272B8A5B006268D5 /* PhysXPhysicsManager.swift in Sources */,
 				041BAE4B272A50FB006268D5 /* RenderFace.swift in Sources */,

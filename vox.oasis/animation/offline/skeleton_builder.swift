@@ -59,9 +59,18 @@ class SkeletonBuilder {
             for j in 0..<4 {
                 if (i * 4 + j < num_joints) {
                     let src_joint = lister.linear_joints[i * 4 + j].joint
-                    translations[j] = simd_float4.load3PtrU(src_joint.transform.translation.x)
-                    rotations[j] = normalizeSafe4(simd_float4.loadPtrU(src_joint.transform.rotation.x), w_axis)
-                    scales[j] = simd_float4.load3PtrU(src_joint.transform.scale.x)
+
+                    var vec = [src_joint.transform.translation.x, src_joint.transform.translation.y,
+                               src_joint.transform.translation.z, 0]
+                    translations[j] = simd_float4.load3PtrU(&vec)
+
+                    vec = [src_joint.transform.rotation.x, src_joint.transform.rotation.y,
+                           src_joint.transform.rotation.z, src_joint.transform.rotation.w]
+                    rotations[j] = normalizeSafe4(simd_float4.loadPtrU(&vec), w_axis)
+
+                    vec = [src_joint.transform.scale.x, src_joint.transform.scale.y,
+                           src_joint.transform.scale.z, 0]
+                    scales[j] = simd_float4.load3PtrU(&vec)
                 } else {
                     translations[j] = zero
                     rotations[j] = w_axis
@@ -69,9 +78,9 @@ class SkeletonBuilder {
                 }
             }
             // Fills the SoaTransform structure.
-            transpose4x3(translations, &skeleton.joint_bind_poses_[i].translation.x)
-            transpose4x4(rotations, &skeleton.joint_bind_poses_[i].rotation.x)
-            transpose4x3(scales, &skeleton.joint_bind_poses_[i].scale.x)
+            transpose4x3(translations, &skeleton.joint_bind_poses_[i].translation)
+            transpose4x4(rotations, &skeleton.joint_bind_poses_[i].rotation)
+            transpose4x3(scales, &skeleton.joint_bind_poses_[i].scale)
         }
 
         return skeleton  // Success.
