@@ -76,7 +76,7 @@ class SoaSkeleton {
 
     // Internal allocation/deallocation function.
     // Allocate returns the beginning of the contiguous buffer of names.
-    internal func Allocate(_ _num_joints: Int) {
+    internal func allocate(_ _num_joints: Int) {
         assert(joint_bind_poses_.count == 0 && joint_names_.count == 0 &&
                 joint_parents_.count == 0)
 

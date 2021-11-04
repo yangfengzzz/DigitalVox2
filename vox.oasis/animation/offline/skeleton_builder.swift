@@ -16,7 +16,7 @@ class SkeletonBuilder {
     // caller.
     func eval(_ _raw_skeleton: RawSkeleton) -> SoaSkeleton? {
         // Tests _raw_skeleton validity.
-        if (!_raw_skeleton.Validate()) {
+        if (!_raw_skeleton.validate()) {
             return nil
         }
 
@@ -29,11 +29,11 @@ class SkeletonBuilder {
         // list.
         // Iteration order defines runtime skeleton joint ordering.
         var lister = JointLister(num_joints)
-        IterateJointsDF(_raw_skeleton, &lister)
+        iterateJointsDF(_raw_skeleton, &lister)
         assert(lister.linear_joints.count == num_joints)
 
         // Allocates all skeleton members.
-        skeleton.Allocate(num_joints)
+        skeleton.allocate(num_joints)
 
         // Copy names. All names are allocated in a single buffer. Only the first name
         // is set, all other names array entries must be initialized.
