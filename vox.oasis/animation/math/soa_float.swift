@@ -569,10 +569,10 @@ func clamp(_ _a: SoaFloat4, _ _v: SoaFloat4, _ _b: SoaFloat4) -> SoaFloat4 {
     max(_a, min(_v, _b))
 }
 
-func Clamp(_ _a: SoaFloat3, _ _v: SoaFloat3, _ _b: SoaFloat3) -> SoaFloat3 {
+func clamp(_ _a: SoaFloat3, _ _v: SoaFloat3, _ _b: SoaFloat3) -> SoaFloat3 {
     max(_a, min(_v, _b))
 }
 
-func Clamp(_ _a: SoaFloat2, _ _v: SoaFloat2, _ _b: SoaFloat2) -> SoaFloat2 {
+func clamp(_ _a: SoaFloat2, _ _v: SoaFloat2, _ _b: SoaFloat2) -> SoaFloat2 {
     max(_a, min(_v, _b))
 }
