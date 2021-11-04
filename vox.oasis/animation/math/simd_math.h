@@ -1203,11 +1203,15 @@ typedef const __m128i _SimdInt4;
 // Converts from a half to a float.
 + (SimdFloat4)HalfToFloatWithSIMD:(_SimdInt4)_h;
 
++ (int)FloatCastI32:(float)_f;
+
++ (uint)FloatCastU32:(float)_f;
+
 @end
 
 // Declare the Quaternion type.
 struct SimdQuaternion {
-  SimdFloat4 xyzw;
+    SimdFloat4 xyzw;
 };
 
 #endif /* simd_math_h */

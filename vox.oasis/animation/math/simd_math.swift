@@ -1695,4 +1695,12 @@ enum math {
     static func halfToFloat(_ _h: _SimdInt4) -> simd_float4 {
         OZZMath.halfToFloat(withSIMD: _h)
     }
+
+    static func floatCastI32(_ _f: Float) -> Int32 {
+        OZZMath.floatCastI32(_f)
+    }
+
+    static func floatCastU32(_ _f: Float) -> UInt32 {
+        OZZMath.floatCastU32(_f)
+    }
 }

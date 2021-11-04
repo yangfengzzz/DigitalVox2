@@ -2061,4 +2061,20 @@ inline SimdFloat4 DivX(_SimdFloat4 _a, _SimdFloat4 _b) {
     return _mm_or_ps(scaled, sign_inf);
 }
 
++ (int)FloatCastI32:(float)_f {
+    union {
+        float f;
+        int i;
+    } orx = {_f};
+    return orx.i;
+}
+
++ (uint)FloatCastU32:(float)_f {
+    union {
+        float f;
+        unsigned int i;
+    } orx = {_f};
+    return orx.i;
+}
+
 @end
