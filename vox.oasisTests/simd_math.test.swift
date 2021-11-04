@@ -870,6 +870,100 @@ class SimdMathTests: XCTestCase {
     }
 
     func testTransposeFloat() {
+        let src: [simd_float4] = [
+            simd_float4.load(0.0, 1.0, 2.0, 3.0),
+            simd_float4.load(4.0, 5.0, 6.0, 7.0),
+            simd_float4.load(8.0, 9.0, 10.0, 11.0),
+            simd_float4.load(12.0, 13.0, 14.0, 15.0)
+        ]
+
+        var t4x1 = [simd_float4()]
+        transpose4x1(src, &t4x1)
+        EXPECT_SIMDFLOAT_EQ(t4x1[0], 0.0, 4.0, 8.0, 12.0)
+
+        var t1x4 = [simd_float4(), simd_float4(), simd_float4(), simd_float4()]
+        transpose1x4(src, &t1x4)
+        EXPECT_SIMDFLOAT_EQ(t1x4[0], 0.0, 0.0, 0.0, 0.0)
+        EXPECT_SIMDFLOAT_EQ(t1x4[1], 1.0, 0.0, 0.0, 0.0)
+        EXPECT_SIMDFLOAT_EQ(t1x4[2], 2.0, 0.0, 0.0, 0.0)
+        EXPECT_SIMDFLOAT_EQ(t1x4[3], 3.0, 0.0, 0.0, 0.0)
+
+        var t4x2 = [simd_float4(), simd_float4()]
+        transpose4x2(src, &t4x2)
+        EXPECT_SIMDFLOAT_EQ(t4x2[0], 0.0, 4.0, 8.0, 12.0)
+        EXPECT_SIMDFLOAT_EQ(t4x2[1], 1.0, 5.0, 9.0, 13.0)
+
+        var t2x4 = [simd_float4(), simd_float4(), simd_float4(), simd_float4()]
+        transpose2x4(src, &t2x4)
+        EXPECT_SIMDFLOAT_EQ(t2x4[0], 0.0, 4.0, 0.0, 0.0)
+        EXPECT_SIMDFLOAT_EQ(t2x4[1], 1.0, 5.0, 0.0, 0.0)
+        EXPECT_SIMDFLOAT_EQ(t2x4[2], 2.0, 6.0, 0.0, 0.0)
+        EXPECT_SIMDFLOAT_EQ(t2x4[3], 3.0, 7.0, 0.0, 0.0)
+
+        var t4x3 = SoaFloat3()
+        transpose4x3(src, &t4x3)
+        EXPECT_SIMDFLOAT_EQ(t4x3.x, 0.0, 4.0, 8.0, 12.0)
+        EXPECT_SIMDFLOAT_EQ(t4x3.y, 1.0, 5.0, 9.0, 13.0)
+        EXPECT_SIMDFLOAT_EQ(t4x3.z, 2.0, 6.0, 10.0, 14.0)
+
+        let soa = SoaFloat3(
+                x: simd_float4.load(0.0, 1.0, 2.0, 3.0),
+                y: simd_float4.load(4.0, 5.0, 6.0, 7.0),
+                z: simd_float4.load(8.0, 9.0, 10.0, 11.0)
+        )
+        var t3x4 = [simd_float4(), simd_float4(), simd_float4(), simd_float4()]
+        transpose3x4(soa, &t3x4)
+        EXPECT_SIMDFLOAT_EQ(t3x4[0], 0.0, 4.0, 8.0, 0.0)
+        EXPECT_SIMDFLOAT_EQ(t3x4[1], 1.0, 5.0, 9.0, 0.0)
+        EXPECT_SIMDFLOAT_EQ(t3x4[2], 2.0, 6.0, 10.0, 0.0)
+        EXPECT_SIMDFLOAT_EQ(t3x4[3], 3.0, 7.0, 11.0, 0.0)
+
+        var t4x4 = SoaQuaternion()
+        transpose4x4(src, &t4x4)
+        EXPECT_SIMDFLOAT_EQ(t4x4.x, 0.0, 4.0, 8.0, 12.0)
+        EXPECT_SIMDFLOAT_EQ(t4x4.y, 1.0, 5.0, 9.0, 13.0)
+        EXPECT_SIMDFLOAT_EQ(t4x4.z, 2.0, 6.0, 10.0, 14.0)
+        EXPECT_SIMDFLOAT_EQ(t4x4.w, 3.0, 7.0, 11.0, 15.0)
+
+        let src2 = SoaFloat4x4(cols: (
+                SoaFloat4(
+                        x: simd_float4.load(0.0, 16.0, 32.0, 48.0),
+                        y: simd_float4.load(1.0, 17.0, 33.0, 49.0),
+                        z: simd_float4.load(2.0, 18.0, 34.0, 50.0),
+                        w: simd_float4.load(3.0, 19.0, 35.0, 51.0)),
+                SoaFloat4(
+                        x: simd_float4.load(4.0, 20.0, 36.0, 52.0),
+                        y: simd_float4.load(5.0, 21.0, 37.0, 53.0),
+                        z: simd_float4.load(6.0, 22.0, 38.0, 54.0),
+                        w: simd_float4.load(7.0, 23.0, 39.0, 55.0)),
+                SoaFloat4(
+                        x: simd_float4.load(8.0, 24.0, 40.0, 56.0),
+                        y: simd_float4.load(9.0, 25.0, 41.0, 57.0),
+                        z: simd_float4.load(10.0, 26.0, 42.0, 58.0),
+                        w: simd_float4.load(11.0, 27.0, 43.0, 59.0)),
+                SoaFloat4(
+                        x: simd_float4.load(12.0, 28.0, 44.0, 60.0),
+                        y: simd_float4.load(13.0, 29.0, 45.0, 61.0),
+                        z: simd_float4.load(14.0, 30.0, 46.0, 62.0),
+                        w: simd_float4.load(15.0, 31.0, 47.0, 63.0))))
+        var t16x16 = [simd_float4x4(), simd_float4x4(), simd_float4x4(), simd_float4x4()]
+        transpose16x16(src2, &t16x16)
+        EXPECT_SIMDFLOAT_EQ(t16x16[0].columns.0, 0.0, 1.0, 2.0, 3.0)
+        EXPECT_SIMDFLOAT_EQ(t16x16[0].columns.1, 4.0, 5.0, 6.0, 7.0)
+        EXPECT_SIMDFLOAT_EQ(t16x16[0].columns.2, 8.0, 9.0, 10.0, 11.0)
+        EXPECT_SIMDFLOAT_EQ(t16x16[0].columns.3, 12.0, 13.0, 14.0, 15.0)
+        EXPECT_SIMDFLOAT_EQ(t16x16[1].columns.0, 16.0, 17.0, 18.0, 19.0)
+        EXPECT_SIMDFLOAT_EQ(t16x16[1].columns.1, 20.0, 21.0, 22.0, 23.0)
+        EXPECT_SIMDFLOAT_EQ(t16x16[1].columns.2, 24.0, 25.0, 26.0, 27.0)
+        EXPECT_SIMDFLOAT_EQ(t16x16[1].columns.3, 28.0, 29.0, 30.0, 31.0)
+        EXPECT_SIMDFLOAT_EQ(t16x16[2].columns.0, 32.0, 33.0, 34.0, 35.0)
+        EXPECT_SIMDFLOAT_EQ(t16x16[2].columns.1, 36.0, 37.0, 38.0, 39.0)
+        EXPECT_SIMDFLOAT_EQ(t16x16[2].columns.2, 40.0, 41.0, 42.0, 43.0)
+        EXPECT_SIMDFLOAT_EQ(t16x16[2].columns.3, 44.0, 45.0, 46.0, 47.0)
+        EXPECT_SIMDFLOAT_EQ(t16x16[3].columns.0, 48.0, 49.0, 50.0, 51.0)
+        EXPECT_SIMDFLOAT_EQ(t16x16[3].columns.1, 52.0, 53.0, 54.0, 55.0)
+        EXPECT_SIMDFLOAT_EQ(t16x16[3].columns.2, 56.0, 57.0, 58.0, 59.0)
+        EXPECT_SIMDFLOAT_EQ(t16x16[3].columns.3, 60.0, 61.0, 62.0, 63.0)
     }
 
     //MARK: - SimdQuaternion(Done)
@@ -1201,19 +1295,19 @@ class SimdMathTests: XCTestCase {
 
         let pi_2 = simd_float4.loadX(kPi_2)
         EXPECT_SIMDFLOAT3_EQ(transformVector(
-                        SimdQuaternion.fromAxisAngle(simd_float4.y_axis(), pi_2),
-                        simd_float4.y_axis()), 0, 1, 0)
+                SimdQuaternion.fromAxisAngle(simd_float4.y_axis(), pi_2),
+                simd_float4.y_axis()), 0, 1, 0)
         EXPECT_SIMDFLOAT3_EQ(transformVector(
-                        SimdQuaternion.fromAxisAngle(simd_float4.y_axis(), pi_2),
-                        simd_float4.x_axis()), 0, 0, -1)
+                SimdQuaternion.fromAxisAngle(simd_float4.y_axis(), pi_2),
+                simd_float4.x_axis()), 0, 0, -1)
         EXPECT_SIMDFLOAT3_EQ(transformVector(
-                        SimdQuaternion.fromAxisAngle(simd_float4.y_axis(), pi_2),
-                        simd_float4.z_axis()), 1, 0, 0)
+                SimdQuaternion.fromAxisAngle(simd_float4.y_axis(), pi_2),
+                simd_float4.z_axis()), 1, 0, 0)
 
         // Non unit
         EXPECT_SIMDFLOAT3_EQ(transformVector(
-                        SimdQuaternion.fromAxisAngle(simd_float4.z_axis(), pi_2),
-                        simd_float4.x_axis() * simd_float4.load1(2.0)), 0, 2, 0)
+                SimdQuaternion.fromAxisAngle(simd_float4.z_axis(), pi_2),
+                simd_float4.x_axis() * simd_float4.load1(2.0)), 0, 2, 0)
     }
 
     //MARK: - simd_float4x4(Done)
