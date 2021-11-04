@@ -17,7 +17,7 @@ class SimdMathTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    //MARK: - Float Math
+    //MARK: - Float Math(Load Store miss)
     func testLoadFloat() {
         let fX = simd_float4.loadX(15.0)
         EXPECT_SIMDFLOAT_EQ(fX, 15.0, 0.0, 0.0, 0.0)
@@ -27,6 +27,10 @@ class SimdMathTests: XCTestCase {
 
         let f4 = simd_float4.load(1.0, -1.0, 2.0, -3.0)
         EXPECT_SIMDFLOAT_EQ(f4, 1.0, -1.0, 2.0, -3.0)
+    }
+    
+    func testLoadFloatPtr() {
+        
     }
 
     func testGetFloat() {
@@ -51,6 +55,10 @@ class SimdMathTests: XCTestCase {
         EXPECT_SIMDFLOAT_EQ(setI(a, b, 1), 1.0, 5.0, 3.0, 4.0)
         EXPECT_SIMDFLOAT_EQ(setI(a, b, 2), 1.0, 2.0, 5.0, 4.0)
         EXPECT_SIMDFLOAT_EQ(setI(a, b, 3), 1.0, 2.0, 3.0, 5.0)
+    }
+    
+    func testStoreFloatPtr() {
+        
     }
 
     func testConstantFloat() {
@@ -579,7 +587,7 @@ class SimdMathTests: XCTestCase {
         }
     }
 
-    //MARK: - Int Math
+    //MARK: - Int Math(Load Store miss)
     func testLoadInt() {
         let iX = SimdInt4.loadX(15)
         EXPECT_SIMDINT_EQ(iX, 15, 0, 0, 0)
@@ -868,7 +876,8 @@ class SimdMathTests: XCTestCase {
         let shift_ru = shiftRu(a, 3)
         EXPECT_SIMDINT_EQ(shift_ru, 0x1fffffff, 0x00000000, 0x10000000, 0x0fffffff)
     }
-
+    
+    //MARK: - Transpose(Done)
     func testTransposeFloat() {
         let src: [simd_float4] = [
             simd_float4.load(0.0, 1.0, 2.0, 3.0),

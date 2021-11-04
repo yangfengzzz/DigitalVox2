@@ -873,7 +873,7 @@ class SoaMathTests: XCTestCase {
                 -12.0, 0.0, 12.0, 7.0, -46.0, 0.0, 0.0, 7.0, 46.0, 1.0, 1.0, 1.0, 1.0)
     }
 
-    //MARK: - Soa Transform
+    //MARK: - Soa Transform(Done)
     func testSoaTransformConstant() {
         EXPECT_SOAFLOAT3_EQ(SoaTransform.identity().translation, 0.0, 0.0, 0.0, 0.0,
                 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
