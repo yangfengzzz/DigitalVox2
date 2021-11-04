@@ -234,6 +234,7 @@
 		042F0DAA273388E000FF4A26 /* math_helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042F0DA9273388E000FF4A26 /* math_helper.swift */; };
 		042F0DAC2733C2AB00FF4A26 /* soa_math.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042F0DAB2733C2AB00FF4A26 /* soa_math.test.swift */; };
 		042F0DAE2733D2BC00FF4A26 /* vec_math.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042F0DAD2733D2BC00FF4A26 /* vec_math.test.swift */; };
+		042F0DB02733DFD800FF4A26 /* rect.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042F0DAF2733DFD800FF4A26 /* rect.test.swift */; };
 		0452EC9926DFA0CD0015BFB1 /* voxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9826DFA0CD0015BFB1 /* voxApp.swift */; };
 		0452EC9B26DFA0CD0015BFB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */; };
 		0452EC9D26DFA0CD0015BFB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0452EC9C26DFA0CD0015BFB1 /* Assets.xcassets */; };
@@ -507,6 +508,7 @@
 		042F0DA9273388E000FF4A26 /* math_helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = math_helper.swift; sourceTree = "<group>"; };
 		042F0DAB2733C2AB00FF4A26 /* soa_math.test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = soa_math.test.swift; sourceTree = "<group>"; };
 		042F0DAD2733D2BC00FF4A26 /* vec_math.test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = vec_math.test.swift; sourceTree = "<group>"; };
+		042F0DAF2733DFD800FF4A26 /* rect.test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rect.test.swift; sourceTree = "<group>"; };
 		043CB42226EF590B004A0B21 /* Matrix3x3.test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matrix3x3.test.swift; sourceTree = "<group>"; };
 		043CB42426EF8954004A0B21 /* Quaternion.test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quaternion.test.swift; sourceTree = "<group>"; };
 		043CB42626F02520004A0B21 /* BoundingBox.test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingBox.test.swift; sourceTree = "<group>"; };
@@ -1045,6 +1047,7 @@
 				042F0DA727337FCE00FF4A26 /* simd_math.test.swift */,
 				042F0DAB2733C2AB00FF4A26 /* soa_math.test.swift */,
 				042F0DAD2733D2BC00FF4A26 /* vec_math.test.swift */,
+				042F0DAF2733DFD800FF4A26 /* rect.test.swift */,
 			);
 			path = vox.oasisTests;
 			sourceTree = "<group>";
@@ -2340,6 +2343,7 @@
 				042F0DAC2733C2AB00FF4A26 /* soa_math.test.swift in Sources */,
 				042F0D9E27337DD200FF4A26 /* BoundingSphere.test.swift in Sources */,
 				042F0DA427337DD200FF4A26 /* BoundingBox.test.swift in Sources */,
+				042F0DB02733DFD800FF4A26 /* rect.test.swift in Sources */,
 				042F0DA227337DD200FF4A26 /* Ray.test.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
