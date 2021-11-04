@@ -13,7 +13,6 @@
 		0419B6DC26E6ED2300005FEA /* bvh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6DB26E6ED2300005FEA /* bvh.swift */; };
 		041BADDA272A4FA5006268D5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 041BADD9272A4FA5006268D5 /* Assets.xcassets */; };
 		041BADDD272A4FA5006268D5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 041BADDC272A4FA5006268D5 /* Preview Assets.xcassets */; };
-		041BADE8272A4FA6006268D5 /* vox_oasisTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041BADE7272A4FA6006268D5 /* vox_oasisTests.swift */; };
 		041BADF2272A4FA6006268D5 /* vox_oasisUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041BADF1272A4FA6006268D5 /* vox_oasisUITests.swift */; };
 		041BADF4272A4FA6006268D5 /* vox_oasisUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041BADF3272A4FA6006268D5 /* vox_oasisUITestsLaunchTests.swift */; };
 		041BADFE272A500F006268D5 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042BB13026EA38EB00604751 /* Camera.swift */; };
@@ -217,17 +216,20 @@
 		041BAF14272B8A5B006268D5 /* PhysXPhysicsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041BAF13272B8A5B006268D5 /* PhysXPhysicsManager.swift */; };
 		042BB13426EA3EA400604751 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 042BB13326EA3EA400604751 /* Logging */; };
 		042C841226E4A7AE00BD3733 /* sampling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042C841126E4A7AE00BD3733 /* sampling.swift */; };
-		043CB42326EF590B004A0B21 /* Matrix3x3.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB42226EF590B004A0B21 /* Matrix3x3.test.swift */; };
-		043CB42526EF8954004A0B21 /* Quaternion.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB42426EF8954004A0B21 /* Quaternion.test.swift */; };
-		043CB42726F02520004A0B21 /* BoundingBox.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB42626F02520004A0B21 /* BoundingBox.test.swift */; };
-		043CB42B26F027E9004A0B21 /* Plane.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB42A26F027E9004A0B21 /* Plane.test.swift */; };
-		043CB42D26F02908004A0B21 /* BoundingSphere.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB42C26F02908004A0B21 /* BoundingSphere.test.swift */; };
-		043CB42F26F02A28004A0B21 /* BoundingFrustum.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB42E26F02A28004A0B21 /* BoundingFrustum.test.swift */; };
-		043CB43126F02C87004A0B21 /* CollisionUtil.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB43026F02C87004A0B21 /* CollisionUtil.test.swift */; };
-		043CB43326F03008004A0B21 /* Ray.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB43226F03008004A0B21 /* Ray.test.swift */; };
-		043CB43526F030EB004A0B21 /* Color.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB43426F030EB004A0B21 /* Color.test.swift */; };
-		043CB43726F03355004A0B21 /* MathUtil.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB43626F03355004A0B21 /* MathUtil.test.swift */; };
-		043CB43E26F1F176004A0B21 /* Transform.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB43D26F1F176004A0B21 /* Transform.test.swift */; };
+		042F0D9827337DD200FF4A26 /* Color.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB43426F030EB004A0B21 /* Color.test.swift */; };
+		042F0D9927337DD200FF4A26 /* Vector4.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE164F26EEE2C100201439 /* Vector4.test.swift */; };
+		042F0D9A27337DD200FF4A26 /* MathUtil.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB43626F03355004A0B21 /* MathUtil.test.swift */; };
+		042F0D9B27337DD200FF4A26 /* Vector2.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EFDE7726DF281D005FBB6F /* Vector2.test.swift */; };
+		042F0D9C27337DD200FF4A26 /* Matrix.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE165126EEE85D00201439 /* Matrix.test.swift */; };
+		042F0D9D27337DD200FF4A26 /* BoundingFrustum.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB42E26F02A28004A0B21 /* BoundingFrustum.test.swift */; };
+		042F0D9E27337DD200FF4A26 /* BoundingSphere.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB42C26F02908004A0B21 /* BoundingSphere.test.swift */; };
+		042F0D9F27337DD200FF4A26 /* Quaternion.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB42426EF8954004A0B21 /* Quaternion.test.swift */; };
+		042F0DA127337DD200FF4A26 /* CollisionUtil.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB43026F02C87004A0B21 /* CollisionUtil.test.swift */; };
+		042F0DA227337DD200FF4A26 /* Ray.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB43226F03008004A0B21 /* Ray.test.swift */; };
+		042F0DA327337DD200FF4A26 /* Plane.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB42A26F027E9004A0B21 /* Plane.test.swift */; };
+		042F0DA427337DD200FF4A26 /* BoundingBox.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB42626F02520004A0B21 /* BoundingBox.test.swift */; };
+		042F0DA527337DD200FF4A26 /* Vector3.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE164D26EED80600201439 /* Vector3.test.swift */; };
+		042F0DA627337DD200FF4A26 /* Matrix3x3.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043CB42226EF590B004A0B21 /* Matrix3x3.test.swift */; };
 		0452EC9926DFA0CD0015BFB1 /* voxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9826DFA0CD0015BFB1 /* voxApp.swift */; };
 		0452EC9B26DFA0CD0015BFB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */; };
 		0452EC9D26DFA0CD0015BFB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0452EC9C26DFA0CD0015BFB1 /* Assets.xcassets */; };
@@ -302,9 +304,6 @@
 		0497A1E926DF150800F61DE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0497A1E826DF150800F61DE9 /* Assets.xcassets */; };
 		0497A1EC26DF150800F61DE9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0497A1EB26DF150800F61DE9 /* Preview Assets.xcassets */; };
 		0497A20226DF150800F61DE9 /* DigitalVox2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A20126DF150800F61DE9 /* DigitalVox2UITests.swift */; };
-		04AE164E26EED80600201439 /* Vector3.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE164D26EED80600201439 /* Vector3.test.swift */; };
-		04AE165026EEE2C100201439 /* Vector4.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE164F26EEE2C100201439 /* Vector4.test.swift */; };
-		04AE165226EEE85D00201439 /* Matrix.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AE165126EEE85D00201439 /* Matrix.test.swift */; };
 		04AFFD4A272FAA5D005C2835 /* PhysXRaycastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFFD49272FAA5D005C2835 /* PhysXRaycastView.swift */; };
 		04CB88C427320E6700B0E398 /* Skeleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88C327320E6700B0E398 /* Skeleton.swift */; };
 		04CB88C7273211DE00B0E398 /* skeleton.usda in Resources */ = {isa = PBXBuildFile; fileRef = 04CB88C5273211DE00B0E398 /* skeleton.usda */; };
@@ -333,7 +332,6 @@
 		04EA0D7026E1205C00CA7833 /* ray2f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6F26E1205C00CA7833 /* ray2f.swift */; };
 		04EA0D7226E1206400CA7833 /* ray3f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D7126E1206400CA7833 /* ray3f.swift */; };
 		04EC860426E984C300F58934 /* monkey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEBAE26E5936A0078CFAF /* monkey.swift */; };
-		04EFDE7826DF281E005FBB6F /* Vector2.test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EFDE7726DF281D005FBB6F /* Vector2.test.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -435,7 +433,6 @@
 		041BADDC272A4FA5006268D5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		041BADDE272A4FA5006268D5 /* vox_oasis.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = vox_oasis.entitlements; sourceTree = "<group>"; };
 		041BADE3272A4FA6006268D5 /* vox.oasisTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = vox.oasisTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		041BADE7272A4FA6006268D5 /* vox_oasisTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = vox_oasisTests.swift; sourceTree = "<group>"; };
 		041BADED272A4FA6006268D5 /* vox.oasisUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = vox.oasisUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		041BADF1272A4FA6006268D5 /* vox_oasisUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = vox_oasisUITests.swift; sourceTree = "<group>"; };
 		041BADF3272A4FA6006268D5 /* vox_oasisUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = vox_oasisUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -1021,7 +1018,21 @@
 		041BADE6272A4FA6006268D5 /* vox.oasisTests */ = {
 			isa = PBXGroup;
 			children = (
-				041BADE7272A4FA6006268D5 /* vox_oasisTests.swift */,
+				04EFDE7726DF281D005FBB6F /* Vector2.test.swift */,
+				04AE164D26EED80600201439 /* Vector3.test.swift */,
+				04AE164F26EEE2C100201439 /* Vector4.test.swift */,
+				04AE165126EEE85D00201439 /* Matrix.test.swift */,
+				043CB42226EF590B004A0B21 /* Matrix3x3.test.swift */,
+				043CB42426EF8954004A0B21 /* Quaternion.test.swift */,
+				043CB42626F02520004A0B21 /* BoundingBox.test.swift */,
+				043CB42C26F02908004A0B21 /* BoundingSphere.test.swift */,
+				043CB42A26F027E9004A0B21 /* Plane.test.swift */,
+				043CB42E26F02A28004A0B21 /* BoundingFrustum.test.swift */,
+				043CB43026F02C87004A0B21 /* CollisionUtil.test.swift */,
+				043CB43226F03008004A0B21 /* Ray.test.swift */,
+				043CB43426F030EB004A0B21 /* Color.test.swift */,
+				043CB43626F03355004A0B21 /* MathUtil.test.swift */,
+				043CB43D26F1F176004A0B21 /* Transform.test.swift */,
 			);
 			path = vox.oasisTests;
 			sourceTree = "<group>";
@@ -1605,21 +1616,6 @@
 			isa = PBXGroup;
 			children = (
 				0497A1F826DF150800F61DE9 /* Info.plist */,
-				04EFDE7726DF281D005FBB6F /* Vector2.test.swift */,
-				04AE164D26EED80600201439 /* Vector3.test.swift */,
-				04AE164F26EEE2C100201439 /* Vector4.test.swift */,
-				04AE165126EEE85D00201439 /* Matrix.test.swift */,
-				043CB42226EF590B004A0B21 /* Matrix3x3.test.swift */,
-				043CB42426EF8954004A0B21 /* Quaternion.test.swift */,
-				043CB42626F02520004A0B21 /* BoundingBox.test.swift */,
-				043CB42C26F02908004A0B21 /* BoundingSphere.test.swift */,
-				043CB42A26F027E9004A0B21 /* Plane.test.swift */,
-				043CB42E26F02A28004A0B21 /* BoundingFrustum.test.swift */,
-				043CB43026F02C87004A0B21 /* CollisionUtil.test.swift */,
-				043CB43226F03008004A0B21 /* Ray.test.swift */,
-				043CB43426F030EB004A0B21 /* Color.test.swift */,
-				043CB43626F03355004A0B21 /* MathUtil.test.swift */,
-				043CB43D26F1F176004A0B21 /* Transform.test.swift */,
 			);
 			path = vox.renderTests;
 			sourceTree = "<group>";
@@ -2315,7 +2311,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				041BADE8272A4FA6006268D5 /* vox_oasisTests.swift in Sources */,
+				042F0DA627337DD200FF4A26 /* Matrix3x3.test.swift in Sources */,
+				042F0D9A27337DD200FF4A26 /* MathUtil.test.swift in Sources */,
+				042F0D9827337DD200FF4A26 /* Color.test.swift in Sources */,
+				042F0DA327337DD200FF4A26 /* Plane.test.swift in Sources */,
+				042F0DA527337DD200FF4A26 /* Vector3.test.swift in Sources */,
+				042F0D9D27337DD200FF4A26 /* BoundingFrustum.test.swift in Sources */,
+				042F0D9F27337DD200FF4A26 /* Quaternion.test.swift in Sources */,
+				042F0D9C27337DD200FF4A26 /* Matrix.test.swift in Sources */,
+				042F0DA127337DD200FF4A26 /* CollisionUtil.test.swift in Sources */,
+				042F0D9B27337DD200FF4A26 /* Vector2.test.swift in Sources */,
+				042F0D9927337DD200FF4A26 /* Vector4.test.swift in Sources */,
+				042F0D9E27337DD200FF4A26 /* BoundingSphere.test.swift in Sources */,
+				042F0DA427337DD200FF4A26 /* BoundingBox.test.swift in Sources */,
+				042F0DA227337DD200FF4A26 /* Ray.test.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2429,21 +2438,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04AE164E26EED80600201439 /* Vector3.test.swift in Sources */,
-				043CB42F26F02A28004A0B21 /* BoundingFrustum.test.swift in Sources */,
-				043CB42B26F027E9004A0B21 /* Plane.test.swift in Sources */,
-				04EFDE7826DF281E005FBB6F /* Vector2.test.swift in Sources */,
-				043CB43726F03355004A0B21 /* MathUtil.test.swift in Sources */,
-				043CB42D26F02908004A0B21 /* BoundingSphere.test.swift in Sources */,
-				04AE165026EEE2C100201439 /* Vector4.test.swift in Sources */,
-				04AE165226EEE85D00201439 /* Matrix.test.swift in Sources */,
-				043CB43E26F1F176004A0B21 /* Transform.test.swift in Sources */,
-				043CB43126F02C87004A0B21 /* CollisionUtil.test.swift in Sources */,
-				043CB43526F030EB004A0B21 /* Color.test.swift in Sources */,
-				043CB42526EF8954004A0B21 /* Quaternion.test.swift in Sources */,
-				043CB42726F02520004A0B21 /* BoundingBox.test.swift in Sources */,
-				043CB42326EF590B004A0B21 /* Matrix3x3.test.swift in Sources */,
-				043CB43326F03008004A0B21 /* Ray.test.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2498,7 +2492,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = vox.oasis/vox_oasis.entitlements;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -2572,7 +2566,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = vox.oasis/vox_oasis.entitlements;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;

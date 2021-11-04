@@ -7,7 +7,7 @@
 
 
 import XCTest
-@testable import vox_render
+@testable import vox_oasis
 
 class BoundingSphereTests: XCTestCase {
     override func setUpWithError() throws {

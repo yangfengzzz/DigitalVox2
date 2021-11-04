@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import vox_render
+@testable import vox_oasis
 
 class MathUtilTests: XCTestCase {
     override func setUpWithError() throws {
