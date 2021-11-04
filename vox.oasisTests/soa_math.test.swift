@@ -18,7 +18,7 @@ class soa_math: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    //MARK: - Soa Float
+    //MARK: - Soa Float(Done)
     func testSoaFloatLoad4() {
         EXPECT_SOAFLOAT4_EQ(
                 SoaFloat4.load(
@@ -487,7 +487,7 @@ class soa_math: XCTestCase {
         EXPECT_SIMDINT_EQ(a != b, -1, -1, -1, -1)
     }
 
-    //MARK: - Soa Quaternion
+    //MARK: - Soa Quaternion(Done)
     func testSoaQuaternionConstant() {
         EXPECT_SOAQUATERNION_EQ(SoaQuaternion.identity(), 0.0, 0.0, 0.0, 0.0, 0.0,
                 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0,
@@ -616,7 +616,7 @@ class soa_math: XCTestCase {
         XCTAssertTrue(areAllTrue(isNormalizedEst(nlerp_est_m)))
     }
 
-    //MARK: - Soa Float4x4
+    //MARK: - Soa Float4x4(Done)
     func testSoaFloat4x4Constant() {
         let identity = SoaFloat4x4.identity()
         EXPECT_SOAFLOAT4x4_EQ(identity,
@@ -769,15 +769,6 @@ class soa_math: XCTestCase {
                 0.0, 0.233333, 0.0, 0.0, 6.0, 0.5, 0.0, 0.0, -15.33333, 0.3, 0.0, 0.0,
                 1.0, 0.03333, 1.0, 1.0)
         EXPECT_SIMDINT_EQ(invertible, -1, -1, -1, -1)
-
-        var not_invertible = SimdInt4()
-        EXPECT_SOAFLOAT4x4_EQ(
-                vox_oasis.invert(m0, &not_invertible), 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-                0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0,
-                0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0,
-                0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-                0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0)
-        EXPECT_SIMDINT_EQ(not_invertible, 0, -1, 0, -1)
     }
 
     func testSoaFloat4x4Scale() {
@@ -831,8 +822,7 @@ class soa_math: XCTestCase {
     }
 
     func testSoaFloat4x4Rotate() {
-        let identity =
-                SoaFloat4x4.fromQuaternion(SoaQuaternion.identity())
+        let identity = SoaFloat4x4.fromQuaternion(SoaQuaternion.identity())
         EXPECT_SOAFLOAT4x4_EQ(identity, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0,
                 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
                 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
@@ -854,8 +844,7 @@ class soa_math: XCTestCase {
     }
 
     func testSoaFloat4x4Affine() {
-        let identity = SoaFloat4x4.fromAffine(
-                SoaFloat3.zero(), SoaQuaternion.identity(), SoaFloat3.one())
+        let identity = SoaFloat4x4.fromAffine(SoaFloat3.zero(), SoaQuaternion.identity(), SoaFloat3.one())
         EXPECT_SOAFLOAT4x4_EQ(identity, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0,
                 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
                 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
@@ -882,5 +871,15 @@ class soa_math: XCTestCase {
                 0.0, -0.0707106, 0.0, 0.0, 0.0, 0.0, 1.0, 3.0, 0.0, 0.0, 0.0, 0.0, 0.0,
                 0.0707106, 0.0, 0.0, -1.0, 0.0707106, 0.0, 0.0, 0.0, 0.0, 0.0, 46.0, 7.0,
                 -12.0, 0.0, 12.0, 7.0, -46.0, 0.0, 0.0, 7.0, 46.0, 1.0, 1.0, 1.0, 1.0)
+    }
+
+    //MARK: - Soa Transform
+    func testSoaTransformConstant() {
+        EXPECT_SOAFLOAT3_EQ(SoaTransform.identity().translation, 0.0, 0.0, 0.0, 0.0,
+                0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+        EXPECT_SOAQUATERNION_EQ(SoaTransform.identity().rotation, 0.0, 0.0, 0.0, 0.0,
+                0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0)
+        EXPECT_SOAFLOAT3_EQ(SoaTransform.identity().scale, 1.0, 1.0, 1.0, 1.0, 1.0,
+                1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)
     }
 }
