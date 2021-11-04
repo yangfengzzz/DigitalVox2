@@ -350,7 +350,109 @@ class VecMathTests: XCTestCase {
         XCTAssertTrue(compare(c, d, 0.2))
         XCTAssertFalse(compare(c, d, 0.05))
     }
-    
+
     //MARK: - Vec Quaternion
-    
+    func testQuaternionConstant() {
+        EXPECT_QUATERNION_EQ(VecQuaternion.identity(), 0.0, 0.0, 0.0, 1.0)
+    }
+
+    func testQuaternionAxisAngle() {
+        // Identity
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromAxisAngle(VecFloat3.y_axis(), 0.0), 0.0, 0.0, 0.0, 1.0)
+        EXPECT_FLOAT4_EQ(toAxisAngle(VecQuaternion.identity()), 1.0, 0.0, 0.0, 0.0)
+
+        // Other axis angles
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromAxisAngle(VecFloat3.y_axis(), kPi_2), 0.0, 0.70710677, 0.0, 0.70710677)
+        EXPECT_FLOAT4_EQ(toAxisAngle(VecQuaternion(0.0, 0.70710677, 0.0, 0.70710677)), 0.0, 1.0, 0.0, kPi_2)
+
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromAxisAngle(VecFloat3.y_axis(), -kPi_2), 0.0, -0.70710677, 0.0, 0.70710677)
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromAxisAngle(-VecFloat3.y_axis(), kPi_2), 0.0, -0.70710677, 0.0, 0.70710677)
+        EXPECT_FLOAT4_EQ(toAxisAngle(VecQuaternion(0.0, -0.70710677, 0.0, 0.70710677)), 0.0, -1.0, 0.0, kPi_2)
+
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromAxisAngle(VecFloat3.y_axis(), 3.0 * kPi_4), 0.0, 0.923879504, 0.0, 0.382683426)
+        EXPECT_FLOAT4_EQ(toAxisAngle(VecQuaternion(0.0, 0.923879504, 0.0, 0.382683426)), 0.0, 1.0, 0.0, 3.0 * kPi_4)
+
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromAxisAngle(VecFloat3(0.819865, 0.033034, -0.571604), 1.123), 0.4365425, 0.017589169, -0.30435428, 0.84645736)
+        EXPECT_FLOAT4_EQ(toAxisAngle(VecQuaternion(0.4365425, 0.017589169, -0.30435428, 0.84645736)), 0.819865, 0.033034, -0.571604, 1.123)
+    }
+
+    func testQuaternionAxisCosAngle() {
+        // Identity
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromAxisCosAngle(VecFloat3.y_axis(), 1.0), 0.0, 0.0, 0.0, 1.0)
+
+        // Other axis angles
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromAxisCosAngle(VecFloat3.y_axis(), cos(kPi_2)), 0.0, 0.70710677, 0.0, 0.70710677)
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromAxisCosAngle(-VecFloat3.y_axis(), cos(kPi_2)), 0.0, -0.70710677, 0.0, 0.70710677)
+
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromAxisCosAngle(VecFloat3.y_axis(), cos(3.0 * kPi_4)), 0.0, 0.923879504, 0.0, 0.382683426)
+
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromAxisCosAngle(VecFloat3(0.819865, 0.033034, -0.571604), cos(1.123)), 0.4365425, 0.017589169, -0.30435428, 0.84645736)
+    }
+
+    func testQuaternionQuaternionEuler() {
+        // Identity
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromEuler(0.0, 0.0, 0.0), 0.0, 0.0, 0.0, 1.0)
+        EXPECT_FLOAT3_EQ(toEuler(VecQuaternion.identity()), 0.0, 0.0, 0.0)
+
+        // Heading
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromEuler(kPi_2, 0.0, 0.0), 0.0, 0.70710677, 0.0, 0.70710677)
+        EXPECT_FLOAT3_EQ(toEuler(VecQuaternion(0.0, 0.70710677, 0.0, 0.70710677)), kPi_2, 0.0, 0.0)
+
+        // Elevation
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromEuler(0.0, kPi_2, 0.0), 0.0, 0.0, 0.70710677, 0.70710677)
+        EXPECT_FLOAT3_EQ(toEuler(VecQuaternion(0.0, 0.0, 0.70710677, 0.70710677)), 0.0, kPi_2, 0.0)
+
+        // Bank
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromEuler(0.0, 0.0, kPi_2), 0.70710677, 0.0, 0.0, 0.70710677)
+        EXPECT_FLOAT3_EQ(toEuler(VecQuaternion(0.70710677, 0.0, 0.0, 0.70710677)), 0.0, 0.0, kPi_2)
+
+        // Any rotation
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromEuler(kPi / 4.0, -kPi / 6.0, kPi_2), 0.56098551, 0.092295974, -0.43045932, 0.70105737)
+        EXPECT_FLOAT3_EQ(toEuler(VecQuaternion(0.56098551, 0.092295974, -0.43045932, 0.70105737)), kPi / 4.0, -kPi / 6.0, kPi_2)
+    }
+
+    func testQuaternionFromVectors() {
+        // Returns identity for a 0 length vector
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromVectors(VecFloat3.zero(), VecFloat3.x_axis()), 0.0, 0.0, 0.0, 1.0)
+
+        // pi/2 around y
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromVectors(VecFloat3.z_axis(), VecFloat3.x_axis()), 0.0, 0.707106769, 0.0, 0.707106769)
+
+        // Non unit pi/2 around y
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromVectors(VecFloat3.z_axis() * 7.0, VecFloat3.x_axis()), 0.0, 0.707106769, 0.0, 0.707106769)
+
+        // Minus pi/2 around y
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromVectors(VecFloat3.x_axis(), VecFloat3.z_axis()), 0.0, -0.707106769, 0.0, 0.707106769)
+
+        // pi/2 around x
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromVectors(VecFloat3.y_axis(), VecFloat3.z_axis()), 0.707106769, 0.0, 0.0, 0.707106769)
+
+        // Non unit pi/2 around x
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromVectors(VecFloat3.y_axis() * 9.0, VecFloat3.z_axis() * 13.0), 0.707106769, 0.0, 0.0, 0.707106769)
+
+        // pi/2 around z
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromVectors(VecFloat3.x_axis(), VecFloat3.y_axis()), 0.0, 0.0, 0.707106769, 0.707106769)
+
+        // pi/2 around z also
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromVectors(VecFloat3(0.707106769, 0.707106769, 0.0), VecFloat3(-0.707106769, 0.707106769, 0.0)), 0.0, 0.0, 0.707106769, 0.707106769)
+
+        // Aligned vectors
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromVectors(VecFloat3.x_axis(), VecFloat3.x_axis()), 0.0, 0.0, 0.0, 1.0)
+
+        // Non-unit aligned vectors
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromVectors(VecFloat3.x_axis(), VecFloat3.x_axis() * 2.0), 0.0, 0.0, 0.0, 1.0)
+
+        // Opposed vectors
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromVectors(VecFloat3.x_axis(), -VecFloat3.x_axis()), 0.0, 1.0, 0.0, 0)
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromVectors(-VecFloat3.x_axis(), VecFloat3.x_axis()), 0.0, -1.0, 0.0, 0)
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromVectors(VecFloat3.y_axis(), -VecFloat3.y_axis()), 0.0, 0.0, 1.0, 0)
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromVectors(-VecFloat3.y_axis(), VecFloat3.y_axis()), 0.0, 0.0, -1.0, 0)
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromVectors(VecFloat3.z_axis(), -VecFloat3.z_axis()), 0.0, -1.0, 0.0, 0)
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromVectors(-VecFloat3.z_axis(), VecFloat3.z_axis()), 0.0, 1.0, 0.0, 0)
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromVectors(VecFloat3(0.707106769, 0.707106769, 0.0), -VecFloat3(0.707106769, 0.707106769, 0.0)), -0.707106769, 0.707106769, 0.0, 0)
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromVectors(VecFloat3(0.0, 0.707106769, 0.707106769), -VecFloat3(0.0, 0.707106769, 0.707106769)), 0.0, -0.707106769, 0.707106769, 0)
+
+        // Non-unit opposed vectors
+        EXPECT_QUATERNION_EQ(VecQuaternion.fromVectors(VecFloat3(2.0, 2.0, 2.0), -VecFloat3(2.0, 2.0, 2.0)), 0.0, -0.707106769, 0.707106769, 0)
+    }
 }
