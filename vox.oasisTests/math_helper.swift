@@ -167,6 +167,11 @@ func EXPECT_SOAFLOAT2_EQ(_ _expected: SoaFloat2,
     _IMPL_EXPECT_SIMDFLOAT_EQ(_expected.y, _y0, _y1, _y2, _y3)
 }
 
+func EXPECT_SOAFLOAT1_EQ(_ _expected: simd_float4,
+                         _ _x0: Float, _ _x1: Float, _ _x2: Float, _ _x3: Float) {
+    _IMPL_EXPECT_SIMDFLOAT_EQ(_expected, _x0, _x1, _x2, _x3)
+}
+
 func EXPECT_SOAQUATERNION_EQ(_ _expected: SoaQuaternion,
                              _ _x0: Float, _ _x1: Float, _ _x2: Float, _ _x3: Float,
                              _ _y0: Float, _ _y1: Float, _ _y2: Float, _ _y3: Float,
