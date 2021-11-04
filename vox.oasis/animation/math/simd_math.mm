@@ -279,7 +279,7 @@ inline SimdFloat4 DivX(_SimdFloat4 _a, _SimdFloat4 _b) {
 }
 
 + (SimdFloat4)Swizzle1201With:(_SimdFloat4)_v {
-    return OZZ_SHUFFLE_PS1(_v, _MM_SHUFFLE(1, 2, 0, 1));
+    return OZZ_SHUFFLE_PS1(_v, _MM_SHUFFLE(1, 0, 2, 1));
 }
 
 + (SimdFloat4)Swizzle2011With:(_SimdFloat4)_v {

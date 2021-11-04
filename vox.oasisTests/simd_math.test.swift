@@ -867,4 +867,369 @@ class SimdMathTests: XCTestCase {
         let shift_ru = shiftRu(a, 3)
         EXPECT_SIMDINT_EQ(shift_ru, 0x1fffffff, 0x00000000, 0x10000000, 0x0fffffff)
     }
+
+    func testTransposeFloat() {
+    }
+
+    //MARK: - SimdQuaternion
+    func testQuaternionConstant() {
+        EXPECT_SIMDQUATERNION_EQ(SimdQuaternion.identity(), 0.0, 0.0, 0.0, 1.0)
+    }
+
+    func testQuaternionArithmetic() {
+        let a = SimdQuaternion(xyzw: simd_float4.load(0.70710677, 0.0, 0.0, 0.70710677))
+        let b = SimdQuaternion(xyzw: simd_float4.load(0.0, 0.70710677, 0.0, 0.70710677))
+        let c = SimdQuaternion(xyzw: simd_float4.load(0.0, 0.70710677, 0.0, -0.70710677))
+        let denorm = SimdQuaternion(xyzw: simd_float4.load(1.414212, 0.0, 0.0, 1.414212))
+        let zero = SimdQuaternion(xyzw: simd_float4.zero())
+
+        EXPECT_SIMDINT_EQ(isNormalized(a), -1, 0, 0, 0)
+        EXPECT_SIMDINT_EQ(isNormalized(b), -1, 0, 0, 0)
+        EXPECT_SIMDINT_EQ(isNormalized(c), -1, 0, 0, 0)
+        EXPECT_SIMDINT_EQ(isNormalized(denorm), 0, 0, 0, 0)
+
+        let conjugate = conjugate(a)
+        EXPECT_SIMDQUATERNION_EQ(conjugate, -0.70710677, 0.0, 0.0, 0.70710677)
+
+        let negate = -a
+        EXPECT_SIMDQUATERNION_EQ(negate, -0.70710677, 0.0, 0.0, -0.70710677)
+
+        let mul0 = a * conjugate
+        EXPECT_SIMDQUATERNION_EQ(mul0, 0.0, 0.0, 0.0, 1.0)
+
+        let mul1 = conjugate * a
+        EXPECT_SIMDQUATERNION_EQ(mul1, 0.0, 0.0, 0.0, 1.0)
+
+        let q1234 = SimdQuaternion(xyzw:
+        simd_float4.load(1.0, 2.0, 3.0, 4.0))
+        let q5678 = SimdQuaternion(xyzw:
+        simd_float4.load(5.0, 6.0, 7.0, 8.0))
+        let mul12345678 = q1234 * q5678
+        EXPECT_SIMDQUATERNION_EQ(mul12345678, 24.0, 48.0, 48.0, -6.0)
+
+        let norm = normalize(denorm)
+        EXPECT_SIMDINT_EQ(isNormalized(norm), -1, 0, 0, 0)
+        EXPECT_SIMDQUATERNION_EQ(norm, 0.7071068, 0.0, 0.0, 0.7071068)
+
+        // EXPECT_ASSERTION(NormalizeSafe(denorm, zero), "_safer is not normalized")
+        let norm_safe = normalizeSafe(denorm, b)
+        EXPECT_SIMDINT_EQ(isNormalized(norm_safe), -1, 0, 0, 0)
+        EXPECT_SIMDQUATERNION_EQ(norm_safe, 0.7071068, 0.0, 0.0, 0.7071068)
+        let norm_safer = normalizeSafe(zero, b)
+        EXPECT_SIMDINT_EQ(isNormalized(norm_safer), -1, 0, 0, 0)
+        EXPECT_SIMDQUATERNION_EQ(norm_safer, 0.0, 0.70710677, 0.0, 0.70710677)
+
+        let norm_est = normalizeEst(denorm)
+        EXPECT_SIMDINT_EQ(isNormalizedEst(norm_est), -1, 0, 0, 0)
+        EXPECT_SIMDQUATERNION_EQ_EST(norm_est, 0.7071068, 0.0, 0.0, 0.7071068)
+
+        // EXPECT_ASSERTION(NormalizeSafe(denorm, zero), "_safer is not normalized")
+        let norm_safe_est = normalizeSafeEst(denorm, b)
+        EXPECT_SIMDINT_EQ(isNormalizedEst(norm_safe_est), -1, 0, 0, 0)
+        EXPECT_SIMDQUATERNION_EQ_EST(norm_safe_est, 0.7071068, 0.0, 0.0, 0.7071068)
+        let norm_safer_est = normalizeSafeEst(zero, b)
+        EXPECT_SIMDINT_EQ(isNormalizedEst(norm_safer_est), -1, 0, 0, 0)
+        EXPECT_SIMDQUATERNION_EQ_EST(norm_safer_est, 0.0, 0.70710677, 0.0, 0.70710677)
+    }
+
+    func testQuaternionFromVectors() {
+        // Returns identity for a 0 length vector
+        EXPECT_SIMDQUATERNION_EQ(SimdQuaternion.fromVectors(simd_float4.zero(),
+                simd_float4.x_axis()),
+                0.0, 0.0, 0.0, 1.0)
+
+        // pi/2 around y
+        EXPECT_SIMDQUATERNION_EQ(
+                SimdQuaternion.fromVectors(simd_float4.z_axis(),
+                        simd_float4.x_axis()),
+                0.0, 0.707106769, 0.0, 0.707106769)
+
+        // Non unit pi/2 around y
+        EXPECT_SIMDQUATERNION_EQ(
+                SimdQuaternion.fromVectors(simd_float4.z_axis(),
+                        simd_float4.x_axis() *
+                                simd_float4.load1(27.0)),
+                0.0, 0.707106769, 0.0, 0.707106769)
+
+        // Minus pi/2 around y
+        EXPECT_SIMDQUATERNION_EQ(
+                SimdQuaternion.fromVectors(simd_float4.x_axis(),
+                        simd_float4.z_axis()),
+                0.0, -0.707106769, 0.0, 0.707106769)
+
+        // pi/2 around x
+        EXPECT_SIMDQUATERNION_EQ(
+                SimdQuaternion.fromVectors(simd_float4.y_axis(),
+                        simd_float4.z_axis()),
+                0.707106769, 0.0, 0.0, 0.707106769)
+
+        // pi/2 around z
+        EXPECT_SIMDQUATERNION_EQ(
+                SimdQuaternion.fromVectors(simd_float4.x_axis(),
+                        simd_float4.y_axis()),
+                0.0, 0.0, 0.707106769, 0.707106769)
+
+        // pi/2 around z also
+        EXPECT_SIMDQUATERNION_EQ(
+                SimdQuaternion.fromVectors(
+                        simd_float4.load(0.707106769, 0.707106769, 0.0, 99.0),
+                        simd_float4.load(-0.707106769, 0.707106769, 0.0, 93.0)),
+                0.0, 0.0, 0.707106769, 0.707106769)
+
+        // Non unit pi/2 around z also
+        EXPECT_SIMDQUATERNION_EQ(
+                SimdQuaternion.fromVectors(
+                        simd_float4.load(0.707106769, 0.707106769, 0.0, 99.0) *
+                                simd_float4.load1(9.0),
+                        simd_float4.load(-0.707106769, 0.707106769, 0.0, 93.0) *
+                                simd_float4.load1(46.0)),
+                0.0, 0.0, 0.707106769, 0.707106769)
+
+        // Non-unit pi/2 around z
+        EXPECT_SIMDQUATERNION_EQ(
+                SimdQuaternion.fromVectors(simd_float4.x_axis(),
+                        simd_float4.y_axis() *
+                                simd_float4.load1(2.0)),
+                0.0, 0.0, 0.707106769, 0.707106769)
+
+        // Aligned vectors
+        EXPECT_SIMDQUATERNION_EQ(
+                SimdQuaternion.fromVectors(simd_float4.x_axis(),
+                        simd_float4.x_axis()),
+                0.0, 0.0, 0.0, 1.0)
+
+        // Non-unit aligned vectors
+        EXPECT_SIMDQUATERNION_EQ(
+                SimdQuaternion.fromVectors(simd_float4.x_axis(),
+                        simd_float4.x_axis() *
+                                simd_float4.load1(2.0)),
+                0.0, 0.0, 0.0, 1.0)
+
+        // Opposed vectors
+        EXPECT_SIMDQUATERNION_EQ(
+                SimdQuaternion.fromVectors(simd_float4.x_axis(),
+                        -simd_float4.x_axis()),
+                0.0, 1.0, 0.0, 0)
+        EXPECT_SIMDQUATERNION_EQ(
+                SimdQuaternion.fromVectors(-simd_float4.x_axis(),
+                        simd_float4.x_axis()),
+                0.0, -1.0, 0.0, 0)
+        EXPECT_SIMDQUATERNION_EQ(
+                SimdQuaternion.fromVectors(simd_float4.y_axis(),
+                        -simd_float4.y_axis()),
+                0.0, 0.0, 1.0, 0)
+        EXPECT_SIMDQUATERNION_EQ(
+                SimdQuaternion.fromVectors(-simd_float4.y_axis(),
+                        simd_float4.y_axis()),
+                0.0, 0.0, -1.0, 0)
+        EXPECT_SIMDQUATERNION_EQ(
+                SimdQuaternion.fromVectors(simd_float4.z_axis(),
+                        -simd_float4.z_axis()),
+                0.0, -1.0, 0.0, 0)
+        EXPECT_SIMDQUATERNION_EQ(
+                SimdQuaternion.fromVectors(-simd_float4.z_axis(),
+                        simd_float4.z_axis()),
+                0.0, 1.0, 0.0, 0)
+        EXPECT_SIMDQUATERNION_EQ(
+                SimdQuaternion.fromVectors(
+                        simd_float4.load(0.707106769, 0.707106769, 0.0, 93.0),
+                        -simd_float4.load(0.707106769, 0.707106769, 0.0, 99.0)),
+                -0.707106769, 0.707106769, 0.0, 0.0)
+        EXPECT_SIMDQUATERNION_EQ(
+                SimdQuaternion.fromVectors(
+                        simd_float4.load(0.0, 0.707106769, 0.707106769, 93.0),
+                        -simd_float4.load(0.0, 0.707106769, 0.707106769, 99.0)),
+                0.0, -0.707106769, 0.707106769, 0.0)
+
+        // Non-unit opposed vectors
+        EXPECT_SIMDQUATERNION_EQ(
+                SimdQuaternion.fromVectors(
+                        simd_float4.load(2.0, 2.0, 2.0, 0.0),
+                        simd_float4.load(-2.0, -2.0, -2.0, 0.0)),
+                0.0, -0.707106769, 0.707106769, 0)
+    }
+
+    func testQuaternionFromUnitVectors() {
+        // pi/2 around y
+        EXPECT_SIMDQUATERNION_EQ(
+                SimdQuaternion.fromUnitVectors(simd_float4.z_axis(),
+                        simd_float4.x_axis()),
+                0.0, 0.707106769, 0.0, 0.707106769)
+
+        // Minus pi/2 around y
+        EXPECT_SIMDQUATERNION_EQ(
+                SimdQuaternion.fromUnitVectors(simd_float4.x_axis(),
+                        simd_float4.z_axis()),
+                0.0, -0.707106769, 0.0, 0.707106769)
+
+        // pi/2 around x
+        EXPECT_SIMDQUATERNION_EQ(
+                SimdQuaternion.fromUnitVectors(simd_float4.y_axis(),
+                        simd_float4.z_axis()),
+                0.707106769, 0.0, 0.0, 0.707106769)
+
+        // pi/2 around z
+        EXPECT_SIMDQUATERNION_EQ(
+                SimdQuaternion.fromUnitVectors(simd_float4.x_axis(),
+                        simd_float4.y_axis()),
+                0.0, 0.0, 0.707106769, 0.707106769)
+
+        // pi/2 around z also
+        EXPECT_SIMDQUATERNION_EQ(
+                SimdQuaternion.fromUnitVectors(
+                        simd_float4.load(0.707106769, 0.707106769, 0.0, 99.0),
+                        simd_float4.load(-0.707106769, 0.707106769, 0.0, 93.0)),
+                0.0, 0.0, 0.707106769, 0.707106769)
+
+        // Aligned vectors
+        EXPECT_SIMDQUATERNION_EQ(
+                SimdQuaternion.fromUnitVectors(simd_float4.x_axis(),
+                        simd_float4.x_axis()),
+                0.0, 0.0, 0.0, 1.0)
+
+        // Opposed vectors
+        EXPECT_SIMDQUATERNION_EQ(
+                SimdQuaternion.fromUnitVectors(simd_float4.x_axis(),
+                        -simd_float4.x_axis()),
+                0.0, 1.0, 0.0, 0)
+        EXPECT_SIMDQUATERNION_EQ(
+                SimdQuaternion.fromUnitVectors(-simd_float4.x_axis(),
+                        simd_float4.x_axis()),
+                0.0, -1.0, 0.0, 0)
+        EXPECT_SIMDQUATERNION_EQ(
+                SimdQuaternion.fromUnitVectors(simd_float4.y_axis(),
+                        -simd_float4.y_axis()),
+                0.0, 0.0, 1.0, 0)
+        EXPECT_SIMDQUATERNION_EQ(
+                SimdQuaternion.fromUnitVectors(-simd_float4.y_axis(),
+                        simd_float4.y_axis()),
+                0.0, 0.0, -1.0, 0)
+        EXPECT_SIMDQUATERNION_EQ(
+                SimdQuaternion.fromUnitVectors(simd_float4.z_axis(),
+                        -simd_float4.z_axis()),
+                0.0, -1.0, 0.0, 0)
+        EXPECT_SIMDQUATERNION_EQ(
+                SimdQuaternion.fromUnitVectors(-simd_float4.z_axis(),
+                        simd_float4.z_axis()),
+                0.0, 1.0, 0.0, 0)
+        EXPECT_SIMDQUATERNION_EQ(
+                SimdQuaternion.fromUnitVectors(
+                        simd_float4.load(0.707106769, 0.707106769, 0.0, 93.0),
+                        -simd_float4.load(0.707106769, 0.707106769, 0.0, 99.0)),
+                -0.707106769, 0.707106769, 0.0, 0.0)
+        EXPECT_SIMDQUATERNION_EQ(
+                SimdQuaternion.fromUnitVectors(
+                        simd_float4.load(0.0, 0.707106769, 0.707106769, 93.0),
+                        -simd_float4.load(0.0, 0.707106769, 0.707106769, 99.0)),
+                0.0, -0.707106769, 0.707106769, 0.0)
+    }
+
+    func testQuaternionAxisAngle() {
+        // Identity
+        EXPECT_SIMDQUATERNION_EQ(
+                SimdQuaternion.fromAxisAngle(simd_float4.x_axis(),
+                        simd_float4.zero()),
+                0.0, 0.0, 0.0, 1.0)
+        EXPECT_SIMDFLOAT_EQ(toAxisAngle(SimdQuaternion.identity()), 1.0, 0.0, 0.0,
+                0.0)
+
+        // Other axis angles
+        let pi_2 = simd_float4.loadX(kPi_2)
+        let qy_pi_2 = SimdQuaternion.fromAxisAngle(simd_float4.y_axis(), pi_2)
+        EXPECT_SIMDQUATERNION_EQ(qy_pi_2, 0.0, 0.70710677, 0.0, 0.70710677)
+        EXPECT_SIMDFLOAT_EQ(toAxisAngle(qy_pi_2), 0.0, 1.0, 0.0, kPi_2)
+
+        let qy_mpi_2 = SimdQuaternion.fromAxisAngle(simd_float4.y_axis(), -pi_2)
+        EXPECT_SIMDQUATERNION_EQ(qy_mpi_2, 0.0, -0.70710677, 0.0, 0.70710677)
+        EXPECT_SIMDFLOAT_EQ(toAxisAngle(qy_mpi_2), 0.0, -1.0, 0.0, kPi_2)  // q = -q
+        let qmy_pi_2 = SimdQuaternion.fromAxisAngle(-simd_float4.y_axis(), pi_2)
+        EXPECT_SIMDQUATERNION_EQ(qmy_pi_2, 0.0, -0.70710677, 0.0, 0.70710677)
+
+        let any_axis = simd_float4.load(0.819865, 0.033034, -0.571604, 99.0)
+        let any_angle = simd_float4.load(1.123, 99.0, 26.0, 93.0)
+        let qany = SimdQuaternion.fromAxisAngle(any_axis, any_angle)
+        EXPECT_SIMDQUATERNION_EQ(qany, 0.4365425, 0.017589169, -0.30435428,
+                0.84645736)
+        EXPECT_SIMDFLOAT_EQ(toAxisAngle(qany), 0.819865, 0.033034, -0.571604, 1.123)
+    }
+
+    func testQuaternionAxisCosAngle() {
+        // Identity
+        EXPECT_SIMDQUATERNION_EQ(
+                SimdQuaternion.fromAxisCosAngle(
+                        simd_float4.y_axis(),
+                        simd_float4.load(1.0, 99.0, 93.0, 5.0)),
+                0.0, 0.0, 0.0, 1.0)
+
+        // Other axis angles
+        EXPECT_SIMDQUATERNION_EQ(
+                SimdQuaternion.fromAxisCosAngle(
+                        simd_float4.y_axis(),
+                        simd_float4.load(cos(kPi_2), 99.0, 93.0,
+                                5.0)),
+                0.0, 0.70710677, 0.0, 0.70710677)
+        EXPECT_SIMDQUATERNION_EQ(
+                SimdQuaternion.fromAxisCosAngle(
+                        -simd_float4.y_axis(),
+                        simd_float4.load(cos(kPi_2), 99.0, 93.0,
+                                5.0)),
+                0.0, -0.70710677, 0.0, 0.70710677)
+
+        EXPECT_SIMDQUATERNION_EQ(
+                SimdQuaternion.fromAxisCosAngle(
+                        simd_float4.y_axis(),
+                        simd_float4.load(cos(3.0 * kPi_4), 99.0,
+                                93.0, 5.0)),
+                0.0, 0.923879504, 0.0, 0.382683426)
+
+        EXPECT_SIMDQUATERNION_EQ(
+                SimdQuaternion.fromAxisCosAngle(
+                        simd_float4.load(0.819865, 0.033034, -0.571604, 99.0),
+                        simd_float4.load(cos(1.123), 99.0, 93.0, 5.0)),
+                0.4365425, 0.017589169, -0.30435428, 0.84645736)
+    }
+
+    func testQuaternionTransformVector() {
+        // 0 length
+        EXPECT_SIMDFLOAT3_EQ(transformVector(SimdQuaternion.fromAxisAngle(
+                simd_float4.y_axis(),
+                simd_float4.zero()),
+                simd_float4.zero()),
+                0, 0, 0)
+
+        // Unit length
+        EXPECT_SIMDFLOAT3_EQ(transformVector(SimdQuaternion.fromAxisAngle(
+                simd_float4.y_axis(),
+                simd_float4.zero()),
+                simd_float4.z_axis()),
+                0, 0, 1)
+
+        let pi_2 = simd_float4.loadX(kPi_2)
+        EXPECT_SIMDFLOAT3_EQ(
+                transformVector(
+                        SimdQuaternion.fromAxisAngle(simd_float4.y_axis(), pi_2),
+                        simd_float4.y_axis()),
+                0, 1, 0)
+        EXPECT_SIMDFLOAT3_EQ(
+                transformVector(
+                        SimdQuaternion.fromAxisAngle(simd_float4.y_axis(), pi_2),
+                        simd_float4.x_axis()),
+                0, 0, -1)
+        EXPECT_SIMDFLOAT3_EQ(
+                transformVector(
+                        SimdQuaternion.fromAxisAngle(simd_float4.y_axis(), pi_2),
+                        simd_float4.z_axis()),
+                1, 0, 0)
+
+        // Non unit
+        EXPECT_SIMDFLOAT3_EQ(
+                transformVector(
+                        SimdQuaternion.fromAxisAngle(simd_float4.z_axis(), pi_2),
+                        simd_float4.x_axis() *
+                                simd_float4.load1(2.0)),
+                0, 2, 0)
+    }
+
+    //MARK: - simd_float4x4
+
 }

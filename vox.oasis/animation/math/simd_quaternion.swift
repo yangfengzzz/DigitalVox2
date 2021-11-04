@@ -128,14 +128,10 @@ extension SimdQuaternion {
         //    _a.w * _b.y + _a.y * _b.w + _a.z * _b.x - _a.x * _b.z
         //    _a.w * _b.z + _a.z * _b.w + _a.x * _b.y - _a.y * _b.x
         // - (_a.z * _b.z + _a.x * _b.x + _a.y * _b.y - _a.w * _b.w)
-        let p1 =
-                swizzle3332(_a.xyzw) * swizzle0122(_b.xyzw)
-        let p2 =
-                swizzle0120(_a.xyzw) * swizzle3330(_b.xyzw)
-        let p13 =
-                mAdd(swizzle1201(_a.xyzw), swizzle2011(_b.xyzw), p1)
-        let p24 =
-                nMAdd(swizzle2013(_a.xyzw), swizzle1203(_b.xyzw), p2)
+        let p1 = swizzle3332(_a.xyzw) * swizzle0122(_b.xyzw)
+        let p2 = swizzle0120(_a.xyzw) * swizzle3330(_b.xyzw)
+        let p13 = mAdd(swizzle1201(_a.xyzw), swizzle2011(_b.xyzw), p1)
+        let p24 = nMAdd(swizzle2013(_a.xyzw), swizzle1203(_b.xyzw), p2)
         let quat = SimdQuaternion(xyzw: xor(p13 + p24, SimdInt4.mask_sign_w()))
         return quat
     }
