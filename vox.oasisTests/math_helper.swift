@@ -194,23 +194,23 @@ func EXPECT_SOAQUATERNION_EQ_EST(_ _expected: SoaQuaternion,
     _IMPL_EXPECT_SIMDFLOAT_EQ_EST(_expected.w, _w0, _w1, _w2, _w3)
 }
 
-func EXPECT_SOAFLOAT4x4_EQ(expected: SoaFloat4x4,
-                           col0xx: Float, col0xy: Float, col0xz: Float, col0xw: Float,
-                           col0yx: Float, col0yy: Float, col0yz: Float, col0yw: Float,
-                           col0zx: Float, col0zy: Float, col0zz: Float, col0zw: Float,
-                           col0wx: Float, col0wy: Float, col0wz: Float, col0ww: Float,
-                           col1xx: Float, col1xy: Float, col1xz: Float, col1xw: Float,
-                           col1yx: Float, col1yy: Float, col1yz: Float, col1yw: Float,
-                           col1zx: Float, col1zy: Float, col1zz: Float, col1zw: Float,
-                           col1wx: Float, col1wy: Float, col1wz: Float, col1ww: Float,
-                           col2xx: Float, col2xy: Float, col2xz: Float, col2xw: Float,
-                           col2yx: Float, col2yy: Float, col2yz: Float, col2yw: Float,
-                           col2zx: Float, col2zy: Float, col2zz: Float, col2zw: Float,
-                           col2wx: Float, col2wy: Float, col2wz: Float, col2ww: Float,
-                           col3xx: Float, col3xy: Float, col3xz: Float, col3xw: Float,
-                           col3yx: Float, col3yy: Float, col3yz: Float, col3yw: Float,
-                           col3zx: Float, col3zy: Float, col3zz: Float, col3zw: Float,
-                           col3wx: Float, col3wy: Float, col3wz: Float, col3ww: Float) {
+func EXPECT_SOAFLOAT4x4_EQ(_ expected: SoaFloat4x4,
+                           _ col0xx: Float, _ col0xy: Float, _ col0xz: Float, _ col0xw: Float,
+                           _ col0yx: Float, _ col0yy: Float, _ col0yz: Float, _ col0yw: Float,
+                           _ col0zx: Float, _ col0zy: Float, _ col0zz: Float, _ col0zw: Float,
+                           _ col0wx: Float, _ col0wy: Float, _ col0wz: Float, _ col0ww: Float,
+                           _ col1xx: Float, _ col1xy: Float, _ col1xz: Float, _ col1xw: Float,
+                           _ col1yx: Float, _ col1yy: Float, _ col1yz: Float, _ col1yw: Float,
+                           _ col1zx: Float, _ col1zy: Float, _ col1zz: Float, _ col1zw: Float,
+                           _ col1wx: Float, _ col1wy: Float, _ col1wz: Float, _ col1ww: Float,
+                           _ col2xx: Float, _ col2xy: Float, _ col2xz: Float, _ col2xw: Float,
+                           _ col2yx: Float, _ col2yy: Float, _ col2yz: Float, _ col2yw: Float,
+                           _ col2zx: Float, _ col2zy: Float, _ col2zz: Float, _ col2zw: Float,
+                           _ col2wx: Float, _ col2wy: Float, _ col2wz: Float, _ col2ww: Float,
+                           _ col3xx: Float, _ col3xy: Float, _ col3xz: Float, _ col3xw: Float,
+                           _ col3yx: Float, _ col3yy: Float, _ col3yz: Float, _ col3yw: Float,
+                           _ col3zx: Float, _ col3zy: Float, _ col3zz: Float, _ col3zw: Float,
+                           _ col3wx: Float, _ col3wy: Float, _ col3wz: Float, _ col3ww: Float) {
     _IMPL_EXPECT_SIMDFLOAT_EQ(expected.cols.0.x, col0xx, col0xy, col0xz, col0xw)
     _IMPL_EXPECT_SIMDFLOAT_EQ(expected.cols.0.y, col0yx, col0yy, col0yz, col0yw)
     _IMPL_EXPECT_SIMDFLOAT_EQ(expected.cols.0.z, col0zx, col0zy, col0zz, col0zw)
