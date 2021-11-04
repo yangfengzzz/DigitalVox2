@@ -1207,6 +1207,10 @@ extension SimdInt4 {
         OZZInt4.loadX(with: _x)
     }
 
+    static func loadX(_ _x: Int32) -> SimdInt4 {
+        OZZInt4.loadX(with: _x)
+    }
+
     /// Loads _x to the all the components of the returned vector using the following
     /// conversion rule.
     /// r.x = _x ? 0xffffffff:0
@@ -1214,6 +1218,10 @@ extension SimdInt4 {
     /// r.z = _x ? 0xffffffff:0
     /// r.w = _x ? 0xffffffff:0
     static func load1(_ _x: Bool) -> SimdInt4 {
+        OZZInt4.load1(with: _x)
+    }
+
+    static func load1(_ _x: Int32) -> SimdInt4 {
         OZZInt4.load1(with: _x)
     }
 
@@ -1592,7 +1600,7 @@ func clamp(_ _a: _SimdInt4, _ _v: _SimdInt4, _ _b: _SimdInt4) -> SimdInt4 {
 /// Returns boolean selection of vectors _true and _false according to consition
 /// _b. All bits a each component of _b must have the same value (O or
 /// 0xffffffff) to ensure portability.
-func select(_ _b: _SimdInt4, _true: _SimdInt4, _false: _SimdInt4) -> SimdInt4 {
+func select(_ _b: _SimdInt4, _ _true: _SimdInt4, _ _false: _SimdInt4) -> SimdInt4 {
     OZZInt4.select(with: _b, _true, _false)
 }
 

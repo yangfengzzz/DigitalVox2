@@ -577,4 +577,294 @@ class SimdMathTests: XCTestCase {
             pow += 1.0
         }
     }
+
+    //MARK: - Int Math
+    func testLoadInt() {
+        let iX = SimdInt4.loadX(15)
+        EXPECT_SIMDINT_EQ(iX, 15, 0, 0, 0)
+
+        let i1 = SimdInt4.load1(15)
+        EXPECT_SIMDINT_EQ(i1, 15, 15, 15, 15)
+
+        let i4 = SimdInt4.load(1, -1, 2, -3)
+        EXPECT_SIMDINT_EQ(i4, 1, -1, 2, -3)
+
+        let itX = SimdInt4.loadX(true)
+        EXPECT_SIMDINT_EQ(itX, -1, 0, 0, 0)
+
+        let ifX = SimdInt4.loadX(false)
+        EXPECT_SIMDINT_EQ(ifX, 0, 0, 0, 0)
+
+        let it1 = SimdInt4.load1(true)
+        EXPECT_SIMDINT_EQ(it1, -1, -1, -1, -1)
+
+        let if1 = SimdInt4.load1(false)
+        EXPECT_SIMDINT_EQ(if1, 0, 0, 0, 0)
+
+        let ibttff = SimdInt4.load(true, true, false, false)
+        EXPECT_SIMDINT_EQ(ibttff, -1, -1, 0, 0)
+
+        let ibftft = SimdInt4.load(false, true, false, true)
+        EXPECT_SIMDINT_EQ(ibftft, 0, -1, 0, -1)
+    }
+
+    func testLoadIntPtr() {
+
+    }
+
+    func testGetInt() {
+        let i = SimdInt4.load(1, 2, 3, 4)
+
+        XCTAssertEqual(getX(i), 1)
+        XCTAssertEqual(getY(i), 2)
+        XCTAssertEqual(getZ(i), 3)
+        XCTAssertEqual(getW(i), 4)
+    }
+
+    func testSetInt() {
+        let a = SimdInt4.load(1, 2, 3, 4)
+        let b = SimdInt4.load(5, 6, 7, 8)
+
+        EXPECT_SIMDINT_EQ(setX(a, b), 5, 2, 3, 4)
+        EXPECT_SIMDINT_EQ(setY(a, b), 1, 5, 3, 4)
+        EXPECT_SIMDINT_EQ(setZ(a, b), 1, 2, 5, 4)
+        EXPECT_SIMDINT_EQ(setW(a, b), 1, 2, 3, 5)
+
+        EXPECT_SIMDINT_EQ(setI(a, b, 0), 5, 2, 3, 4)
+        EXPECT_SIMDINT_EQ(setI(a, b, 1), 1, 5, 3, 4)
+        EXPECT_SIMDINT_EQ(setI(a, b, 2), 1, 2, 5, 4)
+        EXPECT_SIMDINT_EQ(setI(a, b, 3), 1, 2, 3, 5)
+    }
+
+    func testStoreIntPtr() {
+
+    }
+
+    func testConstantInt() {
+        let zero = SimdInt4.zero()
+        EXPECT_SIMDINT_EQ(zero, 0, 0, 0, 0)
+
+        let one = SimdInt4.one()
+        EXPECT_SIMDINT_EQ(one, 1, 1, 1, 1)
+
+        let x_axis = SimdInt4.x_axis()
+        EXPECT_SIMDINT_EQ(x_axis, 1, 0, 0, 0)
+
+        let y_axis = SimdInt4.y_axis()
+        EXPECT_SIMDINT_EQ(y_axis, 0, 1, 0, 0)
+
+        let z_axis = SimdInt4.z_axis()
+        EXPECT_SIMDINT_EQ(z_axis, 0, 0, 1, 0)
+
+        let w_axis = SimdInt4.w_axis()
+        EXPECT_SIMDINT_EQ(w_axis, 0, 0, 0, 1)
+
+        let all_true = SimdInt4.all_true()
+        EXPECT_SIMDINT_EQ(all_true, -1, -1, -1, -1)
+
+        let all_false = SimdInt4.all_false()
+        EXPECT_SIMDINT_EQ(all_false, 0, 0, 0, 0)
+
+        let mask_sign = SimdInt4.mask_sign()
+        EXPECT_SIMDINT_EQ(mask_sign, -2147483648, -2147483648, -2147483648, -2147483648)
+
+        let mask_sign_xyz = SimdInt4.mask_sign_xyz()
+        EXPECT_SIMDINT_EQ(mask_sign_xyz, -2147483648, -2147483648, -2147483648, 0x00000000)
+
+        let mask_sign_w = SimdInt4.mask_sign_w()
+        EXPECT_SIMDINT_EQ(mask_sign_w, 0x00000000, 0x00000000, 0x00000000, -2147483648)
+
+        let mask_not_sign = SimdInt4.mask_not_sign()
+        EXPECT_SIMDINT_EQ(mask_not_sign, 0x7fffffff, 0x7fffffff, 0x7fffffff, 0x7fffffff)
+
+        let mask_ffff = SimdInt4.mask_ffff()
+        EXPECT_SIMDINT_EQ(mask_ffff, -1, -1, -1, -1)
+
+        let mask_0000 = SimdInt4.mask_0000()
+        EXPECT_SIMDINT_EQ(mask_0000, 0, 0, 0, 0)
+
+        let mask_fff0 = SimdInt4.mask_fff0()
+        EXPECT_SIMDINT_EQ(mask_fff0, -1, -1, -1, 0)
+
+        let mask_f000 = SimdInt4.mask_f000()
+        EXPECT_SIMDINT_EQ(mask_f000, -1, 0, 0, 0)
+
+        let mask_0f00 = SimdInt4.mask_0f00()
+        EXPECT_SIMDINT_EQ(mask_0f00, 0, -1, 0, 0)
+
+        let mask_00f0 = SimdInt4.mask_00f0()
+        EXPECT_SIMDINT_EQ(mask_00f0, 0, 0, -1, 0)
+
+        let mask_000f = SimdInt4.mask_000f()
+        EXPECT_SIMDINT_EQ(mask_000f, 0, 0, 0, -1)
+    }
+
+    func testSplatInt() {
+        let i = SimdInt4.load(1, -1, 2, -3)
+
+        let x = splatX(i)
+        EXPECT_SIMDINT_EQ(x, 1, 1, 1, 1)
+
+        let y = splatY(i)
+        EXPECT_SIMDINT_EQ(y, -1, -1, -1, -1)
+
+        let z = splatZ(i)
+        EXPECT_SIMDINT_EQ(z, 2, 2, 2, 2)
+
+        let w = splatW(i)
+        EXPECT_SIMDINT_EQ(w, -3, -3, -3, -3)
+
+        let s0123 = swizzle0123(i)
+        EXPECT_SIMDINT_EQ(s0123, 1, -1, 2, -3)
+    }
+
+    func testFromFloat() {
+        let f = simd_float4.load(0.0, 46.93, 46.26, -93.99)
+        EXPECT_SIMDINT_EQ(SimdInt4.fromFloatRound(f), 0, 47, 46, -94)
+        EXPECT_SIMDINT_EQ(SimdInt4.fromFloatTrunc(f), 0, 46, 46, -93)
+    }
+
+    func testArithmeticInt() {
+        let a = SimdInt4.load(0, 1, 2, 3)
+        let b = SimdInt4.load(4, 5, -6, 7)
+
+        let hadd2 = hAdd2(a)
+        EXPECT_SIMDINT_EQ(hadd2, 1, 1, 2, 3)
+
+        let hadd3 = hAdd3(a)
+        EXPECT_SIMDINT_EQ(hadd3, 3, 1, 2, 3)
+
+        let hadd4 = hAdd4(a)
+        EXPECT_SIMDINT_EQ(hadd4, 6, 1, 2, 3)
+
+        let abs = abs(b)
+        EXPECT_SIMDINT_EQ(abs, 4, 5, 6, 7)
+
+        let sign = sign(b)
+        EXPECT_SIMDINT_EQ(sign, 0, 0, -2147483648, 0)
+    }
+
+    func testCompareInt() {
+        let a = SimdInt4.load(0, 1, 2, 3)
+        let b = SimdInt4.load(4, 1, -6, 7)
+        let c = SimdInt4.load(4, 5, 6, 7)
+
+        let min = min(a, b)
+        EXPECT_SIMDINT_EQ(min, 0, 1, -6, 3)
+
+        let max = max(a, b)
+        EXPECT_SIMDINT_EQ(max, 4, 1, 2, 7)
+
+        let min0 = min0(b)
+        EXPECT_SIMDINT_EQ(min0, 0, 0, -6, 0)
+
+        let max0 = max0(b)
+        EXPECT_SIMDINT_EQ(max0, 4, 1, 0, 7)
+
+        EXPECT_SIMDINT_EQ(clamp(a, SimdInt4.load(-12, 2, 9, 3), c), 0, 2, 6, 3)
+
+        let eq1 = cmpEq(a, b)
+        EXPECT_SIMDINT_EQ(eq1, 0, -1, 0, 0)
+
+        let eq2 = cmpEq(a, a)
+        EXPECT_SIMDINT_EQ(eq2, -1, -1, -1, -1)
+
+        let neq1 = cmpNe(a, b)
+        EXPECT_SIMDINT_EQ(neq1, -1, 0, -1, -1)
+
+        let neq2 = cmpNe(a, a)
+        EXPECT_SIMDINT_EQ(neq2, 0, 0, 0, 0)
+
+        let lt = cmpLt(a, b)
+        EXPECT_SIMDINT_EQ(lt, -1, 0, 0, -1)
+
+        let le = cmpLe(a, b)
+        EXPECT_SIMDINT_EQ(le, -1, -1, 0, -1)
+
+        let gt = cmpGt(a, b)
+        EXPECT_SIMDINT_EQ(gt, 0, 0, -1, 0)
+
+        let ge = cmpGe(a, b)
+        EXPECT_SIMDINT_EQ(ge, 0, -1, -1, 0)
+    }
+
+    func testMaskInt() {
+        XCTAssertEqual(moveMask(SimdInt4.all_false()), 0x00000000)
+        XCTAssertEqual(moveMask(SimdInt4.all_true()), 0x0000000f)
+        XCTAssertEqual(moveMask(SimdInt4.mask_f000()), 0x00000001)
+        XCTAssertEqual(moveMask(SimdInt4.mask_0f00()), 0x00000002)
+        XCTAssertEqual(moveMask(SimdInt4.mask_00f0()), 0x00000004)
+        XCTAssertEqual(moveMask(SimdInt4.mask_000f()), 0x00000008)
+        XCTAssertEqual(moveMask(SimdInt4.load(-1, 0x00000000, -2147483647, 0x7fffffff)), 0x00000005)
+        XCTAssertEqual(moveMask(SimdInt4.load(-1, 0x1000000f, -2147483647, -1879048194)), 0x0000000d)
+        XCTAssertTrue(areAllFalse(SimdInt4.all_false()))
+        XCTAssertFalse(areAllFalse(SimdInt4.all_true()))
+        XCTAssertFalse(areAllFalse(SimdInt4.mask_000f()))
+
+        XCTAssertTrue(areAllTrue(SimdInt4.all_true()))
+        XCTAssertFalse(areAllTrue(SimdInt4.all_false()))
+        XCTAssertFalse(areAllTrue(SimdInt4.mask_000f()))
+
+        XCTAssertTrue(areAllFalse3(SimdInt4.all_false()))
+        XCTAssertTrue(areAllFalse3(SimdInt4.mask_000f()))
+        XCTAssertFalse(areAllFalse3(SimdInt4.all_true()))
+        XCTAssertFalse(areAllFalse3(SimdInt4.mask_f000()))
+
+        XCTAssertTrue(areAllTrue3(SimdInt4.all_true()))
+        XCTAssertFalse(areAllTrue3(SimdInt4.all_false()))
+        XCTAssertFalse(areAllTrue3(SimdInt4.mask_f000()))
+
+        XCTAssertTrue(areAllFalse2(SimdInt4.all_false()))
+        XCTAssertTrue(areAllFalse2(SimdInt4.mask_000f()))
+        XCTAssertFalse(areAllFalse2(SimdInt4.all_true()))
+        XCTAssertFalse(areAllFalse2(SimdInt4.mask_f000()))
+
+        XCTAssertTrue(areAllTrue2(SimdInt4.all_true()))
+        XCTAssertFalse(areAllTrue2(SimdInt4.all_false()))
+        XCTAssertFalse(areAllTrue2(SimdInt4.mask_f000()))
+
+        XCTAssertTrue(areAllFalse1(SimdInt4.all_false()))
+        XCTAssertTrue(areAllFalse1(SimdInt4.mask_000f()))
+        XCTAssertFalse(areAllFalse1(SimdInt4.all_true()))
+        XCTAssertFalse(areAllFalse1(SimdInt4.mask_f000()))
+
+        XCTAssertTrue(areAllTrue1(SimdInt4.all_true()))
+        XCTAssertFalse(areAllTrue1(SimdInt4.all_false()))
+        XCTAssertTrue(areAllTrue1(SimdInt4.mask_f000()))
+    }
+
+    func testLogicalInt() {
+        let a = SimdInt4.load(-1, 0x00000000, -2147483647, 0x7fffffff)
+        let b = SimdInt4.load(-2147483647, -1, 0x7fffffff, 0x00000000)
+        let c = SimdInt4.load(0x01234567, -1985229329, 0x01234567, -1985229329)
+        let cond = SimdInt4.load(-1, 0x00000000, -1, 0x00000000)
+
+        let andm = and(a, b)
+        EXPECT_SIMDINT_EQ(andm, -2147483647, 0x00000000, 0x00000001, 0x00000000)
+
+        let andnm = andNot(a, b)
+        EXPECT_SIMDINT_EQ(andnm, 0x7ffffffe, 0x00000000, -2147483648, 0x7fffffff)
+
+        let orm = or(a, b)
+        EXPECT_SIMDINT_EQ(orm, -1, -1, -1, 0x7fffffff)
+
+        let xorm = xor(a, b)
+        EXPECT_SIMDINT_EQ(xorm, 0x7ffffffe, -1, -2, 0x7fffffff)
+
+        let select = select(cond, b, c)
+        EXPECT_SIMDINT_EQ(select, -2147483647, -1985229329, 0x7fffffff, -1985229329)
+    }
+
+    func testShiftInt() {
+        let a = SimdInt4.load(-1, 0x00000000, -2147483647, 0x7fffffff)
+
+        let shift_l = shiftL(a, 3)
+        EXPECT_SIMDINT_EQ(shift_l, -8, 0x00000000, 0x00000008, -8)
+
+        let shift_r = shiftR(a, 3)
+        EXPECT_SIMDINT_EQ(shift_r, -1, 0x00000000, -268435456, 0x0fffffff)
+
+        let shift_ru = shiftRu(a, 3)
+        EXPECT_SIMDINT_EQ(shift_ru, 0x1fffffff, 0x00000000, 0x10000000, 0x0fffffff)
+    }
 }
