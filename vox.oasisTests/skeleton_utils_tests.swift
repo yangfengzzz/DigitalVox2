@@ -225,4 +225,151 @@ class SkeletonUtilsTests: XCTestCase {
         iterateJointsDF(skeleton, fct.eval, 10)
         iterateJointsDF(skeleton, fct.eval, 99)
     }
+
+    class IterateDFReverseTester {
+        init(_ _skeleton: SoaSkeleton) {
+            skeleton_ = _skeleton
+            num_iterations_ = 0
+        }
+
+        func eval(_  _current: Int, _ _parent: Int) {
+            if (num_iterations_ == 0) {
+                XCTAssertTrue(isLeaf(skeleton_, _current))
+            }
+
+            // A joint is traversed once.
+            let itc = processed_joints_.first { i in
+                i == _current
+            }
+            XCTAssertTrue(itc == nil)
+
+            // A parent can't be traversed before a child.
+            let itp = processed_joints_.first { i in
+                i == _parent
+            }
+            XCTAssertTrue(itp == nil)
+
+            // joint processed
+            processed_joints_.append(_current)
+
+            // Validates parent id.
+            XCTAssertEqual(skeleton_.joint_parents()[_current], _parent)
+
+            num_iterations_ += 1
+        }
+
+        func num_iterations() -> Int {
+            num_iterations_
+        }
+
+        // Iterated skeleton.
+        private var skeleton_: SoaSkeleton
+
+        // Number of iterations completed.
+        private var num_iterations_: Int
+
+        // Already processed joints
+        private var processed_joints_: [Int] = []
+    }
+
+    func testInterateDFReverse() {
+        // Instantiates a builder objects with default parameters.
+        let builder = SkeletonBuilder()
+
+        var raw_skeleton = RawSkeleton()
+        raw_skeleton.roots = [RawSkeleton.Joint(), RawSkeleton.Joint()]
+        let j0 = raw_skeleton.roots[0]
+        j0.name = "j0"
+        let j8 = raw_skeleton.roots[1]
+        j8.name = "j8"
+
+        j0.children = [RawSkeleton.Joint(), RawSkeleton.Joint()]
+        j0.children[0].name = "j1"
+        j0.children[1].name = "j4"
+
+        j0.children[0].children = [RawSkeleton.Joint()]
+        j0.children[0].children[0].name = "j2"
+
+        j0.children[0].children[0].children = [RawSkeleton.Joint()]
+        j0.children[0].children[0].children[0].name = "j3"
+
+        j0.children[1].children = [RawSkeleton.Joint(), RawSkeleton.Joint()]
+        j0.children[1].children[0].name = "j5"
+        j0.children[1].children[1].name = "j6"
+
+        j0.children[1].children[1].children = [RawSkeleton.Joint()]
+        j0.children[1].children[1].children[0].name = "j7"
+
+        j8.children = [RawSkeleton.Joint()]
+        j8.children[0].name = "j9"
+
+        XCTAssertTrue(raw_skeleton.validate())
+        XCTAssertEqual(raw_skeleton.num_joints(), 10)
+
+        let skeleton = builder.eval(raw_skeleton)
+        XCTAssertTrue(skeleton != nil)
+        guard let skeleton = skeleton else {
+            return
+        }
+        XCTAssertEqual(skeleton.num_joints(), 10)
+
+        do {
+            let fct = IterateDFReverseTester(skeleton)
+            iterateJointsDFReverse(skeleton, fct.eval)
+            XCTAssertEqual(fct.num_iterations(), 10)
+        }
+    }
+
+    func testIsLeaf() {
+        // Instantiates a builder objects with default parameters.
+        let builder = SkeletonBuilder()
+
+        var raw_skeleton = RawSkeleton()
+        raw_skeleton.roots = [RawSkeleton.Joint(), RawSkeleton.Joint()]
+        let j0 = raw_skeleton.roots[0]
+        j0.name = "j0"
+        let j8 = raw_skeleton.roots[1]
+        j8.name = "j8"
+
+        j0.children = [RawSkeleton.Joint(), RawSkeleton.Joint()]
+        j0.children[0].name = "j1"
+        j0.children[1].name = "j4"
+
+        j0.children[0].children = [RawSkeleton.Joint()]
+        j0.children[0].children[0].name = "j2"
+
+        j0.children[0].children[0].children = [RawSkeleton.Joint()]
+        j0.children[0].children[0].children[0].name = "j3"
+
+        j0.children[1].children = [RawSkeleton.Joint(), RawSkeleton.Joint()]
+        j0.children[1].children[0].name = "j5"
+        j0.children[1].children[1].name = "j6"
+
+        j0.children[1].children[1].children = [RawSkeleton.Joint()]
+        j0.children[1].children[1].children[0].name = "j7"
+
+        j8.children = [RawSkeleton.Joint()]
+        j8.children[0].name = "j9"
+
+        XCTAssertTrue(raw_skeleton.validate())
+        XCTAssertEqual(raw_skeleton.num_joints(), 10)
+
+        let skeleton = builder.eval(raw_skeleton)
+        XCTAssertTrue(skeleton != nil)
+        guard let skeleton = skeleton else {
+            return
+        }
+        XCTAssertEqual(skeleton.num_joints(), 10)
+
+        XCTAssertFalse(isLeaf(skeleton, 0))
+        XCTAssertFalse(isLeaf(skeleton, 1))
+        XCTAssertFalse(isLeaf(skeleton, 2))
+        XCTAssertTrue(isLeaf(skeleton, 3))
+        XCTAssertFalse(isLeaf(skeleton, 4))
+        XCTAssertTrue(isLeaf(skeleton, 5))
+        XCTAssertFalse(isLeaf(skeleton, 6))
+        XCTAssertTrue(isLeaf(skeleton, 7))
+        XCTAssertFalse(isLeaf(skeleton, 8))
+        XCTAssertTrue(isLeaf(skeleton, 9))
+    }
 }
