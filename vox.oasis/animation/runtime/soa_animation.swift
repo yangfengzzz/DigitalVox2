@@ -1,5 +1,5 @@
 //
-//  animation.swift
+//  soa_animation.swift
 //  vox.oasis
 //
 //  Created by 杨丰 on 2021/11/1.
@@ -28,7 +28,7 @@ extension QuaternionKey:KeyframeType {
 // joints order of the runtime skeleton structure. In order to optimize cache
 // coherency when sampling the animation, Keyframes in this array are sorted by
 // time, then by track number.
-class Animation {
+class SoaAnimation {
     // Duration of the animation clip.
     internal var duration_: Float = 0
 
@@ -81,9 +81,8 @@ class Animation {
     }
 
     // Internal destruction function.
-    internal func Allocate(_ _translation_count: Int, _ _rotation_count: Int, _ _scale_count: Int) {
-        assert(name_ == "" && translations_.count == 0 &&
-                rotations_.count == 0 && scales_.count == 0)
+    internal func allocate(_ _translation_count: Int, _ _rotation_count: Int, _ _scale_count: Int) {
+        assert(name_ == "" && translations_.count == 0 && rotations_.count == 0 && scales_.count == 0)
 
         // Fix up pointers. Serves larger alignment values first.
         translations_ = [Float3Key](repeating: Float3Key(), count: _translation_count)[...]
