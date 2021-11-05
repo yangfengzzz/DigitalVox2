@@ -16,7 +16,7 @@ import Foundation
 /// ordered like skeleton's joints. Output are matrices, because the combination
 /// of affine transformations can contain shearing or complex transformation
 /// that cannot be represented as Transform object.
-struct LocalToModelJob {
+class LocalToModelJob {
     /// Validates job parameters. Returns true for a valid job, or false otherwise:
     /// -if any input pointer, including ranges, is nullptr.
     /// -if the size of the input is smaller than the skeleton's number of joints.
@@ -48,7 +48,7 @@ struct LocalToModelJob {
     /// The job is validated before any operation is performed, see Validate() for
     /// more details.
     /// Returns false if job is not valid. See Validate() function.
-    mutating func run() -> Bool {
+    func run() -> Bool {
         if (!validate()) {
             return false
         }
