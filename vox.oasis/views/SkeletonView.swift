@@ -138,10 +138,24 @@ func fillPostureUniforms(_ _skeleton: SoaSkeleton,
 
         // Next instance.
         instances += 1
+
+        // Only the joint is rendered for leaves, the bone model isn't.
+        if (isLeaf(_skeleton, i)) {
+            // Copy current joint's raw matrix.
+            _uniforms.append(current)
+
+            // Re-use bone_dir to fix the size of the leaf (same as previous bone).
+            // The shader expects to find it at index [3,7,11] of the matrix.
+            _uniforms[instances].columns.0.w = bone_dir[0]
+            _uniforms[instances].columns.1.w = bone_dir[1]
+            _uniforms[instances].columns.2.w = bone_dir[2]
+            _uniforms[instances].columns.3.w = 0.0  // Disables bone rendering.
+            instances += 1
+        }
     }
 }
 
-func createBone(_ engine: Engine) -> ModelMesh {
+func createBoneMesh(_ engine: Engine) -> ModelMesh {
     let kInter: Float = 0.2
     let mesh = ModelMesh(engine)
     var positions: [Vector3] = [Vector3](repeating: Vector3(), count: 6)
@@ -186,13 +200,14 @@ func createBone(_ engine: Engine) -> ModelMesh {
         Vector3(vertex_n[5].x, vertex_n[5].y, vertex_n[5].z),
     ]
 
+    let white = Color(1, 1, 1, 1)
     let colors: [Color] = [
-        Color(1, 1, 1, 1),
-        Color(1, 1, 1, 1),
-        Color(1, 1, 1, 1),
-        Color(1, 1, 1, 1),
-        Color(1, 1, 1, 1),
-        Color(1, 1, 1, 1)
+        white,
+        white,
+        white,
+        white,
+        white,
+        white
     ]
 
     var indices = [UInt32](repeating: 0, count: 24)
@@ -237,6 +252,72 @@ func createBone(_ engine: Engine) -> ModelMesh {
     return mesh
 }
 
+func createJointMesh(_ engine: Engine) -> ModelMesh {
+    let kNumSlices = 20
+    let kNumPointsPerCircle = kNumSlices + 1
+    let kNumPointsYZ = kNumPointsPerCircle
+    let kNumPointsXY = kNumPointsPerCircle + kNumPointsPerCircle / 4
+    let kNumPointsXZ = kNumPointsPerCircle
+    let kRadius: Float = 0.2  // Radius multiplier.
+    let red = Color(1, 0, 0, 1)
+    let green = Color(0, 1, 0, 1)
+    let blue = Color(0, 0, 1, 1)
+
+    var positions: [Vector3] = []
+    var normals: [Vector3] = []
+    var colors: [Color] = []
+    var indices: [UInt32] = []
+
+    var index: UInt32 = 0
+    for j in 0..<kNumPointsYZ { // YZ plan.
+        indices.append(index)
+        let angle = Float(j) * k2Pi / Float(kNumSlices)
+        let s = sinf(angle), c = cosf(angle)
+        positions.append(Vector3(0.0, c * kRadius, s * kRadius))
+        normals.append(Vector3(0.0, c, s))
+        colors.append(red)
+        index += 1
+        indices.append(index)
+    }
+    indices[indices.count - 1] = 0
+
+    for j in 0..<kNumPointsXY { // XY plan.
+        indices.append(index)
+        let angle = Float(j) * k2Pi / Float(kNumSlices)
+        let s = sinf(angle), c = cosf(angle)
+        positions.append(Vector3(s * kRadius, c * kRadius, 0.0))
+        normals.append(Vector3(s, c, 0.0))
+        colors.append(blue)
+        index += 1
+        indices.append(index)
+    }
+    indices[indices.count - 1] = UInt32(kNumPointsYZ)
+
+    for j in 0..<kNumPointsXZ { // XZ plan.
+        indices.append(index)
+        let angle = Float(j) * k2Pi / Float(kNumSlices)
+        let s = sinf(angle), c = cosf(angle)
+        positions.append(Vector3(c * kRadius, 0.0, -s * kRadius))
+        normals.append(Vector3(c, 0.0, -s))
+        colors.append(green)
+        index += 1
+        indices.append(index)
+    }
+    indices[indices.count - 1] = UInt32(kNumPointsYZ + kNumPointsXY)
+
+    let mesh = ModelMesh(engine)
+    mesh.setPositions(positions: positions)
+    mesh.setNormals(normals: normals)
+    mesh.setColors(colors: colors)
+    mesh.uploadData(true)
+    let indexBuffer = engine._hardwareRenderer.device.makeBuffer(bytes: indices,
+            length: indices.count * MemoryLayout<UInt32>.stride,
+            options: .storageModeShared)
+    _ = mesh.addSubMesh(MeshBuffer(indexBuffer!, indices.count * MemoryLayout<UInt32>.stride, .index),
+            .uint32, indices.count, .line)
+    return mesh
+}
+
 class BoneMaterial: BaseMaterial {
     private static var _jointProp = Shader.getPropertyByName("u_joint")
 
@@ -263,6 +344,32 @@ class BoneMaterial: BaseMaterial {
     }
 }
 
+class JointMaterial: BaseMaterial {
+    private static var _jointProp = Shader.getPropertyByName("u_joint")
+
+    /// Tiling and offset of main textures.
+    var joint: Matrix {
+        get {
+            shaderData.getBytes(JointMaterial._jointProp) as! Matrix
+        }
+        set {
+            let joint = shaderData.getBytes(JointMaterial._jointProp) as! Matrix
+            if (newValue !== joint) {
+                newValue.cloneTo(target: joint)
+            }
+        }
+    }
+
+
+    /// Create a pbr base material instance.
+    /// - Parameter engine: Engine to which the material belongs
+    init(_ engine: Engine) {
+        super.init(engine, Shader.find("joint")!)
+
+        shaderData.setBytes(JointMaterial._jointProp, Matrix())
+    }
+}
+
 //MARK: - View
 struct SkeletonView: View {
     let canvas: Canvas
@@ -272,6 +379,7 @@ struct SkeletonView: View {
         canvas = Canvas()
         engine = Engine(canvas, MetalRenderer())
         _ = Shader.create("bone", "bone_vertex", "bone_fragment")
+        _ = Shader.create("joint", "joint_vertex", "bone_fragment")
 
         let scene = engine.sceneManager.activeScene
         let rootEntity = scene!.createRootEntity()
@@ -319,7 +427,8 @@ struct SkeletonView: View {
         fillPostureUniforms(skeleton, prealloc_models_, &joints)
 
         // add bone renderer
-        let bone = createBone(engine)
+        let boneMesh = createBoneMesh(engine)
+        let jointMesh = createJointMesh(engine)
         let joint = Matrix()
         for i in 0..<joints.count {
             let boneEntity = rootEntity.createChild("bone\(i)")
@@ -327,7 +436,16 @@ struct SkeletonView: View {
             let mtl = BoneMaterial(engine)
             joint.elements = joints[i]
             mtl.joint = joint
-            renderer.mesh = bone
+            renderer.mesh = boneMesh
+            renderer.setMaterial(mtl)
+        }
+        for i in 0..<joints.count {
+            let boneEntity = rootEntity.createChild("joint\(i)")
+            let renderer: MeshRenderer = boneEntity.addComponent()
+            let mtl = JointMaterial(engine)
+            joint.elements = joints[i]
+            mtl.joint = joint
+            renderer.mesh = jointMesh
             renderer.setMaterial(mtl)
         }
     }
