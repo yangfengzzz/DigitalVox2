@@ -244,6 +244,7 @@
 		042F0DC02734C09F00FF4A26 /* local_to_model_job_tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042F0DBF2734C09F00FF4A26 /* local_to_model_job_tests.swift */; };
 		042F0DC22734DBEF00FF4A26 /* SkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042F0DC12734DBEF00FF4A26 /* SkeletonView.swift */; };
 		042F0DC42734EDEB00FF4A26 /* SkeletonShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 042F0DC32734EDEB00FF4A26 /* SkeletonShader.metal */; };
+		042F0DC727351DDD00FF4A26 /* SkeletonMaterial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042F0DC627351DDD00FF4A26 /* SkeletonMaterial.swift */; };
 		0452EC9926DFA0CD0015BFB1 /* voxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9826DFA0CD0015BFB1 /* voxApp.swift */; };
 		0452EC9B26DFA0CD0015BFB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */; };
 		0452EC9D26DFA0CD0015BFB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0452EC9C26DFA0CD0015BFB1 /* Assets.xcassets */; };
@@ -526,6 +527,7 @@
 		042F0DBF2734C09F00FF4A26 /* local_to_model_job_tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = local_to_model_job_tests.swift; sourceTree = "<group>"; };
 		042F0DC12734DBEF00FF4A26 /* SkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonView.swift; sourceTree = "<group>"; };
 		042F0DC32734EDEB00FF4A26 /* SkeletonShader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = SkeletonShader.metal; sourceTree = "<group>"; };
+		042F0DC627351DDD00FF4A26 /* SkeletonMaterial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonMaterial.swift; sourceTree = "<group>"; };
 		043CB42226EF590B004A0B21 /* Matrix3x3.test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matrix3x3.test.swift; sourceTree = "<group>"; };
 		043CB42426EF8954004A0B21 /* Quaternion.test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quaternion.test.swift; sourceTree = "<group>"; };
 		043CB42626F02520004A0B21 /* BoundingBox.test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingBox.test.swift; sourceTree = "<group>"; };
@@ -986,6 +988,7 @@
 				043CB43826F0E39D004A0B21 /* controls */,
 				045B06602729854C003E4B68 /* physics */,
 				045D2BC6272CAEB40091636B /* animation */,
+				042F0DC527351D9500FF4A26 /* visualDebugger */,
 				042BB12926EA35C100604751 /* Background.swift */,
 				042BB13026EA38EB00604751 /* Camera.swift */,
 				047FEBF726E6053A0078CFAF /* Component.swift */,
@@ -1028,7 +1031,6 @@
 				041D1C52272A3FC600322BDF /* physics-physx */,
 				0413289E26E0CBE7000A4F4E /* ShaderSimple.metal */,
 				04AE2422272913ED00D62587 /* BRDF.metal */,
-				042F0DC32734EDEB00FF4A26 /* SkeletonShader.metal */,
 				041BADDB272A4FA5006268D5 /* Preview Content */,
 				041BADDE272A4FA5006268D5 /* vox_oasis.entitlements */,
 			);
@@ -1218,6 +1220,15 @@
 				047FEBC026E595E60078CFAF /* shell.swift */,
 			);
 			path = shapes;
+			sourceTree = "<group>";
+		};
+		042F0DC527351D9500FF4A26 /* visualDebugger */ = {
+			isa = PBXGroup;
+			children = (
+				042F0DC32734EDEB00FF4A26 /* SkeletonShader.metal */,
+				042F0DC627351DDD00FF4A26 /* SkeletonMaterial.swift */,
+			);
+			path = visualDebugger;
 			sourceTree = "<group>";
 		};
 		043CB43826F0E39D004A0B21 /* controls */ = {
@@ -2329,6 +2340,7 @@
 				041BAE6B272A5111006268D5 /* DiffuseMode.swift in Sources */,
 				041BAE80272A513B006268D5 /* PhysicsMaterialCombineMode.swift in Sources */,
 				041BAEB8272A5166006268D5 /* LiteUpdateFlag.swift in Sources */,
+				042F0DC727351DDD00FF4A26 /* SkeletonMaterial.swift in Sources */,
 				041BAE30272A50E6006268D5 /* Matrix.swift in Sources */,
 				041BAE27272A50D9006268D5 /* BackgroundMode.swift in Sources */,
 				041BAEB3272A5166006268D5 /* LiteSphereColliderShape.swift in Sources */,

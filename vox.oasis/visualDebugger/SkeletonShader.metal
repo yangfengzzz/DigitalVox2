@@ -7,7 +7,7 @@
 
 #include <metal_stdlib>
 using namespace metal;
-#import "function-constant.metal"
+#import "../function-constant.metal"
 
 float4x4 getBoneWorldMatrix(float4x4 joint) {
     // Rebuilds bone properties.
