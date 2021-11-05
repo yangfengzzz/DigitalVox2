@@ -242,6 +242,7 @@
 		042F0DBC2734B0E500FF4A26 /* skeleton_utils_tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042F0DBB2734B0E500FF4A26 /* skeleton_utils_tests.swift */; };
 		042F0DBE2734BF0F00FF4A26 /* local_to_model_job.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042F0DBD2734BF0F00FF4A26 /* local_to_model_job.swift */; };
 		042F0DC02734C09F00FF4A26 /* local_to_model_job_tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042F0DBF2734C09F00FF4A26 /* local_to_model_job_tests.swift */; };
+		042F0DC22734DBEF00FF4A26 /* SkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042F0DC12734DBEF00FF4A26 /* SkeletonView.swift */; };
 		0452EC9926DFA0CD0015BFB1 /* voxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9826DFA0CD0015BFB1 /* voxApp.swift */; };
 		0452EC9B26DFA0CD0015BFB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */; };
 		0452EC9D26DFA0CD0015BFB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0452EC9C26DFA0CD0015BFB1 /* Assets.xcassets */; };
@@ -522,6 +523,7 @@
 		042F0DBB2734B0E500FF4A26 /* skeleton_utils_tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = skeleton_utils_tests.swift; sourceTree = "<group>"; };
 		042F0DBD2734BF0F00FF4A26 /* local_to_model_job.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = local_to_model_job.swift; sourceTree = "<group>"; };
 		042F0DBF2734C09F00FF4A26 /* local_to_model_job_tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = local_to_model_job_tests.swift; sourceTree = "<group>"; };
+		042F0DC12734DBEF00FF4A26 /* SkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonView.swift; sourceTree = "<group>"; };
 		043CB42226EF590B004A0B21 /* Matrix3x3.test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matrix3x3.test.swift; sourceTree = "<group>"; };
 		043CB42426EF8954004A0B21 /* Quaternion.test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quaternion.test.swift; sourceTree = "<group>"; };
 		043CB42626F02520004A0B21 /* BoundingBox.test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingBox.test.swift; sourceTree = "<group>"; };
@@ -1555,6 +1557,7 @@
 				0497A1E626DF150500F61DE9 /* SceneLoaderView.swift */,
 				04605EFA272BC09800400350 /* PhysXView.swift */,
 				04AFFD49272FAA5D005C2835 /* PhysXRaycastView.swift */,
+				042F0DC12734DBEF00FF4A26 /* SkeletonView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -2155,6 +2158,7 @@
 				041BAEA3272A514D006268D5 /* IPhysics.swift in Sources */,
 				04CB88C427320E6700B0E398 /* Skeleton.swift in Sources */,
 				041BAE7F272A513B006268D5 /* OrbitControl.swift in Sources */,
+				042F0DC22734DBEF00FF4A26 /* SkeletonView.swift in Sources */,
 				04CB88CE27321C2000B0E398 /* Animator.swift in Sources */,
 				041BAE12272A500F006268D5 /* Engine.swift in Sources */,
 				041BAEA2272A514D006268D5 /* IPlaneColliderShape.swift in Sources */,
