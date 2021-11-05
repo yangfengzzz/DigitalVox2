@@ -7,6 +7,140 @@
 
 import SwiftUI
 
+// A millipede slice is 2 legs and a spine.
+// Each slice is made of 7 joints, organized as follows.
+//          * root
+//             |
+//           spine                                   spine
+//         |       |                                   |
+//     left_up    right_up        left_down - left_u - . - right_u - right_down
+//       |           |                  |                                    |
+//   left_down     right_down     left_foot         * root            right_foot
+//     |               |
+// left_foot        right_foot
+
+// The following constants are used to define the millipede skeleton and
+// animation.
+// Skeleton constants.
+let kTransUp = VecFloat3(0.0, 0.0, 0.0)
+let kTransDown = VecFloat3(0.0, 0.0, 1.0)
+let kTransFoot = VecFloat3(1.0, 0.0, 0.0)
+
+let kRotLeftUp = VecQuaternion.fromAxisAngle(VecFloat3.y_axis(), -kPi_2)
+let kRotLeftDown = VecQuaternion.fromAxisAngle(VecFloat3.x_axis(), kPi_2) * VecQuaternion.fromAxisAngle(VecFloat3.y_axis(), -kPi_2)
+let kRotRightUp = VecQuaternion.fromAxisAngle(VecFloat3.y_axis(), kPi_2)
+let kRotRightDown = VecQuaternion.fromAxisAngle(VecFloat3.x_axis(), kPi_2) * VecQuaternion.fromAxisAngle(VecFloat3.y_axis(), -kPi_2)
+// Animation constants.
+let kDuration: Float = 6.0
+let kSpinLength: Float = 0.5
+let kWalkCycleLength: Float = 2.0
+let kWalkCycleCount: Int = 4
+let kSpinLoop: Float = 2 * Float(kWalkCycleCount) * kWalkCycleLength / kSpinLength
+
+let slice_count_ = 2
+
+func createSkeleton(_ _skeleton: inout RawSkeleton) {
+    _skeleton.roots = [RawSkeleton.Joint()]
+    var root = _skeleton.roots[0]
+    root.name = "root"
+    root.transform.translation = VecFloat3(0.0, 1.0, -Float(slice_count_) * kSpinLength)
+    root.transform.rotation = VecQuaternion.identity()
+    root.transform.scale = VecFloat3.one()
+
+    for i in 0..<slice_count_ {
+        root.children = [RawSkeleton.Joint(), RawSkeleton.Joint(), RawSkeleton.Joint()]
+
+        // Left leg.
+        let lu = root.children[0]
+        lu.name = "lu\(i)"
+        lu.transform.translation = kTransUp
+        lu.transform.rotation = kRotLeftUp
+        lu.transform.scale = VecFloat3.one()
+
+        lu.children = [RawSkeleton.Joint()]
+        let ld = lu.children[0]
+        ld.name = "ld\(i)"
+        ld.transform.translation = kTransDown
+        ld.transform.rotation = kRotLeftDown
+        ld.transform.scale = VecFloat3.one()
+
+        ld.children = [RawSkeleton.Joint()]
+        let lf = ld.children[0]
+        lf.name = "lf\(i)"
+        lf.transform.translation = VecFloat3.x_axis()
+        lf.transform.rotation = VecQuaternion.identity()
+        lf.transform.scale = VecFloat3.one()
+
+        // Right leg.
+        let ru = root.children[1]
+        ru.name = "ru\(i)"
+        ru.transform.translation = kTransUp
+        ru.transform.rotation = kRotRightUp
+        ru.transform.scale = VecFloat3.one()
+
+        ru.children = [RawSkeleton.Joint()]
+        let rd = ru.children[0]
+        rd.name = "rd\(i)"
+        rd.transform.translation = kTransDown
+        rd.transform.rotation = kRotRightDown
+        rd.transform.scale = VecFloat3.one()
+
+        rd.children = [RawSkeleton.Joint()]
+        let rf = rd.children[0]
+        rf.name = "rf\(i)"
+        rf.transform.translation = VecFloat3.x_axis()
+        rf.transform.rotation = VecQuaternion.identity()
+        rf.transform.scale = VecFloat3.one()
+
+        // Spine.
+        let sp = root.children[2]
+        sp.name = "sp\(i)"
+        sp.transform.translation = VecFloat3(0.0, 0.0, kSpinLength)
+        sp.transform.rotation = VecQuaternion.identity()
+        sp.transform.scale = VecFloat3.one()
+
+        root = sp
+    }
+}
+
+func fillPostureUniforms(_ _skeleton: SoaSkeleton,
+                         _ _matrices: [matrix_float4x4],
+                         _ _uniforms: inout [matrix_float4x4]) {
+    // Prepares computation constants.
+    let num_joints = _skeleton.num_joints()
+    let parents = _skeleton.joint_parents()
+
+    var instances = 0
+    for i in 0..<num_joints {
+        // Root isn't rendered.
+        let parent_id = parents[i]
+        if (parent_id == SoaSkeleton.Constants.kNoParent.rawValue) {
+            continue
+        }
+
+        // Selects joint matrices.
+        let parent = _matrices[parent_id]
+        let current = _matrices[i]
+
+        // Copy parent joint's raw matrix, to render a bone between the parent and current matrix.
+        _uniforms.append(parent)
+
+        // Set bone direction (bone_dir). The shader expects to find it at index
+        // [3,7,11] of the matrix.
+        // Index 15 is used to store whether a bone should be rendered,
+        // otherwise it's a leaf.
+        var bone_dir: [Float] = [0, 0, 0, 0]
+        storePtrU(current.columns.3 - parent.columns.3, &bone_dir)
+        _uniforms[instances].columns.0.w = bone_dir[0]
+        _uniforms[instances].columns.1.w = bone_dir[1]
+        _uniforms[instances].columns.2.w = bone_dir[2]
+        _uniforms[instances].columns.3.w = 1.0 // Enables bone rendering.
+
+        // Next instance.
+        instances += 1
+    }
+}
+
 func createBone(_ engine: Engine) -> ModelMesh {
     let kInter: Float = 0.2
     let mesh = ModelMesh(engine)
@@ -123,44 +257,6 @@ class BoneMaterial: BaseMaterial {
 struct SkeletonView: View {
     let canvas: Canvas
     let engine: Engine
-    
-    func fillPostureUniforms(_ _skeleton:SoaSkeleton,
-                             _ _matrices:[matrix_float4x4],
-                             _ _uniforms:inout [matrix_float4x4]) {
-        // Prepares computation constants.
-        let num_joints = _skeleton.num_joints();
-        let parents = _skeleton.joint_parents()
-        
-        var instances = 0
-        for i in 0..<num_joints {
-            // Root isn't rendered.
-            let parent_id = parents[i]
-            if (parent_id == SoaSkeleton.Constants.kNoParent.rawValue) {
-                continue
-            }
-
-            // Selects joint matrices.
-            let parent = _matrices[parent_id]
-            let current = _matrices[i]
-
-            // Copy parent joint's raw matrix, to render a bone between the parent and current matrix.
-            _uniforms.append(parent)
-
-            // Set bone direction (bone_dir). The shader expects to find it at index
-            // [3,7,11] of the matrix.
-            // Index 15 is used to store whether a bone should be rendered,
-            // otherwise it's a leaf.
-            var bone_dir: [Float] = [0, 0, 0, 0]
-            storePtrU(current.columns.3 - parent.columns.3, &bone_dir)
-            _uniforms[instances].columns.0.w = bone_dir[0]
-            _uniforms[instances].columns.1.w = bone_dir[1]
-            _uniforms[instances].columns.2.w = bone_dir[2]
-            _uniforms[instances].columns.3.w = 1.0 // Enables bone rendering.
-
-            // Next instance.
-            instances += 1
-        }
-    }
 
     init() {
         canvas = Canvas()
@@ -184,22 +280,7 @@ struct SkeletonView: View {
 
         // init skeleton
         var raw_skeleton = RawSkeleton()
-        raw_skeleton.roots = [RawSkeleton.Joint()]
-        let root = raw_skeleton.roots[0]
-        root.name = "j0"
-        root.transform = VecTransform.identity()
-        root.transform.translation = VecFloat3(1.0, 2.0, 3.0)
-        root.transform.rotation = VecQuaternion(1.0, 0.0, 0.0, 0.0)
-
-        root.children = [RawSkeleton.Joint(), RawSkeleton.Joint()]
-        root.children[0].name = "j1"
-        root.children[0].transform = VecTransform.identity()
-        root.children[0].transform.rotation = VecQuaternion(0.0, 1.0, 0.0, 0.0)
-        root.children[0].transform.translation = VecFloat3(4.0, 5.0, 6.0)
-        root.children[1].name = "j2"
-        root.children[1].transform = VecTransform.identity()
-        root.children[1].transform.rotation = VecQuaternion(0.0, 0.0, 1.0, 0.0)
-        root.children[1].transform.translation = VecFloat3(7.0, 8.0, 9.0)
+        createSkeleton(&raw_skeleton)
 
         let builder = SkeletonBuilder()
         let skeleton = builder.eval(raw_skeleton)
@@ -223,10 +304,10 @@ struct SkeletonView: View {
         if (!job.run(&prealloc_models_[...])) {
             return
         }
-        
-        var joints:[matrix_float4x4] = []
+
+        var joints: [matrix_float4x4] = []
         fillPostureUniforms(skeleton, prealloc_models_, &joints)
-        
+
         // add bone renderer
         let bone = createBone(engine)
         let joint = Matrix()
