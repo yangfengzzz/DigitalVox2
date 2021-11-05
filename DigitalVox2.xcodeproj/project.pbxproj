@@ -245,6 +245,7 @@
 		042F0DC22734DBEF00FF4A26 /* SkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042F0DC12734DBEF00FF4A26 /* SkeletonView.swift */; };
 		042F0DC42734EDEB00FF4A26 /* SkeletonShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 042F0DC32734EDEB00FF4A26 /* SkeletonShader.metal */; };
 		042F0DC727351DDD00FF4A26 /* SkeletonMaterial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042F0DC627351DDD00FF4A26 /* SkeletonMaterial.swift */; };
+		042F0DC92735291600FF4A26 /* SkeletonLoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042F0DC82735291600FF4A26 /* SkeletonLoaderView.swift */; };
 		0452EC9926DFA0CD0015BFB1 /* voxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9826DFA0CD0015BFB1 /* voxApp.swift */; };
 		0452EC9B26DFA0CD0015BFB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */; };
 		0452EC9D26DFA0CD0015BFB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0452EC9C26DFA0CD0015BFB1 /* Assets.xcassets */; };
@@ -528,6 +529,7 @@
 		042F0DC12734DBEF00FF4A26 /* SkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonView.swift; sourceTree = "<group>"; };
 		042F0DC32734EDEB00FF4A26 /* SkeletonShader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = SkeletonShader.metal; sourceTree = "<group>"; };
 		042F0DC627351DDD00FF4A26 /* SkeletonMaterial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonMaterial.swift; sourceTree = "<group>"; };
+		042F0DC82735291600FF4A26 /* SkeletonLoaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonLoaderView.swift; sourceTree = "<group>"; };
 		043CB42226EF590B004A0B21 /* Matrix3x3.test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matrix3x3.test.swift; sourceTree = "<group>"; };
 		043CB42426EF8954004A0B21 /* Quaternion.test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quaternion.test.swift; sourceTree = "<group>"; };
 		043CB42626F02520004A0B21 /* BoundingBox.test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingBox.test.swift; sourceTree = "<group>"; };
@@ -1572,6 +1574,7 @@
 				04605EFA272BC09800400350 /* PhysXView.swift */,
 				04AFFD49272FAA5D005C2835 /* PhysXRaycastView.swift */,
 				042F0DC12734DBEF00FF4A26 /* SkeletonView.swift */,
+				042F0DC82735291600FF4A26 /* SkeletonLoaderView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -2256,6 +2259,7 @@
 				041BAEE5272A9DF4006268D5 /* CPxGeometry.mm in Sources */,
 				041BAE3B272A50E6006268D5 /* PlaneIntersectionType.swift in Sources */,
 				041BAE76272A512B006268D5 /* GLTFModelIO.m in Sources */,
+				042F0DC92735291600FF4A26 /* SkeletonLoaderView.swift in Sources */,
 				04605EFB272BC09800400350 /* PhysXView.swift in Sources */,
 				041BAE38272A50E6006268D5 /* Vector4.swift in Sources */,
 				041BAEBD272A5166006268D5 /* LiteBoxColliderShape.swift in Sources */,

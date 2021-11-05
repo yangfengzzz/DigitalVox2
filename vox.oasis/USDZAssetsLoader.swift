@@ -51,14 +51,14 @@ class USDZAssetsLoader {
                 mesh.setVertexBufferBinding(vertexBuffer.buffer, 0, index)
             }
 
-            // load skeleton
-            let skeleton = Skeleton(_engine, animationBindComponent:
-            (mdlMesh.componentConforming(to: MDLComponent.self) as? MDLAnimationBindComponent))
-
             let renderer: SkinnedMeshRenderer = entity.addComponent()
             renderer.mesh = mesh
-            renderer.skeleton = skeleton
-
+            // load skeleton
+            let bindComponent = mdlMesh.componentConforming(to: MDLComponent.self) as? MDLAnimationBindComponent
+            if bindComponent != nil {
+                renderer.skeleton = Skeleton(_engine, animationBindComponent: bindComponent)
+            }
+            
             var subCount = 0
             zip(mdlMesh.submeshes!, mtkMesh.submeshes).forEach { (mdlSubmesh, mtkSubmesh: MTKSubmesh) in
                 let mdlSubmesh = mdlSubmesh as! MDLSubmesh

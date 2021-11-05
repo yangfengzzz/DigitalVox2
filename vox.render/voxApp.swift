@@ -13,7 +13,8 @@ struct DigitalVox2App: App {
         WindowGroup {
             //SceneLoaderView()
             //PhysXRaycastView()
-            SkeletonView()
+            //SkeletonView()
+            SkeletonLoaderView()
         }
     }
 }

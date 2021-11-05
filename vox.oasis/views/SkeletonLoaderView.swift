@@ -1,13 +1,13 @@
 //
-//  ContentView.swift
-//  DigitalVox2
+//  SkeletonLoaderView.swift
+//  vox.oasis
 //
-//  Created by 杨丰 on 2021/9/1.
+//  Created by 杨丰 on 2021/11/5.
 //
 
 import SwiftUI
 
-struct SceneLoaderView: View {
+struct SkeletonLoaderView: View {
     let canvas: Canvas
     let engine: Engine
     let gltfLoader: GLTFAssetsLoader
@@ -46,10 +46,9 @@ struct SceneLoaderView: View {
         cameraEntity.transform.lookAt(worldPosition: Vector3(0, 0, 0), worldUp: nil)
         let _: OrbitControl = cameraEntity.addComponent()
 
-        usdzLoader.load(with: "Mando_Helmet.usdz") { entities in
-            entities[0].transform.setPosition(x: 0, y: -2, z: 0)
-            entities[0].transform.setScale(x: 0.1, y: 0.1, z: 0.1)
-            entities[0].transform.setRotation(x: 0, y: 90, z: 0)
+        usdzLoader.load(with: "skeleton.usda") { entities in
+            let animator: Animator =  entities[0].getComponent()
+            animator.runAnimation(name: "wave")
             let _: Rotation = entities[0].addComponent()
             rootEntity.addChild(entities[0])
         }
@@ -60,7 +59,7 @@ struct SceneLoaderView: View {
     }
 }
 
-struct SceneLoaderView_Previews: PreviewProvider {
+struct SkeletonLoaderView_Previews: PreviewProvider {
     static var previews: some View {
         SceneLoaderView()
     }
