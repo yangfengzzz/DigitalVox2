@@ -8,29 +8,32 @@
 import Foundation
 
 // Get bind-pose of a skeleton joint.
-func GetJointLocalBindPose(_skeleton: Skeleton, _joint: Int) -> VecTransform {
+func GetJointLocalBindPose(_skeleton: SoaSkeleton, _joint: Int) -> VecTransform {
     guard _joint >= 0 && _joint < _skeleton.num_joints() else {
         fatalError("Joint index out of range.")
     }
 
-
-    var soa_transform = _skeleton.joint_bind_poses()[_joint / 4]
+    let soa_transform = _skeleton.joint_bind_poses()[_joint / 4]
 
     // Transpose SoA data to AoS.
     // TODO: Maybe have problem
     var translations = [SimdFloat4](repeating: SimdFloat4(), count: 4)
-    OZZFloat4.transpose3x4(with: &soa_transform.translation.x, &translations)
+    transpose3x4(soa_transform.translation, &translations)
     var rotations = [SimdFloat4](repeating: SimdFloat4(), count: 4)
-    OZZFloat4.transpose4x4(with: &soa_transform.rotation.x, &rotations)
+    transpose4x4(soa_transform.rotation, &rotations)
     var scales = [SimdFloat4](repeating: SimdFloat4(), count: 4)
-    OZZFloat4.transpose3x4(with: &soa_transform.scale.x, &scales)
+    transpose3x4(soa_transform.scale, &scales)
 
     // Stores to the Transform object.
     var bind_pose = VecTransform.identity()
     let offset = _joint % 4
-    OZZFloat4.store3PtrU(with: translations[offset], &bind_pose.translation.x)
-    OZZFloat4.storePtrU(with: rotations[offset], &bind_pose.rotation.x)
-    OZZFloat4.store3PtrU(with: scales[offset], &bind_pose.scale.x)
+    var result:[Float] = [0, 0, 0, 0]
+    store3PtrU(translations[offset], &result)
+    bind_pose.translation = VecFloat3(result[0], result[1], result[2])
+    storePtrU(rotations[offset], &result)
+    bind_pose.rotation = VecQuaternion(result[0], result[1], result[2], result[4])
+    store3PtrU(scales[offset], &result)
+    bind_pose.scale = VecFloat3(result[0], result[1], result[2])
 
     return bind_pose
 }
@@ -38,7 +41,7 @@ func GetJointLocalBindPose(_skeleton: Skeleton, _joint: Int) -> VecTransform {
 // Test if a joint is a leaf. _joint number must be in range [0, num joints].
 // "_joint" is a leaf if it's the last joint, or next joint's parent isn't
 // "_joint".
-func IsLeaf(_skeleton: Skeleton, _joint: Int) -> Bool {
+func IsLeaf(_skeleton: SoaSkeleton, _joint: Int) -> Bool {
     let num_joints = _skeleton.num_joints()
     guard _joint >= 0 && _joint < num_joints else {
         fatalError("_joint index out of range")
@@ -54,8 +57,8 @@ func IsLeaf(_skeleton: Skeleton, _joint: Int) -> Bool {
 // _current joint is a root. _from indicates the joint from which the joint
 // hierarchy traversal begins. Use Skeleton::kNoParent to traverse the
 // whole hierarchy, in case there are multiple roots.
-func IterateJointsDF(_ _skeleton: Skeleton, _ _fct: (Int, Int)->Void,
-                     _ _from: Int = Skeleton.Constants.kNoParent.rawValue) {
+func IterateJointsDF(_ _skeleton: SoaSkeleton, _ _fct: (Int, Int) -> Void,
+                     _ _from: Int = SoaSkeleton.Constants.kNoParent.rawValue) {
     let parents = _skeleton.joint_parents()
     let num_joints = _skeleton.num_joints()
 
@@ -72,7 +75,7 @@ func IterateJointsDF(_ _skeleton: Skeleton, _ _fct: (Int, Int)->Void,
 // depth-first order. _Fct is of type void(int _current, int _parent) where the
 // first argument is the child of the second argument. _parent is kNoParent if
 // the _current joint is a root.
-func IterateJointsDFReverse(_ _skeleton: Skeleton, _ _fct: (Int, Int)->Void) {
+func IterateJointsDFReverse(_ _skeleton: SoaSkeleton, _ _fct: (Int, Int) -> Void) {
     let parents = _skeleton.joint_parents()
     for i in 0..<_skeleton.num_joints() {
         _fct(i, parents[i])
