@@ -39,7 +39,6 @@ class LocalToModelJob {
 
         /// Test input and output ranges, implicitly tests for nullptr end pointers.
         valid = valid && input.count >= num_soa_joints
-        valid = valid && output.count >= num_joints
 
         return valid
     }
@@ -48,13 +47,18 @@ class LocalToModelJob {
     /// The job is validated before any operation is performed, see Validate() for
     /// more details.
     /// Returns false if job is not valid. See Validate() function.
-    func run() -> Bool {
+    func run(_ output:inout ArraySlice<matrix_float4x4>) -> Bool {
         if (!validate()) {
             return false
         }
-
+        
         guard let skeleton = skeleton else {
-            fatalError()
+            return false
+        }
+        
+        let num_joints = skeleton.num_joints()
+        if (output.count < num_joints) {
+            return false
         }
 
         let parents = skeleton.joint_parents()
@@ -85,7 +89,7 @@ class LocalToModelJob {
             let soa_end = (i + 4) & ~3
             while i < soa_end && process {
                 let parent = parents[i]
-                let parent_matrix = parent == SoaSkeleton.Constants.kNoParent.rawValue ? root_matrix : (output[parent] as! simd_float4x4)
+                let parent_matrix = parent == SoaSkeleton.Constants.kNoParent.rawValue ? root_matrix : output[parent]
                 output[i] = parent_matrix! * local_aos_matrices[i & 3]
 
                 i += 1
@@ -132,9 +136,4 @@ class LocalToModelJob {
 
     /// The input range that store local transforms.
     var input: ArraySlice<SoaTransform> = ArraySlice()
-
-    //MARK: - Job output.
-
-    /// The output range to be filled with model-space matrices.
-    var output: NSMutableArray = NSMutableArray()
 }
