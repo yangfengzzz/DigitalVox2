@@ -798,6 +798,312 @@ class LocalToModelTests: XCTestCase {
             EXPECT_FLOAT4x4_EQ(output[7], 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
                     0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0)
         }
+    }
 
+    func testTransformationFromToExclude() {
+        // Builds the skeleton
+        /*
+         6 joints
+               *
+             /   \
+           j0    j7
+          /  \
+         j1  j3
+          |  / \
+         j2 j4 j6
+             |
+            j5
+        */
+        var raw_skeleton = RawSkeleton()
+        raw_skeleton.roots = [RawSkeleton.Joint(), RawSkeleton.Joint()]
+        let j0 = raw_skeleton.roots[0]
+        j0.name = "j0"
+        let j7 = raw_skeleton.roots[1]
+        j7.name = "j7"
+
+        j0.children = [RawSkeleton.Joint(), RawSkeleton.Joint()]
+        j0.children[0].name = "j1"
+        j0.children[1].name = "j3"
+
+        j0.children[0].children = [RawSkeleton.Joint()]
+        j0.children[0].children[0].name = "j2"
+
+        j0.children[1].children = [RawSkeleton.Joint(), RawSkeleton.Joint()]
+        j0.children[1].children[0].name = "j4"
+        j0.children[1].children[1].name = "j6"
+
+        j0.children[1].children[0].children = [RawSkeleton.Joint()]
+        j0.children[1].children[0].children[0].name = "j5"
+
+        XCTAssertTrue(raw_skeleton.validate())
+        XCTAssertEqual(raw_skeleton.num_joints(), 8)
+
+        let builder = SkeletonBuilder()
+        let skeleton = builder.eval(raw_skeleton)
+        XCTAssertTrue(skeleton != nil)
+        guard let skeleton = skeleton else {
+            return
+        }
+
+        // Initializes an input transformation.
+        let input = [
+            // Stores up to 8 inputs, needs 7.
+            //                             j0   j1   j2    j3
+            SoaTransform(translation: SoaFloat3(
+                    x: simd_float4.load(2.0, 0.0, -2.0, 1.0),
+                    y: simd_float4.load(2.0, 0.0, -2.0, 2.0),
+                    z: simd_float4.load(2.0, 0.0, -2.0, 4.0)),
+                    rotation: SoaQuaternion(
+                            x: simd_float4.load(0.0, 0.0, 0.0, 0.0),
+                            y: simd_float4.load(0.0, 0.70710677, 0.0, 0.0),
+                            z: simd_float4.load(0.0, 0.0, 0.0, 0.0),
+                            w: simd_float4.load(1.0, 0.70710677, 1.0, 1.0)),
+                    scale: SoaFloat3(
+                            x: simd_float4.load(1.0, 1.0, 10.0, 1.0),
+                            y: simd_float4.load(1.0, 1.0, 10.0, 1.0),
+                            z: simd_float4.load(1.0, 1.0, 10.0, 1.0))),
+            //                             j4    j5   j6   j7.
+            SoaTransform(translation: SoaFloat3(
+                    x: simd_float4.load(12.0, 0.0, 3.0, 6.0),
+                    y: simd_float4.load(46.0, 0.0, 4.0, 7.0),
+                    z: simd_float4.load(-12.0, 0.0, 5.0, 8.0)),
+                    rotation: SoaQuaternion(
+                            x: simd_float4.load(0.0, 0.0, 0.0, 0.0),
+                            y: simd_float4.load(0.0, 0.0, 0.0, 0.0),
+                            z: simd_float4.load(0.0, 0.0, 0.0, 0.0),
+                            w: simd_float4.load(1.0, 1.0, 1.0, 1.0)),
+                    scale: SoaFloat3(
+                            x: simd_float4.load(1.0, -0.1, 1.0, 1.0),
+                            y: simd_float4.load(1.0, -0.1, 1.0, 1.0),
+                            z: simd_float4.load(1.0, -0.1, 1.0, 1.0)))]
+
+        var output = [simd_float4x4](repeating: simd_float4x4(), count: 8)
+        let job_full = LocalToModelJob()
+        do {  // Intialize whole hierarchy output
+            job_full.skeleton = skeleton
+            job_full.from = SoaSkeleton.Constants.kNoParent.rawValue
+            job_full.from_excluded = true
+            job_full.input = input[...]
+            XCTAssertTrue(job_full.validate())
+            XCTAssertTrue(job_full.run(&output[...]))
+            EXPECT_FLOAT4x4_EQ(output[0], 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
+                    0.0, 1.0, 0.0, 2.0, 2.0, 2.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[1], 0.0, 0.0, -1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0,
+                    0.0, 0.0, 0.0, 2.0, 2.0, 2.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[2], 0.0, 0.0, -10.0, 0.0, 0.0, 10.0, 0.0, 0.0,
+                    10.0, 0.0, 0.0, 0.0, 0.0, 0.0, 4.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[3], 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
+                    0.0, 1.0, 0.0, 3.0, 4.0, 6.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[4], 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
+                    0.0, 1.0, 0.0, 15.0, 50.0, -6.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[5], -0.1, 0.0, 0.0, 0.0, 0.0, -0.1, 0.0, 0.0, 0.0,
+                    0.0, -0.1, 0.0, 15.0, 50.0, -6.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[6], 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
+                    0.0, 1.0, 0.0, 6.0, 8.0, 11.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[7], 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
+                    0.0, 1.0, 0.0, 6.0, 7.0, 8.0, 1.0)
+        }
+
+        do {  // Updates from j0 excluded, j7 shouldn't be updated
+            output[0] = matrix_float4x4.scaling(simd_float4.load(2.0, 2.0, 2.0, 0.0))
+            output[1] = matrix_float4x4.identity()
+            output[2] = matrix_float4x4.identity()
+            output[3] = matrix_float4x4.identity()
+            output[4] = matrix_float4x4.identity()
+            output[5] = matrix_float4x4.identity()
+            output[6] = matrix_float4x4.identity()
+            output[7] = matrix_float4x4.identity()
+
+            let job = LocalToModelJob()
+            job.skeleton = skeleton
+            job.from = 0
+            job.from_excluded = true
+            job.input = input[...]
+            XCTAssertTrue(job.validate())
+            XCTAssertTrue(job.run(&output[...]))
+
+            EXPECT_FLOAT4x4_EQ(output[0], 2.0, 0.0, 0.0, 0.0, 0.0, 2.0, 0.0, 0.0, 0.0,
+                    0.0, 2.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[1], 0.0, 0.0, -2.0, 0.0, 0.0, 2.0, 0.0, 0.0, 2.0,
+                    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[2], 0.0, 0.0, -20.0, 0.0, 0.0, 20.0, 0.0, 0.0,
+                    20.0, 0.0, 0.0, 0.0, -4.0, -4.0, 4.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[3], 2.0, 0.0, 0.0, 0.0, 0.0, 2.0, 0.0, 0.0, 0.0,
+                    0.0, 2.0, 0.0, 2.0, 4.0, 8.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[4], 2.0, 0.0, 0.0, 0.0, 0.0, 2.0, 0.0, 0.0, 0.0,
+                    0.0, 2.0, 0.0, 26.0, 96.0, -16.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[5], -0.2, 0.0, 0.0, 0.0, 0.0, -0.2, 0.0, 0.0, 0.0,
+                    0.0, -0.2, 0.0, 26.0, 96.0, -16.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[6], 2.0, 0.0, 0.0, 0.0, 0.0, 2.0, 0.0, 0.0, 0.0,
+                    0.0, 2.0, 0.0, 8.0, 12.0, 18.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[7], 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
+                    0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+        }
+
+        do {  // Updates from j1 exclude, j2 should be updated
+            XCTAssertTrue(job_full.run(&output[...]))
+            output[0] = matrix_float4x4.identity()
+            output[2] = matrix_float4x4.identity()
+            output[3] = matrix_float4x4.identity()
+            output[4] = matrix_float4x4.identity()
+            output[5] = matrix_float4x4.identity()
+            output[6] = matrix_float4x4.identity()
+            output[7] = matrix_float4x4.identity()
+            output[1] = matrix_float4x4.scaling(simd_float4.load(2.0, 2.0, 2.0, 0.0))
+
+            let job = LocalToModelJob()
+            job.skeleton = skeleton
+            job.from = 1
+            job.from_excluded = true
+            job.input = input[...]
+            XCTAssertTrue(job.validate())
+            XCTAssertTrue(job.run(&output[...]))
+
+            EXPECT_FLOAT4x4_EQ(output[0], 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
+                    0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[1], 2.0, 0.0, 0.0, 0.0, 0.0, 2.0, 0.0, 0.0, 0.0,
+                    0.0, 2.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[2], 20.0, 0.0, 0.0, 0.0, 0.0, 20.0, 0.0, 0.0, 0.0,
+                    0.0, 20.0, 0.0, -4.0, -4.0, -4.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[3], 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
+                    0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[4], 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
+                    0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[5], 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
+                    0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[6], 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
+                    0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[7], 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
+                    0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+        }
+
+        do {  // Updates from j2 excluded, no joint should be updated
+            XCTAssertTrue(job_full.run(&output[...]))
+            output[0] = matrix_float4x4.identity()
+            output[1] = matrix_float4x4.identity()
+            output[3] = matrix_float4x4.identity()
+            output[4] = matrix_float4x4.identity()
+            output[5] = matrix_float4x4.identity()
+            output[6] = matrix_float4x4.identity()
+            output[7] = matrix_float4x4.identity()
+            output[2] = matrix_float4x4.scaling(simd_float4.load(2.0, 2.0, 2.0, 0.0))
+
+            let job = LocalToModelJob()
+            job.skeleton = skeleton
+            job.from = 2
+            job.from_excluded = true
+            job.input = input[...]
+            XCTAssertTrue(job.validate())
+            XCTAssertTrue(job.run(&output[...]))
+
+            EXPECT_FLOAT4x4_EQ(output[0], 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
+                    0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[1], 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
+                    0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[2], 2.0, 0.0, 0.0, 0.0, 0.0, 2.0, 0.0, 0.0, 0.0,
+                    0.0, 2.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[3], 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
+                    0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[4], 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
+                    0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[5], 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
+                    0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[6], 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
+                    0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[7], 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
+                    0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+        }
+
+        do {  // Updates from j7 excluded, no joint should be updated
+            output[0] = matrix_float4x4.identity()
+            output[1] = matrix_float4x4.identity()
+            output[2] = matrix_float4x4.identity()
+            output[3] = matrix_float4x4.identity()
+            output[4] = matrix_float4x4.identity()
+            output[5] = matrix_float4x4.identity()
+            output[6] = matrix_float4x4.identity()
+            output[7] = matrix_float4x4.scaling(simd_float4.load(2.0, 2.0, 2.0, 0.0))
+
+            let job = LocalToModelJob()
+            job.skeleton = skeleton
+            job.from = 7
+            job.from_excluded = true
+            job.input = input[...]
+            XCTAssertTrue(job.validate())
+            XCTAssertTrue(job.run(&output[...]))
+
+            EXPECT_FLOAT4x4_EQ(output[0], 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
+                    0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[1], 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
+                    0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[2], 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
+                    0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[3], 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
+                    0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[4], 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
+                    0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[5], 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
+                    0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[6], 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
+                    0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[7], 2.0, 0.0, 0.0, 0.0, 0.0, 2.0, 0.0, 0.0, 0.0,
+                    0.0, 2.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+        }
+
+        do {  // Updates from j6 excluded, no joint should be updated
+            XCTAssertTrue(job_full.run(&output[...]))
+            output[0] = matrix_float4x4.identity()
+            output[1] = matrix_float4x4.identity()
+            output[2] = matrix_float4x4.identity()
+            output[3] = matrix_float4x4.identity()
+            output[4] = matrix_float4x4.identity()
+            output[5] = matrix_float4x4.identity()
+            output[7] = matrix_float4x4.identity()
+            output[6] = matrix_float4x4.scaling(simd_float4.load(2.0, 2.0, 2.0, 0.0))
+
+            let job = LocalToModelJob()
+            job.skeleton = skeleton
+            job.from = 6
+            job.from_excluded = true
+            job.input = input[...]
+            XCTAssertTrue(job.validate())
+            XCTAssertTrue(job.run(&output[...]))
+
+            EXPECT_FLOAT4x4_EQ(output[0], 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
+                    0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[1], 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
+                    0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[2], 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
+                    0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[3], 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
+                    0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[4], 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
+                    0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[5], 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
+                    0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[6], 2.0, 0.0, 0.0, 0.0, 0.0, 2.0, 0.0, 0.0, 0.0,
+                    0.0, 2.0, 0.0, 0.0, 0.0, 0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[7], 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
+                    0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+        }
+    }
+
+    func testEmpty() {
+        let skeleton = SoaSkeleton()
+        var output: [simd_float4x4] = []
+        do {  // From root
+            let job = LocalToModelJob()
+            job.skeleton = skeleton
+            XCTAssertTrue(job.validate())
+            XCTAssertTrue(job.run(&output[...]))
+        }
+
+        do {  // From joint 0
+            let job = LocalToModelJob()
+            job.from = 0
+            job.skeleton = skeleton
+            XCTAssertTrue(job.validate())
+            XCTAssertTrue(job.run(&output[...]))
+        }
     }
 }
