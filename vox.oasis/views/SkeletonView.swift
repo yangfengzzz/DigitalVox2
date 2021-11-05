@@ -186,6 +186,15 @@ func createBone(_ engine: Engine) -> ModelMesh {
         Vector3(vertex_n[5].x, vertex_n[5].y, vertex_n[5].z),
     ]
 
+    let colors: [Color] = [
+        Color(1, 1, 1, 1),
+        Color(1, 1, 1, 1),
+        Color(1, 1, 1, 1),
+        Color(1, 1, 1, 1),
+        Color(1, 1, 1, 1),
+        Color(1, 1, 1, 1)
+    ]
+
     var indices = [UInt32](repeating: 0, count: 24)
     indices[0] = 0
     indices[1] = 2
@@ -217,6 +226,7 @@ func createBone(_ engine: Engine) -> ModelMesh {
 
     mesh.setPositions(positions: positions)
     mesh.setNormals(normals: normals)
+    mesh.setColors(colors: colors)
     mesh.uploadData(true)
     let indexBuffer = engine._hardwareRenderer.device.makeBuffer(bytes: indices,
             length: indices.count * MemoryLayout<UInt32>.stride,

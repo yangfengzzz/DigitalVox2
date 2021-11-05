@@ -32,11 +32,13 @@ float4x4 GetWorldMatrix(float4x4 joint) {
 struct VertexIn {
     float3 a_position [[attribute(Position)]];
     float3 a_normal [[attribute(Normal)]];
+    float4 v_color [[attribute(Color_0)]];
 };
 
 struct VertexOut {
     float4 position [[position]];
     float3 v_world_normal;
+    float4 v_vertex_color;
 };
 
 vertex VertexOut bone_vertex(const VertexIn in [[stage_in]],
@@ -53,6 +55,7 @@ vertex VertexOut bone_vertex(const VertexIn in [[stage_in]],
     float invdet = 1.0 / dot(cross_matrix[2], world_matrix[2].xyz);
     float3x3 normal_matrix = cross_matrix * invdet;
     out.v_world_normal = normal_matrix * in.a_normal;
+    out.v_vertex_color = in.v_color;
     return out;
 }
 
@@ -66,5 +69,5 @@ float4 GetAmbient(float3 _world_normal) {
 
 fragment float4 bone_fragment(VertexOut in [[stage_in]]) {
     float4 ambient = GetAmbient(in.v_world_normal);
-    return ambient * float4(0.5, 0.5, 0.5, 1);
+    return ambient * in.v_vertex_color;
 }
