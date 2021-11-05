@@ -10,14 +10,14 @@ import SwiftUI
 func createBone(_ engine: Engine) -> ModelMesh {
     let kInter: Float = 0.2
     let mesh = ModelMesh(engine)
-    let positions: [Vector3] = [Vector3](repeating: Vector3(), count: 6)
-    _ = positions[0].setValue(x: 1.0, y: 0.0, z: 0.0)
-    _ = positions[1].setValue(x: kInter, y: 0.1, z: 0.1)
-    _ = positions[2].setValue(x: kInter, y: 0.1, z: -0.1)
-    _ = positions[3].setValue(x: kInter, y: -0.1, z: -0.1)
-    _ = positions[4].setValue(x: kInter, y: -0.1, z: 0.1)
-    _ = positions[5].setValue(x: 0.0, y: 0.0, z: 0.0)
-     
+    var positions: [Vector3] = [Vector3](repeating: Vector3(), count: 6)
+    positions[0] = Vector3(1.0, 0.0, 0.0)
+    positions[1] = Vector3(kInter, 0.1, 0.1)
+    positions[2] = Vector3(kInter, 0.1, -0.1)
+    positions[3] = Vector3(kInter, -0.1, -0.1)
+    positions[4] = Vector3(kInter, -0.1, 0.1)
+    positions[5] = Vector3(0.0, 0.0, 0.0)
+
     let pos: [VecFloat3] = [
         VecFloat3(1.0, 0.0, 0.0), VecFloat3(kInter, 0.1, 0.1),
         VecFloat3(kInter, 0.1, -0.1), VecFloat3(kInter, -0.1, -0.1),
@@ -128,7 +128,7 @@ struct SkeletonView: View {
         canvas = Canvas()
         engine = Engine(canvas, MetalRenderer())
         _ = Shader.create("bone", "bone_vertex", "bone_fragment")
-        
+
         let scene = engine.sceneManager.activeScene
         let rootEntity = scene!.createRootEntity()
 
@@ -149,8 +149,19 @@ struct SkeletonView: View {
         raw_skeleton.roots = [RawSkeleton.Joint()]
         let root = raw_skeleton.roots[0]
         root.name = "j0"
-        root.children = [RawSkeleton.Joint()]
+        root.transform = VecTransform.identity()
+        root.transform.translation = VecFloat3(1.0, 2.0, 3.0)
+        root.transform.rotation = VecQuaternion(1.0, 0.0, 0.0, 0.0)
+
+        root.children = [RawSkeleton.Joint(), RawSkeleton.Joint()]
         root.children[0].name = "j1"
+        root.children[0].transform = VecTransform.identity()
+        root.children[0].transform.rotation = VecQuaternion(0.0, 1.0, 0.0, 0.0)
+        root.children[0].transform.translation = VecFloat3(4.0, 5.0, 6.0)
+        root.children[1].name = "j2"
+        root.children[1].transform = VecTransform.identity()
+        root.children[1].transform.translation = VecFloat3(7.0, 8.0, 9.0)
+        root.children[1].transform.scale = VecFloat3(-27.0, 46.0, 9.0)
 
         let builder = SkeletonBuilder()
         let skeleton = builder.eval(raw_skeleton)
@@ -175,12 +186,46 @@ struct SkeletonView: View {
             return
         }
 
+        // uniform builder
+        // Prepares computation constants.
+        let parents = skeleton.joint_parents()
+        var _uniforms:[simd_float4x4] = []
+        var instances = 0
+        for i in 0..<num_joints {
+            // Root isn't rendered.
+            let parent_id = parents[i]
+            if (parent_id == SoaSkeleton.Constants.kNoParent.rawValue) {
+                continue
+            }
+
+            // Selects joint matrices.
+            let parent = prealloc_models_[parent_id]
+            let current = prealloc_models_[i]
+
+            // Copy parent joint's raw matrix, to render a bone between the parent and current matrix.
+            _uniforms.append(parent)
+
+            // Set bone direction (bone_dir). The shader expects to find it at index
+            // [3,7,11] of the matrix.
+            // Index 15 is used to store whether a bone should be rendered,
+            // otherwise it's a leaf.
+            var bone_dir: [Float] = [0, 0, 0, 0]
+            storePtrU(current.columns.3 - parent.columns.3, &bone_dir)
+            _uniforms[instances].columns.0.w = bone_dir[0]
+            _uniforms[instances].columns.1.w = bone_dir[1]
+            _uniforms[instances].columns.2.w = bone_dir[2]
+            _uniforms[instances].columns.3.w = 1.0 // Enables bone rendering.
+
+            // Next instance.
+            instances += 1
+        }
+
         // add bone renderer
         let boneEntity = rootEntity.createChild("bone")
         let renderer: MeshRenderer = boneEntity.addComponent()
         let mtl = BoneMaterial(engine)
         let joint = Matrix()
-        joint.elements = prealloc_models_[0]
+        joint.elements = _uniforms[0]
         mtl.joint = joint
         renderer.mesh = createBone(engine)
         renderer.setMaterial(mtl)
