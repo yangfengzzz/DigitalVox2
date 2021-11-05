@@ -8,19 +8,23 @@
 import MetalKit
 
 struct Skeleton {
-    let parentIndices: [Int?]
+    let parentIndices: [Int]
     let jointPaths: [String]
     let bindTransforms: [float4x4]
     let restTransforms: [float4x4]
     let jointMatrixPaletteBuffer: MTLBuffer?
 
-    static func getParentIndices(jointPaths: [String]) -> [Int?] {
-        var parentIndices = [Int?](repeating: nil, count: jointPaths.count)
+    static func getParentIndices(jointPaths: [String]) -> [Int] {
+        var parentIndices = [Int](repeating: SoaSkeleton.Constants.kNoParent.rawValue, count: jointPaths.count)
         for (jointIndex, jointPath) in jointPaths.enumerated() {
             let url = URL(fileURLWithPath: jointPath)
             let parentPath = url.deletingLastPathComponent().relativePath
-            parentIndices[jointIndex] = jointPaths.firstIndex {
+            let parentIndex = jointPaths.firstIndex {
                 $0 == parentPath
+            }
+            
+            if parentIndex != nil {
+                parentIndices[jointIndex] = parentIndex!
             }
         }
         return parentIndices
@@ -58,8 +62,9 @@ struct Skeleton {
                             ?? restTransforms[jointIndex]
 
             let parentPose: float4x4
-            if let parentIndex = parentIndices[jointIndex] {
-                parentPose = poses[parentIndex]
+            
+            if parentIndices[jointIndex] != SoaSkeleton.Constants.kNoParent.rawValue {
+                parentPose = poses[parentIndices[jointIndex]]
             } else {
                 parentPose = .identity()
             }
