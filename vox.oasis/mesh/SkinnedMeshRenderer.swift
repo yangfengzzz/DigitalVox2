@@ -29,10 +29,7 @@ class SkinnedMeshRenderer: MeshRenderer {
         super.update(deltaTime)
         if _skeleton != nil {
             let animator: Animator = entity.getComponent()
-            if animator.currentAnimation != nil {
-                skeleton!.updatePose(animationClip: animator.currentAnimation!,
-                        at: animator.currentTime)
-            }
+            skeleton!.updatePose(animationClip: animator.currentAnimation, at: animator.currentTime)
         }
     }
 }

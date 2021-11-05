@@ -22,7 +22,7 @@ struct Skeleton {
             let parentIndex = jointPaths.firstIndex {
                 $0 == parentPath
             }
-            
+
             if parentIndex != nil {
                 parentIndices[jointIndex] = parentIndex!
             }
@@ -43,8 +43,7 @@ struct Skeleton {
         jointMatrixPaletteBuffer = engine._hardwareRenderer.device.makeBuffer(length: bufferSize, options: [])
     }
 
-    func updatePose(animationClip: AnimationClip,
-                    at time: Float) {
+    func updatePose(animationClip: AnimationClip?, at time: Float) {
         guard let paletteBuffer = jointMatrixPaletteBuffer else {
             return
         }
@@ -56,13 +55,9 @@ struct Skeleton {
         var poses = [float4x4](repeatElement(.identity(),
                 count: jointPaths.count))
         for (jointIndex, jointPath) in jointPaths.enumerated() {
-            let pose =
-                    animationClip.getPose(at: time * animationClip.speed,
-                            jointPath: jointPath)
-                            ?? restTransforms[jointIndex]
+            let pose = animationClip?.getPose(at: time * animationClip!.speed, jointPath: jointPath) ?? restTransforms[jointIndex]
 
             let parentPose: float4x4
-            
             if parentIndices[jointIndex] != SoaSkeleton.Constants.kNoParent.rawValue {
                 parentPose = poses[parentIndices[jointIndex]]
             } else {

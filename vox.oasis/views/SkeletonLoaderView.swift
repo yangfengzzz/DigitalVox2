@@ -13,15 +13,6 @@ struct SkeletonLoaderView: View {
     let gltfLoader: GLTFAssetsLoader
     let usdzLoader: USDZAssetsLoader
 
-    class Rotation: Script {
-        var angle: Float = 0
-
-        override func onUpdate(_ deltaTime: Float) {
-            angle += 0.5
-            entity.transform.setRotation(x: 0, y: angle, z: 0)
-        }
-    }
-
     init() {
         canvas = Canvas()
         engine = Engine(canvas, MetalRenderer())
@@ -29,7 +20,7 @@ struct SkeletonLoaderView: View {
         usdzLoader = USDZAssetsLoader(engine)
         _ = Shader.create("bone", "bone_vertex", "bone_fragment")
         _ = Shader.create("joint", "joint_vertex", "bone_fragment")
-        
+
         let scene = engine.sceneManager.activeScene
         let rootEntity = scene!.createRootEntity()
 
@@ -46,13 +37,15 @@ struct SkeletonLoaderView: View {
         let _: OrbitControl = cameraEntity.addComponent()
 
         usdzLoader.load(with: "skeleton.usda") { [self] entities in
-            let renderer: SkinnedMeshRenderer =  entities[0].getComponent()
+            rootEntity.addChild(entities[0])
+
+            let renderer: SkinnedMeshRenderer = entities[0].getComponent()
             let skeleton = renderer.skeleton!
             let soa_skeleton = SoaSkeleton()
             soa_skeleton.allocate(skeleton.jointPaths.count)
             soa_skeleton.joint_names_ = skeleton.jointPaths[...]
             soa_skeleton.joint_parents_ = skeleton.parentIndices[...]
-            
+
             let w_axis = simd_float4.w_axis()
             let zero = simd_float4.zero()
             let one = simd_float4.one()
@@ -60,10 +53,10 @@ struct SkeletonLoaderView: View {
             var scales = [SimdFloat4](repeating: SimdFloat4(), count: 4)
             var rotations = [SimdFloat4](repeating: SimdFloat4(), count: 4)
             var i = 0
-            while i < skeleton.bindTransforms.count {
+            while i < skeleton.restTransforms.count {
                 for j in 0..<4 {
-                    if i < skeleton.bindTransforms.count {
-                        let result = toAffine(skeleton.bindTransforms[i], &translations[j], &rotations[j], &scales[j])
+                    if i < skeleton.restTransforms.count {
+                        let result = toAffine(skeleton.restTransforms[i], &translations[j], &rotations[j], &scales[j])
                         assert(result)
                         i += 1
                     } else {
@@ -72,14 +65,14 @@ struct SkeletonLoaderView: View {
                         scales[j] = one
                     }
                 }
-                
+
                 // Fills the SoaTransform structure.
                 let soa_index = i / 4 - 1
                 transpose4x3(translations, &soa_skeleton.joint_bind_poses_[soa_index].translation)
                 transpose4x4(rotations, &soa_skeleton.joint_bind_poses_[soa_index].rotation)
                 transpose4x3(scales, &soa_skeleton.joint_bind_poses_[soa_index].scale)
             }
-            
+
             // local to model
             let num_joints = soa_skeleton.num_joints()
             if (num_joints == 0) {
