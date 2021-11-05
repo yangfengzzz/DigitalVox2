@@ -102,10 +102,10 @@ struct RawAnimation {
         // Validates track. See RawAnimation::Validate for more details.
         // Use an infinite value for _duration if unknown. This will validate
         // keyframe orders, but not maximum duration.
-        func Validate(_ _duration: Float) -> Bool {
-            ValidateTrack(translations, _duration) &&
-                    ValidateTrack(rotations, _duration) &&
-                    ValidateTrack(scales, _duration)
+        func validate(_ _duration: Float) -> Bool {
+            validateTrack(translations, _duration) &&
+                    validateTrack(rotations, _duration) &&
+                    validateTrack(scales, _duration)
         }
     }
 
@@ -130,11 +130,11 @@ struct RawAnimation {
     //  1. Animation duration is greater than 0.
     //  2. Keyframes' time are sorted in a strict ascending order.
     //  3. Keyframes' time are all within [0,animation duration] range.
-    func Validate() -> Bool {
+    func validate() -> Bool {
         if (duration <= 0.0) {  // Tests duration is valid.
             return false
         }
-        if (tracks.count > Skeleton.Constants.kMaxJoints.rawValue) {  // Tests number of tracks.
+        if (tracks.count > SoaSkeleton.Constants.kMaxJoints.rawValue) {  // Tests number of tracks.
             return false
         }
         // Ensures that all key frames' time are valid, ie: in a strict ascending
@@ -142,17 +142,16 @@ struct RawAnimation {
         var valid = true
         var i = 0
         while valid && i < tracks.count {
-            valid = tracks[i].Validate(duration)
+            valid = tracks[i].validate(duration)
             i += 1
         }
         return valid  // *this is valid.
     }
 }
 
-
 // Implements key frames' time range and ordering checks.
 // See AnimationBuilder::Create for more details.
-func ValidateTrack<_Key: KeyType>(_ _track: [_Key], _ _duration: Float) -> Bool {
+func validateTrack<_Key: KeyType>(_ _track: [_Key], _ _duration: Float) -> Bool {
     var previous_time: Float = -1.0
     for k in 0..<_track.count {
         let frame_time = _track[k].time
