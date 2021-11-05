@@ -41,10 +41,10 @@ struct VertexOut {
 
 vertex VertexOut bone_vertex(const VertexIn in [[stage_in]],
                              constant matrix_float4x4 &u_MVPMat [[buffer(5)]],
-                             constant matrix_float4x4 &joint [[buffer(6)]]) {
+                             constant matrix_float4x4 &u_joint [[buffer(6)]]) {
     VertexOut out;
     
-    float4x4 world_matrix = GetWorldMatrix(joint);
+    float4x4 world_matrix = GetWorldMatrix(u_joint);
     float4 pos = float4(in.a_position.xyz, 1.);
     out.position = u_MVPMat * world_matrix * pos;
     float3x3 cross_matrix = float3x3(cross(world_matrix[1].xyz, world_matrix[2].xyz),
