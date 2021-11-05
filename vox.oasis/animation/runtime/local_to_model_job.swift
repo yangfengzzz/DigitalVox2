@@ -85,7 +85,7 @@ class LocalToModelJob {
             let soa_end = (i + 4) & ~3
             while i < soa_end && process {
                 let parent = parents[i]
-                let parent_matrix = parent == SoaSkeleton.Constants.kNoParent.rawValue ? root_matrix : output[parent]
+                let parent_matrix = parent == SoaSkeleton.Constants.kNoParent.rawValue ? root_matrix : (output[parent] as! simd_float4x4)
                 output[i] = parent_matrix! * local_aos_matrices[i & 3]
 
                 i += 1
@@ -136,5 +136,5 @@ class LocalToModelJob {
     //MARK: - Job output.
 
     /// The output range to be filled with model-space matrices.
-    var output: ArraySlice<simd_float4x4> = ArraySlice()
+    var output: NSMutableArray = NSMutableArray()
 }

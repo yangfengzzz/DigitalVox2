@@ -41,7 +41,7 @@ class LocalToModelTests: XCTestCase {
         }
 
         let input = [SoaTransform.identity(), SoaTransform.identity()]
-        let output: [simd_float4x4] = .init(repeating: simd_float4x4(), count: 5)
+        let output: NSMutableArray = .init(array: [simd_float4x4](repeating: simd_float4x4(), count: 5))
 
         // Default job
         do {
@@ -62,7 +62,7 @@ class LocalToModelTests: XCTestCase {
         do {
             let job = LocalToModelJob()
             job.skeleton = skeleton
-            job.output = output[0..<2]
+            job.output = output
             XCTAssertFalse(job.validate())
             XCTAssertFalse(job.run())
         }
@@ -70,25 +70,7 @@ class LocalToModelTests: XCTestCase {
         do {
             let job = LocalToModelJob()
             job.input = input[0..<1]
-            job.output = output[0..<4]
-            XCTAssertFalse(job.validate())
-            XCTAssertFalse(job.run())
-        }
-        // Invalid output range: end < begin.
-        do {
-            let job = LocalToModelJob()
-            job.skeleton = skeleton
-            job.input = input[0..<1]
-            job.output = output[0..<1]
-            XCTAssertFalse(job.validate())
-            XCTAssertFalse(job.run())
-        }
-        // Invalid output range: too small.
-        do {
-            let job = LocalToModelJob()
-            job.skeleton = skeleton
-            job.input = input[0..<1]
-            job.output = output[0..<1]
+            job.output = output
             XCTAssertFalse(job.validate())
             XCTAssertFalse(job.run())
         }
@@ -97,7 +79,7 @@ class LocalToModelTests: XCTestCase {
             let job = LocalToModelJob()
             job.skeleton = skeleton
             job.input = input[0..<0]
-            job.output = output[...]
+            job.output = output
             XCTAssertFalse(job.validate())
             XCTAssertFalse(job.run())
         }
@@ -106,7 +88,7 @@ class LocalToModelTests: XCTestCase {
             let job = LocalToModelJob()
             job.skeleton = skeleton
             job.input = input[...]
-            job.output = output[0..<2]
+            job.output = output
             XCTAssertTrue(job.validate())
             XCTAssertTrue(job.run())
         }
@@ -118,7 +100,7 @@ class LocalToModelTests: XCTestCase {
             job.skeleton = skeleton
             job.root = world
             job.input = input[...]
-            job.output = output[0..<2]
+            job.output = output
             XCTAssertTrue(job.validate())
             XCTAssertTrue(job.run())
         }
@@ -128,7 +110,7 @@ class LocalToModelTests: XCTestCase {
             job.skeleton = skeleton
             job.from = 93
             job.input = input[...]
-            job.output = output[0..<2]
+            job.output = output
             XCTAssertTrue(job.validate())
             XCTAssertTrue(job.run())
         }
@@ -138,7 +120,7 @@ class LocalToModelTests: XCTestCase {
             job.skeleton = skeleton
             job.from = -93
             job.input = input[...]
-            job.output = output[0..<2]
+            job.output = output
             XCTAssertTrue(job.validate())
             XCTAssertTrue(job.run())
         }
@@ -148,7 +130,7 @@ class LocalToModelTests: XCTestCase {
             job.skeleton = skeleton
             job.from = 93
             job.input = input[...]
-            job.output = output[0..<2]
+            job.output = output
             XCTAssertTrue(job.validate())
             XCTAssertTrue(job.run())
         }
@@ -158,7 +140,7 @@ class LocalToModelTests: XCTestCase {
             job.skeleton = skeleton
             job.from = -93
             job.input = input[...]
-            job.output = output[0..<2]
+            job.output = output
             XCTAssertTrue(job.validate())
             XCTAssertTrue(job.run())
         }
@@ -167,7 +149,7 @@ class LocalToModelTests: XCTestCase {
             let job = LocalToModelJob()
             job.skeleton = empty_skeleton
             job.input = input[0..<0]
-            job.output = output[0..<2]
+            job.output = output
             XCTAssertTrue(job.validate())
             XCTAssertTrue(job.run())
         }
@@ -176,7 +158,7 @@ class LocalToModelTests: XCTestCase {
             let job = LocalToModelJob()
             job.skeleton = skeleton
             job.input = input[...]
-            job.output = output[...]
+            job.output = output
             XCTAssertTrue(job.validate())
             XCTAssertTrue(job.run())
         }
@@ -251,25 +233,43 @@ class LocalToModelTests: XCTestCase {
 
         do {
             // Prepares the job with root == nullptr (default identity matrix)
-            let output: [simd_float4x4] = .init(repeating: simd_float4x4(), count: 6)
+            let output: NSMutableArray = .init(array: [simd_float4x4](repeating: simd_float4x4(), count: 6))
             let job = LocalToModelJob()
             job.skeleton = skeleton
             job.input = input[...]
-            job.output = output[...]
+            job.output = output
             XCTAssertTrue(job.validate())
             XCTAssertTrue(job.run())
-            EXPECT_FLOAT4x4_EQ(output[0], 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
-                    0.0, 1.0, 0.0, 2.0, 2.0, 2.0, 1.0)
-            EXPECT_FLOAT4x4_EQ(output[1], 0.0, 0.0, -1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0,
-                    0.0, 0.0, 0.0, 2.0, 2.0, 2.0, 1.0)
-            EXPECT_FLOAT4x4_EQ(output[2], 0.0, 0.0, -1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0,
-                    0.0, 0.0, 0.0, 6.0, 4.0, 1.0, 1.0)
-            EXPECT_FLOAT4x4_EQ(output[3], 10.0, 0.0, 0.0, 0.0, 0.0, 10.0, 0.0, 0.0, 0.0,
-                    0.0, 10.0, 0.0, 0.0, 0.0, 0.0, 1.0)
-            EXPECT_FLOAT4x4_EQ(output[4], 10.0, 0.0, 0.0, 0.0, 0.0, 10.0, 0.0, 0.0, 0.0,
-                    0.0, 10.0, 0.0, 120.0, 460.0, -120.0, 1.0)
-            EXPECT_FLOAT4x4_EQ(output[5], -1.0, 0.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0,
-                    0.0, -1.0, 0.0, 0.0, 0.0, 0.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[0] as! simd_float4x4,
+                    1.0, 0.0, 0.0, 0.0,
+                    0.0, 1.0, 0.0, 0.0,
+                    0.0, 0.0, 1.0, 0.0,
+                    2.0, 2.0, 2.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[1] as! simd_float4x4,
+                    0.0, 0.0, -1.0, 0.0,
+                    0.0, 1.0, 0.0, 0.0,
+                    1.0, 0.0, 0.0, 0.0,
+                    2.0, 2.0, 2.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[2] as! simd_float4x4,
+                    0.0, 0.0, -1.0, 0.0,
+                    0.0, 1.0, 0.0, 0.0,
+                    1.0, 0.0, 0.0, 0.0,
+                    6.0, 4.0, 1.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[3] as! simd_float4x4,
+                    10.0, 0.0, 0.0, 0.0,
+                    0.0, 10.0, 0.0, 0.0,
+                    0.0, 0.0, 10.0, 0.0,
+                    0.0, 0.0, 0.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[4] as! simd_float4x4,
+                    10.0, 0.0, 0.0, 0.0,
+                    0.0, 10.0, 0.0, 0.0,
+                    0.0, 0.0, 10.0, 0.0,
+                    120.0, 460.0, -120.0, 1.0)
+            EXPECT_FLOAT4x4_EQ(output[5] as! simd_float4x4,
+                    -1.0, 0.0, 0.0, 0.0,
+                    0.0, -1.0, 0.0, 0.0,
+                    0.0, 0.0, -1.0, 0.0,
+                    0.0, 0.0, 0.0, 1.0)
         }
     }
 }
