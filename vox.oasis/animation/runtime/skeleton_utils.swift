@@ -26,7 +26,7 @@ func getJointLocalBindPose(_ _skeleton: SoaSkeleton, _ _joint: Int) -> VecTransf
     // Stores to the Transform object.
     var bind_pose = VecTransform.identity()
     let offset = _joint % 4
-    var result:[Float] = [0, 0, 0, 0]
+    var result: [Float] = [0, 0, 0, 0]
     store3PtrU(translations[offset], &result)
     bind_pose.translation = VecFloat3(result[0], result[1], result[2])
     storePtrU(rotations[offset], &result)
@@ -76,7 +76,7 @@ func iterateJointsDF(_ _skeleton: SoaSkeleton, _ _fct: (Int, Int) -> Void,
 // the _current joint is a root.
 func iterateJointsDFReverse(_ _skeleton: SoaSkeleton, _ _fct: (Int, Int) -> Void) {
     let parents = _skeleton.joint_parents()
-    for i in 0..<_skeleton.num_joints() {
+    for i in stride(from: _skeleton.num_joints() - 1, through: 0, by: -1) {
         _fct(i, parents[i])
     }
 }
