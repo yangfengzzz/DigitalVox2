@@ -7,26 +7,28 @@
 
 import Foundation
 
+//MARK: - Lerp Methods
 // Translation interpolation method.
-func LerpTranslation(_ _a: VecFloat3, _ _b: VecFloat3, _ _alpha: Float) -> VecFloat3 {
-    Lerp(_a, _b, _alpha)
+func lerpTranslation(_ _a: VecFloat3, _ _b: VecFloat3, _ _alpha: Float) -> VecFloat3 {
+    lerp(_a, _b, _alpha)
 }
 
 // Rotation interpolation method.
-func LerpRotation(_ _a: VecQuaternion, _ _b: VecQuaternion, _ _alpha: Float) -> VecQuaternion {
+func lerpRotation(_ _a: VecQuaternion, _ _b: VecQuaternion, _ _alpha: Float) -> VecQuaternion {
     // Finds the shortest path. This is done by the AnimationBuilder for runtime
     // animations.
     let dot = _a.x * _b.x + _a.y * _b.y + _a.z * _b.z + _a.w * _b.w
-    return NLerp(_a, dot < 0.0 ? -_b : _b, _alpha)  // _b an -_b are the same rotation.
+    return nlerp(_a, dot < 0.0 ? -_b : _b, _alpha)  // _b an -_b are the same rotation.
 }
 
 // Scale interpolation method.
-func LerpScale(_ _a: VecFloat3, _ _b: VecFloat3, _ _alpha: Float) -> VecFloat3 {
-    Lerp(_a, _b, _alpha)
+func lerpScale(_ _a: VecFloat3, _ _b: VecFloat3, _ _alpha: Float) -> VecFloat3 {
+    lerp(_a, _b, _alpha)
 }
 
+//MARK: - Sample Methods
 // Samples a component (translation, rotation or scale) of a track.
-func SampleComponent<T, _Key: KeyType>(_ _track: [_Key],
+func sampleComponent<T, _Key: KeyType>(_ _track: [_Key],
                                        _ _lerp: (T, T, Float) -> T,
                                        _ _time: Float) -> T where T == _Key.T {
     if (_track.count == 0) {
@@ -55,24 +57,24 @@ func SampleComponent<T, _Key: KeyType>(_ _track: [_Key],
     }
 }
 
-func SampleTrack_NoValidate(_ _track: RawAnimation.JointTrack, _ _time: Float,
+func sampleTrack_NoValidate(_ _track: RawAnimation.JointTrack, _ _time: Float,
                             _ _transform: inout VecTransform) {
-    _transform.translation = SampleComponent(_track.translations, LerpTranslation, _time)
-    _transform.rotation = SampleComponent(_track.rotations, LerpRotation, _time)
-    _transform.scale = SampleComponent(_track.scales, LerpScale, _time)
+    _transform.translation = sampleComponent(_track.translations, lerpTranslation, _time)
+    _transform.rotation = sampleComponent(_track.rotations, lerpRotation, _time)
+    _transform.scale = sampleComponent(_track.scales, lerpScale, _time)
 }
 
 // Samples a RawAnimation track. This function shall be used for offline
 // purpose. Use ozz::animation::Animation and ozz::animation::SamplingJob for
 // runtime purpose.
 // Returns false if track is invalid.
-func SampleTrack(_track: RawAnimation.JointTrack, _time: Float,
-                 _transform: inout VecTransform) -> Bool {
-    if (!_track.Validate(Float.greatestFiniteMagnitude)) {
+func sampleTrack(_ _track: RawAnimation.JointTrack, _ _time: Float,
+                 _ _transform: inout VecTransform) -> Bool {
+    if (!_track.validate(Float.greatestFiniteMagnitude)) {
         return false
     }
 
-    SampleTrack_NoValidate(_track, _time, &_transform)
+    sampleTrack_NoValidate(_track, _time, &_transform)
     return true
 }
 
@@ -81,8 +83,8 @@ func SampleTrack(_track: RawAnimation.JointTrack, _time: Float,
 // runtime purpose.
 // _animation must be valid.
 // Returns false output range is too small or animation is invalid.
-func SampleAnimation(_animation: RawAnimation, _time: Float, _transforms: inout ArraySlice<VecTransform>) -> Bool {
-    if (!_animation.Validate()) {
+func sampleAnimation(_ _animation: RawAnimation, _ _time: Float, _ _transforms: inout ArraySlice<VecTransform>) -> Bool {
+    if (!_animation.validate()) {
         return false
     }
     if (_animation.tracks.count > _transforms.count) {
@@ -90,7 +92,7 @@ func SampleAnimation(_animation: RawAnimation, _time: Float, _transforms: inout 
     }
 
     for i in 0..<_animation.tracks.count {
-        SampleTrack_NoValidate(_animation.tracks[i], _time, &_transforms[i])
+        sampleTrack_NoValidate(_animation.tracks[i], _time, &_transforms[i])
     }
     return true
 }
