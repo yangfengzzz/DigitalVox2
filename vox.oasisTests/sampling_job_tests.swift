@@ -234,23 +234,277 @@ class SamplingJobTests: XCTestCase {
     }
 
     func testSamplingNoTrack() {
+        var raw_animation = RawAnimation()
+        raw_animation.duration = 46.0
 
+        let cache = SamplingCache(1)
+
+        let builder = AnimationBuilder()
+        let animation = builder.eval(raw_animation)
+        XCTAssertTrue(animation != nil)
+        guard let animation = animation else {
+            return
+        }
+
+        let test_output = [SoaTransform.identity()]
+        var output = [SoaTransform.identity()]
+
+        let job = SamplingJob()
+        job.ratio = 0.0
+        job.animation = animation
+        job.cache = cache
+        XCTAssertTrue(job.validate())
+        XCTAssertTrue(job.run(&output[...]))
+
+        // Tests output.
+        XCTAssertEqual(test_output[0].translation.x, output[0].translation.x)
+        XCTAssertEqual(test_output[0].translation.y, output[0].translation.y)
+        XCTAssertEqual(test_output[0].translation.z, output[0].translation.z)
+
+        XCTAssertEqual(test_output[0].rotation.x, output[0].rotation.x)
+        XCTAssertEqual(test_output[0].rotation.y, output[0].rotation.y)
+        XCTAssertEqual(test_output[0].rotation.z, output[0].rotation.z)
+        XCTAssertEqual(test_output[0].rotation.w, output[0].rotation.w)
+
+        XCTAssertEqual(test_output[0].scale.x, output[0].scale.x)
+        XCTAssertEqual(test_output[0].scale.y, output[0].scale.y)
+        XCTAssertEqual(test_output[0].scale.z, output[0].scale.z)
     }
 
     func testSampling1Track0Key() {
+        var raw_animation = RawAnimation()
+        raw_animation.duration = 46.0
+        raw_animation.tracks = [RawAnimation.JointTrack()]  // Adds a joint.
 
+        let cache = SamplingCache(1)
+
+        let builder = AnimationBuilder()
+        let animation = builder.eval(raw_animation)
+        XCTAssertTrue(animation != nil)
+        guard let animation = animation else {
+            return
+        }
+
+        var output = [SoaTransform.identity()]
+
+        let job = SamplingJob()
+        job.animation = animation
+        job.cache = cache
+
+        var t: Float = -0.2
+        while t < 1.2 {
+            output[0] = .identity()
+            job.ratio = t
+            XCTAssertTrue(job.validate())
+            XCTAssertTrue(job.run(&output[...]))
+            EXPECT_SOAFLOAT3_EQ_EST(output[0].translation, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                    0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+            EXPECT_SOAQUATERNION_EQ_EST(output[0].rotation, 0.0, 0.0, 0.0, 0.0, 0.0,
+                    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0)
+            EXPECT_SOAFLOAT3_EQ_EST(output[0].scale, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
+                    1.0, 1.0, 1.0, 1.0, 1.0)
+
+            t += 0.1
+        }
     }
 
     func testSampling1Track1Key() {
+        var raw_animation = RawAnimation()
+        raw_animation.duration = 46.0
+        raw_animation.tracks = [RawAnimation.JointTrack()]  // Adds a joint.
 
+        let cache = SamplingCache(1)
+
+        let tkey = RawAnimation.TranslationKey(0.3, VecFloat3(1.0, -1.0, 5.0))
+        raw_animation.tracks[0].translations.append(tkey)  // Adds a key.
+
+        let builder = AnimationBuilder()
+        let animation = builder.eval(raw_animation)
+        XCTAssertTrue(animation != nil)
+        guard let animation = animation else {
+            return
+        }
+
+        var output = [SoaTransform.identity()]
+
+        let job = SamplingJob()
+        job.animation = animation
+        job.cache = cache
+
+        var t: Float = -0.2
+        while t < 1.2 {
+            output[0] = .identity()
+            job.ratio = t
+            XCTAssertTrue(job.validate())
+            XCTAssertTrue(job.run(&output[...]))
+            EXPECT_SOAFLOAT3_EQ_EST(output[0].translation, 1.0, 0.0, 0.0, 0.0, -1.0,
+                    0.0, 0.0, 0.0, 5.0, 0.0, 0.0, 0.0)
+            EXPECT_SOAQUATERNION_EQ_EST(output[0].rotation, 0.0, 0.0, 0.0, 0.0, 0.0,
+                    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0)
+            EXPECT_SOAFLOAT3_EQ_EST(output[0].scale, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
+                    1.0, 1.0, 1.0, 1.0, 1.0)
+
+            t += 0.1
+        }
     }
 
     func testSampling1Track2Keys() {
+        var raw_animation = RawAnimation()
+        raw_animation.duration = 46.0
+        raw_animation.tracks = [RawAnimation.JointTrack()]  // Adds a joint.
+
+        let cache = SamplingCache(1)
+
+        let tkey0 = RawAnimation.TranslationKey(0.5, VecFloat3(1.0, 2.0, 4.0))
+        raw_animation.tracks[0].translations.append(tkey0)  // Adds a key.
+        let tkey1 = RawAnimation.TranslationKey(0.8, VecFloat3(2.0, 4.0, 8.0))
+        raw_animation.tracks[0].translations.append(tkey1)  // Adds a key.
+
+        let builder = AnimationBuilder()
+        let animation = builder.eval(raw_animation)
+        XCTAssertTrue(animation != nil)
+        guard let animation = animation else {
+            return
+        }
+
+        var output = [SoaTransform.identity()]
+
+        let job = SamplingJob()
+        job.animation = animation
+        job.cache = cache
+
+        // Samples at t = 0.
+        job.ratio = 0.0
+        XCTAssertTrue(job.validate())
+        XCTAssertTrue(job.run(&output[...]))
+        EXPECT_SOAFLOAT3_EQ_EST(output[0].translation, 1.0, 0.0, 0.0, 0.0, 2.0, 0.0,
+                0.0, 0.0, 4.0, 0.0, 0.0, 0.0)
+        EXPECT_SOAQUATERNION_EQ_EST(output[0].rotation, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0)
+        EXPECT_SOAFLOAT3_EQ_EST(output[0].scale, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
+                1.0, 1.0, 1.0, 1.0, 1.0)
+
+        // Samples at t = tkey0.
+        job.ratio = tkey0.time / animation.duration()
+        XCTAssertTrue(job.validate())
+        XCTAssertTrue(job.run(&output[...]))
+        EXPECT_SOAFLOAT3_EQ_EST(output[0].translation, 1.0, 0.0, 0.0, 0.0, 2.0, 0.0,
+                0.0, 0.0, 4.0, 0.0, 0.0, 0.0)
+        EXPECT_SOAQUATERNION_EQ_EST(output[0].rotation, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0)
+        EXPECT_SOAFLOAT3_EQ_EST(output[0].scale, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
+                1.0, 1.0, 1.0, 1.0, 1.0)
+
+        // Samples at t = tkey1.
+        job.ratio = tkey1.time / animation.duration()
+        XCTAssertTrue(job.validate())
+        XCTAssertTrue(job.run(&output[...]))
+        EXPECT_SOAFLOAT3_EQ_EST(output[0].translation, 2.0, 0.0, 0.0, 0.0, 4.0, 0.0,
+                0.0, 0.0, 8.0, 0.0, 0.0, 0.0)
+        EXPECT_SOAQUATERNION_EQ_EST(output[0].rotation, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0)
+        EXPECT_SOAFLOAT3_EQ_EST(output[0].scale, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
+                1.0, 1.0, 1.0, 1.0, 1.0)
+
+        // Samples at t = end.
+        job.ratio = 1.0
+        XCTAssertTrue(job.validate())
+        XCTAssertTrue(job.run(&output[...]))
+        EXPECT_SOAFLOAT3_EQ_EST(output[0].translation, 2.0, 0.0, 0.0, 0.0, 4.0, 0.0,
+                0.0, 0.0, 8.0, 0.0, 0.0, 0.0)
+        EXPECT_SOAQUATERNION_EQ_EST(output[0].rotation, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0)
+        EXPECT_SOAFLOAT3_EQ_EST(output[0].scale, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
+                1.0, 1.0, 1.0, 1.0, 1.0)
+
+        // Samples at tkey0.time < t < tkey1.time.
+        job.ratio = (tkey0.time / animation.duration() + tkey1.time / animation.duration()) / 2.0
+        XCTAssertTrue(job.validate())
+        XCTAssertTrue(job.run(&output[...]))
+        EXPECT_SOAFLOAT3_EQ_EST(output[0].translation, 1.5, 0.0, 0.0, 0.0, 3.0, 0.0,
+                0.0, 0.0, 6.0, 0.0, 0.0, 0.0)
+        EXPECT_SOAQUATERNION_EQ_EST(output[0].rotation, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0)
+        EXPECT_SOAFLOAT3_EQ_EST(output[0].scale, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
+                1.0, 1.0, 1.0, 1.0, 1.0)
 
     }
 
     func testSampling4Track2Keys() {
+        var raw_animation = RawAnimation()
+        raw_animation.duration = 1.0
+        raw_animation.tracks = [RawAnimation.JointTrack](repeating: RawAnimation.JointTrack(), count: 4)  // Adds a joint.
 
+        let cache = SamplingCache(1)
+
+        let tkey00 = RawAnimation.TranslationKey(0.5, VecFloat3(1.0, 2.0, 4.0))
+        raw_animation.tracks[0].translations.append(tkey00)  // Adds a key.
+        let tkey01 = RawAnimation.TranslationKey(0.8, VecFloat3(2.0, 4.0, 8.0))
+        raw_animation.tracks[0].translations.append(tkey01)  // Adds a key.
+
+        // This quaternion will be negated as the builder ensures that the first key
+        // is in identity quaternion hemisphere.
+        let rkey10 = RawAnimation.RotationKey(0.0, VecQuaternion(0.0, 0.0, 0.0, -1.0))
+        raw_animation.tracks[1].rotations.append(rkey10)  // Adds a key.
+        let rkey11 = RawAnimation.RotationKey(1.0, VecQuaternion(0.0, 1.0, 0.0, 0.0))
+        raw_animation.tracks[1].rotations.append(rkey11)  // Adds a key.
+
+        let skey20 = RawAnimation.ScaleKey(0.5, VecFloat3(0.0, 0.0, 0.0))
+        raw_animation.tracks[2].scales.append(skey20)  // Adds a key.
+        let skey21 = RawAnimation.ScaleKey(0.8, VecFloat3(-1.0, -1.0, -1.0))
+        raw_animation.tracks[2].scales.append(skey21)  // Adds a key.
+
+        let tkey30 = RawAnimation.TranslationKey(0.0, VecFloat3(-1.0, -2.0, -4.0))
+        raw_animation.tracks[3].translations.append(tkey30)  // Adds a key.
+        let tkey31 = RawAnimation.TranslationKey(1.0, VecFloat3(-2.0, -4.0, -8.0))
+        raw_animation.tracks[3].translations.append(tkey31)  // Adds a key.
+
+        let builder = AnimationBuilder()
+        let animation = builder.eval(raw_animation)
+        XCTAssertTrue(animation != nil)
+        guard let animation = animation else {
+            return
+        }
+
+        var output = [SoaTransform.identity()]
+
+        let job = SamplingJob()
+        job.animation = animation
+        job.cache = cache
+
+        // Samples at t = 0.
+        job.ratio = 0.0
+        XCTAssertTrue(job.validate())
+        XCTAssertTrue(job.run(&output[...]))
+        EXPECT_SOAFLOAT3_EQ_EST(output[0].translation, 1.0, 0.0, 0.0, -1.0, 2.0, 0.0,
+                0.0, -2.0, 4.0, 0.0, 0.0, -4.0)
+        EXPECT_SOAQUATERNION_EQ_EST(output[0].rotation, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0)
+        EXPECT_SOAFLOAT3_EQ_EST(output[0].scale, 1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 0.0,
+                1.0, 1.0, 1.0, 0.0, 1.0)
+
+        // Samples at t = tkey00.
+        job.ratio = tkey00.time / animation.duration()
+        XCTAssertTrue(job.validate())
+        XCTAssertTrue(job.run(&output[...]))
+        EXPECT_SOAFLOAT3_EQ_EST(output[0].translation, 1.0, 0.0, 0.0, -1.5, 2.0, 0.0,
+                0.0, -3.0, 4.0, 0.0, 0.0, -6.0)
+        EXPECT_SOAQUATERNION_EQ_EST(output[0].rotation, 0.0, 0.0, 0.0, 0.0, 0.0,
+                0.7071067, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0,
+                0.7071067, 1.0, 1.0)
+        EXPECT_SOAFLOAT3_EQ_EST(output[0].scale, 1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 0.0,
+                1.0, 1.0, 1.0, 0.0, 1.0)
+
+        // Samples at t = end.
+        job.ratio = 1.0
+        XCTAssertTrue(job.validate())
+        XCTAssertTrue(job.run(&output[...]))
+        EXPECT_SOAFLOAT3_EQ_EST(output[0].translation, 2.0, 0.0, 0.0, -2.0, 4.0, 0.0,
+                0.0, -4.0, 8.0, 0.0, 0.0, -8.0)
+        EXPECT_SOAQUATERNION_EQ_EST(output[0].rotation, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0,
+                0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0)
+        EXPECT_SOAFLOAT3_EQ_EST(output[0].scale, 1.0, 1.0, -1.0, 1.0, 1.0, 1.0, -1.0,
+                1.0, 1.0, 1.0, -1.0, 1.0)
     }
 
     func testCache() {
