@@ -417,6 +417,10 @@ class AnimationScript: Script {
                 jointMtl[i].joint = joint
             }
         }
+        
+        if isFirst {
+            isFirst = !isFirst
+        }
     }
 }
 
