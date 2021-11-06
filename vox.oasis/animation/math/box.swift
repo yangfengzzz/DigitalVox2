@@ -83,7 +83,14 @@ func transformBox(_  _matrix: simd_float4x4, _  _box: Box) -> Box {
 
     // Finds new min and max and store them in box.
     var tbox = Box()
-    OZZFloat4.store3PtrU(with: OZZFloat4.min(with: ta, tb), &tbox.min.x)
-    OZZFloat4.store3PtrU(with: OZZFloat4.max(with: ta, tb), &tbox.max.x)
+    var out: [Float] = [0, 0, 0]
+    store3PtrU(vox_oasis.min(ta, tb), &out)
+    tbox.min.x = out[0]
+    tbox.min.y = out[1]
+    tbox.min.z = out[2]
+    store3PtrU(vox_oasis.max(ta, tb), &out)
+    tbox.max.x = out[0]
+    tbox.max.y = out[1]
+    tbox.max.z = out[2]
     return tbox
 }
