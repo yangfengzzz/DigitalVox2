@@ -171,10 +171,109 @@ class AnimationBuilderTests: XCTestCase {
     }
 
     func testName() {
+        // Instantiates a builder objects with default parameters.
+        let builder = AnimationBuilder()
 
+        do {  // Building an unnamed animation.
+            var raw_animation = RawAnimation()
+            raw_animation.duration = 1.0
+            raw_animation.tracks = [RawAnimation.JointTrack](repeating: RawAnimation.JointTrack(), count: 46)
+
+            // Builds animation
+            let anim = builder.eval(raw_animation)
+            XCTAssertTrue(anim != nil)
+            guard let anim = anim else {
+                return
+            }
+
+            // Should
+            XCTAssertEqual(anim.name(), "")
+        }
+
+        do {  // Building an unnamed animation.
+            var raw_animation = RawAnimation()
+            raw_animation.duration = 1.0
+            raw_animation.tracks = [RawAnimation.JointTrack](repeating: RawAnimation.JointTrack(), count: 46)
+            raw_animation.name = "46"
+
+            // Builds animation
+            let anim = builder.eval(raw_animation)
+            XCTAssertTrue(anim != nil)
+            guard let anim = anim else {
+                return
+            }
+
+            // Should
+            XCTAssertEqual(anim.name(), "46")
+        }
     }
 
     func testSort() {
+        // Instantiates a builder objects with default parameters.
+        let builder = AnimationBuilder()
 
+        var raw_animation = RawAnimation()
+        raw_animation.duration = 1.0
+        raw_animation.tracks = [RawAnimation.JointTrack](repeating: RawAnimation.JointTrack(), count: 4)
+
+        // Raw animation inputs.
+        //     0              1
+        // --------------------
+        // 0 - A     B        |
+        // 1 - C  D  E        |
+        // 2 - F  G     H  I  J
+        // 3 - K  L  M  N     |
+
+        // Final animation.
+        //     0              1
+        // --------------------
+        // 0 - 0     4       11
+        // 1 - 1  5  8       12
+        // 2 - 2  6     9 14 16
+        // 3 - 3  7 10 13    15
+
+        let a = RawAnimation.TranslationKey(0.0 * raw_animation.duration, VecFloat3(1.0, 0.0, 0.0))
+        raw_animation.tracks[0].translations.append(a)
+        let b = RawAnimation.TranslationKey(0.4 * raw_animation.duration, VecFloat3(3.0, 0.0, 0.0))
+        raw_animation.tracks[0].translations.append(b)
+
+        let c = RawAnimation.TranslationKey(0.0 * raw_animation.duration, VecFloat3(2.0, 0.0, 0.0))
+        raw_animation.tracks[1].translations.append(c)
+        let d = RawAnimation.TranslationKey(0.2 * raw_animation.duration, VecFloat3(6.0, 0.0, 0.0))
+        raw_animation.tracks[1].translations.append(d)
+        let e = RawAnimation.TranslationKey(0.4 * raw_animation.duration, VecFloat3(8.0, 0.0, 0.0))
+        raw_animation.tracks[1].translations.append(e)
+
+        let f = RawAnimation.TranslationKey(0.0 * raw_animation.duration, VecFloat3(12.0, 0.0, 0.0))
+        raw_animation.tracks[2].translations.append(f)
+        let g = RawAnimation.TranslationKey(0.2 * raw_animation.duration, VecFloat3(11.0, 0.0, 0.0))
+        raw_animation.tracks[2].translations.append(g)
+        let h = RawAnimation.TranslationKey(0.6 * raw_animation.duration, VecFloat3(9.0, 0.0, 0.0))
+        raw_animation.tracks[2].translations.append(h)
+        let i = RawAnimation.TranslationKey(0.8 * raw_animation.duration, VecFloat3(7.0, 0.0, 0.0))
+        raw_animation.tracks[2].translations.append(i)
+        let j = RawAnimation.TranslationKey(1.0 * raw_animation.duration, VecFloat3(5.0, 0.0, 0.0))
+        raw_animation.tracks[2].translations.append(j)
+
+        let k = RawAnimation.TranslationKey(0.0 * raw_animation.duration, VecFloat3(1.0, 0.0, 0.0))
+        raw_animation.tracks[3].translations.append(k)
+        let l = RawAnimation.TranslationKey(0.2 * raw_animation.duration, VecFloat3(2.0, 0.0, 0.0))
+        raw_animation.tracks[3].translations.append(l)
+        let m = RawAnimation.TranslationKey(0.4 * raw_animation.duration, VecFloat3(3.0, 0.0, 0.0))
+        raw_animation.tracks[3].translations.append(m)
+        let n = RawAnimation.TranslationKey(0.6 * raw_animation.duration, VecFloat3(4.0, 0.0, 0.0))
+        raw_animation.tracks[3].translations.append(n)
+
+        // Builds animation
+        let animation = builder.eval(raw_animation)
+        XCTAssertTrue(animation != nil)
+        guard let animation = animation else {
+            return
+        }
+
+        // Duration must be maintained.
+        XCTAssertEqual(animation.duration(), raw_animation.duration)
+
+        //TODO:
     }
 }
