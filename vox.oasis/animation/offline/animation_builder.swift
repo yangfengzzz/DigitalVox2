@@ -96,7 +96,7 @@ class AnimationBuilder {
 }
 
 fileprivate func align(_ _value: Int, _ _alignment: Int) -> Int {
-    (_value + (_alignment - 1)) & (0 - _alignment);
+    (_value + (_alignment - 1)) & (0 - _alignment)
 }
 
 fileprivate protocol SortingType {

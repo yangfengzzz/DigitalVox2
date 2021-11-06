@@ -76,7 +76,98 @@ class AnimationBuilderTests: XCTestCase {
     }
 
     func testBuild() {
+        // Instantiates a builder objects with default parameters.
+        let builder = AnimationBuilder()
 
+        do {  // Building an Animation with unsorted keys fails.
+            var raw_animation = RawAnimation()
+            raw_animation.duration = 1.0
+            raw_animation.tracks = [RawAnimation.JointTrack()]
+
+            // Adds 2 unordered keys
+            let first_key = RawAnimation.TranslationKey(0.8, VecFloat3.zero())
+            raw_animation.tracks[0].translations.append(first_key)
+            let second_key = RawAnimation.TranslationKey(0.2, VecFloat3.zero())
+            raw_animation.tracks[0].translations.append(second_key)
+
+            // Builds animation
+            XCTAssertFalse(builder.eval(raw_animation) != nil)
+        }
+
+        do {  // Building an Animation with invalid key frame's time fails.
+            var raw_animation = RawAnimation()
+            raw_animation.duration = 1.0
+            raw_animation.tracks = [RawAnimation.JointTrack()]
+
+            // Adds a key with a time greater than animation duration.
+            let first_key = RawAnimation.TranslationKey(2.0, VecFloat3.zero())
+            raw_animation.tracks[0].translations.append(first_key)
+
+            // Builds animation
+            XCTAssertFalse(builder.eval(raw_animation) != nil)
+        }
+
+        do {  // Building an Animation with unsorted key frame's time fails.
+            var raw_animation = RawAnimation()
+            raw_animation.duration = 1.0
+            raw_animation.tracks = [RawAnimation.JointTrack(), RawAnimation.JointTrack()]
+
+            // Adds 2 unsorted keys.
+            let first_key = RawAnimation.TranslationKey(0.7, VecFloat3.zero())
+            raw_animation.tracks[0].translations.append(first_key)
+            let second_key = RawAnimation.TranslationKey(0.1, VecFloat3.zero())
+            raw_animation.tracks[0].translations.append(second_key)
+
+            // Builds animation
+            XCTAssertFalse(builder.eval(raw_animation) != nil)
+        }
+
+        do {  // Building an Animation with equal key frame's time fails.
+            var raw_animation = RawAnimation()
+            raw_animation.duration = 1.0
+            raw_animation.tracks = [RawAnimation.JointTrack(), RawAnimation.JointTrack()]
+
+            // Adds 2 unsorted keys.
+            let key = RawAnimation.TranslationKey(0.7, VecFloat3.zero())
+            raw_animation.tracks[0].translations.append(key)
+            raw_animation.tracks[0].translations.append(key)
+
+            // Builds animation
+            XCTAssertFalse(builder.eval(raw_animation) != nil)
+        }
+
+        do {  // Building a valid Animation with empty tracks succeeds.
+            var raw_animation = RawAnimation()
+            raw_animation.duration = 46.0
+            raw_animation.tracks = [RawAnimation.JointTrack](repeating: RawAnimation.JointTrack(), count: 46)
+
+            // Builds animation
+            let anim = builder.eval(raw_animation)
+            XCTAssertTrue(anim != nil)
+            guard let anim = anim else {
+                return
+            }
+            XCTAssertEqual(anim.duration(), 46.0)
+            XCTAssertEqual(anim.num_tracks(), 46)
+        }
+
+        do {  // Building a valid Animation with 1 track succeeds.
+            var raw_animation = RawAnimation()
+            raw_animation.duration = 46.0
+            raw_animation.tracks = [RawAnimation.JointTrack()]
+
+            let first_key = RawAnimation.TranslationKey(0.7, VecFloat3.zero())
+            raw_animation.tracks[0].translations.append(first_key)
+
+            // Builds animation
+            let anim = builder.eval(raw_animation)
+            XCTAssertTrue(anim != nil)
+            guard let anim = anim else {
+                return
+            }
+            XCTAssertEqual(anim.duration(), 46.0)
+            XCTAssertEqual(anim.num_tracks(), 1)
+        }
     }
 
     func testName() {
