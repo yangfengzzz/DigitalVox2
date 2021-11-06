@@ -16,15 +16,15 @@ class AnimationBuilder {
     // See RawAnimation::Validate() for more details about failure reasons.
     // The animation is returned as an unique_ptr as ownership is given back to
     // the caller.
-    func eval(_raw_animation _input: RawAnimation) -> Animation? {
+    func eval(_ _input: RawAnimation) -> SoaAnimation? {
         // Tests _raw_animation validity.
-        if (!_input.Validate()) {
+        if (!_input.validate()) {
             return nil
         }
 
         // Everything is fine, allocates and fills the animation.
         // Nothing can fail now.
-        let animation = Animation()
+        let animation = SoaAnimation()
 
         // Sets duration.
         let duration = _input.duration
@@ -80,7 +80,7 @@ class AnimationBuilder {
         }
 
         // Allocate animation members.
-        animation.Allocate(sorting_translations.count, sorting_rotations.count, sorting_scales.count)
+        animation.allocate(sorting_translations.count, sorting_rotations.count, sorting_scales.count)
 
         // Copy sorted keys to final animation.
         CopyToAnimation(&sorting_translations, &animation.translations_, inv_duration)
@@ -204,9 +204,9 @@ fileprivate func CopyToAnimation<_SortingKey: SortingType>(_ _src: inout [_Sorti
     for i in 0..<src_count {
         _dest[i].ratio = _src[i].key.time * _inv_duration
         _dest[i].track = _src[i].track
-        _dest[i].value.0 = OZZMath.floatToHalf(with: _src[i].key.value.x)
-        _dest[i].value.1 = OZZMath.floatToHalf(with: _src[i].key.value.y)
-        _dest[i].value.2 = OZZMath.floatToHalf(with: _src[i].key.value.z)
+        _dest[i].value.0 = math.floatToHalf(_src[i].key.value.x)
+        _dest[i].value.1 = math.floatToHalf(_src[i].key.value.y)
+        _dest[i].value.2 = math.floatToHalf(_src[i].key.value.z)
     }
 }
 
@@ -265,7 +265,7 @@ fileprivate func CopyToAnimation(_ _src: inout [SortingRotationKey],
     var track = UInt16.max
     let identity = VecQuaternion.identity()
     for i in 0..<src_count {
-        var normalized = NormalizeSafe(_src[i].key.value, identity)
+        var normalized = normalizeSafe(_src[i].key.value, identity)
         if (track != _src[i].track) {   // First key of the track.
             if (normalized.w < 0.0) {    // .w eq to a dot with identity quaternion.
                 normalized = -normalized  // Q an -Q are the same rotation.
@@ -273,9 +273,8 @@ fileprivate func CopyToAnimation(_ _src: inout [SortingRotationKey],
         } else {  // Still on the same track: so fixes-up quaternion.
             let prev = VecFloat4(_src[i - 1].key.value.x, _src[i - 1].key.value.y,
                     _src[i - 1].key.value.z, _src[i - 1].key.value.w)
-            let curr = VecFloat4(normalized.x, normalized.y, normalized.z,
-                    normalized.w)
-            if (Dot(prev, curr) < 0.0) {
+            let curr = VecFloat4(normalized.x, normalized.y, normalized.z, normalized.w)
+            if (dot(prev, curr) < 0.0) {
                 normalized = -normalized  // Q an -Q are the same rotation.
             }
         }

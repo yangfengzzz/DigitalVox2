@@ -320,6 +320,7 @@
 		048692462735FA1B007B8DFE /* raw_animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048692452735FA1B007B8DFE /* raw_animation.swift */; };
 		048692482735FACD007B8DFE /* soa_animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048692472735FACD007B8DFE /* soa_animation.swift */; };
 		0486924B2735FBFA007B8DFE /* raw_animation_utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0486924A2735FBFA007B8DFE /* raw_animation_utils.swift */; };
+		0486924D2735FCD6007B8DFE /* animation_builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0486924C2735FCD6007B8DFE /* animation_builder.swift */; };
 		0497A1E926DF150800F61DE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0497A1E826DF150800F61DE9 /* Assets.xcassets */; };
 		0497A1EC26DF150800F61DE9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0497A1EB26DF150800F61DE9 /* Preview Assets.xcassets */; };
 		0497A20226DF150800F61DE9 /* DigitalVox2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A20126DF150800F61DE9 /* DigitalVox2UITests.swift */; };
@@ -745,6 +746,7 @@
 		048692472735FACD007B8DFE /* soa_animation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = soa_animation.swift; sourceTree = "<group>"; };
 		048692492735FAF9007B8DFE /* animation_keyframe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = animation_keyframe.h; sourceTree = "<group>"; };
 		0486924A2735FBFA007B8DFE /* raw_animation_utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = raw_animation_utils.swift; sourceTree = "<group>"; };
+		0486924C2735FCD6007B8DFE /* animation_builder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = animation_builder.swift; sourceTree = "<group>"; };
 		04874ED326F771F3005E3318 /* PBRMaterial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PBRMaterial.swift; sourceTree = "<group>"; };
 		0497A1E126DF150500F61DE9 /* vox.render.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vox.render.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0497A1E426DF150500F61DE9 /* voxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = voxApp.swift; path = ../vox.render/voxApp.swift; sourceTree = "<group>"; };
@@ -1740,6 +1742,7 @@
 				04CB89022732BFBF00B0E398 /* skeleton_builder.swift */,
 				048692452735FA1B007B8DFE /* raw_animation.swift */,
 				0486924A2735FBFA007B8DFE /* raw_animation_utils.swift */,
+				0486924C2735FCD6007B8DFE /* animation_builder.swift */,
 			);
 			path = offline;
 			sourceTree = "<group>";
@@ -2197,6 +2200,7 @@
 				041BAE4B272A50FB006268D5 /* RenderFace.swift in Sources */,
 				04CB88F72732B11F00B0E398 /* vec_quaternion.swift in Sources */,
 				041BAE9E272A5141006268D5 /* DynamicCollider.swift in Sources */,
+				0486924D2735FCD6007B8DFE /* animation_builder.swift in Sources */,
 				041BAE0B272A500F006268D5 /* EngineFeatureManager.swift in Sources */,
 				041BAE68272A5111006268D5 /* PointLight.swift in Sources */,
 				041BAE28272A50D9006268D5 /* CameraClearFlags.swift in Sources */,
