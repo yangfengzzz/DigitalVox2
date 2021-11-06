@@ -434,9 +434,9 @@ func updateInterpKeyframes<_Key: KeyframeType, _InterpKey: InterpSoaType>(_ _num
         _outdated[j] = 0  // Reset outdated entries as all will be processed.
         var i = j * 8
         while outdated != 0 {
-            if ((outdated & 1) == 0) {
-                continue
-            }
+//            if ((outdated & 1) == 0) {
+//                continue
+//            }
             let base = i * 4 * 2  // * soa size * 2 keys
 
             // Decompress left side keyframes and store them in soa structures.
