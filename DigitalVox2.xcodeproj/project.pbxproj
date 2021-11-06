@@ -247,6 +247,7 @@
 		042F0DC727351DDD00FF4A26 /* SkeletonMaterial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042F0DC627351DDD00FF4A26 /* SkeletonMaterial.swift */; };
 		042F0DC92735291600FF4A26 /* SkeletonLoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042F0DC82735291600FF4A26 /* SkeletonLoaderView.swift */; };
 		042F0DCB2736511B00FF4A26 /* sampling_job.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042F0DCA2736511B00FF4A26 /* sampling_job.swift */; };
+		042F0DCD2736551100FF4A26 /* additive_animation_builder_tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042F0DCC2736551100FF4A26 /* additive_animation_builder_tests.swift */; };
 		0452EC9926DFA0CD0015BFB1 /* voxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9826DFA0CD0015BFB1 /* voxApp.swift */; };
 		0452EC9B26DFA0CD0015BFB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9A26DFA0CD0015BFB1 /* ContentView.swift */; };
 		0452EC9D26DFA0CD0015BFB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0452EC9C26DFA0CD0015BFB1 /* Assets.xcassets */; };
@@ -542,6 +543,7 @@
 		042F0DC627351DDD00FF4A26 /* SkeletonMaterial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonMaterial.swift; sourceTree = "<group>"; };
 		042F0DC82735291600FF4A26 /* SkeletonLoaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonLoaderView.swift; sourceTree = "<group>"; };
 		042F0DCA2736511B00FF4A26 /* sampling_job.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = sampling_job.swift; sourceTree = "<group>"; };
+		042F0DCC2736551100FF4A26 /* additive_animation_builder_tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = additive_animation_builder_tests.swift; sourceTree = "<group>"; };
 		043CB42226EF590B004A0B21 /* Matrix3x3.test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matrix3x3.test.swift; sourceTree = "<group>"; };
 		043CB42426EF8954004A0B21 /* Quaternion.test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quaternion.test.swift; sourceTree = "<group>"; };
 		043CB42626F02520004A0B21 /* BoundingBox.test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingBox.test.swift; sourceTree = "<group>"; };
@@ -1099,6 +1101,7 @@
 				042F0DBF2734C09F00FF4A26 /* local_to_model_job_tests.swift */,
 				0486925627360858007B8DFE /* raw_animation_utils_tests.swift */,
 				04869258273618F5007B8DFE /* animation_builder_tests.swift */,
+				042F0DCC2736551100FF4A26 /* additive_animation_builder_tests.swift */,
 				048692542736010A007B8DFE /* animation_utils_tests.swift */,
 			);
 			path = vox.oasisTests;
@@ -2439,6 +2442,7 @@
 				042F0DA427337DD200FF4A26 /* BoundingBox.test.swift in Sources */,
 				042F0DB22733E07A00FF4A26 /* box.test.swift in Sources */,
 				0486925727360858007B8DFE /* raw_animation_utils_tests.swift in Sources */,
+				042F0DCD2736551100FF4A26 /* additive_animation_builder_tests.swift in Sources */,
 				042F0DB02733DFD800FF4A26 /* rect.test.swift in Sources */,
 				042F0DA227337DD200FF4A26 /* Ray.test.swift in Sources */,
 			);
