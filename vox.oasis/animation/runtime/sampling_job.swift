@@ -20,7 +20,7 @@ struct SamplingJob {
     // Validates job parameters. Returns true for a valid job, or false otherwise:
     // -if any input pointer is nullptr
     // -if output range is invalid.
-    func Validate() -> Bool {
+    func validate() -> Bool {
         // Don't need any early out, as jobs are valid in most of the performance
         // critical cases.
         // Tests are written in multiple lines in order to avoid branches.
@@ -45,8 +45,8 @@ struct SamplingJob {
     // The job is validated before any operation is performed, see Validate() for
     // more details.
     // Returns false if *this job is not valid.
-    mutating func Run() -> Bool {
-        if (!Validate()) {
+    mutating func run() -> Bool {
+        if (!validate()) {
             return false
         }
 
@@ -65,33 +65,32 @@ struct SamplingJob {
 
         // Step the cache to this potentially new animation and ratio.
         assert(cache.max_soa_tracks() >= num_soa_tracks)
-        cache.Step(animation, anim_ratio)
+        cache.step(animation, anim_ratio)
 
         // Fetch key frames from the animation to the cache a r = anim_ratio.
         // Then updates outdated soa hot values.
-        UpdateCacheCursor(anim_ratio, num_soa_tracks, animation.translations(),
+        updateCacheCursor(anim_ratio, num_soa_tracks, animation.translations(),
                 &cache.translation_cursor_, &cache.translation_keys_,
                 &cache.outdated_translations_)
-        UpdateInterpKeyframes(num_soa_tracks, animation.translations(),
+        updateInterpKeyframes(num_soa_tracks, animation.translations(),
                 cache.translation_keys_, &cache.outdated_translations_,
-                &cache.soa_translations_, DecompressFloat3)
+                &cache.soa_translations_, decompressFloat3)
 
-        UpdateCacheCursor(anim_ratio, num_soa_tracks, animation.rotations(),
+        updateCacheCursor(anim_ratio, num_soa_tracks, animation.rotations(),
                 &cache.rotation_cursor_, &cache.rotation_keys_,
                 &cache.outdated_rotations_)
-        UpdateInterpKeyframes(num_soa_tracks, animation.rotations(),
+        updateInterpKeyframes(num_soa_tracks, animation.rotations(),
                 cache.rotation_keys_, &cache.outdated_rotations_,
-                &cache.soa_rotations_, DecompressQuaternion)
+                &cache.soa_rotations_, decompressQuaternion)
 
-        UpdateCacheCursor(anim_ratio, num_soa_tracks, animation.scales(),
+        updateCacheCursor(anim_ratio, num_soa_tracks, animation.scales(),
                 &cache.scale_cursor_, &cache.scale_keys_,
                 &cache.outdated_scales_)
-        UpdateInterpKeyframes(num_soa_tracks, animation.scales(), cache.scale_keys_,
-                &cache.outdated_scales_, &cache.soa_scales_,
-                DecompressFloat3)
+        updateInterpKeyframes(num_soa_tracks, animation.scales(), cache.scale_keys_,
+                &cache.outdated_scales_, &cache.soa_scales_, decompressFloat3)
 
         // Interpolates soa hot data.
-        Interpolates(anim_ratio, num_soa_tracks, cache.soa_translations_,
+        interpolates(anim_ratio, num_soa_tracks, cache.soa_translations_,
                 cache.soa_rotations_, cache.soa_scales_, &output)
 
         return true
@@ -105,7 +104,7 @@ struct SamplingJob {
     var ratio: Float = 0.0
 
     // The animation to sample.
-    var animation: Animation?
+    var animation: SoaAnimation?
 
     // A cache object that must be big enough to sample *this animation.
     var cache: SamplingCache?
@@ -121,17 +120,17 @@ struct SamplingJob {
 
 protocol InterpSoaType {
     associatedtype T
-    var ratio: (SimdFloat4, SimdFloat4) { get set }
+    var ratio: (simd_float4, simd_float4) { get set }
     var value: (T, T) { get set }
 }
 
 internal struct InterpSoaFloat3: InterpSoaType {
-    var ratio: (SimdFloat4, SimdFloat4) = (OZZFloat4.zero(), OZZFloat4.zero())
+    var ratio: (simd_float4, simd_float4) = (simd_float4.zero(), simd_float4.zero())
     var value: (SoaFloat3, SoaFloat3) = (SoaFloat3.zero(), SoaFloat3.zero())
 }
 
 internal struct InterpSoaQuaternion: InterpSoaType {
-    var ratio: (SimdFloat4, SimdFloat4) = (OZZFloat4.zero(), OZZFloat4.zero())
+    var ratio: (simd_float4, simd_float4) = (simd_float4.zero(), simd_float4.zero())
     var value: (SoaQuaternion, SoaQuaternion) = (SoaQuaternion.identity(), SoaQuaternion.identity())
 }
 
@@ -141,7 +140,7 @@ internal class SamplingCache {
     // Constructs an empty cache. The cache needs to be resized with the
     // appropriate number of tracks before it can be used with a SamplingJob.
     init() {
-        Invalidate()
+        invalidate()
     }
 
     // Constructs a cache that can be used to sample any animation with at most
@@ -149,21 +148,21 @@ internal class SamplingCache {
     // soa size, which means max_tracks() can return a different (but bigger)
     // value than _max_tracks.
     init(_ _max_tracks: Int) {
-        Resize(_max_tracks)
+        resize(_max_tracks)
     }
 
     // Resize the number of joints that the cache can support.
     // This also implicitly invalidate the cache.
-    func Resize(_ _max_tracks: Int) {
+    func resize(_ _max_tracks: Int) {
         // Reset existing data.
-        Invalidate()
+        invalidate()
 
         // Updates maximum supported soa tracks.
         max_soa_tracks_ = (_max_tracks + 3) / 4
 
         // Allocate all cache data at once in a single allocation.
         // Alignment is guaranteed because memory is dispatch from the highest
-        // alignment requirement (Soa data: SimdFloat4) to the lowest (outdated
+        // alignment requirement (Soa data: simd_float4) to the lowest (outdated
         // flag: unsigned char).
 
         // Computes allocation size.
@@ -191,7 +190,7 @@ internal class SamplingCache {
     // animation (could be the result of successive call to delete / new).
     // Therefore it is recommended to manually invalidate a cache when it is
     // known that this cache will not be used for with an animation again.
-    func Invalidate() {
+    func invalidate() {
         animation_ = nil
         ratio_ = 0.0
         translation_cursor_ = 0
@@ -212,7 +211,7 @@ internal class SamplingCache {
     // ratio. If the _animation is different from the animation currently cached,
     // or if the _ratio shows that the animation is played backward, then the
     // cache is invalidated and reseted for the new _animation and _ratio.
-    internal func Step(_ _animation: Animation, _ _ratio: Float) {
+    internal func step(_ _animation: SoaAnimation, _ _ratio: Float) {
         // The cache is invalidated if animation has changed or if it is being rewind.
         if (animation_ !== _animation || _ratio < ratio_) {
             animation_ = _animation
@@ -224,7 +223,7 @@ internal class SamplingCache {
     }
 
     // The animation this cache refers to. nullptr means that the cache is invalid.
-    internal var animation_: Animation?
+    internal var animation_: SoaAnimation?
 
     // The current time ratio in the animation.
     internal var ratio_: Float = 0.0
@@ -255,7 +254,7 @@ internal class SamplingCache {
 }
 
 // Loops through the sorted key frames and update cache structure.
-func UpdateCacheCursor<_Key: KeyframeType>(_ _ratio: Float, _ _num_soa_tracks: Int,
+func updateCacheCursor<_Key: KeyframeType>(_ _ratio: Float, _ _num_soa_tracks: Int,
                                            _ _keys: ArraySlice<_Key>, _ _cursor: inout Int,
                                            _ _cache: inout ArraySlice<Int>, _ _outdated: inout ArraySlice<uint8>) {
     assert(_num_soa_tracks >= 1)
@@ -288,8 +287,7 @@ func UpdateCacheCursor<_Key: KeyframeType>(_ _ratio: Float, _ _num_soa_tracks: I
         for i in 0..<num_outdated_flags - 1 {
             _outdated[i] = 0xff
         }
-        _outdated[num_outdated_flags - 1] =
-                0xff >> (num_outdated_flags * 8 - _num_soa_tracks)
+        _outdated[num_outdated_flags - 1] = 0xff >> (num_outdated_flags * 8 - _num_soa_tracks)
     } else {
         cursor = _cursor  // Might be == end()
         assert(cursor >= num_tracks * 2 && cursor <= _keys.count)
@@ -318,14 +316,14 @@ func UpdateCacheCursor<_Key: KeyframeType>(_ _ratio: Float, _ _num_soa_tracks: I
     _cursor = cursor
 }
 
-func DecompressFloat3(_ _k0: Float3Key, _ _k1: Float3Key,
+func decompressFloat3(_ _k0: Float3Key, _ _k1: Float3Key,
                       _ _k2: Float3Key, _ _k3: Float3Key,
                       _ _soa_float3: inout SoaFloat3) {
-    _soa_float3.x = OZZMath.halfToFloat(withSIMD: OZZInt4.load(with: Int32(_k0.value.0), Int32(_k1.value.0),
+    _soa_float3.x = math.halfToFloat(SimdInt4.load(Int32(_k0.value.0), Int32(_k1.value.0),
             Int32(_k2.value.0), Int32(_k3.value.0)))
-    _soa_float3.y = OZZMath.halfToFloat(withSIMD: OZZInt4.load(with: Int32(_k0.value.1), Int32(_k1.value.1),
+    _soa_float3.y = math.halfToFloat(SimdInt4.load(Int32(_k0.value.1), Int32(_k1.value.1),
             Int32(_k2.value.1), Int32(_k3.value.1)))
-    _soa_float3.z = OZZMath.halfToFloat(withSIMD: OZZInt4.load(with: Int32(_k0.value.2), Int32(_k1.value.2),
+    _soa_float3.z = math.halfToFloat(SimdInt4.load(Int32(_k0.value.2), Int32(_k1.value.2),
             Int32(_k2.value.2), Int32(_k3.value.2)))
 }
 
@@ -333,7 +331,7 @@ func DecompressFloat3(_ _k0: Float3Key, _ _k1: Float3Key,
 // quaternion.
 let kCpntMapping: [[Int]] = [[0, 0, 1, 2], [0, 0, 1, 2], [0, 1, 0, 2], [0, 1, 2, 0]]
 
-func DecompressQuaternion(_ _k0: QuaternionKey, _ _k1: QuaternionKey,
+func decompressQuaternion(_ _k0: QuaternionKey, _ _k1: QuaternionKey,
                           _ _k2: QuaternionKey, _ _k3: QuaternionKey,
                           _ _quaternion: inout SoaQuaternion) {
     // Selects proper mapping for each key.
@@ -372,29 +370,29 @@ func DecompressQuaternion(_ _k0: QuaternionKey, _ _k1: QuaternionKey,
     cmp_keys[Int(_k3.largest)][3] = 0
 
     // Rebuilds quaternion from quantized values.
-    let kInt2Float = OZZFloat4.load1(with: 1.0 / (32767.0 * kSqrt2))
-    var cpnt: [SimdFloat4] = [
-        kInt2Float * OZZFloat4.fromInt(with: OZZInt4.loadPtr(with: cmp_keys[0])),
-        kInt2Float * OZZFloat4.fromInt(with: OZZInt4.loadPtr(with: cmp_keys[1])),
-        kInt2Float * OZZFloat4.fromInt(with: OZZInt4.loadPtr(with: cmp_keys[2])),
-        kInt2Float * OZZFloat4.fromInt(with: OZZInt4.loadPtr(with: cmp_keys[3])),
+    let kInt2Float = simd_float4.load1(1.0 / (32767.0 * kSqrt2))
+    var cpnt: [simd_float4] = [
+        kInt2Float * simd_float4.fromInt(SimdInt4.loadPtr(&cmp_keys[0])),
+        kInt2Float * simd_float4.fromInt(SimdInt4.loadPtr(&cmp_keys[1])),
+        kInt2Float * simd_float4.fromInt(SimdInt4.loadPtr(&cmp_keys[2])),
+        kInt2Float * simd_float4.fromInt(SimdInt4.loadPtr(&cmp_keys[3])),
     ]
 
     // Get back length of 4th component. Favors performance over accuracy by using
     // x * RSqrtEst(x) instead of Sqrt(x).
     // ww0 cannot be 0 because we 're recomputing the largest component.
     let dot = cpnt[0] * cpnt[0] + cpnt[1] * cpnt[1] + cpnt[2] * cpnt[2] + cpnt[3] * cpnt[3]
-    let ww0 = OZZFloat4.max(with: OZZFloat4.load1(with: 1e-16), OZZFloat4.one() - dot)
-    let w0 = ww0 * OZZFloat4.rSqrtEst(with: ww0)
+    let ww0 = max(simd_float4.load1(1e-16), simd_float4.one() - dot)
+    let w0 = ww0 * rSqrtEst(ww0)
     // Re-applies 4th component' s sign.
-    let sign = OZZInt4.shiftL(with: OZZInt4.load(with: Int32(_k0.sign), Int32(_k1.sign), Int32(_k2.sign), Int32(_k3.sign)), 31)
-    let restored = OZZFloat4.or(with: w0, int4: sign)
+    let sign = shiftL(SimdInt4.load(Int32(_k0.sign), Int32(_k1.sign), Int32(_k2.sign), Int32(_k3.sign)), 31)
+    let restored = or(w0, sign)
 
     // Re-injects the largest component inside the SoA structure.
-    cpnt[Int(_k0.largest)] = OZZFloat4.or(with: cpnt[Int(_k0.largest)], float4: OZZFloat4.and(with: restored, int4: OZZInt4.mask_f000()))
-    cpnt[Int(_k1.largest)] = OZZFloat4.or(with: cpnt[Int(_k1.largest)], float4: OZZFloat4.and(with: restored, int4: OZZInt4.mask_0f00()))
-    cpnt[Int(_k2.largest)] = OZZFloat4.or(with: cpnt[Int(_k2.largest)], float4: OZZFloat4.and(with: restored, int4: OZZInt4.mask_00f0()))
-    cpnt[Int(_k3.largest)] = OZZFloat4.or(with: cpnt[Int(_k3.largest)], float4: OZZFloat4.and(with: restored, int4: OZZInt4.mask_000f()))
+    cpnt[Int(_k0.largest)] = or(cpnt[Int(_k0.largest)], and(restored, SimdInt4.mask_f000()))
+    cpnt[Int(_k1.largest)] = or(cpnt[Int(_k1.largest)], and(restored, SimdInt4.mask_0f00()))
+    cpnt[Int(_k2.largest)] = or(cpnt[Int(_k2.largest)], and(restored, SimdInt4.mask_00f0()))
+    cpnt[Int(_k3.largest)] = or(cpnt[Int(_k3.largest)], and(restored, SimdInt4.mask_000f()))
 
     // Stores result.
     _quaternion.x = cpnt[0]
@@ -403,31 +401,28 @@ func DecompressQuaternion(_ _k0: QuaternionKey, _ _k1: QuaternionKey,
     _quaternion.w = cpnt[3]
 }
 
-func Interpolates(_ _anim_ratio: Float, _ _num_soa_tracks: Int,
+func interpolates(_ _anim_ratio: Float, _ _num_soa_tracks: Int,
                   _ _translations: ArraySlice<InterpSoaFloat3>,
                   _ _rotations: ArraySlice<InterpSoaQuaternion>,
                   _ _scales: ArraySlice<InterpSoaFloat3>,
                   _ _output: inout ArraySlice<SoaTransform>) {
-    let anim_ratio = OZZFloat4.load1(with: _anim_ratio)
+    let anim_ratio = simd_float4.load1(_anim_ratio)
     for i in 0..<_num_soa_tracks {
         // Prepares interpolation coefficients.
-        let interp_t_ratio = (anim_ratio - _translations[i].ratio.0) *
-                OZZFloat4.rcpEst(with: _translations[i].ratio.1 - _translations[i].ratio.0)
-        let interp_r_ratio = (anim_ratio - _rotations[i].ratio.0) *
-                OZZFloat4.rcpEst(with: _rotations[i].ratio.1 - _rotations[i].ratio.0)
-        let interp_s_ratio = (anim_ratio - _scales[i].ratio.0) *
-                OZZFloat4.rcpEst(with: _scales[i].ratio.1 - _scales[i].ratio.0)
+        let interp_t_ratio = (anim_ratio - _translations[i].ratio.0) * rcpEst(_translations[i].ratio.1 - _translations[i].ratio.0)
+        let interp_r_ratio = (anim_ratio - _rotations[i].ratio.0) * rcpEst(_rotations[i].ratio.1 - _rotations[i].ratio.0)
+        let interp_s_ratio = (anim_ratio - _scales[i].ratio.0) * rcpEst(_scales[i].ratio.1 - _scales[i].ratio.0)
 
         // Processes interpolations.
         // The lerp of the rotation uses the shortest path, because opposed
         // quaternions were negated during animation build stage (AnimationBuilder).
-        _output[i].translation = Lerp(_translations[i].value.0, _translations[i].value.1, interp_t_ratio)
-        _output[i].rotation = NLerpEst(_rotations[i].value.0, _rotations[i].value.1, interp_r_ratio)
-        _output[i].scale = Lerp(_scales[i].value.0, _scales[i].value.1, interp_s_ratio)
+        _output[i].translation = lerp(_translations[i].value.0, _translations[i].value.1, interp_t_ratio)
+        _output[i].rotation = nlerpEst(_rotations[i].value.0, _rotations[i].value.1, interp_r_ratio)
+        _output[i].scale = lerp(_scales[i].value.0, _scales[i].value.1, interp_s_ratio)
     }
 }
 
-func UpdateInterpKeyframes<_Key: KeyframeType, _InterpKey: InterpSoaType>(_ _num_soa_tracks: Int,
+func updateInterpKeyframes<_Key: KeyframeType, _InterpKey: InterpSoaType>(_ _num_soa_tracks: Int,
                                                                           _ _keys: ArraySlice<_Key>,
                                                                           _ _interp: ArraySlice<Int>,
                                                                           _ _outdated: inout ArraySlice<UInt8>,
@@ -450,7 +445,7 @@ func UpdateInterpKeyframes<_Key: KeyframeType, _InterpKey: InterpSoaType>(_ _num
             let k10 = _keys[_interp[base + 2]]
             let k20 = _keys[_interp[base + 4]]
             let k30 = _keys[_interp[base + 6]]
-            _interp_keys[i].ratio.0 = OZZFloat4.load(with: k00.ratio, k10.ratio, k20.ratio, k30.ratio)
+            _interp_keys[i].ratio.0 = simd_float4.load(k00.ratio, k10.ratio, k20.ratio, k30.ratio)
             _decompress(k00, k10, k20, k30, &_interp_keys[i].value.0)
 
             // Decompress right side keyframes and store them in soa structures.
@@ -458,7 +453,7 @@ func UpdateInterpKeyframes<_Key: KeyframeType, _InterpKey: InterpSoaType>(_ _num
             let k11 = _keys[_interp[base + 3]]
             let k21 = _keys[_interp[base + 5]]
             let k31 = _keys[_interp[base + 7]]
-            _interp_keys[i].ratio.1 = OZZFloat4.load(with: k01.ratio, k11.ratio, k21.ratio, k31.ratio)
+            _interp_keys[i].ratio.1 = simd_float4.load(k01.ratio, k11.ratio, k21.ratio, k31.ratio)
             _decompress(k01, k11, k21, k31, &_interp_keys[i].value.1)
 
             i += 1
