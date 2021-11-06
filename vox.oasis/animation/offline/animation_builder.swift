@@ -247,9 +247,9 @@ fileprivate func compressQuat(_ _src: VecQuaternion, _ _dest: inout QuaternionKe
     let a = floor(quat[map[0]] * kFloat2Int + 0.5)
     let b = floor(quat[map[1]] * kFloat2Int + 0.5)
     let c = floor(quat[map[2]] * kFloat2Int + 0.5)
-    _dest.value.0 = Int16(Int(simd_clamp(-32767, a, 32767)) & 0xffff)
-    _dest.value.1 = Int16(Int(simd_clamp(-32767, b, 32767)) & 0xffff)
-    _dest.value.2 = Int16(Int(simd_clamp(-32767, c, 32767)) & 0xffff)
+    _dest.value.0 = Int16(simd_clamp(-32767, a, 32767))
+    _dest.value.1 = Int16(simd_clamp(-32767, b, 32767))
+    _dest.value.2 = Int16(simd_clamp(-32767, c, 32767))
 }
 
 // Specialize for rotations in order to normalize quaternions.
