@@ -133,7 +133,6 @@ func createAnimation(_ skeleton_: SoaSkeleton, _ _animation: inout RawAnimation)
         if (joint_name.contains("ld") || joint_name.contains("rd")) {
             let left = joint_name.contains("ld")  // First letter of "ld".
 
-
             // Copy original keys while taking into consideration the spine number
             // as a phase.
             let spine_number = Int(String(joint_name.dropFirst(2)))!
@@ -142,8 +141,7 @@ func createAnimation(_ skeleton_: SoaSkeleton, _ _animation: inout RawAnimation)
 
             // Loop to find animation start.
             var i_offset = 0
-            while (i_offset < kPrecomputedKeyCount &&
-                    kPrecomputedKeys[i_offset].time < phase) {
+            while (i_offset < kPrecomputedKeyCount && kPrecomputedKeys[i_offset].time < phase) {
                 i_offset += 1
             }
 
@@ -160,9 +158,8 @@ func createAnimation(_ skeleton_: SoaSkeleton, _ _animation: inout RawAnimation)
                     let tkey = RawAnimation.TranslationKey(new_time, kTransDown + rkey.value)
                     _animation.tracks[i].translations.append(tkey)
                 } else {
-                    let tkey = RawAnimation.TranslationKey(new_time,
-                            VecFloat3(kTransDown.x - rkey.value.x, kTransDown.y + rkey.value.y,
-                                    kTransDown.z + rkey.value.z))
+                    let tkey = RawAnimation.TranslationKey(new_time, VecFloat3(kTransDown.x - rkey.value.x,
+                            kTransDown.y + rkey.value.y, kTransDown.z + rkey.value.z))
                     _animation.tracks[i].translations.append(tkey)
                 }
             }
@@ -201,13 +198,9 @@ func createAnimation(_ skeleton_: SoaSkeleton, _ _animation: inout RawAnimation)
             let rkey = RawAnimation.RotationKey(0.0, VecQuaternion.identity())
             _animation.tracks[i].rotations.append(rkey)
         } else if (joint_name.contains("root")) {
-            let tkey0 = RawAnimation.TranslationKey(
-                    0.0, VecFloat3(0.0, 1.0, -Float(slice_count_) * kSpinLength))
+            let tkey0 = RawAnimation.TranslationKey(0.0, VecFloat3(0.0, 1.0, -Float(slice_count_) * kSpinLength))
             _animation.tracks[i].translations.append(tkey0)
-            let tkey1 = RawAnimation.TranslationKey(
-                    kDuration,
-                    VecFloat3(0.0, 1.0,
-                            Float(kWalkCycleCount) * kWalkCycleLength + tkey0.value.z))
+            let tkey1 = RawAnimation.TranslationKey(kDuration, VecFloat3(0.0, 1.0, Float(kWalkCycleCount) * kWalkCycleLength + tkey0.value.z))
             _animation.tracks[i].translations.append(tkey1)
         }
 
@@ -276,7 +269,6 @@ struct SkeletonView: View {
         guard let animation_ = animation_ else {
             return
         }
-
 
         // local to model
         let num_joints = skeleton.num_joints()
