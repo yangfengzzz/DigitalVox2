@@ -1100,15 +1100,8 @@
 				042F0DAD2733D2BC00FF4A26 /* vec_math.test.swift */,
 				042F0DAF2733DFD800FF4A26 /* rect.test.swift */,
 				042F0DB12733E07A00FF4A26 /* box.test.swift */,
-				042F0DB7273415B900FF4A26 /* skeleton_builder_tests.swift */,
-				042F0DBB2734B0E500FF4A26 /* skeleton_utils_tests.swift */,
-				042F0DBF2734C09F00FF4A26 /* local_to_model_job_tests.swift */,
-				0486925627360858007B8DFE /* raw_animation_utils_tests.swift */,
-				04869258273618F5007B8DFE /* animation_builder_tests.swift */,
-				042F0DCC2736551100FF4A26 /* additive_animation_builder_tests.swift */,
-				0486925B273669A1007B8DFE /* animation_optimizer_tests.swift */,
-				048692542736010A007B8DFE /* animation_utils_tests.swift */,
-				0486925D273671A6007B8DFE /* sampling_job_tests.swift */,
+				048692622736A14B007B8DFE /* offline */,
+				048692632736A15C007B8DFE /* runtime */,
 			);
 			path = vox.oasisTests;
 			sourceTree = "<group>";
@@ -1645,6 +1638,29 @@
 				04832F0B2701FD82001AD421 /* SkyBoxMaterial.swift */,
 			);
 			path = sky;
+			sourceTree = "<group>";
+		};
+		048692622736A14B007B8DFE /* offline */ = {
+			isa = PBXGroup;
+			children = (
+				042F0DB7273415B900FF4A26 /* skeleton_builder_tests.swift */,
+				0486925627360858007B8DFE /* raw_animation_utils_tests.swift */,
+				04869258273618F5007B8DFE /* animation_builder_tests.swift */,
+				042F0DCC2736551100FF4A26 /* additive_animation_builder_tests.swift */,
+				0486925B273669A1007B8DFE /* animation_optimizer_tests.swift */,
+			);
+			name = offline;
+			sourceTree = "<group>";
+		};
+		048692632736A15C007B8DFE /* runtime */ = {
+			isa = PBXGroup;
+			children = (
+				042F0DBB2734B0E500FF4A26 /* skeleton_utils_tests.swift */,
+				042F0DBF2734C09F00FF4A26 /* local_to_model_job_tests.swift */,
+				048692542736010A007B8DFE /* animation_utils_tests.swift */,
+				0486925D273671A6007B8DFE /* sampling_job_tests.swift */,
+			);
+			name = runtime;
 			sourceTree = "<group>";
 		};
 		0497A1D826DF150500F61DE9 = {
