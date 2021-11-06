@@ -508,10 +508,113 @@ class SamplingJobTests: XCTestCase {
     }
 
     func testCache() {
+        var raw_animation = RawAnimation()
+        raw_animation.duration = 46.0
+        raw_animation.tracks = [RawAnimation.JointTrack()]  // Adds a joint.
+        let empty_key = RawAnimation.TranslationKey(0.0, RawAnimation.TranslationKey.identity())
+        raw_animation.tracks[0].translations.append(empty_key)
 
+        let cache = SamplingCache(1)
+        var animations: [SoaAnimation?] = [nil, nil]
+
+        do {
+            let tkey = RawAnimation.TranslationKey(0.3, VecFloat3(1.0, -1.0, 5.0))
+            raw_animation.tracks[0].translations[0] = tkey
+
+            let builder = AnimationBuilder()
+            animations[0] = builder.eval(raw_animation)
+            XCTAssertTrue(animations[0] != nil)
+        }
+        do {
+            let tkey = RawAnimation.TranslationKey(0.3, VecFloat3(-1.0, 1.0, -5.0))
+            raw_animation.tracks[0].translations[0] = tkey
+
+            let builder = AnimationBuilder()
+            animations[1] = builder.eval(raw_animation)
+            XCTAssertTrue(animations[1] != nil)
+        }
+
+        var output = [SoaTransform.identity()]
+
+        let job = SamplingJob()
+        job.animation = animations[0]
+        job.cache = cache
+        job.ratio = 0.0
+
+        XCTAssertTrue(job.validate())
+        XCTAssertTrue(job.run(&output[...]))
+        EXPECT_SOAFLOAT3_EQ_EST(output[0].translation, 1.0, 0.0, 0.0, 0.0, -1.0, 0.0,
+                0.0, 0.0, 5.0, 0.0, 0.0, 0.0)
+        EXPECT_SOAQUATERNION_EQ_EST(output[0].rotation, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0)
+        EXPECT_SOAFLOAT3_EQ_EST(output[0].scale, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
+                1.0, 1.0, 1.0, 1.0, 1.0)
+
+        // Re-uses cache.
+        XCTAssertTrue(job.validate())
+        XCTAssertTrue(job.run(&output[...]))
+        EXPECT_SOAFLOAT3_EQ_EST(output[0].translation, 1.0, 0.0, 0.0, 0.0, -1.0, 0.0,
+                0.0, 0.0, 5.0, 0.0, 0.0, 0.0)
+
+        // Invalidates cache.
+        cache.invalidate()
+
+        XCTAssertTrue(job.validate())
+        XCTAssertTrue(job.run(&output[...]))
+        EXPECT_SOAFLOAT3_EQ_EST(output[0].translation, 1.0, 0.0, 0.0, 0.0, -1.0, 0.0,
+                0.0, 0.0, 5.0, 0.0, 0.0, 0.0)
+
+        // Changes animation.
+        job.animation = animations[1]
+        XCTAssertTrue(job.validate())
+        XCTAssertTrue(job.run(&output[...]))
+        EXPECT_SOAFLOAT3_EQ_EST(output[0].translation, -1.0, 0.0, 0.0, 0.0, 1.0, 0.0,
+                0.0, 0.0, -5.0, 0.0, 0.0, 0.0)
+        EXPECT_SOAQUATERNION_EQ_EST(output[0].rotation, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0)
+        EXPECT_SOAFLOAT3_EQ_EST(output[0].scale, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
+                1.0, 1.0, 1.0, 1.0, 1.0)
+
+        // Invalidates and changes animation.
+        job.animation = animations[1]
+        XCTAssertTrue(job.validate())
+        XCTAssertTrue(job.run(&output[...]))
+        EXPECT_SOAFLOAT3_EQ_EST(output[0].translation, -1.0, 0.0, 0.0, 0.0, 1.0, 0.0,
+                0.0, 0.0, -5.0, 0.0, 0.0, 0.0)
     }
 
     func testCacheResize() {
+        var raw_animation = RawAnimation()
+        raw_animation.duration = 46.0
+        raw_animation.tracks = [RawAnimation.JointTrack](repeating: RawAnimation.JointTrack(), count: 7)
 
+        let builder = AnimationBuilder()
+        let animation = builder.eval(raw_animation)
+        XCTAssertTrue(animation != nil)
+        guard let animation = animation else {
+            return
+        }
+
+        // Empty cache by default
+        let cache = SamplingCache()
+
+        var output = [SoaTransform](repeating: SoaTransform.identity(), count: 7)
+
+        let job = SamplingJob()
+        job.animation = animation
+        job.cache = cache
+        job.ratio = 0.0
+
+        // Cache is too small
+        XCTAssertFalse(job.validate())
+
+        // Cache is ok.
+        cache.resize(7)
+        XCTAssertTrue(job.validate())
+        XCTAssertTrue(job.run(&output[...]))
+
+        // Cache is too small
+        cache.resize(1)
+        XCTAssertFalse(job.validate())
     }
 }
