@@ -10,9 +10,9 @@ import Foundation
 protocol DecimateType {
     associatedtype Key
 
-    func Decimable(_ _: Key) -> Bool
-    func Lerp(_ _left: Key, _ _right: Key, _ _ref: Key) -> Key
-    func Distance(_ _a: Key, _ _b: Key) -> Float
+    func decimable(_ _: Key) -> Bool
+    func lerp(_ _left: Key, _ _right: Key, _ _ref: Key) -> Key
+    func distance(_ _a: Key, _ _b: Key) -> Float
 }
 
 func decimate<Key, _Adapter: DecimateType>(_ _src: [Key], _ _adapter: _Adapter, _ _tolerance: Float,
@@ -49,11 +49,11 @@ func decimate<Key, _Adapter: DecimateType>(_ _src: [Key], _ _adapter: _Adapter, 
                 fatalError("Included points should be processed once only.")
             }
             let test = _src[i]
-            if (!_adapter.Decimable(test)) {
+            if (!_adapter.decimable(test)) {
                 candidate = i
                 break
             } else {
-                let distance = _adapter.Distance(_adapter.Lerp(left, right, test), test)
+                let distance = _adapter.distance(_adapter.lerp(left, right, test), test)
                 if (distance > _tolerance && distance > max) {
                     max = distance
                     candidate = i
@@ -86,8 +86,8 @@ func decimate<Key, _Adapter: DecimateType>(_ _src: [Key], _ _adapter: _Adapter, 
     if (_dest.count > 1) {
         let last = _dest.last!
         let penultimate = _dest[_dest.count - 2]
-        let distance = _adapter.Distance(penultimate, last)
-        if (_adapter.Decimable(last) && distance <= _tolerance) {
+        let distance = _adapter.distance(penultimate, last)
+        if (_adapter.decimable(last) && distance <= _tolerance) {
             _ = _dest.popLast()
         }
     }

@@ -29,12 +29,12 @@ class AnimationOptimizer {
     // *_output must be a valid RawAnimation instance.
     // Returns false on failure and resets _output to an empty animation.
     // See RawAnimation::Validate() for more details about failure reasons.
-    func eval(_input: RawAnimation, _skeleton: Skeleton, _output: inout RawAnimation) -> Bool {
+    func eval(_ _input: RawAnimation, _ _skeleton: SoaSkeleton, _ _output: inout RawAnimation) -> Bool {
         // Reset output animation to default.
         _output = RawAnimation()
 
         // Validate animation.
-        if (!_input.Validate()) {
+        if (!_input.validate()) {
             return false
         }
 
@@ -59,23 +59,23 @@ class AnimationOptimizer {
             // Gets joint specs back.
             let joint_length = hierarchy.specs[i].length
             let parent = _skeleton.joint_parents()[i]
-            let parent_scale = (parent != Skeleton.Constants.kNoParent.rawValue) ? hierarchy.specs[parent].scale : 1.0
+            let parent_scale = (parent != SoaSkeleton.Constants.kNoParent.rawValue) ? hierarchy.specs[parent].scale : 1.0
             let tolerance = hierarchy.specs[i].tolerance
 
             // Filters independently T, R and S tracks.
             // This joint translation is affected by parent scale.
             let tadap = PositionAdapter(parent_scale)
-            Decimate(input.translations, tadap, tolerance, &_output.tracks[i].translations)
+            decimate(input.translations, tadap, tolerance, &_output.tracks[i].translations)
             // This joint rotation affects children translations/length.
             let radap = RotationAdapter(joint_length)
-            Decimate(input.rotations, radap, tolerance, &_output.tracks[i].rotations)
+            decimate(input.rotations, radap, tolerance, &_output.tracks[i].rotations)
             // This joint scale affects children translations/length.
             let sadap = ScaleAdapter(joint_length)
-            Decimate(input.scales, sadap, tolerance, &_output.tracks[i].scales)
+            decimate(input.scales, sadap, tolerance, &_output.tracks[i].scales)
         }
 
         // Output animation is always valid though.
-        return _output.Validate()
+        return _output.validate()
     }
 
     // Optimization settings.
@@ -108,7 +108,7 @@ class AnimationOptimizer {
     var joints_setting_override: [Int: Setting] = [:]
 }
 
-func GetJointSetting(_ _optimizer: AnimationOptimizer, _ _joint: Int) -> AnimationOptimizer.Setting {
+func getJointSetting(_ _optimizer: AnimationOptimizer, _ _joint: Int) -> AnimationOptimizer.Setting {
     var setting = _optimizer.setting
     let it = _optimizer.joints_setting_override.first { (key: Int, value: AnimationOptimizer.Setting) in
         key == _joint
@@ -121,22 +121,21 @@ func GetJointSetting(_ _optimizer: AnimationOptimizer, _ _joint: Int) -> Animati
 }
 
 class HierarchyBuilder {
-    init(_ _animation: RawAnimation, _ _skeleton: Skeleton,
-         _ _optimizer: AnimationOptimizer) {
+    init(_ _animation: RawAnimation, _ _skeleton: SoaSkeleton, _ _optimizer: AnimationOptimizer) {
         specs = [Spec](repeating: Spec(), count: _animation.tracks.count)
         animation = _animation
         optimizer = _optimizer
         assert(_animation.num_tracks() == _skeleton.num_joints())
 
         // Computes hierarchical scale, iterating skeleton forward (root to leaf).
-        IterateJointsDF(_skeleton, ComputeScaleForward)
+        iterateJointsDF(_skeleton, computeScaleForward)
 
         // Computes hierarchical length, iterating skeleton backward (leaf to root).
-        IterateJointsDFReverse(_skeleton, ComputeLengthBackward)
+        iterateJointsDFReverse(_skeleton, computeLengthBackward)
     }
 
     // Extracts maximum translations and scales for each track/joint.
-    func ComputeScaleForward(_joint: Int, _parent: Int) {
+    func computeScaleForward(_ _joint: Int, _ _parent: Int) {
         // Compute joint maximum animated scale.
         var max_scale: Float = 0.0
         let track = animation.tracks[_joint]
@@ -152,22 +151,22 @@ class HierarchyBuilder {
 
         // Accumulate with parent scale.
         specs[_joint].scale = max_scale
-        if (_parent != Skeleton.Constants.kNoParent.rawValue) {
+        if (_parent != SoaSkeleton.Constants.kNoParent.rawValue) {
             let parent_spec = specs[_parent]
             specs[_joint].scale *= parent_spec.scale
         }
 
         // Computes self setting distance and tolerance.
         // Distance is now scaled with accumulated parent scale.
-        let setting = GetJointSetting(optimizer, _joint)
+        let setting = getJointSetting(optimizer, _joint)
         specs[_joint].length = setting.distance * specs[_joint].scale
         specs[_joint].tolerance = setting.tolerance
     }
 
     // Propagate child translations back to the root.
-    func ComputeLengthBackward(_joint: Int, _parent: Int) {
+    func computeLengthBackward(_ _joint: Int, _ _parent: Int) {
         // Self translation doesn't matter if joint has no parent.
-        if (_parent == Skeleton.Constants.kNoParent.rawValue) {
+        if (_parent == SoaSkeleton.Constants.kNoParent.rawValue) {
             return
         }
 
@@ -175,7 +174,7 @@ class HierarchyBuilder {
         var max_length_sq: Float = 0.0
         let track = animation.tracks[_joint]
         for j in 0..<track.translations.count {
-            max_length_sq = max(max_length_sq, LengthSqr(track.translations[j].value))
+            max_length_sq = max(max_length_sq, lengthSqr(track.translations[j].value))
         }
         let max_length = sqrt(max_length_sq)
 
@@ -208,22 +207,20 @@ class PositionAdapter: DecimateType {
         scale_ = _scale
     }
 
-    func Decimable(_ _: RawAnimation.TranslationKey) -> Bool {
+    func decimable(_ _: RawAnimation.TranslationKey) -> Bool {
         true
     }
 
-    func Lerp(_ _left: RawAnimation.TranslationKey,
-              _ _right: RawAnimation.TranslationKey,
+    func lerp(_ _left: RawAnimation.TranslationKey, _ _right: RawAnimation.TranslationKey,
               _ _ref: RawAnimation.TranslationKey) -> RawAnimation.TranslationKey {
         let alpha = (_ref.time - _left.time) / (_right.time - _left.time)
         assert(alpha >= 0.0 && alpha <= 1.0)
         return RawAnimation.TranslationKey(
-                _ref.time, LerpTranslation(_left.value, _right.value, alpha))
+                _ref.time, lerpTranslation(_left.value, _right.value, alpha))
     }
 
-    func Distance(_ _a: RawAnimation.TranslationKey,
-                  _ _b: RawAnimation.TranslationKey) -> Float {
-        Length(_a.value - _b.value) * scale_
+    func distance(_ _a: RawAnimation.TranslationKey, _ _b: RawAnimation.TranslationKey) -> Float {
+        length(_a.value - _b.value) * scale_
     }
 
 
@@ -235,24 +232,22 @@ class RotationAdapter: DecimateType {
         radius_ = _radius
     }
 
-    func Decimable(_ _: RawAnimation.RotationKey) -> Bool {
+    func decimable(_ _: RawAnimation.RotationKey) -> Bool {
         true
     }
 
-    func Lerp(_ _left: RawAnimation.RotationKey,
-              _ _right: RawAnimation.RotationKey,
+    func lerp(_ _left: RawAnimation.RotationKey, _ _right: RawAnimation.RotationKey,
               _ _ref: RawAnimation.RotationKey) -> RawAnimation.RotationKey {
         let alpha = (_ref.time - _left.time) / (_right.time - _left.time)
         assert(alpha >= 0.0 && alpha <= 1.0)
-        let key = RawAnimation.RotationKey(_ref.time, LerpRotation(_left.value, _right.value, alpha))
+        let key = RawAnimation.RotationKey(_ref.time, lerpRotation(_left.value, _right.value, alpha))
         return key
     }
 
-    func Distance(_ _left: RawAnimation.RotationKey,
-                  _ _right: RawAnimation.RotationKey) -> Float {
+    func distance(_ _left: RawAnimation.RotationKey, _ _right: RawAnimation.RotationKey) -> Float {
         // Compute the shortest unsigned angle between the 2 quaternions.
         // cos_half_angle is w component of a-1 * b.
-        let cos_half_angle = Dot(_left.value, _right.value)
+        let cos_half_angle = dot(_left.value, _right.value)
         let sine_half_angle = sqrt(1.0 - min(1.0, cos_half_angle * cos_half_angle))
         // Deduces distance between 2 points on a circle with radius and a given
         // angle. Using half angle helps as it allows to have a right-angle
@@ -269,22 +264,20 @@ class ScaleAdapter: DecimateType {
         length_ = _length
     }
 
-    func Decimable(_ _: RawAnimation.ScaleKey) -> Bool {
+    func decimable(_ _: RawAnimation.ScaleKey) -> Bool {
         true
     }
 
-    func Lerp(_ _left: RawAnimation.ScaleKey,
-              _ _right: RawAnimation.ScaleKey,
+    func lerp(_ _left: RawAnimation.ScaleKey, _ _right: RawAnimation.ScaleKey,
               _ _ref: RawAnimation.ScaleKey) -> RawAnimation.ScaleKey {
         let alpha = (_ref.time - _left.time) / (_right.time - _left.time)
         assert(alpha >= 0.0 && alpha <= 1.0)
-        let key = RawAnimation.ScaleKey(_ref.time, LerpScale(_left.value, _right.value, alpha))
+        let key = RawAnimation.ScaleKey(_ref.time, lerpScale(_left.value, _right.value, alpha))
         return key
     }
 
-    func Distance(_ _left: RawAnimation.ScaleKey,
-                  _ _right: RawAnimation.ScaleKey) -> Float {
-        Length(_left.value - _right.value) * length_
+    func distance(_ _left: RawAnimation.ScaleKey, _ _right: RawAnimation.ScaleKey) -> Float {
+        length(_left.value - _right.value) * length_
     }
 
     private var length_: Float

@@ -23,7 +23,7 @@ class AdditiveAnimationBuilder {
         _output = RawAnimation()
 
         // Validate animation.
-        if (!_input.Validate()) {
+        if (!_input.validate()) {
             return false
         }
 
@@ -43,13 +43,13 @@ class AdditiveAnimationBuilder {
             let scales = track_in.scales
             let ref_scale = scales.count > 0 ? scales[0].value : VecFloat3.one()
 
-            MakeDelta(translations, ref_translation, MakeDeltaTranslation, &_output.tracks[i].translations)
-            MakeDelta(rotations, ref_rotation, MakeDeltaRotation, &_output.tracks[i].rotations)
-            MakeDelta(scales, ref_scale, MakeDeltaScale, &_output.tracks[i].scales)
+            makeDelta(translations, ref_translation, makeDeltaTranslation, &_output.tracks[i].translations)
+            makeDelta(rotations, ref_rotation, makeDeltaRotation, &_output.tracks[i].rotations)
+            makeDelta(scales, ref_scale, makeDeltaScale, &_output.tracks[i].scales)
         }
 
         // Output animation is always valid though.
-        return _output.Validate()
+        return _output.validate()
     }
 
     // Builds delta animation from _input..
@@ -63,7 +63,7 @@ class AdditiveAnimationBuilder {
         _output = RawAnimation()
 
         // Validate animation.
-        if (!_input.Validate()) {
+        if (!_input.validate()) {
             return false
         }
 
@@ -78,35 +78,29 @@ class AdditiveAnimationBuilder {
         _output.tracks = [RawAnimation.JointTrack](repeating: RawAnimation.JointTrack(), count: _input.tracks.count)
 
         for i in 0..<_input.tracks.count {
-            MakeDelta(_input.tracks[i].translations, _reference_pose[i].translation,
-                    MakeDeltaTranslation, &_output.tracks[i].translations)
-            MakeDelta(_input.tracks[i].rotations, _reference_pose[i].rotation,
-                    MakeDeltaRotation, &_output.tracks[i].rotations)
-            MakeDelta(_input.tracks[i].scales, _reference_pose[i].scale,
-                    MakeDeltaScale, &_output.tracks[i].scales)
+            makeDelta(_input.tracks[i].translations, _reference_pose[i].translation, makeDeltaTranslation, &_output.tracks[i].translations)
+            makeDelta(_input.tracks[i].rotations, _reference_pose[i].rotation, makeDeltaRotation, &_output.tracks[i].rotations)
+            makeDelta(_input.tracks[i].scales, _reference_pose[i].scale, makeDeltaScale, &_output.tracks[i].scales)
         }
 
         // Output animation is always valid though.
-        return _output.Validate()
+        return _output.validate()
     }
 }
 
-fileprivate func MakeDeltaTranslation(_ _reference: VecFloat3,
-                                      _ _value: VecFloat3) -> VecFloat3 {
+fileprivate func makeDeltaTranslation(_ _reference: VecFloat3, _ _value: VecFloat3) -> VecFloat3 {
     _value - _reference
 }
 
-fileprivate func MakeDeltaRotation(_ _reference: VecQuaternion,
-                                   _ _value: VecQuaternion) -> VecQuaternion {
-    _value * Conjugate(_reference)
+fileprivate func makeDeltaRotation(_ _reference: VecQuaternion, _ _value: VecQuaternion) -> VecQuaternion {
+    _value * conjugate(_reference)
 }
 
-fileprivate func MakeDeltaScale(_ _reference: VecFloat3,
-                                _ _value: VecFloat3) -> VecFloat3 {
+fileprivate func makeDeltaScale(_ _reference: VecFloat3, _ _value: VecFloat3) -> VecFloat3 {
     _value / _reference
 }
 
-fileprivate func MakeDelta<T, _RawTrack: KeyType>(_ _src: [_RawTrack], _ reference: T,
+fileprivate func makeDelta<T, _RawTrack: KeyType>(_ _src: [_RawTrack], _ reference: T,
                                                   _ _make_delta: (T, T) -> T,
                                                   _ _dest: inout [_RawTrack]) where _RawTrack.T == T {
     _dest.reserveCapacity(_src.count)
