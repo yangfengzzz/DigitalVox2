@@ -39,7 +39,7 @@ class AnimationBuilder {
         // already been validated.
         let num_tracks = _input.num_tracks()
         animation.num_tracks_ = num_tracks
-        let num_soa_tracks = MemoryLayout<UInt16>.alignment(ofValue: UInt16(num_tracks))
+        let num_soa_tracks = align(num_tracks, 4)
 
         // Declares and preallocates tracks to sort.
         var translations = 0
@@ -62,36 +62,41 @@ class AnimationBuilder {
         var i: UInt16 = 0
         while i < num_tracks {
             let raw_track = _input.tracks[Int(i)]
-            CopyRaw(raw_track.translations, i, duration, &sorting_translations)
-            CopyRaw(raw_track.rotations, i, duration, &sorting_rotations)
-            CopyRaw(raw_track.scales, i, duration, &sorting_scales)
+            copyRaw(raw_track.translations, i, duration, &sorting_translations)
+            copyRaw(raw_track.rotations, i, duration, &sorting_rotations)
+            copyRaw(raw_track.scales, i, duration, &sorting_scales)
             i += 1
         }
 
         while i < num_soa_tracks {
-            PushBackIdentityKey(i, 0.0, &sorting_translations)
-            PushBackIdentityKey(i, duration, &sorting_translations)
+            pushBackIdentityKey(i, 0.0, &sorting_translations)
+            pushBackIdentityKey(i, duration, &sorting_translations)
 
-            PushBackIdentityKey(i, 0.0, &sorting_rotations)
-            PushBackIdentityKey(i, duration, &sorting_rotations)
+            pushBackIdentityKey(i, 0.0, &sorting_rotations)
+            pushBackIdentityKey(i, duration, &sorting_rotations)
 
-            PushBackIdentityKey(i, 0.0, &sorting_scales)
-            PushBackIdentityKey(i, duration, &sorting_scales)
+            pushBackIdentityKey(i, 0.0, &sorting_scales)
+            pushBackIdentityKey(i, duration, &sorting_scales)
+            i += 1
         }
 
         // Allocate animation members.
         animation.allocate(sorting_translations.count, sorting_rotations.count, sorting_scales.count)
 
         // Copy sorted keys to final animation.
-        CopyToAnimation(&sorting_translations, &animation.translations_, inv_duration)
-        CopyToAnimation(&sorting_rotations, &animation.rotations_, inv_duration)
-        CopyToAnimation(&sorting_scales, &animation.scales_, inv_duration)
+        copyToAnimation(&sorting_translations, &animation.translations_, inv_duration)
+        copyToAnimation(&sorting_rotations, &animation.rotations_, inv_duration)
+        copyToAnimation(&sorting_scales, &animation.scales_, inv_duration)
 
         // Copy animation's name.
         animation.name_ = _input.name
 
         return animation  // Success.
     }
+}
+
+fileprivate func align(_ _value: Int, _ _alignment: Int) -> Int {
+    (_value + (_alignment - 1)) & (0 - _alignment);
 }
 
 fileprivate protocol SortingType {
@@ -140,12 +145,12 @@ fileprivate struct SortingScaleKey: SortingType {
 }
 
 // Keyframe sorting. Stores first by time and then track number.
-fileprivate func SortingKeyLess<_Key: SortingType>(_ _left: _Key, _ _right: _Key) -> Bool {
+fileprivate func sortingKeyLess<_Key: SortingType>(_ _left: _Key, _ _right: _Key) -> Bool {
     let time_diff = _left.prev_key_time - _right.prev_key_time
     return time_diff < 0.0 || (time_diff == 0.0 && _left.track < _right.track)
 }
 
-fileprivate func PushBackIdentityKey<_DestTrack: SortingType>(_ _track: UInt16, _ _time: Float, _ _dest: inout [_DestTrack]) {
+fileprivate func pushBackIdentityKey<_DestTrack: SortingType>(_ _track: UInt16, _ _time: Float, _ _dest: inout [_DestTrack]) {
     var prev_time: Float = -1.0
     if (!_dest.isEmpty && _dest.last!.track == _track) {
         prev_time = _dest.last!.key.time
@@ -156,11 +161,11 @@ fileprivate func PushBackIdentityKey<_DestTrack: SortingType>(_ _track: UInt16, 
 
 // Copies a track from a RawAnimation to an Animation.
 // Also fixes up the front (t = 0) and back keys (t = duration).
-fileprivate func CopyRaw<_DestTrack: SortingType>(_ _src: [_DestTrack.Key], _ _track: UInt16,
+fileprivate func copyRaw<_DestTrack: SortingType>(_ _src: [_DestTrack.Key], _ _track: UInt16,
                                                   _ _duration: Float, _ _dest: inout [_DestTrack]) {
     if (_src.count == 0) {  // Adds 2 new keys.
-        PushBackIdentityKey(_track, 0.0, &_dest)
-        PushBackIdentityKey(_track, _duration, &_dest)
+        pushBackIdentityKey(_track, 0.0, &_dest)
+        pushBackIdentityKey(_track, _duration, &_dest)
     } else if (_src.count == 1) {  // Adds 1 new key.
         let raw_key = _src.first!
         assert(raw_key.time >= 0 && raw_key.time <= _duration)
@@ -190,7 +195,7 @@ fileprivate func CopyRaw<_DestTrack: SortingType>(_ _src: [_DestTrack.Key], _ _t
     assert(_dest.first!.key.time == 0.0 && _dest.last!.key.time - _duration == 0.0)
 }
 
-fileprivate func CopyToAnimation<_SortingKey: SortingType>(_ _src: inout [_SortingKey], _ _dest: inout ArraySlice<Float3Key>,
+fileprivate func copyToAnimation<_SortingKey: SortingType>(_ _src: inout [_SortingKey], _ _dest: inout ArraySlice<Float3Key>,
                                                            _ _inv_duration: Float) where _SortingKey.Key.T == VecFloat3 {
     let src_count = _src.count
     if (src_count == 0) {
@@ -198,7 +203,7 @@ fileprivate func CopyToAnimation<_SortingKey: SortingType>(_ _src: inout [_Sorti
     }
 
     // Sort animation keys to favor cache coherency.
-    _src.sort(by: SortingKeyLess)
+    _src.sort(by: sortingKeyLess)
 
     // Fills output.
     for i in 0..<src_count {
@@ -216,7 +221,7 @@ fileprivate func CopyToAnimation<_SortingKey: SortingType>(_ _src: inout [_Sorti
 // property (x^2+y^2+z^2+w^2 = 1). Because the 3 components are the 3 smallest,
 // their value cannot be greater than sqrt(2)/2. Thus quantization quality is
 // improved by pre-multiplying each componenent by sqrt(2).
-fileprivate func CompressQuat(_ _src: VecQuaternion, _ _dest: inout QuaternionKey) {
+fileprivate func compressQuat(_ _src: VecQuaternion, _ _dest: inout QuaternionKey) {
     // Finds the largest quaternion component.
     let quat = [_src.x, _src.y, _src.z, _src.w]
     let largestEle = quat.max { _left, _right in
@@ -250,7 +255,7 @@ fileprivate func CompressQuat(_ _src: VecQuaternion, _ _dest: inout QuaternionKe
 // Specialize for rotations in order to normalize quaternions.
 // Consecutive opposite quaternions are also fixed up in order to avoid checking
 // for the smallest path during the NLerp runtime algorithm.
-fileprivate func CopyToAnimation(_ _src: inout [SortingRotationKey],
+fileprivate func copyToAnimation(_ _src: inout [SortingRotationKey],
                                  _ _dest: inout ArraySlice<QuaternionKey>, _ _inv_duration: Float) {
     let src_count = _src.count
     if (src_count == 0) {
@@ -284,7 +289,7 @@ fileprivate func CopyToAnimation(_ _src: inout [SortingRotationKey],
     }
 
     // Sort.
-    _src.sort(by: SortingKeyLess)
+    _src.sort(by: sortingKeyLess)
 
     // Fills rotation keys output.
     for i in 0..<src_count {
@@ -292,6 +297,6 @@ fileprivate func CopyToAnimation(_ _src: inout [SortingRotationKey],
         _dest[i].track = _src[i].track
 
         // Compress quaternion to destination container.
-        CompressQuat(_src[i].key.value, &_dest[i])
+        compressQuat(_src[i].key.value, &_dest[i])
     }
 }
