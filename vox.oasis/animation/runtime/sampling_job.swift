@@ -16,7 +16,7 @@ import Foundation
 // the animation forward. Backward sampling works, but isn't optimized through
 // the cache. The job does not owned the buffers (in/output) and will thus not
 // delete them during job's destruction.
-struct SamplingJob {
+class SamplingJob {
     // Validates job parameters. Returns true for a valid job, or false otherwise:
     // -if any input pointer is nullptr
     // -if output range is invalid.
@@ -30,11 +30,8 @@ struct SamplingJob {
         if (animation == nil || cache == nil) {
             return false
         }
-        valid = valid && !output.isEmpty
 
         let num_soa_tracks = animation!.num_soa_tracks()
-        valid = valid && output.count >= num_soa_tracks
-
         // Tests cache size.
         valid = valid && cache!.max_soa_tracks() >= num_soa_tracks
 
@@ -45,8 +42,18 @@ struct SamplingJob {
     // The job is validated before any operation is performed, see Validate() for
     // more details.
     // Returns false if *this job is not valid.
-    mutating func run() -> Bool {
+    // Job output.
+    // The output range to be filled with sampled joints during job execution.
+    // If there are less joints in the animation compared to the output range,
+    // then remaining SoaTransform are left unchanged.
+    // If there are more joints in the animation, then the last joints are not
+    // sampled.
+    func run(_ output: inout ArraySlice<SoaTransform>) -> Bool {
         if (!validate()) {
+            return false
+        }
+        
+        if (output.isEmpty || output.count < animation!.num_soa_tracks()) {
             return false
         }
 
@@ -108,14 +115,6 @@ struct SamplingJob {
 
     // A cache object that must be big enough to sample *this animation.
     var cache: SamplingCache?
-
-    // Job output.
-    // The output range to be filled with sampled joints during job execution.
-    // If there are less joints in the animation compared to the output range,
-    // then remaining SoaTransform are left unchanged.
-    // If there are more joints in the animation, then the last joints are not
-    // sampled.
-    var output: ArraySlice<SoaTransform>
 }
 
 protocol InterpSoaType {
