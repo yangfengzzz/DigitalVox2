@@ -274,6 +274,49 @@ class AnimationBuilderTests: XCTestCase {
         // Duration must be maintained.
         XCTAssertEqual(animation.duration(), raw_animation.duration)
 
-        //TODO:
+        // Needs to sample to test the animation.
+        let job = SamplingJob()
+        let cache = SamplingCache(1)
+        var output = [SoaTransform.identity()]
+        job.animation = animation
+        job.cache = cache
+
+        // Samples and compares the two animations
+        do {  // Samples at t = 0
+            job.ratio = 0.0
+            _ = job.run(&output[...])
+            EXPECT_SOAFLOAT3_EQ_EST(output[0].translation, 1.0, 2.0, 12.0, 1.0, 0.0,
+                    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+        }
+        do {  // Samples at t = .2
+            job.ratio = 0.2
+            _ = job.run(&output[...])
+            EXPECT_SOAFLOAT3_EQ_EST(output[0].translation, 2.0, 6.0, 11.0, 2.0, 0.0,
+                    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+        }
+        do {  // Samples at t = .4
+            job.ratio = 0.4
+            _ = job.run(&output[...])
+            EXPECT_SOAFLOAT3_EQ_EST(output[0].translation, 3.0, 8.0, 10.0, 3.0, 0.0,
+                    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+        }
+        do {  // Samples at t = .6
+            job.ratio = 0.6
+            _ = job.run(&output[...])
+            EXPECT_SOAFLOAT3_EQ_EST(output[0].translation, 3.0, 8.0, 9.0, 4.0, 0.0,
+                    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+        }
+        do {  // Samples at t = .8
+            job.ratio = 0.8
+            _ = job.run(&output[...])
+            EXPECT_SOAFLOAT3_EQ_EST(output[0].translation, 3.0, 8.0, 7.0, 4.0, 0.0,
+                    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+        }
+        do {  // Samples at t = 1
+            job.ratio = 1.0
+            _ = job.run(&output[...])
+            EXPECT_SOAFLOAT3_EQ_EST(output[0].translation, 3.0, 8.0, 5.0, 4.0, 0.0,
+                    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+        }
     }
 }
