@@ -324,6 +324,7 @@
 		048692502735FE13007B8DFE /* additive_animation_builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0486924E2735FE13007B8DFE /* additive_animation_builder.swift */; };
 		048692512735FE13007B8DFE /* animation_optimizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0486924F2735FE13007B8DFE /* animation_optimizer.swift */; };
 		048692532736004C007B8DFE /* animation_utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048692522736004C007B8DFE /* animation_utils.swift */; };
+		0486925727360858007B8DFE /* raw_animation_utils_tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0486925627360858007B8DFE /* raw_animation_utils_tests.swift */; };
 		0497A1E926DF150800F61DE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0497A1E826DF150800F61DE9 /* Assets.xcassets */; };
 		0497A1EC26DF150800F61DE9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0497A1EB26DF150800F61DE9 /* Preview Assets.xcassets */; };
 		0497A20226DF150800F61DE9 /* DigitalVox2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A20126DF150800F61DE9 /* DigitalVox2UITests.swift */; };
@@ -754,6 +755,7 @@
 		0486924F2735FE13007B8DFE /* animation_optimizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = animation_optimizer.swift; sourceTree = "<group>"; };
 		048692522736004C007B8DFE /* animation_utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = animation_utils.swift; sourceTree = "<group>"; };
 		048692542736010A007B8DFE /* animation_utils_tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = animation_utils_tests.swift; sourceTree = "<group>"; };
+		0486925627360858007B8DFE /* raw_animation_utils_tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = raw_animation_utils_tests.swift; sourceTree = "<group>"; };
 		04874ED326F771F3005E3318 /* PBRMaterial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PBRMaterial.swift; sourceTree = "<group>"; };
 		0497A1E126DF150500F61DE9 /* vox.render.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vox.render.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0497A1E426DF150500F61DE9 /* voxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = voxApp.swift; path = ../vox.render/voxApp.swift; sourceTree = "<group>"; };
@@ -1090,6 +1092,7 @@
 				042F0DB7273415B900FF4A26 /* skeleton_builder_tests.swift */,
 				042F0DBB2734B0E500FF4A26 /* skeleton_utils_tests.swift */,
 				042F0DBF2734C09F00FF4A26 /* local_to_model_job_tests.swift */,
+				0486925627360858007B8DFE /* raw_animation_utils_tests.swift */,
 				048692542736010A007B8DFE /* animation_utils_tests.swift */,
 			);
 			path = vox.oasisTests;
@@ -2425,6 +2428,7 @@
 				042F0D9E27337DD200FF4A26 /* BoundingSphere.test.swift in Sources */,
 				042F0DA427337DD200FF4A26 /* BoundingBox.test.swift in Sources */,
 				042F0DB22733E07A00FF4A26 /* box.test.swift in Sources */,
+				0486925727360858007B8DFE /* raw_animation_utils_tests.swift in Sources */,
 				042F0DB02733DFD800FF4A26 /* rect.test.swift in Sources */,
 				042F0DA227337DD200FF4A26 /* Ray.test.swift in Sources */,
 			);

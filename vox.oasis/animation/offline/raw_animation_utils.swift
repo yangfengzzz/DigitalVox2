@@ -109,7 +109,7 @@ class FixedRateSamplingTime {
         num_keys_ = Int(ceil(1.0 + _duration * _frequency))
     }
 
-    func time(_key: Int) -> Float {
+    func time(_ _key: Int) -> Float {
         assert(_key < num_keys_)
         return min(Float(_key) * period_, duration_)
     }
