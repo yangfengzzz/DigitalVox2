@@ -334,10 +334,10 @@
 		0486926B27374DED007B8DFE /* stream.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0486926727374DED007B8DFE /* stream.cc */; };
 		0486926C27374DED007B8DFE /* archive.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0486926927374DED007B8DFE /* archive.cc */; };
 		0486926F27374E42007B8DFE /* allocator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0486926D27374E42007B8DFE /* allocator.cc */; };
-		0486927427374EC3007B8DFE /* simd_math_archive.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0486927027374EC3007B8DFE /* simd_math_archive.cc */; };
 		0486927527374EC3007B8DFE /* soa_math_archive.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0486927127374EC3007B8DFE /* soa_math_archive.cc */; };
 		0486927827374FF4007B8DFE /* platform.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0486927627374FF3007B8DFE /* platform.cc */; };
 		0486927E27375531007B8DFE /* soa_skeleton.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0486927D27375531007B8DFE /* soa_skeleton.mm */; };
+		0486928127375861007B8DFE /* soa_animation.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0486928027375861007B8DFE /* soa_animation.mm */; };
 		0497A1E926DF150800F61DE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0497A1E826DF150800F61DE9 /* Assets.xcassets */; };
 		0497A1EC26DF150800F61DE9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0497A1EB26DF150800F61DE9 /* Preview Assets.xcassets */; };
 		0497A20226DF150800F61DE9 /* DigitalVox2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A20126DF150800F61DE9 /* DigitalVox2UITests.swift */; };
@@ -781,17 +781,16 @@
 		0486926A27374DED007B8DFE /* stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stream.h; sourceTree = "<group>"; };
 		0486926D27374E42007B8DFE /* allocator.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = allocator.cc; sourceTree = "<group>"; };
 		0486926E27374E42007B8DFE /* allocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = allocator.h; sourceTree = "<group>"; };
-		0486927027374EC3007B8DFE /* simd_math_archive.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simd_math_archive.cc; sourceTree = "<group>"; };
 		0486927127374EC3007B8DFE /* soa_math_archive.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = soa_math_archive.cc; sourceTree = "<group>"; };
 		0486927227374EC3007B8DFE /* soa_math_archive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soa_math_archive.h; sourceTree = "<group>"; };
-		0486927327374EC3007B8DFE /* simd_math_archive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simd_math_archive.h; sourceTree = "<group>"; };
 		0486927627374FF3007B8DFE /* platform.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = platform.cc; sourceTree = "<group>"; };
 		0486927727374FF4007B8DFE /* platform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = platform.h; sourceTree = "<group>"; };
 		0486927927375088007B8DFE /* endianness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = endianness.h; sourceTree = "<group>"; };
 		0486927A273750A7007B8DFE /* span.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = span.h; sourceTree = "<group>"; };
-		0486927B273752A6007B8DFE /* simd_math_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simd_math_config.h; sourceTree = "<group>"; };
 		0486927C27375524007B8DFE /* soa_skeleton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = soa_skeleton.h; sourceTree = "<group>"; };
 		0486927D27375531007B8DFE /* soa_skeleton.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = soa_skeleton.mm; sourceTree = "<group>"; };
+		0486927F27375859007B8DFE /* soa_animation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = soa_animation.h; sourceTree = "<group>"; };
+		0486928027375861007B8DFE /* soa_animation.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = soa_animation.mm; sourceTree = "<group>"; };
 		04874ED326F771F3005E3318 /* PBRMaterial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PBRMaterial.swift; sourceTree = "<group>"; };
 		0497A1E126DF150500F61DE9 /* vox.render.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vox.render.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0497A1E426DF150500F61DE9 /* voxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = voxApp.swift; path = ../vox.render/voxApp.swift; sourceTree = "<group>"; };
@@ -1794,9 +1793,6 @@
 				0486926A27374DED007B8DFE /* stream.h */,
 				0486926727374DED007B8DFE /* stream.cc */,
 				04CB88DD27326C9900B0E398 /* math_constant.h */,
-				0486927B273752A6007B8DFE /* simd_math_config.h */,
-				0486927327374EC3007B8DFE /* simd_math_archive.h */,
-				0486927027374EC3007B8DFE /* simd_math_archive.cc */,
 				04CB88DF27326C9900B0E398 /* simd_math.h */,
 				04CB88DE27326C9900B0E398 /* simd_math.mm */,
 				04CB88D727326C9900B0E398 /* simd_math.swift */,
@@ -1842,6 +1838,8 @@
 				042F0DBD2734BF0F00FF4A26 /* local_to_model_job.swift */,
 				048692492735FAF9007B8DFE /* animation_keyframe.h */,
 				048692472735FACD007B8DFE /* soa_animation.swift */,
+				0486927F27375859007B8DFE /* soa_animation.h */,
+				0486928027375861007B8DFE /* soa_animation.mm */,
 				048692522736004C007B8DFE /* animation_utils.swift */,
 				042F0DCA2736511B00FF4A26 /* sampling_job.swift */,
 			);
@@ -2325,6 +2323,7 @@
 				041BAE41272A50ED006268D5 /* PrimitiveMesh.swift in Sources */,
 				041BAE4E272A50FB006268D5 /* UnlitMaterial.swift in Sources */,
 				041BAE5A272A510C006268D5 /* ShaderPool.swift in Sources */,
+				0486928127375861007B8DFE /* soa_animation.mm in Sources */,
 				041BAE9D272A5141006268D5 /* PlaneColliderShape.swift in Sources */,
 				041BAE1A272A5046006268D5 /* skybox.metal in Sources */,
 				041BAE21272A5046006268D5 /* function-constant.metal in Sources */,
@@ -2332,7 +2331,6 @@
 				041BAE50272A50FB006268D5 /* PBRMaterial.swift in Sources */,
 				042F0DBA2734AFB500FF4A26 /* skeleton_utils.swift in Sources */,
 				041BAE22272A5046006268D5 /* pbr.metal in Sources */,
-				0486927427374EC3007B8DFE /* simd_math_archive.cc in Sources */,
 				041BAE58272A510C006268D5 /* DepthState.swift in Sources */,
 				041BAEF9272B7305006268D5 /* PhysXCapsuleColliderShape.swift in Sources */,
 				041BAE4C272A50FB006268D5 /* PBRBaseMaterial.swift in Sources */,

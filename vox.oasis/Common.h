@@ -54,5 +54,6 @@
 #include "soa_float.h"
 #include "animation_keyframe.h"
 #include "soa_skeleton.h"
+#include "soa_animation.h"
 
 #endif /* Common_h */
