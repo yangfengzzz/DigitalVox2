@@ -17,7 +17,7 @@
 
 -(size_t) NumberOfNames;
 
--(void) NameWithIndex:(size_t)index :(NSString *_Nonnull) name;
+-(NSString *_Nonnull) NameWithIndex:(size_t)index;
 
 -(size_t) NumberOfParents;
 

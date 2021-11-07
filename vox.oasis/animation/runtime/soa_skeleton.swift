@@ -108,9 +108,9 @@ class SoaSkeleton {
         loader.loadSkeleton(assetUrl.path)
         
         let n_name = loader.numberOfNames()
-        let names = [String](repeating: "", count: n_name)
+        var names = [String](repeating: "", count: n_name)
         for i in 0..<n_name {
-            loader.name(with: i, names[i])
+            names[i] = loader.name(with: i)
         }
         joint_names_ = names[...]
         

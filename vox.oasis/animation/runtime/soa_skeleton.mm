@@ -144,8 +144,8 @@
     return joint_names_.size();
 }
 
--(void) NameWithIndex:(size_t)index :(NSString *_Nonnull) name {
-    name = [NSString stringWithUTF8String:joint_names_[index]];
+-(NSString *_Nonnull) NameWithIndex:(size_t)index {
+    return [NSString stringWithUTF8String:joint_names_[index]];
 }
 
 -(size_t) NumberOfParents {

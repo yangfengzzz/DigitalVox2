@@ -350,7 +350,7 @@ class AnimationScript: Script {
     var laserMtl: BlinnPhongMaterial!
     var laserMesh: ModelMesh!
     var laserEntity: Entity!
-    var offset_: [Float] = [-0.02, 0.03, 0.05]
+    var offset_: [Float] = [-0.02, 0.03, -0.15]
     var attachment_: Int = 0
 
     required init(_ entity: Entity) {
@@ -385,7 +385,7 @@ class AnimationScript: Script {
 
         // Finds the joint where the object should be attached.
         for i in 0..<num_joints {
-            if (skeleton_.joint_names()[i] == "LeftHandMiddle") {
+            if (skeleton_.joint_names()[i].contains("LeftHandMiddle")) {
                 attachment_ = i
                 break
             }
@@ -411,17 +411,19 @@ class AnimationScript: Script {
         ltm_job.input = locals_[...]
         _ = ltm_job.run(&models_[...])
 
+        // update uniform buffer
         var joints: [matrix_float4x4] = []
         fillPostureUniforms(skeleton_, models_, &joints)
 
+        // update camera position
         computePostureBounds(models_[...], &boundingBox)
-        camera_.transform.setPosition(x: boundingBox.max.x + 3, y: boundingBox.max.y, z: boundingBox.max.z + 3)
+        camera_.transform.setPosition(x: boundingBox.max.x + 2, y: boundingBox.max.y, z: boundingBox.max.z + 2)
         let center = (boundingBox.max + boundingBox.min) * 0.5
         camera_.transform.lookAt(worldPosition: Vector3(center.x, center.y, center.z), worldUp: nil)
 
+        // update laser position
         // Builds offset transformation matrix.
         let translation = simd_float4.load3PtrU(&offset_)
-
         // Concatenates joint and offset transformations.
         let transform = models_[attachment_] * simd_float4x4.translation(translation)
         let worldMatrix = laserEntity.transform.worldMatrix
