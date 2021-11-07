@@ -460,8 +460,11 @@ struct SkeletonView: View {
             return
         }
         
-        let testss = SoaSkeleton()
-        testss.load("skeleton.ozz")
+        let s = SoaSkeleton()
+        s.load("skeleton.ozz")
+        
+        let a = SoaAnimation()
+        a.load("animation.ozz")
 
         // Build a walk animation.
         var raw_animation = RawAnimation()

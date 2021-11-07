@@ -6,7 +6,6 @@
 //
 
 #import "soa_animation.h"
-#import "animation_keyframe.h"
 #import "../math/span.h"
 #import "../math/allocator.h"
 #import "../math/archive.h"
@@ -71,7 +70,7 @@
     assert(buffer.empty() && "Whole buffer should be consumned");
 }
 
--(void) Load:(IArchive&) _archive :(uint32_t) _version {
+- (void)Load:(IArchive &)_archive :(uint32_t)_version {
     // Destroy animation in case it was already used before.
     [self Deallocate];
     duration_ = 0.f;
@@ -79,9 +78,9 @@
 
     // No retro-compatibility with anterior versions.
     if (_version != 6) {
-      std::cerr << "Unsupported Animation version " << _version << "."
-                 << std::endl;
-      return;
+        std::cerr << "Unsupported Animation version " << _version << "."
+                  << std::endl;
+        return;
     }
 
     _archive >> duration_;
@@ -102,35 +101,99 @@
     [self Allocate:name_len :translation_count :translation_count :scale_count];
 
     if (name_) {  // nullptr name_ is supported.
-      _archive >> MakeArray(name_, name_len);
-      name_[name_len] = 0;
+        _archive >> MakeArray(name_, name_len);
+        name_[name_len] = 0;
     }
 
-    for (Float3Key& key : translations_) {
-      _archive >> key.ratio;
-      _archive >> key.track;
-      _archive >> MakeArray(key.value);
+    for (Float3Key &key: translations_) {
+        _archive >> key.ratio;
+        _archive >> key.track;
+        _archive >> MakeArray(key.value);
     }
 
-    for (QuaternionKey& key : rotations_) {
-      _archive >> key.ratio;
-      uint16_t track;
-      _archive >> track;
-      key.track = track;
-      uint8_t largest;
-      _archive >> largest;
-      key.largest = largest & 3;
-      bool sign;
-      _archive >> sign;
-      key.sign = sign & 1;
-      _archive >> MakeArray(key.value);
+    for (QuaternionKey &key: rotations_) {
+        _archive >> key.ratio;
+        uint16_t track;
+        _archive >> track;
+        key.track = track;
+        uint8_t largest;
+        _archive >> largest;
+        key.largest = largest & 3;
+        bool sign;
+        _archive >> sign;
+        key.sign = sign & 1;
+        _archive >> MakeArray(key.value);
     }
 
-    for (Float3Key& key : scales_) {
-      _archive >> key.ratio;
-      _archive >> key.track;
-      _archive >> MakeArray(key.value);
+    for (Float3Key &key: scales_) {
+        _archive >> key.ratio;
+        _archive >> key.track;
+        _archive >> MakeArray(key.value);
     }
+}
+
+- (bool)LoadAnimation:(const NSString *)_filename {
+    assert(_filename);
+    const char *name = [_filename cStringUsingEncoding:NSUTF8StringEncoding];
+
+    std::cout << "Loading animation archive: " << name << "." << std::endl;
+    File file(name, "rb");
+    if (!file.opened()) {
+        std::cerr << "Failed to open animation file " << _filename << "." << std::endl;
+        return false;
+    }
+    IArchive archive(&file);
+
+    char buf[OZZ_ARRAY_SIZE("ozz-animation")];
+    archive.LoadBinary(buf, OZZ_ARRAY_SIZE("ozz-animation"));
+
+    uint32_t version;
+    archive >> version;
+
+    // Once the tag is validated, reading cannot fail.
+    [self Load:archive :version];
+
+    return true;
+}
+
+// Duration of the animation clip.
+- (float)duration {
+    return duration_;
+}
+
+// The number of joint tracks. Can differ from the data stored in translation/
+// rotation/scale buffers because of SoA requirements.
+- (size_t)num_tracks {
+    return num_tracks_;
+}
+
+// Animation name.
+- (NSString *)name {
+    return [NSString stringWithUTF8String:name_];
+}
+
+- (size_t)NumberOfTranslations {
+    return translations_.size();
+}
+
+- (void)TranslationWithIndex:(size_t)index :(struct Float3Key *_Nonnull)value {
+    *value = translations_[index];
+}
+
+- (size_t)NumberOfRotations {
+    return rotations_.size();
+}
+
+- (void)RotationWithIndex:(size_t)index :(struct QuaternionKey *_Nonnull)value {
+    *value = rotations_[index];
+}
+
+- (size_t)NumberOfScales {
+    return scales_.size();
+}
+
+- (void)ScaleWithIndex:(size_t)index :(struct Float3Key *_Nonnull)value {
+    *value = scales_[index];
 }
 
 @end

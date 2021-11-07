@@ -8,14 +8,14 @@
 import Foundation
 
 protocol KeyframeType {
-    var ratio:Float {get set}
-    var track:UInt16 {get set}
+    var ratio: Float { get set }
+    var track: UInt16 { get set }
 }
 
-extension Float3Key:KeyframeType {
+extension Float3Key: KeyframeType {
 }
 
-extension QuaternionKey:KeyframeType {
+extension QuaternionKey: KeyframeType {
 }
 
 // Defines a runtime skeletal animation clip.
@@ -88,5 +88,39 @@ class SoaAnimation {
         translations_ = [Float3Key](repeating: Float3Key(), count: _translation_count)[...]
         rotations_ = [QuaternionKey](repeating: QuaternionKey(), count: _rotation_count)[...]
         scales_ = [Float3Key](repeating: Float3Key(), count: _scale_count)[...]
+    }
+
+    func load(_ filename: String) {
+        guard let assetUrl = Bundle.main.url(forResource: filename, withExtension: nil) else {
+            fatalError("Model: \(filename) not found")
+        }
+
+        let loader = SoaAnimationLoader()
+        loader.loadAnimation(assetUrl.path)
+
+        duration_ = loader.duration()
+        num_tracks_ = loader.num_tracks()
+        name_ = loader.name()
+
+        let n_translation = loader.numberOfTranslations()
+        var translations = [Float3Key](repeating: Float3Key(), count: n_translation)
+        for i in 0..<n_translation {
+            loader.translation(with: i, &translations[i])
+        }
+        translations_ = translations[...]
+
+        let n_rotation = loader.numberOfRotations()
+        var rotations = [QuaternionKey](repeating: QuaternionKey(), count: n_rotation)
+        for i in 0..<n_rotation {
+            loader.rotation(with: i, &rotations[i])
+        }
+        rotations_ = rotations[...]
+
+        let n_scale = loader.numberOfScales()
+        var scales = [Float3Key](repeating: Float3Key(), count: n_scale)
+        for i in 0..<n_scale {
+            loader.scale(with: i, &scales[i])
+        }
+        scales_ = scales[...]
     }
 }
