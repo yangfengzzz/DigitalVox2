@@ -97,6 +97,8 @@ extension BasicRenderPipeline {
                 }
                 _transparentQueue.render(camera, pass.replaceMaterial, pass.mask)
             }
+            engine.canvas.gui.draw(in: engine.canvas, rhi.commandBuffer, rhi.renderEncoder)
+
             rhi.endRenderPass()
         }
 

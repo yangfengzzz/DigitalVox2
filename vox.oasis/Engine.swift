@@ -144,6 +144,8 @@ final class Engine: NSObject {
 
         _backgroundTextureMesh = PrimitiveMesh.createPlane(self, 2, 2, 1, 1, false)
         _backgroundTextureMesh.isGCIgnored = true
+
+        canvas.gui.create(with: canvas, _hardwareRenderer.device)
     }
 
     /// Create an entity.

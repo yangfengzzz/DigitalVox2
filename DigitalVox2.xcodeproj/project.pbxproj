@@ -346,6 +346,7 @@
 		0486929527381392007B8DFE /* imgui_widgets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0486929227381392007B8DFE /* imgui_widgets.cpp */; };
 		0486929627381392007B8DFE /* imgui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0486929327381392007B8DFE /* imgui.cpp */; };
 		04869298273813EA007B8DFE /* imgui_draw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04869297273813EA007B8DFE /* imgui_draw.cpp */; };
+		0486929B2738155C007B8DFE /* imgui_bridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0486929A2738155C007B8DFE /* imgui_bridge.mm */; };
 		0497A1E926DF150800F61DE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0497A1E826DF150800F61DE9 /* Assets.xcassets */; };
 		0497A1EC26DF150800F61DE9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0497A1EB26DF150800F61DE9 /* Preview Assets.xcassets */; };
 		0497A20226DF150800F61DE9 /* DigitalVox2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A20126DF150800F61DE9 /* DigitalVox2UITests.swift */; };
@@ -812,6 +813,8 @@
 		0486929227381392007B8DFE /* imgui_widgets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = imgui_widgets.cpp; sourceTree = "<group>"; };
 		0486929327381392007B8DFE /* imgui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = imgui.cpp; sourceTree = "<group>"; };
 		04869297273813EA007B8DFE /* imgui_draw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = imgui_draw.cpp; sourceTree = "<group>"; };
+		0486929927381550007B8DFE /* imgui_bridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = imgui_bridge.h; sourceTree = "<group>"; };
+		0486929A2738155C007B8DFE /* imgui_bridge.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = imgui_bridge.mm; sourceTree = "<group>"; };
 		04874ED326F771F3005E3318 /* PBRMaterial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PBRMaterial.swift; sourceTree = "<group>"; };
 		0497A1E126DF150500F61DE9 /* vox.render.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vox.render.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0497A1E426DF150500F61DE9 /* voxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = voxApp.swift; path = ../vox.render/voxApp.swift; sourceTree = "<group>"; };
@@ -1725,6 +1728,8 @@
 				0486928827381378007B8DFE /* imgui_impl_osx.mm */,
 				0486928B27381378007B8DFE /* imgui_impl_metal.h */,
 				0486928A27381378007B8DFE /* imgui_impl_metal.mm */,
+				0486929927381550007B8DFE /* imgui_bridge.h */,
+				0486929A2738155C007B8DFE /* imgui_bridge.mm */,
 			);
 			path = gui;
 			sourceTree = "<group>";
@@ -2466,6 +2471,7 @@
 				041BAEBC272A5166006268D5 /* LiteTransform.swift in Sources */,
 				041BAE5F272A510C006268D5 /* ShaderProperty.swift in Sources */,
 				04CB88F22732924A00B0E398 /* soa_quaternion.swift in Sources */,
+				0486929B2738155C007B8DFE /* imgui_bridge.mm in Sources */,
 				041BAE6A272A5111006268D5 /* SpotLight.swift in Sources */,
 				041BAE39272A50E6006268D5 /* BoundingBox.swift in Sources */,
 				041BAEE0272A9AA1006268D5 /* CPxBoxGeometry.mm in Sources */,

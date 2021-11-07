@@ -18,6 +18,8 @@ class Canvas: MTKView {
     var rightMouseDownEvents: [EventHandler] = []
     var rightMouseUpEvents: [EventHandler] = []
 
+    var gui = IMGUI()
+
     init() {
         super.init(frame: .zero, device: nil)
     }
@@ -76,30 +78,37 @@ extension Canvas {
         mouseDownEvents.forEach { handler in
             handler(event)
         }
+        gui.handle(event, self)
         inputManager?.processEvent(state: .began, event: event)
     }
 
     override func mouseUp(with event: NSEvent) {
+        gui.handle(event, self)
         inputManager?.processEvent(state: .ended, event: event)
     }
 
     override func mouseDragged(with event: NSEvent) {
+        gui.handle(event, self)
         inputManager?.processEvent(state: .moved, event: event)
     }
 
     override func rightMouseDown(with event: NSEvent) {
+        gui.handle(event, self)
         inputManager?.processEvent(state: .began, event: event)
     }
 
     override func rightMouseUp(with event: NSEvent) {
+        gui.handle(event, self)
         inputManager?.processEvent(state: .ended, event: event)
     }
 
     override func rightMouseDragged(with event: NSEvent) {
+        gui.handle(event, self)
         inputManager?.processEvent(state: .moved, event: event)
     }
 
     override func scrollWheel(with event: NSEvent) {
+        gui.handle(event, self)
         inputManager?.zoomUsing(delta: event.deltaY)
     }
 }

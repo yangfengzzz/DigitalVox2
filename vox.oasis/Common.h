@@ -56,4 +56,6 @@
 #include "soa_skeleton.h"
 #include "soa_animation.h"
 
+#include "imgui_bridge.h"
+
 #endif /* Common_h */
