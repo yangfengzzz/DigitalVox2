@@ -478,7 +478,7 @@ struct SkeletonView: View {
         }
 
         let script: AnimationScript = rootEntity.addComponent()
-        script.load(skeleton, animation_)
+        script.load(s, a)
     }
 
     var body: some View {

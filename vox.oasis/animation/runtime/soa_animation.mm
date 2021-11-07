@@ -98,7 +98,7 @@
     int32_t scale_count;
     _archive >> scale_count;
 
-    [self Allocate:name_len :translation_count :translation_count :scale_count];
+    [self Allocate:name_len :translation_count :rotation_count :scale_count];
 
     if (name_) {  // nullptr name_ is supported.
         _archive >> MakeArray(name_, name_len);
