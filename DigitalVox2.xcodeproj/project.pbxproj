@@ -340,6 +340,12 @@
 		0486928127375861007B8DFE /* soa_animation.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0486928027375861007B8DFE /* soa_animation.mm */; };
 		0486928327376FCC007B8DFE /* skeleton.ozz in Resources */ = {isa = PBXBuildFile; fileRef = 0486928227376FCC007B8DFE /* skeleton.ozz */; };
 		048692852737C27B007B8DFE /* animation.ozz in Resources */ = {isa = PBXBuildFile; fileRef = 048692842737C27B007B8DFE /* animation.ozz */; };
+		0486928C27381378007B8DFE /* imgui_impl_osx.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0486928827381378007B8DFE /* imgui_impl_osx.mm */; };
+		0486928D27381378007B8DFE /* imgui_impl_metal.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0486928A27381378007B8DFE /* imgui_impl_metal.mm */; };
+		0486929427381392007B8DFE /* imgui_tables.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0486929027381392007B8DFE /* imgui_tables.cpp */; };
+		0486929527381392007B8DFE /* imgui_widgets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0486929227381392007B8DFE /* imgui_widgets.cpp */; };
+		0486929627381392007B8DFE /* imgui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0486929327381392007B8DFE /* imgui.cpp */; };
+		04869298273813EA007B8DFE /* imgui_draw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04869297273813EA007B8DFE /* imgui_draw.cpp */; };
 		0497A1E926DF150800F61DE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0497A1E826DF150800F61DE9 /* Assets.xcassets */; };
 		0497A1EC26DF150800F61DE9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0497A1EB26DF150800F61DE9 /* Preview Assets.xcassets */; };
 		0497A20226DF150800F61DE9 /* DigitalVox2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A20126DF150800F61DE9 /* DigitalVox2UITests.swift */; };
@@ -795,6 +801,17 @@
 		0486928027375861007B8DFE /* soa_animation.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = soa_animation.mm; sourceTree = "<group>"; };
 		0486928227376FCC007B8DFE /* skeleton.ozz */ = {isa = PBXFileReference; lastKnownFileType = file; path = skeleton.ozz; sourceTree = "<group>"; };
 		048692842737C27B007B8DFE /* animation.ozz */ = {isa = PBXFileReference; lastKnownFileType = file; path = animation.ozz; sourceTree = "<group>"; };
+		0486928827381378007B8DFE /* imgui_impl_osx.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = imgui_impl_osx.mm; sourceTree = "<group>"; };
+		0486928927381378007B8DFE /* imgui_impl_osx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = imgui_impl_osx.h; sourceTree = "<group>"; };
+		0486928A27381378007B8DFE /* imgui_impl_metal.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = imgui_impl_metal.mm; sourceTree = "<group>"; };
+		0486928B27381378007B8DFE /* imgui_impl_metal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = imgui_impl_metal.h; sourceTree = "<group>"; };
+		0486928E27381392007B8DFE /* imgui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = imgui.h; sourceTree = "<group>"; };
+		0486928F27381392007B8DFE /* imconfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = imconfig.h; sourceTree = "<group>"; };
+		0486929027381392007B8DFE /* imgui_tables.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = imgui_tables.cpp; sourceTree = "<group>"; };
+		0486929127381392007B8DFE /* imgui_internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = imgui_internal.h; sourceTree = "<group>"; };
+		0486929227381392007B8DFE /* imgui_widgets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = imgui_widgets.cpp; sourceTree = "<group>"; };
+		0486929327381392007B8DFE /* imgui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = imgui.cpp; sourceTree = "<group>"; };
+		04869297273813EA007B8DFE /* imgui_draw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = imgui_draw.cpp; sourceTree = "<group>"; };
 		04874ED326F771F3005E3318 /* PBRMaterial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PBRMaterial.swift; sourceTree = "<group>"; };
 		0497A1E126DF150500F61DE9 /* vox.render.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vox.render.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0497A1E426DF150500F61DE9 /* voxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = voxApp.swift; path = ../vox.render/voxApp.swift; sourceTree = "<group>"; };
@@ -1048,6 +1065,7 @@
 				045B06602729854C003E4B68 /* physics */,
 				045D2BC6272CAEB40091636B /* animation */,
 				042F0DC527351D9500FF4A26 /* visualDebugger */,
+				0486928727381319007B8DFE /* gui */,
 				042BB12926EA35C100604751 /* Background.swift */,
 				042BB13026EA38EB00604751 /* Camera.swift */,
 				047FEBF726E6053A0078CFAF /* Component.swift */,
@@ -1693,6 +1711,24 @@
 			name = runtime;
 			sourceTree = "<group>";
 		};
+		0486928727381319007B8DFE /* gui */ = {
+			isa = PBXGroup;
+			children = (
+				0486928F27381392007B8DFE /* imconfig.h */,
+				0486928E27381392007B8DFE /* imgui.h */,
+				0486929127381392007B8DFE /* imgui_internal.h */,
+				0486929327381392007B8DFE /* imgui.cpp */,
+				04869297273813EA007B8DFE /* imgui_draw.cpp */,
+				0486929027381392007B8DFE /* imgui_tables.cpp */,
+				0486929227381392007B8DFE /* imgui_widgets.cpp */,
+				0486928927381378007B8DFE /* imgui_impl_osx.h */,
+				0486928827381378007B8DFE /* imgui_impl_osx.mm */,
+				0486928B27381378007B8DFE /* imgui_impl_metal.h */,
+				0486928A27381378007B8DFE /* imgui_impl_metal.mm */,
+			);
+			path = gui;
+			sourceTree = "<group>";
+		};
 		0497A1D826DF150500F61DE9 = {
 			isa = PBXGroup;
 			children = (
@@ -2260,6 +2296,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				041BAEAD272A5153006268D5 /* MetalRenderer.swift in Sources */,
+				0486928C27381378007B8DFE /* imgui_impl_osx.mm in Sources */,
 				041BAE62272A510C006268D5 /* RenderTargetBlendState.swift in Sources */,
 				041BAEAB272A514D006268D5 /* IColliderShape.swift in Sources */,
 				041BAE2F272A50E6006268D5 /* ContainmentType.swift in Sources */,
@@ -2275,6 +2312,7 @@
 				04CB88CA27321C0000B0E398 /* Animation.swift in Sources */,
 				041BAE2A272A50D9006268D5 /* EngineObject.swift in Sources */,
 				041BAE40272A50ED006268D5 /* SkinnedMeshRenderer.swift in Sources */,
+				0486929427381392007B8DFE /* imgui_tables.cpp in Sources */,
 				041BAE7B272A512B006268D5 /* Sky.swift in Sources */,
 				041BAE5C272A510C006268D5 /* RenderState.swift in Sources */,
 				041BAE6E272A5111006268D5 /* AmbientLight.swift in Sources */,
@@ -2291,6 +2329,7 @@
 				041BAE04272A500F006268D5 /* DisorderedArray.swift in Sources */,
 				042F0DB42734065900FF4A26 /* skeleton_builder.swift in Sources */,
 				041BAE11272A500F006268D5 /* InputManager.swift in Sources */,
+				0486929627381392007B8DFE /* imgui.cpp in Sources */,
 				041BAF14272B8A5B006268D5 /* PhysXPhysicsManager.swift in Sources */,
 				041BAE4B272A50FB006268D5 /* RenderFace.swift in Sources */,
 				04CB88F72732B11F00B0E398 /* vec_quaternion.swift in Sources */,
@@ -2355,6 +2394,7 @@
 				041BAE1D272A5046006268D5 /* blinn-phong.metal in Sources */,
 				04CB88CC27321C1800B0E398 /* AnimationClip.swift in Sources */,
 				041BAF0A272B7F9D006268D5 /* CPxRigidDynamic.mm in Sources */,
+				04869298273813EA007B8DFE /* imgui_draw.cpp in Sources */,
 				041BAEA9272A514D006268D5 /* ISphereColliderShape.swift in Sources */,
 				041BAE77272A512B006268D5 /* GLTFSceneKit.m in Sources */,
 				041BAE0F272A500F006268D5 /* Script.swift in Sources */,
@@ -2371,6 +2411,7 @@
 				041BAED5272A8B21006268D5 /* CPxMaterial.mm in Sources */,
 				041BAE96272A5141006268D5 /* HitResult.swift in Sources */,
 				041BAEE5272A9DF4006268D5 /* CPxGeometry.mm in Sources */,
+				0486928D27381378007B8DFE /* imgui_impl_metal.mm in Sources */,
 				0486924B2735FBFA007B8DFE /* raw_animation_utils.swift in Sources */,
 				041BAE3B272A50E6006268D5 /* PlaneIntersectionType.swift in Sources */,
 				041BAE76272A512B006268D5 /* GLTFModelIO.m in Sources */,
@@ -2407,6 +2448,7 @@
 				041BAE14272A500F006268D5 /* USDZAssetsLoader.swift in Sources */,
 				041BAE70272A5117006268D5 /* ShadowPass.swift in Sources */,
 				041BAE0C272A500F006268D5 /* SceneManager.swift in Sources */,
+				0486929527381392007B8DFE /* imgui_widgets.cpp in Sources */,
 				0486927E27375531007B8DFE /* soa_skeleton.mm in Sources */,
 				04CB88EC27326C9900B0E398 /* simd_math.mm in Sources */,
 				041BAE44272A50ED006268D5 /* ModelMesh.swift in Sources */,
