@@ -335,6 +335,9 @@ class AnimationScript: Script {
 
     // Buffer of model matrices (local-to-model output).
     var models_: [matrix_float4x4] = []
+    
+    var camera_:Entity!
+    var boundingBox:Box = Box()
 
     var boneMesh: ModelMesh!
     var jointMesh: ModelMesh!
@@ -350,10 +353,11 @@ class AnimationScript: Script {
         jointMesh = createJointMesh(engine)
     }
 
-    func load(_ skeleton_: SoaSkeleton, _ animation_: SoaAnimation) {
+    func load(_ skeleton_: SoaSkeleton, _ animation_: SoaAnimation, _ camera_ :Entity) {
         self.skeleton_ = skeleton_
         self.animation_ = animation_
-
+        self.camera_ = camera_
+        
         // Allocates runtime buffers.
         let num_soa_joints = skeleton_.num_soa_joints()
         let num_joints = skeleton_.num_joints()
@@ -385,6 +389,11 @@ class AnimationScript: Script {
 
         var joints: [matrix_float4x4] = []
         fillPostureUniforms(skeleton_, models_, &joints)
+        
+        computePostureBounds(models_[...], &boundingBox)
+        camera_.transform.setPosition(x: boundingBox.max.x + 3, y: boundingBox.max.y, z: boundingBox.max.z + 3)
+        let center = (boundingBox.max + boundingBox.min) * 0.5
+        camera_.transform.lookAt(worldPosition: Vector3(center.x, center.y, center.z), worldUp: nil)
 
         // add bone renderer
         for i in 0..<joints.count {
@@ -417,10 +426,41 @@ class AnimationScript: Script {
                 jointMtl[i].joint = joint
             }
         }
-        
+
         if isFirst {
             isFirst = !isFirst
         }
+    }
+
+    // Loop through matrices and collect min and max bounds.
+    func computePostureBounds(_ _matrices: ArraySlice<matrix_float4x4>,
+                              _ _bound: inout Box) {
+        if (_matrices.isEmpty) {
+            return
+        }
+
+        // Loops through matrices and stores min/max.
+        // Matrices array cannot be empty, it was checked at the beginning of the
+        // function.
+        let current = _matrices.first!
+        var min = current.columns.3
+        var max = current.columns.3
+        _matrices.forEach { current in
+            min = vox_oasis.min(min, current.columns.3)
+            max = vox_oasis.max(max, current.columns.3)
+        }
+
+        // Stores in math::Box structure.
+        var vec: [Float] = [0, 0, 0]
+        store3PtrU(min, &vec)
+        _bound.min.x = vec[0]
+        _bound.min.y = vec[1]
+        _bound.min.z = vec[2]
+        store3PtrU(max, &vec)
+        _bound.max.x = vec[0]
+        _bound.max.y = vec[1]
+        _bound.max.z = vec[2]
+        return
     }
 }
 
@@ -446,9 +486,6 @@ struct SkeletonView: View {
         // init camera
         let cameraEntity = rootEntity.createChild("camera")
         let _: Camera = cameraEntity.addComponent()
-        cameraEntity.transform.setPosition(x: 10, y: 0, z: 0)
-        cameraEntity.transform.lookAt(worldPosition: Vector3(0, 0, 0), worldUp: nil)
-        let _: OrbitControl = cameraEntity.addComponent()
 
         // init skeleton
         var raw_skeleton = RawSkeleton()
@@ -459,10 +496,10 @@ struct SkeletonView: View {
         guard let skeleton = skeleton else {
             return
         }
-        
+
         let s = SoaSkeleton()
         s.load("skeleton.ozz")
-        
+
         let a = SoaAnimation()
         a.load("animation.ozz")
 
@@ -478,7 +515,7 @@ struct SkeletonView: View {
         }
 
         let script: AnimationScript = rootEntity.addComponent()
-        script.load(s, a)
+        script.load(s, a, cameraEntity)
     }
 
     var body: some View {
