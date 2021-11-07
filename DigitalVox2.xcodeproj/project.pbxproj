@@ -337,6 +337,7 @@
 		0486927427374EC3007B8DFE /* simd_math_archive.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0486927027374EC3007B8DFE /* simd_math_archive.cc */; };
 		0486927527374EC3007B8DFE /* soa_math_archive.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0486927127374EC3007B8DFE /* soa_math_archive.cc */; };
 		0486927827374FF4007B8DFE /* platform.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0486927627374FF3007B8DFE /* platform.cc */; };
+		0486927E27375531007B8DFE /* soa_skeleton.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0486927D27375531007B8DFE /* soa_skeleton.mm */; };
 		0497A1E926DF150800F61DE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0497A1E826DF150800F61DE9 /* Assets.xcassets */; };
 		0497A1EC26DF150800F61DE9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0497A1EB26DF150800F61DE9 /* Preview Assets.xcassets */; };
 		0497A20226DF150800F61DE9 /* DigitalVox2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A20126DF150800F61DE9 /* DigitalVox2UITests.swift */; };
@@ -789,6 +790,8 @@
 		0486927927375088007B8DFE /* endianness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = endianness.h; sourceTree = "<group>"; };
 		0486927A273750A7007B8DFE /* span.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = span.h; sourceTree = "<group>"; };
 		0486927B273752A6007B8DFE /* simd_math_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simd_math_config.h; sourceTree = "<group>"; };
+		0486927C27375524007B8DFE /* soa_skeleton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = soa_skeleton.h; sourceTree = "<group>"; };
+		0486927D27375531007B8DFE /* soa_skeleton.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = soa_skeleton.mm; sourceTree = "<group>"; };
 		04874ED326F771F3005E3318 /* PBRMaterial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PBRMaterial.swift; sourceTree = "<group>"; };
 		0497A1E126DF150500F61DE9 /* vox.render.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vox.render.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0497A1E426DF150500F61DE9 /* voxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = voxApp.swift; path = ../vox.render/voxApp.swift; sourceTree = "<group>"; };
@@ -1833,6 +1836,8 @@
 			isa = PBXGroup;
 			children = (
 				04CB89002732B59C00B0E398 /* soa_skeleton.swift */,
+				0486927C27375524007B8DFE /* soa_skeleton.h */,
+				0486927D27375531007B8DFE /* soa_skeleton.mm */,
 				042F0DB92734AFB500FF4A26 /* skeleton_utils.swift */,
 				042F0DBD2734BF0F00FF4A26 /* local_to_model_job.swift */,
 				048692492735FAF9007B8DFE /* animation_keyframe.h */,
@@ -2396,6 +2401,7 @@
 				041BAE14272A500F006268D5 /* USDZAssetsLoader.swift in Sources */,
 				041BAE70272A5117006268D5 /* ShadowPass.swift in Sources */,
 				041BAE0C272A500F006268D5 /* SceneManager.swift in Sources */,
+				0486927E27375531007B8DFE /* soa_skeleton.mm in Sources */,
 				04CB88EC27326C9900B0E398 /* simd_math.mm in Sources */,
 				041BAE44272A50ED006268D5 /* ModelMesh.swift in Sources */,
 				048692532736004C007B8DFE /* animation_utils.swift in Sources */,
