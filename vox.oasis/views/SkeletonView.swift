@@ -459,6 +459,9 @@ struct SkeletonView: View {
         guard let skeleton = skeleton else {
             return
         }
+        
+        let testss = SoaSkeleton()
+        testss.load("skeleton.ozz")
 
         // Build a walk animation.
         var raw_animation = RawAnimation()

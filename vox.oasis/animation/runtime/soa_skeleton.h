@@ -9,8 +9,23 @@
 #define soa_skeleton_h
 
 #import <Foundation/Foundation.h>
+#import "../math/soa_float.h"
 
 @interface SoaSkeletonLoader : NSObject
+
+- (bool)LoadSkeleton:(nullable const NSString *)_filename;
+
+-(size_t) NumberOfNames;
+
+-(void) NameWithIndex:(size_t)index :(NSString *_Nonnull) name;
+
+-(size_t) NumberOfParents;
+
+-(void) ParentWithIndex:(size_t)index :(size_t *_Nonnull) parent;
+
+-(size_t) NumberOfBindPose;
+
+-(void) PoseWithIndex:(size_t)index :(struct SoaTransform *_Nonnull) pose;
 
 @end
 

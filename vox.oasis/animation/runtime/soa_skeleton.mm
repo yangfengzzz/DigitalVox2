@@ -117,4 +117,51 @@
     _archive >> MakeArray(joint_bind_poses_);
 }
 
+- (bool)LoadSkeleton:(const NSString *)_filename {
+    assert(_filename);
+    const char *name = [_filename cStringUsingEncoding:NSUTF8StringEncoding];
+    std::cout << "Loading skeleton archive " << name << "." << std::endl;
+    File file(name, "rb");
+    if (!file.opened()) {
+        std::cerr << "Failed to open skeleton file " << name << "." << std::endl;
+        return false;
+    }
+    IArchive archive(&file);
+
+    char buf[OZZ_ARRAY_SIZE("ozz-skeleton")];
+    archive.LoadBinary(buf, OZZ_ARRAY_SIZE("ozz-skeleton"));
+
+    uint32_t version;
+    archive >> version;
+
+    // Once the tag is validated, reading cannot fail.
+    [self Load:archive :version];
+
+    return true;
+}
+
+-(size_t) NumberOfNames {
+    return joint_names_.size();
+}
+
+-(void) NameWithIndex:(size_t)index :(NSString *_Nonnull) name {
+    name = [NSString stringWithUTF8String:joint_names_[index]];
+}
+
+-(size_t) NumberOfParents {
+    return joint_parents_.size();
+}
+
+-(void) ParentWithIndex:(size_t)index :(size_t *_Nonnull) parent {
+    *parent = joint_parents_[index];
+}
+
+-(size_t) NumberOfBindPose {
+    return joint_bind_poses_.size();
+}
+
+-(void) PoseWithIndex:(size_t)index :(struct SoaTransform *_Nonnull) pose {
+    *pose = joint_bind_poses_[index];
+}
+
 @end

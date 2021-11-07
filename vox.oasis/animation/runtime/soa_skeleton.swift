@@ -98,4 +98,34 @@ class SoaSkeleton {
         // Parents, third biggest alignment.
         joint_parents_ = [Int](repeating: 0, count: _num_joints)[...]
     }
+    
+    func load(_ filename:String) {
+        guard let assetUrl = Bundle.main.url(forResource: filename, withExtension: nil) else {
+            fatalError("Model: \(filename) not found")
+        }
+        
+        let loader = SoaSkeletonLoader()
+        loader.loadSkeleton(assetUrl.path)
+        
+        let n_name = loader.numberOfNames()
+        let names = [String](repeating: "", count: n_name)
+        for i in 0..<n_name {
+            loader.name(with: i, names[i])
+        }
+        joint_names_ = names[...]
+        
+        let n_parents = loader.numberOfParents()
+        var parents = [Int](repeating: -1, count: n_parents)
+        for i in 0..<n_parents {
+            loader.parent(with: i, &parents[i])
+        }
+        joint_parents_ = parents[...]
+        
+        let n_poses = loader.numberOfBindPose()
+        var poses = [SoaTransform](repeating: SoaTransform.identity(), count: n_poses)
+        for i in 0..<n_poses {
+            loader.pose(with: i, &poses[i])
+        }
+        joint_bind_poses_ = poses[...]
+    }
 }
