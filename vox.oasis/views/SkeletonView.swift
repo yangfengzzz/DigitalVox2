@@ -335,9 +335,9 @@ class AnimationScript: Script {
 
     // Buffer of model matrices (local-to-model output).
     var models_: [matrix_float4x4] = []
-    
-    var camera_:Entity!
-    var boundingBox:Box = Box()
+
+    var camera_: Entity!
+    var boundingBox: Box = Box()
 
     var boneMesh: ModelMesh!
     var jointMesh: ModelMesh!
@@ -347,17 +347,33 @@ class AnimationScript: Script {
     var boneMtl: [BoneMaterial] = []
     var jointMtl: [JointMaterial] = []
 
+    var laserMtl: BlinnPhongMaterial!
+    var laserMesh: ModelMesh!
+    var laserEntity: Entity!
+    var offset_: [Float] = [-0.02, 0.03, 0.05]
+    var attachment_: Int = 0
+
     required init(_ entity: Entity) {
         super.init(entity)
         boneMesh = createBoneMesh(engine)
         jointMesh = createJointMesh(engine)
+
+        laserMtl = BlinnPhongMaterial(engine)
+        _ = laserMtl.baseColor.setValue(r: 1, g: 0, b: 0, a: 1)
+        let thickness: Float = 0.01
+        let length: Float = 0.5
+        laserMesh = PrimitiveMesh.createCuboid(engine, thickness, thickness, length, true)
+        laserEntity = entity.createChild("laser")
+        let laserRenderer: MeshRenderer = laserEntity.addComponent()
+        laserRenderer.mesh = laserMesh
+        laserRenderer.setMaterial(laserMtl)
     }
 
-    func load(_ skeleton_: SoaSkeleton, _ animation_: SoaAnimation, _ camera_ :Entity) {
+    func load(_ skeleton_: SoaSkeleton, _ animation_: SoaAnimation, _ camera_: Entity) {
         self.skeleton_ = skeleton_
         self.animation_ = animation_
         self.camera_ = camera_
-        
+
         // Allocates runtime buffers.
         let num_soa_joints = skeleton_.num_soa_joints()
         let num_joints = skeleton_.num_joints()
@@ -366,6 +382,14 @@ class AnimationScript: Script {
 
         // Allocates a cache that matches new animation requirements.
         cache_.resize(num_joints)
+
+        // Finds the joint where the object should be attached.
+        for i in 0..<num_joints {
+            if (skeleton_.joint_names()[i] == "LeftHandMiddle") {
+                attachment_ = i
+                break
+            }
+        }
     }
 
     override func onUpdate(_ deltaTime: Float) {
@@ -389,11 +413,20 @@ class AnimationScript: Script {
 
         var joints: [matrix_float4x4] = []
         fillPostureUniforms(skeleton_, models_, &joints)
-        
+
         computePostureBounds(models_[...], &boundingBox)
         camera_.transform.setPosition(x: boundingBox.max.x + 3, y: boundingBox.max.y, z: boundingBox.max.z + 3)
         let center = (boundingBox.max + boundingBox.min) * 0.5
         camera_.transform.lookAt(worldPosition: Vector3(center.x, center.y, center.z), worldUp: nil)
+
+        // Builds offset transformation matrix.
+        let translation = simd_float4.load3PtrU(&offset_)
+
+        // Concatenates joint and offset transformations.
+        let transform = models_[attachment_] * simd_float4x4.translation(translation)
+        let worldMatrix = laserEntity.transform.worldMatrix
+        worldMatrix.elements = transform
+        laserEntity.transform.worldMatrix = worldMatrix
 
         // add bone renderer
         for i in 0..<joints.count {
