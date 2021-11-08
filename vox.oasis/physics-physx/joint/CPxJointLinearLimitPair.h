@@ -11,6 +11,7 @@
 #import <Foundation/Foundation.h>
 #import "CPxSpring.h"
 
+//TODO: extend in Swift to add default value
 struct CPxTolerancesScale {
     float length;
     float speed;

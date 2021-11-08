@@ -10,6 +10,7 @@
 
 #include "CPxJoint.h"
 #include "CPxSpring.h"
+#include "CPxD6JointDrive.h"
 #include "CPxJointLimitCone.h"
 #include "CPxJointLinearLimitPair.h"
 #include "CPxJointAngularLimitPair.h"

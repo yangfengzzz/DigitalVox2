@@ -383,6 +383,8 @@
 		04E59C962738FFAB000BCA73 /* CPxPrismaticJoint.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04E59C952738FFAB000BCA73 /* CPxPrismaticJoint.mm */; };
 		04E59C9927390022000BCA73 /* CPxJointLinearLimitPair.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04E59C9827390022000BCA73 /* CPxJointLinearLimitPair.mm */; };
 		04E59C9D273903E3000BCA73 /* CPxD6Joint.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04E59C9C273903E3000BCA73 /* CPxD6Joint.mm */; };
+		04E59CA027390D26000BCA73 /* CPxSpring.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04E59C9F27390D26000BCA73 /* CPxSpring.mm */; };
+		04E59CA4273910C3000BCA73 /* CPxD6JointDrive.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04E59CA3273910C3000BCA73 /* CPxD6JointDrive.mm */; };
 		04EA0D6A26E0F9AD00CA7833 /* math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6926E0F9AD00CA7833 /* math.swift */; };
 		04EA0D6C26E1204200CA7833 /* bbox2f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6B26E1204200CA7833 /* bbox2f.swift */; };
 		04EA0D6E26E1204F00CA7833 /* bbox3f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6D26E1204F00CA7833 /* bbox3f.swift */; };
@@ -923,6 +925,10 @@
 		04E59C9B273903DB000BCA73 /* CPxD6Joint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPxD6Joint.h; sourceTree = "<group>"; };
 		04E59C9C273903E3000BCA73 /* CPxD6Joint.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CPxD6Joint.mm; sourceTree = "<group>"; };
 		04E59C9E27390A59000BCA73 /* CJointBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJointBridge.h; sourceTree = "<group>"; };
+		04E59C9F27390D26000BCA73 /* CPxSpring.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CPxSpring.mm; sourceTree = "<group>"; };
+		04E59CA127390F4B000BCA73 /* CPxSpring+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CPxSpring+Internal.h"; sourceTree = "<group>"; };
+		04E59CA2273910B8000BCA73 /* CPxD6JointDrive.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPxD6JointDrive.h; sourceTree = "<group>"; };
+		04E59CA3273910C3000BCA73 /* CPxD6JointDrive.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CPxD6JointDrive.mm; sourceTree = "<group>"; };
 		04EA0D6926E0F9AD00CA7833 /* math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = math.swift; sourceTree = "<group>"; };
 		04EA0D6B26E1204200CA7833 /* bbox2f.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bbox2f.swift; sourceTree = "<group>"; };
 		04EA0D6D26E1204F00CA7833 /* bbox3f.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bbox3f.swift; sourceTree = "<group>"; };
@@ -1978,6 +1984,10 @@
 				04E59C7A2738BC6D000BCA73 /* CPxJoint+Internal.h */,
 				04E59C782738BB93000BCA73 /* CPxJoint.mm */,
 				04E59C8C2738F9DC000BCA73 /* CPxSpring.h */,
+				04E59CA127390F4B000BCA73 /* CPxSpring+Internal.h */,
+				04E59C9F27390D26000BCA73 /* CPxSpring.mm */,
+				04E59CA2273910B8000BCA73 /* CPxD6JointDrive.h */,
+				04E59CA3273910C3000BCA73 /* CPxD6JointDrive.mm */,
 				04E59C872738EDAC000BCA73 /* CPxJointLimitCone.h */,
 				04E59C882738EDD1000BCA73 /* CPxJointLimitCone+Internal.h */,
 				04E59C852738EDA6000BCA73 /* CPxJointLimitCone.mm */,
@@ -2403,6 +2413,7 @@
 				041BAEE3272A9C6D006268D5 /* PhysXBoxColliderShape.swift in Sources */,
 				041BAE6F272A5117006268D5 /* ShadowMapMaterial.swift in Sources */,
 				041BAE35272A50E6006268D5 /* Color.swift in Sources */,
+				04E59CA027390D26000BCA73 /* CPxSpring.mm in Sources */,
 				041BAEA3272A514D006268D5 /* IPhysics.swift in Sources */,
 				04CB88C427320E6700B0E398 /* Skeleton.swift in Sources */,
 				041BAE7F272A513B006268D5 /* OrbitControl.swift in Sources */,
@@ -2615,6 +2626,7 @@
 				041BAF11272B889D006268D5 /* CPxScene.mm in Sources */,
 				041BAE63272A510C006268D5 /* ShaderData.swift in Sources */,
 				041BAEB6272A5166006268D5 /* LiteHitResult.swift in Sources */,
+				04E59CA4273910C3000BCA73 /* CPxD6JointDrive.mm in Sources */,
 				041BAE6D272A5111006268D5 /* IBLLight.swift in Sources */,
 				041BAEA6272A514D006268D5 /* IPhysicsMaterial.swift in Sources */,
 				041BAE01272A500F006268D5 /* Canvas.swift in Sources */,

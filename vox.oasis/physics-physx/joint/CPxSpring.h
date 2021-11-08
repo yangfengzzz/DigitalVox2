@@ -15,6 +15,9 @@
 @property(nonatomic, assign) float stiffness;
 //!< the damping strength of the drive: that is, the force proportional to the velocity error
 @property(nonatomic, assign) float damping;
+
+-(instancetype)initWithStiffness:(float) stiffness_ :(float) damping_;
+
 @end
 
 #endif /* CPxSpring_h */

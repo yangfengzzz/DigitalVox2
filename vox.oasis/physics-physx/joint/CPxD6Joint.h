@@ -9,6 +9,7 @@
 #define CPxD6Joint_h
 
 #import "CPxJoint.h"
+#import "CPxD6JointDrive.h"
 
 enum CPxD6Axis {
     CPxD6Axis_eX = 0,    //!< motion along the X axis
