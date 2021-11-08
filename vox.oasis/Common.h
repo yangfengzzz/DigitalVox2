@@ -50,6 +50,7 @@
 #include "CPxScene.h"
 
 #include "CJointBridge.h"
+#include "CCharacterBridge.h"
 
 #include "math_constant.h"
 #include "simd_math.h"

@@ -372,6 +372,9 @@
 		04CB88FB2732B41E00B0E398 /* decimate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88D327326C9900B0E398 /* decimate.swift */; };
 		04CB88FF2732B56300B0E398 /* raw_skeleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88FE2732B56300B0E398 /* raw_skeleton.swift */; };
 		04CB89012732B59C00B0E398 /* soa_skeleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB89002732B59C00B0E398 /* soa_skeleton.swift */; };
+		04D396E32739467E00D78EBE /* CPxControllerManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04D396E22739467E00D78EBE /* CPxControllerManager.mm */; };
+		04D396E62739478600D78EBE /* CPxController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04D396E52739478600D78EBE /* CPxController.mm */; };
+		04D396E92739482F00D78EBE /* CPxBoxControllerDesc.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04D396E82739482F00D78EBE /* CPxBoxControllerDesc.mm */; };
 		04E59C792738BB93000BCA73 /* CPxJoint.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04E59C782738BB93000BCA73 /* CPxJoint.mm */; };
 		04E59C7D2738BEA9000BCA73 /* CPxConstraint.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04E59C7C2738BEA9000BCA73 /* CPxConstraint.mm */; };
 		04E59C812738C409000BCA73 /* CPxFixedJoint.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04E59C802738C409000BCA73 /* CPxFixedJoint.mm */; };
@@ -891,6 +894,14 @@
 		04CB88FE2732B56300B0E398 /* raw_skeleton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = raw_skeleton.swift; sourceTree = "<group>"; };
 		04CB89002732B59C00B0E398 /* soa_skeleton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = soa_skeleton.swift; sourceTree = "<group>"; };
 		04CB89022732BFBF00B0E398 /* skeleton_builder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = skeleton_builder.swift; sourceTree = "<group>"; };
+		04D396E12739467500D78EBE /* CPxControllerManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPxControllerManager.h; sourceTree = "<group>"; };
+		04D396E22739467E00D78EBE /* CPxControllerManager.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CPxControllerManager.mm; sourceTree = "<group>"; };
+		04D396E42739477B00D78EBE /* CPxController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPxController.h; sourceTree = "<group>"; };
+		04D396E52739478600D78EBE /* CPxController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CPxController.mm; sourceTree = "<group>"; };
+		04D396E72739481C00D78EBE /* CPxBoxControllerDesc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPxBoxControllerDesc.h; sourceTree = "<group>"; };
+		04D396E82739482F00D78EBE /* CPxBoxControllerDesc.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CPxBoxControllerDesc.mm; sourceTree = "<group>"; };
+		04D396EA2739490300D78EBE /* CPxBoxControllerDesc+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CPxBoxControllerDesc+Internal.h"; sourceTree = "<group>"; };
+		04D396EB273949D600D78EBE /* CCharacterBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCharacterBridge.h; sourceTree = "<group>"; };
 		04DB2A4126DF1E0500C15850 /* IClone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IClone.swift; sourceTree = "<group>"; };
 		04DBA7D92700B32D00C3B97C /* EngineFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineFeature.swift; sourceTree = "<group>"; };
 		04DBA7DB2700B3C900C3B97C /* SceneFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneFeature.swift; sourceTree = "<group>"; };
@@ -1252,6 +1263,7 @@
 		041D1C52272A3FC600322BDF /* physics-physx */ = {
 			isa = PBXGroup;
 			children = (
+				04D396E02739466400D78EBE /* characterkinematic */,
 				04E59C7B2738BE9A000BCA73 /* CPxConstraint.h */,
 				04E59C7E2738C277000BCA73 /* CPxConstraint+Internal.h */,
 				04E59C7C2738BEA9000BCA73 /* CPxConstraint.mm */,
@@ -1952,6 +1964,21 @@
 			path = runtime;
 			sourceTree = "<group>";
 		};
+		04D396E02739466400D78EBE /* characterkinematic */ = {
+			isa = PBXGroup;
+			children = (
+				04D396EB273949D600D78EBE /* CCharacterBridge.h */,
+				04D396E12739467500D78EBE /* CPxControllerManager.h */,
+				04D396E22739467E00D78EBE /* CPxControllerManager.mm */,
+				04D396E42739477B00D78EBE /* CPxController.h */,
+				04D396E52739478600D78EBE /* CPxController.mm */,
+				04D396E72739481C00D78EBE /* CPxBoxControllerDesc.h */,
+				04D396EA2739490300D78EBE /* CPxBoxControllerDesc+Internal.h */,
+				04D396E82739482F00D78EBE /* CPxBoxControllerDesc.mm */,
+			);
+			path = characterkinematic;
+			sourceTree = "<group>";
+		};
 		04DB2A4026DF1DF100C15850 /* design */ = {
 			isa = PBXGroup;
 			children = (
@@ -2562,6 +2589,7 @@
 				041BAE33272A50E6006268D5 /* Ray.swift in Sources */,
 				041BAE00272A500F006268D5 /* Scene.swift in Sources */,
 				041BAE60272A510C006268D5 /* ShaderProgram.swift in Sources */,
+				04D396E62739478600D78EBE /* CPxController.mm in Sources */,
 				0486926C27374DED007B8DFE /* archive.cc in Sources */,
 				041BAE14272A500F006268D5 /* USDZAssetsLoader.swift in Sources */,
 				041BAE70272A5117006268D5 /* ShadowPass.swift in Sources */,
@@ -2575,6 +2603,7 @@
 				048692532736004C007B8DFE /* animation_utils.swift in Sources */,
 				0486927827374FF4007B8DFE /* platform.cc in Sources */,
 				041BAE99272A5141006268D5 /* StaticCollider.swift in Sources */,
+				04D396E92739482F00D78EBE /* CPxBoxControllerDesc.mm in Sources */,
 				048692462735FA1B007B8DFE /* raw_animation.swift in Sources */,
 				04CB88F42732953E00B0E398 /* soa_transform.swift in Sources */,
 				041BAEAE272A5153006268D5 /* RenderPipelineState.swift in Sources */,
@@ -2622,6 +2651,7 @@
 				041BAE2C272A50E6006268D5 /* BoundingFrustum.swift in Sources */,
 				041BAE3C272A50E6006268D5 /* BoundingSphere.swift in Sources */,
 				04CB88F027328CC300B0E398 /* soa_float.swift in Sources */,
+				04D396E32739467E00D78EBE /* CPxControllerManager.mm in Sources */,
 				041BAE73272A5117006268D5 /* LightShadow.swift in Sources */,
 				041BAE15272A500F006268D5 /* UpdateFlagManager.swift in Sources */,
 				041BAE9F272A5141006268D5 /* BoxColliderShape.swift in Sources */,
