@@ -19,6 +19,8 @@ using namespace physx;
 
 - (instancetype)initWithSpring:(PxSpring)c_spring;
 
+- (instancetype)initWithD6:(PxD6JointDrive)c_d6;
+
 @end
 
 #endif /* CPxSpring_Internal_h */

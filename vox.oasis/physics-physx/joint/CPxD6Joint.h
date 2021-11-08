@@ -10,6 +10,11 @@
 
 #import "CPxJoint.h"
 #import "CPxD6JointDrive.h"
+#import "CPxJointLimitCone.h"
+#import "CPxJointLinearLimit.h"
+#import "CPxJointLinearLimitPair.h"
+#import "CPxJointAngularLimitPair.h"
+#import "CPxJointLimitPyramid.h"
 
 enum CPxD6Axis {
     CPxD6Axis_eX = 0,    //!< motion along the X axis
@@ -42,6 +47,18 @@ enum CPxD6JointDriveFlag {
 };
 
 @interface CPxD6Joint : CPxJoint
+
+- (void)etMotion:(enum CPxD6Axis)axis :(enum CPxD6Motion)type;
+
+- (enum CPxD6Motion)getMotion:(enum CPxD6Axis)axis;
+
+- (float)getTwistAngle;
+
+- (float)getSwingYAngle;
+
+- (float)getSwingZAngle;
+
+- (void)setDistanceLimit:(CPxJointLinearLimit *)limit;
 
 @end
 

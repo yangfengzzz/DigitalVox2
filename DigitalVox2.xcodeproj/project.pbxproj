@@ -385,6 +385,8 @@
 		04E59C9D273903E3000BCA73 /* CPxD6Joint.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04E59C9C273903E3000BCA73 /* CPxD6Joint.mm */; };
 		04E59CA027390D26000BCA73 /* CPxSpring.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04E59C9F27390D26000BCA73 /* CPxSpring.mm */; };
 		04E59CA4273910C3000BCA73 /* CPxD6JointDrive.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04E59CA3273910C3000BCA73 /* CPxD6JointDrive.mm */; };
+		04E59CA927391639000BCA73 /* CPxJointLinearLimit.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04E59CA827391639000BCA73 /* CPxJointLinearLimit.mm */; };
+		04E59CAE2739179B000BCA73 /* CPxJointLimitPyramid.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04E59CAD2739179B000BCA73 /* CPxJointLimitPyramid.mm */; };
 		04EA0D6A26E0F9AD00CA7833 /* math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6926E0F9AD00CA7833 /* math.swift */; };
 		04EA0D6C26E1204200CA7833 /* bbox2f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6B26E1204200CA7833 /* bbox2f.swift */; };
 		04EA0D6E26E1204F00CA7833 /* bbox3f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6D26E1204F00CA7833 /* bbox3f.swift */; };
@@ -929,6 +931,13 @@
 		04E59CA127390F4B000BCA73 /* CPxSpring+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CPxSpring+Internal.h"; sourceTree = "<group>"; };
 		04E59CA2273910B8000BCA73 /* CPxD6JointDrive.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPxD6JointDrive.h; sourceTree = "<group>"; };
 		04E59CA3273910C3000BCA73 /* CPxD6JointDrive.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CPxD6JointDrive.mm; sourceTree = "<group>"; };
+		04E59CA62739161F000BCA73 /* CPxJointLinearLimit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPxJointLinearLimit.h; sourceTree = "<group>"; };
+		04E59CA72739162E000BCA73 /* CPxJointLinearLimit+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CPxJointLinearLimit+Internal.h"; sourceTree = "<group>"; };
+		04E59CA827391639000BCA73 /* CPxJointLinearLimit.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CPxJointLinearLimit.mm; sourceTree = "<group>"; };
+		04E59CAA2739169A000BCA73 /* CPxTolerancesScale.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPxTolerancesScale.h; sourceTree = "<group>"; };
+		04E59CAB27391786000BCA73 /* CPxJointLimitPyramid.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPxJointLimitPyramid.h; sourceTree = "<group>"; };
+		04E59CAC27391792000BCA73 /* CPxJointLimitPyramid+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CPxJointLimitPyramid+Internal.h"; sourceTree = "<group>"; };
+		04E59CAD2739179B000BCA73 /* CPxJointLimitPyramid.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CPxJointLimitPyramid.mm; sourceTree = "<group>"; };
 		04EA0D6926E0F9AD00CA7833 /* math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = math.swift; sourceTree = "<group>"; };
 		04EA0D6B26E1204200CA7833 /* bbox2f.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bbox2f.swift; sourceTree = "<group>"; };
 		04EA0D6D26E1204F00CA7833 /* bbox3f.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bbox3f.swift; sourceTree = "<group>"; };
@@ -1980,23 +1989,30 @@
 			isa = PBXGroup;
 			children = (
 				04E59C9E27390A59000BCA73 /* CJointBridge.h */,
-				04E59C772738BB87000BCA73 /* CPxJoint.h */,
-				04E59C7A2738BC6D000BCA73 /* CPxJoint+Internal.h */,
-				04E59C782738BB93000BCA73 /* CPxJoint.mm */,
 				04E59C8C2738F9DC000BCA73 /* CPxSpring.h */,
 				04E59CA127390F4B000BCA73 /* CPxSpring+Internal.h */,
 				04E59C9F27390D26000BCA73 /* CPxSpring.mm */,
 				04E59CA2273910B8000BCA73 /* CPxD6JointDrive.h */,
 				04E59CA3273910C3000BCA73 /* CPxD6JointDrive.mm */,
+				04E59CAA2739169A000BCA73 /* CPxTolerancesScale.h */,
 				04E59C872738EDAC000BCA73 /* CPxJointLimitCone.h */,
 				04E59C882738EDD1000BCA73 /* CPxJointLimitCone+Internal.h */,
 				04E59C852738EDA6000BCA73 /* CPxJointLimitCone.mm */,
+				04E59CA62739161F000BCA73 /* CPxJointLinearLimit.h */,
+				04E59CA72739162E000BCA73 /* CPxJointLinearLimit+Internal.h */,
+				04E59CA827391639000BCA73 /* CPxJointLinearLimit.mm */,
 				04E59C972739001B000BCA73 /* CPxJointLinearLimitPair.h */,
 				04E59C9A2739002A000BCA73 /* CPxJointLinearLimitPair+Internal.h */,
 				04E59C9827390022000BCA73 /* CPxJointLinearLimitPair.mm */,
 				04E59C8D2738FA0E000BCA73 /* CPxJointAngularLimitPair.h */,
 				04E59C902738FA2C000BCA73 /* CPxJointAngularLimitPair+Internal.h */,
 				04E59C8E2738FA19000BCA73 /* CPxJointAngularLimitPair.mm */,
+				04E59CAB27391786000BCA73 /* CPxJointLimitPyramid.h */,
+				04E59CAC27391792000BCA73 /* CPxJointLimitPyramid+Internal.h */,
+				04E59CAD2739179B000BCA73 /* CPxJointLimitPyramid.mm */,
+				04E59C772738BB87000BCA73 /* CPxJoint.h */,
+				04E59C7A2738BC6D000BCA73 /* CPxJoint+Internal.h */,
+				04E59C782738BB93000BCA73 /* CPxJoint.mm */,
 				04E59C7F2738C400000BCA73 /* CPxFixedJoint.h */,
 				04E59C802738C409000BCA73 /* CPxFixedJoint.mm */,
 				04E59C822738C863000BCA73 /* CPxSphericalJoint.h */,
@@ -2508,6 +2524,7 @@
 				0486926B27374DED007B8DFE /* stream.cc in Sources */,
 				041BAE1C272A5046006268D5 /* background-texture.metal in Sources */,
 				041BAED5272A8B21006268D5 /* CPxMaterial.mm in Sources */,
+				04E59CA927391639000BCA73 /* CPxJointLinearLimit.mm in Sources */,
 				041BAE96272A5141006268D5 /* HitResult.swift in Sources */,
 				041BAEE5272A9DF4006268D5 /* CPxGeometry.mm in Sources */,
 				0486928D27381378007B8DFE /* imgui_impl_metal.mm in Sources */,
@@ -2523,6 +2540,7 @@
 				041BAE57272A5100006268D5 /* RenderContext.swift in Sources */,
 				041BAEBA272A5166006268D5 /* LiteStaticCollider.swift in Sources */,
 				041BAE0A272A500F006268D5 /* EngineFeature.swift in Sources */,
+				04E59CAE2739179B000BCA73 /* CPxJointLimitPyramid.mm in Sources */,
 				048692502735FE13007B8DFE /* additive_animation_builder.swift in Sources */,
 				041BAE7A272A512B006268D5 /* GLTFAsset.m in Sources */,
 				041BAE47272A50F2006268D5 /* Mesh.swift in Sources */,

@@ -16,16 +16,29 @@ using namespace physx;
 - (instancetype)initWithSpring:(PxSpring)c_spring {
     self = [super init];
     if (self) {
-        if (_c_spring == nullptr) {
-            _c_spring = new PxSpring(0, 0);
+        if (_c_spring != nullptr) {
+            delete _c_spring;
+            _c_spring = nullptr;
         }
-
-        *_c_spring = c_spring;
+        _c_spring = new PxSpring(c_spring.stiffness, c_spring.damping);
     }
     return self;
 }
 
--(instancetype)initWithStiffness:(float) stiffness_ :(float) damping_ {
+- (instancetype)initWithD6:(PxD6JointDrive)c_d6 {
+    self = [super init];
+    if (self) {
+        if (_c_spring != nullptr) {
+            delete _c_spring;
+            _c_spring = nullptr;
+        }
+        _c_spring = new PxD6JointDrive();
+        *_c_spring = c_d6;
+    }
+    return self;
+}
+
+- (instancetype)initWithStiffness:(float)stiffness_ :(float)damping_ {
     self = [super init];
     if (self) {
         if (_c_spring != nullptr) {

@@ -15,6 +15,9 @@
 @property(nonatomic, assign) float forceLimit;
 //!< the joint drive flags
 @property(nonatomic, assign) uint32_t flags;
+
+- (instancetype)initWithLimitStiffness:(float)driveStiffness :(float)driveDamping :(float)driveForceLimit;
+
 @end
 
 #endif /* CPxD6JointDrive_h */

@@ -10,18 +10,13 @@
 
 #import <Foundation/Foundation.h>
 #import "CPxSpring.h"
-
-//TODO: extend in Swift to add default value
-struct CPxTolerancesScale {
-    float length;
-    float speed;
-};
+#import "CPxTolerancesScale.h"
 
 @interface CPxJointLinearLimitPair : NSObject
 
 - (instancetype)initWithHardLimit:(struct CPxTolerancesScale)scale :(float)lowerLimit :(float)upperLimit :(float)contactDist;
 
-- (instancetype)initWithSoftLimit:(float)lowerLimit :(float)upperLimit :(CPxSpring*)spring;
+- (instancetype)initWithSoftLimit:(float)lowerLimit :(float)upperLimit :(CPxSpring *)spring;
 
 @end
 
