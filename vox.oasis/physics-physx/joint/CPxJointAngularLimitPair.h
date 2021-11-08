@@ -15,7 +15,7 @@
 
 - (instancetype)initWithHardLimit:(float)lowerLimit :(float)upperLimit :(float)contactDist;
 
-- (instancetype)initWithSoftLimit:(float)lowerLimit :(float)upperLimit :(struct CPxSpring)spring;
+- (instancetype)initWithSoftLimit:(float)lowerLimit :(float)upperLimit :(CPxSpring*)spring;
 
 @end
 

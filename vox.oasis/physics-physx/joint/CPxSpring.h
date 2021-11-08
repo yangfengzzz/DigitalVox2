@@ -8,11 +8,13 @@
 #ifndef CPxSpring_h
 #define CPxSpring_h
 
-struct CPxSpring {
-    //!< the spring strength of the drive: that is, the force proportional to the position error
-    float stiffness;
-    //!< the damping strength of the drive: that is, the force proportional to the velocity error
-    float damping;
-};
+#import <Foundation/Foundation.h>
+
+@interface CPxSpring : NSObject
+//!< the spring strength of the drive: that is, the force proportional to the position error
+@property(nonatomic, assign) float stiffness;
+//!< the damping strength of the drive: that is, the force proportional to the velocity error
+@property(nonatomic, assign) float damping;
+@end
 
 #endif /* CPxSpring_h */

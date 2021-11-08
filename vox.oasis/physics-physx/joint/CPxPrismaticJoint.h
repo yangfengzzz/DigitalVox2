@@ -12,7 +12,7 @@
 #import "CPxJointLinearLimitPair.h"
 
 enum CPxPrismaticJointFlag {
-    eLIMIT_ENABLED = 1 << 1
+    CPxPrismaticJointFlag_eLIMIT_ENABLED = 1 << 1
 };
 
 @interface CPxPrismaticJoint : CPxJoint
@@ -25,7 +25,7 @@ enum CPxPrismaticJointFlag {
 
 - (CPxJointLinearLimitPair *)getLimit;
 
-- (void)setPrismaticJointFlag:(CPxPrismaticJointFlag)flag :(bool)value;
+- (void)setPrismaticJointFlag:(enum CPxPrismaticJointFlag)flag :(bool)value;
 
 - (void)setProjectionLinearTolerance:(float)tolerance;
 

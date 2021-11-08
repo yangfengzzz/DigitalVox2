@@ -11,9 +11,9 @@
 #import "CPxJoint.h"
 
 enum CPxDistanceJointFlag {
-    eMAX_DISTANCE_ENABLED = 1 << 1,
-    eMIN_DISTANCE_ENABLED = 1 << 2,
-    eSPRING_ENABLED = 1 << 3
+    CPxDistanceJointFlag_eMAX_DISTANCE_ENABLED = 1 << 1,
+    CPxDistanceJointFlag_eMIN_DISTANCE_ENABLED = 1 << 2,
+    CPxDistanceJointFlag_eSPRING_ENABLED = 1 << 3
 };
 
 @interface CPxDistanceJoint : CPxJoint
@@ -40,7 +40,7 @@ enum CPxDistanceJointFlag {
 
 - (float)getDamping;
 
-- (void)setDistanceJointFlag:(CPxDistanceJointFlag)flag :(bool)value;
+- (void)setDistanceJointFlag:(enum CPxDistanceJointFlag)flag :(bool)value;
 
 @end
 

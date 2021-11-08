@@ -36,7 +36,7 @@
     return self;
 }
 
-- (instancetype)initWithSoftLimit:(float)yLimitAngle :(float)zLimitAngle :(struct CPxSpring)spring {
+- (instancetype)initWithSoftLimit:(float)yLimitAngle :(float)zLimitAngle :(CPxSpring*)spring {
     self = [super init];
     if (self) {
         _c_limit = new PxJointLimitCone(yLimitAngle, zLimitAngle, PxSpring(spring.stiffness, spring.damping));

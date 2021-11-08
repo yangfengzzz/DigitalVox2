@@ -15,7 +15,7 @@
 
 - (instancetype)initWithHardLimit:(float)yLimitAngle :(float)zLimitAngle :(float)contactDist;
 
-- (instancetype)initWithSoftLimit:(float)yLimitAngle :(float)zLimitAngle :(struct CPxSpring)spring;
+- (instancetype)initWithSoftLimit:(float)yLimitAngle :(float)zLimitAngle :(CPxSpring*)spring;
 
 @end
 

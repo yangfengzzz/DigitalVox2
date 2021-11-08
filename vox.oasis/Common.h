@@ -49,6 +49,8 @@
 #include "CPxRigidDynamic.h"
 #include "CPxScene.h"
 
+#include "CJointBridge.h"
+
 #include "math_constant.h"
 #include "simd_math.h"
 #include "soa_float.h"

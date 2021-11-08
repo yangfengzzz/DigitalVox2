@@ -39,7 +39,7 @@
     return self;
 }
 
-- (instancetype)initWithSoftLimit:(float)lowerLimit :(float)upperLimit :(struct CPxSpring)spring {
+- (instancetype)initWithSoftLimit:(float)lowerLimit :(float)upperLimit :(CPxSpring*)spring {
     self = [super init];
     if (self) {
         _c_limit = new PxJointLinearLimitPair(lowerLimit, upperLimit, PxSpring(spring.stiffness, spring.damping));

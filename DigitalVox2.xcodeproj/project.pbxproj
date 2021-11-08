@@ -382,6 +382,7 @@
 		04E59C932738FDB4000BCA73 /* CPxDistanceJoint.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04E59C922738FDB4000BCA73 /* CPxDistanceJoint.mm */; };
 		04E59C962738FFAB000BCA73 /* CPxPrismaticJoint.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04E59C952738FFAB000BCA73 /* CPxPrismaticJoint.mm */; };
 		04E59C9927390022000BCA73 /* CPxJointLinearLimitPair.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04E59C9827390022000BCA73 /* CPxJointLinearLimitPair.mm */; };
+		04E59C9D273903E3000BCA73 /* CPxD6Joint.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04E59C9C273903E3000BCA73 /* CPxD6Joint.mm */; };
 		04EA0D6A26E0F9AD00CA7833 /* math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6926E0F9AD00CA7833 /* math.swift */; };
 		04EA0D6C26E1204200CA7833 /* bbox2f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6B26E1204200CA7833 /* bbox2f.swift */; };
 		04EA0D6E26E1204F00CA7833 /* bbox3f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6D26E1204F00CA7833 /* bbox3f.swift */; };
@@ -919,6 +920,9 @@
 		04E59C972739001B000BCA73 /* CPxJointLinearLimitPair.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPxJointLinearLimitPair.h; sourceTree = "<group>"; };
 		04E59C9827390022000BCA73 /* CPxJointLinearLimitPair.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CPxJointLinearLimitPair.mm; sourceTree = "<group>"; };
 		04E59C9A2739002A000BCA73 /* CPxJointLinearLimitPair+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CPxJointLinearLimitPair+Internal.h"; sourceTree = "<group>"; };
+		04E59C9B273903DB000BCA73 /* CPxD6Joint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPxD6Joint.h; sourceTree = "<group>"; };
+		04E59C9C273903E3000BCA73 /* CPxD6Joint.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CPxD6Joint.mm; sourceTree = "<group>"; };
+		04E59C9E27390A59000BCA73 /* CJointBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJointBridge.h; sourceTree = "<group>"; };
 		04EA0D6926E0F9AD00CA7833 /* math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = math.swift; sourceTree = "<group>"; };
 		04EA0D6B26E1204200CA7833 /* bbox2f.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bbox2f.swift; sourceTree = "<group>"; };
 		04EA0D6D26E1204F00CA7833 /* bbox3f.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bbox3f.swift; sourceTree = "<group>"; };
@@ -1969,6 +1973,7 @@
 		04E59C762738BB73000BCA73 /* joint */ = {
 			isa = PBXGroup;
 			children = (
+				04E59C9E27390A59000BCA73 /* CJointBridge.h */,
 				04E59C772738BB87000BCA73 /* CPxJoint.h */,
 				04E59C7A2738BC6D000BCA73 /* CPxJoint+Internal.h */,
 				04E59C782738BB93000BCA73 /* CPxJoint.mm */,
@@ -1992,6 +1997,8 @@
 				04E59C922738FDB4000BCA73 /* CPxDistanceJoint.mm */,
 				04E59C942738FFA5000BCA73 /* CPxPrismaticJoint.h */,
 				04E59C952738FFAB000BCA73 /* CPxPrismaticJoint.mm */,
+				04E59C9B273903DB000BCA73 /* CPxD6Joint.h */,
+				04E59C9C273903E3000BCA73 /* CPxD6Joint.mm */,
 			);
 			path = joint;
 			sourceTree = "<group>";
@@ -2514,6 +2521,7 @@
 				041BAEE8272A9F81006268D5 /* CPxShape.mm in Sources */,
 				041BAEBE272A5166006268D5 /* LiteCollider.swift in Sources */,
 				041BAE67272A5111006268D5 /* DirectLight.swift in Sources */,
+				04E59C9D273903E3000BCA73 /* CPxD6Joint.mm in Sources */,
 				041BAE71272A5117006268D5 /* ShadowMapPass.swift in Sources */,
 				041BAE2B272A50D9006268D5 /* IRefObject.swift in Sources */,
 				041BAEFD272B7575006268D5 /* PhysXCollider.swift in Sources */,

@@ -13,11 +13,11 @@
 
 enum CPxRevoluteJointFlag {
     //!< enable the limit
-    eLIMIT_ENABLED = 1 << 0,
+    CPxRevoluteJointFlag_eLIMIT_ENABLED = 1 << 0,
     //!< enable the drive
-    eDRIVE_ENABLED = 1 << 1,
+    CPxRevoluteJointFlag_eDRIVE_ENABLED = 1 << 1,
     //!< if the existing velocity is beyond the drive velocity, do not add force
-    eDRIVE_FREESPIN = 1 << 2
+    CPxRevoluteJointFlag_eDRIVE_FREESPIN = 1 << 2
 };
 
 @interface CPxRevoluteJoint : CPxJoint
@@ -42,7 +42,7 @@ enum CPxRevoluteJointFlag {
 
 - (float)getDriveGearRatio;
 
-- (void)setRevoluteJointFlag:(CPxRevoluteJointFlag)flag :(bool)value;
+- (void)setRevoluteJointFlag:(enum CPxRevoluteJointFlag)flag :(bool)value;
 
 - (void)setProjectionLinearTolerance:(float)tolerance;
 

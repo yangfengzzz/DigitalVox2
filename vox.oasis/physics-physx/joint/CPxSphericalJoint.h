@@ -13,7 +13,7 @@
 
 enum CPxSphericalJointFlag {
     //!< the cone limit for the spherical joint is enabled
-    eLIMIT_ENABLED = 1 << 1
+    CPxSphericalJointFlag_eLIMIT_ENABLED = 1 << 1
 };
 
 @interface CPxSphericalJoint : CPxJoint
@@ -25,7 +25,7 @@ enum CPxSphericalJointFlag {
 
 - (float)getSwingZAngle;
 
-- (void)setSphericalJointFlag:(CPxSphericalJointFlag)flag :(bool)value;
+- (void)setSphericalJointFlag:(enum CPxSphericalJointFlag)flag :(bool)value;
 
 - (void)setProjectionLinearTolerance:(float)tolerance;
 

@@ -13,18 +13,18 @@
 #import "../CPxConstraint.h"
 
 enum CPxJointActorIndex {
-    eACTOR0,
-    eACTOR1,
-    COUNT
+    CPxJointActorIndex_eACTOR0,
+    CPxJointActorIndex_eACTOR1,
+    CPxJointActorIndex_COUNT
 };
 
 @interface CPxJoint : NSObject
 
 - (void)setActors:(CPxRigidActor *)actor0 :(CPxRigidActor *)actor1;
 
-- (void)setLocalPose:(CPxJointActorIndex)actor :(simd_float3)position rotation:(simd_quatf)rotation;
+- (void)setLocalPose:(enum CPxJointActorIndex)actor :(simd_float3)position rotation:(simd_quatf)rotation;
 
-- (void)getLocalPose:(CPxJointActorIndex)actor :(simd_float3 *)position rotation:(simd_quatf *)rotation;
+- (void)getLocalPose:(enum CPxJointActorIndex)actor :(simd_float3 *)position rotation:(simd_quatf *)rotation;
 
 - (void)getRelativeTransform:(simd_float3 *)position rotation:(simd_quatf *)rotation;
 
@@ -36,7 +36,7 @@ enum CPxJointActorIndex {
 
 - (void)getBreakForce:(float *)force :(float *)torque;
 
-- (void)setConstraintFlag:(CPxConstraintFlag)flags :(bool)value;
+- (void)setConstraintFlag:(enum CPxConstraintFlag)flags :(bool)value;
 
 - (void)setInvMassScale0:(float)invMassScale;
 

@@ -12,15 +12,15 @@
 #import "CPxSpring.h"
 
 struct CPxTolerancesScale {
-    float length = 1.0;
-    float speed = 10.0;
+    float length;
+    float speed;
 };
 
 @interface CPxJointLinearLimitPair : NSObject
 
-- (instancetype)initWithHardLimit:(CPxTolerancesScale)scale :(float)lowerLimit :(float)upperLimit :(float)contactDist;
+- (instancetype)initWithHardLimit:(struct CPxTolerancesScale)scale :(float)lowerLimit :(float)upperLimit :(float)contactDist;
 
-- (instancetype)initWithSoftLimit:(float)lowerLimit :(float)upperLimit :(struct CPxSpring)spring;
+- (instancetype)initWithSoftLimit:(float)lowerLimit :(float)upperLimit :(CPxSpring*)spring;
 
 @end
 
