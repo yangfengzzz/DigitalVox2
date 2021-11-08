@@ -11,14 +11,18 @@
 #import <Foundation/Foundation.h>
 #import <simd/simd.h>
 #import "../CPxMaterial.h"
+#import "../CPxShape.h"
+#import "../CPxRigidActor.h"
+#import "CPxObstacle.h"
 
-enum PxControllerNonWalkableMode
-{
+enum CPxControllerNonWalkableMode {
     //!< Stops character from climbing up non-walkable slopes, but doesn't move it otherwise
-        ePREVENT_CLIMBING,
+    ePREVENT_CLIMBING,
     //!< Stops character from climbing up non-walkable slopes, and forces it to slide down those slopes
-        ePREVENT_CLIMBING_AND_FORCE_SLIDING
+    ePREVENT_CLIMBING_AND_FORCE_SLIDING
 };
+
+@class CPxController;
 
 @interface CPxBoxControllerDesc : NSObject
 
@@ -38,11 +42,13 @@ enum PxControllerNonWalkableMode
 @property(nonatomic, assign) float density;
 @property(nonatomic, assign) float scaleCoeff;
 @property(nonatomic, assign) float volumeGrowth;
-@property(nonatomic, assign) PxControllerNonWalkableMode nonWalkableMode;
-@property(nonatomic, assign) CPxMaterial* material;
+@property(nonatomic, assign) enum CPxControllerNonWalkableMode nonWalkableMode;
+@property(nonatomic, assign) CPxMaterial *_Nullable material;
 @property(nonatomic, assign) bool registerDeletionListener;
 
-
+-(void)setControllerBehaviorCallback:(uint8_t (^ _Nullable)(CPxShape *_Nonnull shape, CPxRigidActor *_Nonnull actor))getShapeBehaviorFlags
+                                    :(uint8_t (^ _Nullable)(CPxController *_Nonnull controller))getControllerBehaviorFlags
+                                    :(uint8_t (^ _Nullable)(CPxObstacle *_Nonnull obstacle))getObstacleBehaviorFlags;
 
 @end
 

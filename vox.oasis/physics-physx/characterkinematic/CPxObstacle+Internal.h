@@ -17,11 +17,15 @@ using namespace physx;
 
 @property(nonatomic, assign) PxBoxObstacle c_obstacle;
 
+- (instancetype)initWithObstacle:(PxBoxObstacle)obstacle;
+
 @end
 
 @interface CPxCapsuleObstacle ()
 
 @property(nonatomic, assign) PxCapsuleObstacle c_obstacle;
+
+- (instancetype)initWithObstacle:(PxCapsuleObstacle)obstacle;
 
 @end
 

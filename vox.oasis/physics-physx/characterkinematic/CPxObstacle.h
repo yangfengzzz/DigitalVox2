@@ -25,7 +25,7 @@ enum CPxGeometryType {
 
 @interface CPxObstacle : NSObject
 
-- (CPxGeometryType)getType;
+- (enum CPxGeometryType)getType;
 
 @end
 

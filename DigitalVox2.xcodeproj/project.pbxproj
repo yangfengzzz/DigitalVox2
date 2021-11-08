@@ -906,6 +906,7 @@
 		04D396EC2739519800D78EBE /* CPxObstacle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPxObstacle.h; sourceTree = "<group>"; };
 		04D396ED273951A400D78EBE /* CPxObstacle.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CPxObstacle.mm; sourceTree = "<group>"; };
 		04D396EF273951B400D78EBE /* CPxObstacle+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CPxObstacle+Internal.h"; sourceTree = "<group>"; };
+		04D396F127396CE700D78EBE /* CPxController+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CPxController+Internal.h"; sourceTree = "<group>"; };
 		04DB2A4126DF1E0500C15850 /* IClone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IClone.swift; sourceTree = "<group>"; };
 		04DBA7D92700B32D00C3B97C /* EngineFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineFeature.swift; sourceTree = "<group>"; };
 		04DBA7DB2700B3C900C3B97C /* SceneFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneFeature.swift; sourceTree = "<group>"; };
@@ -1975,6 +1976,7 @@
 				04D396E12739467500D78EBE /* CPxControllerManager.h */,
 				04D396E22739467E00D78EBE /* CPxControllerManager.mm */,
 				04D396E42739477B00D78EBE /* CPxController.h */,
+				04D396F127396CE700D78EBE /* CPxController+Internal.h */,
 				04D396E52739478600D78EBE /* CPxController.mm */,
 				04D396E72739481C00D78EBE /* CPxBoxControllerDesc.h */,
 				04D396EA2739490300D78EBE /* CPxBoxControllerDesc+Internal.h */,

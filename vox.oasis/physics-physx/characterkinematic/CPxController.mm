@@ -6,6 +6,7 @@
 //
 
 #import "CPxController.h"
+#import "CPxController+Internal.h"
 
 @implementation CPxController
 
