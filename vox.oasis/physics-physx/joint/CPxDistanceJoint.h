@@ -9,7 +9,6 @@
 #define CPxDistanceJoint_h
 
 #import "CPxJoint.h"
-#import "CPxJointAngularLimitPair.h"
 
 enum CPxDistanceJointFlag {
     eMAX_DISTANCE_ENABLED = 1 << 1,

@@ -380,6 +380,8 @@
 		04E59C8B2738F95C000BCA73 /* CPxRevoluteJoint.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04E59C8A2738F95C000BCA73 /* CPxRevoluteJoint.mm */; };
 		04E59C8F2738FA19000BCA73 /* CPxJointAngularLimitPair.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04E59C8E2738FA19000BCA73 /* CPxJointAngularLimitPair.mm */; };
 		04E59C932738FDB4000BCA73 /* CPxDistanceJoint.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04E59C922738FDB4000BCA73 /* CPxDistanceJoint.mm */; };
+		04E59C962738FFAB000BCA73 /* CPxPrismaticJoint.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04E59C952738FFAB000BCA73 /* CPxPrismaticJoint.mm */; };
+		04E59C9927390022000BCA73 /* CPxJointLinearLimitPair.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04E59C9827390022000BCA73 /* CPxJointLinearLimitPair.mm */; };
 		04EA0D6A26E0F9AD00CA7833 /* math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6926E0F9AD00CA7833 /* math.swift */; };
 		04EA0D6C26E1204200CA7833 /* bbox2f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6B26E1204200CA7833 /* bbox2f.swift */; };
 		04EA0D6E26E1204F00CA7833 /* bbox3f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6D26E1204F00CA7833 /* bbox3f.swift */; };
@@ -912,6 +914,11 @@
 		04E59C902738FA2C000BCA73 /* CPxJointAngularLimitPair+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CPxJointAngularLimitPair+Internal.h"; sourceTree = "<group>"; };
 		04E59C912738FDAE000BCA73 /* CPxDistanceJoint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPxDistanceJoint.h; sourceTree = "<group>"; };
 		04E59C922738FDB4000BCA73 /* CPxDistanceJoint.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CPxDistanceJoint.mm; sourceTree = "<group>"; };
+		04E59C942738FFA5000BCA73 /* CPxPrismaticJoint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPxPrismaticJoint.h; sourceTree = "<group>"; };
+		04E59C952738FFAB000BCA73 /* CPxPrismaticJoint.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CPxPrismaticJoint.mm; sourceTree = "<group>"; };
+		04E59C972739001B000BCA73 /* CPxJointLinearLimitPair.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPxJointLinearLimitPair.h; sourceTree = "<group>"; };
+		04E59C9827390022000BCA73 /* CPxJointLinearLimitPair.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CPxJointLinearLimitPair.mm; sourceTree = "<group>"; };
+		04E59C9A2739002A000BCA73 /* CPxJointLinearLimitPair+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CPxJointLinearLimitPair+Internal.h"; sourceTree = "<group>"; };
 		04EA0D6926E0F9AD00CA7833 /* math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = math.swift; sourceTree = "<group>"; };
 		04EA0D6B26E1204200CA7833 /* bbox2f.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bbox2f.swift; sourceTree = "<group>"; };
 		04EA0D6D26E1204F00CA7833 /* bbox3f.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bbox3f.swift; sourceTree = "<group>"; };
@@ -1969,6 +1976,9 @@
 				04E59C872738EDAC000BCA73 /* CPxJointLimitCone.h */,
 				04E59C882738EDD1000BCA73 /* CPxJointLimitCone+Internal.h */,
 				04E59C852738EDA6000BCA73 /* CPxJointLimitCone.mm */,
+				04E59C972739001B000BCA73 /* CPxJointLinearLimitPair.h */,
+				04E59C9A2739002A000BCA73 /* CPxJointLinearLimitPair+Internal.h */,
+				04E59C9827390022000BCA73 /* CPxJointLinearLimitPair.mm */,
 				04E59C8D2738FA0E000BCA73 /* CPxJointAngularLimitPair.h */,
 				04E59C902738FA2C000BCA73 /* CPxJointAngularLimitPair+Internal.h */,
 				04E59C8E2738FA19000BCA73 /* CPxJointAngularLimitPair.mm */,
@@ -1980,6 +1990,8 @@
 				04E59C8A2738F95C000BCA73 /* CPxRevoluteJoint.mm */,
 				04E59C912738FDAE000BCA73 /* CPxDistanceJoint.h */,
 				04E59C922738FDB4000BCA73 /* CPxDistanceJoint.mm */,
+				04E59C942738FFA5000BCA73 /* CPxPrismaticJoint.h */,
+				04E59C952738FFAB000BCA73 /* CPxPrismaticJoint.mm */,
 			);
 			path = joint;
 			sourceTree = "<group>";
@@ -2426,6 +2438,7 @@
 				041BAEA5272A514D006268D5 /* IClone.swift in Sources */,
 				041BAE61272A510C006268D5 /* ShaderDataGroup.swift in Sources */,
 				041BAE46272A50F2006268D5 /* MeshBuffer.swift in Sources */,
+				04E59C9927390022000BCA73 /* CPxJointLinearLimitPair.mm in Sources */,
 				041BAE0E272A500F006268D5 /* Background.swift in Sources */,
 				041BAE07272A500F006268D5 /* Layer.swift in Sources */,
 				041BAE34272A50E6006268D5 /* Vector2.swift in Sources */,
@@ -2521,6 +2534,7 @@
 				04E59C842738C86C000BCA73 /* CPxSphericalJoint.mm in Sources */,
 				04CB88EC27326C9900B0E398 /* simd_math.mm in Sources */,
 				041BAE44272A50ED006268D5 /* ModelMesh.swift in Sources */,
+				04E59C962738FFAB000BCA73 /* CPxPrismaticJoint.mm in Sources */,
 				048692532736004C007B8DFE /* animation_utils.swift in Sources */,
 				0486927827374FF4007B8DFE /* platform.cc in Sources */,
 				041BAE99272A5141006268D5 /* StaticCollider.swift in Sources */,
