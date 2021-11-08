@@ -375,6 +375,7 @@
 		04D396E32739467E00D78EBE /* CPxControllerManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04D396E22739467E00D78EBE /* CPxControllerManager.mm */; };
 		04D396E62739478600D78EBE /* CPxController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04D396E52739478600D78EBE /* CPxController.mm */; };
 		04D396E92739482F00D78EBE /* CPxBoxControllerDesc.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04D396E82739482F00D78EBE /* CPxBoxControllerDesc.mm */; };
+		04D396EE273951A400D78EBE /* CPxObstacle.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04D396ED273951A400D78EBE /* CPxObstacle.mm */; };
 		04E59C792738BB93000BCA73 /* CPxJoint.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04E59C782738BB93000BCA73 /* CPxJoint.mm */; };
 		04E59C7D2738BEA9000BCA73 /* CPxConstraint.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04E59C7C2738BEA9000BCA73 /* CPxConstraint.mm */; };
 		04E59C812738C409000BCA73 /* CPxFixedJoint.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04E59C802738C409000BCA73 /* CPxFixedJoint.mm */; };
@@ -902,6 +903,9 @@
 		04D396E82739482F00D78EBE /* CPxBoxControllerDesc.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CPxBoxControllerDesc.mm; sourceTree = "<group>"; };
 		04D396EA2739490300D78EBE /* CPxBoxControllerDesc+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CPxBoxControllerDesc+Internal.h"; sourceTree = "<group>"; };
 		04D396EB273949D600D78EBE /* CCharacterBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCharacterBridge.h; sourceTree = "<group>"; };
+		04D396EC2739519800D78EBE /* CPxObstacle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPxObstacle.h; sourceTree = "<group>"; };
+		04D396ED273951A400D78EBE /* CPxObstacle.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CPxObstacle.mm; sourceTree = "<group>"; };
+		04D396EF273951B400D78EBE /* CPxObstacle+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CPxObstacle+Internal.h"; sourceTree = "<group>"; };
 		04DB2A4126DF1E0500C15850 /* IClone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IClone.swift; sourceTree = "<group>"; };
 		04DBA7D92700B32D00C3B97C /* EngineFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineFeature.swift; sourceTree = "<group>"; };
 		04DBA7DB2700B3C900C3B97C /* SceneFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneFeature.swift; sourceTree = "<group>"; };
@@ -1975,6 +1979,9 @@
 				04D396E72739481C00D78EBE /* CPxBoxControllerDesc.h */,
 				04D396EA2739490300D78EBE /* CPxBoxControllerDesc+Internal.h */,
 				04D396E82739482F00D78EBE /* CPxBoxControllerDesc.mm */,
+				04D396EC2739519800D78EBE /* CPxObstacle.h */,
+				04D396EF273951B400D78EBE /* CPxObstacle+Internal.h */,
+				04D396ED273951A400D78EBE /* CPxObstacle.mm */,
 			);
 			path = characterkinematic;
 			sourceTree = "<group>";
@@ -2654,6 +2661,7 @@
 				04D396E32739467E00D78EBE /* CPxControllerManager.mm in Sources */,
 				041BAE73272A5117006268D5 /* LightShadow.swift in Sources */,
 				041BAE15272A500F006268D5 /* UpdateFlagManager.swift in Sources */,
+				04D396EE273951A400D78EBE /* CPxObstacle.mm in Sources */,
 				041BAE9F272A5141006268D5 /* BoxColliderShape.swift in Sources */,
 				04CB88F82732B1E600B0E398 /* vec_transform.swift in Sources */,
 				041BAE4F272A50FB006268D5 /* Material.swift in Sources */,
