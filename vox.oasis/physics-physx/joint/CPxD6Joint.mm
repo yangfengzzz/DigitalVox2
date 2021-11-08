@@ -84,7 +84,7 @@
     return [[CPxD6JointDrive alloc] initWithD6:static_cast<PxD6Joint *>(super.c_joint)->getDrive(PxD6Drive::Enum(index))];
 }
 
-- (void)setDrivePosition:(simd_float3)position :rotation :(simd_quatf)rotation {
+- (void)setDrivePosition:(simd_float3)position rotation:(simd_quatf)rotation {
     static_cast<PxD6Joint *>(super.c_joint)->setDrivePosition(PxTransform(PxVec3(position.x, position.y, position.z),
             PxQuat(rotation.vector.x, rotation.vector.y,
                     rotation.vector.z, rotation.vector.w)));

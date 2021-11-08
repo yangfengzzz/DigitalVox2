@@ -17,8 +17,15 @@
 #import "CPxRigidDynamic.h"
 #import "CPxScene.h"
 
+#import "joint/CPxFixedJoint.h"
+#import "joint/CPxRevoluteJoint.h"
+#import "joint/CPxSphericalJoint.h"
+#import "joint/CPxDistanceJoint.h"
+#import "joint/CPxPrismaticJoint.h"
+#import "joint/CPxD6Joint.h"
+
 @interface CPxPhysics : NSObject
-- (bool) initExtensions;
+- (bool)initExtensions;
 
 - (CPxMaterial *_Nonnull)createMaterialWithStaticFriction:(float)staticFriction
                                           dynamicFriction:(float)dynamicFriction
@@ -39,6 +46,25 @@
                        onTriggerEnter:(void (^ _Nullable)(CPxShape *_Nonnull obj1, CPxShape *_Nonnull obj2))onTriggerEnter
                         onTriggerExit:(void (^ _Nullable)(CPxShape *_Nonnull obj1, CPxShape *_Nonnull obj2))onTriggerExit
                         onTriggerStay:(void (^ _Nullable)(CPxShape *_Nonnull obj1, CPxShape *_Nonnull obj2))onTriggerStay;
+
+//MARK: - Joint
+- (CPxFixedJoint *_Nonnull)createFixedJoint:(CPxRigidActor *_Nonnull)actor0 :(simd_float3)position0 :(simd_quatf)rotation0
+        :(CPxRigidActor *_Nonnull)actor1 :(simd_float3)position1 :(simd_quatf)rotation1;
+
+- (CPxRevoluteJoint *_Nonnull)createRevoluteJoint:(CPxRigidActor *_Nonnull)actor0 :(simd_float3)position0 :(simd_quatf)rotation0
+        :(CPxRigidActor *_Nonnull)actor1 :(simd_float3)position1 :(simd_quatf)rotation1;
+
+- (CPxSphericalJoint *_Nonnull)createSphericalJoint:(CPxRigidActor *_Nonnull)actor0 :(simd_float3)position0 :(simd_quatf)rotation0
+        :(CPxRigidActor *_Nonnull)actor1 :(simd_float3)position1 :(simd_quatf)rotation1;
+
+- (CPxDistanceJoint *_Nonnull)createDistanceJoint:(CPxRigidActor *_Nonnull)actor0 :(simd_float3)position0 :(simd_quatf)rotation0
+        :(CPxRigidActor *_Nonnull)actor1 :(simd_float3)position1 :(simd_quatf)rotation1;
+
+- (CPxPrismaticJoint *_Nonnull)createPrismaticJoint:(CPxRigidActor *_Nonnull)actor0 :(simd_float3)position0 :(simd_quatf)rotation0
+        :(CPxRigidActor *_Nonnull)actor1 :(simd_float3)position1 :(simd_quatf)rotation1;
+
+- (CPxD6Joint *_Nonnull)createD6Joint:(CPxRigidActor *_Nonnull)actor0 :(simd_float3)position0 :(simd_quatf)rotation0
+        :(CPxRigidActor *_Nonnull)actor1 :(simd_float3)position1 :(simd_quatf)rotation1;
 
 
 @end

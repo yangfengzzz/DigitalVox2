@@ -82,7 +82,7 @@ enum CPxD6JointDriveFlag {
 
 - (CPxD6JointDrive *)getDrive:(enum CPxD6Drive)index;
 
-- (void)setDrivePosition:(simd_float3)position :rotation :(simd_quatf)rotation;
+- (void)setDrivePosition:(simd_float3)position rotation:(simd_quatf)rotation;
 
 - (void)getDrivePosition:(simd_float3 *)position rotation:(simd_quatf *)rotation;
 
