@@ -9,13 +9,7 @@
 #define CPxJointLimitCone_h
 
 #import <Foundation/Foundation.h>
-
-struct CPxSpring {
-    //!< the spring strength of the drive: that is, the force proportional to the position error
-    float stiffness;
-    //!< the damping strength of the drive: that is, the force proportional to the velocity error
-    float damping;
-};
+#import "CPxSpring.h"
 
 @interface CPxJointLimitCone : NSObject
 
