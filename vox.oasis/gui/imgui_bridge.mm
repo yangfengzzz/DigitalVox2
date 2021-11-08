@@ -50,7 +50,7 @@
     ImGui_ImplOSX_Init();
 }
 
-- (void)drawInMTKView:(MTKView *)view :(id <MTLCommandBuffer>)commandBuffer :(id <MTLRenderCommandEncoder>)commandEncoder {
+- (void)prepareInMTKView:(MTKView *_Nonnull)view {
     ImGuiIO &io = ImGui::GetIO();
     io.DisplaySize.x = view.bounds.size.width;
     io.DisplaySize.y = view.bounds.size.height;
@@ -67,37 +67,11 @@
     ImGui_ImplOSX_NewFrame(view);
 
     ImGui::NewFrame();
-    static ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+}
 
-    {
-        static float f = 0.0f;
-        static int counter = 0;
-
-        ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
-
-        ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-
-        ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-        ImGui::ColorEdit3("clear color", (float *) &clear_color); // Edit 3 floats representing a color
-
-        if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
-            counter++;
-        ImGui::SameLine();
-        ImGui::Text("counter = %d", counter);
-
-        ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-        ImGui::End();
-    }
-
-    // Rendering
+- (void)drawInMTKView:(MTKView *)view :(id <MTLCommandBuffer>)commandBuffer :(id <MTLRenderCommandEncoder>)commandEncoder {
     ImGui::Render();
     ImDrawData *draw_data = ImGui::GetDrawData();
-
-    renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColorMake(
-            clear_color.x * clear_color.w,
-            clear_color.y * clear_color.w,
-            clear_color.z * clear_color.w,
-            clear_color.w);
 
     [commandEncoder pushDebugGroup:@"Dear ImGui rendering"];
     ImGui_ImplMetal_RenderDrawData(draw_data, commandBuffer, commandEncoder);
@@ -108,5 +82,22 @@
     return ImGui_ImplOSX_HandleEvent(event, view);
 }
 
+//MARK: - Widgets
+- (void)Begin:(NSString *_Nonnull)fmt {
+    ImGui::Begin([fmt cStringUsingEncoding:NSUTF8StringEncoding]);
+}
+
+- (void)End {
+    ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+    ImGui::End();
+}
+
+- (void)Text:(NSString *_Nonnull)fmt {
+    ImGui::Text("%s", [fmt cStringUsingEncoding:NSUTF8StringEncoding]);
+}
+
+- (void)SliderFloat:(NSString *_Nonnull)fmt :(float *)value :(float)min :(float)max {
+    ImGui::SliderFloat([fmt cStringUsingEncoding:NSUTF8StringEncoding], value, min, max);
+}
 
 @end

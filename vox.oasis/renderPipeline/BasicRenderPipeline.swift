@@ -97,7 +97,12 @@ extension BasicRenderPipeline {
                 }
                 _transparentQueue.render(camera, pass.replaceMaterial, pass.mask)
             }
-            engine.canvas.gui.draw(in: engine.canvas, rhi.commandBuffer, rhi.renderEncoder)
+            let canvas = engine.canvas
+            canvas.gui.prepare(in: canvas)
+            canvas.guiEvents.forEach { handler in
+                handler()
+            }
+            canvas.gui.draw(in: canvas, rhi.commandBuffer, rhi.renderEncoder)
 
             rhi.endRenderPass()
         }

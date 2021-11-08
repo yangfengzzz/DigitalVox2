@@ -551,6 +551,15 @@ struct SkeletonView: View {
 
         let script: AnimationScript = rootEntity.addComponent()
         script.load(s, a, cameraEntity)
+
+        //GUI
+        var aa: Float = 0
+        canvas.registerGUI { [self]() in
+            canvas.gui.begin("control panel")
+            canvas.gui.text("hello world")
+            canvas.gui.sliderFloat("info", &aa, 0, 10)
+            canvas.gui.end()
+        }
     }
 
     var body: some View {

@@ -19,6 +19,7 @@ class Canvas: MTKView {
     var rightMouseUpEvents: [EventHandler] = []
 
     var gui = IMGUI()
+    var guiEvents: [() -> Void] = []
 
     init() {
         super.init(frame: .zero, device: nil)
@@ -72,6 +73,10 @@ extension Canvas {
 
     func registerMouseDown(_ handler: @escaping EventHandler) {
         mouseDownEvents.append(handler)
+    }
+
+    func registerGUI(_ handler: @escaping () -> Void) {
+        guiEvents.append(handler)
     }
 
     override func mouseDown(with event: NSEvent) {
