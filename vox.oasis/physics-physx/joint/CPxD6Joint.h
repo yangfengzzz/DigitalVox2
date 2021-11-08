@@ -48,7 +48,7 @@ enum CPxD6JointDriveFlag {
 
 @interface CPxD6Joint : CPxJoint
 
-- (void)etMotion:(enum CPxD6Axis)axis :(enum CPxD6Motion)type;
+- (void)setMotion:(enum CPxD6Axis)axis :(enum CPxD6Motion)type;
 
 - (enum CPxD6Motion)getMotion:(enum CPxD6Axis)axis;
 
@@ -59,6 +59,44 @@ enum CPxD6JointDriveFlag {
 - (float)getSwingZAngle;
 
 - (void)setDistanceLimit:(CPxJointLinearLimit *)limit;
+
+- (CPxJointLinearLimit *)getDistanceLimit;
+
+- (void)setLinearLimit:(enum CPxD6Axis)axis :(CPxJointLinearLimitPair *)limit;
+
+- (CPxJointLinearLimitPair *)getLinearLimit:(enum CPxD6Axis)axis;
+
+- (void)setTwistLimit:(CPxJointAngularLimitPair *)limit;
+
+- (CPxJointAngularLimitPair *)getTwistLimit;
+
+- (void)setSwingLimit:(CPxJointLimitCone *)limit;
+
+- (CPxJointLimitCone *)getSwingLimit;
+
+- (void)setPyramidSwingLimit:(CPxJointLimitPyramid *)limit;
+
+- (CPxJointLimitPyramid *)getPyramidSwingLimit;
+
+- (void)setDrive:(enum CPxD6Drive)index :(CPxD6JointDrive *)drive;
+
+- (CPxD6JointDrive *)getDrive:(enum CPxD6Drive)index;
+
+- (void)setDrivePosition:(simd_float3)position :rotation :(simd_quatf)rotation;
+
+- (void)getDrivePosition:(simd_float3 *)position rotation:(simd_quatf *)rotation;
+
+- (void)setDriveVelocity:(simd_float3)linear :(simd_float3)angular;
+
+- (void)getDriveVelocity:(simd_float3 *)linear :(simd_float3 *)angular;
+
+- (void)setProjectionLinearTolerance:(float)tolerance;
+
+- (float)getProjectionLinearTolerance;
+
+- (void)setProjectionAngularTolerance:(float)tolerance;
+
+- (float)getProjectionAngularTolerance;
 
 @end
 
