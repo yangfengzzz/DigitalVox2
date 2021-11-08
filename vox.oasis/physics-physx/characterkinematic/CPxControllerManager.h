@@ -13,7 +13,6 @@
 @interface CPxControllerManager : NSObject
 
 
-
 @end
 
 #endif /* CPxControllerManager_h */

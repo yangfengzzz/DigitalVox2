@@ -18,6 +18,14 @@
 
 @implementation CPxBoxObstacle
 
+- (instancetype)initWithObstacle:(PxBoxObstacle)obstacle {
+    self = [super init];
+    if (self) {
+        _c_obstacle = obstacle;
+    }
+    return self;
+}
+
 - (CPxGeometryType)getType {
     return CPxGeometryType::eBOX;
 }
@@ -49,6 +57,14 @@
 @end
 
 @implementation CPxCapsuleObstacle
+
+- (instancetype)initWithObstacle:(PxCapsuleObstacle)obstacle {
+    self = [super init];
+    if (self) {
+        _c_obstacle = obstacle;
+    }
+    return self;
+}
 
 - (CPxGeometryType)getType {
     return CPxGeometryType::eCAPSULE;
@@ -100,9 +116,9 @@
 
 - (uint32_t)addObstacle:(CPxObstacle *)obstacle {
     if ([obstacle getType] == CPxGeometryType::eBOX) {
-        return _c_context->addObstacle(static_cast<CPxBoxObstacle*>(obstacle).c_obstacle);
+        return _c_context->addObstacle(static_cast<CPxBoxObstacle *>(obstacle).c_obstacle);
     } else if ([obstacle getType] == CPxGeometryType::eCAPSULE) {
-        return _c_context->addObstacle(static_cast<CPxCapsuleObstacle*>(obstacle).c_obstacle);
+        return _c_context->addObstacle(static_cast<CPxCapsuleObstacle *>(obstacle).c_obstacle);
     } else {
         assert(false);
     }
@@ -114,9 +130,9 @@
 
 - (bool)updateObstacle:(uint32_t)handle :(CPxObstacle *)obstacle {
     if ([obstacle getType] == CPxGeometryType::eBOX) {
-        return _c_context->updateObstacle(handle, static_cast<CPxBoxObstacle*>(obstacle).c_obstacle);
+        return _c_context->updateObstacle(handle, static_cast<CPxBoxObstacle *>(obstacle).c_obstacle);
     } else if ([obstacle getType] == CPxGeometryType::eCAPSULE) {
-        return _c_context->updateObstacle(handle, static_cast<CPxCapsuleObstacle*>(obstacle).c_obstacle);
+        return _c_context->updateObstacle(handle, static_cast<CPxCapsuleObstacle *>(obstacle).c_obstacle);
     } else {
         assert(false);
     }
@@ -127,14 +143,14 @@
 }
 
 - (CPxObstacle *)getObstacle:(uint32_t)i {
-    const PxObstacle* obstacle = _c_context->getObstacle(i);
+    const PxObstacle *obstacle = _c_context->getObstacle(i);
     if (obstacle->getType() == PxGeometryType::Enum(CPxGeometryType::eBOX)) {
-        CPxBoxObstacle * result = [[CPxBoxObstacle alloc]init];
-        result.c_obstacle =  *static_cast<const PxBoxObstacle *>(obstacle);
+        CPxBoxObstacle *result = [[CPxBoxObstacle alloc] init];
+        result.c_obstacle = *static_cast<const PxBoxObstacle *>(obstacle);
         return result;
     } else if (obstacle->getType() == PxGeometryType::Enum(CPxGeometryType::eCAPSULE)) {
-        CPxCapsuleObstacle * result = [[CPxCapsuleObstacle alloc]init];
-        result.c_obstacle =  *static_cast<const PxCapsuleObstacle *>(obstacle);
+        CPxCapsuleObstacle *result = [[CPxCapsuleObstacle alloc] init];
+        result.c_obstacle = *static_cast<const PxCapsuleObstacle *>(obstacle);
         return result;
     } else {
         assert(false);
@@ -142,14 +158,14 @@
 }
 
 - (CPxObstacle *)getObstacleByHandle:(uint32_t)handle {
-    const PxObstacle* obstacle = _c_context->getObstacleByHandle(handle);
+    const PxObstacle *obstacle = _c_context->getObstacleByHandle(handle);
     if (obstacle->getType() == PxGeometryType::Enum(CPxGeometryType::eBOX)) {
-        CPxBoxObstacle * result = [[CPxBoxObstacle alloc]init];
-        result.c_obstacle =  *static_cast<const PxBoxObstacle *>(obstacle);
+        CPxBoxObstacle *result = [[CPxBoxObstacle alloc] init];
+        result.c_obstacle = *static_cast<const PxBoxObstacle *>(obstacle);
         return result;
     } else if (obstacle->getType() == PxGeometryType::Enum(CPxGeometryType::eCAPSULE)) {
-        CPxCapsuleObstacle * result = [[CPxCapsuleObstacle alloc]init];
-        result.c_obstacle =  *static_cast<const PxCapsuleObstacle *>(obstacle);
+        CPxCapsuleObstacle *result = [[CPxCapsuleObstacle alloc] init];
+        result.c_obstacle = *static_cast<const PxCapsuleObstacle *>(obstacle);
         return result;
     } else {
         assert(false);

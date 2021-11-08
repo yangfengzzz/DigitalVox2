@@ -31,7 +31,7 @@ using namespace physx;
 
 @interface CPxObstacleContext ()
 
-@property(nonatomic, readonly) PxObstacleContext* c_context;
+@property(nonatomic, readonly) PxObstacleContext *c_context;
 
 - (instancetype)initWithContext:(PxObstacleContext *)context;
 

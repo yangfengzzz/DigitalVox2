@@ -1,12 +1,12 @@
 //
-//  CPxControllerDesc.m
+//  CPxCapsuleControllerDesc.m
 //  vox.oasis
 //
 //  Created by 杨丰 on 2021/11/8.
 //
 
-#import "CPxBoxControllerDesc.h"
-#import "CPxBoxControllerDesc+Internal.h"
+#import "CPxCapsuleControllerDesc.h"
+#import "CPxCapsuleControllerDesc+Internal.h"
 #import "CPxController.h"
 #import "CPxController+Internal.h"
 #import "CPxObstacle+Internal.h"
@@ -14,7 +14,7 @@
 #import "../CPxRigidActor+Internal.h"
 #include <functional>
 
-@implementation CPxBoxControllerDesc
+@implementation CPxCapsuleControllerDesc
 
 - (void)setToDefault {
     _c_desc.setToDefault();
@@ -30,8 +30,7 @@
         std::function<uint8_t(CPxController *controller)> getControllerBehaviorFlags;
         std::function<uint8_t(CPxObstacle *obstacle)> getObstacleBehaviorFlags;
 
-        PxControllerBehaviorCallbackWrapper(
-                std::function<uint8_t(CPxShape *shape, CPxRigidActor *actor)> getShapeBehaviorFlags,
+        PxControllerBehaviorCallbackWrapper(std::function<uint8_t(CPxShape *shape, CPxRigidActor *actor)> getShapeBehaviorFlags,
                 std::function<uint8_t(CPxController *controller)> getControllerBehaviorFlags,
                 std::function<uint8_t(CPxObstacle *obstacle)> getObstacleBehaviorFlags) :
                 getShapeBehaviorFlags(getShapeBehaviorFlags),

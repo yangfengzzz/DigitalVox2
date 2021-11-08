@@ -11,6 +11,7 @@
 #include "CPxControllerManager.h"
 #include "CPxController.h"
 #include "CPxBoxControllerDesc.h"
-
+#include "CPxCapsuleControllerDesc.h"
+#include "CPxObstacle.h"
 
 #endif /* CCharacterBridge_h */
