@@ -553,11 +553,13 @@ struct SkeletonView: View {
         script.load(s, a, cameraEntity)
 
         //GUI
+        let gui = canvas.gui
         var aa: Float = 0
         canvas.registerGUI { [self]() in
-            canvas.gui.begin("control panel")
-            canvas.gui.text("hello world")
-            canvas.gui.sliderFloat("info", &aa, 0, 10)
+            gui.begin("control panel")
+            gui.text("hello world")
+            gui.sliderFloat("info", &aa, 0, 10)
+            gui.showFrameRate()
             canvas.gui.end()
         }
     }

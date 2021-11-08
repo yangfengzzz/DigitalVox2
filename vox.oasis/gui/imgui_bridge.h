@@ -31,6 +31,8 @@
 
 - (void)Text:(NSString *_Nonnull)fmt;
 
+- (void)ShowFrameRate;
+
 - (void)SliderFloat:(NSString *_Nonnull)fmt :(float *_Nonnull)value :(float)min :(float)max;
 
 
