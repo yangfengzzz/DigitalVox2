@@ -379,6 +379,7 @@
 		04E59C862738EDA6000BCA73 /* CPxJointLimitCone.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04E59C852738EDA6000BCA73 /* CPxJointLimitCone.mm */; };
 		04E59C8B2738F95C000BCA73 /* CPxRevoluteJoint.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04E59C8A2738F95C000BCA73 /* CPxRevoluteJoint.mm */; };
 		04E59C8F2738FA19000BCA73 /* CPxJointAngularLimitPair.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04E59C8E2738FA19000BCA73 /* CPxJointAngularLimitPair.mm */; };
+		04E59C932738FDB4000BCA73 /* CPxDistanceJoint.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04E59C922738FDB4000BCA73 /* CPxDistanceJoint.mm */; };
 		04EA0D6A26E0F9AD00CA7833 /* math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6926E0F9AD00CA7833 /* math.swift */; };
 		04EA0D6C26E1204200CA7833 /* bbox2f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6B26E1204200CA7833 /* bbox2f.swift */; };
 		04EA0D6E26E1204F00CA7833 /* bbox3f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0D6D26E1204F00CA7833 /* bbox3f.swift */; };
@@ -909,6 +910,8 @@
 		04E59C8D2738FA0E000BCA73 /* CPxJointAngularLimitPair.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPxJointAngularLimitPair.h; sourceTree = "<group>"; };
 		04E59C8E2738FA19000BCA73 /* CPxJointAngularLimitPair.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CPxJointAngularLimitPair.mm; sourceTree = "<group>"; };
 		04E59C902738FA2C000BCA73 /* CPxJointAngularLimitPair+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CPxJointAngularLimitPair+Internal.h"; sourceTree = "<group>"; };
+		04E59C912738FDAE000BCA73 /* CPxDistanceJoint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPxDistanceJoint.h; sourceTree = "<group>"; };
+		04E59C922738FDB4000BCA73 /* CPxDistanceJoint.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CPxDistanceJoint.mm; sourceTree = "<group>"; };
 		04EA0D6926E0F9AD00CA7833 /* math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = math.swift; sourceTree = "<group>"; };
 		04EA0D6B26E1204200CA7833 /* bbox2f.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bbox2f.swift; sourceTree = "<group>"; };
 		04EA0D6D26E1204F00CA7833 /* bbox3f.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bbox3f.swift; sourceTree = "<group>"; };
@@ -1975,6 +1978,8 @@
 				04E59C832738C86C000BCA73 /* CPxSphericalJoint.mm */,
 				04E59C892738F950000BCA73 /* CPxRevoluteJoint.h */,
 				04E59C8A2738F95C000BCA73 /* CPxRevoluteJoint.mm */,
+				04E59C912738FDAE000BCA73 /* CPxDistanceJoint.h */,
+				04E59C922738FDB4000BCA73 /* CPxDistanceJoint.mm */,
 			);
 			path = joint;
 			sourceTree = "<group>";
@@ -2365,6 +2370,7 @@
 				04CB88F62732AF5A00B0E398 /* vec_float.swift in Sources */,
 				041BAE13272A500F006268D5 /* UpdateFlag.swift in Sources */,
 				041BAE1B272A5046006268D5 /* particle.metal in Sources */,
+				04E59C932738FDB4000BCA73 /* CPxDistanceJoint.mm in Sources */,
 				04CB88FB2732B41E00B0E398 /* decimate.swift in Sources */,
 				041BAF0C272B823A006268D5 /* PhysXStaticCollider.swift in Sources */,
 				041BAEC2272A516E006268D5 /* CPxPhysics.mm in Sources */,
