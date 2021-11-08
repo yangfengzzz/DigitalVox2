@@ -92,6 +92,10 @@ extension Canvas {
         inputManager?.processEvent(state: .moved, event: event)
     }
 
+    override func mouseMoved(with event: NSEvent) {
+        gui.handle(event, self)
+    }
+
     override func rightMouseDown(with event: NSEvent) {
         gui.handle(event, self)
         inputManager?.processEvent(state: .began, event: event)
@@ -105,6 +109,18 @@ extension Canvas {
     override func rightMouseDragged(with event: NSEvent) {
         gui.handle(event, self)
         inputManager?.processEvent(state: .moved, event: event)
+    }
+
+    override func otherMouseDown(with event: NSEvent) {
+        gui.handle(event, self)
+    }
+
+    override func otherMouseUp(with event: NSEvent) {
+        gui.handle(event, self)
+    }
+
+    override func otherMouseDragged(with event: NSEvent) {
+        gui.handle(event, self)
     }
 
     override func scrollWheel(with event: NSEvent) {
