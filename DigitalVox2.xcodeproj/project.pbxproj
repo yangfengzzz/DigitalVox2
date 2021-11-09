@@ -2961,6 +2961,7 @@
 					"-lPhysXFoundation_static_64",
 					"-lPhysXPvdSDK_static_64",
 					"-lPhysXExtensions_static_64",
+					"-lPhysXCharacterKinematic_static_64",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "DigitalVox2.vox-oasis";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3032,6 +3033,7 @@
 					"-lPhysXFoundation_static_64",
 					"-lPhysXPvdSDK_static_64",
 					"-lPhysXExtensions_static_64",
+					"-lPhysXCharacterKinematic_static_64",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "DigitalVox2.vox-oasis";
 				PRODUCT_NAME = "$(TARGET_NAME)";

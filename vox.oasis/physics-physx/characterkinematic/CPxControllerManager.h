@@ -12,7 +12,6 @@
 #import "CPxController.h"
 #import "CPxControllerDesc.h"
 #import "CPxObstacle.h"
-#import "../CPxScene.h"
 
 @interface CPxControllerManager : NSObject
 

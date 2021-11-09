@@ -11,6 +11,7 @@
 #import <Foundation/Foundation.h>
 #import <simd/simd.h>
 #import "CPxRigidActor.h"
+#import "characterkinematic/CPxControllerManager.h"
 
 @interface CPxScene : NSObject
 
@@ -31,6 +32,8 @@
                 outNormal:(simd_float3 *)outNormal
               outDistance:(float *)outDistance
                  outIndex:(int *)outIndex;
+
+- (CPxControllerManager *)createControllerManager;
 
 @end
 

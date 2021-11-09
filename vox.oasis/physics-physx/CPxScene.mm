@@ -8,6 +8,7 @@
 #import "CPxScene.h"
 #import "CPxScene+Internal.h"
 #import "CPxRigidActor+Internal.h"
+#import "characterkinematic/CPxControllerManager+Internal.h"
 
 using namespace physx;
 
@@ -70,5 +71,8 @@ using namespace physx;
     return result;
 }
 
+- (CPxControllerManager *)createControllerManager {
+    return [[CPxControllerManager alloc] initWithManager:PxCreateControllerManager(*_scene)];
+}
 
 @end
