@@ -390,6 +390,9 @@
 		04AFAC47273AAE67003E5928 /* PhysXCharacterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC46273AAE67003E5928 /* PhysXCharacterController.swift */; };
 		04AFAC49273AAEB6003E5928 /* PhysXBoxCharacterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC48273AAEB6003E5928 /* PhysXBoxCharacterController.swift */; };
 		04AFAC4B273AAEC3003E5928 /* PhysXCapsuleCharacterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC4A273AAEC3003E5928 /* PhysXCapsuleCharacterController.swift */; };
+		04AFAC4D273ABA79003E5928 /* PhysXBoxCharacterControllerDesc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC4C273ABA79003E5928 /* PhysXBoxCharacterControllerDesc.swift */; };
+		04AFAC4F273ABBE8003E5928 /* PhysXCapsuleCharacterControllerDesc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC4E273ABBE8003E5928 /* PhysXCapsuleCharacterControllerDesc.swift */; };
+		04AFAC51273ABCD2003E5928 /* PhysXObstacle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC50273ABCD2003E5928 /* PhysXObstacle.swift */; };
 		04AFFD4A272FAA5D005C2835 /* PhysXRaycastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFFD49272FAA5D005C2835 /* PhysXRaycastView.swift */; };
 		04CB88C427320E6700B0E398 /* Skeleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88C327320E6700B0E398 /* Skeleton.swift */; };
 		04CB88C7273211DE00B0E398 /* skeleton.usda in Resources */ = {isa = PBXBuildFile; fileRef = 04CB88C5273211DE00B0E398 /* skeleton.usda */; };
@@ -953,6 +956,9 @@
 		04AFAC46273AAE67003E5928 /* PhysXCharacterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXCharacterController.swift; sourceTree = "<group>"; };
 		04AFAC48273AAEB6003E5928 /* PhysXBoxCharacterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXBoxCharacterController.swift; sourceTree = "<group>"; };
 		04AFAC4A273AAEC3003E5928 /* PhysXCapsuleCharacterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXCapsuleCharacterController.swift; sourceTree = "<group>"; };
+		04AFAC4C273ABA79003E5928 /* PhysXBoxCharacterControllerDesc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXBoxCharacterControllerDesc.swift; sourceTree = "<group>"; };
+		04AFAC4E273ABBE8003E5928 /* PhysXCapsuleCharacterControllerDesc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXCapsuleCharacterControllerDesc.swift; sourceTree = "<group>"; };
+		04AFAC50273ABCD2003E5928 /* PhysXObstacle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXObstacle.swift; sourceTree = "<group>"; };
 		04AFFD49272FAA5D005C2835 /* PhysXRaycastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXRaycastView.swift; sourceTree = "<group>"; };
 		04CB88C327320E6700B0E398 /* Skeleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Skeleton.swift; sourceTree = "<group>"; };
 		04CB88C5273211DE00B0E398 /* skeleton.usda */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = skeleton.usda; sourceTree = "<group>"; };
@@ -2129,12 +2135,15 @@
 				04D396E72739481C00D78EBE /* CPxBoxControllerDesc.h */,
 				04D396EA2739490300D78EBE /* CPxBoxControllerDesc+Internal.h */,
 				04D396E82739482F00D78EBE /* CPxBoxControllerDesc.mm */,
+				04AFAC4C273ABA79003E5928 /* PhysXBoxCharacterControllerDesc.swift */,
 				04D396F227396FF800D78EBE /* CPxCapsuleControllerDesc.h */,
 				04D396F52739700E00D78EBE /* CPxCapsuleControllerDesc+Internal.h */,
 				04D396F32739700200D78EBE /* CPxCapsuleControllerDesc.mm */,
+				04AFAC4E273ABBE8003E5928 /* PhysXCapsuleCharacterControllerDesc.swift */,
 				04D396EC2739519800D78EBE /* CPxObstacle.h */,
 				04D396EF273951B400D78EBE /* CPxObstacle+Internal.h */,
 				04D396ED273951A400D78EBE /* CPxObstacle.mm */,
+				04AFAC50273ABCD2003E5928 /* PhysXObstacle.swift */,
 			);
 			path = characterkinematic;
 			sourceTree = "<group>";
@@ -2605,6 +2614,7 @@
 				041BAEAB272A514D006268D5 /* IColliderShape.swift in Sources */,
 				041BAE2F272A50E6006268D5 /* ContainmentType.swift in Sources */,
 				041BAEF0272B6F74006268D5 /* CPxPlaneGeometry.mm in Sources */,
+				04AFAC4D273ABA79003E5928 /* PhysXBoxCharacterControllerDesc.swift in Sources */,
 				042F0DBE2734BF0F00FF4A26 /* local_to_model_job.swift in Sources */,
 				041BAF01272B76F7006268D5 /* CPxRigidActor.mm in Sources */,
 				04CB88F62732AF5A00B0E398 /* vec_float.swift in Sources */,
@@ -2728,6 +2738,7 @@
 				041BAE0F272A500F006268D5 /* Script.swift in Sources */,
 				041BAE32272A50E6006268D5 /* Quaternion.swift in Sources */,
 				04E59C792738BB93000BCA73 /* CPxJoint.mm in Sources */,
+				04AFAC51273ABCD2003E5928 /* PhysXObstacle.swift in Sources */,
 				041BAE3F272A50ED006268D5 /* BufferMesh.swift in Sources */,
 				041BAE3A272A50E6006268D5 /* CollisionUtil.swift in Sources */,
 				041BAEA0272A514D006268D5 /* IDynamicCollider.swift in Sources */,
@@ -2813,6 +2824,7 @@
 				041BAE05272A500F006268D5 /* SceneFeatureManager.swift in Sources */,
 				041BAEBC272A5166006268D5 /* LiteTransform.swift in Sources */,
 				041BAE5F272A510C006268D5 /* ShaderProperty.swift in Sources */,
+				04AFAC4F273ABBE8003E5928 /* PhysXCapsuleCharacterControllerDesc.swift in Sources */,
 				04CB88F22732924A00B0E398 /* soa_quaternion.swift in Sources */,
 				0486929B2738155C007B8DFE /* imgui_bridge.mm in Sources */,
 				041BAE6A272A5111006268D5 /* SpotLight.swift in Sources */,

@@ -26,7 +26,7 @@ protocol IBoxCharacterControllerDesc: ICharacterControllerDesc {
     func setNonWalkableMode(_ nonWalkableMode: Int)
     func setMaterial(_ material: IPhysicsMaterial)
     func setRegisterDeletionListener(_ registerDeletionListener: Bool)
-    func setControllerBehaviorCallback(getShapeBehaviorFlags: (IColliderShape, ICollider) -> UInt8,
-                                       getControllerBehaviorFlags: (ICharacterController) -> UInt8,
-                                       getObstacleBehaviorFlags: (IPhysicsObstacle) -> UInt8)
+    func setControllerBehaviorCallback(getShapeBehaviorFlags: @escaping (IColliderShape, ICollider) -> UInt8,
+                                       getControllerBehaviorFlags: @escaping (ICharacterController) -> UInt8,
+                                       getObstacleBehaviorFlags: @escaping (IPhysicsObstacle) -> UInt8)
 }
