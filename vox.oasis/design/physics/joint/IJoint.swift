@@ -8,7 +8,7 @@
 import Foundation
 
 protocol IJoint {
-    func setActors(_ actor0: ICollider, _ actor1: ICollider)
+    func setActors(_ actor0: ICollider?, _ actor1: ICollider?)
 
     func setLocalPose(_ actor: Int, _ position: Vector3, _ rotation: Quaternion)
 

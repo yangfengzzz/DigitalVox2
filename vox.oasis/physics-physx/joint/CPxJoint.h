@@ -20,13 +20,13 @@ enum CPxJointActorIndex {
 
 @interface CPxJoint : NSObject
 
-- (void)setActors:(CPxRigidActor *)actor0 :(CPxRigidActor *)actor1;
+- (void)setActors:(CPxRigidActor *_Nullable)actor0 :(CPxRigidActor *_Nullable)actor1;
 
 - (void)setLocalPose:(enum CPxJointActorIndex)actor :(simd_float3)position rotation:(simd_quatf)rotation;
 
-- (void)getLocalPose:(enum CPxJointActorIndex)actor :(simd_float3 *)position rotation:(simd_quatf *)rotation;
+- (void)getLocalPose:(enum CPxJointActorIndex)actor :(simd_float3 *_Nonnull)position rotation:(simd_quatf *_Nonnull)rotation;
 
-- (void)getRelativeTransform:(simd_float3 *)position rotation:(simd_quatf *)rotation;
+- (void)getRelativeTransform:(simd_float3 *_Nonnull)position rotation:(simd_quatf *_Nonnull)rotation;
 
 - (simd_float3)getRelativeLinearVelocity;
 
@@ -34,7 +34,7 @@ enum CPxJointActorIndex {
 
 - (void)setBreakForce:(float)force :(float)torque;
 
-- (void)getBreakForce:(float *)force :(float *)torque;
+- (void)getBreakForce:(float *_Nonnull)force :(float *_Nonnull)torque;
 
 - (void)setConstraintFlag:(enum CPxConstraintFlag)flags :(bool)value;
 
@@ -54,7 +54,7 @@ enum CPxJointActorIndex {
 
 - (float)getInvInertiaScale1;
 
-- (CPxConstraint *)getConstraint;
+- (CPxConstraint *_Nonnull)getConstraint;
 
 
 @end

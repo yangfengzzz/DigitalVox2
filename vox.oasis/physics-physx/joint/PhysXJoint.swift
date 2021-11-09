@@ -10,8 +10,8 @@ import Foundation
 class PhysXJoint: IJoint {
     internal var _pxJoint: CPxJoint!
 
-    func setActors(_ actor0: ICollider, _ actor1: ICollider) {
-        _pxJoint.setActors((actor0 as! PhysXCollider)._pxActor, (actor1 as! PhysXCollider)._pxActor)
+    func setActors(_ actor0: ICollider?, _ actor1: ICollider?) {
+        _pxJoint.setActors((actor0 as? PhysXCollider)?._pxActor, (actor1 as? PhysXCollider)?._pxActor)
     }
 
     func setLocalPose(_ actor: Int, _ position: Vector3, _ rotation: Quaternion) {

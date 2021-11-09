@@ -20,8 +20,8 @@
     return self;
 }
 
-- (void)setActors:(CPxRigidActor *)actor0 :(CPxRigidActor *)actor1 {
-    _c_joint->setActors(actor0.c_actor, actor1.c_actor);
+- (void)setActors:(CPxRigidActor *_Nullable)actor0 :(CPxRigidActor *_Nullable)actor1 {
+    _c_joint->setActors(actor0 != nullptr? actor0.c_actor : nullptr, actor1 != nullptr? actor1.c_actor : nullptr);
 }
 
 - (void)setLocalPose:(CPxJointActorIndex)actor :(simd_float3)position rotation:(simd_quatf)rotation {
