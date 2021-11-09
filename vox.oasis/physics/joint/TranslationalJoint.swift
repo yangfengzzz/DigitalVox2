@@ -8,6 +8,10 @@
 import Foundation
 
 class TranslationalJoint: Joint {
+    private var _enableLimit: Bool = false
+    private var _projectionLinearTolerance: Float = 0
+    private var _projectionAngularTolerance: Float = 0
+
     required init(_ entity: Entity) {
         super.init(entity)
         _nativeJoint = PhysicsManager._nativePhysics.createTranslationalJoint(nil, Vector3(), Quaternion(), nil, Vector3(), Quaternion())
@@ -21,15 +25,33 @@ class TranslationalJoint: Joint {
         (_nativeJoint as! ITranslationalJoint).setSoftLimit(lowerLimit, upperLimit, stiffness, damping)
     }
 
-    func setPrismaticJointFlag(_ flag: Int, _ value: Bool) {
-        (_nativeJoint as! ITranslationalJoint).setPrismaticJointFlag(flag, value)
+    var enableLimit: Bool {
+        get {
+            _enableLimit
+        }
+        set {
+            _enableLimit = newValue
+            (_nativeJoint as! ITranslationalJoint).setPrismaticJointFlag(1 << 1, newValue)
+        }
     }
 
-    func setProjectionLinearTolerance(_ tolerance: Float) {
-        (_nativeJoint as! ITranslationalJoint).setProjectionLinearTolerance(tolerance)
+    var projectionLinearTolerance: Float {
+        get {
+            _projectionLinearTolerance
+        }
+        set {
+            _projectionLinearTolerance = newValue
+            (_nativeJoint as! ITranslationalJoint).setProjectionLinearTolerance(newValue)
+        }
     }
 
-    func setProjectionAngularTolerance(_ tolerance: Float) {
-        (_nativeJoint as! ITranslationalJoint).setProjectionAngularTolerance(tolerance)
+    var projectionAngularTolerance: Float {
+        get {
+            _projectionAngularTolerance
+        }
+        set {
+            _projectionAngularTolerance = newValue
+            (_nativeJoint as! ITranslationalJoint).setProjectionAngularTolerance(newValue)
+        }
     }
 }

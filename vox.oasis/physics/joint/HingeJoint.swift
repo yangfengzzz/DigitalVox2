@@ -7,7 +7,23 @@
 
 import Foundation
 
+enum HingeJointFlag: Int {
+    /// enable the limit
+    case LIMIT_ENABLED = 1
+    /// enable the drive
+    case DRIVE_ENABLED = 2
+    /// if the existing velocity is beyond the drive velocity, do not add force
+    case DRIVE_FREESPIN = 4
+};
+
 class HingeJoint: Joint {
+    private var _driveVelocity: Float = 0
+    private var _driveForceLimit: Float = 0
+    private var _driveGearRatio: Float = 0
+    private var _projectionLinearTolerance: Float = 0
+    private var _projectionAngularTolerance: Float = 0
+
+
     required init(_ entity: Entity) {
         super.init(entity)
         _nativeJoint = PhysicsManager._nativePhysics.createHingeJoint(nil, Vector3(), Quaternion(), nil, Vector3(), Quaternion())
@@ -21,27 +37,57 @@ class HingeJoint: Joint {
         (_nativeJoint as! IHingeJoint).setSoftLimit(lowerLimit, upperLimit, stiffness, damping)
     }
 
-    func setDriveVelocity(_ velocity: Float) {
-        (_nativeJoint as! IHingeJoint).setDriveVelocity(velocity)
+    func setHingeJointFlag(_ flag: HingeJointFlag, _ value: Bool) {
+        (_nativeJoint as! IHingeJoint).setRevoluteJointFlag(flag.rawValue, value)
     }
 
-    func setDriveForceLimit(_ limit: Float) {
-        (_nativeJoint as! IHingeJoint).setDriveForceLimit(limit)
+    var driveVelocity: Float {
+        get {
+            _driveVelocity
+        }
+        set {
+            _driveVelocity = newValue
+            (_nativeJoint as! IHingeJoint).setDriveVelocity(newValue)
+        }
     }
 
-    func setDriveGearRatio(_ ratio: Float) {
-        (_nativeJoint as! IHingeJoint).setDriveGearRatio(ratio)
+    var driveForceLimit: Float {
+        get {
+            _driveForceLimit
+        }
+        set {
+            _driveForceLimit = newValue
+            (_nativeJoint as! IHingeJoint).setDriveForceLimit(newValue)
+        }
     }
 
-    func setRevoluteJointFlag(_ flag: Int, _ value: Bool) {
-        (_nativeJoint as! IHingeJoint).setRevoluteJointFlag(flag, value)
+    var driveGearRatio: Float {
+        get {
+            _driveGearRatio
+        }
+        set {
+            _driveGearRatio = newValue
+            (_nativeJoint as! IHingeJoint).setDriveGearRatio(newValue)
+        }
     }
 
-    func setProjectionLinearTolerance(_ tolerance: Float) {
-        (_nativeJoint as! IHingeJoint).setProjectionLinearTolerance(tolerance)
+    var projectionLinearTolerance: Float {
+        get {
+            _projectionLinearTolerance
+        }
+        set {
+            _projectionLinearTolerance = newValue
+            (_nativeJoint as! IHingeJoint).setProjectionLinearTolerance(newValue)
+        }
     }
 
-    func setProjectionAngularTolerance(_ tolerance: Float) {
-        (_nativeJoint as! IHingeJoint).setProjectionAngularTolerance(tolerance)
+    var projectionAngularTolerance: Float {
+        get {
+            _projectionAngularTolerance
+        }
+        set {
+            _projectionAngularTolerance = newValue
+            (_nativeJoint as! IHingeJoint).setProjectionAngularTolerance(newValue)
+        }
     }
 }
