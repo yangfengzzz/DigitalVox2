@@ -385,6 +385,11 @@
 		04AFAC3D273AAB07003E5928 /* IPhysicsObstacle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC3C273AAB07003E5928 /* IPhysicsObstacle.swift */; };
 		04AFAC3F273AABFC003E5928 /* IPhysicsBoxObstacle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC3E273AABFC003E5928 /* IPhysicsBoxObstacle.swift */; };
 		04AFAC41273AAC75003E5928 /* IPhysicsCapsuleObstacle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC40273AAC75003E5928 /* IPhysicsCapsuleObstacle.swift */; };
+		04AFAC43273AAD49003E5928 /* PhysXCharacterControllerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC42273AAD49003E5928 /* PhysXCharacterControllerManager.swift */; };
+		04AFAC45273AADEA003E5928 /* PhysXCharacterControllerDesc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC44273AADEA003E5928 /* PhysXCharacterControllerDesc.swift */; };
+		04AFAC47273AAE67003E5928 /* PhysXCharacterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC46273AAE67003E5928 /* PhysXCharacterController.swift */; };
+		04AFAC49273AAEB6003E5928 /* PhysXBoxCharacterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC48273AAEB6003E5928 /* PhysXBoxCharacterController.swift */; };
+		04AFAC4B273AAEC3003E5928 /* PhysXCapsuleCharacterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC4A273AAEC3003E5928 /* PhysXCapsuleCharacterController.swift */; };
 		04AFFD4A272FAA5D005C2835 /* PhysXRaycastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFFD49272FAA5D005C2835 /* PhysXRaycastView.swift */; };
 		04CB88C427320E6700B0E398 /* Skeleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88C327320E6700B0E398 /* Skeleton.swift */; };
 		04CB88C7273211DE00B0E398 /* skeleton.usda in Resources */ = {isa = PBXBuildFile; fileRef = 04CB88C5273211DE00B0E398 /* skeleton.usda */; };
@@ -943,6 +948,11 @@
 		04AFAC3C273AAB07003E5928 /* IPhysicsObstacle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPhysicsObstacle.swift; sourceTree = "<group>"; };
 		04AFAC3E273AABFC003E5928 /* IPhysicsBoxObstacle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPhysicsBoxObstacle.swift; sourceTree = "<group>"; };
 		04AFAC40273AAC75003E5928 /* IPhysicsCapsuleObstacle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPhysicsCapsuleObstacle.swift; sourceTree = "<group>"; };
+		04AFAC42273AAD49003E5928 /* PhysXCharacterControllerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXCharacterControllerManager.swift; sourceTree = "<group>"; };
+		04AFAC44273AADEA003E5928 /* PhysXCharacterControllerDesc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXCharacterControllerDesc.swift; sourceTree = "<group>"; };
+		04AFAC46273AAE67003E5928 /* PhysXCharacterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXCharacterController.swift; sourceTree = "<group>"; };
+		04AFAC48273AAEB6003E5928 /* PhysXBoxCharacterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXBoxCharacterController.swift; sourceTree = "<group>"; };
+		04AFAC4A273AAEC3003E5928 /* PhysXCapsuleCharacterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXCapsuleCharacterController.swift; sourceTree = "<group>"; };
 		04AFFD49272FAA5D005C2835 /* PhysXRaycastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXRaycastView.swift; sourceTree = "<group>"; };
 		04CB88C327320E6700B0E398 /* Skeleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Skeleton.swift; sourceTree = "<group>"; };
 		04CB88C5273211DE00B0E398 /* skeleton.usda */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = skeleton.usda; sourceTree = "<group>"; };
@@ -2102,15 +2112,20 @@
 				04D396E12739467500D78EBE /* CPxControllerManager.h */,
 				041CED022739FB9A0017F730 /* CPxControllerManager+Internal.h */,
 				04D396E22739467E00D78EBE /* CPxControllerManager.mm */,
+				04AFAC42273AAD49003E5928 /* PhysXCharacterControllerManager.swift */,
 				04D396E42739477B00D78EBE /* CPxController.h */,
 				04D396F127396CE700D78EBE /* CPxController+Internal.h */,
 				04D396E52739478600D78EBE /* CPxController.mm */,
+				04AFAC46273AAE67003E5928 /* PhysXCharacterController.swift */,
 				041CECFA2739F6400017F730 /* CPxBoxController.h */,
 				041CECFB2739F64B0017F730 /* CPxBoxController.mm */,
+				04AFAC48273AAEB6003E5928 /* PhysXBoxCharacterController.swift */,
 				041CECFF2739F69E0017F730 /* CPxCapsuleController.h */,
 				041CECFD2739F6950017F730 /* CPxCapsuleController.mm */,
+				04AFAC4A273AAEC3003E5928 /* PhysXCapsuleCharacterController.swift */,
 				04D396F6273970C800D78EBE /* CPxControllerDesc.h */,
 				041CED002739F93A0017F730 /* CPxControllerDesc.mm */,
+				04AFAC44273AADEA003E5928 /* PhysXCharacterControllerDesc.swift */,
 				04D396E72739481C00D78EBE /* CPxBoxControllerDesc.h */,
 				04D396EA2739490300D78EBE /* CPxBoxControllerDesc+Internal.h */,
 				04D396E82739482F00D78EBE /* CPxBoxControllerDesc.mm */,
@@ -2610,6 +2625,7 @@
 				041BAEE3272A9C6D006268D5 /* PhysXBoxColliderShape.swift in Sources */,
 				041BAE6F272A5117006268D5 /* ShadowMapMaterial.swift in Sources */,
 				041BAE35272A50E6006268D5 /* Color.swift in Sources */,
+				04AFAC43273AAD49003E5928 /* PhysXCharacterControllerManager.swift in Sources */,
 				04E59CA027390D26000BCA73 /* CPxSpring.mm in Sources */,
 				041BAEA3272A514D006268D5 /* IPhysics.swift in Sources */,
 				04CB88C427320E6700B0E398 /* Skeleton.swift in Sources */,
@@ -2642,6 +2658,7 @@
 				041BAE09272A500F006268D5 /* SceneLoaderView.swift in Sources */,
 				041BAE19272A5046006268D5 /* function-common.metal in Sources */,
 				041BAE6C272A5111006268D5 /* Light.swift in Sources */,
+				04AFAC4B273AAEC3003E5928 /* PhysXCapsuleCharacterController.swift in Sources */,
 				041BAEEE272B6F5B006268D5 /* CPxCapsuleGeometry.mm in Sources */,
 				04AFAC2F273A7BF4003E5928 /* ICharacterControllerManager.swift in Sources */,
 				046FB25C273A1CDB004D4042 /* ITranslationalJoint.swift in Sources */,
@@ -2722,6 +2739,7 @@
 				041BAE1C272A5046006268D5 /* background-texture.metal in Sources */,
 				041BAED5272A8B21006268D5 /* CPxMaterial.mm in Sources */,
 				04E59CA927391639000BCA73 /* CPxJointLinearLimit.mm in Sources */,
+				04AFAC47273AAE67003E5928 /* PhysXCharacterController.swift in Sources */,
 				041BAE96272A5141006268D5 /* HitResult.swift in Sources */,
 				041BAEE5272A9DF4006268D5 /* CPxGeometry.mm in Sources */,
 				0486928D27381378007B8DFE /* imgui_impl_metal.mm in Sources */,
@@ -2811,12 +2829,14 @@
 				0486926F27374E42007B8DFE /* allocator.cc in Sources */,
 				041BAEFB272B74A3006268D5 /* PhysXPlaneColliderShape.swift in Sources */,
 				048692482735FACD007B8DFE /* soa_animation.swift in Sources */,
+				04AFAC49273AAEB6003E5928 /* PhysXBoxCharacterController.swift in Sources */,
 				04CB88FA2732B24600B0E398 /* rect.swift in Sources */,
 				046FB25A273A1C9C004D4042 /* IConfigurableJoint.swift in Sources */,
 				041BAE7D272A512B006268D5 /* GLTFAssetReader.m in Sources */,
 				04AFAC35273A7E3E003E5928 /* ICapsuleCharacterController.swift in Sources */,
 				041BAE54272A5100006268D5 /* RenderPass.swift in Sources */,
 				041BAE64272A510C006268D5 /* ShaderMacroCollection.swift in Sources */,
+				04AFAC45273AADEA003E5928 /* PhysXCharacterControllerDesc.swift in Sources */,
 				041BAEB4272A5166006268D5 /* LitePhysicsManager.swift in Sources */,
 				041CECFE2739F6950017F730 /* CPxCapsuleController.mm in Sources */,
 				041BAEB9272A5166006268D5 /* LiteColliderShape.swift in Sources */,
