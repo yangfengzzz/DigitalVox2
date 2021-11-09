@@ -179,4 +179,4 @@ enum PxConstraintFlag: Int {
     case eDISABLE_PREPROCESSING = 128
     /// enables extended limit ranges for angular limits (e.g. limit values > PxPi or < -PxPi)
     case eENABLE_EXTENDED_LIMITS = 256
-};
+}

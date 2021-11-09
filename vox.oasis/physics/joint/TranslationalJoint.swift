@@ -12,19 +12,6 @@ class TranslationalJoint: Joint {
     private var _projectionLinearTolerance: Float = 0
     private var _projectionAngularTolerance: Float = 0
 
-    required init(_ entity: Entity) {
-        super.init(entity)
-        _nativeJoint = PhysicsManager._nativePhysics.createTranslationalJoint(nil, Vector3(), Quaternion(), nil, Vector3(), Quaternion())
-    }
-
-    func setHardLimit(_ lowerLimit: Float, _ upperLimit: Float, _ contactDist: Float) {
-        (_nativeJoint as! ITranslationalJoint).setHardLimit(lowerLimit, upperLimit, contactDist)
-    }
-
-    func setSoftLimit(_ lowerLimit: Float, _ upperLimit: Float, _ stiffness: Float, _ damping: Float) {
-        (_nativeJoint as! ITranslationalJoint).setSoftLimit(lowerLimit, upperLimit, stiffness, damping)
-    }
-
     var enableLimit: Bool {
         get {
             _enableLimit
@@ -53,5 +40,18 @@ class TranslationalJoint: Joint {
             _projectionAngularTolerance = newValue
             (_nativeJoint as! ITranslationalJoint).setProjectionAngularTolerance(newValue)
         }
+    }
+
+    required init(_ entity: Entity) {
+        super.init(entity)
+        _nativeJoint = PhysicsManager._nativePhysics.createTranslationalJoint(nil, Vector3(), Quaternion(), nil, Vector3(), Quaternion())
+    }
+
+    func setHardLimit(_ lowerLimit: Float, _ upperLimit: Float, _ contactDist: Float) {
+        (_nativeJoint as! ITranslationalJoint).setHardLimit(lowerLimit, upperLimit, contactDist)
+    }
+
+    func setSoftLimit(_ lowerLimit: Float, _ upperLimit: Float, _ stiffness: Float, _ damping: Float) {
+        (_nativeJoint as! ITranslationalJoint).setSoftLimit(lowerLimit, upperLimit, stiffness, damping)
     }
 }

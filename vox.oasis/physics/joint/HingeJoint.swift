@@ -14,7 +14,7 @@ enum HingeJointFlag: Int {
     case DRIVE_ENABLED = 2
     /// if the existing velocity is beyond the drive velocity, do not add force
     case DRIVE_FREESPIN = 4
-};
+}
 
 class HingeJoint: Joint {
     private var _driveVelocity: Float = 0
@@ -22,24 +22,6 @@ class HingeJoint: Joint {
     private var _driveGearRatio: Float = 0
     private var _projectionLinearTolerance: Float = 0
     private var _projectionAngularTolerance: Float = 0
-
-
-    required init(_ entity: Entity) {
-        super.init(entity)
-        _nativeJoint = PhysicsManager._nativePhysics.createHingeJoint(nil, Vector3(), Quaternion(), nil, Vector3(), Quaternion())
-    }
-
-    func setHardLimit(_ lowerLimit: Float, _ upperLimit: Float, _ contactDist: Float) {
-        (_nativeJoint as! IHingeJoint).setHardLimit(lowerLimit, upperLimit, contactDist)
-    }
-
-    func setSoftLimit(_ lowerLimit: Float, _ upperLimit: Float, _ stiffness: Float, _ damping: Float) {
-        (_nativeJoint as! IHingeJoint).setSoftLimit(lowerLimit, upperLimit, stiffness, damping)
-    }
-
-    func setHingeJointFlag(_ flag: HingeJointFlag, _ value: Bool) {
-        (_nativeJoint as! IHingeJoint).setRevoluteJointFlag(flag.rawValue, value)
-    }
 
     var driveVelocity: Float {
         get {
@@ -89,5 +71,22 @@ class HingeJoint: Joint {
             _projectionAngularTolerance = newValue
             (_nativeJoint as! IHingeJoint).setProjectionAngularTolerance(newValue)
         }
+    }
+
+    required init(_ entity: Entity) {
+        super.init(entity)
+        _nativeJoint = PhysicsManager._nativePhysics.createHingeJoint(nil, Vector3(), Quaternion(), nil, Vector3(), Quaternion())
+    }
+
+    func setHardLimit(_ lowerLimit: Float, _ upperLimit: Float, _ contactDist: Float) {
+        (_nativeJoint as! IHingeJoint).setHardLimit(lowerLimit, upperLimit, contactDist)
+    }
+
+    func setSoftLimit(_ lowerLimit: Float, _ upperLimit: Float, _ stiffness: Float, _ damping: Float) {
+        (_nativeJoint as! IHingeJoint).setSoftLimit(lowerLimit, upperLimit, stiffness, damping)
+    }
+
+    func setHingeJointFlag(_ flag: HingeJointFlag, _ value: Bool) {
+        (_nativeJoint as! IHingeJoint).setRevoluteJointFlag(flag.rawValue, value)
     }
 }

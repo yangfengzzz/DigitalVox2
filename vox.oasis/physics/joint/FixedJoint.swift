@@ -11,11 +11,6 @@ class FixedJoint: Joint {
     private var _projectionLinearTolerance: Float = 0
     private var _projectionAngularTolerance: Float = 0
 
-    required init(_ entity: Entity) {
-        super.init(entity)
-        _nativeJoint = PhysicsManager._nativePhysics.createFixedJoint(nil, Vector3(), Quaternion(), nil, Vector3(), Quaternion())
-    }
-
     var projectionLinearTolerance: Float {
         get {
             _projectionLinearTolerance
@@ -34,5 +29,10 @@ class FixedJoint: Joint {
             _projectionAngularTolerance = newValue
             (_nativeJoint as! IFixedJoint).setProjectionAngularTolerance(_projectionAngularTolerance)
         }
+    }
+
+    required init(_ entity: Entity) {
+        super.init(entity)
+        _nativeJoint = PhysicsManager._nativePhysics.createFixedJoint(nil, Vector3(), Quaternion(), nil, Vector3(), Quaternion())
     }
 }

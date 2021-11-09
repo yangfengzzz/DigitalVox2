@@ -20,11 +20,6 @@ class SpringJoint: Joint {
     private var _stiffness: Float = 0
     private var _damping: Float = 0
 
-    required init(_ entity: Entity) {
-        super.init(entity)
-        _nativeJoint = PhysicsManager._nativePhysics.createSpringJoint(nil, Vector3(), Quaternion(), nil, Vector3(), Quaternion())
-    }
-
     var minDistance: Float {
         get {
             _minDistance
@@ -73,6 +68,11 @@ class SpringJoint: Joint {
             _damping = newValue
             (_nativeJoint as! ISpringJoint).setDamping(newValue)
         }
+    }
+
+    required init(_ entity: Entity) {
+        super.init(entity)
+        _nativeJoint = PhysicsManager._nativePhysics.createSpringJoint(nil, Vector3(), Quaternion(), nil, Vector3(), Quaternion())
     }
 
     func setDistanceJointFlag(_ flag: SpringJointFlag, _ value: Bool) {

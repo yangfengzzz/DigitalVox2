@@ -7,16 +7,80 @@
 
 import Foundation
 
+enum ConfigurableJointAxis: Int {
+    /// motion along the X axis
+    case X = 0
+    /// motion along the Y axis
+    case Y = 1
+    /// motion along the Z axis
+    case Z = 2
+    /// motion around the X axis
+    case TWIST = 3
+    /// motion around the Y axis
+    case SWING1 = 4
+    /// motion around the Z axis
+    case SWING2 = 5
+}
+
+enum ConfigurableJointMotion: Int {
+    /// The DOF is locked, it does not allow relative motion.
+    case LOCKED = 0
+    /// The DOF is limited, it only allows motion within a specific range.
+    case LIMITED = 1
+    /// The DOF is free and has its full range of motion.
+    case FREE = 2
+}
+
+enum ConfigurableJointDrive: Int {
+    /// drive along the X-axis
+    case eX = 0
+    /// drive along the Y-axis
+    case eY = 1
+    /// drive along the Z-axis
+    case eZ = 2
+    /// drive of displacement from the X-axis
+    case eSWING = 3
+    /// drive of the displacement around the X-axis
+    case eTWIST = 4
+    /// drive of all three angular degrees along a SLERP-path
+    case eSLERP = 5
+}
+
 class ConfigurableJoint: Joint {
+    private var _projectionLinearTolerance: Float = 0
+    private var _projectionAngularTolerance: Float = 0
+
+    var projectionLinearTolerance: Float {
+        get {
+            _projectionLinearTolerance
+        }
+        set {
+            _projectionLinearTolerance = newValue
+            (_nativeJoint as! IConfigurableJoint).setProjectionLinearTolerance(newValue)
+        }
+    }
+
+    var projectionAngularTolerance: Float {
+        get {
+            _projectionAngularTolerance
+        }
+        set {
+            _projectionAngularTolerance = newValue
+            (_nativeJoint as! IConfigurableJoint).setProjectionAngularTolerance(newValue)
+        }
+    }
+
     required init(_ entity: Entity) {
         super.init(entity)
         _nativeJoint = PhysicsManager._nativePhysics.createConfigurableJoint(nil, Vector3(), Quaternion(), nil, Vector3(), Quaternion())
     }
 
-    func setMotion(_ axis: Int, _ type: Int) {
-        (_nativeJoint as! IConfigurableJoint).setMotion(axis, type)
+    //MARK: - Motion
+    func setMotion(_ axis: ConfigurableJointAxis, _ type: ConfigurableJointMotion) {
+        (_nativeJoint as! IConfigurableJoint).setMotion(axis.rawValue, type.rawValue)
     }
 
+    //MARK: - Limit
     func setHardDistanceLimit(_ extent: Float, contactDist: Float) {
         (_nativeJoint as! IConfigurableJoint).setHardDistanceLimit(extent, contactDist: contactDist)
     }
@@ -25,12 +89,12 @@ class ConfigurableJoint: Joint {
         (_nativeJoint as! IConfigurableJoint).setSoftDistanceLimit(extent, stiffness, damping)
     }
 
-    func setHardLinearLimit(_ axis: Int, _ lowerLimit: Float, _ upperLimit: Float, _ contactDist: Float) {
-        (_nativeJoint as! IConfigurableJoint).setHardLinearLimit(axis, lowerLimit, upperLimit, contactDist)
+    func setHardLinearLimit(_ axis: ConfigurableJointAxis, _ lowerLimit: Float, _ upperLimit: Float, _ contactDist: Float) {
+        (_nativeJoint as! IConfigurableJoint).setHardLinearLimit(axis.rawValue, lowerLimit, upperLimit, contactDist)
     }
 
-    func setSoftLinearLimit(_ axis: Int, _ lowerLimit: Float, _ upperLimit: Float, _ stiffness: Float, _ damping: Float) {
-        (_nativeJoint as! IConfigurableJoint).setSoftLinearLimit(axis, lowerLimit, upperLimit, stiffness, damping)
+    func setSoftLinearLimit(_ axis: ConfigurableJointAxis, _ lowerLimit: Float, _ upperLimit: Float, _ stiffness: Float, _ damping: Float) {
+        (_nativeJoint as! IConfigurableJoint).setSoftLinearLimit(axis.rawValue, lowerLimit, upperLimit, stiffness, damping)
     }
 
     func setHardTwistLimit(_ lowerLimit: Float, _ upperLimit: Float, _ contactDist: Float) {
@@ -59,8 +123,9 @@ class ConfigurableJoint: Joint {
         (_nativeJoint as! IConfigurableJoint).setSoftPyramidSwingLimit(yLimitAngleMin, yLimitAngleMax, zLimitAngleMin, zLimitAngleMax, stiffness, damping)
     }
 
-    func setDrive(_ index: Int, _ driveStiffness: Float, _ driveDamping: Float, _ driveForceLimit: Float) {
-        (_nativeJoint as! IConfigurableJoint).setDrive(index, driveStiffness, driveDamping, driveForceLimit)
+    //MARK: - Drive
+    func setDrive(_ index: ConfigurableJointDrive, _ driveStiffness: Float, _ driveDamping: Float, _ driveForceLimit: Float) {
+        (_nativeJoint as! IConfigurableJoint).setDrive(index.rawValue, driveStiffness, driveDamping, driveForceLimit)
     }
 
     func setDrivePosition(_ position: Vector3, _ rotation: Quaternion) {
@@ -69,13 +134,5 @@ class ConfigurableJoint: Joint {
 
     func setDriveVelocity(_ linear: Vector3, _ angular: Vector3) {
         (_nativeJoint as! IConfigurableJoint).setDriveVelocity(linear, angular)
-    }
-
-    func setProjectionLinearTolerance(_ tolerance: Float) {
-        (_nativeJoint as! IConfigurableJoint).setProjectionLinearTolerance(tolerance)
-    }
-
-    func setProjectionAngularTolerance(_ tolerance: Float) {
-        (_nativeJoint as! IConfigurableJoint).setProjectionAngularTolerance(tolerance)
     }
 }
