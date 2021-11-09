@@ -8,6 +8,11 @@
 import Foundation
 
 class SphericalJoint: Joint {
+    required init(_ entity: Entity) {
+        super.init(entity)
+        _nativeJoint = PhysicsManager._nativePhysics.createSphericalJoint(nil, Vector3(), Quaternion(), nil, Vector3(), Quaternion())
+    }
+
     func setHardLimitCone(_ yLimitAngle: Float, _ zLimitAngle: Float, _ contactDist: Float) {
         (_nativeJoint as! ISphericalJoint).setHardLimitCone(yLimitAngle, zLimitAngle, contactDist)
     }

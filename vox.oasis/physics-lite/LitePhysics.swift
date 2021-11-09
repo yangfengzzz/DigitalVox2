@@ -70,33 +70,33 @@ class LitePhysics: IPhysics {
     }
 
     //MARK: - Joint
-    static func createFixedJoint(_ actor0: ICollider, _ position0: Vector3, _ rotation0: Quaternion,
-                                 _ actor1: ICollider, _ position1: Vector3, _ rotation1: Quaternion) -> IFixedJoint {
+    static func createFixedJoint(_ actor0: ICollider?, _ position0: Vector3, _ rotation0: Quaternion,
+                                 _ actor1: ICollider?, _ position1: Vector3, _ rotation1: Quaternion) -> IFixedJoint {
         fatalError("Physics-lite don't support FixedJoint. Use Physics-PhysX instead!")
     }
 
-    static func createHingeJoint(_ actor0: ICollider, _ position0: Vector3, _ rotation0: Quaternion,
-                                 _ actor1: ICollider, _ position1: Vector3, _ rotation1: Quaternion) -> IHingeJoint {
+    static func createHingeJoint(_ actor0: ICollider?, _ position0: Vector3, _ rotation0: Quaternion,
+                                 _ actor1: ICollider?, _ position1: Vector3, _ rotation1: Quaternion) -> IHingeJoint {
         fatalError("Physics-lite don't support HingeJoint. Use Physics-PhysX instead!")
     }
 
-    static func createSphericalJoint(_ actor0: ICollider, _ position0: Vector3, _ rotation0: Quaternion,
-                                     _ actor1: ICollider, _ position1: Vector3, _ rotation1: Quaternion) -> ISphericalJoint {
+    static func createSphericalJoint(_ actor0: ICollider?, _ position0: Vector3, _ rotation0: Quaternion,
+                                     _ actor1: ICollider?, _ position1: Vector3, _ rotation1: Quaternion) -> ISphericalJoint {
         fatalError("Physics-lite don't support SphericalJoint. Use Physics-PhysX instead!")
     }
 
-    static func createSpringJoint(_ actor0: ICollider, _ position0: Vector3, _ rotation0: Quaternion,
-                                  _ actor1: ICollider, _ position1: Vector3, _ rotation1: Quaternion) -> ISpringJoint {
+    static func createSpringJoint(_ actor0: ICollider?, _ position0: Vector3, _ rotation0: Quaternion,
+                                  _ actor1: ICollider?, _ position1: Vector3, _ rotation1: Quaternion) -> ISpringJoint {
         fatalError("Physics-lite don't support SpringJoint. Use Physics-PhysX instead!")
     }
 
-    static func createTranslationalJoint(_ actor0: ICollider, _ position0: Vector3, _ rotation0: Quaternion,
-                                         _ actor1: ICollider, _ position1: Vector3, _ rotation1: Quaternion) -> ITranslationalJoint {
+    static func createTranslationalJoint(_ actor0: ICollider?, _ position0: Vector3, _ rotation0: Quaternion,
+                                         _ actor1: ICollider?, _ position1: Vector3, _ rotation1: Quaternion) -> ITranslationalJoint {
         fatalError("Physics-lite don't support TranslationalJoint. Use Physics-PhysX instead!")
     }
 
-    static func createConfigurableJoint(_ actor0: ICollider, _ position0: Vector3, _ rotation0: Quaternion,
-                                        _ actor1: ICollider, _ position1: Vector3, _ rotation1: Quaternion) -> IConfigurableJoint {
+    static func createConfigurableJoint(_ actor0: ICollider?, _ position0: Vector3, _ rotation0: Quaternion,
+                                        _ actor1: ICollider?, _ position1: Vector3, _ rotation1: Quaternion) -> IConfigurableJoint {
         fatalError("Physics-lite don't support ConfigurableJoint. Use Physics-PhysX instead!")
     }
 }

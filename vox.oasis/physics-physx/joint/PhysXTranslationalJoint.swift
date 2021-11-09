@@ -8,12 +8,12 @@
 import Foundation
 
 class PhysXTranslationalJoint: PhysXJoint, ITranslationalJoint {
-    init(_ actor0: PhysXCollider, _ position0: Vector3, _ rotation0: Quaternion,
-         _ actor1: PhysXCollider, _ position1: Vector3, _ rotation1: Quaternion) {
+    init(_ actor0: PhysXCollider?, _ position0: Vector3, _ rotation0: Quaternion,
+         _ actor1: PhysXCollider?, _ position1: Vector3, _ rotation1: Quaternion) {
         super.init()
         _pxJoint = PhysXPhysics._pxPhysics.createPrismaticJoint(
-                actor0._pxActor, position0.elements, rotation0.elements,
-                actor1._pxActor, position1.elements, rotation1.elements)
+                actor0?._pxActor ?? nil, position0.elements, rotation0.elements,
+                actor1?._pxActor ?? nil, position1.elements, rotation1.elements)
     }
 
     func setHardLimit(_ lowerLimit: Float, _ upperLimit: Float, _ contactDist: Float) {

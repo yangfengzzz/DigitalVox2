@@ -8,6 +8,11 @@
 import Foundation
 
 class ConfigurableJoint: Joint {
+    required init(_ entity: Entity) {
+        super.init(entity)
+        _nativeJoint = PhysicsManager._nativePhysics.createConfigurableJoint(nil, Vector3(), Quaternion(), nil, Vector3(), Quaternion())
+    }
+
     func setMotion(_ axis: Int, _ type: Int) {
         (_nativeJoint as! IConfigurableJoint).setMotion(axis, type)
     }

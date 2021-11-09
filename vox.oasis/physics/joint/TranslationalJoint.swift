@@ -8,6 +8,11 @@
 import Foundation
 
 class TranslationalJoint: Joint {
+    required init(_ entity: Entity) {
+        super.init(entity)
+        _nativeJoint = PhysicsManager._nativePhysics.createTranslationalJoint(nil, Vector3(), Quaternion(), nil, Vector3(), Quaternion())
+    }
+
     func setHardLimit(_ lowerLimit: Float, _ upperLimit: Float, _ contactDist: Float) {
         (_nativeJoint as! ITranslationalJoint).setHardLimit(lowerLimit, upperLimit, contactDist)
     }

@@ -48,23 +48,23 @@
                         onTriggerStay:(void (^ _Nullable)(CPxShape *_Nonnull obj1, CPxShape *_Nonnull obj2))onTriggerStay;
 
 //MARK: - Joint
-- (CPxFixedJoint *_Nonnull)createFixedJoint:(CPxRigidActor *_Nonnull)actor0 :(simd_float3)position0 :(simd_quatf)rotation0
-        :(CPxRigidActor *_Nonnull)actor1 :(simd_float3)position1 :(simd_quatf)rotation1;
+- (CPxFixedJoint *_Nonnull)createFixedJoint:(CPxRigidActor *_Nullable)actor0 :(simd_float3)position0 :(simd_quatf)rotation0
+        :(CPxRigidActor *_Nullable)actor1 :(simd_float3)position1 :(simd_quatf)rotation1;
 
-- (CPxRevoluteJoint *_Nonnull)createRevoluteJoint:(CPxRigidActor *_Nonnull)actor0 :(simd_float3)position0 :(simd_quatf)rotation0
-        :(CPxRigidActor *_Nonnull)actor1 :(simd_float3)position1 :(simd_quatf)rotation1;
+- (CPxRevoluteJoint *_Nonnull)createRevoluteJoint:(CPxRigidActor *_Nullable)actor0 :(simd_float3)position0 :(simd_quatf)rotation0
+        :(CPxRigidActor *_Nullable)actor1 :(simd_float3)position1 :(simd_quatf)rotation1;
 
-- (CPxSphericalJoint *_Nonnull)createSphericalJoint:(CPxRigidActor *_Nonnull)actor0 :(simd_float3)position0 :(simd_quatf)rotation0
-        :(CPxRigidActor *_Nonnull)actor1 :(simd_float3)position1 :(simd_quatf)rotation1;
+- (CPxSphericalJoint *_Nonnull)createSphericalJoint:(CPxRigidActor *_Nullable)actor0 :(simd_float3)position0 :(simd_quatf)rotation0
+        :(CPxRigidActor *_Nullable)actor1 :(simd_float3)position1 :(simd_quatf)rotation1;
 
-- (CPxDistanceJoint *_Nonnull)createDistanceJoint:(CPxRigidActor *_Nonnull)actor0 :(simd_float3)position0 :(simd_quatf)rotation0
-        :(CPxRigidActor *_Nonnull)actor1 :(simd_float3)position1 :(simd_quatf)rotation1;
+- (CPxDistanceJoint *_Nonnull)createDistanceJoint:(CPxRigidActor *_Nullable)actor0 :(simd_float3)position0 :(simd_quatf)rotation0
+        :(CPxRigidActor *_Nullable)actor1 :(simd_float3)position1 :(simd_quatf)rotation1;
 
-- (CPxPrismaticJoint *_Nonnull)createPrismaticJoint:(CPxRigidActor *_Nonnull)actor0 :(simd_float3)position0 :(simd_quatf)rotation0
-        :(CPxRigidActor *_Nonnull)actor1 :(simd_float3)position1 :(simd_quatf)rotation1;
+- (CPxPrismaticJoint *_Nonnull)createPrismaticJoint:(CPxRigidActor *_Nullable)actor0 :(simd_float3)position0 :(simd_quatf)rotation0
+        :(CPxRigidActor *_Nullable)actor1 :(simd_float3)position1 :(simd_quatf)rotation1;
 
-- (CPxD6Joint *_Nonnull)createD6Joint:(CPxRigidActor *_Nonnull)actor0 :(simd_float3)position0 :(simd_quatf)rotation0
-        :(CPxRigidActor *_Nonnull)actor1 :(simd_float3)position1 :(simd_quatf)rotation1;
+- (CPxD6Joint *_Nonnull)createD6Joint:(CPxRigidActor *_Nullable)actor0 :(simd_float3)position0 :(simd_quatf)rotation0
+        :(CPxRigidActor *_Nullable)actor1 :(simd_float3)position1 :(simd_quatf)rotation1;
 
 
 @end

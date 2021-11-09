@@ -8,6 +8,11 @@
 import Foundation
 
 class FixedJoint: Joint {
+    required init(_ entity: Entity) {
+        super.init(entity)
+        _nativeJoint = PhysicsManager._nativePhysics.createFixedJoint(nil, Vector3(), Quaternion(), nil, Vector3(), Quaternion())
+    }
+
     func setProjectionLinearTolerance(_ tolerance: Float) {
         (_nativeJoint as! IFixedJoint).setProjectionLinearTolerance(tolerance)
     }

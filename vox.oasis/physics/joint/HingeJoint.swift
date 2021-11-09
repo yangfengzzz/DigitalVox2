@@ -8,6 +8,11 @@
 import Foundation
 
 class HingeJoint: Joint {
+    required init(_ entity: Entity) {
+        super.init(entity)
+        _nativeJoint = PhysicsManager._nativePhysics.createHingeJoint(nil, Vector3(), Quaternion(), nil, Vector3(), Quaternion())
+    }
+
     func setHardLimit(_ lowerLimit: Float, _ upperLimit: Float, _ contactDist: Float) {
         (_nativeJoint as! IHingeJoint).setHardLimit(lowerLimit, upperLimit, contactDist)
     }

@@ -47,21 +47,21 @@ protocol IPhysics {
                                            _ material: IPhysicsMaterial) -> ICapsuleColliderShape
 
     //MARK: - Joint
-    static func createFixedJoint(_ actor0: ICollider, _ position0: Vector3, _ rotation0: Quaternion,
-                                 _ actor1: ICollider, _ position1: Vector3, _ rotation1: Quaternion) -> IFixedJoint
+    static func createFixedJoint(_ actor0: ICollider?, _ position0: Vector3, _ rotation0: Quaternion,
+                                 _ actor1: ICollider?, _ position1: Vector3, _ rotation1: Quaternion) -> IFixedJoint
 
-    static func createHingeJoint(_ actor0: ICollider, _ position0: Vector3, _ rotation0: Quaternion,
-                                 _ actor1: ICollider, _ position1: Vector3, _ rotation1: Quaternion) -> IHingeJoint
+    static func createHingeJoint(_ actor0: ICollider?, _ position0: Vector3, _ rotation0: Quaternion,
+                                 _ actor1: ICollider?, _ position1: Vector3, _ rotation1: Quaternion) -> IHingeJoint
 
-    static func createSphericalJoint(_ actor0: ICollider, _ position0: Vector3, _ rotation0: Quaternion,
-                                     _ actor1: ICollider, _ position1: Vector3, _ rotation1: Quaternion) -> ISphericalJoint
+    static func createSphericalJoint(_ actor0: ICollider?, _ position0: Vector3, _ rotation0: Quaternion,
+                                     _ actor1: ICollider?, _ position1: Vector3, _ rotation1: Quaternion) -> ISphericalJoint
 
-    static func createSpringJoint(_ actor0: ICollider, _ position0: Vector3, _ rotation0: Quaternion,
-                                  _ actor1: ICollider, _ position1: Vector3, _ rotation1: Quaternion) -> ISpringJoint
+    static func createSpringJoint(_ actor0: ICollider?, _ position0: Vector3, _ rotation0: Quaternion,
+                                  _ actor1: ICollider?, _ position1: Vector3, _ rotation1: Quaternion) -> ISpringJoint
 
-    static func createTranslationalJoint(_ actor0: ICollider, _ position0: Vector3, _ rotation0: Quaternion,
-                                         _ actor1: ICollider, _ position1: Vector3, _ rotation1: Quaternion) -> ITranslationalJoint
+    static func createTranslationalJoint(_ actor0: ICollider?, _ position0: Vector3, _ rotation0: Quaternion,
+                                         _ actor1: ICollider?, _ position1: Vector3, _ rotation1: Quaternion) -> ITranslationalJoint
 
-    static func createConfigurableJoint(_ actor0: ICollider, _ position0: Vector3, _ rotation0: Quaternion,
-                                        _ actor1: ICollider, _ position1: Vector3, _ rotation1: Quaternion) -> IConfigurableJoint
+    static func createConfigurableJoint(_ actor0: ICollider?, _ position0: Vector3, _ rotation0: Quaternion,
+                                        _ actor1: ICollider?, _ position1: Vector3, _ rotation1: Quaternion) -> IConfigurableJoint
 }

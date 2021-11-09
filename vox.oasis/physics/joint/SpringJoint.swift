@@ -8,6 +8,11 @@
 import Foundation
 
 class SpringJoint: Joint {
+    required init(_ entity: Entity) {
+        super.init(entity)
+        _nativeJoint = PhysicsManager._nativePhysics.createSpringJoint(nil, Vector3(), Quaternion(), nil, Vector3(), Quaternion())
+    }
+
     func setMinDistance(_ distance: Float) {
         (_nativeJoint as! ISpringJoint).setMinDistance(distance)
     }
