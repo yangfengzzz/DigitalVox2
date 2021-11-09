@@ -13,81 +13,82 @@ class Joint: Component {
     private var _force: Float = 0
     private var _torque: Float = 0
 
-    private var _actor0: Collider?
-    private var _localPose0 = (Vector3(), Quaternion())
-    private var _invMassScale0: Float = 0
-    private var _invInertiaScale0: Float = 0
+    private struct JointActor {
+        var _collider: Collider?
+        var _localPosition = Vector3()
+        var _localRotation = Quaternion()
+        var _invMassScale: Float = 0
+        var _invInertiaScale: Float = 0
+    }
 
-    private var _actor1: Collider?
-    private var _localPose1 = (Vector3(), Quaternion())
-    private var _invMassScale1: Float = 0
-    private var _invInertiaScale1: Float = 0
+    private var _jointActor0 = JointActor()
+    private var _jointActor1 = JointActor()
 
     var actor0: Collider? {
         get {
-            _actor0
+            _jointActor0._collider
         }
         set {
-            _actor0 = newValue
-            _nativeJoint.setActors(_actor0?._nativeCollider, _actor1?._nativeCollider)
+            _jointActor0._collider = newValue
+            _nativeJoint.setActors(_jointActor0._collider?._nativeCollider, _jointActor1._collider?._nativeCollider)
         }
     }
 
     var actor1: Collider? {
         get {
-            _actor1
+            _jointActor1._collider
         }
         set {
-            _actor1 = newValue
-            _nativeJoint.setActors(_actor0?._nativeCollider, _actor1?._nativeCollider)
+            _jointActor1._collider = newValue
+            _nativeJoint.setActors(_jointActor0._collider?._nativeCollider, _jointActor1._collider?._nativeCollider)
         }
     }
 
 
     var localPosition0: Vector3 {
         get {
-            return _localPose0.0
+            _jointActor0._localPosition
         }
         set {
-            if newValue !== _localPose0.0 {
-                newValue.cloneTo(target: _localPose0.0)
-                _nativeJoint.setLocalPose(0, _localPose0.0, _localPose0.1)
+            if newValue !== _jointActor0._localPosition {
+                newValue.cloneTo(target: _jointActor0._localPosition)
+                _nativeJoint.setLocalPose(0, _jointActor0._localPosition, _jointActor0._localRotation)
             }
         }
     }
 
     var localRotation0: Quaternion {
         get {
-            return _localPose0.1
+            _jointActor0._localRotation
         }
         set {
-            if newValue !== _localPose0.1 {
-                newValue.cloneTo(target: _localPose0.1)
-                _nativeJoint.setLocalPose(0, _localPose0.0, _localPose0.1)
+            if newValue !== _jointActor0._localRotation {
+                newValue.cloneTo(target: _jointActor0._localRotation)
+                _nativeJoint.setLocalPose(0, _jointActor0._localPosition, _jointActor0._localRotation)
             }
         }
     }
 
     var localPosition1: Vector3 {
         get {
-            return _localPose1.0
+            _jointActor1._localPosition
         }
         set {
-            if newValue !== _localPose1.0 {
-                newValue.cloneTo(target: _localPose1.0)
-                _nativeJoint.setLocalPose(1, _localPose1.0, _localPose1.1)
+            if newValue !== _jointActor1._localPosition {
+                newValue.cloneTo(target: _jointActor1._localPosition)
+                _nativeJoint.setLocalPose(1, _jointActor1._localPosition, _jointActor1._localRotation)
             }
         }
     }
 
     var localRotation1: Quaternion {
         get {
-            return _localPose1.1
+            _jointActor1._localRotation
         }
         set {
-            if newValue !== _localPose1.1 {
-                newValue.cloneTo(target: _localPose1.1)
-                _nativeJoint.setLocalPose(1, _localPose1.0, _localPose1.1)
+            if newValue !== _jointActor1._localRotation {
+                newValue.cloneTo(target: _jointActor1._localRotation)
+                _nativeJoint.setLocalPose(1, _jointActor1._localPosition, _jointActor1._localRotation)
             }
         }
     }
@@ -114,41 +115,41 @@ class Joint: Component {
 
     var invMassScale0: Float {
         get {
-            _invMassScale0
+            _jointActor0._invMassScale
         }
         set {
-            _invMassScale0 = newValue
-            _nativeJoint.setInvMassScale0(invMassScale0)
+            _jointActor0._invMassScale = newValue
+            _nativeJoint.setInvMassScale0(_jointActor0._invMassScale)
         }
     }
 
     var invInertiaScale0: Float {
         get {
-            _invInertiaScale0
+            _jointActor0._invInertiaScale
         }
         set {
-            _invInertiaScale0 = newValue
-            _nativeJoint.setInvInertiaScale0(invInertiaScale0)
+            _jointActor0._invInertiaScale = newValue
+            _nativeJoint.setInvInertiaScale0(_jointActor0._invInertiaScale)
         }
     }
 
     var invMassScale1: Float {
         get {
-            _invMassScale1
+            _jointActor1._invMassScale
         }
         set {
-            _invMassScale1 = newValue
-            _nativeJoint.setInvMassScale1(invMassScale1)
+            _jointActor1._invMassScale = newValue
+            _nativeJoint.setInvMassScale1(_jointActor1._invMassScale)
         }
     }
 
     var invInertiaScale1: Float {
         get {
-            _invInertiaScale1
+            _jointActor1._invInertiaScale
         }
         set {
-            _invInertiaScale1 = newValue
-            _nativeJoint.setInvInertiaScale1(invInertiaScale1)
+            _jointActor1._invInertiaScale = newValue
+            _nativeJoint.setInvInertiaScale1(_jointActor1._invInertiaScale)
         }
     }
 
