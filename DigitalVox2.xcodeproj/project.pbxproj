@@ -394,6 +394,10 @@
 		04AFAC4F273ABBE8003E5928 /* PhysXCapsuleCharacterControllerDesc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC4E273ABBE8003E5928 /* PhysXCapsuleCharacterControllerDesc.swift */; };
 		04AFAC51273ABCD2003E5928 /* PhysXObstacle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC50273ABCD2003E5928 /* PhysXObstacle.swift */; };
 		04AFAC54273AC64D003E5928 /* CharacterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC53273AC64D003E5928 /* CharacterController.swift */; };
+		04AFAC56273B3CCF003E5928 /* BoxCharacterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC55273B3CCF003E5928 /* BoxCharacterController.swift */; };
+		04AFAC58273B3D10003E5928 /* CapsuleCharacterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC57273B3D10003E5928 /* CapsuleCharacterController.swift */; };
+		04AFAC5C273B3FAC003E5928 /* BoxCharacterControllerDesc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC5B273B3FAC003E5928 /* BoxCharacterControllerDesc.swift */; };
+		04AFAC5E273B3FBB003E5928 /* CapsuleCharacterControllerDesc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC5D273B3FBB003E5928 /* CapsuleCharacterControllerDesc.swift */; };
 		04AFFD4A272FAA5D005C2835 /* PhysXRaycastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFFD49272FAA5D005C2835 /* PhysXRaycastView.swift */; };
 		04CB88C427320E6700B0E398 /* Skeleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88C327320E6700B0E398 /* Skeleton.swift */; };
 		04CB88C7273211DE00B0E398 /* skeleton.usda in Resources */ = {isa = PBXBuildFile; fileRef = 04CB88C5273211DE00B0E398 /* skeleton.usda */; };
@@ -961,6 +965,10 @@
 		04AFAC4E273ABBE8003E5928 /* PhysXCapsuleCharacterControllerDesc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXCapsuleCharacterControllerDesc.swift; sourceTree = "<group>"; };
 		04AFAC50273ABCD2003E5928 /* PhysXObstacle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXObstacle.swift; sourceTree = "<group>"; };
 		04AFAC53273AC64D003E5928 /* CharacterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterController.swift; sourceTree = "<group>"; };
+		04AFAC55273B3CCF003E5928 /* BoxCharacterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxCharacterController.swift; sourceTree = "<group>"; };
+		04AFAC57273B3D10003E5928 /* CapsuleCharacterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapsuleCharacterController.swift; sourceTree = "<group>"; };
+		04AFAC5B273B3FAC003E5928 /* BoxCharacterControllerDesc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxCharacterControllerDesc.swift; sourceTree = "<group>"; };
+		04AFAC5D273B3FBB003E5928 /* CapsuleCharacterControllerDesc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapsuleCharacterControllerDesc.swift; sourceTree = "<group>"; };
 		04AFFD49272FAA5D005C2835 /* PhysXRaycastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXRaycastView.swift; sourceTree = "<group>"; };
 		04CB88C327320E6700B0E398 /* Skeleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Skeleton.swift; sourceTree = "<group>"; };
 		04CB88C5273211DE00B0E398 /* skeleton.usda */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = skeleton.usda; sourceTree = "<group>"; };
@@ -2050,6 +2058,10 @@
 			isa = PBXGroup;
 			children = (
 				04AFAC53273AC64D003E5928 /* CharacterController.swift */,
+				04AFAC55273B3CCF003E5928 /* BoxCharacterController.swift */,
+				04AFAC5B273B3FAC003E5928 /* BoxCharacterControllerDesc.swift */,
+				04AFAC57273B3D10003E5928 /* CapsuleCharacterController.swift */,
+				04AFAC5D273B3FBB003E5928 /* CapsuleCharacterControllerDesc.swift */,
 			);
 			path = characterkinematic;
 			sourceTree = "<group>";
@@ -2723,6 +2735,7 @@
 				041BAE50272A50FB006268D5 /* PBRMaterial.swift in Sources */,
 				042F0DBA2734AFB500FF4A26 /* skeleton_utils.swift in Sources */,
 				046FB254273A1C5F004D4042 /* ISphericalJoint.swift in Sources */,
+				04AFAC56273B3CCF003E5928 /* BoxCharacterController.swift in Sources */,
 				041BAE22272A5046006268D5 /* pbr.metal in Sources */,
 				041BAE58272A510C006268D5 /* DepthState.swift in Sources */,
 				041BAEF9272B7305006268D5 /* PhysXCapsuleColliderShape.swift in Sources */,
@@ -2739,6 +2752,7 @@
 				041BAE66272A510C006268D5 /* ShaderUniformBlock.swift in Sources */,
 				041BAE74272A5117006268D5 /* ShadowMaterial.swift in Sources */,
 				041BAEC1272A516E006268D5 /* BRDF.metal in Sources */,
+				04AFAC5E273B3FBB003E5928 /* CapsuleCharacterControllerDesc.swift in Sources */,
 				041BAE1D272A5046006268D5 /* blinn-phong.metal in Sources */,
 				04CB88CC27321C1800B0E398 /* AnimationClip.swift in Sources */,
 				041BAF0A272B7F9D006268D5 /* CPxRigidDynamic.mm in Sources */,
@@ -2747,6 +2761,7 @@
 				04AFAC2A273A4693003E5928 /* SpringJoint.swift in Sources */,
 				041BAE77272A512B006268D5 /* GLTFSceneKit.m in Sources */,
 				041BAE0F272A500F006268D5 /* Script.swift in Sources */,
+				04AFAC5C273B3FAC003E5928 /* BoxCharacterControllerDesc.swift in Sources */,
 				041BAE32272A50E6006268D5 /* Quaternion.swift in Sources */,
 				04E59C792738BB93000BCA73 /* CPxJoint.mm in Sources */,
 				04AFAC51273ABCD2003E5928 /* PhysXObstacle.swift in Sources */,
@@ -2868,6 +2883,7 @@
 				041BAEBB272A5166006268D5 /* LitePhysicsMaterial.swift in Sources */,
 				042F0DCB2736511B00FF4A26 /* sampling_job.swift in Sources */,
 				041BAE0D272A500F006268D5 /* EngineView.swift in Sources */,
+				04AFAC58273B3D10003E5928 /* CapsuleCharacterController.swift in Sources */,
 				041BAEAC272A5153006268D5 /* ResourceCache.swift in Sources */,
 				041BADFE272A500F006268D5 /* Camera.swift in Sources */,
 				041BAF04272B7737006268D5 /* CPxRigidStatic.mm in Sources */,

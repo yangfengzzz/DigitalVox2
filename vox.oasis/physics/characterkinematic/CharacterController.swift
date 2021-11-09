@@ -10,6 +10,13 @@ import Foundation
 class CharacterController: Component {
     internal var _nativeCharacterController: ICharacterController!
 
+    required init(_ entity: Entity) {
+        super.init(entity)
+        if engine.physicsManager!.characterControllerManager == nil {
+            engine.physicsManager!._createCharacterControllerManager()
+        }
+    }
+
     func move(_ disp: Vector3, _ minDist: Float, _ elapsedTime: Float) -> UInt8 {
         _nativeCharacterController.move(disp, minDist, elapsedTime)
     }

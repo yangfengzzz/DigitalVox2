@@ -11,6 +11,7 @@ import Foundation
 class PhysicsManager {
     internal static var _nativePhysics: IPhysics.Type!
 
+    private var _nativeCharacterControllerManager: ICharacterControllerManager?
     private var _nativePhysicsManager: IPhysicsManager!
     private var _physicalObjectsMap: [Int: ColliderShape] = [:]
 
@@ -93,6 +94,16 @@ class PhysicsManager {
     /// - Parameter collider: StaticCollider or DynamicCollider.
     internal func _removeCollider(_  collider: Collider) {
         _nativePhysicsManager.removeCollider(collider._nativeCollider)
+    }
+
+    internal func _createCharacterControllerManager() {
+        _nativeCharacterControllerManager = _nativePhysicsManager.createControllerManager()
+    }
+
+    var characterControllerManager: ICharacterControllerManager? {
+        get {
+            _nativeCharacterControllerManager
+        }
     }
 }
 
