@@ -8,6 +8,11 @@
 import Foundation
 
 class PhysXCapsuleCharacterControllerDesc: PhysXCharacterControllerDesc, ICapsuleCharacterControllerDesc {
+    override init() {
+        super.init()
+        _pxControllerDesc = CPxCapsuleControllerDesc()
+    }
+
     func setToDefault() {
         (_pxControllerDesc as! CPxCapsuleControllerDesc).setToDefault()
     }

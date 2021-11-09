@@ -8,6 +8,11 @@
 import Foundation
 
 class PhysXBoxCharacterControllerDesc: PhysXCharacterControllerDesc, IBoxCharacterControllerDesc {
+    override init() {
+        super.init()
+        _pxControllerDesc = CPxBoxControllerDesc()
+    }
+
     func setToDefault() {
         (_pxControllerDesc as! CPxBoxControllerDesc).setToDefault()
     }

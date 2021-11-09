@@ -99,4 +99,21 @@ class LitePhysics: IPhysics {
                                         _ actor1: ICollider?, _ position1: Vector3, _ rotation1: Quaternion) -> IConfigurableJoint {
         fatalError("Physics-lite don't support ConfigurableJoint. Use Physics-PhysX instead!")
     }
+    
+    //MARK: - Character Controller
+    static func createBoxCharacterControllerDesc() -> IBoxCharacterControllerDesc {
+        fatalError("Physics-lite don't support BoxCharacterControllerDesc. Use Physics-PhysX instead!")
+    }
+
+    static func createCapsuleCharacterControllerDesc() -> ICapsuleCharacterControllerDesc {
+        fatalError("Physics-lite don't support CapsuleCharacterControllerDesc. Use Physics-PhysX instead!")
+    }
+
+    static func createBoxObstacle() -> IPhysicsBoxObstacle {
+        fatalError("Physics-lite don't support BoxObstacle. Use Physics-PhysX instead!")
+    }
+
+    static func createCapsuleObstacle() -> IPhysicsCapsuleObstacle {
+        fatalError("Physics-lite don't support CapsuleObstacle. Use Physics-PhysX instead!")
+    }
 }

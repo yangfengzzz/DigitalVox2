@@ -96,4 +96,21 @@ class PhysXPhysics: IPhysics {
                                         _ actor1: ICollider?, _ position1: Vector3, _ rotation1: Quaternion) -> IConfigurableJoint {
         PhysXConfigurableJoint((actor0 as? PhysXCollider ?? nil), position0, rotation0, (actor1 as! PhysXCollider), position1, rotation1)
     }
+
+    //MARK: - Character Controller
+    static func createBoxCharacterControllerDesc() -> IBoxCharacterControllerDesc {
+        PhysXBoxCharacterControllerDesc()
+    }
+
+    static func createCapsuleCharacterControllerDesc() -> ICapsuleCharacterControllerDesc {
+        PhysXCapsuleCharacterControllerDesc()
+    }
+
+    static func createBoxObstacle() -> IPhysicsBoxObstacle {
+        PhysXBoxObstacle()
+    }
+
+    static func createCapsuleObstacle() -> IPhysicsCapsuleObstacle {
+        PhysXCapsuleObstacle()
+    }
 }

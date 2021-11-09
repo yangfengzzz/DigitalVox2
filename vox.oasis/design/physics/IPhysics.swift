@@ -64,4 +64,13 @@ protocol IPhysics {
 
     static func createConfigurableJoint(_ actor0: ICollider?, _ position0: Vector3, _ rotation0: Quaternion,
                                         _ actor1: ICollider?, _ position1: Vector3, _ rotation1: Quaternion) -> IConfigurableJoint
+    
+    //MARK: - Character Controller
+    static func createBoxCharacterControllerDesc() -> IBoxCharacterControllerDesc
+
+    static func createCapsuleCharacterControllerDesc() -> ICapsuleCharacterControllerDesc
+
+    static func createBoxObstacle() -> IPhysicsBoxObstacle
+
+    static func createCapsuleObstacle() -> IPhysicsCapsuleObstacle
 }

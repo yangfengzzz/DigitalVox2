@@ -16,6 +16,11 @@ class PhysXObstacle: IPhysicsObstacle {
 }
 
 class PhysXBoxObstacle: PhysXObstacle, IPhysicsBoxObstacle {
+    override init() {
+        super.init()
+        _pxObstacle = CPxBoxObstacle()
+    }
+
     func setPos(_ mPos: Vector3) {
         (_pxObstacle as! CPxBoxObstacle).mPos = mPos.elements
     }
@@ -30,6 +35,11 @@ class PhysXBoxObstacle: PhysXObstacle, IPhysicsBoxObstacle {
 }
 
 class PhysXCapsuleObstacle: PhysXObstacle, IPhysicsCapsuleObstacle {
+    override init() {
+        super.init()
+        _pxObstacle = CPxCapsuleObstacle()
+    }
+
     func setPos(_ mPos: Vector3) {
         (_pxObstacle as! CPxCapsuleObstacle).mPos = mPos.elements
     }
