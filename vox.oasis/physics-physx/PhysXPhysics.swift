@@ -12,6 +12,11 @@ class PhysXPhysics: IPhysics {
     /// Physx physics object
     internal static var _pxPhysics: CPxPhysics!
 
+    static func initialization() {
+        _pxPhysics = CPxPhysics()
+        _pxPhysics.initExtensions()
+    }
+
     static func createPhysicsManager(_ onContactEnter: ((Int, Int) -> Void)?,
                                      _ onContactExit: ((Int, Int) -> Void)?,
                                      _ onContactStay: ((Int, Int) -> Void)?,
@@ -19,7 +24,7 @@ class PhysXPhysics: IPhysics {
                                      _ onTriggerExit: ((Int, Int) -> Void)?,
                                      _ onTriggerStay: ((Int, Int) -> Void)?) -> IPhysicsManager {
         PhysXPhysicsManager(onContactEnter, onContactExit, onContactStay,
-                             onTriggerEnter, onTriggerExit, onTriggerStay)
+                onTriggerEnter, onTriggerExit, onTriggerStay)
     }
 
     static func createDynamicCollider(_ position: Vector3, _ rotation: Quaternion) -> IDynamicCollider {
@@ -40,6 +45,7 @@ class PhysXPhysics: IPhysics {
                 CombineMode(rawValue: bounceCombine)!)
     }
 
+    //MARK: - Collider Shape
     static func createBoxColliderShape(_ uniqueID: Int, _ size: Vector3,
                                        _ material: IPhysicsMaterial) -> IBoxColliderShape {
         PhysXBoxColliderShape(uniqueID, size, (material as! PhysXPhysicsMaterial))
@@ -60,8 +66,34 @@ class PhysXPhysics: IPhysics {
         PhysXCapsuleColliderShape(uniqueID, radius, height, (material as! PhysXPhysicsMaterial))
     }
 
-    static func initialization() {
-        _pxPhysics = CPxPhysics()
-        _pxPhysics.initExtensions()
+    //MARK: - Joint
+    static func createFixedJoint(_ actor0: ICollider, _ position0: Vector3, _ rotation0: Quaternion,
+                                 _ actor1: ICollider, _ position1: Vector3, _ rotation1: Quaternion) -> IFixedJoint {
+        PhysXFixedJoint((actor0 as! PhysXCollider), position0, rotation0, (actor1 as! PhysXCollider), position1, rotation1)
+    }
+
+    static func createHingeJoint(_ actor0: ICollider, _ position0: Vector3, _ rotation0: Quaternion,
+                                 _ actor1: ICollider, _ position1: Vector3, _ rotation1: Quaternion) -> IHingeJoint {
+        PhysXHingeJoint((actor0 as! PhysXCollider), position0, rotation0, (actor1 as! PhysXCollider), position1, rotation1)
+    }
+
+    static func createSphericalJoint(_ actor0: ICollider, _ position0: Vector3, _ rotation0: Quaternion,
+                                     _ actor1: ICollider, _ position1: Vector3, _ rotation1: Quaternion) -> ISphericalJoint {
+        PhysXSphericalJoint((actor0 as! PhysXCollider), position0, rotation0, (actor1 as! PhysXCollider), position1, rotation1)
+    }
+
+    static func createSpringJoint(_ actor0: ICollider, _ position0: Vector3, _ rotation0: Quaternion,
+                                  _ actor1: ICollider, _ position1: Vector3, _ rotation1: Quaternion) -> ISpringJoint {
+        PhysXSpringJoint((actor0 as! PhysXCollider), position0, rotation0, (actor1 as! PhysXCollider), position1, rotation1)
+    }
+
+    static func createTranslationalJoint(_ actor0: ICollider, _ position0: Vector3, _ rotation0: Quaternion,
+                                         _ actor1: ICollider, _ position1: Vector3, _ rotation1: Quaternion) -> ITranslationalJoint {
+        PhysXTranslationalJoint((actor0 as! PhysXCollider), position0, rotation0, (actor1 as! PhysXCollider), position1, rotation1)
+    }
+
+    static func createConfigurableJoint(_ actor0: ICollider, _ position0: Vector3, _ rotation0: Quaternion,
+                                        _ actor1: ICollider, _ position1: Vector3, _ rotation1: Quaternion) -> IConfigurableJoint {
+        PhysXConfigurableJoint((actor0 as! PhysXCollider), position0, rotation0, (actor1 as! PhysXCollider), position1, rotation1)
     }
 }
