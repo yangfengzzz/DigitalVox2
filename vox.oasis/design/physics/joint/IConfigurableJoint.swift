@@ -16,7 +16,7 @@ protocol IConfigurableJoint: IJoint {
 
     func setHardLinearLimit(_ axis: Int, _ lowerLimit: Float, _ upperLimit: Float, _ contactDist: Float)
 
-    func setSoftLinearLimit(_ axis: Int, _ lowerLimit: Float, _ stiffness: Float, _ damping: Float)
+    func setSoftLinearLimit(_ axis: Int, _ lowerLimit: Float, _ upperLimit: Float, _ stiffness: Float, _ damping: Float)
 
     func setHardTwistLimit(_ lowerLimit: Float, _ upperLimit: Float, _ contactDist: Float)
 
@@ -32,7 +32,7 @@ protocol IConfigurableJoint: IJoint {
     func setSoftPyramidSwingLimit(_ yLimitAngleMin: Float, _ yLimitAngleMax: Float,
                                   _ zLimitAngleMin: Float, _ zLimitAngleMax: Float, _ stiffness: Float, _ damping: Float)
 
-    func setDrive(_ index: Int, _ drive: CPxD6JointDrive)
+    func setDrive(_ index: Int, _ driveStiffness: Float, _ driveDamping: Float, _ driveForceLimit: Float)
 
     func setDrivePosition(_ position: Vector3, _ rotation: Quaternion)
 
