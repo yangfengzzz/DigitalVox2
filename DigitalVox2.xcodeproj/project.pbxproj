@@ -393,6 +393,7 @@
 		04AFAC4D273ABA79003E5928 /* PhysXBoxCharacterControllerDesc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC4C273ABA79003E5928 /* PhysXBoxCharacterControllerDesc.swift */; };
 		04AFAC4F273ABBE8003E5928 /* PhysXCapsuleCharacterControllerDesc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC4E273ABBE8003E5928 /* PhysXCapsuleCharacterControllerDesc.swift */; };
 		04AFAC51273ABCD2003E5928 /* PhysXObstacle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC50273ABCD2003E5928 /* PhysXObstacle.swift */; };
+		04AFAC54273AC64D003E5928 /* CharacterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC53273AC64D003E5928 /* CharacterController.swift */; };
 		04AFFD4A272FAA5D005C2835 /* PhysXRaycastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFFD49272FAA5D005C2835 /* PhysXRaycastView.swift */; };
 		04CB88C427320E6700B0E398 /* Skeleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88C327320E6700B0E398 /* Skeleton.swift */; };
 		04CB88C7273211DE00B0E398 /* skeleton.usda in Resources */ = {isa = PBXBuildFile; fileRef = 04CB88C5273211DE00B0E398 /* skeleton.usda */; };
@@ -959,6 +960,7 @@
 		04AFAC4C273ABA79003E5928 /* PhysXBoxCharacterControllerDesc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXBoxCharacterControllerDesc.swift; sourceTree = "<group>"; };
 		04AFAC4E273ABBE8003E5928 /* PhysXCapsuleCharacterControllerDesc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXCapsuleCharacterControllerDesc.swift; sourceTree = "<group>"; };
 		04AFAC50273ABCD2003E5928 /* PhysXObstacle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXObstacle.swift; sourceTree = "<group>"; };
+		04AFAC53273AC64D003E5928 /* CharacterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterController.swift; sourceTree = "<group>"; };
 		04AFFD49272FAA5D005C2835 /* PhysXRaycastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXRaycastView.swift; sourceTree = "<group>"; };
 		04CB88C327320E6700B0E398 /* Skeleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Skeleton.swift; sourceTree = "<group>"; };
 		04CB88C5273211DE00B0E398 /* skeleton.usda */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = skeleton.usda; sourceTree = "<group>"; };
@@ -1787,6 +1789,7 @@
 				045B06612729857C003E4B68 /* enums */,
 				042291B9272A254A003A4C8B /* shape */,
 				04AFAC1E273A4416003E5928 /* joint */,
+				04AFAC52273AC63A003E5928 /* characterkinematic */,
 				04F6AA5C2701486200A0D6F6 /* HitResult.swift */,
 				04F6AA6F2701579D00A0D6F6 /* PhysicsManager.swift */,
 				042291B7272A2443003A4C8B /* PhysicsMaterial.swift */,
@@ -2039,6 +2042,14 @@
 				04AFAC3C273AAB07003E5928 /* IPhysicsObstacle.swift */,
 				04AFAC3E273AABFC003E5928 /* IPhysicsBoxObstacle.swift */,
 				04AFAC40273AAC75003E5928 /* IPhysicsCapsuleObstacle.swift */,
+			);
+			path = characterkinematic;
+			sourceTree = "<group>";
+		};
+		04AFAC52273AC63A003E5928 /* characterkinematic */ = {
+			isa = PBXGroup;
+			children = (
+				04AFAC53273AC64D003E5928 /* CharacterController.swift */,
 			);
 			path = characterkinematic;
 			sourceTree = "<group>";
@@ -2820,6 +2831,7 @@
 				04AFAC1D273A3D9F003E5928 /* PhysXConfigurableJoint.swift in Sources */,
 				041BAEA4272A514D006268D5 /* ICollider.swift in Sources */,
 				04AFAC3F273AABFC003E5928 /* IPhysicsBoxObstacle.swift in Sources */,
+				04AFAC54273AC64D003E5928 /* CharacterController.swift in Sources */,
 				041BAE55272A5100006268D5 /* ClassPool.swift in Sources */,
 				041BAE05272A500F006268D5 /* SceneFeatureManager.swift in Sources */,
 				041BAEBC272A5166006268D5 /* LiteTransform.swift in Sources */,

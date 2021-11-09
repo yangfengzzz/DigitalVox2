@@ -16,7 +16,7 @@ class PhysXCharacterControllerManager: ICharacterControllerManager {
 
     func createController(_ desc: ICharacterControllerDesc) -> ICharacterController {
         let pxController = _pxControllerManager.createController((desc as! PhysXCharacterControllerDesc)._pxControllerDesc)
-        if desc.getType() == eCAPSULE.rawValue {
+        if desc.getType() == CPxControllerShapeType_eCAPSULE.rawValue {
             let controller = PhysXCapsuleCharacterController()
             controller._pxController = pxController
             return controller
