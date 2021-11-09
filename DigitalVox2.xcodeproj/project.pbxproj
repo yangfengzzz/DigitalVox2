@@ -368,6 +368,13 @@
 		04AFAC19273A3C48003E5928 /* PhysXHingeJoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC18273A3C48003E5928 /* PhysXHingeJoint.swift */; };
 		04AFAC1B273A3D0A003E5928 /* PhysXSpringJoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC1A273A3D0A003E5928 /* PhysXSpringJoint.swift */; };
 		04AFAC1D273A3D9F003E5928 /* PhysXConfigurableJoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC1C273A3D9F003E5928 /* PhysXConfigurableJoint.swift */; };
+		04AFAC20273A4433003E5928 /* Joint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC1F273A4433003E5928 /* Joint.swift */; };
+		04AFAC22273A4505003E5928 /* FixedJoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC21273A4505003E5928 /* FixedJoint.swift */; };
+		04AFAC24273A4560003E5928 /* SphericalJoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC23273A4560003E5928 /* SphericalJoint.swift */; };
+		04AFAC26273A45DA003E5928 /* TranslationalJoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC25273A45DA003E5928 /* TranslationalJoint.swift */; };
+		04AFAC28273A462C003E5928 /* HingeJoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC27273A462C003E5928 /* HingeJoint.swift */; };
+		04AFAC2A273A4693003E5928 /* SpringJoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC29273A4693003E5928 /* SpringJoint.swift */; };
+		04AFAC2C273A46DC003E5928 /* ConfigurableJoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC2B273A46DC003E5928 /* ConfigurableJoint.swift */; };
 		04AFFD4A272FAA5D005C2835 /* PhysXRaycastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFFD49272FAA5D005C2835 /* PhysXRaycastView.swift */; };
 		04CB88C427320E6700B0E398 /* Skeleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88C327320E6700B0E398 /* Skeleton.swift */; };
 		04CB88C7273211DE00B0E398 /* skeleton.usda in Resources */ = {isa = PBXBuildFile; fileRef = 04CB88C5273211DE00B0E398 /* skeleton.usda */; };
@@ -909,6 +916,13 @@
 		04AFAC18273A3C48003E5928 /* PhysXHingeJoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXHingeJoint.swift; sourceTree = "<group>"; };
 		04AFAC1A273A3D0A003E5928 /* PhysXSpringJoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXSpringJoint.swift; sourceTree = "<group>"; };
 		04AFAC1C273A3D9F003E5928 /* PhysXConfigurableJoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXConfigurableJoint.swift; sourceTree = "<group>"; };
+		04AFAC1F273A4433003E5928 /* Joint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Joint.swift; sourceTree = "<group>"; };
+		04AFAC21273A4505003E5928 /* FixedJoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedJoint.swift; sourceTree = "<group>"; };
+		04AFAC23273A4560003E5928 /* SphericalJoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphericalJoint.swift; sourceTree = "<group>"; };
+		04AFAC25273A45DA003E5928 /* TranslationalJoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationalJoint.swift; sourceTree = "<group>"; };
+		04AFAC27273A462C003E5928 /* HingeJoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HingeJoint.swift; sourceTree = "<group>"; };
+		04AFAC29273A4693003E5928 /* SpringJoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpringJoint.swift; sourceTree = "<group>"; };
+		04AFAC2B273A46DC003E5928 /* ConfigurableJoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurableJoint.swift; sourceTree = "<group>"; };
 		04AFFD49272FAA5D005C2835 /* PhysXRaycastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXRaycastView.swift; sourceTree = "<group>"; };
 		04CB88C327320E6700B0E398 /* Skeleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Skeleton.swift; sourceTree = "<group>"; };
 		04CB88C5273211DE00B0E398 /* skeleton.usda */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = skeleton.usda; sourceTree = "<group>"; };
@@ -1735,6 +1749,7 @@
 			children = (
 				045B06612729857C003E4B68 /* enums */,
 				042291B9272A254A003A4C8B /* shape */,
+				04AFAC1E273A4416003E5928 /* joint */,
 				04F6AA5C2701486200A0D6F6 /* HitResult.swift */,
 				04F6AA6F2701579D00A0D6F6 /* PhysicsManager.swift */,
 				042291B7272A2443003A4C8B /* PhysicsMaterial.swift */,
@@ -1958,6 +1973,20 @@
 				0452ECF226DFA8BD0015BFB1 /* Textures.xcassets */,
 			);
 			path = textures;
+			sourceTree = "<group>";
+		};
+		04AFAC1E273A4416003E5928 /* joint */ = {
+			isa = PBXGroup;
+			children = (
+				04AFAC1F273A4433003E5928 /* Joint.swift */,
+				04AFAC21273A4505003E5928 /* FixedJoint.swift */,
+				04AFAC23273A4560003E5928 /* SphericalJoint.swift */,
+				04AFAC25273A45DA003E5928 /* TranslationalJoint.swift */,
+				04AFAC27273A462C003E5928 /* HingeJoint.swift */,
+				04AFAC29273A4693003E5928 /* SpringJoint.swift */,
+				04AFAC2B273A46DC003E5928 /* ConfigurableJoint.swift */,
+			);
+			path = joint;
 			sourceTree = "<group>";
 		};
 		04CB88D127326C6000B0E398 /* math */ = {
@@ -2566,6 +2595,8 @@
 				041BAE68272A5111006268D5 /* PointLight.swift in Sources */,
 				041BAE28272A50D9006268D5 /* CameraClearFlags.swift in Sources */,
 				041BAE2E272A50E6006268D5 /* SphericalHarmonics3.swift in Sources */,
+				04AFAC20273A4433003E5928 /* Joint.swift in Sources */,
+				04AFAC2C273A46DC003E5928 /* ConfigurableJoint.swift in Sources */,
 				041BAEB2272A5166006268D5 /* LiteDynamicCollider.swift in Sources */,
 				041BAE09272A500F006268D5 /* SceneLoaderView.swift in Sources */,
 				041BAE19272A5046006268D5 /* function-common.metal in Sources */,
@@ -2630,6 +2661,7 @@
 				041BAF0A272B7F9D006268D5 /* CPxRigidDynamic.mm in Sources */,
 				04869298273813EA007B8DFE /* imgui_draw.cpp in Sources */,
 				041BAEA9272A514D006268D5 /* ISphereColliderShape.swift in Sources */,
+				04AFAC2A273A4693003E5928 /* SpringJoint.swift in Sources */,
 				041BAE77272A512B006268D5 /* GLTFSceneKit.m in Sources */,
 				041BAE0F272A500F006268D5 /* Script.swift in Sources */,
 				041BAE32272A50E6006268D5 /* Quaternion.swift in Sources */,
@@ -2679,6 +2711,7 @@
 				041BAE17272A500F006268D5 /* Entity.swift in Sources */,
 				041BAEA8272A514D006268D5 /* IPhysicsManager.swift in Sources */,
 				04CB88F32732937100B0E398 /* soa_float4x4.swift in Sources */,
+				04AFAC24273A4560003E5928 /* SphericalJoint.swift in Sources */,
 				041BAEC3272A516E006268D5 /* PhysXPhysics.swift in Sources */,
 				041BAE33272A50E6006268D5 /* Ray.swift in Sources */,
 				041BAE00272A500F006268D5 /* Scene.swift in Sources */,
@@ -2689,6 +2722,7 @@
 				046FB256273A1C79004D4042 /* IHingeJoint.swift in Sources */,
 				041BAE70272A5117006268D5 /* ShadowPass.swift in Sources */,
 				041BAE0C272A500F006268D5 /* SceneManager.swift in Sources */,
+				04AFAC26273A45DA003E5928 /* TranslationalJoint.swift in Sources */,
 				0486929527381392007B8DFE /* imgui_widgets.cpp in Sources */,
 				0486927E27375531007B8DFE /* soa_skeleton.mm in Sources */,
 				04E59C842738C86C000BCA73 /* CPxSphericalJoint.mm in Sources */,
@@ -2771,6 +2805,7 @@
 				041BAE30272A50E6006268D5 /* Matrix.swift in Sources */,
 				041BAE27272A50D9006268D5 /* BackgroundMode.swift in Sources */,
 				041BAEB3272A5166006268D5 /* LiteSphereColliderShape.swift in Sources */,
+				04AFAC28273A462C003E5928 /* HingeJoint.swift in Sources */,
 				041BAEC4272A516E006268D5 /* ShaderSimple.metal in Sources */,
 				041BAE2D272A50E6006268D5 /* Vector3.swift in Sources */,
 				041BAE4A272A50FB006268D5 /* PBRSpecularMaterial.swift in Sources */,
@@ -2782,6 +2817,7 @@
 				04D396F42739700200D78EBE /* CPxCapsuleControllerDesc.mm in Sources */,
 				04E59CA4273910C3000BCA73 /* CPxD6JointDrive.mm in Sources */,
 				041BAE6D272A5111006268D5 /* IBLLight.swift in Sources */,
+				04AFAC22273A4505003E5928 /* FixedJoint.swift in Sources */,
 				041BAEA6272A514D006268D5 /* IPhysicsMaterial.swift in Sources */,
 				041BAE01272A500F006268D5 /* Canvas.swift in Sources */,
 				041BAE31272A50E6006268D5 /* Plane.swift in Sources */,
