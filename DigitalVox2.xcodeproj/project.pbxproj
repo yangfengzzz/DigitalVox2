@@ -288,6 +288,13 @@
 		0452ED3B26E0F50A0015BFB1 /* frame3f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ED3826E0F50A0015BFB1 /* frame3f.swift */; };
 		0452ED3C26E0F50A0015BFB1 /* frame2f.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452ED3926E0F50A0015BFB1 /* frame2f.swift */; };
 		04605EFB272BC09800400350 /* PhysXView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04605EFA272BC09800400350 /* PhysXView.swift */; };
+		046FB250273A1B46004D4042 /* IJoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046FB24F273A1B46004D4042 /* IJoint.swift */; };
+		046FB252273A1B69004D4042 /* IFixedJoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046FB251273A1B69004D4042 /* IFixedJoint.swift */; };
+		046FB254273A1C5F004D4042 /* ISphericalJoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046FB253273A1C5F004D4042 /* ISphericalJoint.swift */; };
+		046FB256273A1C79004D4042 /* IHingeJoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046FB255273A1C79004D4042 /* IHingeJoint.swift */; };
+		046FB258273A1C90004D4042 /* ISpringJoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046FB257273A1C90004D4042 /* ISpringJoint.swift */; };
+		046FB25A273A1C9C004D4042 /* IConfigurableJoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046FB259273A1C9C004D4042 /* IConfigurableJoint.swift */; };
+		046FB25C273A1CDB004D4042 /* ITranslationalJoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046FB25B273A1CDB004D4042 /* ITranslationalJoint.swift */; };
 		047FEB7026E1BA4A0078CFAF /* shape_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEB6F26E1BA4A0078CFAF /* shape_data.swift */; };
 		047FEB7226E1BC570078CFAF /* fvshape_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEB7126E1BC570078CFAF /* fvshape_data.swift */; };
 		047FEB7426E1BD590078CFAF /* shape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047FEB7326E1BD590078CFAF /* shape.swift */; };
@@ -722,6 +729,13 @@
 		045B065E2729831A003E4B68 /* LitePhysics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LitePhysics.swift; sourceTree = "<group>"; };
 		045B066227298591003E4B68 /* ColliderShapeUpAxis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColliderShapeUpAxis.swift; sourceTree = "<group>"; };
 		04605EFA272BC09800400350 /* PhysXView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXView.swift; sourceTree = "<group>"; };
+		046FB24F273A1B46004D4042 /* IJoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IJoint.swift; sourceTree = "<group>"; };
+		046FB251273A1B69004D4042 /* IFixedJoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IFixedJoint.swift; sourceTree = "<group>"; };
+		046FB253273A1C5F004D4042 /* ISphericalJoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ISphericalJoint.swift; sourceTree = "<group>"; };
+		046FB255273A1C79004D4042 /* IHingeJoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IHingeJoint.swift; sourceTree = "<group>"; };
+		046FB257273A1C90004D4042 /* ISpringJoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ISpringJoint.swift; sourceTree = "<group>"; };
+		046FB259273A1C9C004D4042 /* IConfigurableJoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IConfigurableJoint.swift; sourceTree = "<group>"; };
+		046FB25B273A1CDB004D4042 /* ITranslationalJoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ITranslationalJoint.swift; sourceTree = "<group>"; };
 		047914CA26F37C0300BE5170 /* ShaderData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderData.swift; sourceTree = "<group>"; };
 		047E7B2B26EE257E006BC3FB /* MeshRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeshRenderer.swift; sourceTree = "<group>"; };
 		047FEB6F26E1BA4A0078CFAF /* shape_data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = shape_data.swift; sourceTree = "<group>"; };
@@ -1648,6 +1662,7 @@
 		045B062A27293EBE003E4B68 /* physics */ = {
 			isa = PBXGroup;
 			children = (
+				046FB24E273A1B35004D4042 /* joint */,
 				045B0639272941F8003E4B68 /* shape */,
 				045B062D27293EE2003E4B68 /* IPhysicsMaterial.swift */,
 				045B062B27293ECE003E4B68 /* ICollider.swift */,
@@ -1746,6 +1761,20 @@
 				042F0DC82735291600FF4A26 /* SkeletonLoaderView.swift */,
 			);
 			path = views;
+			sourceTree = "<group>";
+		};
+		046FB24E273A1B35004D4042 /* joint */ = {
+			isa = PBXGroup;
+			children = (
+				046FB24F273A1B46004D4042 /* IJoint.swift */,
+				046FB251273A1B69004D4042 /* IFixedJoint.swift */,
+				046FB253273A1C5F004D4042 /* ISphericalJoint.swift */,
+				046FB25B273A1CDB004D4042 /* ITranslationalJoint.swift */,
+				046FB255273A1C79004D4042 /* IHingeJoint.swift */,
+				046FB257273A1C90004D4042 /* ISpringJoint.swift */,
+				046FB259273A1C9C004D4042 /* IConfigurableJoint.swift */,
+			);
+			path = joint;
 			sourceTree = "<group>";
 		};
 		047FEBCA26E5A1130078CFAF /* images */ = {
@@ -2516,6 +2545,7 @@
 				041BAE19272A5046006268D5 /* function-common.metal in Sources */,
 				041BAE6C272A5111006268D5 /* Light.swift in Sources */,
 				041BAEEE272B6F5B006268D5 /* CPxCapsuleGeometry.mm in Sources */,
+				046FB25C273A1CDB004D4042 /* ITranslationalJoint.swift in Sources */,
 				041BAEB7272A5166006268D5 /* LitePhysics.swift in Sources */,
 				041BAE95272A5141006268D5 /* Collider.swift in Sources */,
 				041BAE29272A50D9006268D5 /* TextureCubeFace.swift in Sources */,
@@ -2524,6 +2554,7 @@
 				04CB88EE27326EE400B0E398 /* simd_math.swift in Sources */,
 				04E59C8F2738FA19000BCA73 /* CPxJointAngularLimitPair.mm in Sources */,
 				0486927527374EC3007B8DFE /* soa_math_archive.cc in Sources */,
+				046FB250273A1B46004D4042 /* IJoint.swift in Sources */,
 				041BADFF272A500F006268D5 /* voxApp.swift in Sources */,
 				048692512735FE13007B8DFE /* animation_optimizer.swift in Sources */,
 				041BAEAF272A5153006268D5 /* ComputePipelineState.swift in Sources */,
@@ -2551,6 +2582,7 @@
 				041BAE16272A500F006268D5 /* Component.swift in Sources */,
 				041BAE50272A50FB006268D5 /* PBRMaterial.swift in Sources */,
 				042F0DBA2734AFB500FF4A26 /* skeleton_utils.swift in Sources */,
+				046FB254273A1C5F004D4042 /* ISphericalJoint.swift in Sources */,
 				041BAE22272A5046006268D5 /* pbr.metal in Sources */,
 				041BAE58272A510C006268D5 /* DepthState.swift in Sources */,
 				041BAEF9272B7305006268D5 /* PhysXCapsuleColliderShape.swift in Sources */,
@@ -2558,6 +2590,7 @@
 				041BAE5D272A510C006268D5 /* BlendState.swift in Sources */,
 				041BAE48272A50FB006268D5 /* BlendMode.swift in Sources */,
 				041BAF0E272B82CB006268D5 /* PhysXDynamicCollider.swift in Sources */,
+				046FB258273A1C90004D4042 /* ISpringJoint.swift in Sources */,
 				04CB89012732B59C00B0E398 /* soa_skeleton.swift in Sources */,
 				04CB88F52732AE0000B0E398 /* simd_quaternion.swift in Sources */,
 				041BAE06272A500F006268D5 /* GLTFAssetLoader.swift in Sources */,
@@ -2625,6 +2658,7 @@
 				04D396E62739478600D78EBE /* CPxController.mm in Sources */,
 				0486926C27374DED007B8DFE /* archive.cc in Sources */,
 				041BAE14272A500F006268D5 /* USDZAssetsLoader.swift in Sources */,
+				046FB256273A1C79004D4042 /* IHingeJoint.swift in Sources */,
 				041BAE70272A5117006268D5 /* ShadowPass.swift in Sources */,
 				041BAE0C272A500F006268D5 /* SceneManager.swift in Sources */,
 				0486929527381392007B8DFE /* imgui_widgets.cpp in Sources */,
@@ -2653,6 +2687,7 @@
 				0486929B2738155C007B8DFE /* imgui_bridge.mm in Sources */,
 				041BAE6A272A5111006268D5 /* SpotLight.swift in Sources */,
 				041BAE39272A50E6006268D5 /* BoundingBox.swift in Sources */,
+				046FB252273A1B69004D4042 /* IFixedJoint.swift in Sources */,
 				041BAEE0272A9AA1006268D5 /* CPxBoxGeometry.mm in Sources */,
 				041BAE18272A5046006268D5 /* shadow-map.metal in Sources */,
 				041BAE53272A5100006268D5 /* RenderElement.swift in Sources */,
@@ -2665,6 +2700,7 @@
 				041BAEFB272B74A3006268D5 /* PhysXPlaneColliderShape.swift in Sources */,
 				048692482735FACD007B8DFE /* soa_animation.swift in Sources */,
 				04CB88FA2732B24600B0E398 /* rect.swift in Sources */,
+				046FB25A273A1C9C004D4042 /* IConfigurableJoint.swift in Sources */,
 				041BAE7D272A512B006268D5 /* GLTFAssetReader.m in Sources */,
 				041BAE54272A5100006268D5 /* RenderPass.swift in Sources */,
 				041BAE64272A510C006268D5 /* ShaderMacroCollection.swift in Sources */,
