@@ -18,7 +18,9 @@
 
 @class CPxController;
 
-@interface CPxBoxControllerDesc : NSObject
+@interface CPxBoxControllerDesc : CPxControllerDesc
+
+-(enum CPxControllerShapeType) getType;
 
 - (void)setToDefault;
 

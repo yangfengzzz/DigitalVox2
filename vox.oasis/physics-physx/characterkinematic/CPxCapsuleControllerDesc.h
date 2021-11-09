@@ -27,7 +27,9 @@ enum CPxCapsuleClimbingMode {
 
 @class CPxController;
 
-@interface CPxCapsuleControllerDesc : NSObject
+@interface CPxCapsuleControllerDesc : CPxControllerDesc
+
+-(enum CPxControllerShapeType) getType;
 
 - (void)setToDefault;
 

@@ -9,7 +9,8 @@
 #define CCharacterBridge_h
 
 #include "CPxControllerManager.h"
-#include "CPxController.h"
+#include "CPxBoxController.h"
+#include "CPxCapsuleController.h"
 #include "CPxBoxControllerDesc.h"
 #include "CPxCapsuleControllerDesc.h"
 #include "CPxObstacle.h"
