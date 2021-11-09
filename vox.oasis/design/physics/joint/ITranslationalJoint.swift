@@ -7,6 +7,14 @@
 
 import Foundation
 
-protocol ITranslationalJoint :IJoint {
-    
+protocol ITranslationalJoint: IJoint {
+    func setHardLimit(_ lowerLimit: Float, _ upperLimit: Float, _ contactDist: Float)
+
+    func setSoftLimit(_ lowerLimit: Float, _ upperLimit: Float, _ stiffness: Float, _ damping: Float)
+
+    func setPrismaticJointFlag(_ flag: Int, _ value: Bool)
+
+    func setProjectionLinearTolerance(_ tolerance: Float)
+
+    func setProjectionAngularTolerance(_ tolerance: Float)
 }

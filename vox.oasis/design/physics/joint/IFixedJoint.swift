@@ -7,6 +7,8 @@
 
 import Foundation
 
-protocol IFixedJoint :IJoint {
-    
+protocol IFixedJoint: IJoint {
+    func setProjectionLinearTolerance(_ tolerance: Float)
+
+    func setProjectionAngularTolerance(_ tolerance: Float)
 }
