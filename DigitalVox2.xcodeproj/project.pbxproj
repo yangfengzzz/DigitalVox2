@@ -360,6 +360,7 @@
 		0497A1E926DF150800F61DE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0497A1E826DF150800F61DE9 /* Assets.xcassets */; };
 		0497A1EC26DF150800F61DE9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0497A1EB26DF150800F61DE9 /* Preview Assets.xcassets */; };
 		0497A20226DF150800F61DE9 /* DigitalVox2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497A20126DF150800F61DE9 /* DigitalVox2UITests.swift */; };
+		04AFAC0F273A34FA003E5928 /* PhysXJoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC0E273A34FA003E5928 /* PhysXJoint.swift */; };
 		04AFFD4A272FAA5D005C2835 /* PhysXRaycastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFFD49272FAA5D005C2835 /* PhysXRaycastView.swift */; };
 		04CB88C427320E6700B0E398 /* Skeleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88C327320E6700B0E398 /* Skeleton.swift */; };
 		04CB88C7273211DE00B0E398 /* skeleton.usda in Resources */ = {isa = PBXBuildFile; fileRef = 04CB88C5273211DE00B0E398 /* skeleton.usda */; };
@@ -893,6 +894,7 @@
 		04AE2420272911EF00D62587 /* IBLLight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IBLLight.swift; sourceTree = "<group>"; };
 		04AE2422272913ED00D62587 /* BRDF.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = BRDF.metal; sourceTree = "<group>"; };
 		04AE2424272916DC00D62587 /* irradiance.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = irradiance.png; sourceTree = "<group>"; };
+		04AFAC0E273A34FA003E5928 /* PhysXJoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXJoint.swift; sourceTree = "<group>"; };
 		04AFFD49272FAA5D005C2835 /* PhysXRaycastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXRaycastView.swift; sourceTree = "<group>"; };
 		04CB88C327320E6700B0E398 /* Skeleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Skeleton.swift; sourceTree = "<group>"; };
 		04CB88C5273211DE00B0E398 /* skeleton.usda */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = skeleton.usda; sourceTree = "<group>"; };
@@ -2102,6 +2104,7 @@
 				04E59C772738BB87000BCA73 /* CPxJoint.h */,
 				04E59C7A2738BC6D000BCA73 /* CPxJoint+Internal.h */,
 				04E59C782738BB93000BCA73 /* CPxJoint.mm */,
+				04AFAC0E273A34FA003E5928 /* PhysXJoint.swift */,
 				04E59C7F2738C400000BCA73 /* CPxFixedJoint.h */,
 				04E59C802738C409000BCA73 /* CPxFixedJoint.mm */,
 				04E59C822738C863000BCA73 /* CPxSphericalJoint.h */,
@@ -2551,6 +2554,7 @@
 				041BAE29272A50D9006268D5 /* TextureCubeFace.swift in Sources */,
 				041BAE4D272A50FB006268D5 /* BlinnPhongMaterial.swift in Sources */,
 				041BAE5E272A510C006268D5 /* RasterState.swift in Sources */,
+				04AFAC0F273A34FA003E5928 /* PhysXJoint.swift in Sources */,
 				04CB88EE27326EE400B0E398 /* simd_math.swift in Sources */,
 				04E59C8F2738FA19000BCA73 /* CPxJointAngularLimitPair.mm in Sources */,
 				0486927527374EC3007B8DFE /* soa_math_archive.cc in Sources */,
