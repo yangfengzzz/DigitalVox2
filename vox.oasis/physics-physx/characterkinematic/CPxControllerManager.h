@@ -12,6 +12,7 @@
 #import "CPxController.h"
 #import "CPxControllerDesc.h"
 #import "CPxObstacle.h"
+#import "../CPxScene.h"
 
 @interface CPxControllerManager : NSObject
 
@@ -28,6 +29,8 @@
 - (CPxObstacleContext *)getObstacleContext:(uint32_t)index;
 
 - (CPxObstacleContext *)createObstacleContext;
+
+- (void)computeInteractions:(float)elapsedTime;
 
 - (void)setTessellation:(bool)flag :(float)maxEdgeLength;
 

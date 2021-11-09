@@ -549,6 +549,7 @@
 		041CECFD2739F6950017F730 /* CPxCapsuleController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CPxCapsuleController.mm; sourceTree = "<group>"; };
 		041CECFF2739F69E0017F730 /* CPxCapsuleController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPxCapsuleController.h; sourceTree = "<group>"; };
 		041CED002739F93A0017F730 /* CPxControllerDesc.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CPxControllerDesc.mm; sourceTree = "<group>"; };
+		041CED022739FB9A0017F730 /* CPxControllerManager+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CPxControllerManager+Internal.h"; sourceTree = "<group>"; };
 		041D1C46272A354600322BDF /* BoxColliderShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxColliderShape.swift; sourceTree = "<group>"; };
 		041D1C48272A360300322BDF /* CapsuleColliderShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapsuleColliderShape.swift; sourceTree = "<group>"; };
 		041D1C4A272A36B600322BDF /* PlaneColliderShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaneColliderShape.swift; sourceTree = "<group>"; };
@@ -1987,6 +1988,7 @@
 			children = (
 				04D396EB273949D600D78EBE /* CCharacterBridge.h */,
 				04D396E12739467500D78EBE /* CPxControllerManager.h */,
+				041CED022739FB9A0017F730 /* CPxControllerManager+Internal.h */,
 				04D396E22739467E00D78EBE /* CPxControllerManager.mm */,
 				04D396E42739477B00D78EBE /* CPxController.h */,
 				04D396F127396CE700D78EBE /* CPxController+Internal.h */,
