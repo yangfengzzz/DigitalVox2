@@ -12,6 +12,18 @@
 
 @interface CPxBoxController : CPxController
 
+- (float)getHalfHeight;
+
+- (float)getHalfSideExtent;
+
+- (float)getHalfForwardExtent;
+
+- (bool)setHalfHeight:(float)halfHeight;
+
+- (bool)setHalfSideExtent:(float)halfSideExtent;
+
+- (bool)setHalfForwardExtent:(float)halfForwardExtent;
+
 @end
 
 #endif /* CPxBoxController_h */
