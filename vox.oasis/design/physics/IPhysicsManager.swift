@@ -24,6 +24,9 @@ protocol IPhysicsManager {
     /// Remove ICollider.
     func removeCollider(_ collider: ICollider)
 
+    /// Create Character Controller Manager
+    func createControllerManager() -> ICharacterControllerManager
+
     /// Call on every frame to update pose of objects.
     func update(_ elapsedTime: Float)
 

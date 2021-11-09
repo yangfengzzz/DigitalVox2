@@ -93,6 +93,12 @@ class PhysXPhysicsManager: IPhysicsManager {
         _pxScene.removeActor(with: (collider as! PhysXCollider)._pxActor)
     }
 
+    func createControllerManager() -> ICharacterControllerManager {
+        let manager = PhysXCharacterControllerManager()
+        manager._pxControllerManager = _pxScene.createControllerManager()
+        return manager
+    }
+
     func update(_ elapsedTime: Float) {
         _simulate(elapsedTime)
         _fetchResults()

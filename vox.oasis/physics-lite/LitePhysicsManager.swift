@@ -67,6 +67,10 @@ class LitePhysicsManager: IPhysicsManager {
         }
     }
 
+    func createControllerManager() -> ICharacterControllerManager {
+        fatalError("Physics-lite don't support character controller. Use Physics-PhysX instead!")
+    }
+
     func update(_ deltaTime: Float) {
         let colliders = _colliders
         for i in 0..<colliders.count {
