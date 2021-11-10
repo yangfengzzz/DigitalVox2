@@ -8,16 +8,38 @@
 import Foundation
 
 class BoxCharacterController: CharacterController {
-    func setHalfHeight(_ halfHeight: Float) -> Bool {
-        (_nativeCharacterController as! IBoxCharacterController).setHalfHeight(halfHeight)
+    private var _halfHeight: Float = 0
+    private var _halfSideExtent: Float = 0
+    private var _halfForwardExtent: Float = 0
+
+    var halfHeight: Float {
+        get {
+            _halfHeight
+        }
+        set {
+            _halfHeight = newValue
+            _ = (_nativeCharacterController as! IBoxCharacterController).setHalfHeight(newValue)
+        }
     }
 
-    func setHalfSideExtent(_ halfSideExtent: Float) -> Bool {
-        (_nativeCharacterController as! IBoxCharacterController).setHalfSideExtent(halfSideExtent)
+    var halfSideExtent: Float {
+        get {
+            _halfSideExtent
+        }
+        set {
+            _halfSideExtent = newValue
+            _ = (_nativeCharacterController as! IBoxCharacterController).setHalfSideExtent(newValue)
+        }
     }
 
-    func setHalfForwardExtent(_ halfForwardExtent: Float) -> Bool {
-        (_nativeCharacterController as! IBoxCharacterController).setHalfForwardExtent(halfForwardExtent)
+    var halfForwardExtent: Float {
+        get {
+            _halfForwardExtent
+        }
+        set {
+            _halfForwardExtent = newValue
+            _ = (_nativeCharacterController as! IBoxCharacterController).setHalfForwardExtent(newValue)
+        }
     }
 
     func setDesc(_ desc: BoxCharacterControllerDesc) {
