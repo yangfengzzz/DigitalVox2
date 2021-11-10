@@ -67,6 +67,10 @@ class BlendingJob {
         if (!validate()) {
             return false
         }
+        
+        if output.isEmpty || output.count < bind_pose.count {
+            return false
+        }
 
         // Initializes blended parameters that are exchanged across blend stages.
         var process_args = ProcessArgs(self)

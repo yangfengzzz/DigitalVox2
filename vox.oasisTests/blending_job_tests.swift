@@ -39,7 +39,7 @@ class BlendingJobTests: XCTestCase {
             let job = BlendingJob()
             job.layers = layers[0..<2]
             job.bind_pose = bind_poses[0..<2]
-            XCTAssertFalse(job.validate())
+            XCTAssertTrue(job.validate())
         }
         do {  // Layers are optional.
             let job = BlendingJob()
@@ -68,7 +68,7 @@ class BlendingJobTests: XCTestCase {
             let job = BlendingJob()
             job.layers = layers[0..<2]
             job.bind_pose = bind_poses[0..<2]
-            XCTAssertFalse(job.validate())
+            XCTAssertTrue(sjob.validate())
             XCTAssertFalse(job.run(&output_transforms[0..<1]))
         }
 
