@@ -16,6 +16,11 @@ class PhysicsObstacle {
 }
 
 class PhysicsBoxObstacle: PhysicsObstacle {
+    override init() {
+        super.init()
+        _nativeObstacle = PhysicsManager._nativePhysics.createBoxObstacle()
+    }
+
     func setPos(_ mPos: Vector3) {
         (_nativeObstacle as! IPhysicsBoxObstacle).setPos(mPos)
     }
@@ -30,6 +35,11 @@ class PhysicsBoxObstacle: PhysicsObstacle {
 }
 
 class PhysicsCapsuleObstacle: PhysicsObstacle {
+    override init() {
+        super.init()
+        _nativeObstacle = PhysicsManager._nativePhysics.createCapsuleObstacle()
+    }
+
     func setPos(_ mPos: Vector3) {
         (_nativeObstacle as! IPhysicsCapsuleObstacle).setPos(mPos)
     }
