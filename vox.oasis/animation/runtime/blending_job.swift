@@ -99,7 +99,7 @@ class BlendingJob {
         // This range must be at least as big as the bind pose buffer, even though
         // only the number of transforms defined by the bind pose buffer will be
         // processed.
-        var transform: ArraySlice<SoaTransform>
+        var transform: ArraySlice<SoaTransform> = ArraySlice()
 
         // Optional range [begin,end[ of blending weight for each joint in this
         // layer.
@@ -113,7 +113,7 @@ class BlendingJob {
         // be [0,1]. Negative weight values are considered as 0, but positive ones
         // aren't clamped because they could exceed 1.f if all layers contains valid
         // joint weights.
-        var joint_weights: ArraySlice<SimdFloat4>
+        var joint_weights: ArraySlice<SimdFloat4> = ArraySlice()
     }
 
     // The job blends the bind pose to the output when the accumulated weight of
