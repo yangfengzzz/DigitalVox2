@@ -17,10 +17,10 @@ import Foundation
 // vector should aim the target.
 // Result is unstable if joint-to-target direction is parallel to pole vector,
 // or if target is too close to joint position.
-struct IKAimJob {
+class IKAimJob {
     // Validates job parameters. Returns true for a valid job, or false otherwise:
     // -if output quaternion pointer is nullptr
-    func Validate() -> Bool {
+    func validate() -> Bool {
         fatalError()
     }
 
@@ -28,52 +28,41 @@ struct IKAimJob {
     // The job is validated before any operation is performed, see Validate() for
     // more details.
     // Returns false if *this job is not valid.
-    func Run() -> Bool {
+    func run(_ joint_correction: inout SimdQuaternion, _ reached: inout Bool) -> Bool {
         fatalError()
     }
 
     // Job input.
 
     // Target position to aim at, in model-space
-    var target: SimdFloat4
+    var target: simd_float4!
 
     // Joint forward axis, in joint local-space, to be aimed at target position.
     // This vector shall be normalized, otherwise validation will fail.
     // Default is x axis.
-    var forward: SimdFloat4
+    var forward: simd_float4!
 
     // Offset position from the joint in local-space, that will aim at target.
-    var offset: SimdFloat4
+    var offset: simd_float4!
 
     // Joint up axis, in joint local-space, used to keep the joint oriented in the
     // same direction as the pole vector. Default is y axis.
-    var up: SimdFloat4
+    var up: simd_float4!
 
     // Pole vector, in model-space. The pole vector defines the direction
     // the up should point to.  Note that IK chain orientation will flip when
     // target vector and the pole vector are aligned/crossing each other. It's
     // caller responsibility to ensure that this doesn't happen.
-    var pole_vector: SimdFloat4
+    var pole_vector: simd_float4!
 
     // Twist_angle rotates joint around the target vector.
     // Default is 0.
-    var twist_angle: Float
+    var twist_angle: Float!
 
     // Weight given to the IK correction clamped in range [0,1]. This allows to
     // blend / interpolate from no IK applied (0 weight) to full IK (1).
-    var weight: Float
+    var weight: Float!
 
     // Joint model-space matrix.
-    var joint: Float4x4
-
-    //MARK: - Job output.
-
-    // Output local-space joint correction quaternion. It needs to be multiplied
-    // with joint local-space quaternion.
-    var joint_correction: SimdQuaternion
-
-    // Optional boolean output value, set to true if target can be reached with IK
-    // computations. Target is considered not reachable when target is between
-    // joint and offset position.
-    var reached: Bool
+    var joint: matrix_float4x4!
 }

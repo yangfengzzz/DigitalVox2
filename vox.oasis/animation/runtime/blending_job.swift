@@ -19,7 +19,7 @@ import Foundation
 // blend operations in a single pass.
 // The job does not owned any buffers (input/output) and will thus not delete
 // them during job's destruction.
-struct BlendingJob {
+class BlendingJob {
     // Validates job parameters.
     // Returns true for a valid job, false otherwise:
     // -if layer range is not valid (can be empty though).
@@ -29,7 +29,7 @@ struct BlendingJob {
     // -if any buffer (including layers' content : transform, joint weights...) is
     // smaller than the bind pose buffer.
     // -if the threshold value is less than or equal to 0.f.
-    func Validate() -> Bool {
+    func validate() -> Bool {
         fatalError()
     }
 
@@ -37,7 +37,7 @@ struct BlendingJob {
     // The job is validated before any operation is performed, see Validate() for
     // more details.
     // Returns false if *this job is not valid.
-    func Run() -> Bool {
+    func run(_ output: inout ArraySlice<SoaTransform>) -> Bool {
         fatalError()
     }
 
@@ -74,27 +74,20 @@ struct BlendingJob {
     // The job blends the bind pose to the output when the accumulated weight of
     // all layers is less than this threshold value.
     // Must be greater than 0.f.
-    var threshold: Float
+    var threshold: Float!
 
     // Job input layers, can be empty or nullptr.
     // The range of layers that must be blended.
-    var layers: ArraySlice<Layer>
+    var layers: ArraySlice<Layer>!
 
     // Job input additive layers, can be empty or nullptr.
     // The range of layers that must be added to the output.
-    var additive_layers: ArraySlice<Layer>
+    var additive_layers: ArraySlice<Layer>!
 
     // The skeleton bind pose. The size of this buffer defines the number of
     // transforms to blend. This is the reference because this buffer is defined
     // by the skeleton that all the animations belongs to.
     // It is used when the accumulated weight for a bone on all layers is
     // less than the threshold value, in order to fall back on valid transforms.
-    var bind_pose: ArraySlice<SoaTransform>
-
-    //MARK: -  Job output.
-    // The range of output transforms to be filled with blended layer
-    // transforms during job execution.
-    // Must be at least as big as the bind pose buffer, but only the number of
-    // transforms defined by the bind pose buffer size will be processed.
-    var output: ArraySlice<SoaTransform>
+    var bind_pose: ArraySlice<SoaTransform>!
 }

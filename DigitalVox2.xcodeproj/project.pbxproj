@@ -399,6 +399,9 @@
 		04AFAC5C273B3FAC003E5928 /* BoxCharacterControllerDesc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC5B273B3FAC003E5928 /* BoxCharacterControllerDesc.swift */; };
 		04AFAC5E273B3FBB003E5928 /* CapsuleCharacterControllerDesc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC5D273B3FBB003E5928 /* CapsuleCharacterControllerDesc.swift */; };
 		04AFAC60273B44DA003E5928 /* PhysicsObstacle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC5F273B44DA003E5928 /* PhysicsObstacle.swift */; };
+		04AFAC64273B63AF003E5928 /* ik_aim_job.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC61273B63AF003E5928 /* ik_aim_job.swift */; };
+		04AFAC65273B63AF003E5928 /* blending_job.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC62273B63AF003E5928 /* blending_job.swift */; };
+		04AFAC66273B63AF003E5928 /* ik_two_bone_job.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC63273B63AF003E5928 /* ik_two_bone_job.swift */; };
 		04AFFD4A272FAA5D005C2835 /* PhysXRaycastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFFD49272FAA5D005C2835 /* PhysXRaycastView.swift */; };
 		04CB88C427320E6700B0E398 /* Skeleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88C327320E6700B0E398 /* Skeleton.swift */; };
 		04CB88C7273211DE00B0E398 /* skeleton.usda in Resources */ = {isa = PBXBuildFile; fileRef = 04CB88C5273211DE00B0E398 /* skeleton.usda */; };
@@ -971,6 +974,9 @@
 		04AFAC5B273B3FAC003E5928 /* BoxCharacterControllerDesc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxCharacterControllerDesc.swift; sourceTree = "<group>"; };
 		04AFAC5D273B3FBB003E5928 /* CapsuleCharacterControllerDesc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapsuleCharacterControllerDesc.swift; sourceTree = "<group>"; };
 		04AFAC5F273B44DA003E5928 /* PhysicsObstacle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsObstacle.swift; sourceTree = "<group>"; };
+		04AFAC61273B63AF003E5928 /* ik_aim_job.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ik_aim_job.swift; sourceTree = "<group>"; };
+		04AFAC62273B63AF003E5928 /* blending_job.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = blending_job.swift; sourceTree = "<group>"; };
+		04AFAC63273B63AF003E5928 /* ik_two_bone_job.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ik_two_bone_job.swift; sourceTree = "<group>"; };
 		04AFFD49272FAA5D005C2835 /* PhysXRaycastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXRaycastView.swift; sourceTree = "<group>"; };
 		04CB88C327320E6700B0E398 /* Skeleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Skeleton.swift; sourceTree = "<group>"; };
 		04CB88C5273211DE00B0E398 /* skeleton.usda */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = skeleton.usda; sourceTree = "<group>"; };
@@ -2133,6 +2139,9 @@
 				0486928027375861007B8DFE /* soa_animation.mm */,
 				048692522736004C007B8DFE /* animation_utils.swift */,
 				042F0DCA2736511B00FF4A26 /* sampling_job.swift */,
+				04AFAC62273B63AF003E5928 /* blending_job.swift */,
+				04AFAC61273B63AF003E5928 /* ik_aim_job.swift */,
+				04AFAC63273B63AF003E5928 /* ik_two_bone_job.swift */,
 			);
 			path = runtime;
 			sourceTree = "<group>";
@@ -2713,11 +2722,13 @@
 				041BADFF272A500F006268D5 /* voxApp.swift in Sources */,
 				048692512735FE13007B8DFE /* animation_optimizer.swift in Sources */,
 				041BAEAF272A5153006268D5 /* ComputePipelineState.swift in Sources */,
+				04AFAC64273B63AF003E5928 /* ik_aim_job.swift in Sources */,
 				041BAE3D272A50ED006268D5 /* MeshRenderer.swift in Sources */,
 				041BAE97272A5141006268D5 /* PhysicsManager.swift in Sources */,
 				041BAEA5272A514D006268D5 /* IClone.swift in Sources */,
 				041BAE61272A510C006268D5 /* ShaderDataGroup.swift in Sources */,
 				041BAE46272A50F2006268D5 /* MeshBuffer.swift in Sources */,
+				04AFAC65273B63AF003E5928 /* blending_job.swift in Sources */,
 				04E59C9927390022000BCA73 /* CPxJointLinearLimitPair.mm in Sources */,
 				041BAE0E272A500F006268D5 /* Background.swift in Sources */,
 				041BAE07272A500F006268D5 /* Layer.swift in Sources */,
@@ -2916,6 +2927,7 @@
 				042F0DC727351DDD00FF4A26 /* SkeletonMaterial.swift in Sources */,
 				041BAE30272A50E6006268D5 /* Matrix.swift in Sources */,
 				041BAE27272A50D9006268D5 /* BackgroundMode.swift in Sources */,
+				04AFAC66273B63AF003E5928 /* ik_two_bone_job.swift in Sources */,
 				041BAEB3272A5166006268D5 /* LiteSphereColliderShape.swift in Sources */,
 				04AFAC28273A462C003E5928 /* HingeJoint.swift in Sources */,
 				041BAEC4272A516E006268D5 /* ShaderSimple.metal in Sources */,
