@@ -261,14 +261,13 @@ class BlendingJobTests: XCTestCase {
             var output_transforms = [SoaTransform.identity(), SoaTransform.identity()]
 
             let job = BlendingJob()
-            job.layers = layers[...]
             job.bind_pose = bind_poses[...]
 
             // Weight 0 (a bit less must give the same result) for the first layer,
             // 1 for the second.
             layers[0].weight = -0.07
             layers[1].weight = 1.0
-
+            job.layers = layers[...] // must bind after modification
             XCTAssertTrue(job.run(&output_transforms[...]))
 
             EXPECT_SOAFLOAT3_EQ(output_transforms[0].translation, -0.0, -1.0, -2.0,
@@ -284,7 +283,7 @@ class BlendingJobTests: XCTestCase {
             // Weight 1 for the first layer, 0 for the second.
             layers[0].weight = 1.0
             layers[1].weight = 1e-27  // Very low weight value.
-
+            job.layers = layers[...] // must bind after modification
             XCTAssertTrue(job.run(&output_transforms[...]))
 
             EXPECT_SOAFLOAT3_EQ(output_transforms[0].translation, 0.0, 1.0, 2.0, 3.0,
@@ -299,7 +298,7 @@ class BlendingJobTests: XCTestCase {
             // Weight .5 for both layers.
             layers[0].weight = 0.5
             layers[1].weight = 0.5
-
+            job.layers = layers[...] // must bind after modification
             XCTAssertTrue(job.run(&output_transforms[...]))
 
             EXPECT_SOAFLOAT3_EQ(output_transforms[0].translation, 0.0, 0.0, 0.0, 0.0,
@@ -355,12 +354,11 @@ class BlendingJobTests: XCTestCase {
             var output_transforms = [SoaTransform.identity(), SoaTransform.identity(), SoaTransform.identity()]
 
             let job = BlendingJob()
-            job.layers = layers[...]
             job.bind_pose = bind_poses[...]
 
             layers[0].weight = 0.5
             layers[1].weight = 0.5
-
+            job.layers = layers[...] // must bind after modification
             XCTAssertTrue(job.run(&output_transforms[...]))
 
             EXPECT_SOAFLOAT3_EQ(output_transforms[0].translation, 0.0, 0.0, -2.0, 13.0,
@@ -376,12 +374,11 @@ class BlendingJobTests: XCTestCase {
             var output_transforms = [SoaTransform.identity(), SoaTransform.identity()]
 
             let job = BlendingJob()
-            job.layers = layers[...]
             job.bind_pose = bind_poses[...]
 
             layers[0].weight = 0.0
             layers[1].weight = 1.0
-
+            job.layers = layers[...] // must bind after modification
             XCTAssertTrue(job.run(&output_transforms[...]))
 
             EXPECT_SOAFLOAT3_EQ(output_transforms[0].translation, -0.0, -1.0, -2.0,
@@ -628,11 +625,11 @@ class BlendingJobTests: XCTestCase {
             var output_transforms = [SoaTransform.identity()]
 
             let job = BlendingJob()
-            job.additive_layers = layers[...]
             job.bind_pose = bind_poses[...]
 
             // No weight for the 1st layer.
             layers[0].weight = 0.0
+            job.additive_layers = layers[...] // must bind after modification
             XCTAssertTrue(job.run(&output_transforms[...]))
 
             EXPECT_SOAFLOAT3_EQ(output_transforms[0].translation, 0.0, 0.0, 0.0, 0.0,
@@ -645,6 +642,7 @@ class BlendingJobTests: XCTestCase {
 
             // .5 weight for the 1st layer.
             layers[0].weight = 0.5
+            job.additive_layers = layers[...] // must bind after modification
             XCTAssertTrue(job.run(&output_transforms[...]))
 
             EXPECT_SOAFLOAT3_EQ(output_transforms[0].translation, 0.0, 0.5, 1.0, 1.5,
@@ -658,6 +656,7 @@ class BlendingJobTests: XCTestCase {
 
             // Full weight for the 1st layer.
             layers[0].weight = 1.0
+            job.additive_layers = layers[...] // must bind after modification
             XCTAssertTrue(job.run(&output_transforms[...]))
 
             EXPECT_SOAFLOAT3_EQ(output_transforms[0].translation, 0.0, 1.0, 2.0, 3.0,
@@ -678,13 +677,12 @@ class BlendingJobTests: XCTestCase {
             var output_transforms = [SoaTransform.identity()]
 
             let job = BlendingJob()
-            job.additive_layers = layers[...]
             job.bind_pose = bind_poses[...]
 
             // No weight for the 1st layer.
             layers[0].weight = 0.0
             layers[1].weight = 1.0
-
+            job.additive_layers = layers[...] // must bind after modification
             XCTAssertTrue(job.run(&output_transforms[...]))
 
             EXPECT_SOAFLOAT3_EQ(output_transforms[0].translation, -0.0, -1.0, -2.0,
@@ -699,7 +697,7 @@ class BlendingJobTests: XCTestCase {
             // Full weight for the both layer.
             layers[0].weight = 1.0
             layers[1].weight = 1.0
-
+            job.additive_layers = layers[...] // must bind after modification
             XCTAssertTrue(job.run(&output_transforms[...]))
 
             EXPECT_SOAFLOAT3_EQ(output_transforms[0].translation, 0.0, 0.0, 0.0, 0.0,
@@ -715,7 +713,7 @@ class BlendingJobTests: XCTestCase {
             layers[0].weight = 0.5
             layers[1].transform = input_transforms[0][...]
             layers[1].weight = -0.5
-
+            job.additive_layers = layers[...] // must bind after modification
             XCTAssertTrue(job.run(&output_transforms[...]))
 
             EXPECT_SOAFLOAT3_EQ(output_transforms[0].translation, 0.0, 0.0, 0.0, 0.0,
@@ -761,11 +759,11 @@ class BlendingJobTests: XCTestCase {
             var output_transforms = [SoaTransform.identity()]
 
             let job = BlendingJob()
-            job.additive_layers = layers[...]
             job.bind_pose = bind_poses[...]
 
             // No weight for the 1st layer.
             layers[0].weight = 0.0
+            job.additive_layers = layers[...] // must bind after modification
             XCTAssertTrue(job.run(&output_transforms[...]))
 
             EXPECT_SOAFLOAT3_EQ(output_transforms[0].translation, 0.0, 0.0, 0.0, 0.0,
@@ -778,6 +776,7 @@ class BlendingJobTests: XCTestCase {
 
             // .5 weight for the 1st layer.
             layers[0].weight = 0.5
+            job.additive_layers = layers[...] // must bind after modification
             XCTAssertTrue(job.run(&output_transforms[...]))
 
             EXPECT_SOAFLOAT3_EQ(output_transforms[0].translation, 0.0, 0.25, 0.0, 0.0,
@@ -790,6 +789,7 @@ class BlendingJobTests: XCTestCase {
 
             // Full weight for the 1st layer.
             layers[0].weight = 1.0
+            job.additive_layers = layers[...] // must bind after modification
             XCTAssertTrue(job.run(&output_transforms[...]))
 
             EXPECT_SOAFLOAT3_EQ(output_transforms[0].translation, 0.0, 0.5, 0.0, 0.0,
@@ -802,7 +802,7 @@ class BlendingJobTests: XCTestCase {
 
             // Subtract layer.
             layers[0].weight = -1.0
-
+            job.additive_layers = layers[...] // must bind after modification
             XCTAssertTrue(job.run(&output_transforms[...]))
 
             EXPECT_SOAFLOAT3_EQ(output_transforms[0].translation, -0.0, -0.5, 0.0, 0.0,
