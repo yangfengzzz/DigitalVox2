@@ -123,7 +123,7 @@ class BlendingJob {
     // The job blends the bind pose to the output when the accumulated weight of
     // all layers is less than this threshold value.
     // Must be greater than 0.f.
-    var threshold: Float = 1.0
+    var threshold: Float = 0.1
 
     // Job input layers, can be empty or nullptr.
     // The range of layers that must be blended.
