@@ -63,7 +63,7 @@ class LiteDynamicCollider: LiteCollider, IDynamicCollider {
         fatalError("Physics-lite don't support setSolverIterations. Use Physics-PhysX instead!")
     }
 
-    func setCollisionDetectionMode(value: CollisionDetectionMode) {
+    func setCollisionDetectionMode(_ value: Int) {
         fatalError("Physics-lite don't support setCollisionDetectionMode. Use Physics-PhysX instead!")
     }
 

@@ -8,7 +8,7 @@
 import Foundation
 
 /// The collision detection mode constants used for PhysXDynamicCollider.collisionDetectionMode.
-enum CollisionDetectionMode {
+enum CollisionDetectionMode : Int {
     /// Continuous collision detection is off for this dynamic collider.
     case Discrete
     /// Continuous collision detection is on for colliding with static mesh geometry.
@@ -94,21 +94,23 @@ class PhysXDynamicCollider: PhysXCollider, IDynamicCollider {
         (_pxActor as! CPxRigidDynamic).setSolverIterationCounts(UInt32(value), minVelocityIters: 1)
     }
 
-    func setCollisionDetectionMode(value: CollisionDetectionMode) {
+    func setCollisionDetectionMode(_ value: Int) {
         switch (value) {
-        case CollisionDetectionMode.Continuous:
+        case CollisionDetectionMode.Continuous.rawValue:
             (_pxActor as! CPxRigidDynamic).setRigidBodyFlag(eENABLE_CCD, value: true)
             break
-        case CollisionDetectionMode.ContinuousDynamic:
+        case CollisionDetectionMode.ContinuousDynamic.rawValue:
             (_pxActor as! CPxRigidDynamic).setRigidBodyFlag(eENABLE_CCD_FRICTION, value: true)
             break
-        case CollisionDetectionMode.ContinuousSpeculative:
+        case CollisionDetectionMode.ContinuousSpeculative.rawValue:
             (_pxActor as! CPxRigidDynamic).setRigidBodyFlag(eENABLE_SPECULATIVE_CCD, value: true)
             break
-        case CollisionDetectionMode.Discrete:
+        case CollisionDetectionMode.Discrete.rawValue:
             (_pxActor as! CPxRigidDynamic).setRigidBodyFlag(eENABLE_CCD, value: false)
             (_pxActor as! CPxRigidDynamic).setRigidBodyFlag(eENABLE_CCD_FRICTION, value: false)
             (_pxActor as! CPxRigidDynamic).setRigidBodyFlag(eENABLE_SPECULATIVE_CCD, value: false)
+            break
+        default:
             break
         }
     }

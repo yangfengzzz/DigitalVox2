@@ -9,6 +9,183 @@ import Foundation
 
 /// A dynamic collider can act with self-defined movement or physical force.
 class DynamicCollider: Collider {
+    private var _linearDamping: Float = 0
+    private var _angularDamping: Float = 0
+    private var _linearVelocity = Vector3()
+    private var _angularVelocity = Vector3()
+    private var _mass: Float = 0
+    private var _centerOfMass = Vector3()
+    private var _inertiaTensor = Vector3()
+    private var _maxAngularVelocity: Float = 0
+    private var _maxDepenetrationVelocity: Float = 0
+    private var _sleepThreshold: Float = 0
+    private var _solverIterations: Int = 0
+    private var _isKinematic: Bool = false
+    private var _freezeRotation: Bool = false
+    private var _collisionDetectionMode: CollisionDetectionMode = .Discrete
+
+    /// The linear damping of the dynamic collider.
+    var linearDamping: Float {
+        get {
+            _linearDamping
+        }
+        set {
+            _linearDamping = newValue
+            (_nativeCollider as! IDynamicCollider).setLinearDamping(newValue)
+        }
+    }
+
+    /// The angular damping of the dynamic collider.
+    var angularDamping: Float {
+        get {
+            _angularDamping
+        }
+        set {
+            _angularDamping = newValue
+            (_nativeCollider as! IDynamicCollider).setAngularDamping(newValue)
+        }
+    }
+
+    /// The linear velocity vector of the dynamic collider measured in world unit per second.
+    var linearVelocity: Vector3 {
+        get {
+            _linearVelocity
+        }
+        set {
+            if _linearVelocity !== newValue {
+                newValue.cloneTo(target: _linearVelocity)
+            }
+            (_nativeCollider as! IDynamicCollider).setLinearVelocity(_linearVelocity)
+        }
+    }
+
+    /// The angular velocity vector of the dynamic collider measured in radians per second.
+    var angularVelocity: Vector3 {
+        get {
+            _angularVelocity
+        }
+        set {
+            if _angularVelocity !== newValue {
+                newValue.cloneTo(target: _angularVelocity)
+            }
+            (_nativeCollider as! IDynamicCollider).setAngularVelocity(_angularVelocity)
+        }
+    }
+
+    /// The mass of the dynamic collider.
+    var mass: Float {
+        get {
+            _mass
+        }
+        set {
+            _mass = newValue
+            (_nativeCollider as! IDynamicCollider).setMass(newValue)
+        }
+    }
+
+    /// The center of mass relative to the transform's origin.
+    var centerOfMass: Vector3 {
+        get {
+            _centerOfMass
+        }
+        set {
+            if _centerOfMass !== newValue {
+                newValue.cloneTo(target: _centerOfMass)
+            }
+            (_nativeCollider as! IDynamicCollider).setCenterOfMass(_centerOfMass)
+        }
+    }
+
+    /// The diagonal inertia tensor of mass relative to the center of mass.
+    var inertiaTensor: Vector3 {
+        get {
+            _inertiaTensor
+        }
+        set {
+            if _inertiaTensor !== newValue {
+                newValue.cloneTo(target: _inertiaTensor)
+            }
+            (_nativeCollider as! IDynamicCollider).setInertiaTensor(_inertiaTensor)
+        }
+    }
+
+    /// The maximum angular velocity of the collider measured in radians per second. (Default 7) range { 0, infinity }.
+    var maxAngularVelocity: Float {
+        get {
+            _maxAngularVelocity
+        }
+        set {
+            _maxAngularVelocity = newValue
+            (_nativeCollider as! IDynamicCollider).setMaxAngularVelocity(newValue)
+        }
+    }
+
+    /// Maximum velocity of a collider when moving out of penetrating state.
+    var maxDepenetrationVelocity: Float {
+        get {
+            _maxDepenetrationVelocity
+        }
+        set {
+            _maxDepenetrationVelocity = newValue
+            (_nativeCollider as! IDynamicCollider).setMaxDepenetrationVelocity(newValue)
+        }
+    }
+
+    /// The mass-normalized energy threshold, below which objects start going to sleep.
+    var sleepThreshold: Float {
+        get {
+            _sleepThreshold
+        }
+        set {
+            _sleepThreshold = newValue
+            (_nativeCollider as! IDynamicCollider).setSleepThreshold(newValue)
+        }
+    }
+
+    /// The solverIterations determines how accurately collider joints and collision contacts are resolved.
+    var solverIterations: Int {
+        get {
+            _solverIterations
+        }
+        set {
+            _solverIterations = newValue
+            (_nativeCollider as! IDynamicCollider).setSolverIterations(newValue)
+        }
+    }
+
+    /// Controls whether physics affects the dynamic collider.
+    var isKinematic: Bool {
+        get {
+            _isKinematic
+        }
+        set {
+            _isKinematic = newValue
+            (_nativeCollider as! IDynamicCollider).setIsKinematic(newValue)
+        }
+    }
+
+    /// Controls whether physics will change the rotation of the object.
+    var freezeRotation: Bool {
+        get {
+            _freezeRotation
+        }
+        set {
+            _freezeRotation = newValue
+            (_nativeCollider as! IDynamicCollider).setFreezeRotation(newValue)
+        }
+    }
+
+    /// The colliders' collision detection mode.
+    var collisionDetectionMode: CollisionDetectionMode {
+        get {
+            _collisionDetectionMode
+        }
+        set {
+            _collisionDetectionMode = newValue
+            (_nativeCollider as! IDynamicCollider).setCollisionDetectionMode(newValue.rawValue)
+        }
+    }
+
     required init(_ entity: Entity) {
         super.init(entity)
         let transform = entity.transform!
@@ -16,76 +193,6 @@ class DynamicCollider: Collider {
                 transform.worldPosition,
                 transform.worldRotationQuaternion
         )
-    }
-    
-    /// The linear damping of the dynamic collider.
-    func setLinearDamping(_ value: Float) {
-        (_nativeCollider as! IDynamicCollider).setLinearDamping(value)
-    }
-
-    /// The angular damping of the dynamic collider.
-    func setAngularDamping(_ value: Float) {
-        (_nativeCollider as! IDynamicCollider).setAngularDamping(value)
-    }
-
-    /// The linear velocity vector of the dynamic collider measured in world unit per second.
-    func setLinearVelocity(_ value: Vector3) {
-        (_nativeCollider as! IDynamicCollider).setLinearVelocity(value)
-    }
-
-    /// The angular velocity vector of the dynamic collider measured in radians per second.
-    func setAngularVelocity(_ value: Vector3) {
-        (_nativeCollider as! IDynamicCollider).setAngularVelocity(value)
-    }
-
-    /// The mass of the dynamic collider.
-    func setMass(_ value: Float) {
-        (_nativeCollider as! IDynamicCollider).setMass(value)
-    }
-
-    /// The center of mass relative to the transform's origin.
-    func setCenterOfMass(_ value: Vector3) {
-        (_nativeCollider as! IDynamicCollider).setCenterOfMass(value)
-    }
-
-    /// The diagonal inertia tensor of mass relative to the center of mass.
-    func setInertiaTensor(_ value: Vector3) {
-        (_nativeCollider as! IDynamicCollider).setInertiaTensor(value)
-    }
-
-    /// The maximum angular velocity of the collider measured in radians per second. (Default 7) range { 0, infinity }.
-    func setMaxAngularVelocity(_ value: Float) {
-        (_nativeCollider as! IDynamicCollider).setMaxAngularVelocity(value)
-    }
-
-    /// Maximum velocity of a collider when moving out of penetrating state.
-    func setMaxDepenetrationVelocity(_ value: Float) {
-        (_nativeCollider as! IDynamicCollider).setMaxDepenetrationVelocity(value)
-    }
-
-    /// The mass-normalized energy threshold, below which objects start going to sleep.
-    func setSleepThreshold(_ value: Float) {
-        (_nativeCollider as! IDynamicCollider).setSleepThreshold(value)
-    }
-
-    /// The solverIterations determines how accurately collider joints and collision contacts are resolved.
-    func setSolverIterations(_ value: Int) {
-        (_nativeCollider as! IDynamicCollider).setSolverIterations(value)
-    }
-
-    /// The colliders' collision detection mode.
-    func setCollisionDetectionMode(value: CollisionDetectionMode) {
-        (_nativeCollider as! IDynamicCollider).setCollisionDetectionMode(value: value)
-    }
-
-    /// Controls whether physics affects the dynamic collider.
-    func setIsKinematic(_ value: Bool) {
-        (_nativeCollider as! IDynamicCollider).setIsKinematic(value)
-    }
-
-    /// Controls whether physics will change the rotation of the object.
-    func setFreezeRotation(_ value: Bool) {
-        (_nativeCollider as! IDynamicCollider).setFreezeRotation(value)
     }
 
     /// Apply a force to the DynamicCollider.

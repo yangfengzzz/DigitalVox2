@@ -43,7 +43,7 @@ protocol IDynamicCollider: ICollider {
     func setSolverIterations(_ value: Int)
 
     /// The colliders' collision detection mode.
-    func setCollisionDetectionMode(value: CollisionDetectionMode)
+    func setCollisionDetectionMode(_ value: Int)
 
     /// Controls whether physics affects the dynamic collider.
     func setIsKinematic(_ value: Bool)
