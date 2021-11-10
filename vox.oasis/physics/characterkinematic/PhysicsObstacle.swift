@@ -16,6 +16,20 @@ class PhysicsObstacle {
 }
 
 class PhysicsBoxObstacle: PhysicsObstacle {
+    private var _halfExtents = Vector3()
+
+    var halfExtents: Vector3 {
+        get {
+            _halfExtents
+        }
+        set {
+            if _halfExtents !== newValue {
+                newValue.cloneTo(target: _halfExtents)
+            }
+            (_nativeObstacle as! IPhysicsBoxObstacle).setHalfExtents(_halfExtents)
+        }
+    }
+
     override init() {
         super.init()
         _nativeObstacle = PhysicsManager._nativePhysics.createBoxObstacle()
@@ -28,13 +42,32 @@ class PhysicsBoxObstacle: PhysicsObstacle {
     func setRot(_ mRot: Quaternion) {
         (_nativeObstacle as! IPhysicsBoxObstacle).setRot(mRot)
     }
-
-    func setHalfExtents(_ mHalfExtents: Vector3) {
-        (_nativeObstacle as! IPhysicsBoxObstacle).setHalfExtents(mHalfExtents)
-    }
 }
 
 class PhysicsCapsuleObstacle: PhysicsObstacle {
+    private var _radius: Float = 0
+    private var _halfHeight: Float = 0
+
+    var radius: Float {
+        get {
+            _radius
+        }
+        set {
+            _radius = newValue
+            (_nativeObstacle as! IPhysicsCapsuleObstacle).setRadius(newValue)
+        }
+    }
+
+    var halfHeight: Float {
+        get {
+            _halfHeight
+        }
+        set {
+            _halfHeight = newValue
+            (_nativeObstacle as! IPhysicsCapsuleObstacle).setHalfHeight(newValue)
+        }
+    }
+
     override init() {
         super.init()
         _nativeObstacle = PhysicsManager._nativePhysics.createCapsuleObstacle()
@@ -46,13 +79,5 @@ class PhysicsCapsuleObstacle: PhysicsObstacle {
 
     func setRot(_ mRot: Quaternion) {
         (_nativeObstacle as! IPhysicsCapsuleObstacle).setRot(mRot)
-    }
-
-    func setRadius(_ mRadius: Float) {
-        (_nativeObstacle as! IPhysicsCapsuleObstacle).setRadius(mRadius)
-    }
-
-    func setHalfHeight(_ mHalfHeight: Float) {
-        (_nativeObstacle as! IPhysicsCapsuleObstacle).setHalfHeight(mHalfHeight)
     }
 }
