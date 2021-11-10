@@ -68,7 +68,7 @@ class BlendingJobTests: XCTestCase {
             let job = BlendingJob()
             job.layers = layers[0..<2]
             job.bind_pose = bind_poses[0..<2]
-            XCTAssertTrue(sjob.validate())
+            XCTAssertTrue(job.validate())
             XCTAssertFalse(job.run(&output_transforms[0..<1]))
         }
 
@@ -397,18 +397,422 @@ class BlendingJobTests: XCTestCase {
     }
 
     func testNormalize() {
+        let identity = SoaTransform.identity()
 
+        // Initialize inputs.
+        var input_transforms = [[identity], [identity]]
+
+        // Initialize bind pose.
+        var bind_poses = [identity]
+        bind_poses[0].scale = SoaFloat3.load(
+                simd_float4.load(0.0, 1.0, 2.0, 3.0),
+                simd_float4.load(4.0, 5.0, 6.0, 7.0),
+                simd_float4.load(8.0, 9.0, 10.0, 11.0))
+
+        input_transforms[0][0].rotation = SoaQuaternion.load(
+                simd_float4.load(0.70710677, 0.0, 0.0, 0.382683432),
+                simd_float4.load(0.0, 0.0, 0.70710677, 0.0),
+                simd_float4.load(0.0, 0.0, 0.0, 0.0),
+                simd_float4.load(0.70710677, 1.0, 0.70710677, 0.9238795))
+        input_transforms[1][0].rotation = SoaQuaternion.load(
+                simd_float4.load(0.0, 0.70710677, -0.70710677, -0.382683432),
+                simd_float4.load(0.0, 0.0, 0.0, 0.0),
+                simd_float4.load(0.0, 0.0, -0.70710677, 0.0),
+                simd_float4.load(1.0, 0.70710677, 0.0, -0.9238795))
+
+        do {  // Un-normalized weights < 1.0.
+            input_transforms[0][0].translation = SoaFloat3.load(
+                    simd_float4.load(2.0, 3.0, 4.0, 5.0),
+                    simd_float4.load(6.0, 7.0, 8.0, 9.0),
+                    simd_float4.load(10.0, 11.0, 12.0, 13.0))
+            input_transforms[1][0].translation = SoaFloat3.load(
+                    simd_float4.load(3.0, 4.0, 5.0, 6.0),
+                    simd_float4.load(7.0, 8.0, 9.0, 10.0),
+                    simd_float4.load(11.0, 12.0, 13.0, 14.0))
+
+            var layers = [BlendingJob.Layer(), BlendingJob.Layer()]
+            layers[0].weight = 0.2
+            layers[0].transform = input_transforms[0][...]
+            layers[1].weight = 0.3
+            layers[1].transform = input_transforms[1][...]
+
+            var output_transforms = [SoaTransform.identity()]
+
+            let job = BlendingJob()
+            job.layers = layers[...]
+            job.bind_pose = bind_poses[...]
+
+            XCTAssertTrue(job.run(&output_transforms[...]))
+
+            EXPECT_SOAFLOAT3_EQ(output_transforms[0].translation, 2.6, 3.6, 4.6,
+                    5.6, 6.6, 7.6, 8.6, 9.6, 10.6, 11.6, 12.6, 13.6)
+            EXPECT_SOAQUATERNION_EQ_EST(output_transforms[0].rotation, 0.30507791,
+                    0.45761687, -0.58843851, 0.38268352, 0.0, 0.0,
+                    0.39229235, 0.0, 0.0, 0.0, -0.58843851, 0.0,
+                    0.95224595, 0.88906217, 0.39229235, 0.92387962)
+            XCTAssertTrue(areAllTrue(isNormalizedEst(output_transforms[0].rotation)))
+            EXPECT_SOAFLOAT3_EQ(output_transforms[0].scale, 1.0, 1.0, 1.0, 1.0, 1.0,
+                    1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)
+        }
+        do {  // Un-normalized weights > 1.0.
+            input_transforms[0][0].translation = SoaFloat3.load(
+                    simd_float4.load(5.0, 10.0, 15.0, 20.0),
+                    simd_float4.load(25.0, 30.0, 35.0, 40.0),
+                    simd_float4.load(45.0, 50.0, 55.0, 60.0))
+            input_transforms[1][0].translation = SoaFloat3.load(
+                    simd_float4.load(10.0, 15.0, 20.0, 25.0),
+                    simd_float4.load(30.0, 35.0, 40.0, 45.0),
+                    simd_float4.load(50.0, 55.0, 60.0, 65.0))
+
+            var layers = [BlendingJob.Layer(), BlendingJob.Layer()]
+            layers[0].weight = 2.0
+            layers[0].transform = input_transforms[0][...]
+            layers[1].weight = 3.0
+            layers[1].transform = input_transforms[1][...]
+
+            var output_transforms = [SoaTransform.identity()]
+
+            let job = BlendingJob()
+            job.layers = layers[...]
+            job.bind_pose = bind_poses[...]
+
+            XCTAssertTrue(job.run(&output_transforms[...]))
+
+            EXPECT_SOAFLOAT3_EQ(output_transforms[0].translation, 8.0, 13.0, 18.0, 23.0,
+                    28.0, 33.0, 38.0, 43.0, 48.0, 53.0, 58.0, 63.0)
+            EXPECT_SOAQUATERNION_EQ_EST(output_transforms[0].rotation, 0.30507791,
+                    0.45761687, -0.58843851, 0.38268352, 0.0, 0.0,
+                    0.39229235, 0.0, 0.0, 0.0, -0.58843851, 0.0,
+                    0.95224595, 0.88906217, 0.39229235, 0.92387962)
+            XCTAssertTrue(areAllTrue(isNormalizedEst(output_transforms[0].rotation)))
+            EXPECT_SOAFLOAT3_EQ(output_transforms[0].scale, 1.0, 1.0, 1.0, 1.0, 1.0,
+                    1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)
+        }
+        do {  // Un-normalized weights > 1.0, with per-joint weights.
+            input_transforms[0][0].translation = SoaFloat3.load(
+                    simd_float4.load(5.0, 10.0, 15.0, 20.0),
+                    simd_float4.load(25.0, 30.0, 35.0, 40.0),
+                    simd_float4.load(45.0, 50.0, 55.0, 60.0))
+            input_transforms[1][0].translation = SoaFloat3.load(
+                    simd_float4.load(10.0, 15.0, 20.0, 25.0),
+                    simd_float4.load(30.0, 35.0, 40.0, 45.0),
+                    simd_float4.load(50.0, 55.0, 60.0, 65.0))
+            let joint_weights = [
+                simd_float4.load(1.0, -1.0, 2.0, 0.1)]
+
+            var layers = [BlendingJob.Layer(), BlendingJob.Layer()]
+            layers[0].weight = 2.0
+            layers[0].transform = input_transforms[0][...]
+            layers[1].weight = 3.0
+            layers[1].transform = input_transforms[1][...]
+            layers[1].joint_weights = joint_weights[...]
+
+            var output_transforms = [SoaTransform.identity()]
+
+            let job = BlendingJob()
+            job.layers = layers[...]
+            job.bind_pose = bind_poses[...]
+
+            XCTAssertTrue(job.run(&output_transforms[...]))
+
+            EXPECT_SOAFLOAT3_EQ(output_transforms[0].translation, 8.0, 10.0,
+                    150.0 / 8.0, 47.5 / 2.3, 28.0, 30.0, 310.0 / 8.0,
+                    93.5 / 2.3, 48.0, 50.0, 470.0 / 8.0, 139.5 / 2.3)
+            EXPECT_SOAFLOAT3_EQ(output_transforms[0].scale, 1.0, 1.0, 1.0, 1.0, 1.0,
+                    1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)
+        }
     }
 
     func testThreshold() {
+        let identity = SoaTransform.identity()
 
+        // Initialize inputs.
+        var input_transforms = [[identity], [identity]]
+
+        // Initialize bind pose.
+        var bind_poses = [identity]
+        bind_poses[0].scale = SoaFloat3.load(
+                simd_float4.load(0.0, 1.0, 2.0, 3.0),
+                simd_float4.load(4.0, 5.0, 6.0, 7.0),
+                simd_float4.load(8.0, 9.0, 10.0, 11.0))
+
+        input_transforms[0][0].translation = SoaFloat3.load(
+                simd_float4.load(2.0, 3.0, 4.0, 5.0),
+                simd_float4.load(6.0, 7.0, 8.0, 9.0),
+                simd_float4.load(10.0, 11.0, 12.0, 13.0))
+        input_transforms[1][0].translation = SoaFloat3.load(
+                simd_float4.load(3.0, 4.0, 5.0, 6.0),
+                simd_float4.load(7.0, 8.0, 9.0, 10.0),
+                simd_float4.load(11.0, 12.0, 13.0, 14.0))
+
+        do {  // Threshold is not reached.
+            var layers = [BlendingJob.Layer(), BlendingJob.Layer()]
+            layers[0].weight = 0.04
+            layers[0].transform = input_transforms[0][...]
+            layers[1].weight = 0.06
+            layers[1].transform = input_transforms[1][...]
+
+            var output_transforms = [SoaTransform.identity()]
+
+            let job = BlendingJob()
+            job.threshold = 0.1
+            job.layers = layers[...]
+            job.bind_pose = bind_poses[...]
+
+            XCTAssertTrue(job.run(&output_transforms[...]))
+
+            EXPECT_SOAFLOAT3_EQ(output_transforms[0].translation, 2.6, 3.6, 4.6,
+                    5.6, 6.6, 7.6, 8.6, 9.6, 10.6, 11.6, 12.6,
+                    13.6)
+            EXPECT_SOAQUATERNION_EQ_EST(output_transforms[0].rotation, 0.0, 0.0, 0.0,
+                    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                    1.0, 1.0, 1.0, 1.0)
+            EXPECT_SOAFLOAT3_EQ(output_transforms[0].scale, 1.0, 1.0, 1.0, 1.0, 1.0,
+                    1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)
+        }
+        do {  // Threshold is reached at 100%.
+            var layers = [BlendingJob.Layer(), BlendingJob.Layer()]
+            layers[0].weight = 1e-27
+            layers[0].transform = input_transforms[0][...]
+            layers[1].weight = 0.0
+            layers[1].transform = input_transforms[1][...]
+
+            var output_transforms = [SoaTransform.identity()]
+
+            let job = BlendingJob()
+            job.threshold = 0.1
+            job.layers = layers[...]
+            job.bind_pose = bind_poses[...]
+
+            XCTAssertTrue(job.run(&output_transforms[...]))
+
+            EXPECT_SOAFLOAT3_EQ(output_transforms[0].translation, 0.0, 0.0, 0.0, 0.0,
+                    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+            EXPECT_SOAQUATERNION_EQ_EST(output_transforms[0].rotation, 0.0, 0.0, 0.0,
+                    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                    1.0, 1.0, 1.0, 1.0)
+            EXPECT_SOAFLOAT3_EQ(output_transforms[0].scale, 0.0, 1.0, 2.0, 3.0, 4.0,
+                    5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0)
+        }
     }
 
     func testAdditiveWeight() {
+        let identity = SoaTransform.identity()
 
+        // Initialize inputs.
+        var input_transforms = [[identity], [identity]]
+        input_transforms[0][0].translation = SoaFloat3.load(
+                simd_float4.load(0.0, 1.0, 2.0, 3.0),
+                simd_float4.load(4.0, 5.0, 6.0, 7.0),
+                simd_float4.load(8.0, 9.0, 10.0, 11.0))
+        input_transforms[0][0].rotation = SoaQuaternion.load(
+                simd_float4.load(0.70710677, 0.0, 0.0, 0.382683432),
+                simd_float4.load(0.0, 0.0, 0.70710677, 0.0),
+                simd_float4.load(0.0, 0.0, 0.0, 0.0),
+                simd_float4.load(0.70710677, 1.0, -0.70710677, 0.9238795))
+        input_transforms[0][0].scale = SoaFloat3.load(
+                simd_float4.load(12.0, 13.0, 14.0, 15.0),
+                simd_float4.load(16.0, 17.0, 18.0, 19.0),
+                simd_float4.load(20.0, 21.0, 22.0, 23.0))
+        input_transforms[1][0].translation = -input_transforms[0][0].translation
+        input_transforms[1][0].rotation = conjugate(input_transforms[0][0].rotation)
+        input_transforms[1][0].scale = -input_transforms[0][0].scale
+
+        // Initialize bind pose.
+        let bind_poses = [identity]
+
+        do {
+            var layers = [BlendingJob.Layer()]
+            layers[0].transform = input_transforms[0][...]
+
+            var output_transforms = [SoaTransform.identity()]
+
+            let job = BlendingJob()
+            job.additive_layers = layers[...]
+            job.bind_pose = bind_poses[...]
+
+            // No weight for the 1st layer.
+            layers[0].weight = 0.0
+            XCTAssertTrue(job.run(&output_transforms[...]))
+
+            EXPECT_SOAFLOAT3_EQ(output_transforms[0].translation, 0.0, 0.0, 0.0, 0.0,
+                    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+            EXPECT_SOAQUATERNION_EQ_EST(output_transforms[0].rotation, 0.0, 0.0, 0.0,
+                    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                    1.0, 1.0, 1.0, 1.0)
+            EXPECT_SOAFLOAT3_EQ(output_transforms[0].scale, 1.0, 1.0, 1.0, 1.0, 1.0,
+                    1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)
+
+            // .5 weight for the 1st layer.
+            layers[0].weight = 0.5
+            XCTAssertTrue(job.run(&output_transforms[...]))
+
+            EXPECT_SOAFLOAT3_EQ(output_transforms[0].translation, 0.0, 0.5, 1.0, 1.5,
+                    2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5)
+            EXPECT_SOAQUATERNION_EQ_EST(output_transforms[0].rotation, 0.3826834, 0.0,
+                    0.0, 0.19509032, 0.0, 0.0, -0.3826834, 0.0, 0.0,
+                    0.0, 0.0, 0.0, 0.9238795, 1.0, 0.9238795,
+                    0.98078528)
+            EXPECT_SOAFLOAT3_EQ(output_transforms[0].scale, 6.5, 7.0, 7.5, 8.0, 8.5,
+                    9.0, 9.5, 10.0, 10.5, 11.0, 11.5, 12.0)
+
+            // Full weight for the 1st layer.
+            layers[0].weight = 1.0
+            XCTAssertTrue(job.run(&output_transforms[...]))
+
+            EXPECT_SOAFLOAT3_EQ(output_transforms[0].translation, 0.0, 1.0, 2.0, 3.0,
+                    4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0)
+            EXPECT_SOAQUATERNION_EQ_EST(output_transforms[0].rotation, 0.70710677, 0.0,
+                    0.0, 0.382683432, 0.0, 0.0, -0.70710677, 0.0,
+                    0.0, 0.0, 0.0, 0.0, 0.70710677, 1.0, 0.70710677,
+                    0.9238795)
+            EXPECT_SOAFLOAT3_EQ(output_transforms[0].scale, 12.0, 13.0, 14.0, 15.0,
+                    16.0, 17.0, 18.0, 19.0, 20.0, 21.0, 22.0, 23.0)
+        }
+
+        do {
+            var layers = [BlendingJob.Layer(), BlendingJob.Layer()]
+            layers[0].transform = input_transforms[0][...]
+            layers[1].transform = input_transforms[1][...]
+
+            var output_transforms = [SoaTransform.identity()]
+
+            let job = BlendingJob()
+            job.additive_layers = layers[...]
+            job.bind_pose = bind_poses[...]
+
+            // No weight for the 1st layer.
+            layers[0].weight = 0.0
+            layers[1].weight = 1.0
+
+            XCTAssertTrue(job.run(&output_transforms[...]))
+
+            EXPECT_SOAFLOAT3_EQ(output_transforms[0].translation, -0.0, -1.0, -2.0,
+                    -3.0, -4.0, -5.0, -6.0, -7.0, -8.0, -9.0, -10.0, -11.0)
+            EXPECT_SOAQUATERNION_EQ_EST(output_transforms[0].rotation, -0.70710677,
+                    -0.0, -0.0, -0.382683432, -0.0, -0.0,
+                    0.70710677, -0.0, -0.0, -0.0, -0.0, -0.0,
+                    0.70710677, 1.0, 0.70710677, 0.9238795)
+            EXPECT_SOAFLOAT3_EQ(output_transforms[0].scale, -12.0, -13.0, -14.0, -15.0,
+                    -16.0, -17.0, -18.0, -19.0, -20.0, -21.0, -22.0, -23.0)
+
+            // Full weight for the both layer.
+            layers[0].weight = 1.0
+            layers[1].weight = 1.0
+
+            XCTAssertTrue(job.run(&output_transforms[...]))
+
+            EXPECT_SOAFLOAT3_EQ(output_transforms[0].translation, 0.0, 0.0, 0.0, 0.0,
+                    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+            EXPECT_SOAQUATERNION_EQ_EST(output_transforms[0].rotation, 0.0, 0.0, 0.0,
+                    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                    1.0, 1.0, 1.0, 1.0)
+            EXPECT_SOAFLOAT3_EQ(output_transforms[0].scale, -144.0, -169.0, -196.0,
+                    -225.0, -256.0, -289.0, -324.0, -361.0, -400.0, -441.0,
+                    -484.0, -529.0)
+
+            // Subtract second layer.
+            layers[0].weight = 0.5
+            layers[1].transform = input_transforms[0][...]
+            layers[1].weight = -0.5
+
+            XCTAssertTrue(job.run(&output_transforms[...]))
+
+            EXPECT_SOAFLOAT3_EQ(output_transforms[0].translation, 0.0, 0.0, 0.0, 0.0,
+                    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+            EXPECT_SOAQUATERNION_EQ_EST(output_transforms[0].rotation, 0.0, 0.0, 0.0,
+                    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                    1.0, 1.0, 1.0, 1.0)
+            EXPECT_SOAFLOAT3_EQ_EST(output_transforms[0].scale, 1.0, 1.0, 1.0, 1.0, 1.0,
+                    1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)
+        }
     }
 
     func testAdditiveJointWeight() {
+        let identity = SoaTransform.identity()
 
+        // Initialize inputs.
+        var input_transforms = [identity]
+        input_transforms[0].translation = SoaFloat3.load(
+                simd_float4.load(0.0, 1.0, 2.0, 3.0),
+                simd_float4.load(4.0, 5.0, 6.0, 7.0),
+                simd_float4.load(8.0, 9.0, 10.0, 11.0))
+        input_transforms[0].rotation = SoaQuaternion.load(
+                simd_float4.load(0.70710677, 0.0, 0.0, 0.382683432),
+                simd_float4.load(0.0, 0.0, 0.70710677, 0.0),
+                simd_float4.load(0.0, 0.0, 0.0, 0.0),
+                simd_float4.load(0.70710677, 1.0, -0.70710677, 0.9238795))
+        input_transforms[0].scale = SoaFloat3.load(
+                simd_float4.load(12.0, 13.0, 14.0, 15.0),
+                simd_float4.load(16.0, 17.0, 18.0, 19.0),
+                simd_float4.load(20.0, 21.0, 22.0, 23.0))
+
+        let joint_weights = [
+            simd_float4.load(1.0, 0.5, 0.0, -1.0)]
+
+        // Initialize bind pose.
+        let bind_poses = [identity]
+
+        do {
+            var layers = [BlendingJob.Layer()]
+            layers[0].transform = input_transforms[...]
+            layers[0].joint_weights = joint_weights[...]
+
+            var output_transforms = [SoaTransform.identity()]
+
+            let job = BlendingJob()
+            job.additive_layers = layers[...]
+            job.bind_pose = bind_poses[...]
+
+            // No weight for the 1st layer.
+            layers[0].weight = 0.0
+            XCTAssertTrue(job.run(&output_transforms[...]))
+
+            EXPECT_SOAFLOAT3_EQ(output_transforms[0].translation, 0.0, 0.0, 0.0, 0.0,
+                    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+            EXPECT_SOAQUATERNION_EQ_EST(output_transforms[0].rotation, 0.0, 0.0, 0.0,
+                    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                    1.0, 1.0, 1.0, 1.0)
+            EXPECT_SOAFLOAT3_EQ(output_transforms[0].scale, 1.0, 1.0, 1.0, 1.0, 1.0,
+                    1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)
+
+            // .5 weight for the 1st layer.
+            layers[0].weight = 0.5
+            XCTAssertTrue(job.run(&output_transforms[...]))
+
+            EXPECT_SOAFLOAT3_EQ(output_transforms[0].translation, 0.0, 0.25, 0.0, 0.0,
+                    2.0, 1.25, 0.0, 0.0, 4.0, 2.25, 0.0, 0.0)
+            EXPECT_SOAQUATERNION_EQ_EST(output_transforms[0].rotation, 0.3826834, 0.0,
+                    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                    0.0, 0.9238795, 1.0, 1.0, 1.0)
+            EXPECT_SOAFLOAT3_EQ(output_transforms[0].scale, 6.5, 4.0, 1.0, 1.0, 8.5,
+                    5.0, 1.0, 1.0, 10.5, 6.0, 1.0, 1.0)
+
+            // Full weight for the 1st layer.
+            layers[0].weight = 1.0
+            XCTAssertTrue(job.run(&output_transforms[...]))
+
+            EXPECT_SOAFLOAT3_EQ(output_transforms[0].translation, 0.0, 0.5, 0.0, 0.0,
+                    4.0, 2.5, 0.0, 0.0, 8.0, 4.5, 0.0, 0.0)
+            EXPECT_SOAQUATERNION_EQ_EST(output_transforms[0].rotation, 0.70710677, 0.0,
+                    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                    0.0, 0.70710677, 1.0, 1.0, 1.0)
+            EXPECT_SOAFLOAT3_EQ(output_transforms[0].scale, 12.0, 7.0, 1.0, 1.0, 16.0,
+                    9.0, 1.0, 1.0, 20.0, 11.0, 1.0, 1.0)
+
+            // Subtract layer.
+            layers[0].weight = -1.0
+
+            XCTAssertTrue(job.run(&output_transforms[...]))
+
+            EXPECT_SOAFLOAT3_EQ(output_transforms[0].translation, -0.0, -0.5, 0.0, 0.0,
+                    -4.0, -2.5, 0.0, 0.0, -8.0, -4.5, 0.0, 0.0)
+            EXPECT_SOAQUATERNION_EQ_EST(output_transforms[0].rotation, -0.70710677, 0.0,
+                    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                    0.0, 0.70710677, 1.0, 1.0, 1.0)
+            EXPECT_SOAFLOAT3_EQ_EST(output_transforms[0].scale, 1.0 / 12.0, 1.0 / 7.0,
+                    1.0, 1.0, 1.0 / 16.0, 1.0 / 9.0, 1.0, 1.0,
+                    1.0 / 20.0, 1.0 / 11.0, 1.0, 1.0)
+        }
     }
 }
