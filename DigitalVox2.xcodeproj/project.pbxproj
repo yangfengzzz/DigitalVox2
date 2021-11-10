@@ -403,6 +403,7 @@
 		04AFAC65273B63AF003E5928 /* blending_job.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC62273B63AF003E5928 /* blending_job.swift */; };
 		04AFAC66273B63AF003E5928 /* ik_two_bone_job.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC63273B63AF003E5928 /* ik_two_bone_job.swift */; };
 		04AFAC6A273BB0D1003E5928 /* ik_aim_job_tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC69273BB0D1003E5928 /* ik_aim_job_tests.swift */; };
+		04AFAC6C273BB8D7003E5928 /* ik_two_bone_job_tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC6B273BB8D7003E5928 /* ik_two_bone_job_tests.swift */; };
 		04AFFD4A272FAA5D005C2835 /* PhysXRaycastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFFD49272FAA5D005C2835 /* PhysXRaycastView.swift */; };
 		04CB88C427320E6700B0E398 /* Skeleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88C327320E6700B0E398 /* Skeleton.swift */; };
 		04CB88C7273211DE00B0E398 /* skeleton.usda in Resources */ = {isa = PBXBuildFile; fileRef = 04CB88C5273211DE00B0E398 /* skeleton.usda */; };
@@ -980,6 +981,7 @@
 		04AFAC63273B63AF003E5928 /* ik_two_bone_job.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ik_two_bone_job.swift; sourceTree = "<group>"; };
 		04AFAC67273BA2E8003E5928 /* blending_job_tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = blending_job_tests.swift; sourceTree = "<group>"; };
 		04AFAC69273BB0D1003E5928 /* ik_aim_job_tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ik_aim_job_tests.swift; sourceTree = "<group>"; };
+		04AFAC6B273BB8D7003E5928 /* ik_two_bone_job_tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ik_two_bone_job_tests.swift; sourceTree = "<group>"; };
 		04AFFD49272FAA5D005C2835 /* PhysXRaycastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysXRaycastView.swift; sourceTree = "<group>"; };
 		04CB88C327320E6700B0E398 /* Skeleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Skeleton.swift; sourceTree = "<group>"; };
 		04CB88C5273211DE00B0E398 /* skeleton.usda */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = skeleton.usda; sourceTree = "<group>"; };
@@ -1921,6 +1923,7 @@
 				0486925D273671A6007B8DFE /* sampling_job_tests.swift */,
 				04AFAC67273BA2E8003E5928 /* blending_job_tests.swift */,
 				04AFAC69273BB0D1003E5928 /* ik_aim_job_tests.swift */,
+				04AFAC6B273BB8D7003E5928 /* ik_two_bone_job_tests.swift */,
 			);
 			name = runtime;
 			sourceTree = "<group>";
@@ -2993,6 +2996,7 @@
 				042F0DCD2736551100FF4A26 /* additive_animation_builder_tests.swift in Sources */,
 				042F0DB02733DFD800FF4A26 /* rect.test.swift in Sources */,
 				042F0DA227337DD200FF4A26 /* Ray.test.swift in Sources */,
+				04AFAC6C273BB8D7003E5928 /* ik_two_bone_job_tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
