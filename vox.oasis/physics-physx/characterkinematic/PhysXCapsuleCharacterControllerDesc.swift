@@ -73,8 +73,8 @@ class PhysXCapsuleCharacterControllerDesc: PhysXCharacterControllerDesc, ICapsul
         (_pxControllerDesc as! CPxCapsuleControllerDesc).nonWalkableMode = CPxControllerNonWalkableMode(UInt32(nonWalkableMode))
     }
 
-    func setMaterial(_ material: IPhysicsMaterial) {
-        (_pxControllerDesc as! CPxCapsuleControllerDesc).material = (material as! PhysXPhysicsMaterial)._pxMaterial
+    func setMaterial(_ material: IPhysicsMaterial?) {
+        (_pxControllerDesc as! CPxCapsuleControllerDesc).material = (material as? PhysXPhysicsMaterial)?._pxMaterial
     }
 
     func setRegisterDeletionListener(_ registerDeletionListener: Bool) {

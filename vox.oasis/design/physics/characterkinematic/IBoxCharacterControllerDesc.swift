@@ -24,7 +24,7 @@ protocol IBoxCharacterControllerDesc: ICharacterControllerDesc {
     func setScaleCoeff(_ scaleCoeff: Float)
     func setVolumeGrowth(_ volumeGrowth: Float)
     func setNonWalkableMode(_ nonWalkableMode: Int)
-    func setMaterial(_ material: IPhysicsMaterial)
+    func setMaterial(_ material: IPhysicsMaterial?)
     func setRegisterDeletionListener(_ registerDeletionListener: Bool)
     func setControllerBehaviorCallback(getShapeBehaviorFlags: @escaping (IColliderShape, ICollider) -> UInt8,
                                        getControllerBehaviorFlags: @escaping (ICharacterController) -> UInt8,

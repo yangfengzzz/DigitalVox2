@@ -73,8 +73,8 @@ class PhysXBoxCharacterControllerDesc: PhysXCharacterControllerDesc, IBoxCharact
         (_pxControllerDesc as! CPxBoxControllerDesc).nonWalkableMode = CPxControllerNonWalkableMode(UInt32(nonWalkableMode))
     }
 
-    func setMaterial(_ material: IPhysicsMaterial) {
-        (_pxControllerDesc as! CPxBoxControllerDesc).material = (material as! PhysXPhysicsMaterial)._pxMaterial
+    func setMaterial(_ material: IPhysicsMaterial?) {
+        (_pxControllerDesc as! CPxBoxControllerDesc).material = (material as? PhysXPhysicsMaterial)?._pxMaterial
     }
 
     func setRegisterDeletionListener(_ registerDeletionListener: Bool) {
