@@ -12,7 +12,8 @@ struct DigitalVox2App: App {
     var body: some SwiftUI.Scene {
         WindowGroup {
             //SceneLoaderView()
-            PhysXRaycastView()
+            //PhysXRaycastView()
+            PhysXDynamicView()
             //SkeletonView()
             //SkeletonLoaderView()
         }

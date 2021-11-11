@@ -235,6 +235,8 @@ class DynamicCollider: Collider {
     internal override func _onLateUpdate() {
         let transform = entity.transform!
         _nativeCollider.getWorldTransform(transform.worldPosition, transform.worldRotationQuaternion)
+        transform.worldPosition = transform.worldPosition
+        transform.worldRotationQuaternion = transform.worldRotationQuaternion
         _updateFlag.flag = false
     }
 }
