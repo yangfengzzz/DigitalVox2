@@ -51,5 +51,6 @@ class CapsuleCharacterController: CharacterController {
 
     func setDesc(_ desc: CapsuleCharacterControllerDesc) {
         _nativeCharacterController = engine.physicsManager!.characterControllerManager!.createController(desc._nativeCharacterControllerDesc)
+        _nativeCharacterController.setUniqueID(_id)
     }
 }

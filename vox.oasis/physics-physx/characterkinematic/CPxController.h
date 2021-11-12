@@ -61,6 +61,8 @@ enum CPxControllerCollisionFlag {
 
 - (void)resize:(float)height;
 
+- (void)setQueryFilterData:(uint32_t)w0 w1:(uint32_t)w1 w2:(uint32_t)w2 w3:(uint32_t)w3;
+
 @end
 
 #endif /* CPxController_h */

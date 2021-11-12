@@ -8,23 +8,28 @@
 import Foundation
 
 protocol ICharacterController {
-    func move(_ disp:Vector3, _ minDist:Float, _ elapsedTime:Float)->UInt8
+    func move(_ disp: Vector3, _ minDist: Float, _ elapsedTime: Float) -> UInt8
 
-    func setPosition(_ position:Vector3) ->Bool
-    
-    func setFootPosition(_ position:Vector3)
+    func setPosition(_ position: Vector3) -> Bool
 
-    func setStepOffset(_ offset:Float)
+    func setFootPosition(_ position: Vector3)
 
-    func setNonWalkableMode(_ flag:Int)
+    func setStepOffset(_ offset: Float)
 
-    func setContactOffset(_ offset:Float)
+    func setNonWalkableMode(_ flag: Int)
 
-    func setUpDirection(_ up:Vector3)
+    func setContactOffset(_ offset: Float)
 
-    func setSlopeLimit(_ slopeLimit:Float)
-    
+    func setUpDirection(_ up: Vector3)
+
+    func setSlopeLimit(_ slopeLimit: Float)
+
     func invalidateCache()
 
-    func resize(_ height:Float)
+    func resize(_ height: Float)
+
+    /// Set unique id of the collider shape.
+    func setUniqueID(_ id: Int)
+
+    func getPosition(_ position: Vector3)
 }

@@ -98,4 +98,11 @@
     _c_controller->resize(height);
 }
 
+- (void)setQueryFilterData:(uint32_t)w0 w1:(uint32_t)w1 w2:(uint32_t)w2 w3:(uint32_t)w3 {
+    PxRigidDynamic *actor = _c_controller->getActor();
+    PxShape *shape;
+    actor->getShapes(&shape, 1);
+    shape->setQueryFilterData(PxFilterData(w0, w1, w2, w3));
+}
+
 @end

@@ -90,17 +90,17 @@ struct PhysXView: View {
         class CollisionScript: Script {
             var sphereRenderer: MeshRenderer?
 
-            override func onTriggerExit(_ other: ColliderShape) {
+            override func onTriggerExit(_ other: TriggerObject) {
                 _ = (sphereRenderer!.getMaterial() as! BlinnPhongMaterial).baseColor.setValue(
                         r: Float.random(in: 0..<1),
                         g: Float.random(in: 0..<1),
                         b: Float.random(in: 0..<1), a: 1.0)
             }
 
-            override func onTriggerStay(_ other: ColliderShape) {
+            override func onTriggerStay(_ other: TriggerObject) {
             }
 
-            override func onTriggerEnter(_ other: ColliderShape) {
+            override func onTriggerEnter(_ other: TriggerObject) {
                 _ = (sphereRenderer!.getMaterial() as! BlinnPhongMaterial).baseColor.setValue(
                         r: Float.random(in: 0..<1),
                         g: Float.random(in: 0..<1),

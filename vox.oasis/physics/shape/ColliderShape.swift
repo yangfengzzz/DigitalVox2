@@ -9,8 +9,6 @@ import Foundation
 
 /// Abstract class for collider shapes.
 class ColliderShape {
-    private static var _idGenerator: Int = 0
-
     internal var _collider: Collider?
     internal var _nativeShape: IColliderShape!
 
@@ -72,8 +70,8 @@ class ColliderShape {
 
     init() {
         _material = PhysicsMaterial()
-        _id = ColliderShape._idGenerator
-        ColliderShape._idGenerator += 1
+        _id = PhysicsManager._idGenerator
+        PhysicsManager._idGenerator += 1
     }
 
 

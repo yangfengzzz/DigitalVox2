@@ -71,7 +71,7 @@ class Collider: Component {
 
     internal func _onUpdate() {
         if (_updateFlag.flag) {
-            let transform = self.entity.transform
+            let transform = entity.transform
             _nativeCollider.setWorldTransform(transform!.worldPosition, transform!.worldRotationQuaternion)
             _updateFlag.flag = false
 

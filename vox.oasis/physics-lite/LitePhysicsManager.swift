@@ -67,6 +67,14 @@ class LitePhysicsManager: IPhysicsManager {
         }
     }
 
+    func addCharacterController(_ characterController: ICharacterController) {
+        fatalError("Physics-lite don't support character controller. Use Physics-PhysX instead!")
+    }
+
+    func removeCharacterController(_ characterController: ICharacterController) {
+        fatalError("Physics-lite don't support character controller. Use Physics-PhysX instead!")
+    }
+
     func createControllerManager() -> ICharacterControllerManager {
         fatalError("Physics-lite don't support character controller. Use Physics-PhysX instead!")
     }

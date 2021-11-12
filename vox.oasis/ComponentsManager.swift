@@ -30,6 +30,7 @@ class ComponentsManager {
 
     // Physics
     private var _colliders: DisorderedArray<Collider> = DisorderedArray()
+    private var _characterControllers: DisorderedArray<CharacterController> = DisorderedArray()
 }
 
 extension ComponentsManager {
@@ -57,6 +58,19 @@ extension ComponentsManager {
             replaced!._index = collider._index
         }
         collider._index = -1
+    }
+
+    func addCharacterController(_ controller: CharacterController) {
+        controller._index = _characterControllers.length
+        _characterControllers.add(controller)
+    }
+
+    func removeCharacterController(_ controller: CharacterController) {
+        let replaced = _characterControllers.deleteByIndex(controller._index)
+        if replaced != nil {
+            replaced!._index = controller._index
+        }
+        controller._index = -1
     }
 
     func addOnStartScript(_ script: Script) {
@@ -258,6 +272,20 @@ extension ComponentsManager {
     func callColliderOnLateUpdate() {
         let elements = _colliders._elements
         for i in 0..<_colliders.length {
+            elements[i]!._onLateUpdate()
+        }
+    }
+
+    func callCharacterControllerOnUpdate(_ deltaTime: Float) {
+        let elements = _characterControllers._elements
+        for i in 0..<_characterControllers.length {
+            elements[i]!._onUpdate(deltaTime)
+        }
+    }
+
+    func callCharacterControllerOnLateUpdate() {
+        let elements = _characterControllers._elements
+        for i in 0..<_characterControllers.length {
             elements[i]!._onLateUpdate()
         }
     }

@@ -7,13 +7,30 @@
 
 import Foundation
 
+enum TriggerObject {
+    case ColliderShape(ColliderShape)
+    case CharacterController(CharacterController)
+
+    var entity: Entity {
+        get {
+            switch self {
+            case .ColliderShape(let value):
+                return value.collider!.entity
+            case .CharacterController(let value):
+                return value.entity
+            }
+        }
+    }
+}
+
 /// A physics manager is a collection of bodies and constraints which can interact.
 class PhysicsManager {
+    internal static var _idGenerator: Int = 0
     internal static var _nativePhysics: IPhysics.Type!
 
     private var _nativeCharacterControllerManager: ICharacterControllerManager?
     private var _nativePhysicsManager: IPhysicsManager!
-    private var _physicalObjectsMap: [Int: ColliderShape] = [:]
+    private var _physicalObjectsMap: [Int: TriggerObject] = [:]
 
     init() {
         _nativePhysicsManager = PhysicsManager._nativePhysics.createPhysicsManager(
@@ -24,12 +41,12 @@ class PhysicsManager {
                     let shape1 = self._physicalObjectsMap[obj1]
                     let shape2 = self._physicalObjectsMap[obj2]
 
-                    var scripts = shape1!.collider!.entity._scripts
+                    var scripts = shape1!.entity._scripts
                     for i in 0..<scripts.length {
                         scripts.get(i)!.onTriggerEnter(shape2!)
                     }
 
-                    scripts = shape2!.collider!.entity._scripts
+                    scripts = shape2!.entity._scripts
                     for i in 0..<scripts.length {
                         scripts.get(i)!.onTriggerEnter(shape1!)
                     }
@@ -38,12 +55,12 @@ class PhysicsManager {
                     let shape1 = self._physicalObjectsMap[obj1]
                     let shape2 = self._physicalObjectsMap[obj2]
 
-                    var scripts = shape1!.collider!.entity._scripts
+                    var scripts = shape1!.entity._scripts
                     for i in 0..<scripts.length {
                         scripts.get(i)!.onTriggerExit(shape2!)
                     }
 
-                    scripts = shape2!.collider!.entity._scripts
+                    scripts = shape2!.entity._scripts
                     for i in 0..<scripts.length {
                         scripts.get(i)!.onTriggerExit(shape1!)
                     }
@@ -52,12 +69,12 @@ class PhysicsManager {
                     let shape1 = self._physicalObjectsMap[obj1]
                     let shape2 = self._physicalObjectsMap[obj2]
 
-                    var scripts = shape1!.collider!.entity._scripts
+                    var scripts = shape1!.entity._scripts
                     for i in 0..<scripts.length {
                         scripts.get(i)!.onTriggerStay(shape2!)
                     }
 
-                    scripts = shape2!.collider!.entity._scripts
+                    scripts = shape2!.entity._scripts
                     for i in 0..<scripts.length {
                         scripts.get(i)!.onTriggerStay(shape1!)
                     }
@@ -73,7 +90,7 @@ class PhysicsManager {
     /// Add ColliderShape into the manager.
     /// - Parameter colliderShape: The Collider Shape.
     internal func _addColliderShape(_  colliderShape: ColliderShape) {
-        _physicalObjectsMap[colliderShape.id] = colliderShape
+        _physicalObjectsMap[colliderShape.id] = .ColliderShape(colliderShape)
         _nativePhysicsManager.addColliderShape(colliderShape._nativeShape)
     }
 
@@ -94,6 +111,20 @@ class PhysicsManager {
     /// - Parameter collider: StaticCollider or DynamicCollider.
     internal func _removeCollider(_  collider: Collider) {
         _nativePhysicsManager.removeCollider(collider._nativeCollider)
+    }
+
+    /// Add CharacterController into the manager.
+    /// - Parameter characterController: The Character Controller.
+    internal func _addCharacterController(_  characterController: CharacterController) {
+        _physicalObjectsMap[characterController.id] = .CharacterController(characterController)
+        _nativePhysicsManager.addCharacterController(characterController._nativeCharacterController)
+    }
+
+    /// Remove CharacterController.
+    /// - Parameter characterController: The Character Controller.
+    internal func _removeCharacterController(_ characterController: CharacterController) {
+        _physicalObjectsMap.removeValue(forKey: characterController.id)
+        _nativePhysicsManager.removeCharacterController(characterController._nativeCharacterController)
     }
 
     internal func _createCharacterControllerManager() {
@@ -127,7 +158,7 @@ extension PhysicsManager {
         let layerMask = Layer.Everything
 
         let result = _nativePhysicsManager.raycast(ray, distance, { [self](idx, distance, position, normal) in
-            hitResult.entity = _physicalObjectsMap[idx]!._collider!.entity
+            hitResult.entity = _physicalObjectsMap[idx]!.entity
             hitResult.distance = distance
             normal.cloneTo(target: hitResult.normal)
             position.cloneTo(target: hitResult.point)
@@ -167,7 +198,7 @@ extension PhysicsManager {
         let layerMask = Layer.Everything
 
         let result = _nativePhysicsManager.raycast(ray, distance, { [self](idx, distance, position, normal) in
-            hitResult.entity = _physicalObjectsMap[idx]!._collider!.entity
+            hitResult.entity = _physicalObjectsMap[idx]!.entity
             hitResult.distance = distance
             normal.cloneTo(target: hitResult.normal)
             position.cloneTo(target: hitResult.point)
@@ -208,7 +239,7 @@ extension PhysicsManager {
         let hitResult = outHitResult
 
         let result = _nativePhysicsManager.raycast(ray, distance, { [self](idx, distance, position, normal) in
-            hitResult.entity = _physicalObjectsMap[idx]!._collider!.entity
+            hitResult.entity = _physicalObjectsMap[idx]!.entity
             hitResult.distance = distance
             normal.cloneTo(target: hitResult.normal)
             position.cloneTo(target: hitResult.point)

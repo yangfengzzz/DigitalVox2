@@ -44,5 +44,6 @@ class BoxCharacterController: CharacterController {
 
     func setDesc(_ desc: BoxCharacterControllerDesc) {
         _nativeCharacterController = engine.physicsManager!.characterControllerManager!.createController(desc._nativeCharacterControllerDesc)
+        _nativeCharacterController.setUniqueID(_id)
     }
 }

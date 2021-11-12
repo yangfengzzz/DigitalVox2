@@ -169,8 +169,10 @@ final class Engine: NSObject {
         if (scene != nil) {
             componentsManager.callScriptOnStart()
             if (physicsManager != nil) {
+                componentsManager.callCharacterControllerOnUpdate(deltaTime)
                 componentsManager.callColliderOnUpdate()
                 physicsManager!._update(deltaTime)
+                componentsManager.callCharacterControllerOnLateUpdate()
                 componentsManager.callColliderOnLateUpdate()
             }
 

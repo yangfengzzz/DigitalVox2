@@ -8,6 +8,7 @@
 import Foundation
 
 class PhysXCharacterController: ICharacterController {
+    internal var _id: Int!
     internal var _pxController: CPxController!
 
     func move(_ disp: Vector3, _ minDist: Float, _ elapsedTime: Float) -> UInt8 {
@@ -48,5 +49,14 @@ class PhysXCharacterController: ICharacterController {
 
     func resize(_ height: Float) {
         _pxController.resize(height)
+    }
+
+    func setUniqueID(_ id: Int) {
+        _id = id
+        _pxController.setQueryFilterData(UInt32(id), w1: 0, w2: 0, w3: 0)
+    }
+
+    func getPosition(_ position: Vector3) {
+        position.elements = _pxController.getPosition()
     }
 }

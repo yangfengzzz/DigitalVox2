@@ -15,6 +15,7 @@ enum ControllerNonWalkableMode: Int {
 };
 
 class CharacterController: Component {
+    internal var _index: Int = -1
     internal var _nativeCharacterController: ICharacterController!
 
     private var _stepOffset: Float = 0
@@ -22,6 +23,16 @@ class CharacterController: Component {
     private var _contactOffset: Float = 0
     private var _upDirection = Vector3(0, 1, 0)
     private var _slopeLimit: Float = 0
+
+    var _id: Int
+    var _updateFlag: UpdateFlag
+
+    /// Unique id for this controller.
+    var id: Int {
+        get {
+            _id
+        }
+    }
 
     var stepOffset: Float {
         get {
@@ -76,7 +87,12 @@ class CharacterController: Component {
     }
 
     required init(_ entity: Entity) {
+        _id = PhysicsManager._idGenerator
+        PhysicsManager._idGenerator += 1
+        _updateFlag = entity.transform.registerWorldChangeFlag()
+
         super.init(entity)
+
         if engine.physicsManager!.characterControllerManager == nil {
             engine.physicsManager!._createCharacterControllerManager()
         }
@@ -100,5 +116,31 @@ class CharacterController: Component {
 
     func resize(_ height: Float) {
         _nativeCharacterController.resize(height)
+    }
+
+    internal func _onUpdate(_ deltaTime: Float) {
+        if (_updateFlag.flag) {
+            let transform = entity.transform
+            _ = _nativeCharacterController.move(transform!.worldPosition, 0.1, deltaTime)
+            _updateFlag.flag = false
+        }
+    }
+
+    internal func _onLateUpdate() {
+        let position = entity.transform!.worldPosition
+        _nativeCharacterController.getPosition(position)
+        entity.transform!.worldPosition = position
+        _updateFlag.flag = false
+    }
+
+    internal override func _onEnable() {
+        engine.physicsManager!._addCharacterController(self)
+        engine._componentsManager.addCharacterController(self)
+    }
+
+
+    internal override func _onDisable() {
+        engine.physicsManager!._removeCharacterController(self)
+        engine._componentsManager.removeCharacterController(self)
     }
 }

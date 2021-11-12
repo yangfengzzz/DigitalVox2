@@ -24,6 +24,12 @@ protocol IPhysicsManager {
     /// Remove ICollider.
     func removeCollider(_ collider: ICollider)
 
+    /// Add ICharacterController into the manager.
+    func addCharacterController(_ characterController: ICharacterController)
+
+    /// Remove ICharacterController.
+    func removeCharacterController(_ characterController: ICharacterController)
+
     /// Create Character Controller Manager
     func createControllerManager() -> ICharacterControllerManager
 

@@ -93,6 +93,14 @@ class PhysXPhysicsManager: IPhysicsManager {
         _pxScene.removeActor(with: (collider as! PhysXCollider)._pxActor)
     }
 
+    func addCharacterController(_ characterController: ICharacterController) {
+        _eventMap[(characterController as! PhysXCharacterController)._id] = [:]
+    }
+
+    func removeCharacterController(_ characterController: ICharacterController) {
+        _eventMap.removeValue(forKey: (characterController as! PhysXCharacterController)._id)
+    }
+
     func createControllerManager() -> ICharacterControllerManager {
         let manager = PhysXCharacterControllerManager()
         manager._pxControllerManager = _pxScene.createControllerManager()
