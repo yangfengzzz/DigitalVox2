@@ -55,7 +55,7 @@ struct PhysXDynamicView: View {
         return boxEntity
     }
 
-    func addSphere(_ radius: Float, _ position: Vector3, _ rotation: Quaternion) -> Entity {
+    func addSphere(_ radius: Float, _ position: Vector3, _ rotation: Quaternion, _ velocity: Vector3) -> Entity {
         let mtl = BlinnPhongMaterial(engine)
         _ = mtl.baseColor.setValue(r: Float.random(in: 0..<1), g: Float.random(in: 0..<1), b: Float.random(in: 0..<1), a: 1.0)
         let sphereEntity = rootEntity.createChild()
@@ -75,6 +75,8 @@ struct PhysXDynamicView: View {
 
         let sphereCollider: DynamicCollider = sphereEntity.addComponent()
         sphereCollider.addShape(physicsSphere)
+        sphereCollider.linearVelocity = velocity
+        sphereCollider.angularDamping = 0.5
 
         return sphereEntity
     }
@@ -265,6 +267,20 @@ struct PhysXDynamicView: View {
                 meshes.forEach { mesh in
                     mesh.setMaterial(mtl)
                 }
+            }
+        }
+
+        canvas.registerKeyDown { [self] key in
+            let dir = Vector3()
+            _ = cameraEntity.transform.getWorldForward(forward: dir)
+            Vector3.scale(left: dir, s: 50, out: dir)
+            switch (key) {
+            case .space:
+                _ = addSphere(0.5, cameraEntity.transform.position,
+                        cameraEntity.transform.rotationQuaternion, dir)
+                break
+            default:
+                return
             }
         }
     }
