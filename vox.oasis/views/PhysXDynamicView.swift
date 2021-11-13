@@ -99,6 +99,30 @@ struct PhysXDynamicView: View {
 
         return capsuleEntity
     }
+    
+    func addPlayer(_ radius: Float, _ height: Float, _ position: Vector3, _ rotation: Quaternion) -> Entity {
+        let mtl = BlinnPhongMaterial(engine)
+        _ = mtl.baseColor.setValue(r: Float.random(in: 0..<1), g: Float.random(in: 0..<1), b: Float.random(in: 0..<1), a: 1.0)
+        let capsuleEntity = rootEntity.createChild()
+        let renderer: MeshRenderer = capsuleEntity.addComponent()
+
+        renderer.mesh = PrimitiveMesh.createCapsule(engine, radius, height, 20)
+        renderer.setMaterial(mtl)
+        capsuleEntity.transform.position = position
+        capsuleEntity.transform.rotationQuaternion = rotation
+
+        let physicsCapsule = CapsuleColliderShape()
+        physicsCapsule.radius = radius
+        physicsCapsule.height = height
+
+        let characterController: CapsuleCharacterController = capsuleEntity.addComponent()
+        let characterControllerDesc = CapsuleCharacterControllerDesc()
+        characterControllerDesc.radius = radius
+        characterControllerDesc.height = height
+        characterController.setDesc(characterControllerDesc)
+
+        return capsuleEntity
+    }
 
     init() {
         canvas = Canvas()
@@ -121,7 +145,8 @@ struct PhysXDynamicView: View {
         light.transform.setPosition(x: 0, y: 3, z: 0)
         let pointLight: PointLight = light.addComponent()
         pointLight.intensity = 0.3
-
+        
+        let player = addPlayer(1, 3, Vector3(0, 2.5, 0), Quaternion())
 
         _ = addPlane(Vector3(30, 0.1, 30), Vector3(), Quaternion())
         for i in 0..<5 {

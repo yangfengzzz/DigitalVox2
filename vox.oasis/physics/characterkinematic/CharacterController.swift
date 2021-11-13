@@ -26,7 +26,8 @@ class CharacterController: Component {
 
     var _id: Int
     var _updateFlag: UpdateFlag
-
+    var _material: PhysicsMaterial
+    
     /// Unique id for this controller.
     var id: Int {
         get {
@@ -90,7 +91,8 @@ class CharacterController: Component {
         _id = PhysicsManager._idGenerator
         PhysicsManager._idGenerator += 1
         _updateFlag = entity.transform.registerWorldChangeFlag()
-
+        _material = PhysicsMaterial()
+        
         super.init(entity)
 
         if engine.physicsManager!.characterControllerManager == nil {
@@ -134,7 +136,6 @@ class CharacterController: Component {
     }
 
     internal override func _onEnable() {
-        engine.physicsManager!._addCharacterController(self)
         engine._componentsManager.addCharacterController(self)
     }
 

@@ -821,7 +821,7 @@ class PrimitiveMesh {
                 &normals,
                 &uvs,
                 &indices,
-                &indicesOffset
+                indicesOffset
         )
 
         indicesOffset += 6 * capRectangleCount
@@ -836,7 +836,7 @@ class PrimitiveMesh {
                 &normals,
                 &uvs,
                 &indices,
-                &indicesOffset
+                indicesOffset
         )
 
         let bounds = mesh.bounds
@@ -857,7 +857,8 @@ class PrimitiveMesh {
                                           _ normals: inout [Vector3],
                                           _ uvs: inout [Vector2],
                                           _ indices: inout [UInt32],
-                                          _ indicesOffset: inout Int) {
+                                          _ indicesOffset: Int) {
+        var indicesOffset = indicesOffset
         let radialCount = radialSegments + 1
         let halfHeight = height * 0.5
         let capVertexCount = radialCount * radialCount
