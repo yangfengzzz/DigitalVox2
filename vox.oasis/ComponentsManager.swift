@@ -276,13 +276,6 @@ extension ComponentsManager {
         }
     }
 
-    func callCharacterControllerOnUpdate(_ deltaTime: Float) {
-        let elements = _characterControllers._elements
-        for i in 0..<_characterControllers.length {
-            elements[i]!._onUpdate(deltaTime)
-        }
-    }
-
     func callCharacterControllerOnLateUpdate() {
         let elements = _characterControllers._elements
         for i in 0..<_characterControllers.length {

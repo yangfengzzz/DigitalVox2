@@ -15,6 +15,10 @@ class PhysXCharacterController: ICharacterController {
         _pxController.move(disp.elements, minDist, elapsedTime)
     }
 
+    func isSetControllerCollisionFlag(_ flags: UInt8, _ flag: Int) -> Bool {
+        _pxController.isSetControllerCollisionFlag(flags, CPxControllerCollisionFlag(UInt32(flag)))
+    }
+
     func setPosition(_ position: Vector3) -> Bool {
         _pxController.setPosition(position.elements)
     }

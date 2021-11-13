@@ -27,6 +27,8 @@ enum CPxControllerCollisionFlag {
 
 - (uint8_t)move:(simd_float3)disp :(float)minDist :(float)elapsedTime;
 
+- (bool)isSetControllerCollisionFlag:(uint8_t)flags :(enum CPxControllerCollisionFlag)flag;
+
 - (bool)setPosition:(simd_float3)position;
 
 - (simd_float3)getPosition;

@@ -14,6 +14,15 @@ enum ControllerNonWalkableMode: Int {
     case PREVENT_CLIMBING_AND_FORCE_SLIDING
 };
 
+enum ControllerCollisionFlag: Int {
+    /// Character is colliding to the sides.
+    case COLLISION_SIDES = 1
+    /// Character has collision above.
+    case COLLISION_UP = 2
+    /// Character has collision below.
+    case COLLISION_DOWN = 4
+};
+
 class CharacterController: Component {
     internal var _index: Int = -1
     internal var _nativeCharacterController: ICharacterController!
@@ -25,9 +34,8 @@ class CharacterController: Component {
     private var _slopeLimit: Float = 0
 
     var _id: Int
-    var _updateFlag: UpdateFlag
     var _material: PhysicsMaterial
-    
+
     /// Unique id for this controller.
     var id: Int {
         get {
@@ -90,9 +98,8 @@ class CharacterController: Component {
     required init(_ entity: Entity) {
         _id = PhysicsManager._idGenerator
         PhysicsManager._idGenerator += 1
-        _updateFlag = entity.transform.registerWorldChangeFlag()
         _material = PhysicsMaterial()
-        
+
         super.init(entity)
 
         if engine.physicsManager!.characterControllerManager == nil {
@@ -102,6 +109,10 @@ class CharacterController: Component {
 
     func move(_ disp: Vector3, _ minDist: Float, _ elapsedTime: Float) -> UInt8 {
         _nativeCharacterController.move(disp, minDist, elapsedTime)
+    }
+
+    func isSetControllerCollisionFlag(_ flags: UInt8, _ flag: ControllerCollisionFlag) -> Bool {
+        _nativeCharacterController.isSetControllerCollisionFlag(flags, flag.rawValue)
     }
 
     func setPosition(_ position: Vector3) -> Bool {
@@ -120,19 +131,10 @@ class CharacterController: Component {
         _nativeCharacterController.resize(height)
     }
 
-    internal func _onUpdate(_ deltaTime: Float) {
-        if (_updateFlag.flag) {
-            let transform = entity.transform
-            _ = _nativeCharacterController.move(transform!.worldPosition, 0.1, deltaTime)
-            _updateFlag.flag = false
-        }
-    }
-
     internal func _onLateUpdate() {
         let position = entity.transform!.worldPosition
         _nativeCharacterController.getPosition(position)
         entity.transform!.worldPosition = position
-        _updateFlag.flag = false
     }
 
     internal override func _onEnable() {

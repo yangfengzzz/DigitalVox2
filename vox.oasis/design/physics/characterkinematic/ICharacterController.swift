@@ -10,6 +10,8 @@ import Foundation
 protocol ICharacterController {
     func move(_ disp: Vector3, _ minDist: Float, _ elapsedTime: Float) -> UInt8
 
+    func isSetControllerCollisionFlag(_ flags: UInt8, _ flag: Int) -> Bool
+
     func setPosition(_ position: Vector3) -> Bool
 
     func setFootPosition(_ position: Vector3)

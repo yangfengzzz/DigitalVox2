@@ -27,6 +27,10 @@
     return _c_controller->move(PxVec3(disp.x, disp.y, disp.z), minDist, elapsedTime, PxControllerFilters());
 }
 
+- (bool)isSetControllerCollisionFlag:(uint8_t)flags :(enum CPxControllerCollisionFlag)flag {
+    return PxControllerCollisionFlags(flags).isSet(PxControllerCollisionFlag::Enum(flag));
+}
+
 - (bool)setPosition:(simd_float3)position {
     return _c_controller->setPosition(PxExtendedVec3(position.x, position.y, position.z));
 }
