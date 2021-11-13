@@ -135,30 +135,30 @@ struct PhysXDynamicView: View {
 
         func targetCamera(_ camera: Entity) {
             engine.canvas.registerKeyDown { [self] key in
-                var forward = Vector3();
-                Vector3.subtract(left: entity.transform.position, right: camera.transform.position, out: forward);
-                forward.y = 0;
-                forward = forward.normalize();
-                let cross = Vector3(forward.z, 0, -forward.x);
+                var forward = Vector3()
+                Vector3.subtract(left: entity.transform.position, right: camera.transform.position, out: forward)
+                forward.y = 0
+                forward = forward.normalize()
+                let cross = Vector3(forward.z, 0, -forward.x)
 
                 switch key {
                 case .w:
-                    displacement = forward.scale(s: 0.3);
-                    break;
+                    displacement = forward.scale(s: 0.3)
+                    break
                 case .s:
-                    displacement = forward.negate().scale(s: 0.3);
-                    break;
+                    displacement = forward.negate().scale(s: 0.3)
+                    break
                 case .a:
-                    displacement = cross.scale(s: 0.3);
-                    break;
+                    displacement = cross.scale(s: 0.3)
+                    break
                 case .d:
-                    displacement = cross.negate().scale(s: 0.3);
-                    break;
+                    displacement = cross.negate().scale(s: 0.3)
+                    break
                 case .space:
                     displacement.x = 0
                     displacement.y = 2
                     displacement.z = 0
-                    break;
+                    break
                 default:
                     return
                 }
@@ -173,6 +173,33 @@ struct PhysXDynamicView: View {
             if !character.isSetControllerCollisionFlag(flags, .COLLISION_DOWN) {
                 _ = character.move(Vector3(0, -0.2, 0), 0.1, deltaTime)
             }
+        }
+    }
+
+    func transform(_ position: Vector3, _ rotation: Quaternion, _ outPosition: Vector3, _ outRotation: Quaternion) {
+        Quaternion.multiply(left: rotation, right: outRotation, out: outRotation)
+        Vector3.transformByQuat(v: outPosition, quaternion: rotation, out: outPosition)
+        Vector3.add(left: outPosition, right: position, out: outPosition)
+    }
+
+    func createChain(_ position: Vector3, _ rotation: Quaternion, _ length: Int, _ separation: Float) {
+        let offset = Vector3(0, -separation / 2, 0)
+        var prevCollider: DynamicCollider? = nil
+        for i in 0..<length {
+            let localTm_pos = Vector3(0, -separation / 2 * (2 * Float(i) + 1), 0)
+            let localTm_quat = Quaternion()
+            transform(position, rotation, localTm_pos, localTm_quat)
+
+            let currentEntity = addBox(Vector3(2.0, 2.0, 0.5), localTm_pos, localTm_quat)
+            let currentCollider: DynamicCollider = currentEntity.getComponent()
+
+            let joint = FixedJoint(prevCollider, currentCollider)
+            joint.localPosition0 = prevCollider != nil ? offset : position
+            joint.localRotation0 = prevCollider != nil ? Quaternion() : rotation
+            joint.localPosition1 = Vector3(0, separation / 2, 0)
+            joint.localRotation1 = Quaternion()
+
+            prevCollider = currentCollider
         }
     }
 
@@ -212,6 +239,7 @@ struct PhysXDynamicView: View {
                         Quaternion(0, 0, 0.3, 0.7))
             }
         }
+        createChain(Vector3(0.0, 25.0, -10.0), Quaternion(), 10, 2.0)
 
         canvas.registerMouseDown { [self](event) in
             let ray = Ray()

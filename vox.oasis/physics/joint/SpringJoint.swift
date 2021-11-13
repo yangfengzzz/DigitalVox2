@@ -70,9 +70,11 @@ class SpringJoint: Joint {
         }
     }
 
-    required init(_ entity: Entity) {
-        super.init(entity)
-        _nativeJoint = PhysicsManager._nativePhysics.createSpringJoint(nil, Vector3(), Quaternion(), nil, Vector3(), Quaternion())
+    init(_ collider0: Collider?, _ collider1: Collider?) {
+        super.init()
+        _nativeJoint = PhysicsManager._nativePhysics.createSpringJoint(
+                collider0?._nativeCollider, Vector3(), Quaternion(),
+                collider1?._nativeCollider, Vector3(), Quaternion())
     }
 
     func setDistanceJointFlag(_ flag: SpringJointFlag, _ value: Bool) {

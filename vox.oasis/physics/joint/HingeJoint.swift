@@ -73,9 +73,11 @@ class HingeJoint: Joint {
         }
     }
 
-    required init(_ entity: Entity) {
-        super.init(entity)
-        _nativeJoint = PhysicsManager._nativePhysics.createHingeJoint(nil, Vector3(), Quaternion(), nil, Vector3(), Quaternion())
+    init(_ collider0: Collider?, _ collider1: Collider?) {
+        super.init()
+        _nativeJoint = PhysicsManager._nativePhysics.createHingeJoint(
+                collider0?._nativeCollider, Vector3(), Quaternion(),
+                collider1?._nativeCollider, Vector3(), Quaternion())
     }
 
     func setHardLimit(_ lowerLimit: Float, _ upperLimit: Float, _ contactDist: Float) {

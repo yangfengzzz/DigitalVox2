@@ -69,32 +69,32 @@ class PhysXPhysics: IPhysics {
     //MARK: - Joint
     static func createFixedJoint(_ actor0: ICollider?, _ position0: Vector3, _ rotation0: Quaternion,
                                  _ actor1: ICollider?, _ position1: Vector3, _ rotation1: Quaternion) -> IFixedJoint {
-        PhysXFixedJoint((actor0 as? PhysXCollider ?? nil), position0, rotation0, (actor1 as! PhysXCollider), position1, rotation1)
+        PhysXFixedJoint((actor0 as? PhysXCollider ?? nil), position0, rotation0, (actor1 as? PhysXCollider ?? nil), position1, rotation1)
     }
 
     static func createHingeJoint(_ actor0: ICollider?, _ position0: Vector3, _ rotation0: Quaternion,
                                  _ actor1: ICollider?, _ position1: Vector3, _ rotation1: Quaternion) -> IHingeJoint {
-        PhysXHingeJoint((actor0 as? PhysXCollider ?? nil), position0, rotation0, (actor1 as! PhysXCollider), position1, rotation1)
+        PhysXHingeJoint((actor0 as? PhysXCollider ?? nil), position0, rotation0, (actor1 as? PhysXCollider ?? nil), position1, rotation1)
     }
 
     static func createSphericalJoint(_ actor0: ICollider?, _ position0: Vector3, _ rotation0: Quaternion,
                                      _ actor1: ICollider?, _ position1: Vector3, _ rotation1: Quaternion) -> ISphericalJoint {
-        PhysXSphericalJoint((actor0 as? PhysXCollider ?? nil), position0, rotation0, (actor1 as! PhysXCollider), position1, rotation1)
+        PhysXSphericalJoint((actor0 as? PhysXCollider ?? nil), position0, rotation0, (actor1 as? PhysXCollider ?? nil), position1, rotation1)
     }
 
     static func createSpringJoint(_ actor0: ICollider?, _ position0: Vector3, _ rotation0: Quaternion,
                                   _ actor1: ICollider?, _ position1: Vector3, _ rotation1: Quaternion) -> ISpringJoint {
-        PhysXSpringJoint((actor0 as? PhysXCollider ?? nil), position0, rotation0, (actor1 as! PhysXCollider), position1, rotation1)
+        PhysXSpringJoint((actor0 as? PhysXCollider ?? nil), position0, rotation0, (actor1 as? PhysXCollider ?? nil), position1, rotation1)
     }
 
     static func createTranslationalJoint(_ actor0: ICollider?, _ position0: Vector3, _ rotation0: Quaternion,
                                          _ actor1: ICollider?, _ position1: Vector3, _ rotation1: Quaternion) -> ITranslationalJoint {
-        PhysXTranslationalJoint((actor0 as? PhysXCollider ?? nil), position0, rotation0, (actor1 as! PhysXCollider), position1, rotation1)
+        PhysXTranslationalJoint((actor0 as? PhysXCollider ?? nil), position0, rotation0, (actor1 as? PhysXCollider ?? nil), position1, rotation1)
     }
 
     static func createConfigurableJoint(_ actor0: ICollider?, _ position0: Vector3, _ rotation0: Quaternion,
                                         _ actor1: ICollider?, _ position1: Vector3, _ rotation1: Quaternion) -> IConfigurableJoint {
-        PhysXConfigurableJoint((actor0 as? PhysXCollider ?? nil), position0, rotation0, (actor1 as! PhysXCollider), position1, rotation1)
+        PhysXConfigurableJoint((actor0 as? PhysXCollider ?? nil), position0, rotation0, (actor1 as? PhysXCollider ?? nil), position1, rotation1)
     }
 
     //MARK: - Character Controller

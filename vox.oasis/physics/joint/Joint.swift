@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Joint: Component {
+class Joint {
     internal var _nativeJoint: IJoint!
 
     private var _force: Float = 0
