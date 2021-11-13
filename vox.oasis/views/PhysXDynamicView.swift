@@ -126,14 +126,50 @@ struct PhysXDynamicView: View {
 
     class ControllerScript: Script {
         var character: CharacterController
+        var displacement = Vector3()
 
         required init(_ entity: Entity) {
             character = entity.getComponent()
             super.init(entity)
         }
 
+        func targetCamera(_ camera: Entity) {
+            engine.canvas.registerKeyDown { [self] key in
+                var forward = Vector3();
+                Vector3.subtract(left: entity.transform.position, right: camera.transform.position, out: forward);
+                forward.y = 0;
+                forward = forward.normalize();
+                let cross = Vector3(forward.z, 0, -forward.x);
+
+                switch key {
+                case .w:
+                    displacement = forward.scale(s: 0.3);
+                    break;
+                case .s:
+                    displacement = forward.negate().scale(s: 0.3);
+                    break;
+                case .a:
+                    displacement = cross.scale(s: 0.3);
+                    break;
+                case .d:
+                    displacement = cross.negate().scale(s: 0.3);
+                    break;
+                case .space:
+                    displacement.x = 0
+                    displacement.y = 2
+                    displacement.z = 0
+                    break;
+                default:
+                    return
+                }
+            }
+        }
+
         override func onUpdate(_ deltaTime: Float) {
-            let flags = character.move(Vector3(), 0.1, deltaTime)
+            let flags = character.move(displacement, 0.1, deltaTime)
+            displacement.x = 0
+            displacement.y = 0
+            displacement.z = 0
             if !character.isSetControllerCollisionFlag(flags, .COLLISION_DOWN) {
                 _ = character.move(Vector3(0, -0.2, 0), 0.1, deltaTime)
             }
@@ -163,7 +199,8 @@ struct PhysXDynamicView: View {
         pointLight.intensity = 0.3
 
         let player = addPlayer(1, 3, Vector3(0, 6.5, 0), Quaternion())
-        let _: ControllerScript = player.addComponent()
+        let controller: ControllerScript = player.addComponent()
+        controller.targetCamera(cameraEntity)
 
         _ = addPlane(Vector3(30, 0.1, 30), Vector3(), Quaternion())
         for i in 0..<5 {

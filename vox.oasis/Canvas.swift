@@ -18,6 +18,9 @@ class Canvas: MTKView {
     var rightMouseDownEvents: [EventHandler] = []
     var rightMouseUpEvents: [EventHandler] = []
 
+    typealias KeyboardHandler = (KeyboardControl) -> Void
+    var keyboardDownEvents: [KeyboardHandler] = []
+
     var gui = IMGUI()
     var guiEvents: [() -> Void] = []
 
@@ -56,9 +59,18 @@ extension Canvas {
         true
     }
 
+    //MARK: - KeyBoard
+    func registerKeyDown(_ handler: @escaping KeyboardHandler) {
+        keyboardDownEvents.append(handler)
+    }
+
     override func keyDown(with event: NSEvent) {
         guard let key = KeyboardControl(rawValue: event.keyCode) else {
             return
+        }
+
+        keyboardDownEvents.forEach { handler in
+            handler(key)
         }
         let state: InputState = event.isARepeat ? .continued : .began
         inputManager?.processEvent(key: key, state: state)
@@ -71,12 +83,9 @@ extension Canvas {
         inputManager?.processEvent(key: key, state: .ended)
     }
 
+    //MARK: - Mouse
     func registerMouseDown(_ handler: @escaping EventHandler) {
         mouseDownEvents.append(handler)
-    }
-
-    func registerGUI(_ handler: @escaping () -> Void) {
-        guiEvents.append(handler)
     }
 
     override func mouseDown(with event: NSEvent) {
@@ -131,6 +140,11 @@ extension Canvas {
     override func scrollWheel(with event: NSEvent) {
         gui.handle(event, self)
         inputManager?.zoomUsing(delta: event.deltaY)
+    }
+
+    //MARK: - GUI
+    func registerGUI(_ handler: @escaping () -> Void) {
+        guiEvents.append(handler)
     }
 }
 
