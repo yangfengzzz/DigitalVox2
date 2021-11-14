@@ -53,6 +53,11 @@ class USDZAssetsLoader {
 
             let renderer: SkinnedMeshRenderer = entity.addComponent()
             renderer.mesh = mesh
+            // load skeleton
+            let bindComponent = mdlMesh.componentConforming(to: MDLComponent.self) as? MDLAnimationBindComponent
+            if bindComponent != nil {
+                renderer.loadBindPose(animationBindComponent: bindComponent!)
+            }
             
             var subCount = 0
             zip(mdlMesh.submeshes!, mtkMesh.submeshes).forEach { (mdlSubmesh, mtkSubmesh: MTKSubmesh) in

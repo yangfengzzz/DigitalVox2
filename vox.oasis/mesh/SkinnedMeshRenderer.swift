@@ -9,7 +9,15 @@ import Metal
 
 class SkinnedMeshRenderer: MeshRenderer {
     private static var _jointMatrixProperty = Shader.getPropertyByName("u_jointMatrix")
+    var bindTransforms: [float4x4] = []
     private var _jointMatrixPaletteBuffer: MTLBuffer?
+    
+    func loadBindPose(animationBindComponent: MDLAnimationBindComponent) {
+        guard let skeleton = animationBindComponent.skeleton else {
+            return
+        }
+        bindTransforms = skeleton.jointBindTransforms.float4x4Array
+    }
     
     var jointMatrixPaletteBuffer: MTLBuffer? {
         get {
@@ -32,7 +40,7 @@ class SkinnedMeshRenderer: MeshRenderer {
         palettePointer.initialize(repeating: .identity(), count: modelMatrix.count)
         
         for i in 0..<modelMatrix.count {
-            palettePointer.pointee = modelMatrix[i]
+            palettePointer.pointee = modelMatrix[i] * bindTransforms[i].inverse
             palettePointer = palettePointer.advanced(by: 1)
         }
     }
