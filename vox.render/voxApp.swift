@@ -13,9 +13,10 @@ struct DigitalVox2App: App {
         WindowGroup {
             //SceneLoaderView()
             //PhysXRaycastView()
-            PhysXDynamicView()
+            //PhysXDynamicView()
             //SkeletonView()
             //SkeletonLoaderView()
+            CharacterView()
         }
     }
 }

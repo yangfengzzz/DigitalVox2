@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0413754F27412EE500FDEF5C /* CharacterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413754E27412EE500FDEF5C /* CharacterView.swift */; };
+		0413755127412F6200FDEF5C /* Doggy.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 0413755027412F6200FDEF5C /* Doggy.usdz */; };
 		0419B6D626E6E30300005FEA /* instance_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D526E6E30300005FEA /* instance_data.swift */; };
 		0419B6D826E6E5CE00005FEA /* shading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D726E6E5CE00005FEA /* shading.swift */; };
 		0419B6DA26E6EA3900005FEA /* trace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D926E6EA3900005FEA /* trace.swift */; };
@@ -523,6 +525,8 @@
 		0413289C26E0C288000A4F4E /* UpdateFlagManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateFlagManager.swift; sourceTree = "<group>"; };
 		0413289E26E0CBE7000A4F4E /* ShaderSimple.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = ShaderSimple.metal; sourceTree = "<group>"; };
 		041328A026E19EE1000A4F4E /* geometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = geometry.swift; sourceTree = "<group>"; };
+		0413754E27412EE500FDEF5C /* CharacterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterView.swift; sourceTree = "<group>"; };
+		0413755027412F6200FDEF5C /* Doggy.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = Doggy.usdz; sourceTree = "<group>"; };
 		04198A08271D3AF800871A26 /* GLTFTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLTFTypes.h; sourceTree = "<group>"; };
 		04198A09271D3AF800871A26 /* GLTFAssetReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLTFAssetReader.m; sourceTree = "<group>"; };
 		04198A0A271D3AF800871A26 /* cgltf_write.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cgltf_write.h; sourceTree = "<group>"; };
@@ -1686,6 +1690,7 @@
 		0452ECDF26DFA66E0015BFB1 /* models */ = {
 			isa = PBXGroup;
 			children = (
+				0413755027412F6200FDEF5C /* Doggy.usdz */,
 				048692842737C27B007B8DFE /* animation.ozz */,
 				0486928227376FCC007B8DFE /* skeleton.ozz */,
 				04CB88C5273211DE00B0E398 /* skeleton.usda */,
@@ -1855,6 +1860,7 @@
 				04AFAC6E273CB74E003E5928 /* PhysXDynamicView.swift */,
 				042F0DC12734DBEF00FF4A26 /* SkeletonView.swift */,
 				042F0DC82735291600FF4A26 /* SkeletonLoaderView.swift */,
+				0413754E27412EE500FDEF5C /* CharacterView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -2558,6 +2564,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				048692852737C27B007B8DFE /* animation.ozz in Resources */,
+				0413755127412F6200FDEF5C /* Doggy.usdz in Resources */,
 				041BAE78272A512B006268D5 /* README.md in Resources */,
 				041BAED0272A6E0A006268D5 /* Mando_Helmet.usdz in Resources */,
 				0486928327376FCC007B8DFE /* skeleton.ozz in Resources */,
@@ -2872,6 +2879,7 @@
 				041BAE98272A5141006268D5 /* CapsuleColliderShape.swift in Sources */,
 				04AFAC1D273A3D9F003E5928 /* PhysXConfigurableJoint.swift in Sources */,
 				041BAEA4272A514D006268D5 /* ICollider.swift in Sources */,
+				0413754F27412EE500FDEF5C /* CharacterView.swift in Sources */,
 				04AFAC3F273AABFC003E5928 /* IPhysicsBoxObstacle.swift in Sources */,
 				04AFAC54273AC64D003E5928 /* CharacterController.swift in Sources */,
 				041BAE55272A5100006268D5 /* ClassPool.swift in Sources */,
