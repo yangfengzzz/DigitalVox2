@@ -53,11 +53,6 @@ class USDZAssetsLoader {
 
             let renderer: SkinnedMeshRenderer = entity.addComponent()
             renderer.mesh = mesh
-            // load skeleton
-            let bindComponent = mdlMesh.componentConforming(to: MDLComponent.self) as? MDLAnimationBindComponent
-            if bindComponent != nil {
-                renderer.skeleton = Skeleton(_engine, animationBindComponent: bindComponent)
-            }
             
             var subCount = 0
             zip(mdlMesh.submeshes!, mtkMesh.submeshes).forEach { (mdlSubmesh, mtkSubmesh: MTKSubmesh) in
@@ -76,16 +71,6 @@ class USDZAssetsLoader {
 
             return mesh
         }
-
-        let animator: Animator = entity.addComponent()
-        // load animations
-        let assetAnimations = asset.animations.objects.compactMap {
-            $0 as? MDLPackedJointAnimation
-        }
-        animator.animations = Dictionary(uniqueKeysWithValues: assetAnimations.map {
-            let name = URL(fileURLWithPath: $0.name).lastPathComponent
-            return (name, Animator.load(animation: $0))
-        })
 
         entities.append(entity)
     }

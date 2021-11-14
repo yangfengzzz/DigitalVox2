@@ -250,7 +250,6 @@
 		042F0DC22734DBEF00FF4A26 /* SkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042F0DC12734DBEF00FF4A26 /* SkeletonView.swift */; };
 		042F0DC42734EDEB00FF4A26 /* SkeletonShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 042F0DC32734EDEB00FF4A26 /* SkeletonShader.metal */; };
 		042F0DC727351DDD00FF4A26 /* SkeletonMaterial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042F0DC627351DDD00FF4A26 /* SkeletonMaterial.swift */; };
-		042F0DC92735291600FF4A26 /* SkeletonLoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042F0DC82735291600FF4A26 /* SkeletonLoaderView.swift */; };
 		042F0DCB2736511B00FF4A26 /* sampling_job.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042F0DCA2736511B00FF4A26 /* sampling_job.swift */; };
 		042F0DCD2736551100FF4A26 /* additive_animation_builder_tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042F0DCC2736551100FF4A26 /* additive_animation_builder_tests.swift */; };
 		0452EC9926DFA0CD0015BFB1 /* voxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0452EC9826DFA0CD0015BFB1 /* voxApp.swift */; };
@@ -430,6 +429,9 @@
 		04CB88FB2732B41E00B0E398 /* decimate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88D327326C9900B0E398 /* decimate.swift */; };
 		04CB88FF2732B56300B0E398 /* raw_skeleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88FE2732B56300B0E398 /* raw_skeleton.swift */; };
 		04CB89012732B59C00B0E398 /* soa_skeleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB89002732B59C00B0E398 /* soa_skeleton.swift */; };
+		04CE366F27413F0900204B8E /* doggy_skeleton.ozz in Resources */ = {isa = PBXBuildFile; fileRef = 04CE366D27413F0900204B8E /* doggy_skeleton.ozz */; };
+		04CE367027413F0900204B8E /* Hit.ozz in Resources */ = {isa = PBXBuildFile; fileRef = 04CE366E27413F0900204B8E /* Hit.ozz */; };
+		04CE36722741414700204B8E /* Run.ozz in Resources */ = {isa = PBXBuildFile; fileRef = 04CE36712741414700204B8E /* Run.ozz */; };
 		04D396E32739467E00D78EBE /* CPxControllerManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04D396E22739467E00D78EBE /* CPxControllerManager.mm */; };
 		04D396E62739478600D78EBE /* CPxController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04D396E52739478600D78EBE /* CPxController.mm */; };
 		04D396E92739482F00D78EBE /* CPxBoxControllerDesc.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04D396E82739482F00D78EBE /* CPxBoxControllerDesc.mm */; };
@@ -1015,6 +1017,9 @@
 		04CB88FE2732B56300B0E398 /* raw_skeleton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = raw_skeleton.swift; sourceTree = "<group>"; };
 		04CB89002732B59C00B0E398 /* soa_skeleton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = soa_skeleton.swift; sourceTree = "<group>"; };
 		04CB89022732BFBF00B0E398 /* skeleton_builder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = skeleton_builder.swift; sourceTree = "<group>"; };
+		04CE366D27413F0900204B8E /* doggy_skeleton.ozz */ = {isa = PBXFileReference; lastKnownFileType = file; path = doggy_skeleton.ozz; sourceTree = "<group>"; };
+		04CE366E27413F0900204B8E /* Hit.ozz */ = {isa = PBXFileReference; lastKnownFileType = file; path = Hit.ozz; sourceTree = "<group>"; };
+		04CE36712741414700204B8E /* Run.ozz */ = {isa = PBXFileReference; lastKnownFileType = file; path = Run.ozz; sourceTree = "<group>"; };
 		04D396E12739467500D78EBE /* CPxControllerManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPxControllerManager.h; sourceTree = "<group>"; };
 		04D396E22739467E00D78EBE /* CPxControllerManager.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CPxControllerManager.mm; sourceTree = "<group>"; };
 		04D396E42739477B00D78EBE /* CPxController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPxController.h; sourceTree = "<group>"; };
@@ -1690,7 +1695,7 @@
 		0452ECDF26DFA66E0015BFB1 /* models */ = {
 			isa = PBXGroup;
 			children = (
-				0413755027412F6200FDEF5C /* Doggy.usdz */,
+				04CE366C27413EC500204B8E /* Doggy */,
 				048692842737C27B007B8DFE /* animation.ozz */,
 				0486928227376FCC007B8DFE /* skeleton.ozz */,
 				04CB88C5273211DE00B0E398 /* skeleton.usda */,
@@ -2164,6 +2169,17 @@
 			path = runtime;
 			sourceTree = "<group>";
 		};
+		04CE366C27413EC500204B8E /* Doggy */ = {
+			isa = PBXGroup;
+			children = (
+				04CE36712741414700204B8E /* Run.ozz */,
+				04CE366D27413F0900204B8E /* doggy_skeleton.ozz */,
+				04CE366E27413F0900204B8E /* Hit.ozz */,
+				0413755027412F6200FDEF5C /* Doggy.usdz */,
+			);
+			path = Doggy;
+			sourceTree = "<group>";
+		};
 		04D396E02739466400D78EBE /* characterkinematic */ = {
 			isa = PBXGroup;
 			children = (
@@ -2569,13 +2585,16 @@
 				041BAED0272A6E0A006268D5 /* Mando_Helmet.usdz in Resources */,
 				0486928327376FCC007B8DFE /* skeleton.ozz in Resources */,
 				041BAECC272A6E0A006268D5 /* cottage1.obj in Resources */,
+				04CE366F27413F0900204B8E /* doggy_skeleton.ozz in Resources */,
 				04CB88C8273211DE00B0E398 /* skeletonWave.usda in Resources */,
 				041BADDD272A4FA5006268D5 /* Preview Assets.xcassets in Resources */,
 				041BADDA272A4FA5006268D5 /* Assets.xcassets in Resources */,
 				041BAECD272A6E0A006268D5 /* cottage2.obj in Resources */,
 				041BAEC8272A6E00006268D5 /* Textures.xcassets in Resources */,
 				041BAEC9272A6E0A006268D5 /* cottage2.mtl in Resources */,
+				04CE367027413F0900204B8E /* Hit.ozz in Resources */,
 				041BAECF272A6E0A006268D5 /* cottage1.mtl in Resources */,
+				04CE36722741414700204B8E /* Run.ozz in Resources */,
 				041BAEC7272A6E00006268D5 /* irradiance.png in Resources */,
 				041BAECE272A6E0A006268D5 /* cube.mtl in Resources */,
 				04CB88C7273211DE00B0E398 /* skeleton.usda in Resources */,
@@ -2817,7 +2836,6 @@
 				0486924B2735FBFA007B8DFE /* raw_animation_utils.swift in Sources */,
 				041BAE3B272A50E6006268D5 /* PlaneIntersectionType.swift in Sources */,
 				041BAE76272A512B006268D5 /* GLTFModelIO.m in Sources */,
-				042F0DC92735291600FF4A26 /* SkeletonLoaderView.swift in Sources */,
 				04605EFB272BC09800400350 /* PhysXView.swift in Sources */,
 				041BAE38272A50E6006268D5 /* Vector4.swift in Sources */,
 				041BAEBD272A5166006268D5 /* LiteBoxColliderShape.swift in Sources */,

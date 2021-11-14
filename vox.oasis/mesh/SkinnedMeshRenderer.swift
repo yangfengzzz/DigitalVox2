@@ -9,27 +9,31 @@ import Metal
 
 class SkinnedMeshRenderer: MeshRenderer {
     private static var _jointMatrixProperty = Shader.getPropertyByName("u_jointMatrix")
-
-    private var _skeleton: Skeleton?
-
-    var skeleton: Skeleton? {
+    private var _jointMatrixPaletteBuffer: MTLBuffer?
+    
+    var jointMatrixPaletteBuffer: MTLBuffer? {
         get {
-            _skeleton
+            _jointMatrixPaletteBuffer
         }
         set {
-            _skeleton = newValue
-            if let paletteBuffer = skeleton?.jointMatrixPaletteBuffer {
+            _jointMatrixPaletteBuffer = newValue
+            if let paletteBuffer = _jointMatrixPaletteBuffer {
                 shaderData.enableMacro(HAS_SKIN)
                 shaderData.setBuffer(SkinnedMeshRenderer._jointMatrixProperty, paletteBuffer)
             }
         }
     }
-
-    override func update(_ deltaTime: Float) {
-        super.update(deltaTime)
-        if _skeleton != nil {
-            let animator: Animator = entity.getComponent()
-            skeleton!.updatePose(animationClip: animator.currentAnimation, at: animator.currentTime)
+    
+    func updateJoint(_ modelMatrix:[matrix_float4x4]) {
+        guard let paletteBuffer = jointMatrixPaletteBuffer else {
+            return
+        }
+        var palettePointer = paletteBuffer.contents().bindMemory(to: float4x4.self, capacity: modelMatrix.count)
+        palettePointer.initialize(repeating: .identity(), count: modelMatrix.count)
+        
+        for i in 0..<modelMatrix.count {
+            palettePointer.pointee = modelMatrix[i]
+            palettePointer = palettePointer.advanced(by: 1)
         }
     }
 }
