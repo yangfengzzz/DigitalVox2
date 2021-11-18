@@ -7,9 +7,9 @@
 
 #import "soa_skeleton.h"
 #import "../math/soa_float.h"
-#import "../math/span.h"
-#import "../math/allocator.h"
-#import "../math/archive.h"
+#import "../span.h"
+#import "../memory/allocator.h"
+#import "../io/archive.h"
 #import "../math/soa_math_archive.h"
 #include <iostream>
 

@@ -6,9 +6,9 @@
 //
 
 #import "soa_animation.h"
-#import "../math/span.h"
-#import "../math/allocator.h"
-#import "../math/archive.h"
+#import "../span.h"
+#import "../memory/allocator.h"
+#import "../io/archive.h"
 #include <iostream>
 
 @implementation SoaAnimationLoader {

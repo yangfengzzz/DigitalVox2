@@ -1198,6 +1198,34 @@
 			path = fbx;
 			sourceTree = "<group>";
 		};
+		040C5FE9274618B700170B6A /* containers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = containers;
+			sourceTree = "<group>";
+		};
+		040C5FEA274618D900170B6A /* memory */ = {
+			isa = PBXGroup;
+			children = (
+				0486926E27374E42007B8DFE /* allocator.h */,
+				0486926D27374E42007B8DFE /* allocator.cc */,
+			);
+			path = memory;
+			sourceTree = "<group>";
+		};
+		040C5FEB2746191900170B6A /* io */ = {
+			isa = PBXGroup;
+			children = (
+				0486926827374DED007B8DFE /* archive_traits.h */,
+				0486926627374DED007B8DFE /* archive.h */,
+				0486926927374DED007B8DFE /* archive.cc */,
+				0486926A27374DED007B8DFE /* stream.h */,
+				0486926727374DED007B8DFE /* stream.cc */,
+			);
+			path = io;
+			sourceTree = "<group>";
+		};
 		0413287C26E07F07000A4F4E /* enums */ = {
 			isa = PBXGroup;
 			children = (
@@ -1872,6 +1900,13 @@
 		045D2BC6272CAEB40091636B /* animation */ = {
 			isa = PBXGroup;
 			children = (
+				0486927727374FF4007B8DFE /* platform.h */,
+				0486927627374FF3007B8DFE /* platform.cc */,
+				0486927927375088007B8DFE /* endianness.h */,
+				0486927A273750A7007B8DFE /* span.h */,
+				040C5FEA274618D900170B6A /* memory */,
+				040C5FEB2746191900170B6A /* io */,
+				040C5FE9274618B700170B6A /* containers */,
 				04CB88D127326C6000B0E398 /* math */,
 				04CB88FD2732B4A400B0E398 /* runtime */,
 				04CB88FC2732B49B00B0E398 /* offline */,
@@ -2127,17 +2162,6 @@
 		04CB88D127326C6000B0E398 /* math */ = {
 			isa = PBXGroup;
 			children = (
-				0486927727374FF4007B8DFE /* platform.h */,
-				0486927627374FF3007B8DFE /* platform.cc */,
-				0486927927375088007B8DFE /* endianness.h */,
-				0486927A273750A7007B8DFE /* span.h */,
-				0486926E27374E42007B8DFE /* allocator.h */,
-				0486926D27374E42007B8DFE /* allocator.cc */,
-				0486926827374DED007B8DFE /* archive_traits.h */,
-				0486926627374DED007B8DFE /* archive.h */,
-				0486926927374DED007B8DFE /* archive.cc */,
-				0486926A27374DED007B8DFE /* stream.h */,
-				0486926727374DED007B8DFE /* stream.cc */,
 				04CB88DD27326C9900B0E398 /* math_constant.h */,
 				04CB88DF27326C9900B0E398 /* simd_math.h */,
 				04CB88DE27326C9900B0E398 /* simd_math.mm */,
