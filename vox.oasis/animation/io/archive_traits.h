@@ -34,25 +34,28 @@
 #include <stdint.h>
 #include <cstddef>
 
-// Forward declaration of archive types.
-class OArchive;
+namespace ozz {
+    namespace io {
 
-class IArchive;
+        // Forward declaration of archive types.
+        class OArchive;
 
-// Default loading and saving external declaration.
-// Those template implementations aim to be specialized at compilation time by
-// non-member Load and save functions. For example the specialization of the
-// Save() function for a type Type is:
-// void Save(OArchive& _archive, const Extrusive* _test, size_t _count) {
-// }
-// The Load() function receives the version _version of type _Ty at the time the
-// archive was saved.
-// This uses polymorphism rather than template specialization to avoid
-// including the file that contains the template definition.
-//
-// This default function call member _Ty::Load/Save function.
-template<typename _Ty>
-struct Extern;
+        class IArchive;
+
+        // Default loading and saving external declaration.
+        // Those template implementations aim to be specialized at compilation time by
+        // non-member Load and save functions. For example the specialization of the
+        // Save() function for a type Type is:
+        // void Save(OArchive& _archive, const Extrusive* _test, size_t _count) {
+        // }
+        // The Load() function receives the version _version of type _Ty at the time the
+        // archive was saved.
+        // This uses polymorphism rather than template specialization to avoid
+        // including the file that contains the template definition.
+        //
+        // This default function call member _Ty::Load/Save function.
+        template<typename _Ty>
+        struct Extern;
 
 // Declares the current (compile time) version of _type.
 // This macro must be used inside namespace ozz::io.
@@ -199,20 +202,23 @@ struct Extern;
   };                                                                  \
   }  // internal
 
-namespace internal {
-// Definition of version specializable template struct.
-// There's no default implementation in order to force user to define it, which
-// in turn forces those who want to serialize an object to include the file that
-// defines it's version. This helps with detecting issues at compile time.
-    template<typename _Ty>
-    struct Version;
+        namespace internal {
+            // Definition of version specializable template struct.
+            // There's no default implementation in order to force user to define it, which
+            // in turn forces those who want to serialize an object to include the file that
+            // defines it's version. This helps with detecting issues at compile time.
+            template<typename _Ty>
+            struct Version;
 
-// Defines default tag value, which is disabled.
-    template<typename _Ty>
-    struct Tag {
-        enum {
-            kTagLength = 0
-        };
-    };
-}  // namespace internal
+            // Defines default tag value, which is disabled.
+            template<typename _Ty>
+            struct Tag {
+                enum {
+                    kTagLength = 0
+                };
+            };
+        }  // namespace internal
+    }  // namespace io
+}  // namespace ozz
+
 #endif  // OZZ_OZZ_BASE_IO_ARCHIVE_TRAITS_H_

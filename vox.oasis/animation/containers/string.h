@@ -25,33 +25,17 @@
 //                                                                            //
 //----------------------------------------------------------------------------//
 
-#include "archive.h"
+#ifndef OZZ_OZZ_BASE_CONTAINERS_STRING_H_
+#define OZZ_OZZ_BASE_CONTAINERS_STRING_H_
 
-#include <cassert>
+#include <string>
+
+#include "std_allocator.h"
 
 namespace ozz {
-    namespace io {
-
-// OArchive implementation.
-
-        OArchive::OArchive(Stream *_stream, Endianness _endianness)
-                : stream_(_stream), endian_swap_(_endianness != GetNativeEndianness()) {
-            assert(stream_ && stream_->opened() &&
-                    "_stream argument must point a valid opened stream.");
-            // Save as a single byte as it does not need to be swapped.
-            uint8_t endianness = static_cast<uint8_t>(_endianness);
-            *this << endianness;
-        }
-
-// IArchive implementation.
-
-        IArchive::IArchive(Stream *_stream) : stream_(_stream), endian_swap_(false) {
-            assert(stream_ && stream_->opened() &&
-                    "_stream argument must point a valid opened stream.");
-            // Endianness was saved as a single byte, as it does not need to be swapped.
-            uint8_t endianness;
-            *this >> endianness;
-            endian_swap_ = endianness != GetNativeEndianness();
-        }
-    }  // namespace io
+// Redirects std::basic_string to ozz::string in order to replace std default
+// allocator by ozz::StdAllocator.
+using string =
+    std::basic_string<char, std::char_traits<char>, ozz::StdAllocator<char>>;
 }  // namespace ozz
+#endif  // OZZ_OZZ_BASE_CONTAINERS_STRING_H_

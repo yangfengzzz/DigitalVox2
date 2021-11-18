@@ -41,6 +41,8 @@
 #include <cassert>
 #include <cstddef>
 
+namespace ozz {
+
 // Finds the number of elements of a statically allocated array.
 #define OZZ_ARRAY_SIZE(_array) (sizeof(_array) / sizeof(_array[0]))
 
@@ -75,40 +77,41 @@
 #define OZZ_IF_NDEBUG(...)
 #endif  // NDEBUG
 
-// Case sensitive wildcard string matching:
-// - a ? sign matches any character, except an empty string.
-// - a * sign matches any string, including an empty string.
-bool strmatch(const char *_str, const char *_pattern);
+    // Case sensitive wildcard string matching:
+    // - a ? sign matches any character, except an empty string.
+    // - a * sign matches any string, including an empty string.
+    bool strmatch(const char *_str, const char *_pattern);
 
-// Tests whether _block is aligned to _alignment boundary.
-template<typename _Ty>
-OZZ_INLINE bool IsAligned(_Ty _value, size_t _alignment) {
-    return (_value & (_alignment - 1)) == 0;
-}
+    // Tests whether _block is aligned to _alignment boundary.
+    template<typename _Ty>
+    OZZ_INLINE bool IsAligned(_Ty _value, size_t _alignment) {
+        return (_value & (_alignment - 1)) == 0;
+    }
 
-template<typename _Ty>
-OZZ_INLINE bool IsAligned(_Ty *_address, size_t _alignment) {
-    return (reinterpret_cast<uintptr_t>(_address) & (_alignment - 1)) == 0;
-}
+    template<typename _Ty>
+    OZZ_INLINE bool IsAligned(_Ty *_address, size_t _alignment) {
+        return (reinterpret_cast<uintptr_t>(_address) & (_alignment - 1)) == 0;
+    }
 
-// Aligns _block address to the first greater address that is aligned to
-// _alignment boundaries.
-template<typename _Ty>
-OZZ_INLINE _Ty Align(_Ty _value, size_t _alignment) {
-    return static_cast<_Ty>(_value + (_alignment - 1)) & (0 - _alignment);
-}
+    // Aligns _block address to the first greater address that is aligned to
+    // _alignment boundaries.
+    template<typename _Ty>
+    OZZ_INLINE _Ty Align(_Ty _value, size_t _alignment) {
+        return static_cast<_Ty>(_value + (_alignment - 1)) & (0 - _alignment);
+    }
 
-template<typename _Ty>
-OZZ_INLINE _Ty *Align(_Ty *_address, size_t _alignment) {
-    return reinterpret_cast<_Ty *>(
-            (reinterpret_cast<uintptr_t>(_address) + (_alignment - 1)) &
-                    (0 - _alignment));
-}
+    template<typename _Ty>
+    OZZ_INLINE _Ty *Align(_Ty *_address, size_t _alignment) {
+        return reinterpret_cast<_Ty *>(
+                (reinterpret_cast<uintptr_t>(_address) + (_alignment - 1)) &
+                        (0 - _alignment));
+    }
 
-// Offset a pointer from a given number of bytes.
-template<typename _Ty>
-_Ty *PointerStride(_Ty *_ty, size_t _stride) {
-    return reinterpret_cast<_Ty *>(reinterpret_cast<uintptr_t>(_ty) + _stride);
-}
+    // Offset a pointer from a given number of bytes.
+    template<typename _Ty>
+    _Ty *PointerStride(_Ty *_ty, size_t _stride) {
+        return reinterpret_cast<_Ty *>(reinterpret_cast<uintptr_t>(_ty) + _stride);
+    }
+}  // namespace ozz
 
 #endif  // OZZ_OZZ_BASE_PLATFORM_H_

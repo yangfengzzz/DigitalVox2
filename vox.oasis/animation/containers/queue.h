@@ -25,33 +25,23 @@
 //                                                                            //
 //----------------------------------------------------------------------------//
 
-#include "archive.h"
+#ifndef OZZ_OZZ_BASE_CONTAINERS_QUEUE_H_
+#define OZZ_OZZ_BASE_CONTAINERS_QUEUE_H_
 
-#include <cassert>
+#include <queue>
+
+#include "deque.h"
 
 namespace ozz {
-    namespace io {
+// Redirects std::queue to ozz::queue in order to replace std default allocator
+// by ozz::StdAllocator.
+template <class _Ty, class _Container = deque<_Ty>>
+using queue = std::queue<_Ty, _Container>;
 
-// OArchive implementation.
-
-        OArchive::OArchive(Stream *_stream, Endianness _endianness)
-                : stream_(_stream), endian_swap_(_endianness != GetNativeEndianness()) {
-            assert(stream_ && stream_->opened() &&
-                    "_stream argument must point a valid opened stream.");
-            // Save as a single byte as it does not need to be swapped.
-            uint8_t endianness = static_cast<uint8_t>(_endianness);
-            *this << endianness;
-        }
-
-// IArchive implementation.
-
-        IArchive::IArchive(Stream *_stream) : stream_(_stream), endian_swap_(false) {
-            assert(stream_ && stream_->opened() &&
-                    "_stream argument must point a valid opened stream.");
-            // Endianness was saved as a single byte, as it does not need to be swapped.
-            uint8_t endianness;
-            *this >> endianness;
-            endian_swap_ = endianness != GetNativeEndianness();
-        }
-    }  // namespace io
+// Redirects std::priority_queue to ozz::priority_queue in order to replace std
+// default allocator by ozz::StdAllocator.
+template <class _Ty, class _Container = deque<_Ty>,
+          class _Pred = std::less<typename _Container::value_type>>
+using priority_queue = std::priority_queue<_Ty, _Container, _Pred>;
 }  // namespace ozz
+#endif  // OZZ_OZZ_BASE_CONTAINERS_QUEUE_H_

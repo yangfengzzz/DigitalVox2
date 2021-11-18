@@ -9,7 +9,7 @@
 #define soa_skeleton_h
 
 #import <Foundation/Foundation.h>
-#import "../math/soa_float.h"
+#import "../maths/soa_float.h"
 
 @interface SoaSkeletonLoader : NSObject
 

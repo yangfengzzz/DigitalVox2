@@ -27,25 +27,27 @@
 
 #include "platform.h"
 
-bool strmatch(const char *_str, const char *_pattern) {
-    for (; *_pattern; ++_str, ++_pattern) {
-        if (*_pattern == '?') {
-            if (!*_str) {
+namespace ozz {
+    bool strmatch(const char *_str, const char *_pattern) {
+        for (; *_pattern; ++_str, ++_pattern) {
+            if (*_pattern == '?') {
+                if (!*_str) {
+                    return false;
+                }
+            } else if (*_pattern == '*') {
+                if (strmatch(_str, _pattern + 1)) {
+                    return true;
+                }
+                if (*_str && strmatch(_str + 1, _pattern)) {
+                    return true;
+                }
                 return false;
-            }
-        } else if (*_pattern == '*') {
-            if (strmatch(_str, _pattern + 1)) {
-                return true;
-            }
-            if (*_str && strmatch(_str + 1, _pattern)) {
-                return true;
-            }
-            return false;
-        } else {
-            if (*_str != *_pattern) {
-                return false;
+            } else {
+                if (*_str != *_pattern) {
+                    return false;
+                }
             }
         }
+        return !*_str && !*_pattern;
     }
-    return !*_str && !*_pattern;
-}
+}  // namespace ozz

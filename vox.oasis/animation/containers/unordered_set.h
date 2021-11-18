@@ -25,33 +25,28 @@
 //                                                                            //
 //----------------------------------------------------------------------------//
 
-#include "archive.h"
+#ifndef OZZ_OZZ_BASE_CONTAINERS_UNORDERED_SET_H_
+#define OZZ_OZZ_BASE_CONTAINERS_UNORDERED_SET_H_
 
-#include <cassert>
+#include <unordered_set>
+
+#include "ozz/base/containers/std_allocator.h"
 
 namespace ozz {
-    namespace io {
+// Redirects std::unordered_set to ozz::UnorderedSet in order to replace std
+// default allocator by ozz::StdAllocator.
+template <class _Key, class _Hash = std::hash<_Key>,
+          class _KeyEqual = std::equal_to<_Key>,
+          class _Allocator = ozz::StdAllocator<_Key> >
+using unordered_set =
+    std::unordered_set<_Key, _Hash, _KeyEqual, _Allocator>;
 
-// OArchive implementation.
-
-        OArchive::OArchive(Stream *_stream, Endianness _endianness)
-                : stream_(_stream), endian_swap_(_endianness != GetNativeEndianness()) {
-            assert(stream_ && stream_->opened() &&
-                    "_stream argument must point a valid opened stream.");
-            // Save as a single byte as it does not need to be swapped.
-            uint8_t endianness = static_cast<uint8_t>(_endianness);
-            *this << endianness;
-        }
-
-// IArchive implementation.
-
-        IArchive::IArchive(Stream *_stream) : stream_(_stream), endian_swap_(false) {
-            assert(stream_ && stream_->opened() &&
-                    "_stream argument must point a valid opened stream.");
-            // Endianness was saved as a single byte, as it does not need to be swapped.
-            uint8_t endianness;
-            *this >> endianness;
-            endian_swap_ = endianness != GetNativeEndianness();
-        }
-    }  // namespace io
+// Redirects std::unordered_multiset to ozz::UnorderedMultiSet in order to
+// replace std default allocator by ozz::StdAllocator.
+template <class _Key, class _Hash = std::hash<_Key>,
+          class _KeyEqual = std::equal_to<_Key>,
+          class _Allocator = ozz::StdAllocator<_Key> >
+using unordered_multiset =
+    std::unordered_multiset<_Key, _Hash, _KeyEqual, _Allocator>;
 }  // namespace ozz
+#endif  // OZZ_OZZ_BASE_CONTAINERS_UNORDERED_SET_H_

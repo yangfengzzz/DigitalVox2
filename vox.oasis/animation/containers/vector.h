@@ -25,33 +25,50 @@
 //                                                                            //
 //----------------------------------------------------------------------------//
 
-#include "archive.h"
+#ifndef OZZ_OZZ_BASE_CONTAINERS_VECTOR_H_
+#define OZZ_OZZ_BASE_CONTAINERS_VECTOR_H_
 
-#include <cassert>
+#include <vector>
+
+#include "ozz/base/containers/std_allocator.h"
 
 namespace ozz {
-    namespace io {
+// Redirects std::vector to ozz::vector in order to replace std default
+// allocator by ozz::StdAllocator.
+template <class _Ty, class _Allocator = ozz::StdAllocator<_Ty>>
+using vector = std::vector<_Ty, _Allocator>;
 
-// OArchive implementation.
+// Extends std::vector with two functions that gives access to the begin and the
+// end of its array of elements.
 
-        OArchive::OArchive(Stream *_stream, Endianness _endianness)
-                : stream_(_stream), endian_swap_(_endianness != GetNativeEndianness()) {
-            assert(stream_ && stream_->opened() &&
-                    "_stream argument must point a valid opened stream.");
-            // Save as a single byte as it does not need to be swapped.
-            uint8_t endianness = static_cast<uint8_t>(_endianness);
-            *this << endianness;
-        }
+// Returns the mutable begin of the array of elements, or nullptr if
+// vector's empty.
+template <class _Ty, class _Allocator>
+inline _Ty* array_begin(std::vector<_Ty, _Allocator>& _vector) {
+  return _vector.data();
+}
 
-// IArchive implementation.
+// Returns the non-mutable begin of the array of elements, or nullptr if
+// vector's empty.
+template <class _Ty, class _Allocator>
+inline const _Ty* array_begin(const std::vector<_Ty, _Allocator>& _vector) {
+  return _vector.data();
+}
 
-        IArchive::IArchive(Stream *_stream) : stream_(_stream), endian_swap_(false) {
-            assert(stream_ && stream_->opened() &&
-                    "_stream argument must point a valid opened stream.");
-            // Endianness was saved as a single byte, as it does not need to be swapped.
-            uint8_t endianness;
-            *this >> endianness;
-            endian_swap_ = endianness != GetNativeEndianness();
-        }
-    }  // namespace io
+// Returns the mutable end of the array of elements, or nullptr if
+// vector's empty. Array end is one element past the last element of the
+// array, it cannot be dereferenced.
+template <class _Ty, class _Allocator>
+inline _Ty* array_end(std::vector<_Ty, _Allocator>& _vector) {
+  return _vector.data() + _vector.size();
+}
+
+// Returns the non-mutable end of the array of elements, or nullptr if
+// vector's empty. Array end is one element past the last element of the
+// array, it cannot be dereferenced.
+template <class _Ty, class _Allocator>
+inline const _Ty* array_end(const std::vector<_Ty, _Allocator>& _vector) {
+  return _vector.data() + _vector.size();
+}
 }  // namespace ozz
+#endif  // OZZ_OZZ_BASE_CONTAINERS_VECTOR_H_

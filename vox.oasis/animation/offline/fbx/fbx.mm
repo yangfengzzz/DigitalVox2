@@ -6,7 +6,7 @@
 //
 
 #include "fbx.hpp"
-#include "../../math/simd_math.h"
+#include "../../maths/simd_math.h"
 #include <iostream>
 
 FbxManagerInstance::FbxManagerInstance() : fbx_manager_(nullptr) {

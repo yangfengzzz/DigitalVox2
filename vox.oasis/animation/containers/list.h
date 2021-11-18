@@ -25,33 +25,27 @@
 //                                                                            //
 //----------------------------------------------------------------------------//
 
-#include "archive.h"
+#ifndef OZZ_OZZ_BASE_CONTAINERS_LIST_H_
+#define OZZ_OZZ_BASE_CONTAINERS_LIST_H_
 
-#include <cassert>
+#ifdef _MSC_VER
+#pragma warning(push)
+// Removes constant conditional expression warning.
+#pragma warning(disable : 4127)
+#endif  // _MSC_VER
+
+#include <list>
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif  // _MSC_VER
+
+#include "ozz/base/containers/std_allocator.h"
 
 namespace ozz {
-    namespace io {
-
-// OArchive implementation.
-
-        OArchive::OArchive(Stream *_stream, Endianness _endianness)
-                : stream_(_stream), endian_swap_(_endianness != GetNativeEndianness()) {
-            assert(stream_ && stream_->opened() &&
-                    "_stream argument must point a valid opened stream.");
-            // Save as a single byte as it does not need to be swapped.
-            uint8_t endianness = static_cast<uint8_t>(_endianness);
-            *this << endianness;
-        }
-
-// IArchive implementation.
-
-        IArchive::IArchive(Stream *_stream) : stream_(_stream), endian_swap_(false) {
-            assert(stream_ && stream_->opened() &&
-                    "_stream argument must point a valid opened stream.");
-            // Endianness was saved as a single byte, as it does not need to be swapped.
-            uint8_t endianness;
-            *this >> endianness;
-            endian_swap_ = endianness != GetNativeEndianness();
-        }
-    }  // namespace io
+// Redirects std::list to ozz::list in order to replace std default allocator by
+// ozz::StdAllocator.
+template <class _Ty, class _Allocator = ozz::StdAllocator<_Ty>>
+using list = std::list<_Ty, _Allocator>;
 }  // namespace ozz
+#endif  // OZZ_OZZ_BASE_CONTAINERS_LIST_H_

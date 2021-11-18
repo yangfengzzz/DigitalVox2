@@ -6,11 +6,11 @@
 //
 
 #import "soa_skeleton.h"
-#import "../math/soa_float.h"
+#import "../maths/soa_float.h"
 #import "../span.h"
 #import "../memory/allocator.h"
 #import "../io/archive.h"
-#import "../math/soa_math_archive.h"
+#import "../maths/soa_math_archive.h"
 #include <iostream>
 
 @implementation SoaSkeletonLoader {

@@ -25,33 +25,48 @@
 //                                                                            //
 //----------------------------------------------------------------------------//
 
-#include "archive.h"
+#ifndef OZZ_OZZ_BASE_CONTAINERS_VECTOR_ARCHIVE_H_
+#define OZZ_OZZ_BASE_CONTAINERS_VECTOR_ARCHIVE_H_
 
-#include <cassert>
+#include "ozz/base/containers/vector.h"
+#include "ozz/base/io/archive.h"
+#include "ozz/base/platform.h"
 
 namespace ozz {
-    namespace io {
+namespace io {
 
-// OArchive implementation.
+OZZ_IO_TYPE_NOT_VERSIONABLE_T2(class _Ty, class _Allocator,
+                               std::vector<_Ty, _Allocator>)
 
-        OArchive::OArchive(Stream *_stream, Endianness _endianness)
-                : stream_(_stream), endian_swap_(_endianness != GetNativeEndianness()) {
-            assert(stream_ && stream_->opened() &&
-                    "_stream argument must point a valid opened stream.");
-            // Save as a single byte as it does not need to be swapped.
-            uint8_t endianness = static_cast<uint8_t>(_endianness);
-            *this << endianness;
-        }
-
-// IArchive implementation.
-
-        IArchive::IArchive(Stream *_stream) : stream_(_stream), endian_swap_(false) {
-            assert(stream_ && stream_->opened() &&
-                    "_stream argument must point a valid opened stream.");
-            // Endianness was saved as a single byte, as it does not need to be swapped.
-            uint8_t endianness;
-            *this >> endianness;
-            endian_swap_ = endianness != GetNativeEndianness();
-        }
-    }  // namespace io
+template <class _Ty, class _Allocator>
+struct Extern<std::vector<_Ty, _Allocator>> {
+  inline static void Save(OArchive& _archive,
+                          const std::vector<_Ty, _Allocator>* _values,
+                          size_t _count) {
+    for (size_t i = 0; i < _count; i++) {
+      const std::vector<_Ty, _Allocator>& vector = _values[i];
+      const uint32_t size = static_cast<uint32_t>(vector.size());
+      _archive << size;
+      if (size > 0) {
+        _archive << ozz::io::MakeArray(&vector[0], size);
+      }
+    }
+  }
+  inline static void Load(IArchive& _archive,
+                          std::vector<_Ty, _Allocator>* _values, size_t _count,
+                          uint32_t _version) {
+    (void)_version;
+    for (size_t i = 0; i < _count; i++) {
+      std::vector<_Ty, _Allocator>& vector = _values[i];
+      uint32_t size;
+      _archive >> size;
+      vector.resize(size);
+      if (size > 0) {
+        _archive >> ozz::io::MakeArray(&vector[0], size);
+      }
+    }
+  }
+};
+}  // namespace io
 }  // namespace ozz
+#endif  // OZZ_OZZ_BASE_CONTAINERS_VECTOR_ARCHIVE_H_

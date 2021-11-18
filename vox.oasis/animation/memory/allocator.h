@@ -34,15 +34,18 @@
 
 #include "platform.h"
 
+namespace ozz {
+namespace memory {
+
 // Forwards declare Allocator class.
 class Allocator;
 
 // Defines the default allocator accessor.
-Allocator *default_allocator();
+Allocator* default_allocator();
 
 // Set the default allocator, used for all dynamic allocation inside ozz.
 // Returns current memory allocator, such that in can be restored if needed.
-Allocator *SetDefaulAllocator(Allocator *_allocator);
+Allocator* SetDefaulAllocator(Allocator* _allocator);
 
 // Defines an abstract allocator class.
 // Implements helper methods to allocate/deallocate POD typed objects instead of
@@ -50,23 +53,23 @@ Allocator *SetDefaulAllocator(Allocator *_allocator);
 // Implements New and Delete function to allocate C++ objects, as a replacement
 // of new and delete operators.
 class Allocator {
-public:
-    // Default virtual destructor.
-    virtual ~Allocator() {
-    }
+ public:
+  // Default virtual destructor.
+  virtual ~Allocator() {}
 
-    // Next functions are the pure virtual functions that must be implemented by
-    // allocator concrete classes.
+  // Next functions are the pure virtual functions that must be implemented by
+  // allocator concrete classes.
 
-    // Allocates _size bytes on the specified _alignment boundaries.
-    // Allocate function conforms with standard malloc function specifications.
-    virtual void *Allocate(size_t _size, size_t _alignment) = 0;
+  // Allocates _size bytes on the specified _alignment boundaries.
+  // Allocate function conforms with standard malloc function specifications.
+  virtual void* Allocate(size_t _size, size_t _alignment) = 0;
 
-    // Frees a block that was allocated with Allocate or Reallocate.
-    // Argument _block can be nullptr.
-    // Deallocate function conforms with standard free function specifications.
-    virtual void Deallocate(void *_block) = 0;
+  // Frees a block that was allocated with Allocate or Reallocate.
+  // Argument _block can be nullptr.
+  // Deallocate function conforms with standard free function specifications.
+  virtual void Deallocate(void* _block) = 0;
 };
+}  // namespace memory
 
 // ozz replacement for c++ operator new with, used to allocate with an
 // ozz::memory::Allocator. Delete must be used to deallocate such object.
@@ -74,21 +77,24 @@ public:
 // Type* object = New<Type>();
 // or any number of argument:
 // Type* object = New<Type>(1,2,3,4);
-template<typename _Ty, typename... _Args>
-_Ty *New(_Args &&... _args) {
-    void *alloc = default_allocator()->Allocate(sizeof(_Ty), alignof(_Ty));
-    return new(alloc) _Ty(std::forward<_Args>(_args)...);
+template <typename _Ty, typename... _Args>
+_Ty* New(_Args&&... _args) {
+  void* alloc =
+      memory::default_allocator()->Allocate(sizeof(_Ty), alignof(_Ty));
+  return new (alloc) _Ty(std::forward<_Args>(_args)...);
 }
 
-template<typename _Ty>
-void Delete(_Ty *_object) {
-    if (_object) {
-        // Prevents from false "unreferenced parameter" warning when _Ty has no
-        // explicit destructor.
-        (void) _object;
-        _object->~_Ty();
-        default_allocator()->Deallocate(_object);
-    }
+template <typename _Ty>
+void Delete(_Ty* _object) {
+  if (_object) {
+    // Prevents from false "unreferenced parameter" warning when _Ty has no
+    // explicit destructor.
+    (void)_object;
+    _object->~_Ty();
+    memory::default_allocator()->Deallocate(_object);
+  }
 }
+
+}  // namespace ozz
 
 #endif  // OZZ_OZZ_BASE_MEMORY_ALLOCATOR_H_

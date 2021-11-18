@@ -25,33 +25,25 @@
 //                                                                            //
 //----------------------------------------------------------------------------//
 
-#include "archive.h"
+#ifndef OZZ_OZZ_BASE_CONTAINERS_STRING_ARCHIVE_H_
+#define OZZ_OZZ_BASE_CONTAINERS_STRING_ARCHIVE_H_
 
-#include <cassert>
+#include "string.h"
+#include "../io/archive_traits.h"
+#include "../platform.h"
 
 namespace ozz {
-    namespace io {
+namespace io {
 
-// OArchive implementation.
+OZZ_IO_TYPE_NOT_VERSIONABLE(ozz::string)
 
-        OArchive::OArchive(Stream *_stream, Endianness _endianness)
-                : stream_(_stream), endian_swap_(_endianness != GetNativeEndianness()) {
-            assert(stream_ && stream_->opened() &&
-                    "_stream argument must point a valid opened stream.");
-            // Save as a single byte as it does not need to be swapped.
-            uint8_t endianness = static_cast<uint8_t>(_endianness);
-            *this << endianness;
-        }
-
-// IArchive implementation.
-
-        IArchive::IArchive(Stream *_stream) : stream_(_stream), endian_swap_(false) {
-            assert(stream_ && stream_->opened() &&
-                    "_stream argument must point a valid opened stream.");
-            // Endianness was saved as a single byte, as it does not need to be swapped.
-            uint8_t endianness;
-            *this >> endianness;
-            endian_swap_ = endianness != GetNativeEndianness();
-        }
-    }  // namespace io
+template <>
+struct Extern<ozz::string> {
+  static void Save(OArchive& _archive, const ozz::string* _values,
+                   size_t _count);
+  static void Load(IArchive& _archive, ozz::string* _values, size_t _count,
+                   uint32_t _version);
+};
+}  // namespace io
 }  // namespace ozz
+#endif  // OZZ_OZZ_BASE_CONTAINERS_STRING_ARCHIVE_H_

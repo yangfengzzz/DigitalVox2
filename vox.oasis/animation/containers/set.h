@@ -25,33 +25,24 @@
 //                                                                            //
 //----------------------------------------------------------------------------//
 
-#include "archive.h"
+#ifndef OZZ_OZZ_BASE_CONTAINERS_SET_H_
+#define OZZ_OZZ_BASE_CONTAINERS_SET_H_
 
-#include <cassert>
+#include <set>
+
+#include "ozz/base/containers/std_allocator.h"
 
 namespace ozz {
-    namespace io {
+// Redirects std::set to ozz::set in order to replace std default allocator by
+// ozz::StdAllocator.
+template <class _Key, class _Pred = std::less<_Key>,
+          class _Allocator = ozz::StdAllocator<_Key>>
+using set = std::set<_Key, _Pred, _Allocator>;
 
-// OArchive implementation.
-
-        OArchive::OArchive(Stream *_stream, Endianness _endianness)
-                : stream_(_stream), endian_swap_(_endianness != GetNativeEndianness()) {
-            assert(stream_ && stream_->opened() &&
-                    "_stream argument must point a valid opened stream.");
-            // Save as a single byte as it does not need to be swapped.
-            uint8_t endianness = static_cast<uint8_t>(_endianness);
-            *this << endianness;
-        }
-
-// IArchive implementation.
-
-        IArchive::IArchive(Stream *_stream) : stream_(_stream), endian_swap_(false) {
-            assert(stream_ && stream_->opened() &&
-                    "_stream argument must point a valid opened stream.");
-            // Endianness was saved as a single byte, as it does not need to be swapped.
-            uint8_t endianness;
-            *this >> endianness;
-            endian_swap_ = endianness != GetNativeEndianness();
-        }
-    }  // namespace io
+// Redirects std::multiset to ozz::multiset in order to replace std default
+// allocator by ozz::StdAllocator.
+template <class _Key, class _Pred = std::less<_Key>,
+          class _Allocator = ozz::StdAllocator<_Key>>
+using multiset = std::multiset<_Key, _Pred, _Allocator>;
 }  // namespace ozz
+#endif  // OZZ_OZZ_BASE_CONTAINERS_SET_H_
