@@ -5,7 +5,7 @@
 //  Created by 杨丰 on 2021/10/30.
 //
 
-#import "simd_math.h"
+#import "csimd_math.h"
 #import "math_constant.h"
 
 #define OZZ_SHUFFLE_PS1(_v, _m) _mm_shuffle_ps(_v, _v, _m)
