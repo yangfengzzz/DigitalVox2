@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		040C5FFB274619F500170B6A /* string_archive.cc in Sources */ = {isa = PBXBuildFile; fileRef = 040C5FEF274619F400170B6A /* string_archive.cc */; };
 		040C60072746942900170B6A /* USDZAssetsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0458275A26F6EF0E0056D134 /* USDZAssetsLoader.swift */; };
+		040C600A274694D100170B6A /* simd_math.cc in Sources */ = {isa = PBXBuildFile; fileRef = 040C6008274694D100170B6A /* simd_math.cc */; };
+		040C600C2747EE6E00170B6A /* csimd_math.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88DE27326C9900B0E398 /* csimd_math.mm */; };
 		0413755127412F6200FDEF5C /* Doggy.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 0413755027412F6200FDEF5C /* Doggy.usdz */; };
 		0419B6D626E6E30300005FEA /* instance_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D526E6E30300005FEA /* instance_data.swift */; };
 		0419B6D826E6E5CE00005FEA /* shading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D726E6E5CE00005FEA /* shading.swift */; };
@@ -498,6 +500,8 @@
 		040C60012746931600170B6A /* simd_math_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simd_math_config.h; sourceTree = "<group>"; };
 		040C60022746931600170B6A /* simd_math_ref-inl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "simd_math_ref-inl.h"; sourceTree = "<group>"; };
 		040C60032746931600170B6A /* simd_math_sse-inl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "simd_math_sse-inl.h"; sourceTree = "<group>"; };
+		040C6008274694D100170B6A /* simd_math.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simd_math.cc; sourceTree = "<group>"; };
+		040C6009274694D100170B6A /* simd_math.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simd_math.h; sourceTree = "<group>"; };
 		0413286A26DF86DC000A4F4E /* BoundingBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingBox.swift; sourceTree = "<group>"; };
 		0413286C26E06648000A4F4E /* BoundingSphere.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingSphere.swift; sourceTree = "<group>"; };
 		0413286E26E06A40000A4F4E /* Plane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plane.swift; sourceTree = "<group>"; };
@@ -2173,6 +2177,8 @@
 				040C5FFC274690D600170B6A /* math_archive.h */,
 				040C5FFE274690D600170B6A /* math_archive.cc */,
 				04CB88DD27326C9900B0E398 /* math_constant.h */,
+				040C6009274694D100170B6A /* simd_math.h */,
+				040C6008274694D100170B6A /* simd_math.cc */,
 				04CB88DF27326C9900B0E398 /* csimd_math.h */,
 				04CB88DE27326C9900B0E398 /* csimd_math.mm */,
 				04CB88D727326C9900B0E398 /* simd_math.swift */,
@@ -2891,6 +2897,7 @@
 				041BAE65272A510C006268D5 /* ShaderUniform.swift in Sources */,
 				041BAE81272A513B006268D5 /* Spherical.swift in Sources */,
 				041BAEE8272A9F81006268D5 /* CPxShape.mm in Sources */,
+				040C600C2747EE6E00170B6A /* csimd_math.mm in Sources */,
 				041BAEBE272A5166006268D5 /* LiteCollider.swift in Sources */,
 				041BAE67272A5111006268D5 /* DirectLight.swift in Sources */,
 				04E59C9D273903E3000BCA73 /* CPxD6Joint.mm in Sources */,
@@ -2933,6 +2940,7 @@
 				04AFAC54273AC64D003E5928 /* CharacterController.swift in Sources */,
 				041BAE55272A5100006268D5 /* ClassPool.swift in Sources */,
 				041BAE05272A500F006268D5 /* SceneFeatureManager.swift in Sources */,
+				040C600A274694D100170B6A /* simd_math.cc in Sources */,
 				041BAEBC272A5166006268D5 /* LiteTransform.swift in Sources */,
 				041BAE5F272A510C006268D5 /* ShaderProperty.swift in Sources */,
 				04AFAC4F273ABBE8003E5928 /* PhysXCapsuleCharacterControllerDesc.swift in Sources */,

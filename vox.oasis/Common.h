@@ -52,7 +52,6 @@
 #include "CJointBridge.h"
 #include "CCharacterBridge.h"
 
-#include "math_constant.h"
 #include "csimd_math.h"
 #include "soa_float.h"
 #include "animation_keyframe.h"

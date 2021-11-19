@@ -6,914 +6,566 @@
 //
 
 #import "csimd_math.h"
-#import "math_constant.h"
-
-#define OZZ_SHUFFLE_PS1(_v, _m) _mm_shuffle_ps(_v, _v, _m)
-
-#define OZZ_SSE_SPLAT_F(_v, _i) OZZ_SHUFFLE_PS1(_v, _MM_SHUFFLE(_i, _i, _i, _i))
-
-#define OZZ_SSE_SPLAT_I(_v, _i) \
-  _mm_shuffle_epi32(_v, _MM_SHUFFLE(_i, _i, _i, _i))
-
-// _v.x + _v.y, _v.y, _v.z, _v.w
-#define OZZ_SSE_HADD2_F(_v) _mm_add_ss(_v, OZZ_SSE_SPLAT_F(_v, 1))
-
-// _v.x + _v.y + _v.z, _v.y, _v.z, _v.w
-#define OZZ_SSE_HADD3_F(_v) \
-  _mm_add_ss(_mm_add_ss(_v, OZZ_SSE_SPLAT_F(_v, 2)), OZZ_SSE_SPLAT_F(_v, 1))
-
-// _v.x + _v.y + _v.z + _v.w, ?, ?, ?
-#define OZZ_SSE_HADD4_F(_v, _r)                                    \
-  do {                                                             \
-    const __m128 haddxyzw = _mm_add_ps(_v, _mm_movehl_ps(_v, _v)); \
-    _r = _mm_add_ss(haddxyzw, OZZ_SSE_SPLAT_F(haddxyzw, 1));       \
-  } while (void(0), 0)
-
-// dot2, ?, ?, ?
-#define OZZ_SSE_DOT2_F(_a, _b, _r)               \
-  do {                                           \
-    const __m128 ab = _mm_mul_ps(_a, _b);        \
-    _r = _mm_add_ss(ab, OZZ_SSE_SPLAT_F(ab, 1)); \
-                                                 \
-  } while (void(0), 0)
-
-// dot3, ?, ?, ?
-#define OZZ_SSE_DOT3_F(_a, _b, _r) \
-  do {                             \
-    _r = _mm_dp_ps(_a, _b, 0x7f);  \
-  } while (void(0), 0)
-
-// dot4, ?, ?, ?
-#define OZZ_SSE_DOT4_F(_a, _b, _r) \
-  do {                             \
-    _r = _mm_dp_ps(_a, _b, 0xff);  \
-  } while (void(0), 0)
-
-#define OZZ_MADD(_a, _b, _c) _mm_add_ps(_mm_mul_ps(_a, _b), _c)
-#define OZZ_MSUB(_a, _b, _c) _mm_sub_ps(_mm_mul_ps(_a, _b), _c)
-#define OZZ_NMADD(_a, _b, _c) _mm_sub_ps(_c, _mm_mul_ps(_a, _b))
-#define OZZ_NMSUB(_a, _b, _c) (-_mm_add_ps(_mm_mul_ps(_a, _b), _c))
-#define OZZ_MADDX(_a, _b, _c) _mm_add_ss(_mm_mul_ss(_a, _b), _c)
-#define OZZ_MSUBX(_a, _b, _c) _mm_sub_ss(_mm_mul_ss(_a, _b), _c)
-#define OZZ_NMADDX(_a, _b, _c) _mm_sub_ss(_c, _mm_mul_ss(_a, _b))
-#define OZZ_NMSUBX(_a, _b, _c) (-_mm_add_ss(_mm_mul_ss(_a, _b), _c))
-
-inline SimdFloat4 DivX(_SimdFloat4 _a, _SimdFloat4 _b) {
-    return _mm_div_ss(_a, _b);
-}
-
-#define OZZ_SSE_SELECT_F(_b, _true, _false) \
-  _mm_blendv_ps(_false, _true, _mm_castsi128_ps(_b))
-
-#define OZZ_SSE_SELECT_I(_b, _true, _false) _mm_blendv_epi8(_false, _true, _b)
+#import "simd_math.h"
 
 @implementation OZZFloat4 {
 
 }
 
 + (SimdFloat4)zero {
-    return _mm_setzero_ps();
+    return ozz::math::simd_float4::zero();
 }
 
 + (SimdFloat4)one {
-    const __m128i zero = _mm_setzero_si128();
-    return _mm_castsi128_ps(
-            _mm_srli_epi32(_mm_slli_epi32(_mm_cmpeq_epi32(zero, zero), 25), 2));
+    return ozz::math::simd_float4::one();
 }
 
 + (SimdFloat4)x_axis {
-    const __m128i zero = _mm_setzero_si128();
-    const __m128i one =
-            _mm_srli_epi32(_mm_slli_epi32(_mm_cmpeq_epi32(zero, zero), 25), 2);
-    return _mm_castsi128_ps(_mm_srli_si128(one, 12));
+    return ozz::math::simd_float4::x_axis();
 }
 
 + (SimdFloat4)y_axis {
-    const __m128i zero = _mm_setzero_si128();
-    const __m128i one =
-            _mm_srli_epi32(_mm_slli_epi32(_mm_cmpeq_epi32(zero, zero), 25), 2);
-    return _mm_castsi128_ps(_mm_slli_si128(_mm_srli_si128(one, 12), 4));
+    return ozz::math::simd_float4::y_axis();
 }
 
 + (SimdFloat4)z_axis {
-    const __m128i zero = _mm_setzero_si128();
-    const __m128i one =
-            _mm_srli_epi32(_mm_slli_epi32(_mm_cmpeq_epi32(zero, zero), 25), 2);
-    return _mm_castsi128_ps(_mm_slli_si128(_mm_srli_si128(one, 12), 8));
+    return ozz::math::simd_float4::z_axis();
 }
 
 + (SimdFloat4)w_axis {
-    const __m128i zero = _mm_setzero_si128();
-    const __m128i one =
-            _mm_srli_epi32(_mm_slli_epi32(_mm_cmpeq_epi32(zero, zero), 25), 2);
-    return _mm_castsi128_ps(_mm_slli_si128(one, 12));
+    return ozz::math::simd_float4::w_axis();
 }
 
 + (SimdFloat4)LoadWith:(float)_x :(float)_y :(float)_z :(float)_w {
-    return _mm_set_ps(_w, _z, _y, _x);
+    return ozz::math::simd_float4::Load(_x, _y, _z, _w);
 }
 
 + (SimdFloat4)LoadXWith:(float)_x {
-    return _mm_set_ss(_x);
+    return ozz::math::simd_float4::LoadX(_x);
 }
 
 + (SimdFloat4)Load1With:(float)_x {
-    return _mm_set_ps1(_x);
+    return ozz::math::simd_float4::Load1(_x);
 }
 
 + (SimdFloat4)LoadPtrWith:(const float *)_f {
-    assert(!(reinterpret_cast<uintptr_t>(_f) & 0xf) && "Invalid alignment");
-    return _mm_load_ps(_f);
+    return ozz::math::simd_float4::LoadPtr(_f);
 }
 
 + (SimdFloat4)LoadPtrUWith:(const float *)_f {
-    assert(!(reinterpret_cast<uintptr_t>(_f) & 0x3) && "Invalid alignment");
-    return _mm_loadu_ps(_f);
+    return ozz::math::simd_float4::LoadPtrU(_f);
 }
 
 + (SimdFloat4)LoadXPtrUWith:(const float *)_f {
-    assert(!(reinterpret_cast<uintptr_t>(_f) & 0x3) && "Invalid alignment");
-    return _mm_load_ss(_f);
+    return ozz::math::simd_float4::LoadXPtrU(_f);
 }
 
 + (SimdFloat4)Load1PtrUWith:(const float *)_f {
-    assert(!(reinterpret_cast<uintptr_t>(_f) & 0x3) && "Invalid alignment");
-    return _mm_load_ps1(_f);
+    return ozz::math::simd_float4::Load1PtrU(_f);
 }
 
 + (SimdFloat4)Load2PtrUWith:(const float *)_f {
-    assert(!(reinterpret_cast<uintptr_t>(_f) & 0x3) && "Invalid alignment");
-    return _mm_unpacklo_ps(_mm_load_ss(_f + 0), _mm_load_ss(_f + 1));
+    return ozz::math::simd_float4::Load2PtrU(_f);
 }
 
 + (SimdFloat4)Load3PtrUWith:(const float *)_f {
-    assert(!(reinterpret_cast<uintptr_t>(_f) & 0x3) && "Invalid alignment");
-    return _mm_movelh_ps(
-            _mm_unpacklo_ps(_mm_load_ss(_f + 0), _mm_load_ss(_f + 1)),
-            _mm_load_ss(_f + 2));
+    return ozz::math::simd_float4::Load3PtrU(_f);
 }
 
 + (SimdFloat4)FromIntWith:(_SimdInt4)_i {
-    return _mm_cvtepi32_ps(_i);
+    return ozz::math::simd_float4::FromInt(_i);
 }
 
 + (float)GetXWith:(_SimdFloat4)_v {
-    return _mm_cvtss_f32(_v);
+    return ozz::math::GetX(_v);
 }
 
 + (float)GetYWith:(_SimdFloat4)_v {
-    return _mm_cvtss_f32(OZZ_SSE_SPLAT_F(_v, 1));
+    return ozz::math::GetY(_v);
 }
 
 + (float)GetZWith:(_SimdFloat4)_v {
-    return _mm_cvtss_f32(_mm_movehl_ps(_v, _v));
+    return ozz::math::GetZ(_v);
 }
 
 + (float)GetWWith:(_SimdFloat4)_v {
-    return _mm_cvtss_f32(OZZ_SSE_SPLAT_F(_v, 3));
+    return ozz::math::GetW(_v);
 }
 
 + (SimdFloat4)SetXWith:(_SimdFloat4)_v :(_SimdFloat4)_f {
-    return _mm_move_ss(_v, _f);
+    return ozz::math::SetX(_v, _f);
 }
 
 + (SimdFloat4)SetYWith:(_SimdFloat4)_v :(_SimdFloat4)_f {
-    const __m128 xfnn = _mm_unpacklo_ps(_v, _f);
-    return _mm_shuffle_ps(xfnn, _v, _MM_SHUFFLE(3, 2, 1, 0));
+    return ozz::math::SetY(_v, _f);
 }
 
 + (SimdFloat4)SetZWith:(_SimdFloat4)_v :(_SimdFloat4)_f {
-    const __m128 ffww = _mm_shuffle_ps(_f, _v, _MM_SHUFFLE(3, 3, 0, 0));
-    return _mm_shuffle_ps(_v, ffww, _MM_SHUFFLE(2, 0, 1, 0));
+    return ozz::math::SetZ(_v, _f);
 }
 
 + (SimdFloat4)SetWWith:(_SimdFloat4)_v :(_SimdFloat4)_f {
-    const __m128 ffzz = _mm_shuffle_ps(_f, _v, _MM_SHUFFLE(2, 2, 0, 0));
-    return _mm_shuffle_ps(_v, ffzz, _MM_SHUFFLE(0, 2, 1, 0));
+    return ozz::math::SetW(_v, _f);
 }
 
 + (SimdFloat4)SetIWith:(_SimdFloat4)_v :(_SimdFloat4)_f :(int)_ith {
-    assert(_ith >= 0 && _ith <= 3 && "Invalid index, out of range.");
-    union {
-        SimdFloat4 ret;
-        float af[4];
-    } u = {_v};
-    u.af[_ith] = _mm_cvtss_f32(_f);
-    return u.ret;
+    return ozz::math::SetI(_v, _f, _ith);
 }
 
 + (void)StorePtrWith:(_SimdFloat4)_v :(float *)_f {
-    assert(!(reinterpret_cast<uintptr_t>(_f) & 0xf) && "Invalid alignment");
-    _mm_store_ps(_f, _v);
+    return ozz::math::StorePtr(_v, _f);
 }
 
 + (void)Store1PtrWith:(_SimdFloat4)_v :(float *)_f {
-    assert(!(reinterpret_cast<uintptr_t>(_f) & 0xf) && "Invalid alignment");
-    _mm_store_ss(_f, _v);
+    return ozz::math::Store1Ptr(_v, _f);
 }
 
 + (void)Store2PtrWith:(_SimdFloat4)_v :(float *)_f {
-    assert(!(reinterpret_cast<uintptr_t>(_f) & 0xf) && "Invalid alignment");
-    _mm_storel_pi(reinterpret_cast<__m64 *>(_f), _v);
+    return ozz::math::Store2Ptr(_v, _f);
 }
 
 + (void)Store3PtrWith:(_SimdFloat4)_v :(float *)_f {
-    assert(!(reinterpret_cast<uintptr_t>(_f) & 0xf) && "Invalid alignment");
-    _mm_storel_pi(reinterpret_cast<__m64 *>(_f), _v);
-    _mm_store_ss(_f + 2, _mm_movehl_ps(_v, _v));
+    return ozz::math::Store3Ptr(_v, _f);
 }
 
 + (void)StorePtrUWith:(_SimdFloat4)_v :(float *)_f {
-    assert(!(reinterpret_cast<uintptr_t>(_f) & 0x3) && "Invalid alignment");
-    _mm_storeu_ps(_f, _v);
+    return ozz::math::StorePtrU(_v, _f);
 }
 
 + (void)Store1PtrUWith:(_SimdFloat4)_v :(float *)_f {
-    assert(!(reinterpret_cast<uintptr_t>(_f) & 0x3) && "Invalid alignment");
-    _mm_store_ss(_f, _v);
+    return ozz::math::Store1PtrU(_v, _f);
 }
 
 + (void)Store2PtrUWith:(_SimdFloat4)_v :(float *)_f {
-    assert(!(reinterpret_cast<uintptr_t>(_f) & 0x3) && "Invalid alignment");
-    _mm_store_ss(_f + 0, _v);
-    _mm_store_ss(_f + 1, OZZ_SSE_SPLAT_F(_v, 1));
+    return ozz::math::Store2PtrU(_v, _f);
 }
 
 + (void)Store3PtrUWith:(_SimdFloat4)_v :(float *)_f {
-    assert(!(reinterpret_cast<uintptr_t>(_f) & 0x3) && "Invalid alignment");
-    _mm_store_ss(_f + 0, _v);
-    _mm_store_ss(_f + 1, OZZ_SSE_SPLAT_F(_v, 1));
-    _mm_store_ss(_f + 2, _mm_movehl_ps(_v, _v));
+    return ozz::math::Store3PtrU(_v, _f);
 }
 
 + (SimdFloat4)SplatXWith:(_SimdFloat4)_v {
-    return OZZ_SSE_SPLAT_F(_v, 0);
+    return ozz::math::SplatX(_v);
 }
 
 + (SimdFloat4)SplatYWith:(_SimdFloat4)_v {
-    return OZZ_SSE_SPLAT_F(_v, 1);
+    return ozz::math::SplatY(_v);
 }
 
 + (SimdFloat4)SplatZWith:(_SimdFloat4)_v {
-    return OZZ_SSE_SPLAT_F(_v, 2);
+    return ozz::math::SplatZ(_v);
 }
 
 + (SimdFloat4)SplatWWith:(_SimdFloat4)_v {
-    return OZZ_SSE_SPLAT_F(_v, 3);
+    return ozz::math::SplatW(_v);
 }
 
 + (SimdFloat4)Swizzle3332With:(_SimdFloat4)_v {
-    return OZZ_SHUFFLE_PS1(_v, _MM_SHUFFLE(2, 3, 3, 3));
+    return ozz::math::Swizzle<3, 3, 3, 2>(_v);
 }
 
 + (SimdFloat4)Swizzle0122With:(_SimdFloat4)_v {
-    return OZZ_SHUFFLE_PS1(_v, _MM_SHUFFLE(2, 2, 1, 0));
+    return ozz::math::Swizzle<0, 1, 2, 2>(_v);
 }
 
 + (SimdFloat4)Swizzle0120With:(_SimdFloat4)_v {
-    return OZZ_SHUFFLE_PS1(_v, _MM_SHUFFLE(0, 2, 1, 0));
+    return ozz::math::Swizzle<0, 1, 2, 0>(_v);
 }
 
 + (SimdFloat4)Swizzle3330With:(_SimdFloat4)_v {
-    return OZZ_SHUFFLE_PS1(_v, _MM_SHUFFLE(0, 3, 3, 3));
+    return ozz::math::Swizzle<3, 3, 3, 0>(_v);
 }
 
 + (SimdFloat4)Swizzle1201With:(_SimdFloat4)_v {
-    return OZZ_SHUFFLE_PS1(_v, _MM_SHUFFLE(1, 0, 2, 1));
+    return ozz::math::Swizzle<1, 2, 0, 1>(_v);
 }
 
 + (SimdFloat4)Swizzle2011With:(_SimdFloat4)_v {
-    return OZZ_SHUFFLE_PS1(_v, _MM_SHUFFLE(1, 1, 0, 2));
+    return ozz::math::Swizzle<2, 0, 1, 1>(_v);
 }
 
 + (SimdFloat4)Swizzle2013With:(_SimdFloat4)_v {
-    return OZZ_SHUFFLE_PS1(_v, _MM_SHUFFLE(3, 1, 0, 2));
+    return ozz::math::Swizzle<2, 0, 1, 3>(_v);
 }
 
 + (SimdFloat4)Swizzle1203With:(_SimdFloat4)_v {
-    return OZZ_SHUFFLE_PS1(_v, _MM_SHUFFLE(3, 0, 2, 1));
+    return ozz::math::Swizzle<1, 2, 0, 3>(_v);
 }
 
 + (SimdFloat4)Swizzle0123With:(_SimdFloat4)_v {
-    return _v;
+    return ozz::math::Swizzle<0, 1, 2, 3>(_v);
 }
 
 + (SimdFloat4)Swizzle0101With:(_SimdFloat4)_v {
-    return _mm_movelh_ps(_v, _v);
+    return ozz::math::Swizzle<0, 1, 0, 1>(_v);
 }
 
 + (SimdFloat4)Swizzle2323With:(_SimdFloat4)_v {
-    return _mm_movehl_ps(_v, _v);
+    return ozz::math::Swizzle<2, 3, 2, 3>(_v);
 }
 
 + (SimdFloat4)Swizzle0011With:(_SimdFloat4)_v {
-    return _mm_unpacklo_ps(_v, _v);
+    return ozz::math::Swizzle<0, 0, 1, 1>(_v);
 }
 
 + (SimdFloat4)Swizzle2233With:(_SimdFloat4)_v {
-    return _mm_unpackhi_ps(_v, _v);
+    return ozz::math::Swizzle<2, 2, 3, 3>(_v);
 }
 
 + (void)Transpose4x1With:(const SimdFloat4[4])_in :(SimdFloat4[1])_out {
-    const __m128 xz = _mm_unpacklo_ps(_in[0], _in[2]);
-    const __m128 yw = _mm_unpacklo_ps(_in[1], _in[3]);
-    _out[0] = _mm_unpacklo_ps(xz, yw);
+    return ozz::math::Transpose4x1(_in, _out);
 }
 
 + (void)Transpose1x4With:(const SimdFloat4[1])_in :(SimdFloat4[3])_out {
-    const __m128 zwzw = _mm_movehl_ps(_in[0], _in[0]);
-    const __m128 yyyy = OZZ_SSE_SPLAT_F(_in[0], 1);
-    const __m128 wwww = OZZ_SSE_SPLAT_F(_in[0], 3);
-    const __m128 zero = _mm_setzero_ps();
-    _out[0] = _mm_move_ss(zero, _in[0]);
-    _out[1] = _mm_move_ss(zero, yyyy);
-    _out[2] = _mm_move_ss(zero, zwzw);
-    _out[3] = _mm_move_ss(zero, wwww);
+    return ozz::math::Transpose1x4(_in, _out);
 }
 
 + (void)Transpose4x2With:(const SimdFloat4[4])_in :(SimdFloat4[2])_out {
-    const __m128 tmp0 = _mm_unpacklo_ps(_in[0], _in[2]);
-    const __m128 tmp1 = _mm_unpacklo_ps(_in[1], _in[3]);
-    _out[0] = _mm_unpacklo_ps(tmp0, tmp1);
-    _out[1] = _mm_unpackhi_ps(tmp0, tmp1);
+    return ozz::math::Transpose4x2(_in, _out);
 }
 
 + (void)Transpose2x4With:(const SimdFloat4[2])_in :(SimdFloat4[4])_out {
-    const __m128 tmp0 = _mm_unpacklo_ps(_in[0], _in[1]);
-    const __m128 tmp1 = _mm_unpackhi_ps(_in[0], _in[1]);
-    const __m128 zero = _mm_setzero_ps();
-    _out[0] = _mm_movelh_ps(tmp0, zero);
-    _out[1] = _mm_movehl_ps(zero, tmp0);
-    _out[2] = _mm_movelh_ps(tmp1, zero);
-    _out[3] = _mm_movehl_ps(zero, tmp1);
+    return ozz::math::Transpose2x4(_in, _out);
 }
 
 + (void)Transpose4x3With:(const SimdFloat4[4])_in :(SoaFloat3[1])_out {
-    const __m128 tmp0 = _mm_unpacklo_ps(_in[0], _in[2]);
-    const __m128 tmp1 = _mm_unpacklo_ps(_in[1], _in[3]);
-    const __m128 tmp2 = _mm_unpackhi_ps(_in[0], _in[2]);
-    const __m128 tmp3 = _mm_unpackhi_ps(_in[1], _in[3]);
-    _out[0].x = _mm_unpacklo_ps(tmp0, tmp1);
-    _out[0].y = _mm_unpackhi_ps(tmp0, tmp1);
-    _out[0].z = _mm_unpacklo_ps(tmp2, tmp3);
+    return ozz::math::Transpose4x3(_in, &_out[0].x);
 }
 
 + (void)Transpose3x4With:(const SoaFloat3[1])_in :(SimdFloat4[4])_out {
-    const __m128 zero = _mm_setzero_ps();
-    const __m128 temp0 = _mm_unpacklo_ps(_in[0].x, _in[0].y);
-    const __m128 temp1 = _mm_unpacklo_ps(_in[0].z, zero);
-    const __m128 temp2 = _mm_unpackhi_ps(_in[0].x, _in[0].y);
-    const __m128 temp3 = _mm_unpackhi_ps(_in[0].z, zero);
-    _out[0] = _mm_movelh_ps(temp0, temp1);
-    _out[1] = _mm_movehl_ps(temp1, temp0);
-    _out[2] = _mm_movelh_ps(temp2, temp3);
-    _out[3] = _mm_movehl_ps(temp3, temp2);
+    return ozz::math::Transpose3x4(&_in[0].x, _out);
 }
 
 + (void)Transpose4x4With:(const SimdFloat4[4])_in toQuat:(SoaQuaternion[1])_out {
-    const __m128 tmp0 = _mm_unpacklo_ps(_in[0], _in[2]);
-    const __m128 tmp1 = _mm_unpacklo_ps(_in[1], _in[3]);
-    const __m128 tmp2 = _mm_unpackhi_ps(_in[0], _in[2]);
-    const __m128 tmp3 = _mm_unpackhi_ps(_in[1], _in[3]);
-    _out[0].x = _mm_unpacklo_ps(tmp0, tmp1);
-    _out[0].y = _mm_unpackhi_ps(tmp0, tmp1);
-    _out[0].z = _mm_unpacklo_ps(tmp2, tmp3);
-    _out[0].w = _mm_unpackhi_ps(tmp2, tmp3);
+    return ozz::math::Transpose4x4(_in, &_out[0].x);
 }
 
 + (void)Transpose4x4FromQuat:(const SoaQuaternion[1])_in :(SimdFloat4[4])_out {
-    const __m128 tmp0 = _mm_unpacklo_ps(_in[0].x, _in[0].z);
-    const __m128 tmp1 = _mm_unpacklo_ps(_in[0].y, _in[0].w);
-    const __m128 tmp2 = _mm_unpackhi_ps(_in[0].x, _in[0].z);
-    const __m128 tmp3 = _mm_unpackhi_ps(_in[0].y, _in[0].w);
-    _out[0] = _mm_unpacklo_ps(tmp0, tmp1);
-    _out[1] = _mm_unpackhi_ps(tmp0, tmp1);
-    _out[2] = _mm_unpacklo_ps(tmp2, tmp3);
-    _out[3] = _mm_unpackhi_ps(tmp2, tmp3);
+    return ozz::math::Transpose4x4(&_in[0].x, _out);
 }
 
 + (void)Transpose16x16With:(const SoaFloat4x4[1])_in :(simd_float4x4[4])_out {
-    const __m128 tmp0 = _mm_unpacklo_ps(_in[0].cols[0].x, _in[0].cols[0].z);
-    const __m128 tmp1 = _mm_unpacklo_ps(_in[0].cols[0].y, _in[0].cols[0].w);
-    _out[0].columns[0] = _mm_unpacklo_ps(tmp0, tmp1);
-    _out[1].columns[0] = _mm_unpackhi_ps(tmp0, tmp1);
-    const __m128 tmp2 = _mm_unpackhi_ps(_in[0].cols[0].x, _in[0].cols[0].z);
-    const __m128 tmp3 = _mm_unpackhi_ps(_in[0].cols[0].y, _in[0].cols[0].w);
-    _out[2].columns[0] = _mm_unpacklo_ps(tmp2, tmp3);
-    _out[3].columns[0] = _mm_unpackhi_ps(tmp2, tmp3);
-    const __m128 tmp4 = _mm_unpacklo_ps(_in[0].cols[1].x, _in[0].cols[1].z);
-    const __m128 tmp5 = _mm_unpacklo_ps(_in[0].cols[1].y, _in[0].cols[1].w);
-    _out[0].columns[1] = _mm_unpacklo_ps(tmp4, tmp5);
-    _out[1].columns[1] = _mm_unpackhi_ps(tmp4, tmp5);
-    const __m128 tmp6 = _mm_unpackhi_ps(_in[0].cols[1].x, _in[0].cols[1].z);
-    const __m128 tmp7 = _mm_unpackhi_ps(_in[0].cols[1].y, _in[0].cols[1].w);
-    _out[2].columns[1] = _mm_unpacklo_ps(tmp6, tmp7);
-    _out[3].columns[1] = _mm_unpackhi_ps(tmp6, tmp7);
-    const __m128 tmp8 = _mm_unpacklo_ps(_in[0].cols[2].x, _in[0].cols[2].z);
-    const __m128 tmp9 = _mm_unpacklo_ps(_in[0].cols[2].y, _in[0].cols[2].w);
-    _out[0].columns[2] = _mm_unpacklo_ps(tmp8, tmp9);
-    _out[1].columns[2] = _mm_unpackhi_ps(tmp8, tmp9);
-    const __m128 tmp10 = _mm_unpackhi_ps(_in[0].cols[2].x, _in[0].cols[2].z);
-    const __m128 tmp11 = _mm_unpackhi_ps(_in[0].cols[2].y, _in[0].cols[2].w);
-    _out[2].columns[2] = _mm_unpacklo_ps(tmp10, tmp11);
-    _out[3].columns[2] = _mm_unpackhi_ps(tmp10, tmp11);
-    const __m128 tmp12 = _mm_unpacklo_ps(_in[0].cols[3].x, _in[0].cols[3].z);
-    const __m128 tmp13 = _mm_unpacklo_ps(_in[0].cols[3].y, _in[0].cols[3].w);
-    _out[0].columns[3] = _mm_unpacklo_ps(tmp12, tmp13);
-    _out[1].columns[3] = _mm_unpackhi_ps(tmp12, tmp13);
-    const __m128 tmp14 = _mm_unpackhi_ps(_in[0].cols[3].x, _in[0].cols[3].z);
-    const __m128 tmp15 = _mm_unpackhi_ps(_in[0].cols[3].y, _in[0].cols[3].w);
-    _out[2].columns[3] = _mm_unpacklo_ps(tmp14, tmp15);
-    _out[3].columns[3] = _mm_unpackhi_ps(tmp14, tmp15);
+    return ozz::math::Transpose16x16(&_in[0].cols[0].x, &_out[0].columns[0]);
 }
 
 + (SimdFloat4)MAddWith:(_SimdFloat4)_a :(_SimdFloat4)_b :(_SimdFloat4)_c {
-    return OZZ_MADD(_a, _b, _c);
+    return ozz::math::MAdd(_a, _b, _c);
 }
 
 + (SimdFloat4)MSubWith:(_SimdFloat4)_a :(_SimdFloat4)_b :(_SimdFloat4)_c {
-    return OZZ_MSUB(_a, _b, _c);
+    return ozz::math::MSub(_a, _b, _c);
 }
 
 + (SimdFloat4)NMAddWith:(_SimdFloat4)_a :(_SimdFloat4)_b :(_SimdFloat4)_c {
-    return OZZ_NMADD(_a, _b, _c);
+    return ozz::math::NMAdd(_a, _b, _c);
 }
 
 + (SimdFloat4)NMSubWith:(_SimdFloat4)_a :(_SimdFloat4)_b :(_SimdFloat4)_c {
-    return OZZ_NMSUB(_a, _b, _c);
+    return ozz::math::NMSub(_a, _b, _c);
 }
 
 + (SimdFloat4)DivXWith:(_SimdFloat4)_a :(_SimdFloat4)_b {
-    return _mm_div_ss(_a, _b);
+    return ozz::math::DivX(_a, _b);
 }
 
 + (SimdFloat4)HAdd2With:(_SimdFloat4)_v {
-    return OZZ_SSE_HADD2_F(_v);
+    return ozz::math::HAdd2(_v);
 }
 
 + (SimdFloat4)HAdd3With:(_SimdFloat4)_v {
-    return OZZ_SSE_HADD3_F(_v);
+    return ozz::math::HAdd3(_v);
 }
 
 + (SimdFloat4)HAdd4With:(_SimdFloat4)_v {
-    __m128 hadd4;
-    OZZ_SSE_HADD4_F(_v, hadd4);
-    return hadd4;
+    return ozz::math::HAdd4(_v);
 }
 
 + (SimdFloat4)Dot2With:(_SimdFloat4)_a :(_SimdFloat4)_b {
-    __m128 dot2;
-    OZZ_SSE_DOT2_F(_a, _b, dot2);
-    return dot2;
+    return ozz::math::Dot2(_a, _b);
 }
 
 + (SimdFloat4)Dot3With:(_SimdFloat4)_a :(_SimdFloat4)_b {
-    __m128 dot3;
-    OZZ_SSE_DOT3_F(_a, _b, dot3);
-    return dot3;
+    return ozz::math::Dot3(_a, _b);
 }
 
 + (SimdFloat4)Dot4With:(_SimdFloat4)_a :(_SimdFloat4)_b {
-    __m128 dot4;
-    OZZ_SSE_DOT4_F(_a, _b, dot4);
-    return dot4;
+    return ozz::math::Dot4(_a, _b);
 }
 
 + (SimdFloat4)Cross3With:(_SimdFloat4)_a :(_SimdFloat4)_b {
-    // Implementation with 3 shuffles only is based on:
-    // https://geometrian.com/programming/tutorials/cross-product
-    const __m128 shufa = OZZ_SHUFFLE_PS1(_a, _MM_SHUFFLE(3, 0, 2, 1));
-    const __m128 shufb = OZZ_SHUFFLE_PS1(_b, _MM_SHUFFLE(3, 0, 2, 1));
-    const __m128 shufc = OZZ_MSUB(_a, shufb, _mm_mul_ps(_b, shufa));
-    return OZZ_SHUFFLE_PS1(shufc, _MM_SHUFFLE(3, 0, 2, 1));
+    return ozz::math::Cross3(_a, _b);
 }
 
 + (SimdFloat4)RcpEstWith:(_SimdFloat4)_v {
-    return _mm_rcp_ps(_v);
+    return ozz::math::RcpEst(_v);
 }
 
 + (SimdFloat4)RcpEstNRWith:(_SimdFloat4)_v {
-    const __m128 nr = _mm_rcp_ps(_v);
-    // Do one more Newton-Raphson step to improve precision.
-    return OZZ_NMADD(_mm_mul_ps(nr, nr), _v, _mm_add_ps(nr, nr));
+    return ozz::math::RcpEstNR(_v);
 }
 
 + (SimdFloat4)RcpEstXWith:(_SimdFloat4)_v {
-    return _mm_rcp_ss(_v);
+    return ozz::math::RcpEstX(_v);
 }
 
 + (SimdFloat4)RcpEstXNRWith:(_SimdFloat4)_v {
-    const __m128 nr = _mm_rcp_ss(_v);
-    // Do one more Newton-Raphson step to improve precision.
-    return OZZ_NMADDX(_mm_mul_ss(nr, nr), _v, _mm_add_ss(nr, nr));
+    return ozz::math::RcpEstXNR(_v);
 }
 
 + (SimdFloat4)SqrtWith:(_SimdFloat4)_v {
-    return _mm_sqrt_ps(_v);
+    return ozz::math::Sqrt(_v);
 }
 
 + (SimdFloat4)SqrtXWith:(_SimdFloat4)_v {
-    return _mm_sqrt_ss(_v);
+    return ozz::math::SqrtX(_v);
 }
 
 + (SimdFloat4)RSqrtEstWith:(_SimdFloat4)_v {
-    return _mm_rsqrt_ps(_v);
+    return ozz::math::RSqrtEst(_v);
 }
 
 + (SimdFloat4)RSqrtEstNRWith:(_SimdFloat4)_v {
-    const __m128 nr = _mm_rsqrt_ps(_v);
-    // Do one more Newton-Raphson step to improve precision.
-    return _mm_mul_ps(_mm_mul_ps(_mm_set_ps1(.5f), nr),
-            OZZ_NMADD(_mm_mul_ps(_v, nr), nr, _mm_set_ps1(3.f)));
+    return ozz::math::RSqrtEstNR(_v);
 }
 
 + (SimdFloat4)RSqrtEstXWith:(_SimdFloat4)_v {
-    return _mm_rsqrt_ss(_v);
+    return ozz::math::RSqrtEstX(_v);
 }
 
 + (SimdFloat4)RSqrtEstXNRWith:(_SimdFloat4)_v {
-    const __m128 nr = _mm_rsqrt_ss(_v);
-    // Do one more Newton-Raphson step to improve precision.
-    return _mm_mul_ss(_mm_mul_ss(_mm_set_ps1(.5f), nr),
-            OZZ_NMADDX(_mm_mul_ss(_v, nr), nr, _mm_set_ps1(3.f)));
+    return ozz::math::RSqrtEstXNR(_v);
 }
 
 + (SimdFloat4)AbsWith:(_SimdFloat4)_v {
-    const __m128i zero = _mm_setzero_si128();
-    return _mm_and_ps(
-            _mm_castsi128_ps(_mm_srli_epi32(_mm_cmpeq_epi32(zero, zero), 1)), _v);
+    return ozz::math::Abs(_v);
 }
 
 + (SimdInt4)SignWith:(_SimdFloat4)_v {
-    return _mm_slli_epi32(_mm_srli_epi32(_mm_castps_si128(_v), 31), 31);
+    return ozz::math::Sign(_v);
 }
 
 + (SimdFloat4)Length2With:(_SimdFloat4)_v {
-    __m128 sq_len;
-    OZZ_SSE_DOT2_F(_v, _v, sq_len);
-    return _mm_sqrt_ss(sq_len);
+    return ozz::math::Length2(_v);
 }
 
 + (SimdFloat4)Length3With:(_SimdFloat4)_v {
-    __m128 sq_len;
-    OZZ_SSE_DOT3_F(_v, _v, sq_len);
-    return _mm_sqrt_ss(sq_len);
+    return ozz::math::Length3(_v);
 }
 
 + (SimdFloat4)Length4With:(_SimdFloat4)_v {
-    __m128 sq_len;
-    OZZ_SSE_DOT4_F(_v, _v, sq_len);
-    return _mm_sqrt_ss(sq_len);
+    return ozz::math::Length4(_v);
 }
 
 + (SimdFloat4)Length2SqrWith:(_SimdFloat4)_v {
-    __m128 sq_len;
-    OZZ_SSE_DOT2_F(_v, _v, sq_len);
-    return sq_len;
+    return ozz::math::Length2Sqr(_v);
 }
 
 + (SimdFloat4)Length3SqrWith:(_SimdFloat4)_v {
-    __m128 sq_len;
-    OZZ_SSE_DOT3_F(_v, _v, sq_len);
-    return sq_len;
+    return ozz::math::Length3Sqr(_v);
 }
 
 + (SimdFloat4)Length4SqrWith:(_SimdFloat4)_v {
-    __m128 sq_len;
-    OZZ_SSE_DOT4_F(_v, _v, sq_len);
-    return sq_len;
+    return ozz::math::Length4Sqr(_v);
 }
 
 + (SimdFloat4)Normalize2With:(_SimdFloat4)_v {
-    __m128 sq_len;
-    OZZ_SSE_DOT2_F(_v, _v, sq_len);
-    assert(_mm_cvtss_f32(sq_len) != 0.f && "_v is not normalizable");
-    const __m128 inv_len = _mm_div_ss([OZZFloat4 one], _mm_sqrt_ss(sq_len));
-    const __m128 inv_lenxxxx = OZZ_SSE_SPLAT_F(inv_len, 0);
-    const __m128 norm = _mm_mul_ps(_v, inv_lenxxxx);
-    return _mm_movelh_ps(norm, _mm_movehl_ps(_v, _v));
+    return ozz::math::Normalize2(_v);
 }
 
 + (SimdFloat4)Normalize3With:(_SimdFloat4)_v {
-    __m128 sq_len;
-    OZZ_SSE_DOT3_F(_v, _v, sq_len);
-    assert(_mm_cvtss_f32(sq_len) != 0.f && "_v is not normalizable");
-    const __m128 inv_len = _mm_div_ss([OZZFloat4 one], _mm_sqrt_ss(sq_len));
-    const __m128 vwxyz = OZZ_SHUFFLE_PS1(_v, _MM_SHUFFLE(0, 1, 2, 3));
-    const __m128 inv_lenxxxx = OZZ_SSE_SPLAT_F(inv_len, 0);
-    const __m128 normwxyz = _mm_move_ss(_mm_mul_ps(vwxyz, inv_lenxxxx), vwxyz);
-    return OZZ_SHUFFLE_PS1(normwxyz, _MM_SHUFFLE(0, 1, 2, 3));
+    return ozz::math::Normalize3(_v);
 }
 
 + (SimdFloat4)Normalize4With:(_SimdFloat4)_v {
-    __m128 sq_len;
-    OZZ_SSE_DOT4_F(_v, _v, sq_len);
-    assert(_mm_cvtss_f32(sq_len) != 0.f && "_v is not normalizable");
-    const __m128 inv_len = _mm_div_ss([OZZFloat4 one], _mm_sqrt_ss(sq_len));
-    const __m128 inv_lenxxxx = OZZ_SSE_SPLAT_F(inv_len, 0);
-    return _mm_mul_ps(_v, inv_lenxxxx);
+    return ozz::math::Normalize4(_v);
 }
 
 + (SimdFloat4)NormalizeEst2With:(_SimdFloat4)_v {
-    __m128 sq_len;
-    OZZ_SSE_DOT2_F(_v, _v, sq_len);
-    assert(_mm_cvtss_f32(sq_len) != 0.f && "_v is not normalizable");
-    const __m128 inv_len = _mm_rsqrt_ss(sq_len);
-    const __m128 inv_lenxxxx = OZZ_SSE_SPLAT_F(inv_len, 0);
-    const __m128 norm = _mm_mul_ps(_v, inv_lenxxxx);
-    return _mm_movelh_ps(norm, _mm_movehl_ps(_v, _v));
+    return ozz::math::NormalizeEst2(_v);
 }
 
 + (SimdFloat4)NormalizeEst3With:(_SimdFloat4)_v {
-    __m128 sq_len;
-    OZZ_SSE_DOT3_F(_v, _v, sq_len);
-    assert(_mm_cvtss_f32(sq_len) != 0.f && "_v is not normalizable");
-    const __m128 inv_len = _mm_rsqrt_ss(sq_len);
-    const __m128 vwxyz = OZZ_SHUFFLE_PS1(_v, _MM_SHUFFLE(0, 1, 2, 3));
-    const __m128 inv_lenxxxx = OZZ_SSE_SPLAT_F(inv_len, 0);
-    const __m128 normwxyz = _mm_move_ss(_mm_mul_ps(vwxyz, inv_lenxxxx), vwxyz);
-    return OZZ_SHUFFLE_PS1(normwxyz, _MM_SHUFFLE(0, 1, 2, 3));
+    return ozz::math::NormalizeEst3(_v);
 }
 
 + (SimdFloat4)NormalizeEst4With:(_SimdFloat4)_v {
-    __m128 sq_len;
-    OZZ_SSE_DOT4_F(_v, _v, sq_len);
-    assert(_mm_cvtss_f32(sq_len) != 0.f && "_v is not normalizable");
-    const __m128 inv_len = _mm_rsqrt_ss(sq_len);
-    const __m128 inv_lenxxxx = OZZ_SSE_SPLAT_F(inv_len, 0);
-    return _mm_mul_ps(_v, inv_lenxxxx);
+    return ozz::math::NormalizeEst4(_v);
 }
 
 + (SimdInt4)IsNormalized2With:(_SimdFloat4)_v {
-    const __m128 max = _mm_set_ss(1.f + kNormalizationToleranceSq);
-    const __m128 min = _mm_set_ss(1.f - kNormalizationToleranceSq);
-    __m128 dot;
-    OZZ_SSE_DOT2_F(_v, _v, dot);
-    __m128 dotx000 = _mm_move_ss(_mm_setzero_ps(), dot);
-    return _mm_castps_si128(
-            _mm_and_ps(_mm_cmplt_ss(dotx000, max), _mm_cmpgt_ss(dotx000, min)));
+    return ozz::math::IsNormalized2(_v);
 }
 
 + (SimdInt4)IsNormalized3With:(_SimdFloat4)_v {
-    const __m128 max = _mm_set_ss(1.f + kNormalizationToleranceSq);
-    const __m128 min = _mm_set_ss(1.f - kNormalizationToleranceSq);
-    __m128 dot;
-    OZZ_SSE_DOT3_F(_v, _v, dot);
-    __m128 dotx000 = _mm_move_ss(_mm_setzero_ps(), dot);
-    return _mm_castps_si128(
-            _mm_and_ps(_mm_cmplt_ss(dotx000, max), _mm_cmpgt_ss(dotx000, min)));
+    return ozz::math::IsNormalized3(_v);
 }
 
 + (SimdInt4)IsNormalized4With:(_SimdFloat4)_v {
-    const __m128 max = _mm_set_ss(1.f + kNormalizationToleranceSq);
-    const __m128 min = _mm_set_ss(1.f - kNormalizationToleranceSq);
-    __m128 dot;
-    OZZ_SSE_DOT4_F(_v, _v, dot);
-    __m128 dotx000 = _mm_move_ss(_mm_setzero_ps(), dot);
-    return _mm_castps_si128(
-            _mm_and_ps(_mm_cmplt_ss(dotx000, max), _mm_cmpgt_ss(dotx000, min)));
+    return ozz::math::IsNormalized4(_v);
 }
 
 + (SimdInt4)IsNormalizedEst2With:(_SimdFloat4)_v {
-    const __m128 max = _mm_set_ss(1.f + kNormalizationToleranceEstSq);
-    const __m128 min = _mm_set_ss(1.f - kNormalizationToleranceEstSq);
-    __m128 dot;
-    OZZ_SSE_DOT2_F(_v, _v, dot);
-    __m128 dotx000 = _mm_move_ss(_mm_setzero_ps(), dot);
-    return _mm_castps_si128(
-            _mm_and_ps(_mm_cmplt_ss(dotx000, max), _mm_cmpgt_ss(dotx000, min)));
+    return ozz::math::IsNormalizedEst2(_v);
 }
 
 + (SimdInt4)IsNormalizedEst3With:(_SimdFloat4)_v {
-    const __m128 max = _mm_set_ss(1.f + kNormalizationToleranceEstSq);
-    const __m128 min = _mm_set_ss(1.f - kNormalizationToleranceEstSq);
-    __m128 dot;
-    OZZ_SSE_DOT3_F(_v, _v, dot);
-    __m128 dotx000 = _mm_move_ss(_mm_setzero_ps(), dot);
-    return _mm_castps_si128(
-            _mm_and_ps(_mm_cmplt_ss(dotx000, max), _mm_cmpgt_ss(dotx000, min)));
+    return ozz::math::IsNormalizedEst3(_v);
 }
 
 + (SimdInt4)IsNormalizedEst4With:(_SimdFloat4)_v {
-    const __m128 max = _mm_set_ss(1.f + kNormalizationToleranceEstSq);
-    const __m128 min = _mm_set_ss(1.f - kNormalizationToleranceEstSq);
-    __m128 dot;
-    OZZ_SSE_DOT4_F(_v, _v, dot);
-    __m128 dotx000 = _mm_move_ss(_mm_setzero_ps(), dot);
-    return _mm_castps_si128(
-            _mm_and_ps(_mm_cmplt_ss(dotx000, max), _mm_cmpgt_ss(dotx000, min)));
+    return ozz::math::IsNormalizedEst4(_v);
 }
 
 + (SimdFloat4)NormalizeSafe2With:(_SimdFloat4)_v :(_SimdFloat4)_safe {
-    // assert(AreAllTrue1(IsNormalized2(_safe)) && "_safe is not normalized");
-    __m128 sq_len;
-    OZZ_SSE_DOT2_F(_v, _v, sq_len);
-    const __m128 inv_len = _mm_div_ss([OZZFloat4 one], _mm_sqrt_ss(sq_len));
-    const __m128 inv_lenxxxx = OZZ_SSE_SPLAT_F(inv_len, 0);
-    const __m128 norm = _mm_mul_ps(_v, inv_lenxxxx);
-    const __m128i cond = _mm_castps_si128(
-            _mm_cmple_ps(OZZ_SSE_SPLAT_F(sq_len, 0), _mm_setzero_ps()));
-    const __m128 cfalse = _mm_movelh_ps(norm, _mm_movehl_ps(_v, _v));
-    return OZZ_SSE_SELECT_F(cond, _safe, cfalse);
+    return ozz::math::NormalizeSafe2(_v, _safe);
 }
 
 + (SimdFloat4)NormalizeSafe3With:(_SimdFloat4)_v :(_SimdFloat4)_safe {
-    // assert(AreAllTrue1(IsNormalized3(_safe)) && "_safe is not normalized");
-    __m128 sq_len;
-    OZZ_SSE_DOT3_F(_v, _v, sq_len);
-    const __m128 inv_len = _mm_div_ss([OZZFloat4 one], _mm_sqrt_ss(sq_len));
-    const __m128 vwxyz = OZZ_SHUFFLE_PS1(_v, _MM_SHUFFLE(0, 1, 2, 3));
-    const __m128 inv_lenxxxx = OZZ_SSE_SPLAT_F(inv_len, 0);
-    const __m128 normwxyz = _mm_move_ss(_mm_mul_ps(vwxyz, inv_lenxxxx), vwxyz);
-    const __m128i cond = _mm_castps_si128(
-            _mm_cmple_ps(OZZ_SSE_SPLAT_F(sq_len, 0), _mm_setzero_ps()));
-    const __m128 cfalse = OZZ_SHUFFLE_PS1(normwxyz, _MM_SHUFFLE(0, 1, 2, 3));
-    return OZZ_SSE_SELECT_F(cond, _safe, cfalse);
+    return ozz::math::NormalizeSafe3(_v, _safe);
 }
 
 + (SimdFloat4)NormalizeSafe4With:(_SimdFloat4)_v :(_SimdFloat4)_safe {
-    // assert(AreAllTrue1(IsNormalized4(_safe)) && "_safe is not normalized");
-    __m128 sq_len;
-    OZZ_SSE_DOT4_F(_v, _v, sq_len);
-    const __m128 inv_len = _mm_div_ss([OZZFloat4 one], _mm_sqrt_ss(sq_len));
-    const __m128 inv_lenxxxx = OZZ_SSE_SPLAT_F(inv_len, 0);
-    const __m128i cond = _mm_castps_si128(
-            _mm_cmple_ps(OZZ_SSE_SPLAT_F(sq_len, 0), _mm_setzero_ps()));
-    const __m128 cfalse = _mm_mul_ps(_v, inv_lenxxxx);
-    return OZZ_SSE_SELECT_F(cond, _safe, cfalse);
+    return ozz::math::NormalizeSafe4(_v, _safe);
 }
 
 + (SimdFloat4)NormalizeSafeEst2With:(_SimdFloat4)_v :(_SimdFloat4)_safe {
-    // assert(AreAllTrue1(IsNormalizedEst2(_safe)) && "_safe is not normalized");
-    __m128 sq_len;
-    OZZ_SSE_DOT2_F(_v, _v, sq_len);
-    const __m128 inv_len = _mm_rsqrt_ss(sq_len);
-    const __m128 inv_lenxxxx = OZZ_SSE_SPLAT_F(inv_len, 0);
-    const __m128 norm = _mm_mul_ps(_v, inv_lenxxxx);
-    const __m128i cond = _mm_castps_si128(
-            _mm_cmple_ps(OZZ_SSE_SPLAT_F(sq_len, 0), _mm_setzero_ps()));
-    const __m128 cfalse = _mm_movelh_ps(norm, _mm_movehl_ps(_v, _v));
-    return OZZ_SSE_SELECT_F(cond, _safe, cfalse);
+    return ozz::math::NormalizeSafeEst2(_v, _safe);
 }
 
 + (SimdFloat4)NormalizeSafeEst3With:(_SimdFloat4)_v :(_SimdFloat4)_safe {
-    // assert(AreAllTrue1(IsNormalizedEst3(_safe)) && "_safe is not normalized");
-    __m128 sq_len;
-    OZZ_SSE_DOT3_F(_v, _v, sq_len);
-    const __m128 inv_len = _mm_rsqrt_ss(sq_len);
-    const __m128 vwxyz = OZZ_SHUFFLE_PS1(_v, _MM_SHUFFLE(0, 1, 2, 3));
-    const __m128 inv_lenxxxx = OZZ_SSE_SPLAT_F(inv_len, 0);
-    const __m128 normwxyz = _mm_move_ss(_mm_mul_ps(vwxyz, inv_lenxxxx), vwxyz);
-    const __m128i cond = _mm_castps_si128(
-            _mm_cmple_ps(OZZ_SSE_SPLAT_F(sq_len, 0), _mm_setzero_ps()));
-    const __m128 cfalse = OZZ_SHUFFLE_PS1(normwxyz, _MM_SHUFFLE(0, 1, 2, 3));
-    return OZZ_SSE_SELECT_F(cond, _safe, cfalse);
+    return ozz::math::NormalizeSafeEst3(_v, _safe);
 }
 
 + (SimdFloat4)NormalizeSafeEst4With:(_SimdFloat4)_v :(_SimdFloat4)_safe {
-    // assert(AreAllTrue1(IsNormalizedEst4(_safe)) && "_safe is not normalized");
-    __m128 sq_len;
-    OZZ_SSE_DOT4_F(_v, _v, sq_len);
-    const __m128 inv_len = _mm_rsqrt_ss(sq_len);
-    const __m128 inv_lenxxxx = OZZ_SSE_SPLAT_F(inv_len, 0);
-    const __m128i cond = _mm_castps_si128(
-            _mm_cmple_ps(OZZ_SSE_SPLAT_F(sq_len, 0), _mm_setzero_ps()));
-    const __m128 cfalse = _mm_mul_ps(_v, inv_lenxxxx);
-    return OZZ_SSE_SELECT_F(cond, _safe, cfalse);
+    return ozz::math::NormalizeSafeEst4(_v, _safe);
 }
 
 + (SimdFloat4)LerpWith:(_SimdFloat4)_a :(_SimdFloat4)_b :(_SimdFloat4)_alpha {
-    return OZZ_MADD(_alpha, _mm_sub_ps(_b, _a), _a);
+    return ozz::math::Lerp(_a, _b, _alpha);
 }
 
 + (SimdFloat4)MinWith:(_SimdFloat4)_a :(_SimdFloat4)_b {
-    return _mm_min_ps(_a, _b);
+    return ozz::math::Min(_a, _b);
 }
 
 + (SimdFloat4)MaxWith:(_SimdFloat4)_a :(_SimdFloat4)_b {
-    return _mm_max_ps(_a, _b);
+    return ozz::math::Max(_a, _b);
 }
 
 + (SimdFloat4)Min0With:(_SimdFloat4)_v {
-    return _mm_min_ps(_mm_setzero_ps(), _v);
+    return ozz::math::Min0(_v);
 }
 
 + (SimdFloat4)Max0With:(_SimdFloat4)_v {
-    return _mm_max_ps(_mm_setzero_ps(), _v);
+    return ozz::math::Max0(_v);
 }
 
 + (SimdFloat4)ClampWith:(_SimdFloat4)_a :(_SimdFloat4)_v :(_SimdFloat4)_b {
-    return _mm_max_ps(_a, _mm_min_ps(_v, _b));
+    return ozz::math::Clamp(_a, _v, _b);
 }
 
 + (SimdFloat4)SelectWith:(_SimdInt4)_b :(_SimdFloat4)_true :(_SimdFloat4)_false {
-    return OZZ_SSE_SELECT_F(_b, _true, _false);
+    return ozz::math::Select(_b, _true, _false);
 }
 
 + (SimdInt4)CmpEqWith:(_SimdFloat4)_a :(_SimdFloat4)_b {
-    return _mm_castps_si128(_mm_cmpeq_ps(_a, _b));
+    return ozz::math::CmpEq(_a, _b);
 }
 
 + (SimdInt4)CmpNeWith:(_SimdFloat4)_a :(_SimdFloat4)_b {
-    return _mm_castps_si128(_mm_cmpneq_ps(_a, _b));
+    return ozz::math::CmpNe(_a, _b);
 }
 
 + (SimdInt4)CmpLtWith:(_SimdFloat4)_a :(_SimdFloat4)_b {
-    return _mm_castps_si128(_mm_cmplt_ps(_a, _b));
+    return ozz::math::CmpLt(_a, _b);
 }
 
 + (SimdInt4)CmpLeWith:(_SimdFloat4)_a :(_SimdFloat4)_b {
-    return _mm_castps_si128(_mm_cmple_ps(_a, _b));
+    return ozz::math::CmpLe(_a, _b);
 }
 
 + (SimdInt4)CmpGtWith:(_SimdFloat4)_a :(_SimdFloat4)_b {
-    return _mm_castps_si128(_mm_cmpgt_ps(_a, _b));
+    return ozz::math::CmpGt(_a, _b);
 }
 
 + (SimdInt4)CmpGeWith:(_SimdFloat4)_a :(_SimdFloat4)_b {
-    return _mm_castps_si128(_mm_cmpge_ps(_a, _b));
+    return ozz::math::CmpGe(_a, _b);
 }
 
 + (SimdFloat4)AndWith:(_SimdFloat4)_a float4:(_SimdFloat4)_b {
-    return _mm_and_ps(_a, _b);
+    return ozz::math::And(_a, _b);
 }
 
 + (SimdFloat4)OrWith:(_SimdFloat4)_a float4:(_SimdFloat4)_b {
-    return _mm_or_ps(_a, _b);
+    return ozz::math::Or(_a, _b);
 }
 
 + (SimdFloat4)XorWith:(_SimdFloat4)_a float4:(_SimdFloat4)_b {
-    return _mm_xor_ps(_a, _b);
+    return ozz::math::Xor(_a, _b);
 }
 
 + (SimdFloat4)AndWith:(_SimdFloat4)_a int4:(_SimdInt4)_b {
-    return _mm_and_ps(_a, _mm_castsi128_ps(_b));
+    return ozz::math::And(_a, _b);
 }
 
 + (SimdFloat4)AndNotWith:(_SimdFloat4)_a :(_SimdInt4)_b {
-    return _mm_andnot_ps(_mm_castsi128_ps(_b), _a);
+    return ozz::math::AndNot(_a, _b);
 }
 
 + (SimdFloat4)OrWith:(_SimdFloat4)_a int4:(_SimdInt4)_b {
-    return _mm_or_ps(_a, _mm_castsi128_ps(_b));
+    return ozz::math::Or(_a, _b);
 }
 
 + (SimdFloat4)XorWith:(_SimdFloat4)_a int4:(_SimdInt4)_b {
-    return _mm_xor_ps(_a, _mm_castsi128_ps(_b));
+    return ozz::math::Xor(_a, _b);
 }
 
 + (SimdFloat4)CosWith:(_SimdFloat4)_v {
-    return _mm_set_ps(std::cos([OZZFloat4 GetWWith:_v]), std::cos([OZZFloat4 GetZWith:_v]),
-            std::cos([OZZFloat4 GetYWith:_v]), std::cos([OZZFloat4 GetXWith:_v]));
+    return ozz::math::Cos(_v);
 }
 
 + (SimdFloat4)CosXWith:(_SimdFloat4)_v {
-    return _mm_move_ss(_v, _mm_set_ps1(std::cos([OZZFloat4 GetXWith:_v])));
+    return ozz::math::CosX(_v);
 }
 
 + (SimdFloat4)ACosWith:(_SimdFloat4)_v {
-    return _mm_set_ps(std::acos([OZZFloat4 GetWWith:_v]), std::acos([OZZFloat4 GetZWith:_v]),
-            std::acos([OZZFloat4 GetYWith:_v]), std::acos([OZZFloat4 GetXWith:_v]));
+    return ozz::math::ACos(_v);
 }
 
 + (SimdFloat4)ACosXWith:(_SimdFloat4)_v {
-    return _mm_move_ss(_v, _mm_set_ps1(std::acos([OZZFloat4 GetXWith:_v])));
+    return ozz::math::ACosX(_v);
 }
 
 + (SimdFloat4)SinWith:(_SimdFloat4)_v {
-    return _mm_set_ps(std::sin([OZZFloat4 GetWWith:_v]), std::sin([OZZFloat4 GetZWith:_v]), std::sin([OZZFloat4 GetYWith:_v]),
-            std::sin([OZZFloat4 GetXWith:_v]));
+    return ozz::math::Sin(_v);
 }
 
 + (SimdFloat4)SinXWith:(_SimdFloat4)_v {
-    return _mm_move_ss(_v, _mm_set_ps1(std::sin([OZZFloat4 GetXWith:_v])));
+    return ozz::math::SinX(_v);
 }
 
 + (SimdFloat4)ASinWith:(_SimdFloat4)_v {
-    return _mm_set_ps(std::asin([OZZFloat4 GetWWith:_v]), std::asin([OZZFloat4 GetZWith:_v]),
-            std::asin([OZZFloat4 GetYWith:_v]), std::asin([OZZFloat4 GetXWith:_v]));
+    return ozz::math::ASin(_v);
 }
 
 + (SimdFloat4)ASinXWith:(_SimdFloat4)_v {
-    return _mm_move_ss(_v, _mm_set_ps1(std::asin([OZZFloat4 GetXWith:_v])));
+    return ozz::math::ASinX(_v);
 }
 
 + (SimdFloat4)TanWith:(_SimdFloat4)_v {
-    return _mm_set_ps(std::tan([OZZFloat4 GetWWith:_v]), std::tan([OZZFloat4 GetZWith:_v]),
-            std::tan([OZZFloat4 GetYWith:_v]), std::tan([OZZFloat4 GetXWith:_v]));
+    return ozz::math::Tan(_v);
 }
 
 + (SimdFloat4)TanXWith:(_SimdFloat4)_v {
-    return _mm_move_ss(_v, _mm_set_ps1(std::tan([OZZFloat4 GetXWith:_v])));
+    return ozz::math::TanX(_v);
 }
 
 + (SimdFloat4)ATanWith:(_SimdFloat4)_v {
-    return _mm_set_ps(std::atan([OZZFloat4 GetWWith:_v]), std::atan([OZZFloat4 GetZWith:_v]),
-            std::atan([OZZFloat4 GetYWith:_v]), std::atan([OZZFloat4 GetXWith:_v]));
+    return ozz::math::ATan(_v);
 }
 
 + (SimdFloat4)ATanXWith:(_SimdFloat4)_v {
-    return _mm_move_ss(_v, _mm_set_ps1(std::atan([OZZFloat4 GetXWith:_v])));
+    return ozz::math::ATanX(_v);
 }
 
 
@@ -925,471 +577,375 @@ inline SimdFloat4 DivX(_SimdFloat4 _a, _SimdFloat4 _b) {
 }
 
 + (SimdInt4)zero {
-    return _mm_setzero_si128();
+    return ozz::math::simd_int4::zero();
 }
 
 + (SimdInt4)one {
-    const __m128i zero = _mm_setzero_si128();
-    return _mm_sub_epi32(zero, _mm_cmpeq_epi32(zero, zero));
+    return ozz::math::simd_int4::one();
 }
 
 + (SimdInt4)x_axis {
-    const __m128i zero = _mm_setzero_si128();
-    return _mm_srli_si128(_mm_sub_epi32(zero, _mm_cmpeq_epi32(zero, zero)), 12);
+    return ozz::math::simd_int4::x_axis();
 }
 
 + (SimdInt4)y_axis {
-    const __m128i zero = _mm_setzero_si128();
-    return _mm_slli_si128(
-            _mm_srli_si128(_mm_sub_epi32(zero, _mm_cmpeq_epi32(zero, zero)), 12), 4);
+    return ozz::math::simd_int4::y_axis();
 }
 
 + (SimdInt4)z_axis {
-    const __m128i zero = _mm_setzero_si128();
-    return _mm_slli_si128(
-            _mm_srli_si128(_mm_sub_epi32(zero, _mm_cmpeq_epi32(zero, zero)), 12), 8);
+    return ozz::math::simd_int4::z_axis();
 }
 
 + (SimdInt4)w_axis {
-    const __m128i zero = _mm_setzero_si128();
-    return _mm_slli_si128(_mm_sub_epi32(zero, _mm_cmpeq_epi32(zero, zero)), 12);
+    return ozz::math::simd_int4::w_axis();
 }
 
 + (SimdInt4)all_true {
-    const __m128i zero = _mm_setzero_si128();
-    return _mm_cmpeq_epi32(zero, zero);
+    return ozz::math::simd_int4::all_true();
 }
 
 + (SimdInt4)all_false {
-    return _mm_setzero_si128();
+    return ozz::math::simd_int4::all_false();
 }
 
 + (SimdInt4)mask_sign {
-    const __m128i zero = _mm_setzero_si128();
-    return _mm_slli_epi32(_mm_cmpeq_epi32(zero, zero), 31);
+    return ozz::math::simd_int4::mask_sign();
 }
 
 + (SimdInt4)mask_sign_xyz {
-    const __m128i zero = _mm_setzero_si128();
-    return _mm_srli_si128(_mm_slli_epi32(_mm_cmpeq_epi32(zero, zero), 31), 4);
+    return ozz::math::simd_int4::mask_sign_xyz();
 }
 
 + (SimdInt4)mask_sign_w {
-    const __m128i zero = _mm_setzero_si128();
-    return _mm_slli_si128(_mm_slli_epi32(_mm_cmpeq_epi32(zero, zero), 31), 12);
+    return ozz::math::simd_int4::mask_sign_w();
 }
 
 + (SimdInt4)mask_not_sign {
-    const __m128i zero = _mm_setzero_si128();
-    return _mm_srli_epi32(_mm_cmpeq_epi32(zero, zero), 1);
+    return ozz::math::simd_int4::mask_not_sign();
 }
 
 + (SimdInt4)mask_ffff {
-    const __m128i zero = _mm_setzero_si128();
-    return _mm_cmpeq_epi32(zero, zero);
+    return ozz::math::simd_int4::mask_ffff();
 }
 
 + (SimdInt4)mask_0000 {
-    return _mm_setzero_si128();
+    return ozz::math::simd_int4::mask_0000();
 }
 
 + (SimdInt4)mask_fff0 {
-    const __m128i zero = _mm_setzero_si128();
-    return _mm_srli_si128(_mm_cmpeq_epi32(zero, zero), 4);
+    return ozz::math::simd_int4::mask_fff0();
 }
 
 + (SimdInt4)mask_f000 {
-    const __m128i zero = _mm_setzero_si128();
-    return _mm_srli_si128(_mm_cmpeq_epi32(zero, zero), 12);
+    return ozz::math::simd_int4::mask_f000();
 }
 
 + (SimdInt4)mask_0f00 {
-    const __m128i zero = _mm_setzero_si128();
-    return _mm_srli_si128(_mm_slli_si128(_mm_cmpeq_epi32(zero, zero), 12), 8);
+    return ozz::math::simd_int4::mask_0f00();
 }
 
 + (SimdInt4)mask_00f0 {
-    const __m128i zero = _mm_setzero_si128();
-    return _mm_srli_si128(_mm_slli_si128(_mm_cmpeq_epi32(zero, zero), 12), 4);
+    return ozz::math::simd_int4::mask_00f0();
 }
 
 + (SimdInt4)mask_000f {
-    const __m128i zero = _mm_setzero_si128();
-    return _mm_slli_si128(_mm_cmpeq_epi32(zero, zero), 12);
+    return ozz::math::simd_int4::mask_000f();
 }
 
 + (SimdInt4)LoadWithInt:(int)_x :(int)_y :(int)_z :(int)_w {
-    return _mm_set_epi32(_w, _z, _y, _x);
+    return ozz::math::simd_int4::Load(_x, _y, _z, _w);
 }
 
 + (SimdInt4)LoadXWithInt:(int)_x {
-    return _mm_set_epi32(0, 0, 0, _x);
+    return ozz::math::simd_int4::LoadX(_x);
 }
 
 + (SimdInt4)Load1WithInt:(int)_x {
-    return _mm_set1_epi32(_x);
+    return ozz::math::simd_int4::Load1(_x);
 }
 
 + (SimdInt4)LoadWithBool:(bool)_x :(bool)_y :(bool)_z :(bool)_w {
-    return _mm_sub_epi32(_mm_setzero_si128(), _mm_set_epi32(_w, _z, _y, _x));
+    return ozz::math::simd_int4::Load(_x, _y, _z, _w);
 }
 
 + (SimdInt4)LoadXWithBool:(bool)_x {
-    return _mm_sub_epi32(_mm_setzero_si128(), _mm_set_epi32(0, 0, 0, _x));
+    return ozz::math::simd_int4::LoadX(_x);
 }
 
 + (SimdInt4)Load1WithBool:(bool)_x {
-    return _mm_sub_epi32(_mm_setzero_si128(), _mm_set1_epi32(_x));
+    return ozz::math::simd_int4::Load1(_x);
 }
 
 + (SimdInt4)LoadPtrWith:(const int *)_i {
-    assert(!(uintptr_t(_i) & 0xf) && "Invalid alignment");
-    return _mm_load_si128(reinterpret_cast<const __m128i *>(_i));
+    return ozz::math::simd_int4::LoadPtr(_i);
 }
 
 + (SimdInt4)LoadXPtrWith:(const int *)_i {
-    assert(!(uintptr_t(_i) & 0xf) && "Invalid alignment");
-    return _mm_cvtsi32_si128(*_i);
+    return ozz::math::simd_int4::LoadXPtr(_i);
 }
 
 + (SimdInt4)Load1PtrWith:(const int *)_i {
-    assert(!(uintptr_t(_i) & 0xf) && "Invalid alignment");
-    return _mm_shuffle_epi32(
-            _mm_loadl_epi64(reinterpret_cast<const __m128i *>(_i)),
-            _MM_SHUFFLE(0, 0, 0, 0));
+    return ozz::math::simd_int4::Load1Ptr(_i);
 }
 
 + (SimdInt4)Load2PtrWith:(const int *)_i {
-    assert(!(uintptr_t(_i) & 0xf) && "Invalid alignment");
-    return _mm_loadl_epi64(reinterpret_cast<const __m128i *>(_i));
+    return ozz::math::simd_int4::Load2Ptr(_i);
 }
 
 + (SimdInt4)Load3PtrWith:(const int *)_i {
-    assert(!(uintptr_t(_i) & 0xf) && "Invalid alignment");
-    return _mm_set_epi32(0, _i[2], _i[1], _i[0]);
+    return ozz::math::simd_int4::Load3Ptr(_i);
 }
 
 + (SimdInt4)LoadPtrUWith:(const int *)_i {
-    assert(!(uintptr_t(_i) & 0x3) && "Invalid alignment");
-    return _mm_loadu_si128(reinterpret_cast<const __m128i *>(_i));
+    return ozz::math::simd_int4::LoadPtrU(_i);
 }
 
 + (SimdInt4)LoadXPtrUWith:(const int *)_i {
-    assert(!(uintptr_t(_i) & 0x3) && "Invalid alignment");
-    return _mm_cvtsi32_si128(*_i);
+    return ozz::math::simd_int4::LoadXPtr(_i);
 }
 
 + (SimdInt4)Load1PtrUWith:(const int *)_i {
-    assert(!(uintptr_t(_i) & 0x3) && "Invalid alignment");
-    return _mm_set1_epi32(*_i);
+    return ozz::math::simd_int4::Load1PtrU(_i);
 }
 
 + (SimdInt4)Load2PtrUWith:(const int *)_i {
-    assert(!(uintptr_t(_i) & 0x3) && "Invalid alignment");
-    return _mm_set_epi32(0, 0, _i[1], _i[0]);
+    return ozz::math::simd_int4::Load2PtrU(_i);
 }
 
 + (SimdInt4)Load3PtrUWith:(const int *)_i {
-    assert(!(uintptr_t(_i) & 0x3) && "Invalid alignment");
-    return _mm_set_epi32(0, _i[2], _i[1], _i[0]);
+    return ozz::math::simd_int4::Load3PtrU(_i);
 }
 
 + (SimdInt4)FromFloatRoundWith:(_SimdFloat4)_f {
-    return _mm_cvtps_epi32(_f);
+    return ozz::math::simd_int4::FromFloatRound(_f);
 }
 
 + (SimdInt4)FromFloatTruncWith:(_SimdFloat4)_f {
-    return _mm_cvttps_epi32(_f);
+    return ozz::math::simd_int4::FromFloatTrunc(_f);
 }
 
 + (int)GetXWith:(_SimdInt4)_v {
-    return _mm_cvtsi128_si32(_v);
+    return ozz::math::GetX(_v);
 }
 
 + (int)GetYWith:(_SimdInt4)_v {
-    return _mm_cvtsi128_si32(OZZ_SSE_SPLAT_I(_v, 1));
+    return ozz::math::GetY(_v);
 }
 
 + (int)GetZWith:(_SimdInt4)_v {
-    return _mm_cvtsi128_si32(_mm_unpackhi_epi32(_v, _v));
+    return ozz::math::GetZ(_v);
 }
 
 + (int)GetWWith:(_SimdInt4)_v {
-    return _mm_cvtsi128_si32(OZZ_SSE_SPLAT_I(_v, 3));
+    return ozz::math::GetW(_v);
 }
 
 + (SimdInt4)SetXWith:(_SimdInt4)_v :(_SimdInt4)_i {
-    return _mm_castps_si128(
-            _mm_move_ss(_mm_castsi128_ps(_v), _mm_castsi128_ps(_i)));
+    return ozz::math::SetX(_v, _i);
 }
 
 + (SimdInt4)SetYWith:(_SimdInt4)_v :(_SimdInt4)_i {
-    const __m128 xfnn = _mm_castsi128_ps(_mm_unpacklo_epi32(_v, _i));
-    return _mm_castps_si128(
-            _mm_shuffle_ps(xfnn, _mm_castsi128_ps(_v), _MM_SHUFFLE(3, 2, 1, 0)));
+    return ozz::math::SetY(_v, _i);
 }
 
 + (SimdInt4)SetZWith:(_SimdInt4)_v :(_SimdInt4)_i {
-    const __m128 ffww = _mm_shuffle_ps(_mm_castsi128_ps(_i), _mm_castsi128_ps(_v),
-            _MM_SHUFFLE(3, 3, 0, 0));
-    return _mm_castps_si128(
-            _mm_shuffle_ps(_mm_castsi128_ps(_v), ffww, _MM_SHUFFLE(2, 0, 1, 0)));
+    return ozz::math::SetZ(_v, _i);
 }
 
 + (SimdInt4)SetWWith:(_SimdInt4)_v :(_SimdInt4)_i {
-    const __m128 ffzz = _mm_shuffle_ps(_mm_castsi128_ps(_i), _mm_castsi128_ps(_v),
-            _MM_SHUFFLE(2, 2, 0, 0));
-    return _mm_castps_si128(
-            _mm_shuffle_ps(_mm_castsi128_ps(_v), ffzz, _MM_SHUFFLE(0, 2, 1, 0)));
+    return ozz::math::SetW(_v, _i);
 }
 
 + (SimdInt4)SetIWith:(_SimdInt4)_v :(_SimdInt4)_i :(int)_ith {
-    assert(_ith >= 0 && _ith <= 3 && "Invalid index, out of range.");
-    union {
-        SimdInt4 ret;
-        int af[4];
-    } u = {_v};
-    u.af[_ith] = [OZZInt4 GetXWith:_i];
-    return u.ret;
+    return ozz::math::SetI(_v, _i, _ith);
 }
 
 + (void)StorePtrWith:(_SimdInt4)_v :(int *)_i {
-    assert(!(uintptr_t(_i) & 0xf) && "Invalid alignment");
-    _mm_store_si128(reinterpret_cast<__m128i *>(_i), _v);
+    return ozz::math::StorePtr(_v, _i);
 }
 
 + (void)Store1PtrWith:(_SimdInt4)_v :(int *)_i {
-    assert(!(uintptr_t(_i) & 0xf) && "Invalid alignment");
-    *_i = _mm_cvtsi128_si32(_v);
+    return ozz::math::Store1Ptr(_v, _i);
 }
 
 + (void)Store2PtrWith:(_SimdInt4)_v :(int *)_i {
-    assert(!(uintptr_t(_i) & 0xf) && "Invalid alignment");
-    _i[0] = _mm_cvtsi128_si32(_v);
-    _i[1] = _mm_cvtsi128_si32(OZZ_SSE_SPLAT_I(_v, 1));
+    return ozz::math::Store2Ptr(_v, _i);
 }
 
 + (void)Store3PtrWith:(_SimdInt4)_v :(int *)_i {
-    assert(!(uintptr_t(_i) & 0xf) && "Invalid alignment");
-    _i[0] = _mm_cvtsi128_si32(_v);
-    _i[1] = _mm_cvtsi128_si32(OZZ_SSE_SPLAT_I(_v, 1));
-    _i[2] = _mm_cvtsi128_si32(_mm_unpackhi_epi32(_v, _v));
+    return ozz::math::Store3Ptr(_v, _i);
 }
 
 + (void)StorePtrUWith:(_SimdInt4)_v :(int *)_i {
-    assert(!(uintptr_t(_i) & 0x3) && "Invalid alignment");
-    _mm_storeu_si128(reinterpret_cast<__m128i *>(_i), _v);
+    return ozz::math::StorePtrU(_v, _i);
 }
 
 + (void)Store1PtrUWith:(_SimdInt4)_v :(int *)_i {
-    assert(!(uintptr_t(_i) & 0x3) && "Invalid alignment");
-    *_i = _mm_cvtsi128_si32(_v);
+    return ozz::math::Store1PtrU(_v, _i);
 }
 
 + (void)Store2PtrUWith:(_SimdInt4)_v :(int *)_i {
-    assert(!(uintptr_t(_i) & 0x3) && "Invalid alignment");
-    _i[0] = _mm_cvtsi128_si32(_v);
-    _i[1] = _mm_cvtsi128_si32(OZZ_SSE_SPLAT_I(_v, 1));
+    return ozz::math::Store2PtrU(_v, _i);
 }
 
 + (void)Store3PtrUWith:(_SimdInt4)_v :(int *)_i {
-    assert(!(uintptr_t(_i) & 0x3) && "Invalid alignment");
-    _i[0] = _mm_cvtsi128_si32(_v);
-    _i[1] = _mm_cvtsi128_si32(OZZ_SSE_SPLAT_I(_v, 1));
-    _i[2] = _mm_cvtsi128_si32(_mm_unpackhi_epi32(_v, _v));
+    return ozz::math::Store3PtrU(_v, _i);
 }
 
 + (SimdInt4)SplatXWith:(_SimdInt4)_a {
-    return OZZ_SSE_SPLAT_I(_a, 0);
+    return ozz::math::SplatX(_a);
 }
 
 + (SimdInt4)SplatYWith:(_SimdInt4)_a {
-    return OZZ_SSE_SPLAT_I(_a, 1);
+    return ozz::math::SplatY(_a);
 }
 
 + (SimdInt4)SplatZWith:(_SimdInt4)_a {
-    return OZZ_SSE_SPLAT_I(_a, 2);
+    return ozz::math::SplatZ(_a);
 }
 
 + (SimdInt4)SplatWWith:(_SimdInt4)_a {
-    return OZZ_SSE_SPLAT_I(_a, 3);
+    return ozz::math::SplatW(_a);
 }
 
 + (SimdInt4)Swizzle0123With:(_SimdInt4)_v {
-    return _v;
+    return ozz::math::Swizzle<0, 1, 2, 3>(_v);
 }
 
 + (int)MoveMaskWith:(_SimdInt4)_v {
-    return _mm_movemask_ps(_mm_castsi128_ps(_v));
+    return ozz::math::MoveMask(_v);
 }
 
 + (bool)AreAllTrueWith:(_SimdInt4)_v {
-    return _mm_movemask_ps(_mm_castsi128_ps(_v)) == 0xf;
+    return ozz::math::AreAllTrue(_v);
 }
 
 + (bool)AreAllTrue3With:(_SimdInt4)_v {
-    return (_mm_movemask_ps(_mm_castsi128_ps(_v)) & 0x7) == 0x7;
+    return ozz::math::AreAllTrue3(_v);
 }
 
 + (bool)AreAllTrue2With:(_SimdInt4)_v {
-    return (_mm_movemask_ps(_mm_castsi128_ps(_v)) & 0x3) == 0x3;
+    return ozz::math::AreAllTrue2(_v);
 }
 
 + (bool)AreAllTrue1With:(_SimdInt4)_v {
-    return (_mm_movemask_ps(_mm_castsi128_ps(_v)) & 0x1) == 0x1;
+    return ozz::math::AreAllTrue1(_v);
 }
 
 + (bool)AreAllFalseWith:(_SimdInt4)_v {
-    return _mm_movemask_ps(_mm_castsi128_ps(_v)) == 0;
+    return ozz::math::AreAllFalse(_v);
 }
 
 + (bool)AreAllFalse3With:(_SimdInt4)_v {
-    return (_mm_movemask_ps(_mm_castsi128_ps(_v)) & 0x7) == 0;
+    return ozz::math::AreAllFalse3(_v);
 }
 
 + (bool)AreAllFalse2With:(_SimdInt4)_v {
-    return (_mm_movemask_ps(_mm_castsi128_ps(_v)) & 0x3) == 0;
+    return ozz::math::AreAllFalse2(_v);
 }
 
 + (bool)AreAllFalse1With:(_SimdInt4)_v {
-    return (_mm_movemask_ps(_mm_castsi128_ps(_v)) & 0x1) == 0;
+    return ozz::math::AreAllFalse1(_v);
 }
 
 + (SimdInt4)HAdd2With:(_SimdInt4)_v {
-    const __m128i hadd = _mm_add_epi32(_v, OZZ_SSE_SPLAT_I(_v, 1));
-    return _mm_castps_si128(
-            _mm_move_ss(_mm_castsi128_ps(_v), _mm_castsi128_ps(hadd)));
+    return ozz::math::HAdd2(_v);
 }
 
 + (SimdInt4)HAdd3With:(_SimdInt4)_v {
-    const __m128i hadd = _mm_add_epi32(_mm_add_epi32(_v, OZZ_SSE_SPLAT_I(_v, 1)),
-            _mm_unpackhi_epi32(_v, _v));
-    return _mm_castps_si128(
-            _mm_move_ss(_mm_castsi128_ps(_v), _mm_castsi128_ps(hadd)));
+    return ozz::math::HAdd3(_v);
 }
 
 + (SimdInt4)HAdd4With:(_SimdInt4)_v {
-    const __m128 v = _mm_castsi128_ps(_v);
-    const __m128i haddxyzw =
-            _mm_add_epi32(_v, _mm_castps_si128(_mm_movehl_ps(v, v)));
-    return _mm_castps_si128(_mm_move_ss(
-            v,
-            _mm_castsi128_ps(_mm_add_epi32(haddxyzw, OZZ_SSE_SPLAT_I(haddxyzw, 1)))));
+    return ozz::math::HAdd4(_v);
 }
 
 + (SimdInt4)AbsWith:(_SimdInt4)_v {
-#ifdef OZZ_SIMD_SSSE3
-    return _mm_abs_epi32(_v);
-#else   // OZZ_SIMD_SSSE3
-    const __m128i zero = _mm_setzero_si128();
-    return OZZ_SSE_SELECT_I(_mm_cmplt_epi32(_v, zero), _mm_sub_epi32(zero, _v),
-            _v);
-#endif  // OZZ_SIMD_SSSE3
+    return ozz::math::Abs(_v);
 }
 
 + (SimdInt4)SignWith:(_SimdInt4)_v {
-    return _mm_slli_epi32(_mm_srli_epi32(_v, 31), 31);
+    return ozz::math::Sign(_v);
 }
 
 + (SimdInt4)MinWith:(_SimdInt4)_a :(_SimdInt4)_b {
-#ifdef OZZ_SIMD_SSE4_1
-    return _mm_min_epi32(_a, _b);
-#else  // OZZ_SIMD_SSE4_1
-    return OZZ_SSE_SELECT_I(_mm_cmplt_epi32(_a, _b), _a, _b);
-#endif  // OZZ_SIMD_SSE4_1
+    return ozz::math::Min(_a, _b);
 }
 
 + (SimdInt4)MaxWith:(_SimdInt4)_a :(_SimdInt4)_b {
-#ifdef OZZ_SIMD_SSE4_1
-    return _mm_max_epi32(_a, _b);
-#else  // OZZ_SIMD_SSE4_1
-    return OZZ_SSE_SELECT_I(_mm_cmpgt_epi32(_a, _b), _a, _b);
-#endif  // OZZ_SIMD_SSE4_1
+    return ozz::math::Max(_a, _b);
 }
 
 + (SimdInt4)Min0With:(_SimdInt4)_v {
-    const __m128i zero = _mm_setzero_si128();
-#ifdef OZZ_SIMD_SSE4_1
-    return _mm_min_epi32(zero, _v);
-#else   // OZZ_SIMD_SSE4_1
-    return OZZ_SSE_SELECT_I(_mm_cmplt_epi32(zero, _v), zero, _v);
-#endif  // OZZ_SIMD_SSE4_1
+    return ozz::math::Min0(_v);
 }
 
 + (SimdInt4)Max0With:(_SimdInt4)_v {
-    const __m128i zero = _mm_setzero_si128();
-#ifdef OZZ_SIMD_SSE4_1
-    return _mm_max_epi32(zero, _v);
-#else   // OZZ_SIMD_SSE4_1
-    return OZZ_SSE_SELECT_I(_mm_cmpgt_epi32(zero, _v), zero, _v);
-#endif  // OZZ_SIMD_SSE4_1
+    return ozz::math::Max0(_v);
 }
 
 + (SimdInt4)ClampWith:(_SimdInt4)_a :(_SimdInt4)_v :(_SimdInt4)_b {
-    return _mm_min_epi32(_mm_max_epi32(_a, _v), _b);
+    return ozz::math::Clamp(_a, _v, _b);
 }
 
 + (SimdInt4)SelectWith:(_SimdInt4)_b :(_SimdInt4)_true :(_SimdInt4)_false {
-    return OZZ_SSE_SELECT_I(_b, _true, _false);
+    return ozz::math::Select(_b, _true, _false);
 }
 
 + (SimdInt4)AndWith:(_SimdInt4)_a :(_SimdInt4)_b {
-    return _mm_and_si128(_a, _b);
+    return ozz::math::And(_a, _b);
 }
 
 + (SimdInt4)AndNotWith:(_SimdInt4)_a :(_SimdInt4)_b {
-    return _mm_andnot_si128(_b, _a);
+    return ozz::math::AndNot(_a, _b);
 }
 
 + (SimdInt4)OrWith:(_SimdInt4)_a :(_SimdInt4)_b {
-    return _mm_or_si128(_a, _b);
+    return ozz::math::Or(_a, _b);
 }
 
 + (SimdInt4)XorWith:(_SimdInt4)_a :(_SimdInt4)_b {
-    return _mm_xor_si128(_a, _b);
+    return ozz::math::Xor(_a, _b);
 }
 
 + (SimdInt4)NotWith:(_SimdInt4)_v {
-    return _mm_xor_si128(_v, _mm_cmpeq_epi32(_v, _v));
+    return ozz::math::Not(_v);
 }
 
 + (SimdInt4)ShiftLWith:(_SimdInt4)_v :(int)_bits {
-    return _mm_slli_epi32(_v, _bits);
+    return ozz::math::ShiftL(_v, _bits);
 }
 
 + (SimdInt4)ShiftRWith:(_SimdInt4)_v :(int)_bits {
-    return _mm_srai_epi32(_v, _bits);
+    return ozz::math::ShiftR(_v, _bits);
 }
 
 + (SimdInt4)ShiftRuWith:(_SimdInt4)_v :(int)_bits {
-    return _mm_srli_epi32(_v, _bits);
+    return ozz::math::ShiftRu(_v, _bits);
 }
 
 + (SimdInt4)CmpEqWith:(_SimdInt4)_a :(_SimdInt4)_b {
-    return _mm_cmpeq_epi32(_a, _b);
+    return ozz::math::CmpEq(_a, _b);
 }
 
 + (SimdInt4)CmpNeWith:(_SimdInt4)_a :(_SimdInt4)_b {
-    const __m128i eq = _mm_cmpeq_epi32(_a, _b);
-    return _mm_xor_si128(eq, _mm_cmpeq_epi32(_a, _a));
+    return ozz::math::CmpNe(_a, _b);
 }
 
 + (SimdInt4)CmpLtWith:(_SimdInt4)_a :(_SimdInt4)_b {
-    return _mm_cmpgt_epi32(_b, _a);
+    return ozz::math::CmpLt(_a, _b);
 }
 
 + (SimdInt4)CmpLeWith:(_SimdInt4)_a :(_SimdInt4)_b {
-    const __m128i gt = _mm_cmpgt_epi32(_a, _b);
-    return _mm_xor_si128(gt, _mm_cmpeq_epi32(_a, _a));
+    return ozz::math::CmpLe(_a, _b);
 }
 
 + (SimdInt4)CmpGtWith:(_SimdInt4)_a :(_SimdInt4)_b {
-    return _mm_cmpgt_epi32(_a, _b);
+    return ozz::math::CmpGt(_a, _b);
 }
 
 + (SimdInt4)CmpGeWith:(_SimdInt4)_a :(_SimdInt4)_b {
-    const __m128i lt = _mm_cmpgt_epi32(_b, _a);
-    return _mm_xor_si128(lt, _mm_cmpeq_epi32(_a, _a));
+    return ozz::math::CmpGe(_a, _b);
 }
 
 
@@ -1399,613 +955,104 @@ inline SimdFloat4 DivX(_SimdFloat4 _a, _SimdFloat4 _b) {
 @implementation OZZFloat4x4
 
 + (simd_float4x4)identity {
-    const __m128i zero = _mm_setzero_si128();
-    const __m128i ffff = _mm_cmpeq_epi32(zero, zero);
-    const __m128i one = _mm_srli_epi32(_mm_slli_epi32(ffff, 25), 2);
-    const __m128i x = _mm_srli_si128(one, 12);
-    simd_float4x4 ret = {{_mm_castsi128_ps(x),
-            _mm_castsi128_ps(_mm_slli_si128(x, 4)),
-            _mm_castsi128_ps(_mm_slli_si128(x, 8)),
-            _mm_castsi128_ps(_mm_slli_si128(one, 12))}};
-    return ret;
+    return ozz::math::Float4x4::identity();
 }
 
 + (simd_float4x4)TransposeWith:(simd_float4x4)_m {
-    const __m128 tmp0 = _mm_unpacklo_ps(_m.columns[0], _m.columns[2]);
-    const __m128 tmp1 = _mm_unpacklo_ps(_m.columns[1], _m.columns[3]);
-    const __m128 tmp2 = _mm_unpackhi_ps(_m.columns[0], _m.columns[2]);
-    const __m128 tmp3 = _mm_unpackhi_ps(_m.columns[1], _m.columns[3]);
-    simd_float4x4 ret = {
-            {_mm_unpacklo_ps(tmp0, tmp1), _mm_unpackhi_ps(tmp0, tmp1),
-                    _mm_unpacklo_ps(tmp2, tmp3), _mm_unpackhi_ps(tmp2, tmp3)}};
-    return ret;
+    return ozz::math::Transpose(_m);
 }
 
 + (simd_float4x4)InvertWith:(simd_float4x4)_m :(SimdInt4 *)_invertible {
-    const __m128 _t0 =
-            _mm_shuffle_ps(_m.columns[0], _m.columns[1], _MM_SHUFFLE(1, 0, 1, 0));
-    const __m128 _t1 =
-            _mm_shuffle_ps(_m.columns[2], _m.columns[3], _MM_SHUFFLE(1, 0, 1, 0));
-    const __m128 _t2 =
-            _mm_shuffle_ps(_m.columns[0], _m.columns[1], _MM_SHUFFLE(3, 2, 3, 2));
-    const __m128 _t3 =
-            _mm_shuffle_ps(_m.columns[2], _m.columns[3], _MM_SHUFFLE(3, 2, 3, 2));
-    const __m128 c0 = _mm_shuffle_ps(_t0, _t1, _MM_SHUFFLE(2, 0, 2, 0));
-    const __m128 c1 = _mm_shuffle_ps(_t1, _t0, _MM_SHUFFLE(3, 1, 3, 1));
-    const __m128 c2 = _mm_shuffle_ps(_t2, _t3, _MM_SHUFFLE(2, 0, 2, 0));
-    const __m128 c3 = _mm_shuffle_ps(_t3, _t2, _MM_SHUFFLE(3, 1, 3, 1));
-
-    __m128 minor0, minor1, minor2, minor3, tmp1, tmp2;
-    tmp1 = _mm_mul_ps(c2, c3);
-    tmp1 = OZZ_SHUFFLE_PS1(tmp1, 0xB1);
-    minor0 = _mm_mul_ps(c1, tmp1);
-    minor1 = _mm_mul_ps(c0, tmp1);
-    tmp1 = OZZ_SHUFFLE_PS1(tmp1, 0x4E);
-    minor0 = OZZ_MSUB(c1, tmp1, minor0);
-    minor1 = OZZ_MSUB(c0, tmp1, minor1);
-    minor1 = OZZ_SHUFFLE_PS1(minor1, 0x4E);
-
-    tmp1 = _mm_mul_ps(c1, c2);
-    tmp1 = OZZ_SHUFFLE_PS1(tmp1, 0xB1);
-    minor0 = OZZ_MADD(c3, tmp1, minor0);
-    minor3 = _mm_mul_ps(c0, tmp1);
-    tmp1 = OZZ_SHUFFLE_PS1(tmp1, 0x4E);
-    minor0 = OZZ_NMADD(c3, tmp1, minor0);
-    minor3 = OZZ_MSUB(c0, tmp1, minor3);
-    minor3 = OZZ_SHUFFLE_PS1(minor3, 0x4E);
-
-    tmp1 = _mm_mul_ps(OZZ_SHUFFLE_PS1(c1, 0x4E), c3);
-    tmp1 = OZZ_SHUFFLE_PS1(tmp1, 0xB1);
-    tmp2 = OZZ_SHUFFLE_PS1(c2, 0x4E);
-    minor0 = OZZ_MADD(tmp2, tmp1, minor0);
-    minor2 = _mm_mul_ps(c0, tmp1);
-    tmp1 = OZZ_SHUFFLE_PS1(tmp1, 0x4E);
-    minor0 = OZZ_NMADD(tmp2, tmp1, minor0);
-    minor2 = OZZ_MSUB(c0, tmp1, minor2);
-    minor2 = OZZ_SHUFFLE_PS1(minor2, 0x4E);
-
-    tmp1 = _mm_mul_ps(c0, c1);
-    tmp1 = OZZ_SHUFFLE_PS1(tmp1, 0xB1);
-    minor2 = OZZ_MADD(c3, tmp1, minor2);
-    minor3 = OZZ_MSUB(tmp2, tmp1, minor3);
-    tmp1 = OZZ_SHUFFLE_PS1(tmp1, 0x4E);
-    minor2 = OZZ_MSUB(c3, tmp1, minor2);
-    minor3 = OZZ_NMADD(tmp2, tmp1, minor3);
-
-    tmp1 = _mm_mul_ps(c0, c3);
-    tmp1 = OZZ_SHUFFLE_PS1(tmp1, 0xB1);
-    minor1 = OZZ_NMADD(tmp2, tmp1, minor1);
-    minor2 = OZZ_MADD(c1, tmp1, minor2);
-    tmp1 = OZZ_SHUFFLE_PS1(tmp1, 0x4E);
-    minor1 = OZZ_MADD(tmp2, tmp1, minor1);
-    minor2 = OZZ_NMADD(c1, tmp1, minor2);
-
-    tmp1 = _mm_mul_ps(c0, tmp2);
-    tmp1 = OZZ_SHUFFLE_PS1(tmp1, 0xB1);
-    minor1 = OZZ_MADD(c3, tmp1, minor1);
-    minor3 = OZZ_NMADD(c1, tmp1, minor3);
-    tmp1 = OZZ_SHUFFLE_PS1(tmp1, 0x4E);
-    minor1 = OZZ_NMADD(c3, tmp1, minor1);
-    minor3 = OZZ_MADD(c1, tmp1, minor3);
-
-    __m128 det;
-    det = _mm_mul_ps(c0, minor0);
-    det = _mm_add_ps(OZZ_SHUFFLE_PS1(det, 0x4E), det);
-    det = _mm_add_ss(OZZ_SHUFFLE_PS1(det, 0xB1), det);
-    const SimdInt4 invertible = [OZZFloat4 CmpNeWith:det :[OZZFloat4 zero]];
-    assert((_invertible || [OZZInt4 AreAllTrue1With:invertible]) &&
-            "Matrix is not invertible");
-    if (_invertible != nullptr) {
-        *_invertible = invertible;
-    }
-    tmp1 = OZZ_SSE_SELECT_F(invertible, [OZZFloat4 RcpEstNRWith:det], [OZZFloat4 zero]);
-    det = OZZ_NMADDX(det, _mm_mul_ss(tmp1, tmp1), _mm_add_ss(tmp1, tmp1));
-    det = OZZ_SHUFFLE_PS1(det, 0x00);
-
-    // Copy the final columns
-    simd_float4x4 ret = {{_mm_mul_ps(det, minor0), _mm_mul_ps(det, minor1),
-            _mm_mul_ps(det, minor2), _mm_mul_ps(det, minor3)}};
-    return ret;
+    return ozz::math::Invert(_m, _invertible);
 }
 
 + (simd_float4x4)TranslationWith:(_SimdFloat4)_v {
-    const __m128i zero = _mm_setzero_si128();
-    const __m128i ffff = _mm_cmpeq_epi32(zero, zero);
-    const __m128i mask000f = _mm_slli_si128(ffff, 12);
-    const __m128i one = _mm_srli_epi32(_mm_slli_epi32(ffff, 25), 2);
-    const __m128i x = _mm_srli_si128(one, 12);
-    simd_float4x4 ret = {
-            {_mm_castsi128_ps(x), _mm_castsi128_ps(_mm_slli_si128(x, 4)),
-                    _mm_castsi128_ps(_mm_slli_si128(x, 8)),
-                    OZZ_SSE_SELECT_F(mask000f, _mm_castsi128_ps(one), _v)}};
-    return ret;
+    return ozz::math::Float4x4::Translation(_v);
 }
 
 + (simd_float4x4)ScalingWith:(_SimdFloat4)_v {
-    const __m128i zero = _mm_setzero_si128();
-    const __m128i ffff = _mm_cmpeq_epi32(zero, zero);
-    const __m128i if000 = _mm_srli_si128(ffff, 12);
-    const __m128i ione = _mm_srli_epi32(_mm_slli_epi32(ffff, 25), 2);
-    simd_float4x4 ret = {
-            {
-                    _mm_and_ps(_v, _mm_castsi128_ps(if000)),
-                    _mm_and_ps(_v, _mm_castsi128_ps(_mm_slli_si128(if000, 4))),
-                    _mm_and_ps(_v, _mm_castsi128_ps(_mm_slli_si128(if000, 8))),
-                    _mm_castsi128_ps(_mm_slli_si128(ione, 12))
-            }
-    };
-    return ret;
+    return ozz::math::Float4x4::Scaling(_v);
 }
 
 + (simd_float4x4)TranslateWith:(simd_float4x4)_m :(_SimdFloat4)_v {
-    const __m128 a01 = OZZ_MADD(_m.columns[0], OZZ_SSE_SPLAT_F(_v, 0),
-            _mm_mul_ps(_m.columns[1], OZZ_SSE_SPLAT_F(_v, 1)));
-    const __m128 m3 = OZZ_MADD(_m.columns[2], OZZ_SSE_SPLAT_F(_v, 2), _m.columns[3]);
-    simd_float4x4 ret = {
-            {_m.columns[0], _m.columns[1], _m.columns[2], _mm_add_ps(a01, m3)}};
-    return ret;
+    return ozz::math::Translate(_m, _v);
 }
 
 + (simd_float4x4)ScaleWith:(simd_float4x4)_m :(_SimdFloat4)_v {
-    simd_float4x4 ret = {{_mm_mul_ps(_m.columns[0], OZZ_SSE_SPLAT_F(_v, 0)),
-            _mm_mul_ps(_m.columns[1], OZZ_SSE_SPLAT_F(_v, 1)),
-            _mm_mul_ps(_m.columns[2], OZZ_SSE_SPLAT_F(_v, 2)),
-            _m.columns[3]}};
-    return ret;
+    return ozz::math::Scale(_m, _v);
 }
 
 + (simd_float4x4)ColumnMultiplyWith:(simd_float4x4)_m :(_SimdFloat4)_v {
-    simd_float4x4 ret = {{_mm_mul_ps(_m.columns[0], _v), _mm_mul_ps(_m.columns[1], _v),
-            _mm_mul_ps(_m.columns[2], _v),
-            _mm_mul_ps(_m.columns[3], _v)}};
-    return ret;
+    return ozz::math::ColumnMultiply(_m, _v);
 }
 
 + (SimdInt4)IsNormalizedWith:(simd_float4x4)_m {
-    const __m128 max = _mm_set_ps1(1.f + kNormalizationToleranceSq);
-    const __m128 min = _mm_set_ps1(1.f - kNormalizationToleranceSq);
-
-    const __m128 tmp0 = _mm_unpacklo_ps(_m.columns[0], _m.columns[2]);
-    const __m128 tmp1 = _mm_unpacklo_ps(_m.columns[1], _m.columns[3]);
-    const __m128 tmp2 = _mm_unpackhi_ps(_m.columns[0], _m.columns[2]);
-    const __m128 tmp3 = _mm_unpackhi_ps(_m.columns[1], _m.columns[3]);
-    const __m128 row0 = _mm_unpacklo_ps(tmp0, tmp1);
-    const __m128 row1 = _mm_unpackhi_ps(tmp0, tmp1);
-    const __m128 row2 = _mm_unpacklo_ps(tmp2, tmp3);
-
-    const __m128 dot =
-            OZZ_MADD(row0, row0, OZZ_MADD(row1, row1, _mm_mul_ps(row2, row2)));
-    const __m128 normalized =
-            _mm_and_ps(_mm_cmplt_ps(dot, max), _mm_cmpgt_ps(dot, min));
-    return _mm_castps_si128(
-            _mm_and_ps(normalized, _mm_castsi128_ps([OZZInt4 mask_fff0])));
+    return ozz::math::IsNormalized(_m);
 }
 
 + (SimdInt4)IsNormalizedEstWith:(simd_float4x4)_m {
-    const __m128 max = _mm_set_ps1(1.f + kNormalizationToleranceEstSq);
-    const __m128 min = _mm_set_ps1(1.f - kNormalizationToleranceEstSq);
-
-    const __m128 tmp0 = _mm_unpacklo_ps(_m.columns[0], _m.columns[2]);
-    const __m128 tmp1 = _mm_unpacklo_ps(_m.columns[1], _m.columns[3]);
-    const __m128 tmp2 = _mm_unpackhi_ps(_m.columns[0], _m.columns[2]);
-    const __m128 tmp3 = _mm_unpackhi_ps(_m.columns[1], _m.columns[3]);
-    const __m128 row0 = _mm_unpacklo_ps(tmp0, tmp1);
-    const __m128 row1 = _mm_unpackhi_ps(tmp0, tmp1);
-    const __m128 row2 = _mm_unpacklo_ps(tmp2, tmp3);
-
-    const __m128 dot =
-            OZZ_MADD(row0, row0, OZZ_MADD(row1, row1, _mm_mul_ps(row2, row2)));
-
-    const __m128 normalized =
-            _mm_and_ps(_mm_cmplt_ps(dot, max), _mm_cmpgt_ps(dot, min));
-
-    return _mm_castps_si128(
-            _mm_and_ps(normalized, _mm_castsi128_ps([OZZInt4 mask_fff0])));
+    return ozz::math::IsNormalizedEst(_m);
 }
 
 + (SimdInt4)IsOrthogonalWith:(simd_float4x4)_m {
-    const __m128 max = _mm_set_ss(1.f + kNormalizationToleranceSq);
-    const __m128 min = _mm_set_ss(1.f - kNormalizationToleranceSq);
-    const __m128 zero = _mm_setzero_ps();
-
-    // Use simd_float4::zero() if one of the normalization fails. _m will then be
-    // considered not orthogonal.
-    const SimdFloat4 cross = [OZZFloat4 NormalizeSafe3With:[OZZFloat4 Cross3With:_m.columns[0] :_m.columns[1]] :zero];
-    const SimdFloat4 at = [OZZFloat4 NormalizeSafe3With:_m.columns[2] :zero];
-
-    SimdFloat4 dot;
-    OZZ_SSE_DOT3_F(cross, at, dot);
-    __m128 dotx000 = _mm_move_ss(zero, dot);
-    return _mm_castps_si128(
-            _mm_and_ps(_mm_cmplt_ss(dotx000, max), _mm_cmpgt_ss(dotx000, min)));
+    return ozz::math::IsOrthogonal(_m);
 }
 
 + (SimdFloat4)ToQuaternionWith:(simd_float4x4)_m {
-    assert([OZZInt4 AreAllTrue3With:[OZZFloat4x4 IsNormalizedEstWith:_m]]);
-    assert([OZZInt4 AreAllTrue1With:[OZZFloat4x4 IsOrthogonalWith:_m]]);
-
-    // Prepares constants.
-    const __m128i zero = _mm_setzero_si128();
-    const __m128i ffff = _mm_cmpeq_epi32(zero, zero);
-    const __m128 half = _mm_set1_ps(0.5f);
-    const __m128i mask_f000 = _mm_srli_si128(ffff, 12);
-    const __m128i mask_000f = _mm_slli_si128(ffff, 12);
-    const __m128 one =
-            _mm_castsi128_ps(_mm_srli_epi32(_mm_slli_epi32(ffff, 25), 2));
-    const __m128i mask_0f00 = _mm_slli_si128(mask_f000, 4);
-    const __m128i mask_00f0 = _mm_slli_si128(mask_f000, 8);
-
-    const __m128 xx_yy = OZZ_SSE_SELECT_F(mask_0f00, _m.columns[1], _m.columns[0]);
-    const __m128 xx_yy_0010 = OZZ_SHUFFLE_PS1(xx_yy, _MM_SHUFFLE(0, 0, 1, 0));
-    const __m128 xx_yy_zz_xx =
-            OZZ_SSE_SELECT_F(mask_00f0, _m.columns[2], xx_yy_0010);
-    const __m128 yy_zz_xx_yy =
-            OZZ_SHUFFLE_PS1(xx_yy_zz_xx, _MM_SHUFFLE(1, 0, 2, 1));
-    const __m128 zz_xx_yy_zz =
-            OZZ_SHUFFLE_PS1(xx_yy_zz_xx, _MM_SHUFFLE(2, 1, 0, 2));
-
-    const __m128 diag_sum =
-            _mm_add_ps(_mm_add_ps(xx_yy_zz_xx, yy_zz_xx_yy), zz_xx_yy_zz);
-    const __m128 diag_diff =
-            _mm_sub_ps(_mm_sub_ps(xx_yy_zz_xx, yy_zz_xx_yy), zz_xx_yy_zz);
-    const __m128 radicand =
-            _mm_add_ps(OZZ_SSE_SELECT_F(mask_000f, diag_sum, diag_diff), one);
-    const __m128 invSqrt = one / _mm_sqrt_ps(radicand);
-
-    __m128 zy_xz_yx = OZZ_SSE_SELECT_F(mask_00f0, _m.columns[1], _m.columns[0]);
-    zy_xz_yx = OZZ_SHUFFLE_PS1(zy_xz_yx, _MM_SHUFFLE(0, 1, 2, 2));
-    zy_xz_yx =
-            OZZ_SSE_SELECT_F(mask_0f00, OZZ_SSE_SPLAT_F(_m.columns[2], 0), zy_xz_yx);
-    __m128 yz_zx_xy = OZZ_SSE_SELECT_F(mask_f000, _m.columns[1], _m.columns[0]);
-    yz_zx_xy = OZZ_SHUFFLE_PS1(yz_zx_xy, _MM_SHUFFLE(0, 0, 2, 0));
-    yz_zx_xy =
-            OZZ_SSE_SELECT_F(mask_f000, OZZ_SSE_SPLAT_F(_m.columns[2], 1), yz_zx_xy);
-    const __m128 sum = _mm_add_ps(zy_xz_yx, yz_zx_xy);
-    const __m128 diff = _mm_sub_ps(zy_xz_yx, yz_zx_xy);
-    const __m128 scale = _mm_mul_ps(invSqrt, half);
-
-    const __m128 sum0 = OZZ_SHUFFLE_PS1(sum, _MM_SHUFFLE(0, 1, 2, 0));
-    const __m128 sum1 = OZZ_SHUFFLE_PS1(sum, _MM_SHUFFLE(0, 0, 0, 2));
-    const __m128 sum2 = OZZ_SHUFFLE_PS1(sum, _MM_SHUFFLE(0, 0, 0, 1));
-    __m128 res0 = OZZ_SSE_SELECT_F(mask_000f, OZZ_SSE_SPLAT_F(diff, 0), sum0);
-    __m128 res1 = OZZ_SSE_SELECT_F(mask_000f, OZZ_SSE_SPLAT_F(diff, 1), sum1);
-    __m128 res2 = OZZ_SSE_SELECT_F(mask_000f, OZZ_SSE_SPLAT_F(diff, 2), sum2);
-    res0 = _mm_mul_ps(OZZ_SSE_SELECT_F(mask_f000, radicand, res0),
-            OZZ_SSE_SPLAT_F(scale, 0));
-    res1 = _mm_mul_ps(OZZ_SSE_SELECT_F(mask_0f00, radicand, res1),
-            OZZ_SSE_SPLAT_F(scale, 1));
-    res2 = _mm_mul_ps(OZZ_SSE_SELECT_F(mask_00f0, radicand, res2),
-            OZZ_SSE_SPLAT_F(scale, 2));
-    __m128 res3 = _mm_mul_ps(OZZ_SSE_SELECT_F(mask_000f, radicand, diff),
-            OZZ_SSE_SPLAT_F(scale, 3));
-
-    const __m128 xx = OZZ_SSE_SPLAT_F(_m.columns[0], 0);
-    const __m128 yy = OZZ_SSE_SPLAT_F(_m.columns[1], 1);
-    const __m128 zz = OZZ_SSE_SPLAT_F(_m.columns[2], 2);
-    const __m128i cond0 = _mm_castps_si128(_mm_cmpgt_ps(yy, xx));
-    const __m128i cond1 =
-            _mm_castps_si128(_mm_and_ps(_mm_cmpgt_ps(zz, xx), _mm_cmpgt_ps(zz, yy)));
-    const __m128i cond2 = _mm_castps_si128(
-            _mm_cmpgt_ps(OZZ_SSE_SPLAT_F(diag_sum, 0), _mm_castsi128_ps(zero)));
-    __m128 res = OZZ_SSE_SELECT_F(cond0, res1, res0);
-    res = OZZ_SSE_SELECT_F(cond1, res2, res);
-    res = OZZ_SSE_SELECT_F(cond2, res3, res);
-
-    assert([OZZInt4 AreAllTrue1With:[OZZFloat4 IsNormalizedEst4With:res]]);
-    return res;
+    return ozz::math::ToQuaternion(_m);
 }
 
 + (bool)ToAffineWith:(simd_float4x4)_m :(SimdFloat4 *)_translation
         :(SimdFloat4 *)_quaternion :(SimdFloat4 *)_scale {
-    const __m128 zero = _mm_setzero_ps();
-    const __m128 one = [OZZFloat4 one];
-    const __m128i fff0 = [OZZInt4 mask_fff0];
-    const __m128 max = _mm_set_ps1(kOrthogonalisationToleranceSq);
-    const __m128 min = _mm_set_ps1(-kOrthogonalisationToleranceSq);
-
-    // Extracts translation.
-    *_translation = OZZ_SSE_SELECT_F(fff0, _m.columns[3], one);
-
-    // Extracts scale.
-    const __m128 m_tmp0 = _mm_unpacklo_ps(_m.columns[0], _m.columns[2]);
-    const __m128 m_tmp1 = _mm_unpacklo_ps(_m.columns[1], _m.columns[3]);
-    const __m128 m_tmp2 = _mm_unpackhi_ps(_m.columns[0], _m.columns[2]);
-    const __m128 m_tmp3 = _mm_unpackhi_ps(_m.columns[1], _m.columns[3]);
-    const __m128 m_row0 = _mm_unpacklo_ps(m_tmp0, m_tmp1);
-    const __m128 m_row1 = _mm_unpackhi_ps(m_tmp0, m_tmp1);
-    const __m128 m_row2 = _mm_unpacklo_ps(m_tmp2, m_tmp3);
-
-    const __m128 dot = OZZ_MADD(
-            m_row0, m_row0, OZZ_MADD(m_row1, m_row1, _mm_mul_ps(m_row2, m_row2)));
-    const __m128 abs_scale = _mm_sqrt_ps(dot);
-
-    const __m128 zero_axis =
-            _mm_and_ps(_mm_cmplt_ps(dot, max), _mm_cmpgt_ps(dot, min));
-
-    // Builds an orthonormal matrix in order to support quaternion extraction.
-    simd_float4x4 orthonormal;
-    int mask = _mm_movemask_ps(zero_axis);
-    if (mask & 1) {
-        if (mask & 6) {
-            return false;
-        }
-        orthonormal.columns[1] = _mm_div_ps(_m.columns[1], OZZ_SSE_SPLAT_F(abs_scale, 1));
-        orthonormal.columns[0] = [OZZFloat4 Normalize3With:[OZZFloat4 Cross3With:orthonormal.columns[1] :_m.columns[2]]];
-        orthonormal.columns[2] = [OZZFloat4 Normalize3With:[OZZFloat4 Cross3With:orthonormal.columns[0] :orthonormal.columns[1]]];
-    } else if (mask & 4) {
-        if (mask & 3) {
-            return false;
-        }
-        orthonormal.columns[0] = _mm_div_ps(_m.columns[0], OZZ_SSE_SPLAT_F(abs_scale, 0));
-        orthonormal.columns[2] = [OZZFloat4 Normalize3With:[OZZFloat4 Cross3With:orthonormal.columns[0] :_m.columns[1]]];
-        orthonormal.columns[1] = [OZZFloat4 Normalize3With:[OZZFloat4 Cross3With:orthonormal.columns[2] :orthonormal.columns[0]]];
-    } else {  // Favor z axis in the default case
-        if (mask & 5) {
-            return false;
-        }
-        orthonormal.columns[2] = _mm_div_ps(_m.columns[2], OZZ_SSE_SPLAT_F(abs_scale, 2));
-        orthonormal.columns[1] = [OZZFloat4 Normalize3With:[OZZFloat4 Cross3With:orthonormal.columns[2] :_m.columns[0]]];
-        orthonormal.columns[0] = [OZZFloat4 Normalize3With:[OZZFloat4 Cross3With:orthonormal.columns[1] :orthonormal.columns[2]]];
-    }
-    orthonormal.columns[3] = [OZZFloat4 w_axis];
-
-    // Get back scale signs in case of reflexions
-    const __m128 o_tmp0 =
-            _mm_unpacklo_ps(orthonormal.columns[0], orthonormal.columns[2]);
-    const __m128 o_tmp1 =
-            _mm_unpacklo_ps(orthonormal.columns[1], orthonormal.columns[3]);
-    const __m128 o_tmp2 =
-            _mm_unpackhi_ps(orthonormal.columns[0], orthonormal.columns[2]);
-    const __m128 o_tmp3 =
-            _mm_unpackhi_ps(orthonormal.columns[1], orthonormal.columns[3]);
-    const __m128 o_row0 = _mm_unpacklo_ps(o_tmp0, o_tmp1);
-    const __m128 o_row1 = _mm_unpackhi_ps(o_tmp0, o_tmp1);
-    const __m128 o_row2 = _mm_unpacklo_ps(o_tmp2, o_tmp3);
-
-    const __m128 scale_dot = OZZ_MADD(
-            o_row0, m_row0, OZZ_MADD(o_row1, m_row1, _mm_mul_ps(o_row2, m_row2)));
-
-    const __m128i cond = _mm_castps_si128(_mm_cmpgt_ps(scale_dot, zero));
-    const __m128 cfalse = _mm_sub_ps(zero, abs_scale);
-    const __m128 scale = OZZ_SSE_SELECT_F(cond, abs_scale, cfalse);
-    *_scale = OZZ_SSE_SELECT_F(fff0, scale, one);
-
-    // Extracts quaternion.
-    *_quaternion = [OZZFloat4x4 ToQuaternionWith:orthonormal];
-    return true;
+    return ozz::math::ToAffine(_m, _translation, _quaternion, _scale);
 }
 
 + (simd_float4x4)FromEulerWith:(_SimdFloat4)_v {
-    const __m128 cos = [OZZFloat4 CosWith:_v];
-    const __m128 sin = [OZZFloat4 SinWith:_v];
-
-    const float cx = [OZZFloat4 GetXWith:cos];
-    const float sx = [OZZFloat4 GetXWith:sin];
-    const float cy = [OZZFloat4 GetYWith:cos];
-    const float sy = [OZZFloat4 GetYWith:sin];
-    const float cz = [OZZFloat4 GetZWith:cos];
-    const float sz = [OZZFloat4 GetZWith:sin];
-
-    const float sycz = sy * cz;
-    const float sysz = sy * sz;
-
-    simd_float4x4 ret = {{[OZZFloat4 LoadWith:cx * cy :sx * sz - cx * sycz
-            :cx * sysz + sx * cz :0.f],
-            [OZZFloat4 LoadWith:sy :cy * cz :-cy * sz :0.f],
-            [OZZFloat4 LoadWith:-sx * cy :sx * sycz + cx * sz
-                    :-sx * sysz + cx * cz :0.f],
-            [OZZFloat4 w_axis]}};
-    return ret;
+    return ozz::math::Float4x4::FromEuler(_v);
 }
 
 + (simd_float4x4)FromAxisAngleWith:(_SimdFloat4)_axis :(_SimdFloat4)_angle {
-    assert([OZZInt4 AreAllTrue1With:[OZZFloat4 IsNormalizedEst3With:_axis]]);
-
-    const __m128i zero = _mm_setzero_si128();
-    const __m128i ffff = _mm_cmpeq_epi32(zero, zero);
-    const __m128i ione = _mm_srli_epi32(_mm_slli_epi32(ffff, 25), 2);
-    const __m128 fff0 = _mm_castsi128_ps(_mm_srli_si128(ffff, 4));
-    const __m128 one = _mm_castsi128_ps(ione);
-    const __m128 w_axis = _mm_castsi128_ps(_mm_slli_si128(ione, 12));
-
-    const __m128 sin = [OZZFloat4 SplatXWith:[OZZFloat4 SinXWith:_angle]];
-    const __m128 cos = [OZZFloat4 SplatXWith:[OZZFloat4 CosXWith:_angle]];
-    const __m128 one_minus_cos = _mm_sub_ps(one, cos);
-
-    const __m128 v0 =
-            _mm_mul_ps(_mm_mul_ps(one_minus_cos,
-                            OZZ_SHUFFLE_PS1(_axis, _MM_SHUFFLE(3, 0, 2, 1))),
-                    OZZ_SHUFFLE_PS1(_axis, _MM_SHUFFLE(3, 1, 0, 2)));
-    const __m128 r0 =
-            _mm_add_ps(_mm_mul_ps(_mm_mul_ps(one_minus_cos, _axis), _axis), cos);
-    const __m128 r1 = _mm_add_ps(_mm_mul_ps(sin, _axis), v0);
-    const __m128 r2 = _mm_sub_ps(v0, _mm_mul_ps(sin, _axis));
-    const __m128 r0fff0 = _mm_and_ps(r0, fff0);
-    const __m128 r1r22120 = _mm_shuffle_ps(r1, r2, _MM_SHUFFLE(2, 1, 2, 0));
-    const __m128 v1 = OZZ_SHUFFLE_PS1(r1r22120, _MM_SHUFFLE(0, 3, 2, 1));
-    const __m128 r1r20011 = _mm_shuffle_ps(r1, r2, _MM_SHUFFLE(0, 0, 1, 1));
-    const __m128 v2 = OZZ_SHUFFLE_PS1(r1r20011, _MM_SHUFFLE(2, 0, 2, 0));
-
-    const __m128 t0 = _mm_shuffle_ps(r0fff0, v1, _MM_SHUFFLE(1, 0, 3, 0));
-    const __m128 t1 = _mm_shuffle_ps(r0fff0, v1, _MM_SHUFFLE(3, 2, 3, 1));
-    simd_float4x4 ret = {{OZZ_SHUFFLE_PS1(t0, _MM_SHUFFLE(1, 3, 2, 0)),
-            OZZ_SHUFFLE_PS1(t1, _MM_SHUFFLE(1, 3, 0, 2)),
-            _mm_shuffle_ps(v2, r0fff0, _MM_SHUFFLE(3, 2, 1, 0)),
-            w_axis}};
-    return ret;
+    return ozz::math::Float4x4::FromAxisAngle(_axis, _angle);
 }
 
 + (simd_float4x4)FromQuaternionWith:(_SimdFloat4)_quaternion {
-    assert([OZZInt4 AreAllTrue1With:[OZZFloat4 IsNormalizedEst4With:_quaternion]]);
-
-    const __m128i zero = _mm_setzero_si128();
-    const __m128i ffff = _mm_cmpeq_epi32(zero, zero);
-    const __m128i ione = _mm_srli_epi32(_mm_slli_epi32(ffff, 25), 2);
-    const __m128 fff0 = _mm_castsi128_ps(_mm_srli_si128(ffff, 4));
-    const __m128 c1110 = _mm_castsi128_ps(_mm_srli_si128(ione, 4));
-    const __m128 w_axis = _mm_castsi128_ps(_mm_slli_si128(ione, 12));
-
-    const __m128 vsum = _mm_add_ps(_quaternion, _quaternion);
-    const __m128 vms = _mm_mul_ps(_quaternion, vsum);
-
-    const __m128 r0 = _mm_sub_ps(
-            _mm_sub_ps(
-                    c1110,
-                    _mm_and_ps(OZZ_SHUFFLE_PS1(vms, _MM_SHUFFLE(3, 0, 0, 1)), fff0)),
-            _mm_and_ps(OZZ_SHUFFLE_PS1(vms, _MM_SHUFFLE(3, 1, 2, 2)), fff0));
-    const __m128 v0 =
-            _mm_mul_ps(OZZ_SHUFFLE_PS1(_quaternion, _MM_SHUFFLE(3, 1, 0, 0)),
-                    OZZ_SHUFFLE_PS1(vsum, _MM_SHUFFLE(3, 2, 1, 2)));
-    const __m128 v1 =
-            _mm_mul_ps(OZZ_SHUFFLE_PS1(_quaternion, _MM_SHUFFLE(3, 3, 3, 3)),
-                    OZZ_SHUFFLE_PS1(vsum, _MM_SHUFFLE(3, 0, 2, 1)));
-
-    const __m128 r1 = _mm_add_ps(v0, v1);
-    const __m128 r2 = _mm_sub_ps(v0, v1);
-
-    const __m128 r1r21021 = _mm_shuffle_ps(r1, r2, _MM_SHUFFLE(1, 0, 2, 1));
-    const __m128 v2 = OZZ_SHUFFLE_PS1(r1r21021, _MM_SHUFFLE(1, 3, 2, 0));
-    const __m128 r1r22200 = _mm_shuffle_ps(r1, r2, _MM_SHUFFLE(2, 2, 0, 0));
-    const __m128 v3 = OZZ_SHUFFLE_PS1(r1r22200, _MM_SHUFFLE(2, 0, 2, 0));
-
-    const __m128 q0 = _mm_shuffle_ps(r0, v2, _MM_SHUFFLE(1, 0, 3, 0));
-    const __m128 q1 = _mm_shuffle_ps(r0, v2, _MM_SHUFFLE(3, 2, 3, 1));
-    simd_float4x4 ret = {{OZZ_SHUFFLE_PS1(q0, _MM_SHUFFLE(1, 3, 2, 0)),
-            OZZ_SHUFFLE_PS1(q1, _MM_SHUFFLE(1, 3, 0, 2)),
-            _mm_shuffle_ps(v3, r0, _MM_SHUFFLE(3, 2, 1, 0)),
-            w_axis}};
-    return ret;
+    return ozz::math::Float4x4::FromQuaternion(_quaternion);
 }
 
 + (simd_float4x4)FromAffineWith:(_SimdFloat4)_translation
         :(_SimdFloat4)_quaternion
         :(_SimdFloat4)_scale {
-    assert([OZZInt4 AreAllTrue1With:[OZZFloat4 IsNormalizedEst4With:_quaternion]]);
-
-    const __m128i zero = _mm_setzero_si128();
-    const __m128i ffff = _mm_cmpeq_epi32(zero, zero);
-    const __m128i ione = _mm_srli_epi32(_mm_slli_epi32(ffff, 25), 2);
-    const __m128 fff0 = _mm_castsi128_ps(_mm_srli_si128(ffff, 4));
-    const __m128 c1110 = _mm_castsi128_ps(_mm_srli_si128(ione, 4));
-
-    const __m128 vsum = _mm_add_ps(_quaternion, _quaternion);
-    const __m128 vms = _mm_mul_ps(_quaternion, vsum);
-
-    const __m128 r0 = _mm_sub_ps(
-            _mm_sub_ps(
-                    c1110,
-                    _mm_and_ps(OZZ_SHUFFLE_PS1(vms, _MM_SHUFFLE(3, 0, 0, 1)), fff0)),
-            _mm_and_ps(OZZ_SHUFFLE_PS1(vms, _MM_SHUFFLE(3, 1, 2, 2)), fff0));
-    const __m128 v0 =
-            _mm_mul_ps(OZZ_SHUFFLE_PS1(_quaternion, _MM_SHUFFLE(3, 1, 0, 0)),
-                    OZZ_SHUFFLE_PS1(vsum, _MM_SHUFFLE(3, 2, 1, 2)));
-    const __m128 v1 =
-            _mm_mul_ps(OZZ_SHUFFLE_PS1(_quaternion, _MM_SHUFFLE(3, 3, 3, 3)),
-                    OZZ_SHUFFLE_PS1(vsum, _MM_SHUFFLE(3, 0, 2, 1)));
-
-    const __m128 r1 = _mm_add_ps(v0, v1);
-    const __m128 r2 = _mm_sub_ps(v0, v1);
-
-    const __m128 r1r21021 = _mm_shuffle_ps(r1, r2, _MM_SHUFFLE(1, 0, 2, 1));
-    const __m128 v2 = OZZ_SHUFFLE_PS1(r1r21021, _MM_SHUFFLE(1, 3, 2, 0));
-    const __m128 r1r22200 = _mm_shuffle_ps(r1, r2, _MM_SHUFFLE(2, 2, 0, 0));
-    const __m128 v3 = OZZ_SHUFFLE_PS1(r1r22200, _MM_SHUFFLE(2, 0, 2, 0));
-
-    const __m128 q0 = _mm_shuffle_ps(r0, v2, _MM_SHUFFLE(1, 0, 3, 0));
-    const __m128 q1 = _mm_shuffle_ps(r0, v2, _MM_SHUFFLE(3, 2, 3, 1));
-
-    simd_float4x4 ret = {
-            {_mm_mul_ps(OZZ_SHUFFLE_PS1(q0, _MM_SHUFFLE(1, 3, 2, 0)),
-                    OZZ_SSE_SPLAT_F(_scale, 0)),
-                    _mm_mul_ps(OZZ_SHUFFLE_PS1(q1, _MM_SHUFFLE(1, 3, 0, 2)),
-                            OZZ_SSE_SPLAT_F(_scale, 1)),
-                    _mm_mul_ps(_mm_shuffle_ps(v3, r0, _MM_SHUFFLE(3, 2, 1, 0)),
-                            OZZ_SSE_SPLAT_F(_scale, 2)),
-                    _mm_movelh_ps(_translation, _mm_unpackhi_ps(_translation, c1110))}};
-    return ret;
+    return ozz::math::Float4x4::FromAffine(_translation, _quaternion, _scale);
 }
 
 + (SimdFloat4)TransformPointWith:(simd_float4x4)_m
         :(_SimdFloat4)_v {
-    const __m128 xxxx = _mm_mul_ps(OZZ_SSE_SPLAT_F(_v, 0), _m.columns[0]);
-    const __m128 a23 = OZZ_MADD(OZZ_SSE_SPLAT_F(_v, 2), _m.columns[2], _m.columns[3]);
-    const __m128 a01 = OZZ_MADD(OZZ_SSE_SPLAT_F(_v, 1), _m.columns[1], xxxx);
-    return _mm_add_ps(a01, a23);
+    return ozz::math::TransformPoint(_m, _v);
 }
 
 + (SimdFloat4)TransformVectorWith:(simd_float4x4)_m
         :(_SimdFloat4)_v {
-    const __m128 xxxx = _mm_mul_ps(_m.columns[0], OZZ_SSE_SPLAT_F(_v, 0));
-    const __m128 zzzz = _mm_mul_ps(_m.columns[1], OZZ_SSE_SPLAT_F(_v, 1));
-    const __m128 a21 = OZZ_MADD(_m.columns[2], OZZ_SSE_SPLAT_F(_v, 2), xxxx);
-    return _mm_add_ps(zzzz, a21);
+    return ozz::math::TransformVector(_m, _v);
 }
 
 + (SimdFloat4)MulWith:(simd_float4x4)_m
                   vec:(_SimdFloat4)_v {
-    const __m128 xxxx = _mm_mul_ps(OZZ_SSE_SPLAT_F(_v, 0), _m.columns[0]);
-    const __m128 zzzz = _mm_mul_ps(OZZ_SSE_SPLAT_F(_v, 2), _m.columns[2]);
-    const __m128 a01 = OZZ_MADD(OZZ_SSE_SPLAT_F(_v, 1), _m.columns[1], xxxx);
-    const __m128 a23 = OZZ_MADD(OZZ_SSE_SPLAT_F(_v, 3), _m.columns[3], zzzz);
-    return _mm_add_ps(a01, a23);
+    return ozz::math::operator*(_m, _v);
 }
 
 + (simd_float4x4)MulWith:(simd_float4x4)_a
                      mat:(simd_float4x4)_b {
-    simd_float4x4 ret;
-    {
-        const __m128 xxxx = _mm_mul_ps(OZZ_SSE_SPLAT_F(_b.columns[0], 0), _a.columns[0]);
-        const __m128 zzzz = _mm_mul_ps(OZZ_SSE_SPLAT_F(_b.columns[0], 2), _a.columns[2]);
-        const __m128 a01 =
-                OZZ_MADD(OZZ_SSE_SPLAT_F(_b.columns[0], 1), _a.columns[1], xxxx);
-        const __m128 a23 =
-                OZZ_MADD(OZZ_SSE_SPLAT_F(_b.columns[0], 3), _a.columns[3], zzzz);
-        ret.columns[0] = _mm_add_ps(a01, a23);
-    }
-    {
-        const __m128 xxxx = _mm_mul_ps(OZZ_SSE_SPLAT_F(_b.columns[1], 0), _a.columns[0]);
-        const __m128 zzzz = _mm_mul_ps(OZZ_SSE_SPLAT_F(_b.columns[1], 2), _a.columns[2]);
-        const __m128 a01 =
-                OZZ_MADD(OZZ_SSE_SPLAT_F(_b.columns[1], 1), _a.columns[1], xxxx);
-        const __m128 a23 =
-                OZZ_MADD(OZZ_SSE_SPLAT_F(_b.columns[1], 3), _a.columns[3], zzzz);
-        ret.columns[1] = _mm_add_ps(a01, a23);
-    }
-    {
-        const __m128 xxxx = _mm_mul_ps(OZZ_SSE_SPLAT_F(_b.columns[2], 0), _a.columns[0]);
-        const __m128 zzzz = _mm_mul_ps(OZZ_SSE_SPLAT_F(_b.columns[2], 2), _a.columns[2]);
-        const __m128 a01 =
-                OZZ_MADD(OZZ_SSE_SPLAT_F(_b.columns[2], 1), _a.columns[1], xxxx);
-        const __m128 a23 =
-                OZZ_MADD(OZZ_SSE_SPLAT_F(_b.columns[2], 3), _a.columns[3], zzzz);
-        ret.columns[2] = _mm_add_ps(a01, a23);
-    }
-    {
-        const __m128 xxxx = _mm_mul_ps(OZZ_SSE_SPLAT_F(_b.columns[3], 0), _a.columns[0]);
-        const __m128 zzzz = _mm_mul_ps(OZZ_SSE_SPLAT_F(_b.columns[3], 2), _a.columns[2]);
-        const __m128 a01 =
-                OZZ_MADD(OZZ_SSE_SPLAT_F(_b.columns[3], 1), _a.columns[1], xxxx);
-        const __m128 a23 =
-                OZZ_MADD(OZZ_SSE_SPLAT_F(_b.columns[3], 3), _a.columns[3], zzzz);
-        ret.columns[3] = _mm_add_ps(a01, a23);
-    }
-    return ret;
+    return ozz::math::operator*(_a, _b);
 }
 
 + (simd_float4x4)AddWith:(simd_float4x4)_a
         :(simd_float4x4)_b {
-    simd_float4x4 ret = {
-            {_mm_add_ps(_a.columns[0], _b.columns[0]), _mm_add_ps(_a.columns[1], _b.columns[1]),
-                    _mm_add_ps(_a.columns[2], _b.columns[2]), _mm_add_ps(_a.columns[3], _b.columns[3])}};
-    return ret;
+    return ozz::math::operator+(_a, _b);
 }
 
 + (simd_float4x4)SubWith:(simd_float4x4)_a
         :(simd_float4x4)_b {
-    simd_float4x4 ret = {
-            {_mm_sub_ps(_a.columns[0], _b.columns[0]), _mm_sub_ps(_a.columns[1], _b.columns[1]),
-                    _mm_sub_ps(_a.columns[2], _b.columns[2]), _mm_sub_ps(_a.columns[3], _b.columns[3])}};
-    return ret;
+    return ozz::math::operator-(_a, _b);
 }
 
 @end
@@ -2014,62 +1061,19 @@ inline SimdFloat4 DivX(_SimdFloat4 _a, _SimdFloat4 _b) {
 @implementation OZZMath
 
 + (uint16_t)FloatToHalfWith:(float)_f {
-    const int h = _mm_cvtsi128_si32([OZZMath FloatToHalfWithSIMD:_mm_set1_ps(_f)]);
-    return static_cast<uint16_t>(h);
+    return ozz::math::FloatToHalf(_f);
 }
 
 + (float)HalfToFloatWith:(uint16_t)_h {
-    return _mm_cvtss_f32([OZZMath HalfToFloatWithSIMD:_mm_set1_epi32(_h)]);
+    return ozz::math::HalfToFloat(_h);
 }
 
 + (SimdInt4)FloatToHalfWithSIMD:(_SimdFloat4)_f {
-    const __m128i mask_sign = _mm_set1_epi32(0x80000000u);
-    const __m128i mask_round = _mm_set1_epi32(~0xfffu);
-    const __m128i f32infty = _mm_set1_epi32(255 << 23);
-    const __m128 magic = _mm_castsi128_ps(_mm_set1_epi32(15 << 23));
-    const __m128i nanbit = _mm_set1_epi32(0x200);
-    const __m128i infty_as_fp16 = _mm_set1_epi32(0x7c00);
-    const __m128 clamp = _mm_castsi128_ps(_mm_set1_epi32((31 << 23) - 0x1000));
-
-    const __m128 msign = _mm_castsi128_ps(mask_sign);
-    const __m128 justsign = _mm_and_ps(msign, _f);
-    const __m128 absf = _mm_xor_ps(_f, justsign);
-    const __m128 mround = _mm_castsi128_ps(mask_round);
-    const __m128i absf_int = _mm_castps_si128(absf);
-    const __m128i b_isnan = _mm_cmpgt_epi32(absf_int, f32infty);
-    const __m128i b_isnormal = _mm_cmpgt_epi32(f32infty, _mm_castps_si128(absf));
-    const __m128i inf_or_nan =
-            _mm_or_si128(_mm_and_si128(b_isnan, nanbit), infty_as_fp16);
-    const __m128 fnosticky = _mm_and_ps(absf, mround);
-    const __m128 scaled = _mm_mul_ps(fnosticky, magic);
-    // Logically, we want PMINSD on "biased", but this should gen better code
-    const __m128 clamped = _mm_min_ps(scaled, clamp);
-    const __m128i biased =
-            _mm_sub_epi32(_mm_castps_si128(clamped), _mm_castps_si128(mround));
-    const __m128i shifted = _mm_srli_epi32(biased, 13);
-    const __m128i normal = _mm_and_si128(shifted, b_isnormal);
-    const __m128i not_normal = _mm_andnot_si128(b_isnormal, inf_or_nan);
-    const __m128i joined = _mm_or_si128(normal, not_normal);
-
-    const __m128i sign_shift = _mm_srli_epi32(_mm_castps_si128(justsign), 16);
-    return _mm_or_si128(joined, sign_shift);
+    return ozz::math::FloatToHalf(_f);
 }
 
 + (SimdFloat4)HalfToFloatWithSIMD:(_SimdInt4)_h {
-    const __m128i mask_nosign = _mm_set1_epi32(0x7fff);
-    const __m128 magic = _mm_castsi128_ps(_mm_set1_epi32((254 - 15) << 23));
-    const __m128i was_infnan = _mm_set1_epi32(0x7bff);
-    const __m128 exp_infnan = _mm_castsi128_ps(_mm_set1_epi32(255 << 23));
-
-    const __m128i expmant = _mm_and_si128(mask_nosign, _h);
-    const __m128i shifted = _mm_slli_epi32(expmant, 13);
-    const __m128 scaled = _mm_mul_ps(_mm_castsi128_ps(shifted), magic);
-    const __m128i b_wasinfnan = _mm_cmpgt_epi32(expmant, was_infnan);
-    const __m128i sign = _mm_slli_epi32(_mm_xor_si128(_h, expmant), 16);
-    const __m128 infnanexp =
-            _mm_and_ps(_mm_castsi128_ps(b_wasinfnan), exp_infnan);
-    const __m128 sign_inf = _mm_or_ps(_mm_castsi128_ps(sign), infnanexp);
-    return _mm_or_ps(scaled, sign_inf);
+    return ozz::math::HalfToFloat(_h);
 }
 
 + (int)FloatCastI32:(float)_f {
