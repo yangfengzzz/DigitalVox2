@@ -53,7 +53,7 @@
 #include "CCharacterBridge.h"
 
 #include "csimd_math.h"
-#include "soa_float.h"
+#include "csoa_float.h"
 #include "animation_keyframe.h"
 #include "soa_skeleton.h"
 #include "soa_animation.h"

@@ -27,88 +27,89 @@
 
 #include "soa_math_archive.h"
 
-#include "archive.h"
+#include "../io/archive.h"
 #include "soa_float.h"
+#include "soa_float4x4.h"
+#include "soa_quaternion.h"
+#include "soa_transform.h"
 
-void Extern<SoaFloat2>::Save(OArchive &_archive,
-        const SoaFloat2 *_values,
-        size_t _count) {
-    _archive << MakeArray(reinterpret_cast<const float *>(&_values->x),
-            2 * 4 * _count);
+namespace ozz {
+namespace io {
+void Extern<math::SoaFloat2>::Save(OArchive& _archive,
+                                   const math::SoaFloat2* _values,
+                                   size_t _count) {
+  _archive << MakeArray(reinterpret_cast<const float*>(&_values->x),
+                        2 * 4 * _count);
+}
+void Extern<math::SoaFloat2>::Load(IArchive& _archive, math::SoaFloat2* _values,
+                                   size_t _count, uint32_t _version) {
+  (void)_version;
+  _archive >> MakeArray(reinterpret_cast<float*>(&_values->x), 2 * 4 * _count);
 }
 
-void Extern<SoaFloat2>::Load(IArchive &_archive, SoaFloat2 *_values,
-        size_t _count, uint32_t _version) {
-    (void) _version;
-    _archive >> MakeArray(reinterpret_cast<float *>(&_values->x), 2 * 4 * _count);
+void Extern<math::SoaFloat3>::Save(OArchive& _archive,
+                                   const math::SoaFloat3* _values,
+                                   size_t _count) {
+  _archive << MakeArray(reinterpret_cast<const float*>(&_values->x),
+                        3 * 4 * _count);
+}
+void Extern<math::SoaFloat3>::Load(IArchive& _archive, math::SoaFloat3* _values,
+                                   size_t _count, uint32_t _version) {
+  (void)_version;
+  _archive >> MakeArray(reinterpret_cast<float*>(&_values->x), 3 * 4 * _count);
 }
 
-void Extern<SoaFloat3>::Save(OArchive &_archive,
-        const SoaFloat3 *_values,
-        size_t _count) {
-    _archive << MakeArray(reinterpret_cast<const float *>(&_values->x),
-            3 * 4 * _count);
+void Extern<math::SoaFloat4>::Save(OArchive& _archive,
+                                   const math::SoaFloat4* _values,
+                                   size_t _count) {
+  _archive << MakeArray(reinterpret_cast<const float*>(&_values->x),
+                        4 * 4 * _count);
+}
+void Extern<math::SoaFloat4>::Load(IArchive& _archive, math::SoaFloat4* _values,
+                                   size_t _count, uint32_t _version) {
+  (void)_version;
+  _archive >> MakeArray(reinterpret_cast<float*>(&_values->x), 4 * 4 * _count);
 }
 
-void Extern<SoaFloat3>::Load(IArchive &_archive, SoaFloat3 *_values,
-        size_t _count, uint32_t _version) {
-    (void) _version;
-    _archive >> MakeArray(reinterpret_cast<float *>(&_values->x), 3 * 4 * _count);
+void Extern<math::SoaQuaternion>::Save(OArchive& _archive,
+                                       const math::SoaQuaternion* _values,
+                                       size_t _count) {
+  _archive << MakeArray(reinterpret_cast<const float*>(&_values->x),
+                        4 * 4 * _count);
+}
+void Extern<math::SoaQuaternion>::Load(IArchive& _archive,
+                                       math::SoaQuaternion* _values,
+                                       size_t _count, uint32_t _version) {
+  (void)_version;
+  _archive >> MakeArray(reinterpret_cast<float*>(&_values->x), 4 * 4 * _count);
 }
 
-void Extern<SoaFloat4>::Save(OArchive &_archive,
-        const SoaFloat4 *_values,
-        size_t _count) {
-    _archive << MakeArray(reinterpret_cast<const float *>(&_values->x),
-            4 * 4 * _count);
+void Extern<math::SoaFloat4x4>::Save(OArchive& _archive,
+                                     const math::SoaFloat4x4* _values,
+                                     size_t _count) {
+  _archive << MakeArray(reinterpret_cast<const float*>(&_values->cols[0].x),
+                        4 * 4 * 4 * _count);
+}
+void Extern<math::SoaFloat4x4>::Load(IArchive& _archive,
+                                     math::SoaFloat4x4* _values, size_t _count,
+                                     uint32_t _version) {
+  (void)_version;
+  _archive >> MakeArray(reinterpret_cast<float*>(&_values->cols[0].x),
+                        4 * 4 * 4 * _count);
 }
 
-void Extern<SoaFloat4>::Load(IArchive &_archive, SoaFloat4 *_values,
-        size_t _count, uint32_t _version) {
-    (void) _version;
-    _archive >> MakeArray(reinterpret_cast<float *>(&_values->x), 4 * 4 * _count);
+void Extern<math::SoaTransform>::Save(OArchive& _archive,
+                                      const math::SoaTransform* _values,
+                                      size_t _count) {
+  _archive << MakeArray(reinterpret_cast<const float*>(&_values->translation.x),
+                        10 * 4 * _count);
 }
-
-void Extern<SoaQuaternion>::Save(OArchive &_archive,
-        const SoaQuaternion *_values,
-        size_t _count) {
-    _archive << MakeArray(reinterpret_cast<const float *>(&_values->x),
-            4 * 4 * _count);
+void Extern<math::SoaTransform>::Load(IArchive& _archive,
+                                      math::SoaTransform* _values,
+                                      size_t _count, uint32_t _version) {
+  (void)_version;
+  _archive >> MakeArray(reinterpret_cast<float*>(&_values->translation.x),
+                        10 * 4 * _count);
 }
-
-void Extern<SoaQuaternion>::Load(IArchive &_archive,
-        SoaQuaternion *_values,
-        size_t _count, uint32_t _version) {
-    (void) _version;
-    _archive >> MakeArray(reinterpret_cast<float *>(&_values->x), 4 * 4 * _count);
-}
-
-void Extern<SoaFloat4x4>::Save(OArchive &_archive,
-        const SoaFloat4x4 *_values,
-        size_t _count) {
-    _archive << MakeArray(reinterpret_cast<const float *>(&_values->cols[0].x),
-            4 * 4 * 4 * _count);
-}
-
-void Extern<SoaFloat4x4>::Load(IArchive &_archive,
-        SoaFloat4x4 *_values, size_t _count,
-        uint32_t _version) {
-    (void) _version;
-    _archive >> MakeArray(reinterpret_cast<float *>(&_values->cols[0].x),
-            4 * 4 * 4 * _count);
-}
-
-void Extern<SoaTransform>::Save(OArchive &_archive,
-        const SoaTransform *_values,
-        size_t _count) {
-    _archive << MakeArray(reinterpret_cast<const float *>(&_values->translation.x),
-            10 * 4 * _count);
-}
-
-void Extern<SoaTransform>::Load(IArchive &_archive,
-        SoaTransform *_values,
-        size_t _count, uint32_t _version) {
-    (void) _version;
-    _archive >> MakeArray(reinterpret_cast<float *>(&_values->translation.x),
-            10 * 4 * _count);
-}
+}  // namespace io
+}  // namespace ozz

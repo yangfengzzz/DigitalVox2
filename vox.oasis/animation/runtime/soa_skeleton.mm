@@ -6,7 +6,7 @@
 //
 
 #import "soa_skeleton.h"
-#import "../maths/soa_float.h"
+#import "../maths/csoa_float.h"
 #import "../span.h"
 #import "../memory/allocator.h"
 #import "../io/archive.h"
