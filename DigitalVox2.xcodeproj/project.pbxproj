@@ -64,6 +64,7 @@
 		040C60742748F39B00170B6A /* SkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042F0DC12734DBEF00FF4A26 /* SkeletonView.swift */; };
 		040C60752748F3B400170B6A /* SkinnedMeshRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04832F062701F4B3001AD421 /* SkinnedMeshRenderer.swift */; };
 		040C60762748F3C500170B6A /* Skeleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88C327320E6700B0E398 /* Skeleton.swift */; };
+		040C60822748F4FA00170B6A /* fbx.cc in Sources */ = {isa = PBXBuildFile; fileRef = 040C607B2748F4FA00170B6A /* fbx.cc */; };
 		0413755127412F6200FDEF5C /* Doggy.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 0413755027412F6200FDEF5C /* Doggy.usdz */; };
 		0419B6D626E6E30300005FEA /* instance_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D526E6E30300005FEA /* instance_data.swift */; };
 		0419B6D826E6E5CE00005FEA /* shading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D726E6E5CE00005FEA /* shading.swift */; };
@@ -530,8 +531,6 @@
 		040C5FE02745CF8800170B6A /* mesh_io.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = mesh_io.mm; sourceTree = "<group>"; };
 		040C5FE22745D11200170B6A /* fbx2mesh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fbx2mesh.h; sourceTree = "<group>"; };
 		040C5FE32745D11C00170B6A /* fbx2mesh.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = fbx2mesh.mm; sourceTree = "<group>"; };
-		040C5FE62745D1DC00170B6A /* fbx.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = fbx.mm; sourceTree = "<group>"; };
-		040C5FE72745D1DC00170B6A /* fbx.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = fbx.hpp; sourceTree = "<group>"; };
 		040C5FEC274619F400170B6A /* list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = list.h; sourceTree = "<group>"; };
 		040C5FED274619F400170B6A /* vector_archive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vector_archive.h; sourceTree = "<group>"; };
 		040C5FEE274619F400170B6A /* queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = queue.h; sourceTree = "<group>"; };
@@ -594,6 +593,8 @@
 		040C604C2748987700170B6A /* skeleton_utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = skeleton_utils.h; sourceTree = "<group>"; };
 		040C604D2748987700170B6A /* track_triggering_job.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = track_triggering_job.cc; sourceTree = "<group>"; };
 		040C604E2748987700170B6A /* sampling_job.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sampling_job.h; sourceTree = "<group>"; };
+		040C60792748F4FA00170B6A /* fbx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fbx.h; sourceTree = "<group>"; };
+		040C607B2748F4FA00170B6A /* fbx.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fbx.cc; sourceTree = "<group>"; };
 		0413286A26DF86DC000A4F4E /* BoundingBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingBox.swift; sourceTree = "<group>"; };
 		0413286C26E06648000A4F4E /* BoundingSphere.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingSphere.swift; sourceTree = "<group>"; };
 		0413286E26E06A40000A4F4E /* Plane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plane.swift; sourceTree = "<group>"; };
@@ -1263,14 +1264,14 @@
 		040C5FDC2745CD7700170B6A /* fbx */ = {
 			isa = PBXGroup;
 			children = (
+				040C60792748F4FA00170B6A /* fbx.h */,
+				040C607B2748F4FA00170B6A /* fbx.cc */,
 				040C5FDD2745CDBD00170B6A /* mesh.h */,
 				040C5FDE2745CF6B00170B6A /* mesh_io+Internal.h */,
 				040C5FDF2745CF8000170B6A /* mesh_io.h */,
 				040C5FE02745CF8800170B6A /* mesh_io.mm */,
 				040C5FE22745D11200170B6A /* fbx2mesh.h */,
 				040C5FE32745D11C00170B6A /* fbx2mesh.mm */,
-				040C5FE72745D1DC00170B6A /* fbx.hpp */,
-				040C5FE62745D1DC00170B6A /* fbx.mm */,
 			);
 			path = fbx;
 			sourceTree = "<group>";
@@ -3027,6 +3028,7 @@
 				041BAE9C272A5141006268D5 /* PhysicsMaterial.swift in Sources */,
 				040C600D2747F0A400170B6A /* simd_math.swift in Sources */,
 				041BAE02272A500F006268D5 /* Renderer.swift in Sources */,
+				040C60822748F4FA00170B6A /* fbx.cc in Sources */,
 				041BAEAA272A514D006268D5 /* IStaticCollider.swift in Sources */,
 				0486926B27374DED007B8DFE /* stream.cc in Sources */,
 				041BAE1C272A5046006268D5 /* background-texture.metal in Sources */,
