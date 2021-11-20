@@ -65,6 +65,7 @@
 		040C60752748F3B400170B6A /* SkinnedMeshRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04832F062701F4B3001AD421 /* SkinnedMeshRenderer.swift */; };
 		040C60762748F3C500170B6A /* Skeleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88C327320E6700B0E398 /* Skeleton.swift */; };
 		040C60822748F4FA00170B6A /* fbx.cc in Sources */ = {isa = PBXBuildFile; fileRef = 040C607B2748F4FA00170B6A /* fbx.cc */; };
+		040C60872748F7AB00170B6A /* fbx2mesh.mm in Sources */ = {isa = PBXBuildFile; fileRef = 040C5FE32745D11C00170B6A /* fbx2mesh.mm */; };
 		0413755127412F6200FDEF5C /* Doggy.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 0413755027412F6200FDEF5C /* Doggy.usdz */; };
 		0419B6D626E6E30300005FEA /* instance_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D526E6E30300005FEA /* instance_data.swift */; };
 		0419B6D826E6E5CE00005FEA /* shading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D726E6E5CE00005FEA /* shading.swift */; };
@@ -1264,12 +1265,12 @@
 		040C5FDC2745CD7700170B6A /* fbx */ = {
 			isa = PBXGroup;
 			children = (
-				040C60792748F4FA00170B6A /* fbx.h */,
-				040C607B2748F4FA00170B6A /* fbx.cc */,
 				040C5FDD2745CDBD00170B6A /* mesh.h */,
 				040C5FDE2745CF6B00170B6A /* mesh_io+Internal.h */,
 				040C5FDF2745CF8000170B6A /* mesh_io.h */,
 				040C5FE02745CF8800170B6A /* mesh_io.mm */,
+				040C60792748F4FA00170B6A /* fbx.h */,
+				040C607B2748F4FA00170B6A /* fbx.cc */,
 				040C5FE22745D11200170B6A /* fbx2mesh.h */,
 				040C5FE32745D11C00170B6A /* fbx2mesh.mm */,
 			);
@@ -3017,6 +3018,7 @@
 				041BAE77272A512B006268D5 /* GLTFSceneKit.m in Sources */,
 				041BAE0F272A500F006268D5 /* Script.swift in Sources */,
 				040C601E2747F41F00170B6A /* soa_quaternion.swift in Sources */,
+				040C60872748F7AB00170B6A /* fbx2mesh.mm in Sources */,
 				04AFAC5C273B3FAC003E5928 /* BoxCharacterControllerDesc.swift in Sources */,
 				041BAE32272A50E6006268D5 /* Quaternion.swift in Sources */,
 				04E59C792738BB93000BCA73 /* CPxJoint.mm in Sources */,
