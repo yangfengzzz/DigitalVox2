@@ -40,7 +40,7 @@ ozz::math::Transform GetJointLocalBindPose(const Skeleton& _skeleton,
   assert(_joint >= 0 && _joint < _skeleton.num_joints() &&
          "Joint index out of range.");
 
-  const ozz::math::SoaTransform& soa_transform =
+  const SoaTransform& soa_transform =
       _skeleton.joint_bind_poses()[_joint / 4];
 
   // Transpose SoA data to AoS.

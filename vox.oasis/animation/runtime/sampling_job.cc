@@ -45,11 +45,11 @@ namespace animation {
 namespace internal {
 struct InterpSoaFloat3 {
   math::SimdFloat4 ratio[2];
-  math::SoaFloat3 value[2];
+  SoaFloat3 value[2];
 };
 struct InterpSoaQuaternion {
   math::SimdFloat4 ratio[2];
-  math::SoaQuaternion value[2];
+  SoaQuaternion value[2];
 };
 }  // namespace internal
 
@@ -179,7 +179,7 @@ void UpdateInterpKeyframes(int _num_soa_tracks,
 
 inline void DecompressFloat3(const Float3Key& _k0, const Float3Key& _k1,
                              const Float3Key& _k2, const Float3Key& _k3,
-                             math::SoaFloat3* _soa_float3) {
+                             SoaFloat3* _soa_float3) {
   _soa_float3->x = math::HalfToFloat(math::simd_int4::Load(
       _k0.value[0], _k1.value[0], _k2.value[0], _k3.value[0]));
   _soa_float3->y = math::HalfToFloat(math::simd_int4::Load(
@@ -195,7 +195,7 @@ constexpr int kCpntMapping[4][4] = {
 
 void DecompressQuaternion(const QuaternionKey& _k0, const QuaternionKey& _k1,
                           const QuaternionKey& _k2, const QuaternionKey& _k3,
-                          math::SoaQuaternion* _quaternion) {
+                          SoaQuaternion* _quaternion) {
   // Selects proper mapping for each key.
   const int* m0 = kCpntMapping[_k0.largest];
   const int* m1 = kCpntMapping[_k1.largest];
@@ -266,7 +266,7 @@ void Interpolates(float _anim_ratio, int _num_soa_tracks,
                   const internal::InterpSoaFloat3* _translations,
                   const internal::InterpSoaQuaternion* _rotations,
                   const internal::InterpSoaFloat3* _scales,
-                  math::SoaTransform* _output) {
+                  SoaTransform* _output) {
   const math::SimdFloat4 anim_ratio = math::simd_float4::Load1(_anim_ratio);
   for (int i = 0; i < _num_soa_tracks; ++i) {
     // Prepares interpolation coefficients.
@@ -283,12 +283,12 @@ void Interpolates(float _anim_ratio, int _num_soa_tracks,
     // Processes interpolations.
     // The lerp of the rotation uses the shortest path, because opposed
     // quaternions were negated during animation build stage (AnimationBuilder).
-    _output[i].translation = Lerp(_translations[i].value[0],
+    _output[i].translation = math::Lerp(_translations[i].value[0],
                                   _translations[i].value[1], interp_t_ratio);
-    _output[i].rotation = NLerpEst(_rotations[i].value[0],
+    _output[i].rotation = math::NLerpEst(_rotations[i].value[0],
                                    _rotations[i].value[1], interp_r_ratio);
     _output[i].scale =
-        Lerp(_scales[i].value[0], _scales[i].value[1], interp_s_ratio);
+      math::Lerp(_scales[i].value[0], _scales[i].value[1], interp_s_ratio);
   }
 }
 }  // namespace

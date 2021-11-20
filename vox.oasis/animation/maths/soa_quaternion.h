@@ -29,16 +29,14 @@
 #define OZZ_OZZ_BASE_MATHS_SOA_QUATERNION_H_
 
 #include <cassert>
-
+#include "soa_float_type.h"
 #include "soa_float.h"
 #include "../platform.h"
 
 namespace ozz {
 namespace math {
 
-struct SoaQuaternion {
-  SimdFloat4 x, y, z, w;
-
+namespace soa_quaternion {
   // Loads a quaternion from 4 SimdFloat4 values.
   static OZZ_INLINE SoaQuaternion Load(_SimdFloat4 _x, _SimdFloat4 _y,
                                        _SimdFloat4 _z, const SimdFloat4& _w) {
@@ -149,26 +147,26 @@ OZZ_INLINE SoaQuaternion NLerpEst(const SoaQuaternion& _a,
 }  // namespace ozz
 
 // Returns the addition of _a and _b.
-OZZ_INLINE ozz::math::SoaQuaternion operator+(
-    const ozz::math::SoaQuaternion& _a, const ozz::math::SoaQuaternion& _b) {
-  const ozz::math::SoaQuaternion r = {_a.x + _b.x, _a.y + _b.y, _a.z + _b.z,
+OZZ_INLINE SoaQuaternion operator+(
+    const SoaQuaternion& _a, const SoaQuaternion& _b) {
+  const SoaQuaternion r = {_a.x + _b.x, _a.y + _b.y, _a.z + _b.z,
                                       _a.w + _b.w};
   return r;
 }
 
 // Returns the multiplication of _q and scalar value _f.
-OZZ_INLINE ozz::math::SoaQuaternion operator*(
-    const ozz::math::SoaQuaternion& _q, const ozz::math::SimdFloat4& _f) {
-  const ozz::math::SoaQuaternion r = {_q.x * _f, _q.y * _f, _q.z * _f,
+OZZ_INLINE SoaQuaternion operator*(
+    const SoaQuaternion& _q, const ozz::math::SimdFloat4& _f) {
+  const SoaQuaternion r = {_q.x * _f, _q.y * _f, _q.z * _f,
                                       _q.w * _f};
   return r;
 }
 
 // Returns the multiplication of _a and _b. If both _a and _b are normalized,
 // then the result is normalized.
-OZZ_INLINE ozz::math::SoaQuaternion operator*(
-    const ozz::math::SoaQuaternion& _a, const ozz::math::SoaQuaternion& _b) {
-  const ozz::math::SoaQuaternion r = {
+OZZ_INLINE SoaQuaternion operator*(
+    const SoaQuaternion& _a, const SoaQuaternion& _b) {
+  const SoaQuaternion r = {
       _a.w * _b.x + _a.x * _b.w + _a.y * _b.z - _a.z * _b.y,
       _a.w * _b.y + _a.y * _b.w + _a.z * _b.x - _a.x * _b.z,
       _a.w * _b.z + _a.z * _b.w + _a.x * _b.y - _a.y * _b.x,
@@ -178,8 +176,8 @@ OZZ_INLINE ozz::math::SoaQuaternion operator*(
 
 // Returns true if each element of _a is equal to each element of _b.
 // Uses a bitwise comparison of _a and _b, no tolerance is applied.
-OZZ_INLINE ozz::math::SimdInt4 operator==(const ozz::math::SoaQuaternion& _a,
-                                          const ozz::math::SoaQuaternion& _b) {
+OZZ_INLINE ozz::math::SimdInt4 operator==(const SoaQuaternion& _a,
+                                          const SoaQuaternion& _b) {
   const ozz::math::SimdInt4 x = ozz::math::CmpEq(_a.x, _b.x);
   const ozz::math::SimdInt4 y = ozz::math::CmpEq(_a.y, _b.y);
   const ozz::math::SimdInt4 z = ozz::math::CmpEq(_a.z, _b.z);

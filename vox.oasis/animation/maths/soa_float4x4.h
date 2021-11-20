@@ -29,7 +29,7 @@
 #define OZZ_OZZ_BASE_MATHS_SOA_FLOAT4X4_H_
 
 #include <cassert>
-
+#include "soa_float_type.h"
 #include "soa_float.h"
 #include "soa_quaternion.h"
 #include "../platform.h"
@@ -43,10 +43,7 @@ namespace math {
 // | m.cols[0].y m.cols[1].y m.cols[2].y m.cols[3].y | * {v.y}
 // | m.cols[0].z m.cols[1].y m.cols[2].y m.cols[3].y |   {v.z}
 // [ m.cols[0].w m.cols[1].w m.cols[2].w m.cols[3].w ]   {v.1}
-struct SoaFloat4x4 {
-  // Soa matrix columns.
-  SoaFloat4 cols[4];
-
+namespace soa_float4x4 {
   // Returns the identity matrix.
   static OZZ_INLINE SoaFloat4x4 identity() {
     const SimdFloat4 zero = simd_float4::zero();
@@ -222,9 +219,9 @@ OZZ_INLINE SoaFloat4x4 Scale(const SoaFloat4x4& _m, const SoaFloat4& _v) {
 }  // namespace ozz
 
 // Computes the multiplication of matrix Float4x4 and vector  _v.
-OZZ_INLINE ozz::math::SoaFloat4 operator*(const ozz::math::SoaFloat4x4& _m,
-                                          const ozz::math::SoaFloat4& _v) {
-  const ozz::math::SoaFloat4 ret = {
+OZZ_INLINE SoaFloat4 operator*(const SoaFloat4x4& _m,
+                                          const SoaFloat4& _v) {
+  const SoaFloat4 ret = {
       _m.cols[0].x * _v.x + _m.cols[1].x * _v.y + _m.cols[2].x * _v.z +
           _m.cols[3].x * _v.w,
       _m.cols[0].y * _v.x + _m.cols[1].y * _v.y + _m.cols[2].y * _v.z +
@@ -237,17 +234,17 @@ OZZ_INLINE ozz::math::SoaFloat4 operator*(const ozz::math::SoaFloat4x4& _m,
 }
 
 // Computes the multiplication of two matrices _a and _b.
-OZZ_INLINE ozz::math::SoaFloat4x4 operator*(const ozz::math::SoaFloat4x4& _a,
-                                            const ozz::math::SoaFloat4x4& _b) {
-  const ozz::math::SoaFloat4x4 ret = {
+OZZ_INLINE SoaFloat4x4 operator*(const SoaFloat4x4& _a,
+                                            const SoaFloat4x4& _b) {
+  const SoaFloat4x4 ret = {
       {_a * _b.cols[0], _a * _b.cols[1], _a * _b.cols[2], _a * _b.cols[3]}};
   return ret;
 }
 
 // Computes the per element addition of two matrices _a and _b.
-OZZ_INLINE ozz::math::SoaFloat4x4 operator+(const ozz::math::SoaFloat4x4& _a,
-                                            const ozz::math::SoaFloat4x4& _b) {
-  const ozz::math::SoaFloat4x4 ret = {
+OZZ_INLINE SoaFloat4x4 operator+(const SoaFloat4x4& _a,
+                                            const SoaFloat4x4& _b) {
+  const SoaFloat4x4 ret = {
       {{_a.cols[0].x + _b.cols[0].x, _a.cols[0].y + _b.cols[0].y,
         _a.cols[0].z + _b.cols[0].z, _a.cols[0].w + _b.cols[0].w},
        {_a.cols[1].x + _b.cols[1].x, _a.cols[1].y + _b.cols[1].y,
@@ -260,9 +257,9 @@ OZZ_INLINE ozz::math::SoaFloat4x4 operator+(const ozz::math::SoaFloat4x4& _a,
 }
 
 // Computes the per element subtraction of two matrices _a and _b.
-OZZ_INLINE ozz::math::SoaFloat4x4 operator-(const ozz::math::SoaFloat4x4& _a,
-                                            const ozz::math::SoaFloat4x4& _b) {
-  const ozz::math::SoaFloat4x4 ret = {
+OZZ_INLINE SoaFloat4x4 operator-(const SoaFloat4x4& _a,
+                                            const SoaFloat4x4& _b) {
+  const SoaFloat4x4 ret = {
       {{_a.cols[0].x - _b.cols[0].x, _a.cols[0].y - _b.cols[0].y,
         _a.cols[0].z - _b.cols[0].z, _a.cols[0].w - _b.cols[0].w},
        {_a.cols[1].x - _b.cols[1].x, _a.cols[1].y - _b.cols[1].y,

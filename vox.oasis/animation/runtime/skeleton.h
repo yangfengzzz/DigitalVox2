@@ -32,14 +32,13 @@
 #include "../platform.h"
 #include "../span.h"
 
+struct SoaTransform;
 namespace ozz {
 namespace io {
 class IArchive;
 class OArchive;
 }  // namespace io
-namespace math {
-struct SoaTransform;
-}
+
 namespace animation {
 
 // Forward declaration of SkeletonBuilder, used to instantiate a skeleton.
@@ -92,7 +91,7 @@ class Skeleton {
   int num_soa_joints() const { return (num_joints() + 3) / 4; }
 
   // Returns joint's bind poses. Bind poses are stored in soa format.
-  span<const math::SoaTransform> joint_bind_poses() const {
+  span<const SoaTransform> joint_bind_poses() const {
     return joint_bind_poses_;
   }
 
@@ -126,7 +125,7 @@ class Skeleton {
   // size is equal to the number of joints of the skeleton.
 
   // Bind pose of every joint in local space.
-  span<math::SoaTransform> joint_bind_poses_;
+  span<SoaTransform> joint_bind_poses_;
 
   // Array of joint parent indexes.
   span<int16_t> joint_parents_;

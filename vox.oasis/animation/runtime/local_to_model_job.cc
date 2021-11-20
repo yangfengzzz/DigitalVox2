@@ -89,8 +89,8 @@ bool LocalToModelJob::Run() const {
            process = i < end && (!from_excluded || parents[i] >= from);
        process;) {
     // Builds soa matrices from soa transforms.
-    const math::SoaTransform& transform = input[i / 4];
-    const math::SoaFloat4x4 local_soa_matrices = math::SoaFloat4x4::FromAffine(
+    const SoaTransform& transform = input[i / 4];
+    const SoaFloat4x4 local_soa_matrices = math::soa_float4x4::FromAffine(
         transform.translation, transform.rotation, transform.scale);
 
     // Converts to aos matrices.

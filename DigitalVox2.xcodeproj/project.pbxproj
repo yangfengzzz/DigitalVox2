@@ -36,10 +36,11 @@
 		040C60552748987700170B6A /* skeleton.cc in Sources */ = {isa = PBXBuildFile; fileRef = 040C60432748987700170B6A /* skeleton.cc */; };
 		040C60562748987700170B6A /* animation.cc in Sources */ = {isa = PBXBuildFile; fileRef = 040C60462748987700170B6A /* animation.cc */; };
 		040C60572748987700170B6A /* blending_job.cc in Sources */ = {isa = PBXBuildFile; fileRef = 040C60472748987700170B6A /* blending_job.cc */; };
-		040C60582748987700170B6A /* sampling_job.cc in Sources */ = {isa = PBXBuildFile; fileRef = 040C60482748987700170B6A /* sampling_job.cc */; };
 		040C60592748987700170B6A /* local_to_model_job.cc in Sources */ = {isa = PBXBuildFile; fileRef = 040C60492748987700170B6A /* local_to_model_job.cc */; };
 		040C605A2748987700170B6A /* track_triggering_job.cc in Sources */ = {isa = PBXBuildFile; fileRef = 040C604D2748987700170B6A /* track_triggering_job.cc */; };
 		040C605B27489C8900170B6A /* math_archive.cc in Sources */ = {isa = PBXBuildFile; fileRef = 040C5FFE274690D600170B6A /* math_archive.cc */; };
+		040C605D2748A44D00170B6A /* sampling_job.cc in Sources */ = {isa = PBXBuildFile; fileRef = 040C60482748987700170B6A /* sampling_job.cc */; };
+		040C605E2748A6FB00170B6A /* soa_skeleton.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0486927D27375531007B8DFE /* soa_skeleton.mm */; };
 		0413755127412F6200FDEF5C /* Doggy.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 0413755027412F6200FDEF5C /* Doggy.usdz */; };
 		0419B6D626E6E30300005FEA /* instance_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D526E6E30300005FEA /* instance_data.swift */; };
 		0419B6D826E6E5CE00005FEA /* shading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D726E6E5CE00005FEA /* shading.swift */; };
@@ -1077,7 +1078,7 @@
 		04CB88DE27326C9900B0E398 /* csimd_math.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = csimd_math.mm; sourceTree = "<group>"; };
 		04CB88DF27326C9900B0E398 /* csimd_math.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = csimd_math.h; sourceTree = "<group>"; };
 		04CB88E027326C9900B0E398 /* vec_transform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = vec_transform.swift; sourceTree = "<group>"; };
-		04CB88EF27328C3F00B0E398 /* csoa_float.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = csoa_float.h; sourceTree = "<group>"; };
+		04CB88EF27328C3F00B0E398 /* soa_float_type.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = soa_float_type.h; sourceTree = "<group>"; };
 		04CB88FE2732B56300B0E398 /* raw_skeleton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = raw_skeleton.swift; sourceTree = "<group>"; };
 		04CB89002732B59C00B0E398 /* soa_skeleton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = soa_skeleton.swift; sourceTree = "<group>"; };
 		04CB89022732BFBF00B0E398 /* skeleton_builder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = skeleton_builder.swift; sourceTree = "<group>"; };
@@ -2257,8 +2258,8 @@
 				04CB88D527326C9900B0E398 /* simd_quaternion.swift */,
 				0486927227374EC3007B8DFE /* soa_math_archive.h */,
 				0486927127374EC3007B8DFE /* soa_math_archive.cc */,
+				04CB88EF27328C3F00B0E398 /* soa_float_type.h */,
 				040C602A2747F61800170B6A /* soa_float.h */,
-				04CB88EF27328C3F00B0E398 /* csoa_float.h */,
 				04CB88D927326C9900B0E398 /* soa_float.swift */,
 				040C60192747F3C400170B6A /* soa_quaternion.h */,
 				04CB88DC27326C9900B0E398 /* soa_quaternion.swift */,
@@ -2878,6 +2879,7 @@
 				041BAE7B272A512B006268D5 /* Sky.swift in Sources */,
 				041BAE5C272A510C006268D5 /* RenderState.swift in Sources */,
 				041BAE6E272A5111006268D5 /* AmbientLight.swift in Sources */,
+				040C605D2748A44D00170B6A /* sampling_job.cc in Sources */,
 				041BAEE3272A9C6D006268D5 /* PhysXBoxColliderShape.swift in Sources */,
 				041BAE6F272A5117006268D5 /* ShadowMapMaterial.swift in Sources */,
 				041BAE35272A50E6006268D5 /* Color.swift in Sources */,
@@ -2911,7 +2913,6 @@
 				041BAE6C272A5111006268D5 /* Light.swift in Sources */,
 				040C604F2748987700170B6A /* track_sampling_job.cc in Sources */,
 				04AFAC4B273AAEC3003E5928 /* PhysXCapsuleCharacterController.swift in Sources */,
-				040C60582748987700170B6A /* sampling_job.cc in Sources */,
 				041BAEEE272B6F5B006268D5 /* CPxCapsuleGeometry.mm in Sources */,
 				04AFAC2F273A7BF4003E5928 /* ICharacterControllerManager.swift in Sources */,
 				046FB25C273A1CDB004D4042 /* ITranslationalJoint.swift in Sources */,
@@ -3020,6 +3021,7 @@
 				041BAE81272A513B006268D5 /* Spherical.swift in Sources */,
 				041BAEE8272A9F81006268D5 /* CPxShape.mm in Sources */,
 				040C600C2747EE6E00170B6A /* csimd_math.mm in Sources */,
+				040C605E2748A6FB00170B6A /* soa_skeleton.mm in Sources */,
 				041BAEBE272A5166006268D5 /* LiteCollider.swift in Sources */,
 				040C60552748987700170B6A /* skeleton.cc in Sources */,
 				041BAE67272A5111006268D5 /* DirectLight.swift in Sources */,

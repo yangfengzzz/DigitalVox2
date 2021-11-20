@@ -31,13 +31,9 @@
 #include "../platform.h"
 #include "../span.h"
 
-namespace ozz {
-
-// Forward declaration of math structures.
-namespace math {
 struct SoaTransform;
-}
 
+namespace ozz {
 namespace animation {
 
 // Forward declares the animation type to sample.
@@ -89,7 +85,7 @@ struct SamplingJob {
   // then remaining SoaTransform are left unchanged.
   // If there are more joints in the animation, then the last joints are not
   // sampled.
-  span<ozz::math::SoaTransform> output;
+  span<SoaTransform> output;
 };
 
 namespace internal {

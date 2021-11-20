@@ -32,12 +32,9 @@
 #include "../span.h"
 #include <simd/simd.h>
 
-namespace ozz {
-
-// Forward declaration math structures.
-namespace math {
 struct SoaTransform;
-}
+
+namespace ozz {
 
 namespace animation {
 
@@ -106,7 +103,7 @@ struct LocalToModelJob {
   bool from_excluded;
 
   // The input range that store local transforms.
-  span<const ozz::math::SoaTransform> input;
+  span<const SoaTransform> input;
 
   // Job output.
 

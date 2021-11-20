@@ -32,14 +32,13 @@
 
 #include "math_constant.h"
 #include "simd_math.h"
+#include "soa_float_type.h"
 #include "../platform.h"
 
 namespace ozz {
 namespace math {
 
-struct SoaFloat2 {
-  SimdFloat4 x, y;
-
+namespace soa_float2 {
   static OZZ_INLINE SoaFloat2 Load(_SimdFloat4 _x, _SimdFloat4 _y) {
     const SoaFloat2 r = {_x, _y};
     return r;
@@ -66,9 +65,7 @@ struct SoaFloat2 {
   }
 };
 
-struct SoaFloat3 {
-  SimdFloat4 x, y, z;
-
+namespace soa_float3 {
   static OZZ_INLINE SoaFloat3 Load(_SimdFloat4 _x, _SimdFloat4 _y,
                                    _SimdFloat4 _z) {
     const SoaFloat3 r = {_x, _y, _z};
@@ -111,9 +108,7 @@ struct SoaFloat3 {
   }
 };
 
-struct SoaFloat4 {
-  SimdFloat4 x, y, z, w;
-
+namespace soa_float4 {
   static OZZ_INLINE SoaFloat4 Load(_SimdFloat4 _x, _SimdFloat4 _y,
                                    _SimdFloat4 _z, const SimdFloat4& _w) {
     const SoaFloat4 r = {_x, _y, _z, _w};
@@ -171,112 +166,112 @@ struct SoaFloat4 {
 }  // namespace ozz
 
 // Returns per element addition of _a and _b using operator +.
-OZZ_INLINE ozz::math::SoaFloat4 operator+(const ozz::math::SoaFloat4& _a,
-                                          const ozz::math::SoaFloat4& _b) {
-  const ozz::math::SoaFloat4 r = {_a.x + _b.x, _a.y + _b.y, _a.z + _b.z,
+OZZ_INLINE SoaFloat4 operator+(const SoaFloat4& _a,
+                                          const SoaFloat4& _b) {
+  const SoaFloat4 r = {_a.x + _b.x, _a.y + _b.y, _a.z + _b.z,
                                   _a.w + _b.w};
   return r;
 }
-OZZ_INLINE ozz::math::SoaFloat3 operator+(const ozz::math::SoaFloat3& _a,
-                                          const ozz::math::SoaFloat3& _b) {
-  const ozz::math::SoaFloat3 r = {_a.x + _b.x, _a.y + _b.y, _a.z + _b.z};
+OZZ_INLINE SoaFloat3 operator+(const SoaFloat3& _a,
+                                          const SoaFloat3& _b) {
+  const SoaFloat3 r = {_a.x + _b.x, _a.y + _b.y, _a.z + _b.z};
   return r;
 }
-OZZ_INLINE ozz::math::SoaFloat2 operator+(const ozz::math::SoaFloat2& _a,
-                                          const ozz::math::SoaFloat2& _b) {
-  const ozz::math::SoaFloat2 r = {_a.x + _b.x, _a.y + _b.y};
+OZZ_INLINE SoaFloat2 operator+(const SoaFloat2& _a,
+                                          const SoaFloat2& _b) {
+  const SoaFloat2 r = {_a.x + _b.x, _a.y + _b.y};
   return r;
 }
 
 // Returns per element subtraction of _a and _b using operator -.
-OZZ_INLINE ozz::math::SoaFloat4 operator-(const ozz::math::SoaFloat4& _a,
-                                          const ozz::math::SoaFloat4& _b) {
-  const ozz::math::SoaFloat4 r = {_a.x - _b.x, _a.y - _b.y, _a.z - _b.z,
+OZZ_INLINE SoaFloat4 operator-(const SoaFloat4& _a,
+                                          const SoaFloat4& _b) {
+  const SoaFloat4 r = {_a.x - _b.x, _a.y - _b.y, _a.z - _b.z,
                                   _a.w - _b.w};
   return r;
 }
-OZZ_INLINE ozz::math::SoaFloat3 operator-(const ozz::math::SoaFloat3& _a,
-                                          const ozz::math::SoaFloat3& _b) {
-  const ozz::math::SoaFloat3 r = {_a.x - _b.x, _a.y - _b.y, _a.z - _b.z};
+OZZ_INLINE SoaFloat3 operator-(const SoaFloat3& _a,
+                                          const SoaFloat3& _b) {
+  const SoaFloat3 r = {_a.x - _b.x, _a.y - _b.y, _a.z - _b.z};
   return r;
 }
-OZZ_INLINE ozz::math::SoaFloat2 operator-(const ozz::math::SoaFloat2& _a,
-                                          const ozz::math::SoaFloat2& _b) {
-  const ozz::math::SoaFloat2 r = {_a.x - _b.x, _a.y - _b.y};
+OZZ_INLINE SoaFloat2 operator-(const SoaFloat2& _a,
+                                          const SoaFloat2& _b) {
+  const SoaFloat2 r = {_a.x - _b.x, _a.y - _b.y};
   return r;
 }
 
 // Returns per element negative value of _v.
-OZZ_INLINE ozz::math::SoaFloat4 operator-(const ozz::math::SoaFloat4& _v) {
-  const ozz::math::SoaFloat4 r = {-_v.x, -_v.y, -_v.z, -_v.w};
+OZZ_INLINE SoaFloat4 operator-(const SoaFloat4& _v) {
+  const SoaFloat4 r = {-_v.x, -_v.y, -_v.z, -_v.w};
   return r;
 }
-OZZ_INLINE ozz::math::SoaFloat3 operator-(const ozz::math::SoaFloat3& _v) {
-  const ozz::math::SoaFloat3 r = {-_v.x, -_v.y, -_v.z};
+OZZ_INLINE SoaFloat3 operator-(const SoaFloat3& _v) {
+  const SoaFloat3 r = {-_v.x, -_v.y, -_v.z};
   return r;
 }
-OZZ_INLINE ozz::math::SoaFloat2 operator-(const ozz::math::SoaFloat2& _v) {
-  const ozz::math::SoaFloat2 r = {-_v.x, -_v.y};
+OZZ_INLINE SoaFloat2 operator-(const SoaFloat2& _v) {
+  const SoaFloat2 r = {-_v.x, -_v.y};
   return r;
 }
 
 // Returns per element multiplication of _a and _b using operator *.
-OZZ_INLINE ozz::math::SoaFloat4 operator*(const ozz::math::SoaFloat4& _a,
-                                          const ozz::math::SoaFloat4& _b) {
-  const ozz::math::SoaFloat4 r = {_a.x * _b.x, _a.y * _b.y, _a.z * _b.z,
+OZZ_INLINE SoaFloat4 operator*(const SoaFloat4& _a,
+                                          const SoaFloat4& _b) {
+  const SoaFloat4 r = {_a.x * _b.x, _a.y * _b.y, _a.z * _b.z,
                                   _a.w * _b.w};
   return r;
 }
-OZZ_INLINE ozz::math::SoaFloat3 operator*(const ozz::math::SoaFloat3& _a,
-                                          const ozz::math::SoaFloat3& _b) {
-  const ozz::math::SoaFloat3 r = {_a.x * _b.x, _a.y * _b.y, _a.z * _b.z};
+OZZ_INLINE SoaFloat3 operator*(const SoaFloat3& _a,
+                                          const SoaFloat3& _b) {
+  const SoaFloat3 r = {_a.x * _b.x, _a.y * _b.y, _a.z * _b.z};
   return r;
 }
-OZZ_INLINE ozz::math::SoaFloat2 operator*(const ozz::math::SoaFloat2& _a,
-                                          const ozz::math::SoaFloat2& _b) {
-  const ozz::math::SoaFloat2 r = {_a.x * _b.x, _a.y * _b.y};
+OZZ_INLINE SoaFloat2 operator*(const SoaFloat2& _a,
+                                          const SoaFloat2& _b) {
+  const SoaFloat2 r = {_a.x * _b.x, _a.y * _b.y};
   return r;
 }
 
 // Returns per element multiplication of _a and scalar value _f using
 // operator *.
-OZZ_INLINE ozz::math::SoaFloat4 operator*(const ozz::math::SoaFloat4& _a,
+OZZ_INLINE SoaFloat4 operator*(const SoaFloat4& _a,
                                           ozz::math::_SimdFloat4 _f) {
-  const ozz::math::SoaFloat4 r = {_a.x * _f, _a.y * _f, _a.z * _f, _a.w * _f};
+  const SoaFloat4 r = {_a.x * _f, _a.y * _f, _a.z * _f, _a.w * _f};
   return r;
 }
-OZZ_INLINE ozz::math::SoaFloat3 operator*(const ozz::math::SoaFloat3& _a,
+OZZ_INLINE SoaFloat3 operator*(const SoaFloat3& _a,
                                           ozz::math::_SimdFloat4 _f) {
-  const ozz::math::SoaFloat3 r = {_a.x * _f, _a.y * _f, _a.z * _f};
+  const SoaFloat3 r = {_a.x * _f, _a.y * _f, _a.z * _f};
   return r;
 }
-OZZ_INLINE ozz::math::SoaFloat2 operator*(const ozz::math::SoaFloat2& _a,
+OZZ_INLINE SoaFloat2 operator*(const SoaFloat2& _a,
                                           ozz::math::_SimdFloat4 _f) {
-  const ozz::math::SoaFloat2 r = {_a.x * _f, _a.y * _f};
+  const SoaFloat2 r = {_a.x * _f, _a.y * _f};
   return r;
 }
 
 // Multiplies _a and _b, then adds _addend.
 // v = (_a * _b) + _addend
-OZZ_INLINE ozz::math::SoaFloat2 MAdd(const ozz::math::SoaFloat2& _a,
-                                     const ozz::math::SoaFloat2& _b,
-                                     const ozz::math::SoaFloat2& _addend) {
-  const ozz::math::SoaFloat2 r = {ozz::math::MAdd(_a.x, _b.x, _addend.x),
+OZZ_INLINE SoaFloat2 MAdd(const SoaFloat2& _a,
+                                     const SoaFloat2& _b,
+                                     const SoaFloat2& _addend) {
+  const SoaFloat2 r = {ozz::math::MAdd(_a.x, _b.x, _addend.x),
                                   ozz::math::MAdd(_a.y, _b.y, _addend.y)};
   return r;
 }
-OZZ_INLINE ozz::math::SoaFloat3 MAdd(const ozz::math::SoaFloat3& _a,
-                                     const ozz::math::SoaFloat3& _b,
-                                     const ozz::math::SoaFloat3& _addend) {
-  const ozz::math::SoaFloat3 r = {ozz::math::MAdd(_a.x, _b.x, _addend.x),
+OZZ_INLINE SoaFloat3 MAdd(const SoaFloat3& _a,
+                                     const SoaFloat3& _b,
+                                     const SoaFloat3& _addend) {
+  const SoaFloat3 r = {ozz::math::MAdd(_a.x, _b.x, _addend.x),
                                   ozz::math::MAdd(_a.y, _b.y, _addend.y),
                                   ozz::math::MAdd(_a.z, _b.z, _addend.z)};
   return r;
 }
-OZZ_INLINE ozz::math::SoaFloat4 MAdd(const ozz::math::SoaFloat4& _a,
-                                     const ozz::math::SoaFloat4& _b,
-                                     const ozz::math::SoaFloat4& _addend) {
-  const ozz::math::SoaFloat4 r = {ozz::math::MAdd(_a.x, _b.x, _addend.x),
+OZZ_INLINE SoaFloat4 MAdd(const SoaFloat4& _a,
+                                     const SoaFloat4& _b,
+                                     const SoaFloat4& _addend) {
+  const SoaFloat4 r = {ozz::math::MAdd(_a.x, _b.x, _addend.x),
                                   ozz::math::MAdd(_a.y, _b.y, _addend.y),
                                   ozz::math::MAdd(_a.z, _b.z, _addend.z),
                                   ozz::math::MAdd(_a.w, _b.w, _addend.w)};
@@ -284,127 +279,127 @@ OZZ_INLINE ozz::math::SoaFloat4 MAdd(const ozz::math::SoaFloat4& _a,
 }
 
 // Returns per element division of _a and _b using operator /.
-OZZ_INLINE ozz::math::SoaFloat4 operator/(const ozz::math::SoaFloat4& _a,
-                                          const ozz::math::SoaFloat4& _b) {
-  const ozz::math::SoaFloat4 r = {_a.x / _b.x, _a.y / _b.y, _a.z / _b.z,
+OZZ_INLINE SoaFloat4 operator/(const SoaFloat4& _a,
+                                          const SoaFloat4& _b) {
+  const SoaFloat4 r = {_a.x / _b.x, _a.y / _b.y, _a.z / _b.z,
                                   _a.w / _b.w};
   return r;
 }
-OZZ_INLINE ozz::math::SoaFloat3 operator/(const ozz::math::SoaFloat3& _a,
-                                          const ozz::math::SoaFloat3& _b) {
-  const ozz::math::SoaFloat3 r = {_a.x / _b.x, _a.y / _b.y, _a.z / _b.z};
+OZZ_INLINE SoaFloat3 operator/(const SoaFloat3& _a,
+                                          const SoaFloat3& _b) {
+  const SoaFloat3 r = {_a.x / _b.x, _a.y / _b.y, _a.z / _b.z};
   return r;
 }
-OZZ_INLINE ozz::math::SoaFloat2 operator/(const ozz::math::SoaFloat2& _a,
-                                          const ozz::math::SoaFloat2& _b) {
-  const ozz::math::SoaFloat2 r = {_a.x / _b.x, _a.y / _b.y};
+OZZ_INLINE SoaFloat2 operator/(const SoaFloat2& _a,
+                                          const SoaFloat2& _b) {
+  const SoaFloat2 r = {_a.x / _b.x, _a.y / _b.y};
   return r;
 }
 
 // Returns per element division of _a and scalar value _f using operator/.
-OZZ_INLINE ozz::math::SoaFloat4 operator/(const ozz::math::SoaFloat4& _a,
+OZZ_INLINE SoaFloat4 operator/(const SoaFloat4& _a,
                                           ozz::math::_SimdFloat4 _f) {
-  const ozz::math::SoaFloat4 r = {_a.x / _f, _a.y / _f, _a.z / _f, _a.w / _f};
+  const SoaFloat4 r = {_a.x / _f, _a.y / _f, _a.z / _f, _a.w / _f};
   return r;
 }
-OZZ_INLINE ozz::math::SoaFloat3 operator/(const ozz::math::SoaFloat3& _a,
+OZZ_INLINE SoaFloat3 operator/(const SoaFloat3& _a,
                                           ozz::math::_SimdFloat4 _f) {
-  const ozz::math::SoaFloat3 r = {_a.x / _f, _a.y / _f, _a.z / _f};
+  const SoaFloat3 r = {_a.x / _f, _a.y / _f, _a.z / _f};
   return r;
 }
-OZZ_INLINE ozz::math::SoaFloat2 operator/(const ozz::math::SoaFloat2& _a,
+OZZ_INLINE SoaFloat2 operator/(const SoaFloat2& _a,
                                           ozz::math::_SimdFloat4 _f) {
-  const ozz::math::SoaFloat2 r = {_a.x / _f, _a.y / _f};
+  const SoaFloat2 r = {_a.x / _f, _a.y / _f};
   return r;
 }
 
 // Returns true if each element of a is less than each element of _b.
-OZZ_INLINE ozz::math::SimdInt4 operator<(const ozz::math::SoaFloat4& _a,
-                                         const ozz::math::SoaFloat4& _b) {
+OZZ_INLINE ozz::math::SimdInt4 operator<(const SoaFloat4& _a,
+                                         const SoaFloat4& _b) {
   const ozz::math::SimdInt4 x = ozz::math::CmpLt(_a.x, _b.x);
   const ozz::math::SimdInt4 y = ozz::math::CmpLt(_a.y, _b.y);
   const ozz::math::SimdInt4 z = ozz::math::CmpLt(_a.z, _b.z);
   const ozz::math::SimdInt4 w = ozz::math::CmpLt(_a.w, _b.w);
   return ozz::math::And(ozz::math::And(ozz::math::And(x, y), z), w);
 }
-OZZ_INLINE ozz::math::SimdInt4 operator<(const ozz::math::SoaFloat3& _a,
-                                         const ozz::math::SoaFloat3& _b) {
+OZZ_INLINE ozz::math::SimdInt4 operator<(const SoaFloat3& _a,
+                                         const SoaFloat3& _b) {
   const ozz::math::SimdInt4 x = ozz::math::CmpLt(_a.x, _b.x);
   const ozz::math::SimdInt4 y = ozz::math::CmpLt(_a.y, _b.y);
   const ozz::math::SimdInt4 z = ozz::math::CmpLt(_a.z, _b.z);
   return ozz::math::And(ozz::math::And(x, y), z);
 }
-OZZ_INLINE ozz::math::SimdInt4 operator<(const ozz::math::SoaFloat2& _a,
-                                         const ozz::math::SoaFloat2& _b) {
+OZZ_INLINE ozz::math::SimdInt4 operator<(const SoaFloat2& _a,
+                                         const SoaFloat2& _b) {
   const ozz::math::SimdInt4 x = ozz::math::CmpLt(_a.x, _b.x);
   const ozz::math::SimdInt4 y = ozz::math::CmpLt(_a.y, _b.y);
   return ozz::math::And(x, y);
 }
 
 // Returns true if each element of a is less or equal to each element of _b.
-OZZ_INLINE ozz::math::SimdInt4 operator<=(const ozz::math::SoaFloat4& _a,
-                                          const ozz::math::SoaFloat4& _b) {
+OZZ_INLINE ozz::math::SimdInt4 operator<=(const SoaFloat4& _a,
+                                          const SoaFloat4& _b) {
   const ozz::math::SimdInt4 x = ozz::math::CmpLe(_a.x, _b.x);
   const ozz::math::SimdInt4 y = ozz::math::CmpLe(_a.y, _b.y);
   const ozz::math::SimdInt4 z = ozz::math::CmpLe(_a.z, _b.z);
   const ozz::math::SimdInt4 w = ozz::math::CmpLe(_a.w, _b.w);
   return ozz::math::And(ozz::math::And(ozz::math::And(x, y), z), w);
 }
-OZZ_INLINE ozz::math::SimdInt4 operator<=(const ozz::math::SoaFloat3& _a,
-                                          const ozz::math::SoaFloat3& _b) {
+OZZ_INLINE ozz::math::SimdInt4 operator<=(const SoaFloat3& _a,
+                                          const SoaFloat3& _b) {
   const ozz::math::SimdInt4 x = ozz::math::CmpLe(_a.x, _b.x);
   const ozz::math::SimdInt4 y = ozz::math::CmpLe(_a.y, _b.y);
   const ozz::math::SimdInt4 z = ozz::math::CmpLe(_a.z, _b.z);
   return ozz::math::And(ozz::math::And(x, y), z);
 }
-OZZ_INLINE ozz::math::SimdInt4 operator<=(const ozz::math::SoaFloat2& _a,
-                                          const ozz::math::SoaFloat2& _b) {
+OZZ_INLINE ozz::math::SimdInt4 operator<=(const SoaFloat2& _a,
+                                          const SoaFloat2& _b) {
   const ozz::math::SimdInt4 x = ozz::math::CmpLe(_a.x, _b.x);
   const ozz::math::SimdInt4 y = ozz::math::CmpLe(_a.y, _b.y);
   return ozz::math::And(x, y);
 }
 
 // Returns true if each element of a is greater than each element of _b.
-OZZ_INLINE ozz::math::SimdInt4 operator>(const ozz::math::SoaFloat4& _a,
-                                         const ozz::math::SoaFloat4& _b) {
+OZZ_INLINE ozz::math::SimdInt4 operator>(const SoaFloat4& _a,
+                                         const SoaFloat4& _b) {
   const ozz::math::SimdInt4 x = ozz::math::CmpGt(_a.x, _b.x);
   const ozz::math::SimdInt4 y = ozz::math::CmpGt(_a.y, _b.y);
   const ozz::math::SimdInt4 z = ozz::math::CmpGt(_a.z, _b.z);
   const ozz::math::SimdInt4 w = ozz::math::CmpGt(_a.w, _b.w);
   return ozz::math::And(ozz::math::And(ozz::math::And(x, y), z), w);
 }
-OZZ_INLINE ozz::math::SimdInt4 operator>(const ozz::math::SoaFloat3& _a,
-                                         const ozz::math::SoaFloat3& _b) {
+OZZ_INLINE ozz::math::SimdInt4 operator>(const SoaFloat3& _a,
+                                         const SoaFloat3& _b) {
   const ozz::math::SimdInt4 x = ozz::math::CmpGt(_a.x, _b.x);
   const ozz::math::SimdInt4 y = ozz::math::CmpGt(_a.y, _b.y);
   const ozz::math::SimdInt4 z = ozz::math::CmpGt(_a.z, _b.z);
   return ozz::math::And(ozz::math::And(x, y), z);
 }
-OZZ_INLINE ozz::math::SimdInt4 operator>(const ozz::math::SoaFloat2& _a,
-                                         const ozz::math::SoaFloat2& _b) {
+OZZ_INLINE ozz::math::SimdInt4 operator>(const SoaFloat2& _a,
+                                         const SoaFloat2& _b) {
   const ozz::math::SimdInt4 x = ozz::math::CmpGt(_a.x, _b.x);
   const ozz::math::SimdInt4 y = ozz::math::CmpGt(_a.y, _b.y);
   return ozz::math::And(x, y);
 }
 
 // Returns true if each element of a is greater or equal to each element of _b.
-OZZ_INLINE ozz::math::SimdInt4 operator>=(const ozz::math::SoaFloat4& _a,
-                                          const ozz::math::SoaFloat4& _b) {
+OZZ_INLINE ozz::math::SimdInt4 operator>=(const SoaFloat4& _a,
+                                          const SoaFloat4& _b) {
   const ozz::math::SimdInt4 x = ozz::math::CmpGe(_a.x, _b.x);
   const ozz::math::SimdInt4 y = ozz::math::CmpGe(_a.y, _b.y);
   const ozz::math::SimdInt4 z = ozz::math::CmpGe(_a.z, _b.z);
   const ozz::math::SimdInt4 w = ozz::math::CmpGe(_a.w, _b.w);
   return ozz::math::And(ozz::math::And(ozz::math::And(x, y), z), w);
 }
-OZZ_INLINE ozz::math::SimdInt4 operator>=(const ozz::math::SoaFloat3& _a,
-                                          const ozz::math::SoaFloat3& _b) {
+OZZ_INLINE ozz::math::SimdInt4 operator>=(const SoaFloat3& _a,
+                                          const SoaFloat3& _b) {
   const ozz::math::SimdInt4 x = ozz::math::CmpGe(_a.x, _b.x);
   const ozz::math::SimdInt4 y = ozz::math::CmpGe(_a.y, _b.y);
   const ozz::math::SimdInt4 z = ozz::math::CmpGe(_a.z, _b.z);
   return ozz::math::And(ozz::math::And(x, y), z);
 }
-OZZ_INLINE ozz::math::SimdInt4 operator>=(const ozz::math::SoaFloat2& _a,
-                                          const ozz::math::SoaFloat2& _b) {
+OZZ_INLINE ozz::math::SimdInt4 operator>=(const SoaFloat2& _a,
+                                          const SoaFloat2& _b) {
   const ozz::math::SimdInt4 x = ozz::math::CmpGe(_a.x, _b.x);
   const ozz::math::SimdInt4 y = ozz::math::CmpGe(_a.y, _b.y);
   return ozz::math::And(x, y);
@@ -412,23 +407,23 @@ OZZ_INLINE ozz::math::SimdInt4 operator>=(const ozz::math::SoaFloat2& _a,
 
 // Returns true if each element of _a is equal to each element of _b.
 // Uses a bitwise comparison of _a and _b, no tolerance is applied.
-OZZ_INLINE ozz::math::SimdInt4 operator==(const ozz::math::SoaFloat4& _a,
-                                          const ozz::math::SoaFloat4& _b) {
+OZZ_INLINE ozz::math::SimdInt4 operator==(const SoaFloat4& _a,
+                                          const SoaFloat4& _b) {
   const ozz::math::SimdInt4 x = ozz::math::CmpEq(_a.x, _b.x);
   const ozz::math::SimdInt4 y = ozz::math::CmpEq(_a.y, _b.y);
   const ozz::math::SimdInt4 z = ozz::math::CmpEq(_a.z, _b.z);
   const ozz::math::SimdInt4 w = ozz::math::CmpEq(_a.w, _b.w);
   return ozz::math::And(ozz::math::And(ozz::math::And(x, y), z), w);
 }
-OZZ_INLINE ozz::math::SimdInt4 operator==(const ozz::math::SoaFloat3& _a,
-                                          const ozz::math::SoaFloat3& _b) {
+OZZ_INLINE ozz::math::SimdInt4 operator==(const SoaFloat3& _a,
+                                          const SoaFloat3& _b) {
   const ozz::math::SimdInt4 x = ozz::math::CmpEq(_a.x, _b.x);
   const ozz::math::SimdInt4 y = ozz::math::CmpEq(_a.y, _b.y);
   const ozz::math::SimdInt4 z = ozz::math::CmpEq(_a.z, _b.z);
   return ozz::math::And(ozz::math::And(x, y), z);
 }
-OZZ_INLINE ozz::math::SimdInt4 operator==(const ozz::math::SoaFloat2& _a,
-                                          const ozz::math::SoaFloat2& _b) {
+OZZ_INLINE ozz::math::SimdInt4 operator==(const SoaFloat2& _a,
+                                          const SoaFloat2& _b) {
   const ozz::math::SimdInt4 x = ozz::math::CmpEq(_a.x, _b.x);
   const ozz::math::SimdInt4 y = ozz::math::CmpEq(_a.y, _b.y);
   return ozz::math::And(x, y);
@@ -436,23 +431,23 @@ OZZ_INLINE ozz::math::SimdInt4 operator==(const ozz::math::SoaFloat2& _a,
 
 // Returns true if each element of a is different from each element of _b.
 // Uses a bitwise comparison of _a and _b, no tolerance is applied.
-OZZ_INLINE ozz::math::SimdInt4 operator!=(const ozz::math::SoaFloat4& _a,
-                                          const ozz::math::SoaFloat4& _b) {
+OZZ_INLINE ozz::math::SimdInt4 operator!=(const SoaFloat4& _a,
+                                          const SoaFloat4& _b) {
   const ozz::math::SimdInt4 x = ozz::math::CmpNe(_a.x, _b.x);
   const ozz::math::SimdInt4 y = ozz::math::CmpNe(_a.y, _b.y);
   const ozz::math::SimdInt4 z = ozz::math::CmpNe(_a.z, _b.z);
   const ozz::math::SimdInt4 w = ozz::math::CmpNe(_a.w, _b.w);
   return ozz::math::Or(ozz::math::Or(ozz::math::Or(x, y), z), w);
 }
-OZZ_INLINE ozz::math::SimdInt4 operator!=(const ozz::math::SoaFloat3& _a,
-                                          const ozz::math::SoaFloat3& _b) {
+OZZ_INLINE ozz::math::SimdInt4 operator!=(const SoaFloat3& _a,
+                                          const SoaFloat3& _b) {
   const ozz::math::SimdInt4 x = ozz::math::CmpNe(_a.x, _b.x);
   const ozz::math::SimdInt4 y = ozz::math::CmpNe(_a.y, _b.y);
   const ozz::math::SimdInt4 z = ozz::math::CmpNe(_a.z, _b.z);
   return ozz::math::Or(ozz::math::Or(x, y), z);
 }
-OZZ_INLINE ozz::math::SimdInt4 operator!=(const ozz::math::SoaFloat2& _a,
-                                          const ozz::math::SoaFloat2& _b) {
+OZZ_INLINE ozz::math::SimdInt4 operator!=(const SoaFloat2& _a,
+                                          const SoaFloat2& _b) {
   const ozz::math::SimdInt4 x = ozz::math::CmpNe(_a.x, _b.x);
   const ozz::math::SimdInt4 y = ozz::math::CmpNe(_a.y, _b.y);
   return ozz::math::Or(x, y);

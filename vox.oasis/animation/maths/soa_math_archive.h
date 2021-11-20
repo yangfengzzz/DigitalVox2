@@ -30,68 +30,62 @@
 
 #include "../io/archive_traits.h"
 #include "../platform.h"
+#include "soa_float_type.h"
 
 namespace ozz {
-namespace math {
-struct SoaFloat2;
-struct SoaFloat3;
-struct SoaFloat4;
-struct SoaQuaternion;
-struct SoaFloat4x4;
-struct SoaTransform;
-}  // namespace math
+
 namespace io {
-OZZ_IO_TYPE_NOT_VERSIONABLE(math::SoaFloat2)
+OZZ_IO_TYPE_NOT_VERSIONABLE(SoaFloat2)
 template <>
-struct Extern<math::SoaFloat2> {
-  static void Save(OArchive& _archive, const math::SoaFloat2* _values,
+struct Extern<SoaFloat2> {
+  static void Save(OArchive& _archive, const SoaFloat2* _values,
                    size_t _count);
-  static void Load(IArchive& _archive, math::SoaFloat2* _values, size_t _count,
+  static void Load(IArchive& _archive, SoaFloat2* _values, size_t _count,
                    uint32_t _version);
 };
 
-OZZ_IO_TYPE_NOT_VERSIONABLE(math::SoaFloat3)
+OZZ_IO_TYPE_NOT_VERSIONABLE(SoaFloat3)
 template <>
-struct Extern<math::SoaFloat3> {
-  static void Save(OArchive& _archive, const math::SoaFloat3* _values,
+struct Extern<SoaFloat3> {
+  static void Save(OArchive& _archive, const SoaFloat3* _values,
                    size_t _count);
-  static void Load(IArchive& _archive, math::SoaFloat3* _values, size_t _count,
+  static void Load(IArchive& _archive, SoaFloat3* _values, size_t _count,
                    uint32_t _version);
 };
 
-OZZ_IO_TYPE_NOT_VERSIONABLE(math::SoaFloat4)
+OZZ_IO_TYPE_NOT_VERSIONABLE(SoaFloat4)
 template <>
-struct Extern<math::SoaFloat4> {
-  static void Save(OArchive& _archive, const math::SoaFloat4* _values,
+struct Extern<SoaFloat4> {
+  static void Save(OArchive& _archive, const SoaFloat4* _values,
                    size_t _count);
-  static void Load(IArchive& _archive, math::SoaFloat4* _values, size_t _count,
+  static void Load(IArchive& _archive, SoaFloat4* _values, size_t _count,
                    uint32_t _version);
 };
 
-OZZ_IO_TYPE_NOT_VERSIONABLE(math::SoaQuaternion)
+OZZ_IO_TYPE_NOT_VERSIONABLE(SoaQuaternion)
 template <>
-struct Extern<math::SoaQuaternion> {
-  static void Save(OArchive& _archive, const math::SoaQuaternion* _values,
+struct Extern<SoaQuaternion> {
+  static void Save(OArchive& _archive, const SoaQuaternion* _values,
                    size_t _count);
-  static void Load(IArchive& _archive, math::SoaQuaternion* _values,
+  static void Load(IArchive& _archive, SoaQuaternion* _values,
                    size_t _count, uint32_t _version);
 };
 
-OZZ_IO_TYPE_NOT_VERSIONABLE(math::SoaFloat4x4)
+OZZ_IO_TYPE_NOT_VERSIONABLE(SoaFloat4x4)
 template <>
-struct Extern<math::SoaFloat4x4> {
-  static void Save(OArchive& _archive, const math::SoaFloat4x4* _values,
+struct Extern<SoaFloat4x4> {
+  static void Save(OArchive& _archive, const SoaFloat4x4* _values,
                    size_t _count);
-  static void Load(IArchive& _archive, math::SoaFloat4x4* _values,
+  static void Load(IArchive& _archive, SoaFloat4x4* _values,
                    size_t _count, uint32_t _version);
 };
 
-OZZ_IO_TYPE_NOT_VERSIONABLE(math::SoaTransform)
+OZZ_IO_TYPE_NOT_VERSIONABLE(SoaTransform)
 template <>
-struct Extern<math::SoaTransform> {
-  static void Save(OArchive& _archive, const math::SoaTransform* _values,
+struct Extern<SoaTransform> {
+  static void Save(OArchive& _archive, const SoaTransform* _values,
                    size_t _count);
-  static void Load(IArchive& _archive, math::SoaTransform* _values,
+  static void Load(IArchive& _archive, SoaTransform* _values,
                    size_t _count, uint32_t _version);
 };
 }  // namespace io

@@ -10,7 +10,7 @@
 
 #import <Foundation/Foundation.h>
 #import <simd/simd.h>
-#import "csoa_float.h"
+#import "soa_float_type.h"
 
 // Vector of four floating point values.
 typedef __m128 SimdFloat4;

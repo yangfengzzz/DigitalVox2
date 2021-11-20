@@ -28,6 +28,7 @@
 #ifndef OZZ_OZZ_BASE_MATHS_SOA_TRANSFORM_H_
 #define OZZ_OZZ_BASE_MATHS_SOA_TRANSFORM_H_
 
+#include "soa_float_type.h"
 #include "soa_float.h"
 #include "soa_quaternion.h"
 #include "../platform.h"
@@ -37,14 +38,10 @@ namespace math {
 
 // Stores an affine transformation with separate translation, rotation and scale
 // attributes.
-struct SoaTransform {
-  SoaFloat3 translation;
-  SoaQuaternion rotation;
-  SoaFloat3 scale;
-
+namespace soa_transform {
   static OZZ_INLINE SoaTransform identity() {
-    const SoaTransform ret = {SoaFloat3::zero(), SoaQuaternion::identity(),
-                              SoaFloat3::one()};
+    const SoaTransform ret = {soa_float3::zero(), soa_quaternion::identity(),
+                              soa_float3::one()};
     return ret;
   }
 };

@@ -31,12 +31,9 @@
 #include "../maths/simd_math.h"
 #include "../span.h"
 
-namespace ozz {
-
-// Forward declaration of math structures.
-namespace math {
 struct SoaTransform;
-}
+
+namespace ozz {
 
 namespace animation {
 
@@ -89,7 +86,7 @@ struct BlendingJob {
     // This range must be at least as big as the bind pose buffer, even though
     // only the number of transforms defined by the bind pose buffer will be
     // processed.
-    span<const math::SoaTransform> transform;
+    span<const SoaTransform> transform;
 
     // Optional range [begin,end[ of blending weight for each joint in this
     // layer.
@@ -124,14 +121,14 @@ struct BlendingJob {
   // by the skeleton that all the animations belongs to.
   // It is used when the accumulated weight for a bone on all layers is
   // less than the threshold value, in order to fall back on valid transforms.
-  span<const ozz::math::SoaTransform> bind_pose;
+  span<const SoaTransform> bind_pose;
 
   // Job output.
   // The range of output transforms to be filled with blended layer
   // transforms during job execution.
   // Must be at least as big as the bind pose buffer, but only the number of
   // transforms defined by the bind pose buffer size will be processed.
-  span<ozz::math::SoaTransform> output;
+  span<SoaTransform> output;
 };
 }  // namespace animation
 }  // namespace ozz

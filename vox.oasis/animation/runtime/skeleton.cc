@@ -46,7 +46,7 @@ Skeleton::~Skeleton() { Deallocate(); }
 char* Skeleton::Allocate(size_t _chars_size, size_t _num_joints) {
   // Distributes buffer memory while ensuring proper alignment (serves larger
   // alignment values first).
-  static_assert(alignof(math::SoaTransform) >= alignof(char*) &&
+  static_assert(alignof(SoaTransform) >= alignof(char*) &&
                     alignof(char*) >= alignof(int16_t) &&
                     alignof(int16_t) >= alignof(char),
                 "Must serve larger alignment values first)");
@@ -62,7 +62,7 @@ char* Skeleton::Allocate(size_t _chars_size, size_t _num_joints) {
   // Bind poses have SoA format
   const size_t num_soa_joints = (_num_joints + 3) / 4;
   const size_t joint_bind_poses_size =
-      num_soa_joints * sizeof(math::SoaTransform);
+      num_soa_joints * sizeof(SoaTransform);
   const size_t names_size = _num_joints * sizeof(char*);
   const size_t joint_parents_size = _num_joints * sizeof(int16_t);
   const size_t buffer_size =
@@ -70,12 +70,12 @@ char* Skeleton::Allocate(size_t _chars_size, size_t _num_joints) {
 
   // Allocates whole buffer.
   span<char> buffer = {static_cast<char*>(memory::default_allocator()->Allocate(
-                           buffer_size, alignof(math::SoaTransform))),
+                           buffer_size, alignof(SoaTransform))),
                        buffer_size};
 
   // Serves larger alignment values first.
   // Bind pose first, biggest alignment.
-  joint_bind_poses_ = fill_span<math::SoaTransform>(buffer, num_soa_joints);
+  joint_bind_poses_ = fill_span<SoaTransform>(buffer, num_soa_joints);
 
   // Then names array, second biggest alignment.
   joint_names_ = fill_span<char*>(buffer, _num_joints);
