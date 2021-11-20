@@ -15,17 +15,17 @@
 
 - (bool)LoadSkeleton:(nullable const NSString *)_filename;
 
--(size_t) NumberOfNames;
+- (size_t)NumberOfNames;
 
--(NSString *_Nonnull) NameWithIndex:(size_t)index;
+- (NSString *_Nonnull)NameWithIndex:(size_t)index;
 
--(size_t) NumberOfParents;
+- (size_t)NumberOfParents;
 
--(void) ParentWithIndex:(size_t)index :(size_t *_Nonnull) parent;
+- (void)ParentWithIndex:(size_t)index :(size_t *_Nonnull)parent;
 
--(size_t) NumberOfBindPose;
+- (size_t)NumberOfBindPose;
 
--(void) PoseWithIndex:(size_t)index :(struct SoaTransform *_Nonnull) pose;
+- (void)PoseWithIndex:(size_t)index :(struct SoaTransform *_Nonnull)pose;
 
 @end
 

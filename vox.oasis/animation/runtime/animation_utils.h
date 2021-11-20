@@ -31,13 +31,14 @@
 #include "animation.h"
 
 namespace ozz {
-namespace animation {
+    namespace animation {
+        // Count translation, rotation or scale keyframes for a given track number. Use
+        // a negative _track value to count all tracks.
+        int CountTranslationKeyframes(const Animation &_animation, int _track = -1);
 
-// Count translation, rotation or scale keyframes for a given track number. Use
-// a negative _track value to count all tracks.
-int CountTranslationKeyframes(const Animation& _animation, int _track = -1);
-int CountRotationKeyframes(const Animation& _animation, int _track = -1);
-int CountScaleKeyframes(const Animation& _animation, int _track = -1);
-}  // namespace animation
+        int CountRotationKeyframes(const Animation &_animation, int _track = -1);
+
+        int CountScaleKeyframes(const Animation &_animation, int _track = -1);
+    }  // namespace animation
 }  // namespace ozz
 #endif  // OZZ_OZZ_ANIMATION_RUNTIME_ANIMATION_UTILS_H_

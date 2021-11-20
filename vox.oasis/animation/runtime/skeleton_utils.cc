@@ -32,33 +32,32 @@
 #include <assert.h>
 
 namespace ozz {
-namespace animation {
+    namespace animation {
+        // Unpacks skeleton bind pose stored in soa format by the skeleton.
+        ozz::math::Transform GetJointLocalBindPose(const Skeleton &_skeleton,
+                int _joint) {
+            assert(_joint >= 0 && _joint < _skeleton.num_joints() &&
+                    "Joint index out of range.");
 
-// Unpacks skeleton bind pose stored in soa format by the skeleton.
-ozz::math::Transform GetJointLocalBindPose(const Skeleton& _skeleton,
-                                           int _joint) {
-  assert(_joint >= 0 && _joint < _skeleton.num_joints() &&
-         "Joint index out of range.");
+            const SoaTransform &soa_transform =
+                    _skeleton.joint_bind_poses()[_joint / 4];
 
-  const SoaTransform& soa_transform =
-      _skeleton.joint_bind_poses()[_joint / 4];
+            // Transpose SoA data to AoS.
+            ozz::math::SimdFloat4 translations[4];
+            ozz::math::Transpose3x4(&soa_transform.translation.x, translations);
+            ozz::math::SimdFloat4 rotations[4];
+            ozz::math::Transpose4x4(&soa_transform.rotation.x, rotations);
+            ozz::math::SimdFloat4 scales[4];
+            ozz::math::Transpose3x4(&soa_transform.scale.x, scales);
 
-  // Transpose SoA data to AoS.
-  ozz::math::SimdFloat4 translations[4];
-  ozz::math::Transpose3x4(&soa_transform.translation.x, translations);
-  ozz::math::SimdFloat4 rotations[4];
-  ozz::math::Transpose4x4(&soa_transform.rotation.x, rotations);
-  ozz::math::SimdFloat4 scales[4];
-  ozz::math::Transpose3x4(&soa_transform.scale.x, scales);
+            // Stores to the Transform object.
+            math::Transform bind_pose;
+            const int offset = _joint % 4;
+            ozz::math::Store3PtrU(translations[offset], &bind_pose.translation.x);
+            ozz::math::StorePtrU(rotations[offset], &bind_pose.rotation.x);
+            ozz::math::Store3PtrU(scales[offset], &bind_pose.scale.x);
 
-  // Stores to the Transform object.
-  math::Transform bind_pose;
-  const int offset = _joint % 4;
-  ozz::math::Store3PtrU(translations[offset], &bind_pose.translation.x);
-  ozz::math::StorePtrU(rotations[offset], &bind_pose.rotation.x);
-  ozz::math::Store3PtrU(scales[offset], &bind_pose.scale.x);
-
-  return bind_pose;
-}
-}  // namespace animation
+            return bind_pose;
+        }
+    }  // namespace animation
 }  // namespace ozz

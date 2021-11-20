@@ -37,77 +37,74 @@
 #include "skeleton.h"
 
 namespace ozz {
-namespace animation {
+    namespace animation {
+        LocalToModelJob::LocalToModelJob()
+                : skeleton(nullptr),
+                  root(nullptr),
+                  from(Skeleton::kNoParent),
+                  to(Skeleton::kMaxJoints),
+                  from_excluded(false) {
+        }
 
-LocalToModelJob::LocalToModelJob()
-    : skeleton(nullptr),
-      root(nullptr),
-      from(Skeleton::kNoParent),
-      to(Skeleton::kMaxJoints),
-      from_excluded(false) {}
+        bool LocalToModelJob::Validate() const {
+            // Don't need any early out, as jobs are valid in most of the performance
+            // critical cases.
+            // Tests are written in multiple lines in order to avoid branches.
+            bool valid = true;
 
-bool LocalToModelJob::Validate() const {
-  // Don't need any early out, as jobs are valid in most of the performance
-  // critical cases.
-  // Tests are written in multiple lines in order to avoid branches.
-  bool valid = true;
+            // Test for nullptr begin pointers.
+            if (!skeleton) {
+                return false;
+            }
 
-  // Test for nullptr begin pointers.
-  if (!skeleton) {
-    return false;
-  }
+            const size_t num_joints = static_cast<size_t>(skeleton->num_joints());
+            const size_t num_soa_joints = (num_joints + 3) / 4;
 
-  const size_t num_joints = static_cast<size_t>(skeleton->num_joints());
-  const size_t num_soa_joints = (num_joints + 3) / 4;
+            // Test input and output ranges, implicitly tests for nullptr end pointers.
+            valid &= input.size() >= num_soa_joints;
+            valid &= output.size() >= num_joints;
 
-  // Test input and output ranges, implicitly tests for nullptr end pointers.
-  valid &= input.size() >= num_soa_joints;
-  valid &= output.size() >= num_joints;
+            return valid;
+        }
 
-  return valid;
-}
+        bool LocalToModelJob::Run() const {
+            if (!Validate()) {
+                return false;
+            }
 
-bool LocalToModelJob::Run() const {
-  if (!Validate()) {
-    return false;
-  }
+            const span<const int16_t> &parents = skeleton->joint_parents();
 
-  const span<const int16_t>& parents = skeleton->joint_parents();
+            // Initializes an identity matrix that will be used to compute roots model
+            // matrices without requiring a branch.
+            const simd_float4x4 identity = math::Float4x4::identity();
+            const simd_float4x4 *root_matrix = (root == nullptr) ? &identity : root;
 
-  // Initializes an identity matrix that will be used to compute roots model
-  // matrices without requiring a branch.
-  const simd_float4x4 identity = math::Float4x4::identity();
-  const simd_float4x4* root_matrix = (root == nullptr) ? &identity : root;
+            // Applies hierarchical transformation.
+            // Loop ends after "to".
+            const int end = math::Min(to + 1, skeleton->num_joints());
+            // Begins iteration from "from", or the next joint if "from" is excluded.
+            // Process next joint if end is not reach. parents[begin] >= from is true as
+            // long as "begin" is a child of "from".
+            for (int i = math::Max(from + from_excluded, 0), process = i < end && (!from_excluded || parents[i] >= from);
+                 process;) {
+                // Builds soa matrices from soa transforms.
+                const SoaTransform &transform = input[i / 4];
+                const SoaFloat4x4 local_soa_matrices = math::soa_float4x4::FromAffine(
+                        transform.translation, transform.rotation, transform.scale);
 
-  // Applies hierarchical transformation.
-  // Loop ends after "to".
-  const int end = math::Min(to + 1, skeleton->num_joints());
-  // Begins iteration from "from", or the next joint if "from" is excluded.
-  // Process next joint if end is not reach. parents[begin] >= from is true as
-  // long as "begin" is a child of "from".
-  for (int i = math::Max(from + from_excluded, 0),
-           process = i < end && (!from_excluded || parents[i] >= from);
-       process;) {
-    // Builds soa matrices from soa transforms.
-    const SoaTransform& transform = input[i / 4];
-    const SoaFloat4x4 local_soa_matrices = math::soa_float4x4::FromAffine(
-        transform.translation, transform.rotation, transform.scale);
+                // Converts to aos matrices.
+                simd_float4x4 local_aos_matrices[4];
+                math::Transpose16x16(&local_soa_matrices.cols[0].x, local_aos_matrices->columns);
 
-    // Converts to aos matrices.
-      simd_float4x4 local_aos_matrices[4];
-    math::Transpose16x16(&local_soa_matrices.cols[0].x,
-                         local_aos_matrices->columns);
-
-    // parents[i] >= from is true as long as "i" is a child of "from".
-    for (const int soa_end = (i + 4) & ~3; i < soa_end && process;
-         ++i, process = i < end && parents[i] >= from) {
-      const int parent = parents[i];
-      const simd_float4x4* parent_matrix =
-          parent == Skeleton::kNoParent ? root_matrix : &output[parent];
-        output[i] = ozz::math::operator*(*parent_matrix, local_aos_matrices[i & 3]);
-    }
-  }
-  return true;
-}
-}  // namespace animation
+                // parents[i] >= from is true as long as "i" is a child of "from".
+                for (const int soa_end = (i + 4) & ~3; i < soa_end && process;
+                     ++i, process = i < end && parents[i] >= from) {
+                    const int parent = parents[i];
+                    const simd_float4x4 *parent_matrix = parent == Skeleton::kNoParent ? root_matrix : &output[parent];
+                    output[i] = ozz::math::operator*(*parent_matrix, local_aos_matrices[i & 3]);
+                }
+            }
+            return true;
+        }
+    }  // namespace animation
 }  // namespace ozz

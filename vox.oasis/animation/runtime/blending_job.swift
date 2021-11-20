@@ -67,7 +67,7 @@ class BlendingJob {
         if (!validate()) {
             return false
         }
-        
+
         if output.isEmpty || output.count < bind_pose.count {
             return false
         }
