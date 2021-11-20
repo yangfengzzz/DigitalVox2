@@ -25,27 +25,19 @@
 //                                                                            //
 //----------------------------------------------------------------------------//
 
-#ifndef OZZ_OZZ_BASE_CONTAINERS_LIST_H_
-#define OZZ_OZZ_BASE_CONTAINERS_LIST_H_
+#ifndef OZZ_OZZ_ANIMATION_RUNTIME_ANIMATION_UTILS_H_
+#define OZZ_OZZ_ANIMATION_RUNTIME_ANIMATION_UTILS_H_
 
-#ifdef _MSC_VER
-#pragma warning(push)
-// Removes constant conditional expression warning.
-#pragma warning(disable : 4127)
-#endif  // _MSC_VER
-
-#include <list>
-
-#ifdef _MSC_VER
-#pragma warning(pop)
-#endif  // _MSC_VER
-
-#include "../containers/std_allocator.h"
+#include "animation.h"
 
 namespace ozz {
-// Redirects std::list to ozz::list in order to replace std default allocator by
-// ozz::StdAllocator.
-template <class _Ty, class _Allocator = ozz::StdAllocator<_Ty>>
-using list = std::list<_Ty, _Allocator>;
+namespace animation {
+
+// Count translation, rotation or scale keyframes for a given track number. Use
+// a negative _track value to count all tracks.
+int CountTranslationKeyframes(const Animation& _animation, int _track = -1);
+int CountRotationKeyframes(const Animation& _animation, int _track = -1);
+int CountScaleKeyframes(const Animation& _animation, int _track = -1);
+}  // namespace animation
 }  // namespace ozz
-#endif  // OZZ_OZZ_BASE_CONTAINERS_LIST_H_
+#endif  // OZZ_OZZ_ANIMATION_RUNTIME_ANIMATION_UTILS_H_

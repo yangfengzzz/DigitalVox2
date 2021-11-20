@@ -25,27 +25,38 @@
 //                                                                            //
 //----------------------------------------------------------------------------//
 
-#ifndef OZZ_OZZ_BASE_CONTAINERS_LIST_H_
-#define OZZ_OZZ_BASE_CONTAINERS_LIST_H_
+#include "animation_utils.h"
 
-#ifdef _MSC_VER
-#pragma warning(push)
-// Removes constant conditional expression warning.
-#pragma warning(disable : 4127)
-#endif  // _MSC_VER
-
-#include <list>
-
-#ifdef _MSC_VER
-#pragma warning(pop)
-#endif  // _MSC_VER
-
-#include "../containers/std_allocator.h"
+// Internal include file
+#define OZZ_INCLUDE_PRIVATE_HEADER  // Allows to include private headers.
+#include "animation_keyframe.h"
 
 namespace ozz {
-// Redirects std::list to ozz::list in order to replace std default allocator by
-// ozz::StdAllocator.
-template <class _Ty, class _Allocator = ozz::StdAllocator<_Ty>>
-using list = std::list<_Ty, _Allocator>;
+namespace animation {
+
+template <typename _Key>
+inline int CountKeyframesImpl(const span<const _Key>& _keys, int _track) {
+  if (_track < 0) {
+    return static_cast<int>(_keys.size());
+  }
+
+  int count = 0;
+  for (const _Key& key : _keys) {
+    if (key.track == _track) {
+      ++count;
+    }
+  }
+  return count;
+}
+
+int CountTranslationKeyframes(const Animation& _animation, int _track) {
+  return CountKeyframesImpl(_animation.translations(), _track);
+}
+int CountRotationKeyframes(const Animation& _animation, int _track) {
+  return CountKeyframesImpl(_animation.rotations(), _track);
+}
+int CountScaleKeyframes(const Animation& _animation, int _track) {
+  return CountKeyframesImpl(_animation.scales(), _track);
+}
+}  // namespace animation
 }  // namespace ozz
-#endif  // OZZ_OZZ_BASE_CONTAINERS_LIST_H_

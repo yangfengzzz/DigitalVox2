@@ -27,6 +27,19 @@
 		040C60262747F41F00170B6A /* vec_transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88E027326C9900B0E398 /* vec_transform.swift */; };
 		040C60272747F41F00170B6A /* soa_transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88DA27326C9900B0E398 /* soa_transform.swift */; };
 		040C60292747F47C00170B6A /* math_constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040C60282747F47C00170B6A /* math_constant.swift */; };
+		040C604F2748987700170B6A /* track_sampling_job.cc in Sources */ = {isa = PBXBuildFile; fileRef = 040C60362748987600170B6A /* track_sampling_job.cc */; };
+		040C60502748987700170B6A /* animation_utils.cc in Sources */ = {isa = PBXBuildFile; fileRef = 040C60392748987600170B6A /* animation_utils.cc */; };
+		040C60512748987700170B6A /* skeleton_utils.cc in Sources */ = {isa = PBXBuildFile; fileRef = 040C603D2748987600170B6A /* skeleton_utils.cc */; };
+		040C60522748987700170B6A /* ik_aim_job.cc in Sources */ = {isa = PBXBuildFile; fileRef = 040C603F2748987600170B6A /* ik_aim_job.cc */; };
+		040C60532748987700170B6A /* track.cc in Sources */ = {isa = PBXBuildFile; fileRef = 040C60402748987600170B6A /* track.cc */; };
+		040C60542748987700170B6A /* ik_two_bone_job.cc in Sources */ = {isa = PBXBuildFile; fileRef = 040C60412748987600170B6A /* ik_two_bone_job.cc */; };
+		040C60552748987700170B6A /* skeleton.cc in Sources */ = {isa = PBXBuildFile; fileRef = 040C60432748987700170B6A /* skeleton.cc */; };
+		040C60562748987700170B6A /* animation.cc in Sources */ = {isa = PBXBuildFile; fileRef = 040C60462748987700170B6A /* animation.cc */; };
+		040C60572748987700170B6A /* blending_job.cc in Sources */ = {isa = PBXBuildFile; fileRef = 040C60472748987700170B6A /* blending_job.cc */; };
+		040C60582748987700170B6A /* sampling_job.cc in Sources */ = {isa = PBXBuildFile; fileRef = 040C60482748987700170B6A /* sampling_job.cc */; };
+		040C60592748987700170B6A /* local_to_model_job.cc in Sources */ = {isa = PBXBuildFile; fileRef = 040C60492748987700170B6A /* local_to_model_job.cc */; };
+		040C605A2748987700170B6A /* track_triggering_job.cc in Sources */ = {isa = PBXBuildFile; fileRef = 040C604D2748987700170B6A /* track_triggering_job.cc */; };
+		040C605B27489C8900170B6A /* math_archive.cc in Sources */ = {isa = PBXBuildFile; fileRef = 040C5FFE274690D600170B6A /* math_archive.cc */; };
 		0413755127412F6200FDEF5C /* Doggy.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 0413755027412F6200FDEF5C /* Doggy.usdz */; };
 		0419B6D626E6E30300005FEA /* instance_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D526E6E30300005FEA /* instance_data.swift */; };
 		0419B6D826E6E5CE00005FEA /* shading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D726E6E5CE00005FEA /* shading.swift */; };
@@ -532,6 +545,31 @@
 		040C601A2747F3C500170B6A /* transform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = transform.h; sourceTree = "<group>"; };
 		040C60282747F47C00170B6A /* math_constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = math_constant.swift; sourceTree = "<group>"; };
 		040C602A2747F61800170B6A /* soa_float.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soa_float.h; sourceTree = "<group>"; };
+		040C60362748987600170B6A /* track_sampling_job.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = track_sampling_job.cc; sourceTree = "<group>"; };
+		040C60372748987600170B6A /* animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = animation.h; sourceTree = "<group>"; };
+		040C60382748987600170B6A /* local_to_model_job.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = local_to_model_job.h; sourceTree = "<group>"; };
+		040C60392748987600170B6A /* animation_utils.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = animation_utils.cc; sourceTree = "<group>"; };
+		040C603A2748987600170B6A /* animation_utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = animation_utils.h; sourceTree = "<group>"; };
+		040C603B2748987600170B6A /* skeleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = skeleton.h; sourceTree = "<group>"; };
+		040C603C2748987600170B6A /* ik_two_bone_job.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ik_two_bone_job.h; sourceTree = "<group>"; };
+		040C603D2748987600170B6A /* skeleton_utils.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = skeleton_utils.cc; sourceTree = "<group>"; };
+		040C603E2748987600170B6A /* track.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = track.h; sourceTree = "<group>"; };
+		040C603F2748987600170B6A /* ik_aim_job.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ik_aim_job.cc; sourceTree = "<group>"; };
+		040C60402748987600170B6A /* track.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = track.cc; sourceTree = "<group>"; };
+		040C60412748987600170B6A /* ik_two_bone_job.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ik_two_bone_job.cc; sourceTree = "<group>"; };
+		040C60422748987600170B6A /* track_triggering_job.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = track_triggering_job.h; sourceTree = "<group>"; };
+		040C60432748987700170B6A /* skeleton.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = skeleton.cc; sourceTree = "<group>"; };
+		040C60442748987700170B6A /* track_sampling_job.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = track_sampling_job.h; sourceTree = "<group>"; };
+		040C60452748987700170B6A /* track_triggering_job_trait.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = track_triggering_job_trait.h; sourceTree = "<group>"; };
+		040C60462748987700170B6A /* animation.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = animation.cc; sourceTree = "<group>"; };
+		040C60472748987700170B6A /* blending_job.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = blending_job.cc; sourceTree = "<group>"; };
+		040C60482748987700170B6A /* sampling_job.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sampling_job.cc; sourceTree = "<group>"; };
+		040C60492748987700170B6A /* local_to_model_job.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = local_to_model_job.cc; sourceTree = "<group>"; };
+		040C604A2748987700170B6A /* ik_aim_job.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ik_aim_job.h; sourceTree = "<group>"; };
+		040C604B2748987700170B6A /* blending_job.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = blending_job.h; sourceTree = "<group>"; };
+		040C604C2748987700170B6A /* skeleton_utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = skeleton_utils.h; sourceTree = "<group>"; };
+		040C604D2748987700170B6A /* track_triggering_job.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = track_triggering_job.cc; sourceTree = "<group>"; };
+		040C604E2748987700170B6A /* sampling_job.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sampling_job.h; sourceTree = "<group>"; };
 		0413286A26DF86DC000A4F4E /* BoundingBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingBox.swift; sourceTree = "<group>"; };
 		0413286C26E06648000A4F4E /* BoundingSphere.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingSphere.swift; sourceTree = "<group>"; };
 		0413286E26E06A40000A4F4E /* Plane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plane.swift; sourceTree = "<group>"; };
@@ -2262,20 +2300,45 @@
 		04CB88FD2732B4A400B0E398 /* runtime */ = {
 			isa = PBXGroup;
 			children = (
-				04CB89002732B59C00B0E398 /* soa_skeleton.swift */,
+				040C603B2748987600170B6A /* skeleton.h */,
+				040C60432748987700170B6A /* skeleton.cc */,
 				0486927C27375524007B8DFE /* soa_skeleton.h */,
 				0486927D27375531007B8DFE /* soa_skeleton.mm */,
+				04CB89002732B59C00B0E398 /* soa_skeleton.swift */,
+				040C604C2748987700170B6A /* skeleton_utils.h */,
+				040C603D2748987600170B6A /* skeleton_utils.cc */,
 				042F0DB92734AFB500FF4A26 /* skeleton_utils.swift */,
+				040C60382748987600170B6A /* local_to_model_job.h */,
+				040C60492748987700170B6A /* local_to_model_job.cc */,
 				042F0DBD2734BF0F00FF4A26 /* local_to_model_job.swift */,
 				048692492735FAF9007B8DFE /* animation_keyframe.h */,
-				048692472735FACD007B8DFE /* soa_animation.swift */,
+				040C60372748987600170B6A /* animation.h */,
+				040C60462748987700170B6A /* animation.cc */,
 				0486927F27375859007B8DFE /* soa_animation.h */,
 				0486928027375861007B8DFE /* soa_animation.mm */,
+				048692472735FACD007B8DFE /* soa_animation.swift */,
+				040C603A2748987600170B6A /* animation_utils.h */,
+				040C60392748987600170B6A /* animation_utils.cc */,
 				048692522736004C007B8DFE /* animation_utils.swift */,
+				040C604E2748987700170B6A /* sampling_job.h */,
+				040C60482748987700170B6A /* sampling_job.cc */,
 				042F0DCA2736511B00FF4A26 /* sampling_job.swift */,
+				040C604B2748987700170B6A /* blending_job.h */,
+				040C60472748987700170B6A /* blending_job.cc */,
 				04AFAC62273B63AF003E5928 /* blending_job.swift */,
+				040C604A2748987700170B6A /* ik_aim_job.h */,
+				040C603F2748987600170B6A /* ik_aim_job.cc */,
 				04AFAC61273B63AF003E5928 /* ik_aim_job.swift */,
+				040C603C2748987600170B6A /* ik_two_bone_job.h */,
+				040C60412748987600170B6A /* ik_two_bone_job.cc */,
 				04AFAC63273B63AF003E5928 /* ik_two_bone_job.swift */,
+				040C603E2748987600170B6A /* track.h */,
+				040C60402748987600170B6A /* track.cc */,
+				040C60362748987600170B6A /* track_sampling_job.cc */,
+				040C60442748987700170B6A /* track_sampling_job.h */,
+				040C60452748987700170B6A /* track_triggering_job_trait.h */,
+				040C604D2748987700170B6A /* track_triggering_job.cc */,
+				040C60422748987600170B6A /* track_triggering_job.h */,
 			);
 			path = runtime;
 			sourceTree = "<group>";
@@ -2791,6 +2854,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				040C60502748987700170B6A /* animation_utils.cc in Sources */,
 				041BAEAD272A5153006268D5 /* MetalRenderer.swift in Sources */,
 				0486928C27381378007B8DFE /* imgui_impl_osx.mm in Sources */,
 				04E59C7D2738BEA9000BCA73 /* CPxConstraint.mm in Sources */,
@@ -2845,7 +2909,9 @@
 				041BAE09272A500F006268D5 /* SceneLoaderView.swift in Sources */,
 				041BAE19272A5046006268D5 /* function-common.metal in Sources */,
 				041BAE6C272A5111006268D5 /* Light.swift in Sources */,
+				040C604F2748987700170B6A /* track_sampling_job.cc in Sources */,
 				04AFAC4B273AAEC3003E5928 /* PhysXCapsuleCharacterController.swift in Sources */,
+				040C60582748987700170B6A /* sampling_job.cc in Sources */,
 				041BAEEE272B6F5B006268D5 /* CPxCapsuleGeometry.mm in Sources */,
 				04AFAC2F273A7BF4003E5928 /* ICharacterControllerManager.swift in Sources */,
 				046FB25C273A1CDB004D4042 /* ITranslationalJoint.swift in Sources */,
@@ -2867,12 +2933,15 @@
 				041BAE46272A50F2006268D5 /* MeshBuffer.swift in Sources */,
 				040C5FFB274619F500170B6A /* string_archive.cc in Sources */,
 				040C601C2747F41F00170B6A /* decimate.swift in Sources */,
+				040C60542748987700170B6A /* ik_two_bone_job.cc in Sources */,
 				04E59C9927390022000BCA73 /* CPxJointLinearLimitPair.mm in Sources */,
 				041BAE0E272A500F006268D5 /* Background.swift in Sources */,
+				040C605A2748987700170B6A /* track_triggering_job.cc in Sources */,
 				040C601F2747F41F00170B6A /* soa_float4x4.swift in Sources */,
 				041BAE07272A500F006268D5 /* Layer.swift in Sources */,
 				041BAE34272A50E6006268D5 /* Vector2.swift in Sources */,
 				041BAE49272A50FB006268D5 /* BaseMaterial.swift in Sources */,
+				040C60512748987700170B6A /* skeleton_utils.cc in Sources */,
 				04AFAC3B273A7E9D003E5928 /* IBoxCharacterControllerDesc.swift in Sources */,
 				041BAE79272A512B006268D5 /* ParticleRenderer.swift in Sources */,
 				041BAEF5272B6FA0006268D5 /* CPxSphereGeometry.mm in Sources */,
@@ -2893,6 +2962,7 @@
 				04AFAC39273A7E81003E5928 /* ICapsuleCharacterControllerDesc.swift in Sources */,
 				041BAE4C272A50FB006268D5 /* PBRBaseMaterial.swift in Sources */,
 				041BAE5D272A510C006268D5 /* BlendState.swift in Sources */,
+				040C60532748987700170B6A /* track.cc in Sources */,
 				041BAE48272A50FB006268D5 /* BlendMode.swift in Sources */,
 				041BAF0E272B82CB006268D5 /* PhysXDynamicCollider.swift in Sources */,
 				046FB258273A1C90004D4042 /* ISpringJoint.swift in Sources */,
@@ -2903,6 +2973,7 @@
 				041BAEC1272A516E006268D5 /* BRDF.metal in Sources */,
 				040C600F2747F33D00170B6A /* box.cc in Sources */,
 				04AFAC5E273B3FBB003E5928 /* CapsuleCharacterControllerDesc.swift in Sources */,
+				040C60592748987700170B6A /* local_to_model_job.cc in Sources */,
 				041BAE1D272A5046006268D5 /* blinn-phong.metal in Sources */,
 				041BAF0A272B7F9D006268D5 /* CPxRigidDynamic.mm in Sources */,
 				04869298273813EA007B8DFE /* imgui_draw.cpp in Sources */,
@@ -2950,6 +3021,7 @@
 				041BAEE8272A9F81006268D5 /* CPxShape.mm in Sources */,
 				040C600C2747EE6E00170B6A /* csimd_math.mm in Sources */,
 				041BAEBE272A5166006268D5 /* LiteCollider.swift in Sources */,
+				040C60552748987700170B6A /* skeleton.cc in Sources */,
 				041BAE67272A5111006268D5 /* DirectLight.swift in Sources */,
 				04E59C9D273903E3000BCA73 /* CPxD6Joint.mm in Sources */,
 				041BAE71272A5117006268D5 /* ShadowMapPass.swift in Sources */,
@@ -2977,6 +3049,7 @@
 				040C60202747F41F00170B6A /* vec_quaternion.swift in Sources */,
 				041CED012739F93A0017F730 /* CPxControllerDesc.mm in Sources */,
 				041BAE44272A50ED006268D5 /* ModelMesh.swift in Sources */,
+				040C60572748987700170B6A /* blending_job.cc in Sources */,
 				04E59C962738FFAB000BCA73 /* CPxPrismaticJoint.mm in Sources */,
 				04AFAC11273A3653003E5928 /* PhysXFixedJoint.swift in Sources */,
 				0486927827374FF4007B8DFE /* platform.cc in Sources */,
@@ -2987,6 +3060,7 @@
 				04AFAC31273A7D9E003E5928 /* ICharacterController.swift in Sources */,
 				041BAEAE272A5153006268D5 /* RenderPipelineState.swift in Sources */,
 				041BAE08272A500F006268D5 /* SceneFeature.swift in Sources */,
+				040C605B27489C8900170B6A /* math_archive.cc in Sources */,
 				041BAE98272A5141006268D5 /* CapsuleColliderShape.swift in Sources */,
 				04AFAC1D273A3D9F003E5928 /* PhysXConfigurableJoint.swift in Sources */,
 				041BAEA4272A514D006268D5 /* ICollider.swift in Sources */,
@@ -3007,6 +3081,7 @@
 				041BAE18272A5046006268D5 /* shadow-map.metal in Sources */,
 				040C60272747F41F00170B6A /* soa_transform.swift in Sources */,
 				041BAE53272A5100006268D5 /* RenderElement.swift in Sources */,
+				040C60562748987700170B6A /* animation.cc in Sources */,
 				041BAEF7272B71C9006268D5 /* PhysXSphereColliderShape.swift in Sources */,
 				040C60222747F41F00170B6A /* vec_float.swift in Sources */,
 				041BAE37272A50E6006268D5 /* MathUtil.swift in Sources */,
@@ -3036,6 +3111,7 @@
 				041BAE56272A5100006268D5 /* BasicRenderPipeline.swift in Sources */,
 				04E59C862738EDA6000BCA73 /* CPxJointLimitCone.mm in Sources */,
 				041BAE9A272A5141006268D5 /* SphereColliderShape.swift in Sources */,
+				040C60522748987700170B6A /* ik_aim_job.cc in Sources */,
 				041BAE45272A50F2006268D5 /* SubMesh.swift in Sources */,
 				041BAE7C272A512B006268D5 /* SkyBoxMaterial.swift in Sources */,
 				041BAE03272A500F006268D5 /* Transform.swift in Sources */,

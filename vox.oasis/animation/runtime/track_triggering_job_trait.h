@@ -25,27 +25,27 @@
 //                                                                            //
 //----------------------------------------------------------------------------//
 
-#ifndef OZZ_OZZ_BASE_CONTAINERS_LIST_H_
-#define OZZ_OZZ_BASE_CONTAINERS_LIST_H_
+#ifndef OZZ_OZZ_ANIMATION_RUNTIME_TRACK_TRIGGERING_JOB_TRAIT_H_
+#define OZZ_OZZ_ANIMATION_RUNTIME_TRACK_TRIGGERING_JOB_TRAIT_H_
 
-#ifdef _MSC_VER
-#pragma warning(push)
-// Removes constant conditional expression warning.
-#pragma warning(disable : 4127)
-#endif  // _MSC_VER
+// Defines iterator traits required to use TrackTriggeringJob::Iterator
+// with stl algorithms.
+// This is a separate file from "track_triggering_job.h" to prevent everyone
+// from including stl file <iterator>.
 
-#include <list>
+#include "track_triggering_job.h"
 
-#ifdef _MSC_VER
-#pragma warning(pop)
-#endif  // _MSC_VER
+#include <iterator>
 
-#include "../containers/std_allocator.h"
-
-namespace ozz {
-// Redirects std::list to ozz::list in order to replace std default allocator by
-// ozz::StdAllocator.
-template <class _Ty, class _Allocator = ozz::StdAllocator<_Ty>>
-using list = std::list<_Ty, _Allocator>;
-}  // namespace ozz
-#endif  // OZZ_OZZ_BASE_CONTAINERS_LIST_H_
+// Specializes std::iterator_traits.
+namespace std {
+template <>
+struct iterator_traits<ozz::animation::TrackTriggeringJob::Iterator> {
+  typedef ptrdiff_t difference_type;
+  typedef ozz::animation::TrackTriggeringJob::Edge value_type;
+  typedef const ozz::animation::TrackTriggeringJob::Edge* pointer;
+  typedef const ozz::animation::TrackTriggeringJob::Edge& reference;
+  typedef forward_iterator_tag iterator_category;
+};
+}  // namespace std
+#endif  // OZZ_OZZ_ANIMATION_RUNTIME_TRACK_TRIGGERING_JOB_TRAIT_H_

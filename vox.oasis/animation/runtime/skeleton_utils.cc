@@ -25,27 +25,40 @@
 //                                                                            //
 //----------------------------------------------------------------------------//
 
-#ifndef OZZ_OZZ_BASE_CONTAINERS_LIST_H_
-#define OZZ_OZZ_BASE_CONTAINERS_LIST_H_
+#include "skeleton_utils.h"
 
-#ifdef _MSC_VER
-#pragma warning(push)
-// Removes constant conditional expression warning.
-#pragma warning(disable : 4127)
-#endif  // _MSC_VER
+#include "../maths/soa_transform.h"
 
-#include <list>
-
-#ifdef _MSC_VER
-#pragma warning(pop)
-#endif  // _MSC_VER
-
-#include "../containers/std_allocator.h"
+#include <assert.h>
 
 namespace ozz {
-// Redirects std::list to ozz::list in order to replace std default allocator by
-// ozz::StdAllocator.
-template <class _Ty, class _Allocator = ozz::StdAllocator<_Ty>>
-using list = std::list<_Ty, _Allocator>;
+namespace animation {
+
+// Unpacks skeleton bind pose stored in soa format by the skeleton.
+ozz::math::Transform GetJointLocalBindPose(const Skeleton& _skeleton,
+                                           int _joint) {
+  assert(_joint >= 0 && _joint < _skeleton.num_joints() &&
+         "Joint index out of range.");
+
+  const ozz::math::SoaTransform& soa_transform =
+      _skeleton.joint_bind_poses()[_joint / 4];
+
+  // Transpose SoA data to AoS.
+  ozz::math::SimdFloat4 translations[4];
+  ozz::math::Transpose3x4(&soa_transform.translation.x, translations);
+  ozz::math::SimdFloat4 rotations[4];
+  ozz::math::Transpose4x4(&soa_transform.rotation.x, rotations);
+  ozz::math::SimdFloat4 scales[4];
+  ozz::math::Transpose3x4(&soa_transform.scale.x, scales);
+
+  // Stores to the Transform object.
+  math::Transform bind_pose;
+  const int offset = _joint % 4;
+  ozz::math::Store3PtrU(translations[offset], &bind_pose.translation.x);
+  ozz::math::StorePtrU(rotations[offset], &bind_pose.rotation.x);
+  ozz::math::Store3PtrU(scales[offset], &bind_pose.scale.x);
+
+  return bind_pose;
+}
+}  // namespace animation
 }  // namespace ozz
-#endif  // OZZ_OZZ_BASE_CONTAINERS_LIST_H_

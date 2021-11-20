@@ -25,27 +25,56 @@
 //                                                                            //
 //----------------------------------------------------------------------------//
 
-#ifndef OZZ_OZZ_BASE_CONTAINERS_LIST_H_
-#define OZZ_OZZ_BASE_CONTAINERS_LIST_H_
+#ifndef OZZ_OZZ_ANIMATION_RUNTIME_TRACK_SAMPLING_JOB_H_
+#define OZZ_OZZ_ANIMATION_RUNTIME_TRACK_SAMPLING_JOB_H_
 
-#ifdef _MSC_VER
-#pragma warning(push)
-// Removes constant conditional expression warning.
-#pragma warning(disable : 4127)
-#endif  // _MSC_VER
-
-#include <list>
-
-#ifdef _MSC_VER
-#pragma warning(pop)
-#endif  // _MSC_VER
-
-#include "../containers/std_allocator.h"
+#include "track.h"
 
 namespace ozz {
-// Redirects std::list to ozz::list in order to replace std default allocator by
-// ozz::StdAllocator.
-template <class _Ty, class _Allocator = ozz::StdAllocator<_Ty>>
-using list = std::list<_Ty, _Allocator>;
+namespace animation {
+
+namespace internal {
+
+// TrackSamplingJob internal implementation. See *TrackSamplingJob for more
+// details.
+template <typename _Track>
+struct TrackSamplingJob {
+  typedef typename _Track::ValueType ValueType;
+
+  TrackSamplingJob();
+
+  // Validates all parameters.
+  bool Validate() const;
+
+  // Validates and executes sampling.
+  bool Run() const;
+
+  // Ratio used to sample track, clamped in range [0,1] before job execution. 0
+  // is the beginning of the track, 1 is the end. This is a ratio rather than a
+  // ratio because tracks have no duration.
+  float ratio;
+
+  // Track to sample.
+  const _Track* track;
+
+  // Job output.
+  typename _Track::ValueType* result;
+};
+}  // namespace internal
+
+// Track sampling job implementation. Track sampling allows to query a track
+// value for a specified ratio. This is a ratio rather than a time because
+// tracks have no duration.
+struct FloatTrackSamplingJob : public internal::TrackSamplingJob<FloatTrack> {};
+struct Float2TrackSamplingJob : public internal::TrackSamplingJob<Float2Track> {
+};
+struct Float3TrackSamplingJob : public internal::TrackSamplingJob<Float3Track> {
+};
+struct Float4TrackSamplingJob : public internal::TrackSamplingJob<Float4Track> {
+};
+struct QuaternionTrackSamplingJob
+    : public internal::TrackSamplingJob<QuaternionTrack> {};
+
+}  // namespace animation
 }  // namespace ozz
-#endif  // OZZ_OZZ_BASE_CONTAINERS_LIST_H_
+#endif  // OZZ_OZZ_ANIMATION_RUNTIME_TRACK_SAMPLING_JOB_H_
