@@ -51,6 +51,19 @@
 		040C60662748E66300170B6A /* blending_job.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFAC62273B63AF003E5928 /* blending_job.swift */; };
 		040C60672748E66300170B6A /* sampling_job.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042F0DCA2736511B00FF4A26 /* sampling_job.swift */; };
 		040C60682748E66300170B6A /* animation_utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048692522736004C007B8DFE /* animation_utils.swift */; };
+		040C60692748F30A00170B6A /* skeleton_builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB89022732BFBF00B0E398 /* skeleton_builder.swift */; };
+		040C606A2748F30A00170B6A /* animation_builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0486924C2735FCD6007B8DFE /* animation_builder.swift */; };
+		040C606B2748F30A00170B6A /* animation_optimizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0486924F2735FE13007B8DFE /* animation_optimizer.swift */; };
+		040C606C2748F30A00170B6A /* raw_skeleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88FE2732B56300B0E398 /* raw_skeleton.swift */; };
+		040C606D2748F30A00170B6A /* raw_animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048692452735FA1B007B8DFE /* raw_animation.swift */; };
+		040C606E2748F30A00170B6A /* raw_animation_utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0486924A2735FBFA007B8DFE /* raw_animation_utils.swift */; };
+		040C606F2748F30A00170B6A /* additive_animation_builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0486924E2735FE13007B8DFE /* additive_animation_builder.swift */; };
+		040C60702748F32E00170B6A /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88CD27321C2000B0E398 /* Animator.swift */; };
+		040C60712748F32E00170B6A /* AnimationClip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88CB27321C1800B0E398 /* AnimationClip.swift */; };
+		040C60722748F39B00170B6A /* CharacterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413754E27412EE500FDEF5C /* CharacterView.swift */; };
+		040C60742748F39B00170B6A /* SkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042F0DC12734DBEF00FF4A26 /* SkeletonView.swift */; };
+		040C60752748F3B400170B6A /* SkinnedMeshRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04832F062701F4B3001AD421 /* SkinnedMeshRenderer.swift */; };
+		040C60762748F3C500170B6A /* Skeleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88C327320E6700B0E398 /* Skeleton.swift */; };
 		0413755127412F6200FDEF5C /* Doggy.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 0413755027412F6200FDEF5C /* Doggy.usdz */; };
 		0419B6D626E6E30300005FEA /* instance_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D526E6E30300005FEA /* instance_data.swift */; };
 		0419B6D826E6E5CE00005FEA /* shading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D726E6E5CE00005FEA /* shading.swift */; };
@@ -2882,6 +2895,7 @@
 				04E59C932738FDB4000BCA73 /* CPxDistanceJoint.mm in Sources */,
 				041BAF0C272B823A006268D5 /* PhysXStaticCollider.swift in Sources */,
 				041BAEC2272A516E006268D5 /* CPxPhysics.mm in Sources */,
+				040C60722748F39B00170B6A /* CharacterView.swift in Sources */,
 				04AFAC1B273A3D0A003E5928 /* PhysXSpringJoint.swift in Sources */,
 				04CB88CA27321C0000B0E398 /* Animation.swift in Sources */,
 				041BAE2A272A50D9006268D5 /* EngineObject.swift in Sources */,
@@ -2916,6 +2930,7 @@
 				041BAE28272A50D9006268D5 /* CameraClearFlags.swift in Sources */,
 				041BAE2E272A50E6006268D5 /* SphericalHarmonics3.swift in Sources */,
 				04AFAC20273A4433003E5928 /* Joint.swift in Sources */,
+				040C606E2748F30A00170B6A /* raw_animation_utils.swift in Sources */,
 				04AFAC2C273A46DC003E5928 /* ConfigurableJoint.swift in Sources */,
 				04AFAC3D273AAB07003E5928 /* IPhysicsObstacle.swift in Sources */,
 				041BAEB2272A5166006268D5 /* LiteDynamicCollider.swift in Sources */,
@@ -2929,10 +2944,12 @@
 				041BAEEE272B6F5B006268D5 /* CPxCapsuleGeometry.mm in Sources */,
 				04AFAC2F273A7BF4003E5928 /* ICharacterControllerManager.swift in Sources */,
 				046FB25C273A1CDB004D4042 /* ITranslationalJoint.swift in Sources */,
+				040C60692748F30A00170B6A /* skeleton_builder.swift in Sources */,
 				041BAEB7272A5166006268D5 /* LitePhysics.swift in Sources */,
 				041BAE95272A5141006268D5 /* Collider.swift in Sources */,
 				041BAE29272A50D9006268D5 /* TextureCubeFace.swift in Sources */,
 				041BAE4D272A50FB006268D5 /* BlinnPhongMaterial.swift in Sources */,
+				040C60712748F32E00170B6A /* AnimationClip.swift in Sources */,
 				04AFAC41273AAC75003E5928 /* IPhysicsCapsuleObstacle.swift in Sources */,
 				041BAE5E272A510C006268D5 /* RasterState.swift in Sources */,
 				04AFAC0F273A34FA003E5928 /* PhysXJoint.swift in Sources */,
@@ -2950,6 +2967,8 @@
 				040C60542748987700170B6A /* ik_two_bone_job.cc in Sources */,
 				04E59C9927390022000BCA73 /* CPxJointLinearLimitPair.mm in Sources */,
 				041BAE0E272A500F006268D5 /* Background.swift in Sources */,
+				040C606A2748F30A00170B6A /* animation_builder.swift in Sources */,
+				040C606D2748F30A00170B6A /* raw_animation.swift in Sources */,
 				040C605A2748987700170B6A /* track_triggering_job.cc in Sources */,
 				040C601F2747F41F00170B6A /* soa_float4x4.swift in Sources */,
 				041BAE07272A500F006268D5 /* Layer.swift in Sources */,
@@ -2959,6 +2978,7 @@
 				04AFAC3B273A7E9D003E5928 /* IBoxCharacterControllerDesc.swift in Sources */,
 				041BAE79272A512B006268D5 /* ParticleRenderer.swift in Sources */,
 				041BAEF5272B6FA0006268D5 /* CPxSphereGeometry.mm in Sources */,
+				040C60702748F32E00170B6A /* Animator.swift in Sources */,
 				041BAE26272A50D9006268D5 /* RefObject.swift in Sources */,
 				041BAE41272A50ED006268D5 /* PrimitiveMesh.swift in Sources */,
 				041BAE4E272A50FB006268D5 /* UnlitMaterial.swift in Sources */,
@@ -3024,8 +3044,10 @@
 				041BAEBD272A5166006268D5 /* LiteBoxColliderShape.swift in Sources */,
 				041BAE72272A5117006268D5 /* ShadowFeature.swift in Sources */,
 				042F0DC42734EDEB00FF4A26 /* SkeletonShader.metal in Sources */,
+				040C606C2748F30A00170B6A /* raw_skeleton.swift in Sources */,
 				041BAE57272A5100006268D5 /* RenderContext.swift in Sources */,
 				040C60672748E66300170B6A /* sampling_job.swift in Sources */,
+				040C606F2748F30A00170B6A /* additive_animation_builder.swift in Sources */,
 				041BAEBA272A5166006268D5 /* LiteStaticCollider.swift in Sources */,
 				041BAE0A272A500F006268D5 /* EngineFeature.swift in Sources */,
 				04E59CAE2739179B000BCA73 /* CPxJointLimitPyramid.mm in Sources */,
@@ -3044,6 +3066,7 @@
 				041BAE71272A5117006268D5 /* ShadowMapPass.swift in Sources */,
 				040C601B2747F3C500170B6A /* simd_math_archive.cc in Sources */,
 				041BAE2B272A50D9006268D5 /* IRefObject.swift in Sources */,
+				040C60752748F3B400170B6A /* SkinnedMeshRenderer.swift in Sources */,
 				041BAEFD272B7575006268D5 /* PhysXCollider.swift in Sources */,
 				040C60262747F41F00170B6A /* vec_transform.swift in Sources */,
 				041BAEA1272A514D006268D5 /* ICapsuleColliderShape.swift in Sources */,
@@ -3053,6 +3076,7 @@
 				04AFAC24273A4560003E5928 /* SphericalJoint.swift in Sources */,
 				041BAEC3272A516E006268D5 /* PhysXPhysics.swift in Sources */,
 				041BAE33272A50E6006268D5 /* Ray.swift in Sources */,
+				040C60742748F39B00170B6A /* SkeletonView.swift in Sources */,
 				041BAE00272A500F006268D5 /* Scene.swift in Sources */,
 				041BAE60272A510C006268D5 /* ShaderProgram.swift in Sources */,
 				04D396E62739478600D78EBE /* CPxController.mm in Sources */,
@@ -3107,6 +3131,7 @@
 				041BAE37272A50E6006268D5 /* MathUtil.swift in Sources */,
 				041BAE7E272A513B006268D5 /* ColliderShapeUpAxis.swift in Sources */,
 				041BAE1F272A5046006268D5 /* unlit.metal in Sources */,
+				040C60762748F3C500170B6A /* Skeleton.swift in Sources */,
 				041BAE5B272A510C006268D5 /* Shader.swift in Sources */,
 				0486926F27374E42007B8DFE /* allocator.cc in Sources */,
 				041BAEFB272B74A3006268D5 /* PhysXPlaneColliderShape.swift in Sources */,
@@ -3151,6 +3176,7 @@
 				041BAE6B272A5111006268D5 /* DiffuseMode.swift in Sources */,
 				041BAE80272A513B006268D5 /* PhysicsMaterialCombineMode.swift in Sources */,
 				041BAEB8272A5166006268D5 /* LiteUpdateFlag.swift in Sources */,
+				040C606B2748F30A00170B6A /* animation_optimizer.swift in Sources */,
 				042F0DC727351DDD00FF4A26 /* SkeletonMaterial.swift in Sources */,
 				041BAE30272A50E6006268D5 /* Matrix.swift in Sources */,
 				041BAE27272A50D9006268D5 /* BackgroundMode.swift in Sources */,
