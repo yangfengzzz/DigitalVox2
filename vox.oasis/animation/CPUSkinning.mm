@@ -73,5 +73,66 @@
     return ltm_job.Run();
 }
 
+- (bool)OnInitialize:(NSString *)OPTIONS_skeleton :(NSString *)OPTIONS_animation :(NSString *)OPTIONS_mesh {
+    // Reading skeleton.
+    if (!ozz::skinning::LoadSkeleton([OPTIONS_skeleton cStringUsingEncoding:NSUTF8StringEncoding], &skeleton_)) {
+        return false;
+    }
+
+    // Reading animation.
+    if (!ozz::skinning::LoadAnimation([OPTIONS_animation cStringUsingEncoding:NSUTF8StringEncoding], &animation_)) {
+        return false;
+    }
+
+    // Skeleton and animation needs to match.
+    if (skeleton_.num_joints() != animation_.num_tracks()) {
+        ozz::log::Err() << "The provided animation doesn't match skeleton "
+                           "(joint count mismatch)."
+                        << std::endl;
+        return false;
+    }
+
+    // Allocates runtime buffers.
+    const int num_soa_joints = skeleton_.num_soa_joints();
+    locals_.resize(num_soa_joints);
+    const int num_joints = skeleton_.num_joints();
+    models_.resize(num_joints);
+
+    // Allocates a cache that matches animation requirements.
+    cache_.Resize(num_joints);
+
+    // Reading skinned meshes.
+    if (!ozz::skinning::LoadMeshes([OPTIONS_mesh cStringUsingEncoding:NSUTF8StringEncoding], &meshes_)) {
+        return false;
+    }
+
+    // Computes the number of skinning matrices required to skin all meshes.
+    // A mesh is skinned by only a subset of joints, so the number of skinning
+    // matrices might be less that the number of skeleton joints.
+    // Mesh::joint_remaps is used to know how to order skinning matrices. So the
+    // number of matrices required is the size of joint_remaps.
+    size_t num_skinning_matrices = 0;
+    for (const ozz::skinning::Mesh &mesh: meshes_) {
+        num_skinning_matrices =
+                ozz::math::Max(num_skinning_matrices, mesh.joint_remaps.size());
+    }
+
+    // Allocates skinning matrices.
+    skinning_matrices_.resize(num_skinning_matrices);
+
+    // Check the skeleton matches with the mesh, especially that the mesh
+    // doesn't expect more joints than the skeleton has.
+    for (const ozz::skinning::Mesh &mesh: meshes_) {
+        if (num_joints < mesh.highest_joint_index()) {
+            ozz::log::Err() << "The provided mesh doesn't match skeleton "
+                               "(joint count mismatch)."
+                            << std::endl;
+            return false;
+        }
+    }
+
+    return true;
+}
+
 
 @end
