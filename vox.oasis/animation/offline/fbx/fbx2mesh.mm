@@ -854,4 +854,126 @@ bool StripWeights(Mesh *_mesh) {
 
 @implementation FBX2Mesh
 
+- (bool)LoadMesh:(const NSString *)_filename :(const NSString *)_skeleton {
+    int max_influences = 0;
+    bool split = true;
+    const char *name = [_filename cStringUsingEncoding:NSUTF8StringEncoding];
+    const char *skel = [_skeleton cStringUsingEncoding:NSUTF8StringEncoding];
+
+    // Opens skeleton file.
+    ozz::animation::Skeleton skeleton;
+    {
+        std::cout << "Loading skeleton archive " << skel << "." << std::endl;
+        ozz::io::File file(skel, "rb");
+        if (!file.opened()) {
+            std::cerr << "Failed to open skeleton file " << skel << "." << std::endl;
+            return false;
+        }
+        ozz::io::IArchive archive(&file);
+        if (!archive.TestTag<ozz::animation::Skeleton>()) {
+            std::cerr << "Failed to load skeleton instance from file " << skel << "." << std::endl;
+            return false;
+        }
+
+        // Once the tag is validated, reading cannot fail.
+        archive >> skeleton;
+    }
+
+    // Import Fbx content.
+    ozz::animation::offline::fbx::FbxManagerInstance fbx_manager;
+    ozz::animation::offline::fbx::FbxDefaultIOSettings settings(fbx_manager);
+    ozz::animation::offline::fbx::FbxSceneLoader scene_loader(name, "", fbx_manager, settings);
+    if (!scene_loader.scene()) {
+        std::cerr << "Failed to import file " << name << "." << std::endl;
+        return EXIT_FAILURE;
+    }
+
+    const int num_meshes = scene_loader.scene()->GetSrcObjectCount<FbxMesh>();
+    if (num_meshes == 0) {
+        std::cerr << "No mesh to process in this file: "
+                  << name << "." << std::endl;
+        return false;
+    } else if (num_meshes > 1) {
+        std::cerr << "There's more than one mesh in the file: "
+                  << name << ". All (" << num_meshes
+                  << ") meshes will be concatenated to the output file."
+                  << std::endl;
+    }
+
+    {  // Clean and triangulates the scene.
+        std::cout << "Triangulating scene." << std::endl;
+        FbxGeometryConverter converter(fbx_manager);
+        converter.RemoveBadPolygonsFromMeshes(scene_loader.scene());
+        if (!converter.Triangulate(scene_loader.scene(), true)) {
+            std::cerr << "Failed to triangulating meshes." << std::endl;
+            return false;
+        }
+    }
+
+    // Take all meshes
+    ozz::vector<Mesh> meshes;
+    meshes.resize(num_meshes);
+
+    for (int m = 0; m < num_meshes; ++m) {
+        FbxMesh *mesh = scene_loader.scene()->GetSrcObject<FbxMesh>(m);
+
+        // Allocates output mesh.
+        Mesh &output_mesh = meshes[m];
+        output_mesh.parts.resize(1);
+
+        ControlPointsRemap remap;
+        if (!BuildVertices(mesh, scene_loader.converter(), &remap, &output_mesh)) {
+            std::cerr << "Failed to read vertices." << std::endl;
+            return false;
+        }
+
+        // Finds skinning informations
+        if (mesh->GetDeformerCount(FbxDeformer::eSkin) > 0) {
+            if (!BuildSkin(mesh, scene_loader.converter(), remap, skeleton,
+                    &output_mesh)) {
+                std::cerr << "Failed to read skinning data." << std::endl;
+                return false;
+            }
+
+            // Limiting number of joint influences per vertex.
+            if (max_influences > 0) {
+                Mesh partitioned_meshes;
+                if (!LimitInfluences(output_mesh, max_influences)) {
+                    std::cerr << "Failed to limit number of joint influences."
+                              << std::endl;
+                    return false;
+                }
+            }
+
+            // Remap joint indices. The mesh might not use all skeleton joints, so
+            // this function remaps joint indices to the subset of used joints. It
+            // also reoders inverse bin pose matrices.
+            if (!RemapIndices(&output_mesh)) {
+                std::cerr << "Failed to remap joint indices." << std::endl;
+                return false;
+            }
+
+            // Split the mesh if option is true (default)
+            if (split) {
+                Mesh partitioned_meshes;
+                if (!SplitParts(output_mesh, &partitioned_meshes)) {
+                    std::cerr << "Failed to partitioned meshes." << std::endl;
+                    return false;
+                }
+
+                // Copy partitioned mesh back to the output.
+                output_mesh = partitioned_meshes;
+            }
+
+            if (!StripWeights(&output_mesh)) {
+                std::cerr << "Failed to strip weights." << std::endl;
+                return false;
+            }
+
+            assert(max_influences <= 0 || output_mesh.max_influences_count() <= max_influences);
+        }
+    }
+
+    return true;
+}
 @end
