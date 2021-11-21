@@ -36,60 +36,55 @@
 #include "ozz/base/maths/simd_math_archive.h"
 
 namespace ozz {
-namespace io {
+    namespace io {
+        void Extern<skinning::Mesh::Part>::Save(OArchive &_archive,
+                const skinning::Mesh::Part *_parts, size_t _count) {
+            for (size_t i = 0; i < _count; ++i) {
+                const skinning::Mesh::Part &part = _parts[i];
+                _archive << part.positions;
+                _archive << part.normals;
+                _archive << part.tangents;
+                _archive << part.uvs;
+                _archive << part.colors;
+                _archive << part.joint_indices;
+                _archive << part.joint_weights;
+            }
+        }
 
-void Extern<skinning::Mesh::Part>::Save(OArchive& _archive,
-                                      const skinning::Mesh::Part* _parts,
-                                      size_t _count) {
-  for (size_t i = 0; i < _count; ++i) {
-    const skinning::Mesh::Part& part = _parts[i];
-    _archive << part.positions;
-    _archive << part.normals;
-    _archive << part.tangents;
-    _archive << part.uvs;
-    _archive << part.colors;
-    _archive << part.joint_indices;
-    _archive << part.joint_weights;
-  }
-}
+        void Extern<skinning::Mesh::Part>::Load(IArchive &_archive,
+                skinning::Mesh::Part *_parts, size_t _count, uint32_t _version) {
+            (void) _version;
+            for (size_t i = 0; i < _count; ++i) {
+                skinning::Mesh::Part &part = _parts[i];
+                _archive >> part.positions;
+                _archive >> part.normals;
+                _archive >> part.tangents;
+                _archive >> part.uvs;
+                _archive >> part.colors;
+                _archive >> part.joint_indices;
+                _archive >> part.joint_weights;
+            }
+        }
 
-void Extern<skinning::Mesh::Part>::Load(IArchive& _archive,
-                                        skinning::Mesh::Part* _parts, size_t _count,
-                                      uint32_t _version) {
-  (void)_version;
-  for (size_t i = 0; i < _count; ++i) {
-      skinning::Mesh::Part& part = _parts[i];
-    _archive >> part.positions;
-    _archive >> part.normals;
-    _archive >> part.tangents;
-    _archive >> part.uvs;
-    _archive >> part.colors;
-    _archive >> part.joint_indices;
-    _archive >> part.joint_weights;
-  }
-}
+        void Extern<skinning::Mesh>::Save(OArchive &_archive, const skinning::Mesh *_meshes, size_t _count) {
+            for (size_t i = 0; i < _count; ++i) {
+                const skinning::Mesh &mesh = _meshes[i];
+                _archive << mesh.parts;
+                _archive << mesh.triangle_indices;
+                _archive << mesh.joint_remaps;
+                _archive << mesh.inverse_bind_poses;
+            }
+        }
 
-void Extern<skinning::Mesh>::Save(OArchive& _archive, const skinning::Mesh* _meshes,
-                                size_t _count) {
-  for (size_t i = 0; i < _count; ++i) {
-    const skinning::Mesh& mesh = _meshes[i];
-    _archive << mesh.parts;
-    _archive << mesh.triangle_indices;
-    _archive << mesh.joint_remaps;
-    _archive << mesh.inverse_bind_poses;
-  }
-}
-
-void Extern<skinning::Mesh>::Load(IArchive& _archive, skinning::Mesh* _meshes,
-                                size_t _count, uint32_t _version) {
-  (void)_version;
-  for (size_t i = 0; i < _count; ++i) {
-      skinning::Mesh& mesh = _meshes[i];
-    _archive >> mesh.parts;
-    _archive >> mesh.triangle_indices;
-    _archive >> mesh.joint_remaps;
-    _archive >> mesh.inverse_bind_poses;
-  }
-}
-}  // namespace io
+        void Extern<skinning::Mesh>::Load(IArchive &_archive, skinning::Mesh *_meshes, size_t _count, uint32_t _version) {
+            (void) _version;
+            for (size_t i = 0; i < _count; ++i) {
+                skinning::Mesh &mesh = _meshes[i];
+                _archive >> mesh.parts;
+                _archive >> mesh.triangle_indices;
+                _archive >> mesh.joint_remaps;
+                _archive >> mesh.inverse_bind_poses;
+            }
+        }
+    }  // namespace io
 }  // namespace ozz

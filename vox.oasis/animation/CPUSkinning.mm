@@ -19,10 +19,14 @@
 #include "ozz/base/maths/soa_transform.h"
 #include "ozz/base/maths/vec_float.h"
 #include "ozz/options/options.h"
-
+#include "utils.h"
 #include "mesh.h"
 
 @implementation CPUSkinning {
+    // Playback animation controller. This is a utility class that helps with
+    // controlling animation playback time.
+    ozz::skinning::PlaybackController controller_;
+
     // Runtime skeleton.
     ozz::animation::Skeleton skeleton_;
 
@@ -46,6 +50,28 @@
     ozz::vector<ozz::skinning::Mesh> meshes_;
 }
 
+// Updates current animation time and skeleton pose.
+- (bool)OnUpdate:(float)_dt {
+    // Updates current animation time.
+    controller_.Update(animation_, _dt);
+
+    // Samples optimized animation at t = animation_time_.
+    ozz::animation::SamplingJob sampling_job;
+    sampling_job.animation = &animation_;
+    sampling_job.cache = &cache_;
+    sampling_job.ratio = controller_.time_ratio();
+    sampling_job.output = make_span(locals_);
+    if (!sampling_job.Run()) {
+        return false;
+    }
+
+    // Converts from local space to model space matrices.
+    ozz::animation::LocalToModelJob ltm_job;
+    ltm_job.skeleton = &skeleton_;
+    ltm_job.input = make_span(locals_);
+    ltm_job.output = make_span(models_);
+    return ltm_job.Run();
+}
 
 
 @end

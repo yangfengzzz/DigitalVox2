@@ -13,7 +13,6 @@
 @interface CPUSkinning : NSObject
 
 
-
 @end
 
 #endif /* CPUSkinning_h */

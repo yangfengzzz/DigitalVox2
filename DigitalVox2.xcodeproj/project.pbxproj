@@ -15,6 +15,7 @@
 		040C608C2749E52800170B6A /* Doggy.fbx in Resources */ = {isa = PBXBuildFile; fileRef = 040C608B2749E52800170B6A /* Doggy.fbx */; };
 		040C60A72749FA6000170B6A /* CPUSkinning.mm in Sources */ = {isa = PBXBuildFile; fileRef = 040C60A62749FA6000170B6A /* CPUSkinning.mm */; };
 		040C60AA2749FC8800170B6A /* mesh.cc in Sources */ = {isa = PBXBuildFile; fileRef = 040C60A82749FC8800170B6A /* mesh.cc */; };
+		040C60AD2749FE4B00170B6A /* utils.cc in Sources */ = {isa = PBXBuildFile; fileRef = 040C60AC2749FE4B00170B6A /* utils.cc */; };
 		0419B6D626E6E30300005FEA /* instance_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D526E6E30300005FEA /* instance_data.swift */; };
 		0419B6D826E6E5CE00005FEA /* shading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D726E6E5CE00005FEA /* shading.swift */; };
 		0419B6DA26E6EA3900005FEA /* trace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D926E6EA3900005FEA /* trace.swift */; };
@@ -475,6 +476,8 @@
 		040C60A62749FA6000170B6A /* CPUSkinning.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CPUSkinning.mm; sourceTree = "<group>"; };
 		040C60A82749FC8800170B6A /* mesh.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mesh.cc; sourceTree = "<group>"; };
 		040C60A92749FC8800170B6A /* mesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mesh.h; sourceTree = "<group>"; };
+		040C60AB2749FE4B00170B6A /* utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
+		040C60AC2749FE4B00170B6A /* utils.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = utils.cc; sourceTree = "<group>"; };
 		0413286A26DF86DC000A4F4E /* BoundingBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingBox.swift; sourceTree = "<group>"; };
 		0413286C26E06648000A4F4E /* BoundingSphere.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingSphere.swift; sourceTree = "<group>"; };
 		0413286E26E06A40000A4F4E /* Plane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plane.swift; sourceTree = "<group>"; };
@@ -1767,6 +1770,8 @@
 				04CB88CD27321C2000B0E398 /* Animator.swift */,
 				04CB88CB27321C1800B0E398 /* AnimationClip.swift */,
 				04CB88C927321C0000B0E398 /* Animation.swift */,
+				040C60AB2749FE4B00170B6A /* utils.h */,
+				040C60AC2749FE4B00170B6A /* utils.cc */,
 				040C60A92749FC8800170B6A /* mesh.h */,
 				040C60A82749FC8800170B6A /* mesh.cc */,
 				040C60A52749FA5700170B6A /* CPUSkinning.h */,
@@ -2563,6 +2568,7 @@
 				041BAE04272A500F006268D5 /* DisorderedArray.swift in Sources */,
 				041BAE11272A500F006268D5 /* InputManager.swift in Sources */,
 				0486929627381392007B8DFE /* imgui.cpp in Sources */,
+				040C60AD2749FE4B00170B6A /* utils.cc in Sources */,
 				04AFAC37273A7E52003E5928 /* IBoxCharacterController.swift in Sources */,
 				04AFAC19273A3C48003E5928 /* PhysXHingeJoint.swift in Sources */,
 				041BAF14272B8A5B006268D5 /* PhysXPhysicsManager.swift in Sources */,
