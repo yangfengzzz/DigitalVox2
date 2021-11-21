@@ -52,13 +52,6 @@
 #include "CJointBridge.h"
 #include "CCharacterBridge.h"
 
-#include "csimd_math.h"
-#include "soa_float_type.h"
-#include "animation_keyframe.h"
-#include "soa_skeleton.h"
-#include "soa_animation.h"
-#include "fbx2mesh.h"
-
 #include "imgui_bridge.h"
 
 #endif /* Common_h */

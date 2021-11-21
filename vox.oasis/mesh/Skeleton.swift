@@ -8,23 +8,19 @@
 import MetalKit
 
 struct Skeleton {
-    let parentIndices: [Int]
+    let parentIndices: [Int?]
     let jointPaths: [String]
     let bindTransforms: [float4x4]
     let restTransforms: [float4x4]
     let jointMatrixPaletteBuffer: MTLBuffer?
 
-    static func getParentIndices(jointPaths: [String]) -> [Int] {
-        var parentIndices = [Int](repeating: SoaSkeleton.Constants.kNoParent.rawValue, count: jointPaths.count)
+    static func getParentIndices(jointPaths: [String]) -> [Int?] {
+        var parentIndices = [Int?](repeating: nil, count: jointPaths.count)
         for (jointIndex, jointPath) in jointPaths.enumerated() {
             let url = URL(fileURLWithPath: jointPath)
             let parentPath = url.deletingLastPathComponent().relativePath
-            let parentIndex = jointPaths.firstIndex {
+            parentIndices[jointIndex] = jointPaths.firstIndex {
                 $0 == parentPath
-            }
-
-            if parentIndex != nil {
-                parentIndices[jointIndex] = parentIndex!
             }
         }
         return parentIndices
@@ -43,7 +39,8 @@ struct Skeleton {
         jointMatrixPaletteBuffer = engine._hardwareRenderer.device.makeBuffer(length: bufferSize, options: [])
     }
 
-    func updatePose(animationClip: AnimationClip?, at time: Float) {
+    func updatePose(animationClip: AnimationClip,
+                    at time: Float) {
         guard let paletteBuffer = jointMatrixPaletteBuffer else {
             return
         }
@@ -55,11 +52,14 @@ struct Skeleton {
         var poses = [float4x4](repeatElement(.identity(),
                 count: jointPaths.count))
         for (jointIndex, jointPath) in jointPaths.enumerated() {
-            let pose = animationClip?.getPose(at: time * animationClip!.speed, jointPath: jointPath) ?? restTransforms[jointIndex]
+            let pose =
+                    animationClip.getPose(at: time * animationClip.speed,
+                            jointPath: jointPath)
+                            ?? restTransforms[jointIndex]
 
             let parentPose: float4x4
-            if parentIndices[jointIndex] != SoaSkeleton.Constants.kNoParent.rawValue {
-                parentPose = poses[parentIndices[jointIndex]]
+            if let parentIndex = parentIndices[jointIndex] {
+                parentPose = poses[parentIndex]
             } else {
                 parentPose = .identity()
             }

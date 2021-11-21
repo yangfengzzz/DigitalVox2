@@ -33,3 +33,83 @@ class AnimationClip {
         return pose
     }
 }
+
+// MARK:- float4x4
+extension float4x4 {
+  // MARK:- Translate
+  init(translation: float3) {
+    let matrix = float4x4(
+      [            1,             0,             0, 0],
+      [            0,             1,             0, 0],
+      [            0,             0,             1, 0],
+      [translation.x, translation.y, translation.z, 1]
+    )
+    self = matrix
+  }
+  
+  // MARK:- Scale
+  init(scaling: float3) {
+    let matrix = float4x4(
+      [scaling.x,         0,         0, 0],
+      [        0, scaling.y,         0, 0],
+      [        0,         0, scaling.z, 0],
+      [        0,         0,         0, 1]
+    )
+    self = matrix
+  }
+  
+  init(scaling: Float) {
+    self = matrix_identity_float4x4
+    columns.3.w = 1 / scaling
+  }
+  
+  // MARK:- Rotate
+  init(rotationX angle: Float) {
+    let matrix = float4x4(
+      [1,           0,          0, 0],
+      [0,  cos(angle), sin(angle), 0],
+      [0, -sin(angle), cos(angle), 0],
+      [0,           0,          0, 1]
+    )
+    self = matrix
+  }
+  
+  init(rotationY angle: Float) {
+    let matrix = float4x4(
+      [cos(angle), 0, -sin(angle), 0],
+      [         0, 1,           0, 0],
+      [sin(angle), 0,  cos(angle), 0],
+      [         0, 0,           0, 1]
+    )
+    self = matrix
+  }
+  
+  init(rotationZ angle: Float) {
+    let matrix = float4x4(
+      [ cos(angle), sin(angle), 0, 0],
+      [-sin(angle), cos(angle), 0, 0],
+      [          0,          0, 1, 0],
+      [          0,          0, 0, 1]
+    )
+    self = matrix
+  }
+  
+  init(rotation angle: float3) {
+    let rotationX = float4x4(rotationX: angle.x)
+    let rotationY = float4x4(rotationY: angle.y)
+    let rotationZ = float4x4(rotationZ: angle.z)
+    self = rotationX * rotationY * rotationZ
+  }
+  
+  init(rotationYXZ angle: float3) {
+    let rotationX = float4x4(rotationX: angle.x)
+    let rotationY = float4x4(rotationY: angle.y)
+    let rotationZ = float4x4(rotationZ: angle.z)
+    self = rotationY * rotationX * rotationZ
+  }
+  
+  // MARK:- Identity
+  static func identity() -> float4x4 {
+    matrix_identity_float4x4
+  }
+}

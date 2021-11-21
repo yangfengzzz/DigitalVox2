@@ -9,39 +9,28 @@ import Metal
 
 class SkinnedMeshRenderer: MeshRenderer {
     private static var _jointMatrixProperty = Shader.getPropertyByName("u_jointMatrix")
-    var bindTransforms: [float4x4] = []
-    private var _jointMatrixPaletteBuffer: MTLBuffer?
-    
-    func loadBindPose(animationBindComponent: MDLAnimationBindComponent) {
-        guard let skeleton = animationBindComponent.skeleton else {
-            return
-        }
-        bindTransforms = skeleton.jointBindTransforms.float4x4Array
-    }
-    
-    var jointMatrixPaletteBuffer: MTLBuffer? {
+
+    private var _skeleton: Skeleton?
+
+    var skeleton: Skeleton? {
         get {
-            _jointMatrixPaletteBuffer
+            _skeleton
         }
         set {
-            _jointMatrixPaletteBuffer = newValue
-            if let paletteBuffer = _jointMatrixPaletteBuffer {
+            _skeleton = newValue
+            if let paletteBuffer = skeleton?.jointMatrixPaletteBuffer {
                 shaderData.enableMacro(HAS_SKIN)
                 shaderData.setBuffer(SkinnedMeshRenderer._jointMatrixProperty, paletteBuffer)
             }
         }
     }
-    
-    func updateJoint(_ modelMatrix:[matrix_float4x4]) {
-        guard let paletteBuffer = jointMatrixPaletteBuffer else {
-            return
-        }
-        var palettePointer = paletteBuffer.contents().bindMemory(to: float4x4.self, capacity: modelMatrix.count)
-        palettePointer.initialize(repeating: .identity(), count: modelMatrix.count)
-        
-        for i in 0..<modelMatrix.count {
-            palettePointer.pointee = modelMatrix[i] * bindTransforms[i].inverse
-            palettePointer = palettePointer.advanced(by: 1)
+
+    override func update(_ deltaTime: Float) {
+        super.update(deltaTime)
+        if _skeleton != nil {
+            let animator: Animator = entity.getComponent()
+            skeleton!.updatePose(animationClip: animator.currentAnimation!,
+                    at: animator.currentTime)
         }
     }
 }
