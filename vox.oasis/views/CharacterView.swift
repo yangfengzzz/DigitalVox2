@@ -123,12 +123,12 @@ class CharacterScript: Script {
 struct CharacterView: View {
     let canvas: Canvas
     let engine: Engine
-    let usdzLoader: USDZAssetsLoader
+    let fbxLoader: FBXAssetsLoader
 
     init() {
         canvas = Canvas()
         engine = Engine(canvas, MetalRenderer())
-        usdzLoader = USDZAssetsLoader(engine)
+        fbxLoader = FBXAssetsLoader(engine)
 
         let scene = engine.sceneManager.activeScene
         let rootEntity = scene!.createRootEntity()
@@ -145,22 +145,16 @@ struct CharacterView: View {
         cameraEntity.transform.lookAt(worldPosition: Vector3(0, 0, 0), worldUp: nil)
         let _: OrbitControl = cameraEntity.addComponent()
 
-        usdzLoader.load(with: "Doggy.usdz") { entities in
-            let character = entities[0]
-            character.transform.setScale(x: 0.1, y: 0.1, z: 0.1)
-            character.transform.setPosition(x: 0, y: -3, z: 0)
-            
-            let s = SoaSkeleton()
-            s.load("doggy_skeleton.ozz")
+        let s = SoaSkeleton()
+        s.load("doggy_skeleton.ozz")
 
-            let a = SoaAnimation()
-            a.load("Run.ozz")
-            
-            let script: CharacterScript = character.addComponent()
-            script.load(s, a, cameraEntity)
-            
-            rootEntity.addChild(character)
-        }
+        let a = SoaAnimation()
+        a.load("Run.ozz")
+
+        let character = fbxLoader.load("Doggy.fbx", "doggy_skeleton.ozz")
+        let script: CharacterScript = character.addComponent()
+        script.load(s, a, cameraEntity)
+        rootEntity.addChild(character)
     }
 
     var body: some View {

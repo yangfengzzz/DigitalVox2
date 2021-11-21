@@ -57,6 +57,7 @@
 #include "animation_keyframe.h"
 #include "soa_skeleton.h"
 #include "soa_animation.h"
+#include "fbx2mesh.h"
 
 #include "imgui_bridge.h"
 

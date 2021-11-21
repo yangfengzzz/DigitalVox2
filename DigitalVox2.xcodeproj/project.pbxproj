@@ -67,7 +67,8 @@
 		040C60822748F4FA00170B6A /* fbx.cc in Sources */ = {isa = PBXBuildFile; fileRef = 040C607B2748F4FA00170B6A /* fbx.cc */; };
 		040C60872748F7AB00170B6A /* fbx2mesh.mm in Sources */ = {isa = PBXBuildFile; fileRef = 040C5FE32745D11C00170B6A /* fbx2mesh.mm */; };
 		040C60882749D5F700170B6A /* mesh_io.mm in Sources */ = {isa = PBXBuildFile; fileRef = 040C5FE02745CF8800170B6A /* mesh_io.mm */; };
-		0413755127412F6200FDEF5C /* Doggy.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 0413755027412F6200FDEF5C /* Doggy.usdz */; };
+		040C608A2749E2CA00170B6A /* FBXAssetsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040C60892749E2CA00170B6A /* FBXAssetsLoader.swift */; };
+		040C608C2749E52800170B6A /* Doggy.fbx in Resources */ = {isa = PBXBuildFile; fileRef = 040C608B2749E52800170B6A /* Doggy.fbx */; };
 		0419B6D626E6E30300005FEA /* instance_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D526E6E30300005FEA /* instance_data.swift */; };
 		0419B6D826E6E5CE00005FEA /* shading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D726E6E5CE00005FEA /* shading.swift */; };
 		0419B6DA26E6EA3900005FEA /* trace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D926E6EA3900005FEA /* trace.swift */; };
@@ -597,6 +598,8 @@
 		040C604E2748987700170B6A /* sampling_job.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sampling_job.h; sourceTree = "<group>"; };
 		040C60792748F4FA00170B6A /* fbx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fbx.h; sourceTree = "<group>"; };
 		040C607B2748F4FA00170B6A /* fbx.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fbx.cc; sourceTree = "<group>"; };
+		040C60892749E2CA00170B6A /* FBXAssetsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBXAssetsLoader.swift; sourceTree = "<group>"; };
+		040C608B2749E52800170B6A /* Doggy.fbx */ = {isa = PBXFileReference; lastKnownFileType = file; path = Doggy.fbx; sourceTree = "<group>"; };
 		0413286A26DF86DC000A4F4E /* BoundingBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingBox.swift; sourceTree = "<group>"; };
 		0413286C26E06648000A4F4E /* BoundingSphere.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingSphere.swift; sourceTree = "<group>"; };
 		0413286E26E06A40000A4F4E /* Plane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plane.swift; sourceTree = "<group>"; };
@@ -619,7 +622,6 @@
 		0413289E26E0CBE7000A4F4E /* ShaderSimple.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = ShaderSimple.metal; sourceTree = "<group>"; };
 		041328A026E19EE1000A4F4E /* geometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = geometry.swift; sourceTree = "<group>"; };
 		0413754E27412EE500FDEF5C /* CharacterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterView.swift; sourceTree = "<group>"; };
-		0413755027412F6200FDEF5C /* Doggy.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = Doggy.usdz; sourceTree = "<group>"; };
 		04198A08271D3AF800871A26 /* GLTFTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLTFTypes.h; sourceTree = "<group>"; };
 		04198A09271D3AF800871A26 /* GLTFAssetReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLTFAssetReader.m; sourceTree = "<group>"; };
 		04198A0A271D3AF800871A26 /* cgltf_write.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cgltf_write.h; sourceTree = "<group>"; };
@@ -1449,6 +1451,7 @@
 				045B065A27295772003E4B68 /* DisorderedArray.swift */,
 				04DB2A4026DF1DF100C15850 /* design */,
 				04E28C3226ECE6C5003A3C3B /* rhi-metal */,
+				040C60892749E2CA00170B6A /* FBXAssetsLoader.swift */,
 				0458275A26F6EF0E0056D134 /* USDZAssetsLoader.swift */,
 				04198A21271D697500871A26 /* GLTFAssetLoader.swift */,
 				041BADD9272A4FA5006268D5 /* Assets.xcassets */,
@@ -2373,10 +2376,10 @@
 		04CE366C27413EC500204B8E /* Doggy */ = {
 			isa = PBXGroup;
 			children = (
-				04CE36712741414700204B8E /* Run.ozz */,
+				040C608B2749E52800170B6A /* Doggy.fbx */,
 				04CE366D27413F0900204B8E /* doggy_skeleton.ozz */,
+				04CE36712741414700204B8E /* Run.ozz */,
 				04CE366E27413F0900204B8E /* Hit.ozz */,
-				0413755027412F6200FDEF5C /* Doggy.usdz */,
 			);
 			path = Doggy;
 			sourceTree = "<group>";
@@ -2781,7 +2784,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				048692852737C27B007B8DFE /* animation.ozz in Resources */,
-				0413755127412F6200FDEF5C /* Doggy.usdz in Resources */,
 				041BAE78272A512B006268D5 /* README.md in Resources */,
 				041BAED0272A6E0A006268D5 /* Mando_Helmet.usdz in Resources */,
 				0486928327376FCC007B8DFE /* skeleton.ozz in Resources */,
@@ -2792,6 +2794,7 @@
 				041BADDA272A4FA5006268D5 /* Assets.xcassets in Resources */,
 				041BAECD272A6E0A006268D5 /* cottage2.obj in Resources */,
 				041BAEC8272A6E00006268D5 /* Textures.xcassets in Resources */,
+				040C608C2749E52800170B6A /* Doggy.fbx in Resources */,
 				041BAEC9272A6E0A006268D5 /* cottage2.mtl in Resources */,
 				04CE367027413F0900204B8E /* Hit.ozz in Resources */,
 				041BAECF272A6E0A006268D5 /* cottage1.mtl in Resources */,
@@ -3019,6 +3022,7 @@
 				041BAE77272A512B006268D5 /* GLTFSceneKit.m in Sources */,
 				041BAE0F272A500F006268D5 /* Script.swift in Sources */,
 				040C601E2747F41F00170B6A /* soa_quaternion.swift in Sources */,
+				040C608A2749E2CA00170B6A /* FBXAssetsLoader.swift in Sources */,
 				040C60872748F7AB00170B6A /* fbx2mesh.mm in Sources */,
 				04AFAC5C273B3FAC003E5928 /* BoxCharacterControllerDesc.swift in Sources */,
 				041BAE32272A50E6006268D5 /* Quaternion.swift in Sources */,
