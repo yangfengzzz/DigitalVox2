@@ -137,7 +137,8 @@ private:
     // The mesh used by the sample.
     ozz::vector<ozz::skinning::Mesh> meshes_;
 
-    ScratchBuffer scratch_buffer_;
+    ScratchBuffer vbo_buffer_;
+    ScratchBuffer uv_buffer_;
 }
 
 
@@ -266,7 +267,7 @@ private:
     const int32_t normals_stride = positions_stride;
     const int32_t tangents_stride = positions_stride;
     const int32_t skinned_data_size = vertex_count * positions_stride;
-    void *vbo_map = scratch_buffer_.Resize(skinned_data_size);
+    void *vbo_map = vbo_buffer_.Resize(skinned_data_size);
     vertexDescriptor.attributes[0] = [[MDLVertexAttribute alloc] initWithName:MDLVertexAttributePosition
                                                                        format:MDLVertexFormatFloat3 offset:positions_offset bufferIndex:0];
     vertexDescriptor.attributes[1] = [[MDLVertexAttribute alloc] initWithName:MDLVertexAttributeNormal
@@ -281,7 +282,7 @@ private:
     const int32_t uvs_offset = 0;
     const int32_t uvs_stride = sizeof(float) * 2;
     const int32_t uvs_size = vertex_count * uvs_stride;
-    void *uv_map = scratch_buffer_.Resize(uvs_size);
+    void *uv_map = uv_buffer_.Resize(uvs_size);
     vertexDescriptor.attributes[3] = [[MDLVertexAttribute alloc] initWithName:MDLVertexAttributeTextureCoordinate
                                                                        format:MDLVertexFormatFloat2 offset:uvs_offset bufferIndex:1];
     vertexDescriptor.layouts[0] = [[MDLVertexBufferLayout alloc] initWithStride:positions_stride];
@@ -402,7 +403,7 @@ private:
         if (true) {
             if (part_vertex_count == part.uvs.size() / ozz::skinning::Mesh::Part::kUVsCpnts) {
                 // Optimal path used when the right number of uvs is provided.
-                memcpy(ozz::PointerStride(vbo_map, uvs_offset + processed_vertex_count * uvs_stride),
+                memcpy(ozz::PointerStride(uv_map, uvs_offset + processed_vertex_count * uvs_stride),
                         array_begin(part.uvs), part_vertex_count * uvs_stride);
             } else {
                 // Un-optimal path used when the right number of uvs is not provided.
@@ -410,7 +411,7 @@ private:
                 for (size_t j = 0; j < part_vertex_count;
                      j += OZZ_ARRAY_SIZE(kDefaultUVsArray)) {
                     const size_t this_loop_count = ozz::math::Min(OZZ_ARRAY_SIZE(kDefaultUVsArray), part_vertex_count - j);
-                    memcpy(ozz::PointerStride(vbo_map, uvs_offset + (processed_vertex_count + j) * uvs_stride),
+                    memcpy(ozz::PointerStride(uv_map, uvs_offset + (processed_vertex_count + j) * uvs_stride),
                             kDefaultUVsArray, uvs_stride * this_loop_count);
                 }
             }

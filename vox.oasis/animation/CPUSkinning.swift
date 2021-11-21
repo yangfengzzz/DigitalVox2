@@ -9,7 +9,7 @@ import Foundation
 
 class CPUSkinning: Script {
     let skinning = CCPUSkinning()
-    var meshes: [BufferMesh] = []
+    var renderers: [MeshRenderer] = []
 
     required init(_ entity: Entity) {
         super.init(entity)
@@ -52,15 +52,15 @@ class CPUSkinning: Script {
                     MeshBuffer(indexBuffer, indexCount * MemoryLayout<UInt16>.stride, .index),
                     .uint16, indexCount, .triangle)
 
-            if index < meshes.count {
-                meshes[index] = mesh
+            if index < renderers.count {
+                renderers[index].mesh = mesh
             } else {
                 let child = entity.createChild("part\(index)")
                 let renderer: MeshRenderer = child.addComponent()
                 renderer.mesh = mesh
                 renderer.setMaterial(SkinMaterial(_engine))
 
-                meshes.append(mesh)
+                renderers.append(renderer)
             }
             index += 1
         }

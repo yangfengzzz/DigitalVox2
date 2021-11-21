@@ -33,8 +33,7 @@ vertex VertexOut skin_vertex(const VertexIn vertexIn [[stage_in]],
                                constant matrix_float4x4 &u_MVPMat [[buffer(5)]],
                                constant matrix_float4x4 &u_normalMat [[buffer(6)]],
                                constant float3 &u_cameraPos [[buffer(7)]],
-                               constant float4 &u_tilingOffset [[buffer(8)]],
-                               device matrix_float4x4 *u_jointMatrix [[buffer(12), function_constant(hasSkinNotHasJointTexture)]]) {
+                               constant float4 &u_tilingOffset [[buffer(8)]]) {
     float4 position = float4(vertexIn.position, 1.0);
     float4 normal = float4(vertexIn.normal, 0);
     float4 tangent = float4(vertexIn.tangent, 0);
