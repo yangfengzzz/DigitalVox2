@@ -8,34 +8,40 @@
 import SwiftUI
 
 class CharacterScript: Script {
-    var displacement = Vector3()
+    // total
+    let displacement = Vector3()
+    // current frame
+    let currentMove = Vector3()
+    // new position
     let worldPosition = Vector3()
     
     func targetCamera(_ camera: Entity) {
         engine.canvas.registerKeyDown { [self] key in
             var forward = Vector3()
-            Vector3.subtract(left: entity.transform.position, right: camera.transform.position, out: forward)
+            _ = camera.transform.getWorldForward(forward: forward)
             forward.y = 0
             forward = forward.normalize()
             let cross = Vector3(forward.z, 0, -forward.x)
 
             switch key {
             case .w:
-                displacement = forward.negate().scale(s: 0.1)
+                displacement.x -= forward.x;
+                displacement.z -= forward.z;
                 break
             case .s:
-                displacement = forward.scale(s: 0.1)
+                displacement.x += forward.x;
+                displacement.z += forward.z;
                 break
             case .a:
-                displacement = cross.negate().scale(s: 0.1)
+                displacement.x -= cross.x;
+                displacement.z -= cross.z;
                 break
             case .d:
-                displacement = cross.scale(s: 0.1)
+                displacement.x += cross.x;
+                displacement.z += cross.z;
                 break
             case .space:
-                displacement.x = 0
-                displacement.y = 2
-                displacement.z = 0
+                displacement.y += 2
                 break
             default:
                 return
@@ -44,18 +50,32 @@ class CharacterScript: Script {
     }
 
     override func onUpdate(_ deltaTime: Float) {
-        let position = entity.transform.worldPosition
+        func movement(_ x: inout Float)->Float {
+            var subStep:Float = 0.1
+            if x < -subStep {
+                x += subStep
+                return -subStep
+            } else if x < subStep && x >= -subStep {
+                subStep = x
+                x = 0
+                return subStep
+            } else {
+                x -= subStep
+                return subStep
+            }
+        }
+        currentMove.x = movement(&displacement.x)
+        currentMove.y = movement(&displacement.y)
+        currentMove.z = movement(&displacement.z)
+                
+        let position = entity.transform.position
         
         position.cloneTo(target: worldPosition)
-        worldPosition.elements += displacement.elements;
+        worldPosition.elements += currentMove.elements;
         entity.transform.lookAt(worldPosition: worldPosition, worldUp: nil)
         
-        position.elements -= displacement.elements;
-        entity.transform.worldPosition = position
-        
-        displacement.x = 0
-        displacement.y = 0
-        displacement.z = 0
+        position.elements -= currentMove.elements;
+        entity.transform.position = position
     }
 }
 
