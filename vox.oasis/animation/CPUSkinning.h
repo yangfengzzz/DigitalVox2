@@ -10,7 +10,18 @@
 
 #import <Foundation/Foundation.h>
 
-@interface CPUSkinning : NSObject
+@class MDLVertexDescriptor;
+@protocol MTLDevice, MTLBuffer;
+
+@interface CCPUSkinning : NSObject
+
+- (bool)OnInitialize:(NSString *_Nonnull)OPTIONS_skeleton :(NSString *_Nonnull)OPTIONS_animation :(NSString *_Nonnull)OPTIONS_mesh;
+
+- (bool)OnUpdate:(float)_dt;
+
+- (bool)FreshSkinnedMesh:(id <MTLDevice> _Nonnull)device
+        :(void (^ _Nullable)(id <MTLBuffer> _Nonnull vertexBuffer, id <MTLBuffer> _Nonnull indexBuffer,
+                MDLVertexDescriptor *_Nonnull descriptor))meshInfo;
 
 
 @end

@@ -22,7 +22,8 @@
 #include "ozz/options/options.h"
 #include "utils.h"
 #include "mesh.h"
-
+#import <Metal/Metal.h>
+#import <ModelIO/ModelIO.h>
 
 namespace {
     const uint8_t kDefaultColorsArray[][4] = {
@@ -109,7 +110,7 @@ private:
     size_t size_;
 };
 
-@implementation CPUSkinning {
+@implementation CCPUSkinning {
     // Playback animation controller. This is a utility class that helps with
     // controlling animation playback time.
     ozz::skinning::PlaybackController controller_;
@@ -224,10 +225,37 @@ private:
     return true;
 }
 
+- (bool)FreshSkinnedMesh:(id <MTLDevice>)device
+        :(void (^ _Nullable)(id <MTLBuffer> _Nonnull vertexBuffer, id <MTLBuffer> _Nonnull indexBuffer,
+                MDLVertexDescriptor *descriptor))meshInfo {
+    bool success = true;
+
+    // Builds skinning matrices, based on the output of the animation stage.
+    // The mesh might not use (aka be skinned by) all skeleton joints. We use
+    // the joint remapping table (available from the mesh object) to reorder
+    // model-space matrices and build skinning ones.
+    for (const ozz::skinning::Mesh &mesh: meshes_) {
+        for (size_t i = 0; i < mesh.joint_remaps.size(); ++i) {
+            skinning_matrices_[i] =
+                    models_[mesh.joint_remaps[i]] * mesh.inverse_bind_poses[i];
+        }
+
+        // Renders skin.
+        success &= [self DrawSkinnedMesh:mesh :make_span(skinning_matrices_) :ozz::math::Float4x4::identity() :device :meshInfo];
+    }
+
+    return success;
+}
+
 - (bool)DrawSkinnedMesh:(const ozz::skinning::Mesh &)_mesh
         :(const ozz::span<ozz::math::Float4x4>)_skinning_matrices
-        :(const ozz::math::Float4x4 &)_transform {
+        :(const ozz::math::Float4x4 &)_transform
+        :(id <MTLDevice>)device
+        :(void (^ _Nullable)(id <MTLBuffer> _Nonnull vertexBuffer, id <MTLBuffer> _Nonnull indexBuffer,
+                MDLVertexDescriptor *descriptor))meshInfo {
     const int vertex_count = _mesh.vertex_count();
+
+    MDLVertexDescriptor* vertexDescriptor = [[MDLVertexDescriptor alloc]init];
 
     // Positions and normals are interleaved to improve caching while executing
     // skinning job.
@@ -238,7 +266,13 @@ private:
     const int32_t normals_stride = positions_stride;
     const int32_t tangents_stride = positions_stride;
     const int32_t skinned_data_size = vertex_count * positions_stride;
-
+    vertexDescriptor.attributes[0] = [[MDLVertexAttribute alloc]initWithName:MDLVertexAttributePosition
+                                                                      format:MDLVertexFormatFloat3 offset:positions_offset bufferIndex:0];
+    vertexDescriptor.attributes[1] = [[MDLVertexAttribute alloc]initWithName:MDLVertexAttributeNormal
+                                                                      format:MDLVertexFormatFloat3 offset:normals_offset bufferIndex:0];
+    vertexDescriptor.attributes[2] = [[MDLVertexAttribute alloc]initWithName:MDLVertexAttributeTangent
+                                                                      format:MDLVertexFormatFloat3 offset:tangents_offset bufferIndex:0];
+    
     // Colors and uvs are contiguous. They aren't transformed, so they can be
     // directly copied from source mesh which is non-interleaved as-well.
     // Colors will be filled with white if _options.colors is false.
@@ -250,7 +284,12 @@ private:
     const int32_t uvs_stride = sizeof(float) * 2;
     const int32_t uvs_size = vertex_count * uvs_stride;
     const int32_t fixed_data_size = colors_size + uvs_size;
-
+    vertexDescriptor.attributes[4] = [[MDLVertexAttribute alloc]initWithName:MDLVertexAttributeColor
+                                                                      format:MDLVertexFormatUInt4 offset:colors_offset bufferIndex:0];
+    vertexDescriptor.attributes[5] = [[MDLVertexAttribute alloc]initWithName:MDLVertexAttributeTextureCoordinate
+                                                                      format:MDLVertexFormatFloat2 offset:uvs_offset bufferIndex:0];
+    vertexDescriptor.layouts[0] = [[MDLVertexBufferLayout alloc]initWithStride: positions_stride + colors_stride + uvs_stride];
+    
     // Reallocate vertex buffer.
     const int32_t vbo_size = skinned_data_size + fixed_data_size;
     void *vbo_map = scratch_buffer_.Resize(vbo_size);
@@ -404,6 +443,11 @@ private:
         processed_vertex_count += part_vertex_count;
     }
 
+    id <MTLBuffer> vertexBuffer = [device newBufferWithBytes:vbo_map length:vbo_size options:NULL];
+    id <MTLBuffer> indexBuffer = [device newBufferWithBytes:_mesh.triangle_indices.data()
+                                                     length:_mesh.triangle_indices.size() * sizeof(ozz::skinning::Mesh::TriangleIndices::value_type)
+                                                    options:NULL];
+    meshInfo(vertexBuffer, indexBuffer, vertexDescriptor);
 
     return true;
 }

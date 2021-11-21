@@ -52,6 +52,8 @@
 #include "CJointBridge.h"
 #include "CCharacterBridge.h"
 
+#include "CPUSkinning.h"
+
 #include "imgui_bridge.h"
 
 #endif /* Common_h */

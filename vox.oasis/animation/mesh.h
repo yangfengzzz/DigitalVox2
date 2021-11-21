@@ -160,7 +160,7 @@ namespace ozz {
 
     namespace io {
 
-        OZZ_IO_TYPE_TAG("ozz-skinning-Mesh-Part", skinning::Mesh::Part)
+        OZZ_IO_TYPE_TAG("ozz-sample-Mesh-Part", skinning::Mesh::Part)
         OZZ_IO_TYPE_VERSION(1, skinning::Mesh::Part)
 
         template<>
@@ -172,7 +172,7 @@ namespace ozz {
                     size_t _count, uint32_t _version);
         };
 
-        OZZ_IO_TYPE_TAG("ozz-skinning-Mesh", skinning::Mesh)
+        OZZ_IO_TYPE_TAG("ozz-sample-Mesh", skinning::Mesh)
         OZZ_IO_TYPE_VERSION(1, skinning::Mesh)
 
         template<>
