@@ -12,6 +12,8 @@
 
 @interface FBX2Mesh : NSObject
 
+- (NSArray<MeshIO *> *)LoadMesh:(const NSString *)_filename :(const NSString *)_skeleton;
+
 @end
 
 #endif /* fbx2mesh_h */

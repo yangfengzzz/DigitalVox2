@@ -66,6 +66,7 @@
 		040C60762748F3C500170B6A /* Skeleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88C327320E6700B0E398 /* Skeleton.swift */; };
 		040C60822748F4FA00170B6A /* fbx.cc in Sources */ = {isa = PBXBuildFile; fileRef = 040C607B2748F4FA00170B6A /* fbx.cc */; };
 		040C60872748F7AB00170B6A /* fbx2mesh.mm in Sources */ = {isa = PBXBuildFile; fileRef = 040C5FE32745D11C00170B6A /* fbx2mesh.mm */; };
+		040C60882749D5F700170B6A /* mesh_io.mm in Sources */ = {isa = PBXBuildFile; fileRef = 040C5FE02745CF8800170B6A /* mesh_io.mm */; };
 		0413755127412F6200FDEF5C /* Doggy.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 0413755027412F6200FDEF5C /* Doggy.usdz */; };
 		0419B6D626E6E30300005FEA /* instance_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D526E6E30300005FEA /* instance_data.swift */; };
 		0419B6D826E6E5CE00005FEA /* shading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D726E6E5CE00005FEA /* shading.swift */; };
@@ -3140,6 +3141,7 @@
 				0486926F27374E42007B8DFE /* allocator.cc in Sources */,
 				041BAEFB272B74A3006268D5 /* PhysXPlaneColliderShape.swift in Sources */,
 				04AFAC49273AAEB6003E5928 /* PhysXBoxCharacterController.swift in Sources */,
+				040C60882749D5F700170B6A /* mesh_io.mm in Sources */,
 				046FB25A273A1C9C004D4042 /* IConfigurableJoint.swift in Sources */,
 				041BAE7D272A512B006268D5 /* GLTFAssetReader.m in Sources */,
 				040C60232747F41F00170B6A /* box.swift in Sources */,

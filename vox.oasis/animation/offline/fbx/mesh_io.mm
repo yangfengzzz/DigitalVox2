@@ -10,5 +10,12 @@
 
 @implementation MeshIO
 
+- (instancetype)initWithMesh:(Mesh)mesh {
+    self = [super init];
+    if (self) {
+        _c_mesh = mesh;
+    }
+    return self;
+}
 
 @end

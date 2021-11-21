@@ -9,6 +9,7 @@
 #include "fbx.h"
 
 #include "mesh.h"
+#include "mesh_io+Internal.h"
 #include "../../runtime/skeleton.h"
 
 #include "../../containers/map.h"
@@ -854,7 +855,7 @@ bool StripWeights(Mesh *_mesh) {
 
 @implementation FBX2Mesh
 
-- (bool)LoadMesh:(const NSString *)_filename :(const NSString *)_skeleton {
+- (NSArray<MeshIO *> *)LoadMesh:(const NSString *)_filename :(const NSString *)_skeleton {
     int max_influences = 0;
     bool split = true;
     const char *name = [_filename cStringUsingEncoding:NSUTF8StringEncoding];
@@ -867,12 +868,12 @@ bool StripWeights(Mesh *_mesh) {
         ozz::io::File file(skel, "rb");
         if (!file.opened()) {
             std::cerr << "Failed to open skeleton file " << skel << "." << std::endl;
-            return false;
+            return nullptr;
         }
         ozz::io::IArchive archive(&file);
         if (!archive.TestTag<ozz::animation::Skeleton>()) {
             std::cerr << "Failed to load skeleton instance from file " << skel << "." << std::endl;
-            return false;
+            return nullptr;
         }
 
         // Once the tag is validated, reading cannot fail.
@@ -885,14 +886,14 @@ bool StripWeights(Mesh *_mesh) {
     ozz::animation::offline::fbx::FbxSceneLoader scene_loader(name, "", fbx_manager, settings);
     if (!scene_loader.scene()) {
         std::cerr << "Failed to import file " << name << "." << std::endl;
-        return EXIT_FAILURE;
+        return nullptr;
     }
 
     const int num_meshes = scene_loader.scene()->GetSrcObjectCount<FbxMesh>();
     if (num_meshes == 0) {
         std::cerr << "No mesh to process in this file: "
                   << name << "." << std::endl;
-        return false;
+        return nullptr;
     } else if (num_meshes > 1) {
         std::cerr << "There's more than one mesh in the file: "
                   << name << ". All (" << num_meshes
@@ -906,25 +907,23 @@ bool StripWeights(Mesh *_mesh) {
         converter.RemoveBadPolygonsFromMeshes(scene_loader.scene());
         if (!converter.Triangulate(scene_loader.scene(), true)) {
             std::cerr << "Failed to triangulating meshes." << std::endl;
-            return false;
+            return nullptr;
         }
     }
 
     // Take all meshes
-    ozz::vector<Mesh> meshes;
-    meshes.resize(num_meshes);
-
+    NSMutableArray *meshes = [NSMutableArray arrayWithCapacity:num_meshes];
     for (int m = 0; m < num_meshes; ++m) {
         FbxMesh *mesh = scene_loader.scene()->GetSrcObject<FbxMesh>(m);
 
         // Allocates output mesh.
-        Mesh &output_mesh = meshes[m];
+        Mesh output_mesh;
         output_mesh.parts.resize(1);
 
         ControlPointsRemap remap;
         if (!BuildVertices(mesh, scene_loader.converter(), &remap, &output_mesh)) {
             std::cerr << "Failed to read vertices." << std::endl;
-            return false;
+            return nullptr;
         }
 
         // Finds skinning informations
@@ -932,7 +931,7 @@ bool StripWeights(Mesh *_mesh) {
             if (!BuildSkin(mesh, scene_loader.converter(), remap, skeleton,
                     &output_mesh)) {
                 std::cerr << "Failed to read skinning data." << std::endl;
-                return false;
+                return nullptr;
             }
 
             // Limiting number of joint influences per vertex.
@@ -941,7 +940,7 @@ bool StripWeights(Mesh *_mesh) {
                 if (!LimitInfluences(output_mesh, max_influences)) {
                     std::cerr << "Failed to limit number of joint influences."
                               << std::endl;
-                    return false;
+                    return nullptr;
                 }
             }
 
@@ -950,7 +949,7 @@ bool StripWeights(Mesh *_mesh) {
             // also reoders inverse bin pose matrices.
             if (!RemapIndices(&output_mesh)) {
                 std::cerr << "Failed to remap joint indices." << std::endl;
-                return false;
+                return nullptr;
             }
 
             // Split the mesh if option is true (default)
@@ -958,7 +957,7 @@ bool StripWeights(Mesh *_mesh) {
                 Mesh partitioned_meshes;
                 if (!SplitParts(output_mesh, &partitioned_meshes)) {
                     std::cerr << "Failed to partitioned meshes." << std::endl;
-                    return false;
+                    return nullptr;
                 }
 
                 // Copy partitioned mesh back to the output.
@@ -967,13 +966,15 @@ bool StripWeights(Mesh *_mesh) {
 
             if (!StripWeights(&output_mesh)) {
                 std::cerr << "Failed to strip weights." << std::endl;
-                return false;
+                return nullptr;
             }
 
             assert(max_influences <= 0 || output_mesh.max_influences_count() <= max_influences);
         }
+
+        [meshes addObject:[[MeshIO alloc] initWithMesh:output_mesh]];
     }
 
-    return true;
+    return meshes;
 }
 @end

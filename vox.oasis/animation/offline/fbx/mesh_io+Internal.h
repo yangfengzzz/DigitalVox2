@@ -13,9 +13,9 @@
 
 @interface MeshIO ()
 
-@property(nonatomic, readonly) Mesh *c_mesh;
+@property(nonatomic, readonly) Mesh c_mesh;
 
-- (instancetype)initWithMesh:(Mesh *)mesh;
+- (instancetype)initWithMesh:(Mesh)mesh;
 
 @end
 
