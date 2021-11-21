@@ -10,18 +10,14 @@ import Foundation
 class CPUSkinning: Script {
     let skinning = CCPUSkinning()
     var renderers: [MeshRenderer] = []
+    var mat: PBRMaterial!
 
     required init(_ entity: Entity) {
         super.init(entity)
-        _ = Shader.create("skin", "skin_vertex", "skin_fragment")
-    }
 
-    class SkinMaterial: BaseMaterial {
-        /// Create a pbr base material instance.
-        /// - Parameter engine: Engine to which the material belongs
-        init(_ engine: Engine) {
-            super.init(engine, Shader.find("skin")!)
-        }
+        _ = Shader.create("skin", "skin_vertex", "skin_fragment")
+        mat = PBRMaterial(_engine)
+        loadMaterial(mat)
     }
 
     func load(_ skeleton: String, _ animation: String, _ mesh: String) {
@@ -58,11 +54,51 @@ class CPUSkinning: Script {
                 let child = entity.createChild("part\(index)")
                 let renderer: MeshRenderer = child.addComponent()
                 renderer.mesh = mesh
-                renderer.setMaterial(SkinMaterial(_engine))
+                renderer.setMaterial(mat)
 
                 renderers.append(renderer)
             }
             index += 1
         }
+    }
+
+    func loadMaterial(_ pbr: PBRMaterial) {
+        pbr.baseTexture = try? loadTexture(imageName: "T_Doggy_1_diffuse.png")
+        pbr.normalTexture = try? loadTexture(imageName: "T_Doggy_normal.png")
+        pbr.roughnessTexture = try? loadTexture(imageName: "T_Doggy_roughness.png")
+        pbr.metallicTexture = try? loadTexture(imageName: "T_Doggy_metallic.png")
+        pbr.occlusionTexture = try? loadTexture(imageName: "T_Doggy_1_ao.png")
+    }
+
+    /// static method to load texture from name of image.
+    /// - Parameter imageName: name of image
+    /// - Throws: a pointer to an NSError object if an error occurred, or nil if the texture was fully loaded and initialized.
+    /// - Returns: a fully loaded and initialized Metal texture, or nil if an error occurred.
+    func loadTexture(imageName: String) throws -> MTLTexture? {
+        let textureLoader = MTKTextureLoader(device: _engine._hardwareRenderer.device)
+
+        let textureLoaderOptions: [MTKTextureLoader.Option: Any] =
+                [.origin: MTKTextureLoader.Origin.bottomLeft,
+                 .SRGB: false,
+                 .generateMipmaps: NSNumber(booleanLiteral: true)]
+        let fileExtension =
+                URL(fileURLWithPath: imageName).pathExtension.isEmpty ?
+                        "png" : nil
+        guard let url = Bundle.main.url(forResource: imageName,
+                withExtension: fileExtension)
+                else {
+            let texture = try? textureLoader.newTexture(name: imageName,
+                    scaleFactor: 1.0,
+                    bundle: Bundle.main, options: nil)
+            if texture == nil {
+                print("WARNING: Texture not found: \(imageName)")
+            }
+            return texture
+        }
+
+        let texture = try textureLoader.newTexture(URL: url,
+                options: textureLoaderOptions)
+        print("loaded texture: \(url.lastPathComponent)")
+        return texture
     }
 }

@@ -20,6 +20,11 @@
 		040C60B0274A257A00170B6A /* CharacterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413754E27412EE500FDEF5C /* CharacterView.swift */; };
 		040C60B2274A262700170B6A /* doggy.ozz in Resources */ = {isa = PBXBuildFile; fileRef = 040C60B1274A262700170B6A /* doggy.ozz */; };
 		040C60B4274A32B300170B6A /* SkinningShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 040C60B3274A32B300170B6A /* SkinningShader.metal */; };
+		040C60BA274A60CC00170B6A /* T_Doggy_1_diffuse.png in Resources */ = {isa = PBXBuildFile; fileRef = 040C60B5274A60CB00170B6A /* T_Doggy_1_diffuse.png */; };
+		040C60BB274A60CC00170B6A /* T_Doggy_roughness.png in Resources */ = {isa = PBXBuildFile; fileRef = 040C60B6274A60CB00170B6A /* T_Doggy_roughness.png */; };
+		040C60BC274A60CC00170B6A /* T_Doggy_metallic.png in Resources */ = {isa = PBXBuildFile; fileRef = 040C60B7274A60CB00170B6A /* T_Doggy_metallic.png */; };
+		040C60BD274A60CC00170B6A /* T_Doggy_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 040C60B8274A60CB00170B6A /* T_Doggy_normal.png */; };
+		040C60BE274A60CC00170B6A /* T_Doggy_1_ao.png in Resources */ = {isa = PBXBuildFile; fileRef = 040C60B9274A60CB00170B6A /* T_Doggy_1_ao.png */; };
 		0419B6D626E6E30300005FEA /* instance_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D526E6E30300005FEA /* instance_data.swift */; };
 		0419B6D826E6E5CE00005FEA /* shading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D726E6E5CE00005FEA /* shading.swift */; };
 		0419B6DA26E6EA3900005FEA /* trace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D926E6EA3900005FEA /* trace.swift */; };
@@ -485,6 +490,11 @@
 		040C60AE274A239E00170B6A /* CPUSkinning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPUSkinning.swift; sourceTree = "<group>"; };
 		040C60B1274A262700170B6A /* doggy.ozz */ = {isa = PBXFileReference; lastKnownFileType = file; path = doggy.ozz; sourceTree = "<group>"; };
 		040C60B3274A32B300170B6A /* SkinningShader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = SkinningShader.metal; sourceTree = "<group>"; };
+		040C60B5274A60CB00170B6A /* T_Doggy_1_diffuse.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = T_Doggy_1_diffuse.png; sourceTree = "<group>"; };
+		040C60B6274A60CB00170B6A /* T_Doggy_roughness.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = T_Doggy_roughness.png; sourceTree = "<group>"; };
+		040C60B7274A60CB00170B6A /* T_Doggy_metallic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = T_Doggy_metallic.png; sourceTree = "<group>"; };
+		040C60B8274A60CB00170B6A /* T_Doggy_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = T_Doggy_normal.png; sourceTree = "<group>"; };
+		040C60B9274A60CB00170B6A /* T_Doggy_1_ao.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = T_Doggy_1_ao.png; sourceTree = "<group>"; };
 		0413286A26DF86DC000A4F4E /* BoundingBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingBox.swift; sourceTree = "<group>"; };
 		0413286C26E06648000A4F4E /* BoundingSphere.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingSphere.swift; sourceTree = "<group>"; };
 		0413286E26E06A40000A4F4E /* Plane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plane.swift; sourceTree = "<group>"; };
@@ -1238,6 +1248,7 @@
 				045B064227294442003E4B68 /* physics-lite */,
 				041D1C52272A3FC600322BDF /* physics-physx */,
 				0413289E26E0CBE7000A4F4E /* ShaderSimple.metal */,
+				040C60B3274A32B300170B6A /* SkinningShader.metal */,
 				04AE2422272913ED00D62587 /* BRDF.metal */,
 				041BADDB272A4FA5006268D5 /* Preview Content */,
 				041BADDE272A4FA5006268D5 /* vox_oasis.entitlements */,
@@ -1439,7 +1450,6 @@
 			children = (
 				042F0DC32734EDEB00FF4A26 /* SkeletonShader.metal */,
 				042F0DC627351DDD00FF4A26 /* SkeletonMaterial.swift */,
-				040C60B3274A32B300170B6A /* SkinningShader.metal */,
 			);
 			path = visualDebugger;
 			sourceTree = "<group>";
@@ -2034,6 +2044,11 @@
 		04CE366C27413EC500204B8E /* Doggy */ = {
 			isa = PBXGroup;
 			children = (
+				040C60B9274A60CB00170B6A /* T_Doggy_1_ao.png */,
+				040C60B5274A60CB00170B6A /* T_Doggy_1_diffuse.png */,
+				040C60B7274A60CB00170B6A /* T_Doggy_metallic.png */,
+				040C60B8274A60CB00170B6A /* T_Doggy_normal.png */,
+				040C60B6274A60CB00170B6A /* T_Doggy_roughness.png */,
 				040C608B2749E52800170B6A /* Doggy.fbx */,
 				040C60B1274A262700170B6A /* doggy.ozz */,
 				04CE366D27413F0900204B8E /* doggy_skeleton.ozz */,
@@ -2444,10 +2459,15 @@
 			files = (
 				048692852737C27B007B8DFE /* animation.ozz in Resources */,
 				041BAE78272A512B006268D5 /* README.md in Resources */,
+				040C60BC274A60CC00170B6A /* T_Doggy_metallic.png in Resources */,
+				040C60BB274A60CC00170B6A /* T_Doggy_roughness.png in Resources */,
 				041BAED0272A6E0A006268D5 /* Mando_Helmet.usdz in Resources */,
 				0486928327376FCC007B8DFE /* skeleton.ozz in Resources */,
+				040C60BE274A60CC00170B6A /* T_Doggy_1_ao.png in Resources */,
+				040C60BD274A60CC00170B6A /* T_Doggy_normal.png in Resources */,
 				040C60B2274A262700170B6A /* doggy.ozz in Resources */,
 				041BAECC272A6E0A006268D5 /* cottage1.obj in Resources */,
+				040C60BA274A60CC00170B6A /* T_Doggy_1_diffuse.png in Resources */,
 				04CE366F27413F0900204B8E /* doggy_skeleton.ozz in Resources */,
 				04CB88C8273211DE00B0E398 /* skeletonWave.usda in Resources */,
 				041BADDD272A4FA5006268D5 /* Preview Assets.xcassets in Resources */,
