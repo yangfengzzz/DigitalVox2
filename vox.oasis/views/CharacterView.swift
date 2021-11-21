@@ -8,12 +8,11 @@
 import SwiftUI
 
 class CharacterScript: Script {
-    // total
-    let displacement = Vector3()
-    // current frame
-    let currentMove = Vector3()
-    // new position
-    let worldPosition = Vector3()
+    // last position
+    let position = Vector3()
+    // last rotation
+    let rotMat = Matrix()
+    let rotation = Quaternion()
     
     func targetCamera(_ camera: Entity) {
         engine.canvas.registerKeyDown { [self] key in
@@ -23,59 +22,41 @@ class CharacterScript: Script {
             forward = forward.normalize()
             let cross = Vector3(forward.z, 0, -forward.x)
 
+            entity.transform.worldPosition.cloneTo(target: position)
             switch key {
             case .w:
-                displacement.x -= forward.x;
-                displacement.z -= forward.z;
+                position.x += forward.x;
+                position.z += forward.z;
                 break
             case .s:
-                displacement.x += forward.x;
-                displacement.z += forward.z;
+                position.x -= forward.x;
+                position.z -= forward.z;
                 break
             case .a:
-                displacement.x -= cross.x;
-                displacement.z -= cross.z;
+                position.x += cross.x;
+                position.z += cross.z;
                 break
             case .d:
-                displacement.x += cross.x;
-                displacement.z += cross.z;
-                break
-            case .space:
-                displacement.y += 2
+                position.x -= cross.x;
+                position.z -= cross.z;
                 break
             default:
                 return
             }
+            
+            Matrix.lookAt(eye: position, target: entity.transform.worldPosition, up: Vector3(0, 1, 0), out: rotMat)
+            _ = rotMat.getRotation(out: rotation).invert()
         }
     }
 
     override func onUpdate(_ deltaTime: Float) {
-        func movement(_ x: inout Float)->Float {
-            var subStep:Float = 0.1
-            if x < -subStep {
-                x += subStep
-                return -subStep
-            } else if x < subStep && x >= -subStep {
-                subStep = x
-                x = 0
-                return subStep
-            } else {
-                x -= subStep
-                return subStep
-            }
-        }
-        currentMove.x = movement(&displacement.x)
-        currentMove.y = movement(&displacement.y)
-        currentMove.z = movement(&displacement.z)
-                
-        let position = entity.transform.position
+        let currentPosition = entity.transform.position
+        Vector3.lerp(left: currentPosition, right: position, t: 0.1, out: currentPosition)
+        entity.transform.position = currentPosition
         
-        position.cloneTo(target: worldPosition)
-        worldPosition.elements += currentMove.elements;
-        entity.transform.lookAt(worldPosition: worldPosition, worldUp: nil)
-        
-        position.elements -= currentMove.elements;
-        entity.transform.position = position
+        let currentRot = entity.transform.rotationQuaternion
+        Quaternion.slerp(start: currentRot, end: rotation, t: 0.1, out: currentRot)
+        entity.transform.rotationQuaternion = currentRot
     }
 }
 
