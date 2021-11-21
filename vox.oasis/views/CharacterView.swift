@@ -31,7 +31,7 @@ struct CharacterView: View {
         let _: OrbitControl = cameraEntity.addComponent()
 
         let character = rootEntity.createChild("character");
-        let cpuSkinning = CPUSkinning(character)
+        let cpuSkinning: CPUSkinning = character.addComponent()
         cpuSkinning.load("doggy_skeleton.ozz", "Run.ozz", "doggy.ozz")
     }
 

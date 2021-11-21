@@ -20,7 +20,7 @@
 - (bool)OnUpdate:(float)_dt;
 
 - (bool)FreshSkinnedMesh:(id <MTLDevice> _Nonnull)device
-        :(void (^ _Nullable)(id <MTLBuffer> _Nonnull vertexBuffer, id <MTLBuffer> _Nonnull indexBuffer,
+        :(void (^ _Nullable)(id <MTLBuffer> _Nonnull vertexBuffer, id <MTLBuffer> _Nonnull indexBuffer, size_t indexCount,
                 MDLVertexDescriptor *_Nonnull descriptor))meshInfo;
 
 
