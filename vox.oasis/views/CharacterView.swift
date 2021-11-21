@@ -25,20 +25,20 @@ class CharacterScript: Script {
             entity.transform.worldPosition.cloneTo(target: position)
             switch key {
             case .w:
-                position.x += forward.x;
-                position.z += forward.z;
+                position.x += forward.x * 2;
+                position.z += forward.z * 2;
                 break
             case .s:
-                position.x -= forward.x;
-                position.z -= forward.z;
+                position.x -= forward.x * 2;
+                position.z -= forward.z * 2;
                 break
             case .a:
-                position.x += cross.x;
-                position.z += cross.z;
+                position.x += cross.x * 2;
+                position.z += cross.z * 2;
                 break
             case .d:
-                position.x -= cross.x;
-                position.z -= cross.z;
+                position.x -= cross.x * 2;
+                position.z -= cross.z * 2;
                 break
             default:
                 return
@@ -55,7 +55,7 @@ class CharacterScript: Script {
         entity.transform.position = currentPosition
         
         let currentRot = entity.transform.rotationQuaternion
-        Quaternion.slerp(start: currentRot, end: rotation, t: 0.1, out: currentRot)
+        Quaternion.slerp(start: currentRot, end: rotation, t: 0.05, out: currentRot)
         entity.transform.rotationQuaternion = currentRot
     }
 }
