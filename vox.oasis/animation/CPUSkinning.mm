@@ -226,7 +226,7 @@ private:
 }
 
 - (bool)FreshSkinnedMesh:(id <MTLDevice>)device
-        :(void (^ _Nullable)(id <MTLBuffer> _Nonnull vertexBuffer, id <MTLBuffer> _Nonnull indexBuffer, size_t indexCount,
+        :(void (^ _Nullable)(NSArray<id <MTLBuffer> > *vertexBuffer, id <MTLBuffer> _Nonnull indexBuffer, size_t indexCount,
                 MDLVertexDescriptor *descriptor))meshInfo {
     bool success = true;
 
@@ -251,7 +251,7 @@ private:
         :(const ozz::span<ozz::math::Float4x4>)_skinning_matrices
         :(const ozz::math::Float4x4 &)_transform
         :(id <MTLDevice>)device
-        :(void (^ _Nullable)(id <MTLBuffer> _Nonnull vertexBuffer, id <MTLBuffer> _Nonnull indexBuffer, size_t indexCount,
+        :(void (^ _Nullable)(NSArray<id <MTLBuffer> > *vertexBuffer, id <MTLBuffer> _Nonnull indexBuffer, size_t indexCount,
                 MDLVertexDescriptor *descriptor))meshInfo {
     const int vertex_count = _mesh.vertex_count();
 
@@ -266,6 +266,7 @@ private:
     const int32_t normals_stride = positions_stride;
     const int32_t tangents_stride = positions_stride;
     const int32_t skinned_data_size = vertex_count * positions_stride;
+    void *vbo_map = scratch_buffer_.Resize(skinned_data_size);
     vertexDescriptor.attributes[0] = [[MDLVertexAttribute alloc] initWithName:MDLVertexAttributePosition
                                                                        format:MDLVertexFormatFloat3 offset:positions_offset bufferIndex:0];
     vertexDescriptor.attributes[1] = [[MDLVertexAttribute alloc] initWithName:MDLVertexAttributeNormal
@@ -277,22 +278,15 @@ private:
     // directly copied from source mesh which is non-interleaved as-well.
     // Colors will be filled with white if _options.colors is false.
     // UVs will be skipped if _options.textured is false.
-    const int32_t colors_offset = skinned_data_size;
-    const int32_t colors_stride = sizeof(uint8_t) * 4;
-    const int32_t colors_size = vertex_count * colors_stride;
-    const int32_t uvs_offset = colors_offset + colors_size;
+    const int32_t uvs_offset = 0;
     const int32_t uvs_stride = sizeof(float) * 2;
     const int32_t uvs_size = vertex_count * uvs_stride;
-    const int32_t fixed_data_size = colors_size + uvs_size;
-    vertexDescriptor.attributes[4] = [[MDLVertexAttribute alloc] initWithName:MDLVertexAttributeColor
-                                                                       format:MDLVertexFormatUInt4 offset:colors_offset bufferIndex:0];
-    vertexDescriptor.attributes[5] = [[MDLVertexAttribute alloc] initWithName:MDLVertexAttributeTextureCoordinate
-                                                                       format:MDLVertexFormatFloat2 offset:uvs_offset bufferIndex:0];
-    vertexDescriptor.layouts[0] = [[MDLVertexBufferLayout alloc] initWithStride:positions_stride + colors_stride + uvs_stride];
+    void *uv_map = scratch_buffer_.Resize(uvs_size);
+    vertexDescriptor.attributes[3] = [[MDLVertexAttribute alloc] initWithName:MDLVertexAttributeTextureCoordinate
+                                                                       format:MDLVertexFormatFloat2 offset:uvs_offset bufferIndex:1];
+    vertexDescriptor.layouts[0] = [[MDLVertexBufferLayout alloc] initWithStride:positions_stride];
+    vertexDescriptor.layouts[1] = [[MDLVertexBufferLayout alloc] initWithStride:uvs_stride];
 
-    // Reallocate vertex buffer.
-    const int32_t vbo_size = skinned_data_size + fixed_data_size;
-    void *vbo_map = scratch_buffer_.Resize(vbo_size);
 
     // Iterate mesh parts and fills vbo.
     // Runs a skinning job per mesh part. Triangle indices are shared
@@ -404,23 +398,6 @@ private:
             return false;
         }
 
-        // Handles colors which aren't affected by skinning.
-        if (true && part_vertex_count == part.colors.size() / ozz::skinning::Mesh::Part::kColorsCpnts) {
-            // Optimal path used when the right number of colors is provided.
-            memcpy(ozz::PointerStride(vbo_map, colors_offset + processed_vertex_count * colors_stride),
-                    array_begin(part.colors), part_vertex_count * colors_stride);
-        } else {
-            // Un-optimal path used when the right number of colors is not provided.
-            static_assert(sizeof(kDefaultColorsArray[0]) == colors_stride,
-                    "Stride mismatch");
-
-            for (size_t j = 0; j < part_vertex_count; j += OZZ_ARRAY_SIZE(kDefaultColorsArray)) {
-                const size_t this_loop_count = ozz::math::Min(OZZ_ARRAY_SIZE(kDefaultColorsArray), part_vertex_count - j);
-                memcpy(ozz::PointerStride(vbo_map, colors_offset + (processed_vertex_count + j) * colors_stride),
-                        kDefaultColorsArray, colors_stride * this_loop_count);
-            }
-        }
-
         // Copies uvs which aren't affected by skinning.
         if (true) {
             if (part_vertex_count == part.uvs.size() / ozz::skinning::Mesh::Part::kUVsCpnts) {
@@ -443,11 +420,17 @@ private:
         processed_vertex_count += part_vertex_count;
     }
 
-    id <MTLBuffer> vertexBuffer = [device newBufferWithBytes:vbo_map length:vbo_size options:NULL];
+    id <MTLBuffer> vertexBuffer = [device newBufferWithBytes:vbo_map length:skinned_data_size options:NULL];
+    id <MTLBuffer> uvBuffer = [device newBufferWithBytes:uv_map length:uvs_size options:NULL];
     id <MTLBuffer> indexBuffer = [device newBufferWithBytes:_mesh.triangle_indices.data()
                                                      length:_mesh.triangle_indices.size() * sizeof(ozz::skinning::Mesh::TriangleIndices::value_type)
                                                     options:NULL];
-    meshInfo(vertexBuffer, indexBuffer, _mesh.triangle_indices.size(), vertexDescriptor);
+
+    NSMutableArray *vertexBuffers = [[NSMutableArray alloc] initWithCapacity:2];
+    [vertexBuffers addObject:vertexBuffer];
+    [vertexBuffers addObject:uvBuffer];
+
+    meshInfo(vertexBuffers, indexBuffer, _mesh.triangle_indices.size(), vertexDescriptor);
 
     return true;
 }

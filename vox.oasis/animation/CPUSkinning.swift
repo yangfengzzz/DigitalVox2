@@ -11,6 +11,19 @@ class CPUSkinning: Script {
     let skinning = CCPUSkinning()
     var meshes: [BufferMesh] = []
 
+    required init(_ entity: Entity) {
+        super.init(entity)
+        _ = Shader.create("skin", "skin_vertex", "skin_fragment")
+    }
+
+    class SkinMaterial: BaseMaterial {
+        /// Create a pbr base material instance.
+        /// - Parameter engine: Engine to which the material belongs
+        init(_ engine: Engine) {
+            super.init(engine, Shader.find("skin")!)
+        }
+    }
+
     func load(_ skeleton: String, _ animation: String, _ mesh: String) {
         guard let skeletonUrl = Bundle.main.url(forResource: skeleton, withExtension: nil) else {
             fatalError("Model: \(skeleton) not found")
@@ -29,10 +42,12 @@ class CPUSkinning: Script {
         skinning.onUpdate(deltaTime)
 
         var index = 0
-        skinning.freshSkinnedMesh(_engine._hardwareRenderer.device) { [self]vertexBuffer, indexBuffer, indexCount, vertexDescriptor in
+        skinning.freshSkinnedMesh(_engine._hardwareRenderer.device) { [self]vertexBuffers, indexBuffer, indexCount, vertexDescriptor in
             let mesh = BufferMesh(_engine)
             mesh.setVertexDescriptor(vertexDescriptor)
-            mesh.setVertexBufferBinding(vertexBuffer, 0, 0)
+            for (index, vertexBuffer) in vertexBuffers.enumerated() {
+                mesh.setVertexBufferBinding(vertexBuffer, 0, index)
+            }
             _ = mesh.addSubMesh(
                     MeshBuffer(indexBuffer, indexCount * MemoryLayout<UInt16>.stride, .index),
                     .uint16, indexCount, .triangle)
@@ -43,7 +58,7 @@ class CPUSkinning: Script {
                 let child = entity.createChild("part\(index)")
                 let renderer: MeshRenderer = child.addComponent()
                 renderer.mesh = mesh
-                renderer.setMaterial(PBRMaterial(_engine))
+                renderer.setMaterial(SkinMaterial(_engine))
 
                 meshes.append(mesh)
             }

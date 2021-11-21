@@ -19,6 +19,7 @@
 		040C60AF274A239E00170B6A /* CPUSkinning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040C60AE274A239E00170B6A /* CPUSkinning.swift */; };
 		040C60B0274A257A00170B6A /* CharacterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413754E27412EE500FDEF5C /* CharacterView.swift */; };
 		040C60B2274A262700170B6A /* doggy.ozz in Resources */ = {isa = PBXBuildFile; fileRef = 040C60B1274A262700170B6A /* doggy.ozz */; };
+		040C60B4274A32B300170B6A /* SkinningShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 040C60B3274A32B300170B6A /* SkinningShader.metal */; };
 		0419B6D626E6E30300005FEA /* instance_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D526E6E30300005FEA /* instance_data.swift */; };
 		0419B6D826E6E5CE00005FEA /* shading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D726E6E5CE00005FEA /* shading.swift */; };
 		0419B6DA26E6EA3900005FEA /* trace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D926E6EA3900005FEA /* trace.swift */; };
@@ -483,6 +484,7 @@
 		040C60AC2749FE4B00170B6A /* utils.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = utils.cc; sourceTree = "<group>"; };
 		040C60AE274A239E00170B6A /* CPUSkinning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPUSkinning.swift; sourceTree = "<group>"; };
 		040C60B1274A262700170B6A /* doggy.ozz */ = {isa = PBXFileReference; lastKnownFileType = file; path = doggy.ozz; sourceTree = "<group>"; };
+		040C60B3274A32B300170B6A /* SkinningShader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = SkinningShader.metal; sourceTree = "<group>"; };
 		0413286A26DF86DC000A4F4E /* BoundingBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingBox.swift; sourceTree = "<group>"; };
 		0413286C26E06648000A4F4E /* BoundingSphere.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingSphere.swift; sourceTree = "<group>"; };
 		0413286E26E06A40000A4F4E /* Plane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plane.swift; sourceTree = "<group>"; };
@@ -1437,6 +1439,7 @@
 			children = (
 				042F0DC32734EDEB00FF4A26 /* SkeletonShader.metal */,
 				042F0DC627351DDD00FF4A26 /* SkeletonMaterial.swift */,
+				040C60B3274A32B300170B6A /* SkinningShader.metal */,
 			);
 			path = visualDebugger;
 			sourceTree = "<group>";
@@ -2786,6 +2789,7 @@
 				041BAE9F272A5141006268D5 /* BoxColliderShape.swift in Sources */,
 				041BAE4F272A50FB006268D5 /* Material.swift in Sources */,
 				041BAE9B272A5141006268D5 /* ColliderShape.swift in Sources */,
+				040C60B4274A32B300170B6A /* SkinningShader.metal in Sources */,
 				041BAE52272A5100006268D5 /* RenderQueue.swift in Sources */,
 				041BAE6B272A5111006268D5 /* DiffuseMode.swift in Sources */,
 				041BAE80272A513B006268D5 /* PhysicsMaterialCombineMode.swift in Sources */,
