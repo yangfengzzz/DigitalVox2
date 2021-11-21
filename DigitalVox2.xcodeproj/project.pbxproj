@@ -13,6 +13,8 @@
 		040C60752748F3B400170B6A /* SkinnedMeshRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04832F062701F4B3001AD421 /* SkinnedMeshRenderer.swift */; };
 		040C60762748F3C500170B6A /* Skeleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CB88C327320E6700B0E398 /* Skeleton.swift */; };
 		040C608C2749E52800170B6A /* Doggy.fbx in Resources */ = {isa = PBXBuildFile; fileRef = 040C608B2749E52800170B6A /* Doggy.fbx */; };
+		040C60A72749FA6000170B6A /* CPUSkinning.mm in Sources */ = {isa = PBXBuildFile; fileRef = 040C60A62749FA6000170B6A /* CPUSkinning.mm */; };
+		040C60AA2749FC8800170B6A /* mesh.cc in Sources */ = {isa = PBXBuildFile; fileRef = 040C60A82749FC8800170B6A /* mesh.cc */; };
 		0419B6D626E6E30300005FEA /* instance_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D526E6E30300005FEA /* instance_data.swift */; };
 		0419B6D826E6E5CE00005FEA /* shading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D726E6E5CE00005FEA /* shading.swift */; };
 		0419B6DA26E6EA3900005FEA /* trace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D926E6EA3900005FEA /* trace.swift */; };
@@ -469,6 +471,10 @@
 
 /* Begin PBXFileReference section */
 		040C608B2749E52800170B6A /* Doggy.fbx */ = {isa = PBXFileReference; lastKnownFileType = file; path = Doggy.fbx; sourceTree = "<group>"; };
+		040C60A52749FA5700170B6A /* CPUSkinning.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPUSkinning.h; sourceTree = "<group>"; };
+		040C60A62749FA6000170B6A /* CPUSkinning.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CPUSkinning.mm; sourceTree = "<group>"; };
+		040C60A82749FC8800170B6A /* mesh.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mesh.cc; sourceTree = "<group>"; };
+		040C60A92749FC8800170B6A /* mesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mesh.h; sourceTree = "<group>"; };
 		0413286A26DF86DC000A4F4E /* BoundingBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingBox.swift; sourceTree = "<group>"; };
 		0413286C26E06648000A4F4E /* BoundingSphere.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingSphere.swift; sourceTree = "<group>"; };
 		0413286E26E06A40000A4F4E /* Plane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plane.swift; sourceTree = "<group>"; };
@@ -1761,6 +1767,10 @@
 				04CB88CD27321C2000B0E398 /* Animator.swift */,
 				04CB88CB27321C1800B0E398 /* AnimationClip.swift */,
 				04CB88C927321C0000B0E398 /* Animation.swift */,
+				040C60A92749FC8800170B6A /* mesh.h */,
+				040C60A82749FC8800170B6A /* mesh.cc */,
+				040C60A52749FA5700170B6A /* CPUSkinning.h */,
+				040C60A62749FA6000170B6A /* CPUSkinning.mm */,
 			);
 			path = animation;
 			sourceTree = "<group>";
@@ -2717,6 +2727,7 @@
 				041BAE39272A50E6006268D5 /* BoundingBox.swift in Sources */,
 				046FB252273A1B69004D4042 /* IFixedJoint.swift in Sources */,
 				041BAEE0272A9AA1006268D5 /* CPxBoxGeometry.mm in Sources */,
+				040C60A72749FA6000170B6A /* CPUSkinning.mm in Sources */,
 				041BAE18272A5046006268D5 /* shadow-map.metal in Sources */,
 				041BAE53272A5100006268D5 /* RenderElement.swift in Sources */,
 				041BAEF7272B71C9006268D5 /* PhysXSphereColliderShape.swift in Sources */,
@@ -2771,6 +2782,7 @@
 				04AFAC28273A462C003E5928 /* HingeJoint.swift in Sources */,
 				041BAEC4272A516E006268D5 /* ShaderSimple.metal in Sources */,
 				041BAE2D272A50E6006268D5 /* Vector3.swift in Sources */,
+				040C60AA2749FC8800170B6A /* mesh.cc in Sources */,
 				041BAE4A272A50FB006268D5 /* PBRSpecularMaterial.swift in Sources */,
 				041BAEDA272A949F006268D5 /* PhysXPhysicsMaterial.swift in Sources */,
 				041BAEB5272A5166006268D5 /* LiteUpdateFlagManager.swift in Sources */,
@@ -3025,6 +3037,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					/Users/yangfeng/Desktop/PhysX/physx/bin/mac.x86_64/debug,
 					"/Applications/Autodesk/FBX\\ SDK/2016.1.2/lib/clang/debug",
+					/usr/local/lib,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 1.0;
@@ -3036,6 +3049,13 @@
 					"-lPhysXExtensions_static_64",
 					"-lPhysXCharacterKinematic_static_64",
 					"/Applications/Autodesk/FBX\\ SDK/2016.1.2/lib/clang/debug/libfbxsdk.a",
+					"-lozz_animation_tools_d",
+					"-lozz_options_d",
+					"-lozz_animation_offline_d",
+					"-lozz_geometry_d",
+					"-lozz_animation_fbx_d",
+					"-lozz_base_d",
+					"-lozz_animation_d",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "DigitalVox2.vox-oasis";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3065,6 +3085,7 @@
 					/Users/yangfeng/Desktop/PhysX/physx/../pxshared/include,
 					/Users/yangfeng/Desktop/PhysX/physx/source/foundation/include,
 					"/Applications/Autodesk/FBX\\ SDK/2016.1.2/include",
+					/usr/local/include,
 				);
 			};
 			name = Debug;
@@ -3102,6 +3123,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					/Users/yangfeng/Desktop/PhysX/physx/bin/mac.x86_64/release,
 					"/Applications/Autodesk/FBX\\ SDK/2016.1.2/lib/clang/release",
+					/usr/local/lib,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 1.0;
@@ -3142,6 +3164,7 @@
 					/Users/yangfeng/Desktop/PhysX/physx/../pxshared/include,
 					/Users/yangfeng/Desktop/PhysX/physx/source/foundation/include,
 					"/Applications/Autodesk/FBX\\ SDK/2016.1.2/include",
+					/usr/local/include,
 				);
 			};
 			name = Release;
