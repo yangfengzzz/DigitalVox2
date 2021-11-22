@@ -166,6 +166,9 @@ private:
 
     // The mesh used by the sample.
     ozz::vector<ozz::skinning::Mesh> meshes_;
+    ozz::vector<id <MTLBuffer>> vertexBuffers;
+    ozz::vector<id <MTLBuffer>> uvBuffers;
+    ozz::vector<id <MTLBuffer>> indexBuffers;
 
     ScratchBuffer vbo_buffer_;
     ScratchBuffer uv_buffer_;
@@ -370,6 +373,11 @@ private:
     // Allocates skinning matrices.
     skinning_matrices_.resize(num_skinning_matrices);
 
+    const size_t bufferLength = meshes_.size();
+    vertexBuffers.resize(bufferLength, nullptr);
+    uvBuffers.resize(bufferLength, nullptr);
+    indexBuffers.resize(bufferLength, nullptr);
+
     return true;
 }
 
@@ -382,20 +390,21 @@ private:
     // The mesh might not use (aka be skinned by) all skeleton joints. We use
     // the joint remapping table (available from the mesh object) to reorder
     // model-space matrices and build skinning ones.
-    for (const ozz::skinning::Mesh &mesh: meshes_) {
+    for (size_t index = 0; index < meshes_.size(); index++) {
+        const ozz::skinning::Mesh &mesh = meshes_[index];
         for (size_t i = 0; i < mesh.joint_remaps.size(); ++i) {
-            skinning_matrices_[i] =
-                    models_[mesh.joint_remaps[i]] * mesh.inverse_bind_poses[i];
+            skinning_matrices_[i] = models_[mesh.joint_remaps[i]] * mesh.inverse_bind_poses[i];
         }
 
         // Renders skin.
-        success &= [self DrawSkinnedMesh:mesh :make_span(skinning_matrices_) :ozz::math::Float4x4::identity() :device :meshInfo];
+        success &= [self DrawSkinnedMesh:index :mesh :make_span(skinning_matrices_) :ozz::math::Float4x4::identity() :device :meshInfo];
     }
 
     return success;
 }
 
-- (bool)DrawSkinnedMesh:(const ozz::skinning::Mesh &)_mesh
+- (bool)DrawSkinnedMesh:(size_t)index
+        :(const ozz::skinning::Mesh &)_mesh
         :(const ozz::span<ozz::math::Float4x4>)_skinning_matrices
         :(const ozz::math::Float4x4 &)_transform
         :(id <MTLDevice>)device
@@ -568,17 +577,29 @@ private:
         processed_vertex_count += part_vertex_count;
     }
 
-    id <MTLBuffer> vertexBuffer = [device newBufferWithBytes:vbo_map length:skinned_data_size options:NULL];
-    id <MTLBuffer> uvBuffer = [device newBufferWithBytes:uv_map length:uvs_size options:NULL];
-    id <MTLBuffer> indexBuffer = [device newBufferWithBytes:_mesh.triangle_indices.data()
-                                                     length:_mesh.triangle_indices.size() * sizeof(ozz::skinning::Mesh::TriangleIndices::value_type)
-                                                    options:NULL];
+    if (vertexBuffers[index] == nullptr) {
+        vertexBuffers[index] = [device newBufferWithBytes:vbo_map length:skinned_data_size options:NULL];
+    } else {
+        memcpy([vertexBuffers[index] contents], vbo_map, skinned_data_size);
+    }
 
-    NSMutableArray *vertexBuffers = [[NSMutableArray alloc] initWithCapacity:2];
-    [vertexBuffers addObject:vertexBuffer];
-    [vertexBuffers addObject:uvBuffer];
+    if (uvBuffers[index] == nullptr) {
+        uvBuffers[index] = [device newBufferWithBytes:uv_map length:uvs_size options:NULL];
+    } else {
+        memcpy([uvBuffers[index] contents], uv_map, uvs_size);
+    }
 
-    meshInfo(vertexBuffers, indexBuffer, _mesh.triangle_indices.size(), vertexDescriptor);
+    if (indexBuffers[index] == nullptr) {
+        indexBuffers[index] = [device newBufferWithBytes:_mesh.triangle_indices.data()
+                                                  length:_mesh.triangle_indices.size() * sizeof(ozz::skinning::Mesh::TriangleIndices::value_type)
+                                                 options:NULL];
+    }
+
+    NSMutableArray *meshData = [[NSMutableArray alloc] initWithCapacity:2];
+    [meshData addObject:vertexBuffers[index]];
+    [meshData addObject:uvBuffers[index]];
+
+    meshInfo(meshData, indexBuffers[index], _mesh.triangle_indices.size(), vertexDescriptor);
 
     return true;
 }
