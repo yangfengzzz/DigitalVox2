@@ -31,7 +31,8 @@ class CPUSkinning: Script {
             fatalError("Model: \(mesh) not found")
         }
 
-        skinning.onInitialize(skeletonUrl.path, animationUrl.path, meshUrl.path)
+        skinning.onInitialize(skeletonUrl.path, meshUrl.path)
+        skinning.loadAnimation(animationUrl.path)
     }
 
     override func onUpdate(_ deltaTime: Float) {
