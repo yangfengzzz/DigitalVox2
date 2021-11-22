@@ -25,6 +25,7 @@
         :(void (^ _Nullable)(NSArray<id <MTLBuffer>> *_Nonnull vertexBuffer, id <MTLBuffer> _Nonnull indexBuffer, size_t indexCount,
                 MDLVertexDescriptor *_Nonnull descriptor))meshInfo;
 
+- (void)UpdateWeight:(int)index :(float)weight;
 
 @end
 

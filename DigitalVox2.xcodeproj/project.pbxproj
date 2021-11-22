@@ -25,6 +25,15 @@
 		040C60BC274A60CC00170B6A /* T_Doggy_metallic.png in Resources */ = {isa = PBXBuildFile; fileRef = 040C60B7274A60CB00170B6A /* T_Doggy_metallic.png */; };
 		040C60BD274A60CC00170B6A /* T_Doggy_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 040C60B8274A60CB00170B6A /* T_Doggy_normal.png */; };
 		040C60BE274A60CC00170B6A /* T_Doggy_1_ao.png in Resources */ = {isa = PBXBuildFile; fileRef = 040C60B9274A60CB00170B6A /* T_Doggy_1_ao.png */; };
+		040C60C8274BC8D100170B6A /* Landing.ozz in Resources */ = {isa = PBXBuildFile; fileRef = 040C60BF274BC8D000170B6A /* Landing.ozz */; };
+		040C60C9274BC8D100170B6A /* Lose.ozz in Resources */ = {isa = PBXBuildFile; fileRef = 040C60C0274BC8D000170B6A /* Lose.ozz */; };
+		040C60CA274BC8D100170B6A /* Fall.ozz in Resources */ = {isa = PBXBuildFile; fileRef = 040C60C1274BC8D000170B6A /* Fall.ozz */; };
+		040C60CB274BC8D100170B6A /* Jump_In.ozz in Resources */ = {isa = PBXBuildFile; fileRef = 040C60C2274BC8D000170B6A /* Jump_In.ozz */; };
+		040C60CC274BC8D100170B6A /* Walk.ozz in Resources */ = {isa = PBXBuildFile; fileRef = 040C60C3274BC8D100170B6A /* Walk.ozz */; };
+		040C60CD274BC8D100170B6A /* Idle.ozz in Resources */ = {isa = PBXBuildFile; fileRef = 040C60C4274BC8D100170B6A /* Idle.ozz */; };
+		040C60CE274BC8D100170B6A /* Dash.ozz in Resources */ = {isa = PBXBuildFile; fileRef = 040C60C5274BC8D100170B6A /* Dash.ozz */; };
+		040C60CF274BC8D100170B6A /* Slide.ozz in Resources */ = {isa = PBXBuildFile; fileRef = 040C60C6274BC8D100170B6A /* Slide.ozz */; };
+		040C60D0274BC8D100170B6A /* Battle_Idle.ozz in Resources */ = {isa = PBXBuildFile; fileRef = 040C60C7274BC8D100170B6A /* Battle_Idle.ozz */; };
 		0419B6D626E6E30300005FEA /* instance_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D526E6E30300005FEA /* instance_data.swift */; };
 		0419B6D826E6E5CE00005FEA /* shading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D726E6E5CE00005FEA /* shading.swift */; };
 		0419B6DA26E6EA3900005FEA /* trace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D926E6EA3900005FEA /* trace.swift */; };
@@ -495,6 +504,15 @@
 		040C60B7274A60CB00170B6A /* T_Doggy_metallic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = T_Doggy_metallic.png; sourceTree = "<group>"; };
 		040C60B8274A60CB00170B6A /* T_Doggy_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = T_Doggy_normal.png; sourceTree = "<group>"; };
 		040C60B9274A60CB00170B6A /* T_Doggy_1_ao.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = T_Doggy_1_ao.png; sourceTree = "<group>"; };
+		040C60BF274BC8D000170B6A /* Landing.ozz */ = {isa = PBXFileReference; lastKnownFileType = file; path = Landing.ozz; sourceTree = "<group>"; };
+		040C60C0274BC8D000170B6A /* Lose.ozz */ = {isa = PBXFileReference; lastKnownFileType = file; path = Lose.ozz; sourceTree = "<group>"; };
+		040C60C1274BC8D000170B6A /* Fall.ozz */ = {isa = PBXFileReference; lastKnownFileType = file; path = Fall.ozz; sourceTree = "<group>"; };
+		040C60C2274BC8D000170B6A /* Jump_In.ozz */ = {isa = PBXFileReference; lastKnownFileType = file; path = Jump_In.ozz; sourceTree = "<group>"; };
+		040C60C3274BC8D100170B6A /* Walk.ozz */ = {isa = PBXFileReference; lastKnownFileType = file; path = Walk.ozz; sourceTree = "<group>"; };
+		040C60C4274BC8D100170B6A /* Idle.ozz */ = {isa = PBXFileReference; lastKnownFileType = file; path = Idle.ozz; sourceTree = "<group>"; };
+		040C60C5274BC8D100170B6A /* Dash.ozz */ = {isa = PBXFileReference; lastKnownFileType = file; path = Dash.ozz; sourceTree = "<group>"; };
+		040C60C6274BC8D100170B6A /* Slide.ozz */ = {isa = PBXFileReference; lastKnownFileType = file; path = Slide.ozz; sourceTree = "<group>"; };
+		040C60C7274BC8D100170B6A /* Battle_Idle.ozz */ = {isa = PBXFileReference; lastKnownFileType = file; path = Battle_Idle.ozz; sourceTree = "<group>"; };
 		0413286A26DF86DC000A4F4E /* BoundingBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingBox.swift; sourceTree = "<group>"; };
 		0413286C26E06648000A4F4E /* BoundingSphere.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingSphere.swift; sourceTree = "<group>"; };
 		0413286E26E06A40000A4F4E /* Plane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plane.swift; sourceTree = "<group>"; };
@@ -2052,8 +2070,17 @@
 				040C608B2749E52800170B6A /* Doggy.fbx */,
 				040C60B1274A262700170B6A /* doggy.ozz */,
 				04CE366D27413F0900204B8E /* doggy_skeleton.ozz */,
+				040C60C4274BC8D100170B6A /* Idle.ozz */,
+				040C60C3274BC8D100170B6A /* Walk.ozz */,
 				04CE36712741414700204B8E /* Run.ozz */,
+				040C60C5274BC8D100170B6A /* Dash.ozz */,
+				040C60C2274BC8D000170B6A /* Jump_In.ozz */,
+				040C60C1274BC8D000170B6A /* Fall.ozz */,
+				040C60BF274BC8D000170B6A /* Landing.ozz */,
+				040C60C7274BC8D100170B6A /* Battle_Idle.ozz */,
 				04CE366E27413F0900204B8E /* Hit.ozz */,
+				040C60C0274BC8D000170B6A /* Lose.ozz */,
+				040C60C6274BC8D100170B6A /* Slide.ozz */,
 			);
 			path = Doggy;
 			sourceTree = "<group>";
@@ -2457,26 +2484,35 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				040C60CA274BC8D100170B6A /* Fall.ozz in Resources */,
 				048692852737C27B007B8DFE /* animation.ozz in Resources */,
 				041BAE78272A512B006268D5 /* README.md in Resources */,
 				040C60BC274A60CC00170B6A /* T_Doggy_metallic.png in Resources */,
 				040C60BB274A60CC00170B6A /* T_Doggy_roughness.png in Resources */,
+				040C60CB274BC8D100170B6A /* Jump_In.ozz in Resources */,
 				041BAED0272A6E0A006268D5 /* Mando_Helmet.usdz in Resources */,
+				040C60CE274BC8D100170B6A /* Dash.ozz in Resources */,
 				0486928327376FCC007B8DFE /* skeleton.ozz in Resources */,
+				040C60CC274BC8D100170B6A /* Walk.ozz in Resources */,
 				040C60BE274A60CC00170B6A /* T_Doggy_1_ao.png in Resources */,
 				040C60BD274A60CC00170B6A /* T_Doggy_normal.png in Resources */,
 				040C60B2274A262700170B6A /* doggy.ozz in Resources */,
+				040C60CD274BC8D100170B6A /* Idle.ozz in Resources */,
 				041BAECC272A6E0A006268D5 /* cottage1.obj in Resources */,
 				040C60BA274A60CC00170B6A /* T_Doggy_1_diffuse.png in Resources */,
+				040C60CF274BC8D100170B6A /* Slide.ozz in Resources */,
 				04CE366F27413F0900204B8E /* doggy_skeleton.ozz in Resources */,
 				04CB88C8273211DE00B0E398 /* skeletonWave.usda in Resources */,
+				040C60C8274BC8D100170B6A /* Landing.ozz in Resources */,
 				041BADDD272A4FA5006268D5 /* Preview Assets.xcassets in Resources */,
+				040C60D0274BC8D100170B6A /* Battle_Idle.ozz in Resources */,
 				041BADDA272A4FA5006268D5 /* Assets.xcassets in Resources */,
 				041BAECD272A6E0A006268D5 /* cottage2.obj in Resources */,
 				041BAEC8272A6E00006268D5 /* Textures.xcassets in Resources */,
 				040C608C2749E52800170B6A /* Doggy.fbx in Resources */,
 				041BAEC9272A6E0A006268D5 /* cottage2.mtl in Resources */,
 				04CE367027413F0900204B8E /* Hit.ozz in Resources */,
+				040C60C9274BC8D100170B6A /* Lose.ozz in Resources */,
 				041BAECF272A6E0A006268D5 /* cottage1.mtl in Resources */,
 				04CE36722741414700204B8E /* Run.ozz in Resources */,
 				041BAEC7272A6E00006268D5 /* irradiance.png in Resources */,

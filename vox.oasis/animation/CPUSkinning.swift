@@ -38,6 +38,10 @@ class CPUSkinning: Script {
         skinning.loadAnimation(animationUrl.path)
     }
 
+    func adjustWeight(_ index: Int, _ weight: Float) {
+        skinning.updateWeight(Int32(index), weight);
+    }
+
     override func onUpdate(_ deltaTime: Float) {
         skinning.onUpdate(deltaTime)
 

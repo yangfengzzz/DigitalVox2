@@ -181,6 +181,10 @@ private:
     return self;
 }
 
+- (void)UpdateWeight:(int)index :(float)weight {
+    samplers_[index]->weight = weight;
+}
+
 // Computes blending weight and synchronizes playback speed when the "manual"
 // option is off.
 - (void)UpdateRuntimeParameters {
@@ -227,7 +231,7 @@ private:
     // Updates blending parameters and synchronizes animations if control mode
     // is not manual.
     if (!manual_) {
-        [self UpdateRuntimeParameters];
+//        [self UpdateRuntimeParameters];
     }
 
     // Updates and samples all animations to their respective local space
