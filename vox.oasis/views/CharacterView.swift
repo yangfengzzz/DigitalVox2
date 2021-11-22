@@ -80,7 +80,9 @@ class AnimationBlending: Script {
         cpuSkinning = entity.addComponent()
         super.init(entity)
 
-        cpuSkinning.load("doggy_skeleton.ozz", "doggy.ozz")
+        cpuSkinning.loadSkeleton("doggy_skeleton.ozz")
+        cpuSkinning.loadSkin("doggy.ozz")
+        cpuSkinning.loadSkin("doggy_clothes.ozz")
         animationWeightMap.forEach { (key: String, value: Float) in
             cpuSkinning.loadAnimation(key + ".ozz")
         }

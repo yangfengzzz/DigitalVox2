@@ -34,6 +34,7 @@
 		040C60CE274BC8D100170B6A /* Dash.ozz in Resources */ = {isa = PBXBuildFile; fileRef = 040C60C5274BC8D100170B6A /* Dash.ozz */; };
 		040C60CF274BC8D100170B6A /* Slide.ozz in Resources */ = {isa = PBXBuildFile; fileRef = 040C60C6274BC8D100170B6A /* Slide.ozz */; };
 		040C60D0274BC8D100170B6A /* Battle_Idle.ozz in Resources */ = {isa = PBXBuildFile; fileRef = 040C60C7274BC8D100170B6A /* Battle_Idle.ozz */; };
+		040C60D2274BCF5100170B6A /* doggy_clothes.ozz in Resources */ = {isa = PBXBuildFile; fileRef = 040C60D1274BCF5100170B6A /* doggy_clothes.ozz */; };
 		0419B6D626E6E30300005FEA /* instance_data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D526E6E30300005FEA /* instance_data.swift */; };
 		0419B6D826E6E5CE00005FEA /* shading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D726E6E5CE00005FEA /* shading.swift */; };
 		0419B6DA26E6EA3900005FEA /* trace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6D926E6EA3900005FEA /* trace.swift */; };
@@ -513,6 +514,7 @@
 		040C60C5274BC8D100170B6A /* Dash.ozz */ = {isa = PBXFileReference; lastKnownFileType = file; path = Dash.ozz; sourceTree = "<group>"; };
 		040C60C6274BC8D100170B6A /* Slide.ozz */ = {isa = PBXFileReference; lastKnownFileType = file; path = Slide.ozz; sourceTree = "<group>"; };
 		040C60C7274BC8D100170B6A /* Battle_Idle.ozz */ = {isa = PBXFileReference; lastKnownFileType = file; path = Battle_Idle.ozz; sourceTree = "<group>"; };
+		040C60D1274BCF5100170B6A /* doggy_clothes.ozz */ = {isa = PBXFileReference; lastKnownFileType = file; path = doggy_clothes.ozz; sourceTree = "<group>"; };
 		0413286A26DF86DC000A4F4E /* BoundingBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingBox.swift; sourceTree = "<group>"; };
 		0413286C26E06648000A4F4E /* BoundingSphere.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingSphere.swift; sourceTree = "<group>"; };
 		0413286E26E06A40000A4F4E /* Plane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plane.swift; sourceTree = "<group>"; };
@@ -2069,6 +2071,7 @@
 				040C60B6274A60CB00170B6A /* T_Doggy_roughness.png */,
 				040C608B2749E52800170B6A /* Doggy.fbx */,
 				040C60B1274A262700170B6A /* doggy.ozz */,
+				040C60D1274BCF5100170B6A /* doggy_clothes.ozz */,
 				04CE366D27413F0900204B8E /* doggy_skeleton.ozz */,
 				040C60C4274BC8D100170B6A /* Idle.ozz */,
 				040C60C3274BC8D100170B6A /* Walk.ozz */,
@@ -2519,6 +2522,7 @@
 				041BAECE272A6E0A006268D5 /* cube.mtl in Resources */,
 				04CB88C7273211DE00B0E398 /* skeleton.usda in Resources */,
 				041BAECB272A6E0A006268D5 /* DamagedHelmet.glb in Resources */,
+				040C60D2274BCF5100170B6A /* doggy_clothes.ozz in Resources */,
 				041BAECA272A6E0A006268D5 /* cube.obj in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

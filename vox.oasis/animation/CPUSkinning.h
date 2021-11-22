@@ -15,9 +15,11 @@
 
 @interface CCPUSkinning : NSObject
 
-- (bool)OnInitialize:(NSString *_Nonnull)OPTIONS_skeleton :(NSString *_Nonnull)OPTIONS_mesh;
+- (bool)LoadSkeleton:(NSString *_Nonnull)filename;
 
-- (bool)LoadAnimation:(NSString *_Nonnull)OPTIONS_animation;
+- (bool)loadSkin:(NSString *_Nonnull)filename;
+
+- (bool)LoadAnimation:(NSString *_Nonnull)filename;
 
 - (bool)OnUpdate:(float)_dt;
 
