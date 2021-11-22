@@ -171,6 +171,16 @@ private:
     ScratchBuffer uv_buffer_;
 }
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        blend_ratio_ = 0.3;
+        manual_ = false;
+        threshold_ = ozz::animation::BlendingJob().threshold;
+    }
+    return self;
+}
+
 // Computes blending weight and synchronizes playback speed when the "manual"
 // option is off.
 - (void)UpdateRuntimeParameters {

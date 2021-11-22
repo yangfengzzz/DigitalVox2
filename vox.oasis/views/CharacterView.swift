@@ -108,7 +108,9 @@ struct CharacterView: View {
         let character = rootEntity.createChild("character");
         character.transform.setScale(x: 5, y: 5, z: 5)
         let cpuSkinning: CPUSkinning = character.addComponent()
-        cpuSkinning.load("doggy_skeleton.ozz", "Run.ozz", "doggy.ozz")
+        cpuSkinning.load("doggy_skeleton.ozz", "doggy.ozz")
+        cpuSkinning.loadAnimation("Run.ozz")
+        cpuSkinning.loadAnimation("Hit.ozz")
         let characterController: CharacterScript = character.addComponent()
         characterController.targetCamera(cameraEntity)
     }

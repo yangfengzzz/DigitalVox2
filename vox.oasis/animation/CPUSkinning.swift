@@ -20,18 +20,21 @@ class CPUSkinning: Script {
         loadMaterial(mat)
     }
 
-    func load(_ skeleton: String, _ animation: String, _ mesh: String) {
+    func load(_ skeleton: String, _ mesh: String) {
         guard let skeletonUrl = Bundle.main.url(forResource: skeleton, withExtension: nil) else {
             fatalError("Model: \(skeleton) not found")
-        }
-        guard let animationUrl = Bundle.main.url(forResource: animation, withExtension: nil) else {
-            fatalError("Model: \(animation) not found")
         }
         guard let meshUrl = Bundle.main.url(forResource: mesh, withExtension: nil) else {
             fatalError("Model: \(mesh) not found")
         }
 
         skinning.onInitialize(skeletonUrl.path, meshUrl.path)
+    }
+
+    func loadAnimation(_ animation: String) {
+        guard let animationUrl = Bundle.main.url(forResource: animation, withExtension: nil) else {
+            fatalError("Model: \(animation) not found")
+        }
         skinning.loadAnimation(animationUrl.path)
     }
 
